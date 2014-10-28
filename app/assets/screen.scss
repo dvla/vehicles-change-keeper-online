@@ -1,0 +1,12 @@
+//Main scss file, no scss/css should be written here
+
+//web layer specific config
+@import "scss/base/_config";
+
+//presentation-common (shared between web layers)
+@import "../../target/web/web-modules/main/webjars/lib/vehicles-presentation-common/scss/_screen.scss";
+
+//web layer specific styles
+@import "scss/base/_prototype-banner";
+@import "scss/base/_template";
+@import "scss/custom/_exemplar-specific";

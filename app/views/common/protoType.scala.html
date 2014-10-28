@@ -1,0 +1,7 @@
+@()(implicit lang: Lang, config: utils.helpers.Config)
+
+@if(config.isPrototypeBannerVisible) {
+    <div class="prototype">
+        <p><span class="phase-tag beta">BETA</span> @Messages("prototype.banner") <a href="@Messages("prototype.link.source")" target="_blank">@Messages("prototype.link")</a> </p>
+    </div>
+}

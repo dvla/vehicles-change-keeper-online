@@ -1,0 +1,61 @@
+<configuration scan="true" scanPeriod="30 seconds">
+
+    <!-- TRACE < DEBUG < INFO < WARN < ERROR < FATAL < OFF -->
+    <conversionRule conversionWord="coloredLevel" converterClass="play.api.Logger$ColoredLevel"/>
+
+    <appender name="SYSLOG" class="ch.qos.logback.classic.net.SyslogAppender">
+        <syslogHost>localhost</syslogHost>
+        <facility>LOCAL0</facility>
+        <suffixPattern>vehicles-change-keeper-online: %logger{20} %msg</suffixPattern>
+        <stackTracePattern>vehicles-change-keeper-online: \t</stackTracePattern>
+    </appender>
+
+    <appender name="REQUEST-SYSLOG" class="ch.qos.logback.classic.net.SyslogAppender">
+        <syslogHost>localhost</syslogHost>
+        <facility>LOCAL0</facility>
+        <suffixPattern>vehicles-change-keeper-online: %msg</suffixPattern>
+        <stackTracePattern>vehicles-change-keeper-online: \t</stackTracePattern>
+    </appender>
+
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>logs/application.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- daily rollover -->
+            <fileNamePattern>logs/application_archive/application.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!-- keep 5 days' worth of history -->
+            <maxHistory>5</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%date{MM/dd HH:mm:ss} %-5level[%thread] %logger{1} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <target>System.out</target>
+        <encoder>
+            <pattern>%date{MM/dd HH:mm:ss} %-5level[%thread] %logger{1} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!--Only log play messages to stdout -->
+    <logger name="play" level="DEBUG" additivity="false">
+        <appender-ref ref="CONSOLE"/>
+    </logger>
+
+    <!-- log application messages to root logger appenders -->
+    <logger name="application" level="INFO"/>
+
+    <logger name="dvla.common.AccessLogger" level="INFO" additivity="false" >
+        <appender-ref ref="REQUEST-SYSLOG"/>
+    </logger>
+
+    <!-- Note: The appenders are cumulative.
+    A logger will log to the appenders attached to itself (if any) as well as all the appenders attached to its ancestors.
+     The top ancestor is root; thus all loggers will log to the application log and graylog. -->
+    <root level="TRACE">
+        <appender-ref ref="FILE"/>
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="SYSLOG"/>
+    </root>
+
+</configuration>

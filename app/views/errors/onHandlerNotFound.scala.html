@@ -1,0 +1,18 @@
+@(request: RequestHeader)(implicit lang: Lang, config: utils.helpers.Config)
+
+@import views.html.common.{govMainDefault, protoType}
+@import views.changekeeper.OnHandlerNotFound.ExitId
+
+@govMainDefault(Messages("onHandlerNotFound.title")) {
+    <div class="app vehicles-acquire-online">
+        @protoType()
+
+        <div class="section-content">
+            <h1>@Messages("onHandlerNotFound.header")</h1>
+            <p>@Messages("onHandlerNotFound.body")</p>
+            <div class="step">
+                <a class="button" id="@ExitId" href="@controllers.routes.BeforeYouStart.present()">@Messages("onHandlerNotFound.start.button")</a>
+            </div>
+        </div>
+    </div>
+}

@@ -1,0 +1,22 @@
+@()(implicit lang: Lang,
+token: uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction.CsrfPreventionToken,
+config: utils.helpers.Config)
+
+@import controllers.routes.Help
+@import controllers.routes.BeforeYouStart
+@import views.common.Help.{BackId, ExitId}
+@import views.html.changekeeper.main
+
+@main(
+title = Messages("acquire.help.title")
+) {
+<p>@Messages("acquire.help.p1")</p>
+<p>@Messages("acquire.help.p2.1") <a href=@Messages("acquire.help.email")> @Messages("acquire.help.p2.2") </a></p>
+
+<div class="form-steps">
+    @* Note the reverse routing syntax for the hyperlink *@
+    <a class="button" id="@BackId" href="@Help.back()">@Messages("acquire.help.back_button")</a>
+    <br/>
+    <a class="exit" id="@ExitId" href="@BeforeYouStart.present()">@Messages("acquire.help.exit_button")</a>
+</div>
+}

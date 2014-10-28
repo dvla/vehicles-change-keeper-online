@@ -1,0 +1,33 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# IoC
+# For those controllers whose dependencies are being injected, we use the @controllers syntax here so that
+# the router knows we are referring to a class (not an object). In turn it will call on the
+# GlobalSettings.getControllerInstance method to resolve the actual controller instance. This method hooks into
+# Guice to provide the actual instance complete with its injected dependencies
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file                       controllers.Assets.at(path="/public", file)
+
+# Home page
+GET     /                                   @controllers.Application.index
+
+#page 1 - Before You Start
+GET     /before-you-start                   @controllers.BeforeYouStart.present
+
+# REMOVE ME WHEN THE STORIES ARE AVAILABLE
+GET     /next                               @controllers.TempController.present
+
+# Micro service error
+GET     /service-error                      @controllers.MicroServiceError.present
+GET     /service-error/try-again            @controllers.MicroServiceError.back
+
+GET     /error/:exceptionDigest             @controllers.Error.present(exceptionDigest)
+POST    /error/:exceptionDigest             @controllers.Error.submit(exceptionDigest)
+
+GET     /help                               @controllers.Help.present
+GET     /help/back                          @controllers.Help.back
+
+GET     /healthcheck                        @uk.gov.dvla.vehicles.presentation.common.controllers.HealthCheck.respond

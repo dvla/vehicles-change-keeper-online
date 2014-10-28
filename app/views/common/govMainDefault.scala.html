@@ -1,0 +1,129 @@
+@(title: String)(content: Html)(implicit lang: Lang,
+        config: utils.helpers.Config)
+
+@import views.html.common.{alternateLanguages, feedback}
+@import views.common.Help.HelpLinkId
+@import play.api.Play
+@import play.api.Play.current
+
+<!DOCTYPE html>
+    <!--[if IE 6]>         <html class="ie ie6" lang="en"> <![endif]-->
+    <!--[if IE 7]>         <html class="ie ie7" lang="en"> <![endif]-->
+    <!--[if IE 8]>         <html class="ie ie8" lang="en"> <![endif]-->
+    <!--[if IE 9]>         <html class="ie ie9" lang="en"> <![endif]-->
+    <!--[if gt IE 9]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>@title</title>
+
+        <link rel="stylesheet" href="@routes.Assets.at("screen.min.css")" media="screen" type="text/css">
+
+        <link rel="stylesheet" href="@routes.Assets.at("print.min.css")" media="print" type="text/css">
+
+        <link rel="shortcut icon" href="@routes.Assets.at("lib/vehicles-presentation-common/images/favicon.ico")" type="image/x-icon">
+        <link rel="apple-touch-icon-precomposed" href="@routes.Assets.at("lib/vehicles-presentation-common/images/apple-touch-icon-57x57.png")">
+        <link rel="apple-touch-icon-precomposed" href="@routes.Assets.at("lib/vehicles-presentation-common/images/apple-touch-icon-72x72.png")" sizes="72x72">
+        <link rel="apple-touch-icon-precomposed" href="@routes.Assets.at("lib/vehicles-presentation-common/images/apple-touch-icon-76x76.png")" sizes="76x76">
+        <link rel="apple-touch-icon-precomposed" href="@routes.Assets.at("lib/vehicles-presentation-common/images/apple-touch-icon-114x114.png")" sizes="114x114">
+        <link rel="apple-touch-icon-precomposed" href="@routes.Assets.at("lib/vehicles-presentation-common/images/apple-touch-icon-120x120.png")" sizes="120x120">
+        <link rel="apple-touch-icon-precomposed" href="@routes.Assets.at("lib/vehicles-presentation-common/images/apple-touch-icon-144x144.png")" sizes="144x144">
+        <link rel="apple-touch-icon-precomposed" href="@routes.Assets.at("lib/vehicles-presentation-common/images/apple-touch-icon-152x152.png")" sizes="152X152">
+    </head>
+
+    <body>
+
+        <a href="#main" class="visuallyhidden">Skip to main content</a>
+
+        <div id="global-cookie-message">
+            <div class="cookie-message-wrapper">
+                <p>@{Messages("global.cookiemessage")}&nbsp;<a href="http://www.gov.uk/support/cookies">@{Messages("global.cookiefindoutmore")}</a></p>
+            </div>
+        </div>
+
+        <div role="banner" class="global-header" id="global-header">
+            <div class="header-wrapper">
+                <div class="content">
+                    <div class="header-global">
+                        <div class="header-logo">
+                            <a href="https://www.gov.uk/" title="Go to the GOV.UK homepage" class="logo">
+                              <img src="@routes.Assets.at("lib/vehicles-presentation-common/images/gov.uk_logotype_crown.png")" width="35" height="31">GOV.UK
+                            </a>
+                        </div>
+                    </div>
+                    <div class="header-proposition">
+                        <div class="content">
+                            <div class="proposition-menu">
+                                <h1 class="page-title"><strong>@{Messages("main.banner")}</strong></h1>
+                                <ul class="proposition-links">
+                                    <li><a id="@HelpLinkId" href="@controllers.routes.Help.present()">@{Messages("main.banner.help")}</a></li>
+                                    <li>@feedback()</li>
+                                    @*<li>@alternateLanguages()</li>*@
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--end header-->
+
+        <div role="main" id="main">
+            @content
+        </div>
+
+        <div class="footer" id="footer" role="contentinfo">
+            <div class="footer-wrapper vehicles-online-footer">
+                <div class="footer-meta">
+                    <div class="footer-meta-inner">
+                        <ul>
+                            <li>@{Messages("footer.builtbyintro")}&nbsp;<a href="https://www.gov.uk/government/organisations/driver-and-vehicle-licensing-agency" target="_blank">@{Messages("footer.builtby")}</a></li>
+                        </ul>
+                        <div class="open-government-licence">
+                            <h2>
+                                <a href="http://www.nationalarchives.gov.uk/doc/open-government-licence/version/2">
+                                    <img src="@routes.Assets.at("lib/vehicles-presentation-common/images/open-government-licence_2x.png")" alt="OGL">
+                                </a>
+                            </h2>
+                            <p>@{Messages("footer.text1")}&nbsp;<a href="http://www.nationalarchives.gov.uk/doc/open-government-licence/version/2">@{Messages("footer.link")}</a>@{Messages("footer.text2")}</p>
+                        </div>
+                    </div>
+                    @if(!Play.isTest) {
+                        @* Do not fetch external assets when testing. Ideally we should have asset local and in version control *@
+                        <div class="copyright print-only">
+                            <img src="@routes.Assets.at("lib/vehicles-presentation-common/images/govuk-crest.png")" alt="Crown Copyright">
+                        </div>
+                        <div class="copyright">
+                            <a href="http://www.nationalarchives.gov.uk/information-management/our-services/crown-copyright.htm" target="_blank">&copy;
+                                Crown Copyright</a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <!--end footer-->
+
+        <div id="global-app-error" class="app-error hidden"></div>
+
+        <script data-main="@routes.Assets.at("javascripts/main.js")" src="@routes.Assets.at("lib/requirejs/require.js")"></script>
+
+        <!--[if (lt IE 9) & (!IEMobile)]>
+        <script src="@routes.Assets.at("javascripts/lib/respond.min.js")"></script>
+        <![endif]-->
+
+        <script type="text/javascript">document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');</script>
+
+        @if(config.isGoogleAnalyticsEnabled) {
+            <script>
+                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+                ga('create', '@play.Configuration.root().getString("googleAnalytics.id")', '@play.Configuration.root().getString("googleAnalytics.domain")', {'siteSpeedSampleRate': 25});
+                ga('send', 'pageview');
+            </script>
+        }
+    </body>
+</html>
