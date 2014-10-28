@@ -1,8 +1,0 @@
-# monit/vehicles-change-keeper-online
-#
-check process vehicles-change-keeper-online
-  matching vehicles-change-keeper-online
-  start program = "/sbin/start vehicles-change-keeper-online"
-  stop program = "/sbin/stop vehicles-change-keeper-online"
-  if failed host 127.0.0.1 port 9008 then restart
-
