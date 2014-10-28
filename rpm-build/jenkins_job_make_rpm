@@ -1,0 +1,74 @@
+#!/bin/bash
+#
+# jenkins_job_make_rpm
+#
+#
+
+set -o errexit
+
+test -z $WORKSPACE && echo "WORKSPACE is not set so defaulting it to current directory" && export WORKSPACE=$PWD
+echo "WORKSPACE = $WORKSPACE"
+
+RPM_VERSION="$(date +'%Y%m%d%H%M%S')"
+RPM_NAME="vehicles-change-keeper-online"
+RPM_OWNER="jenkins@dvla"
+RPM_DESCRIPTION="SPIKE"
+RPM_URL="http:/jenkins.dvla"
+RPM_LICENSE="WHAT"
+RPM_VENDOR="DVLA"
+RPM_PREFIX="/opt/"
+RPM_TARGETDIR="$WORKSPACE/target/" #grab the jenkins WORKSPACE working dir
+MONIT_FILES_DIR="rpm-build/monit/"
+UPSTART_FILES_DIR="rpm-build/upstart/"
+DEPENDS="monit"
+
+# Get the version of the binary from sbt and strip color information so we are just left with a version
+VERSION=`sbt version | tail -1 | awk {'print $2'} | sed -E "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g"`
+echo VERSION = $VERSION
+ZIP_FILENAME=vehicles-change-keeper-online-${VERSION}.zip
+
+echo "*********************************"
+echo "*"
+echo "* Creating RPM for $ZIP_FILENAME"
+echo "*"
+echo "*********************************"
+
+# this is really ugly, refactor all of this
+# create workdir directories
+rm -rf ./workdir
+mkdir -p workdir/$RPM_PREFIX
+mkdir -p workdir/etc/init
+mkdir -p workdir/etc/monit.d
+
+# copy objects to workdir directory
+cd workdir/$RPM_PREFIX/
+unzip $WORKSPACE/target/universal/$ZIP_FILENAME
+mv vehicles-change-keeper-online-$VERSION vehicles-change-keeper-online
+cd -
+
+# add a git log file
+git log > workdir/$RPM_PREFIX/$RPM_NAME/git-log.txt
+
+# add the init files
+cp -r $MONIT_FILES_DIR/* workdir/etc/monit.d
+cp -r $UPSTART_FILES_DIR/* workdir/etc/init
+
+# package the thine
+test -e $RPM_TARGETDIR || mkdir $RPM_TARGETDIR
+
+fpm -n $RPM_NAME \
+  --before-remove="rpm-build/pkg-scripts/stop" \
+  --after-install="rpm-build/pkg-scripts/restart" \
+  -v $RPM_VERSION  \
+  -a all \
+  -p $RPM_TARGETDIR/$RPM_NAME.rpm \
+  -m $RPM_OWNER \
+  --description=$RPM_DESCRIPTION \
+  --url=$RPM_URL \
+  --license=$RPM_LICENSE \
+  --vendor=$RPM_VENDOR \
+  -x "*.rpm" -x .git -x .gitignore \
+  -t rpm \
+  -d $DEPENDS \
+  -C workdir \
+  -s dir .

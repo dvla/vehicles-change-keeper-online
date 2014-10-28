@@ -1,0 +1,5 @@
+#!/bin/bash
+
+initctl stop vehicles-change-keeper-online 2>/dev/null
+initctl start vehicles-change-keeper-online 2>/dev/null
+exit 0
