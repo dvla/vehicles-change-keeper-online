@@ -20,6 +20,7 @@ POST    /before-you-start                   @controllers.BeforeYouStart.submit
 
 #page 2 - Vehicle Lookup
 GET     /vehicle-lookup                     @controllers.VehicleLookup.present
+POST    /vehicle-lookup                     @controllers.VehicleLookup.submit
 
 
 # REMOVE ME WHEN THE STORIES ARE AVAILABLE

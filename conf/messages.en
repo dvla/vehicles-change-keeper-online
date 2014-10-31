@@ -127,27 +127,26 @@ change_keeper_beforeyoustart.button = Start now
 
 #page 2 - vehicle Lookup
 change_keeper_vehiclelookup.title = Enter vehicle details
-acquire_vehiclelookup.name = Sell a vehicle into the motor trade
-acquire_vehiclelookup.p1 = Vehicle being sold
-acquire_vehiclelookup.p2 = Vehicle being sold from
-acquire_vehiclelookup.warning.p1 = Do not dispose of a vehicle with a personal registration unless the current keeper understands that the registration will be disposed of along with the vehicle.
-acquire_vehiclelookup.warning.p2 = Retain or transfer personal registrations before disposing to the trade.
-acquire_vehiclelookup.img.h2 = Help finding your V5C document reference number?
-acquire_vehiclelookup.img.alt = V5C document reference number
-acquire_vehiclelookup.refnumlabel = Latest V5C document reference number
-acquire_vehiclelookup.vrninputlabel = Vehicle registration number
-acquire_vehiclelookup.backbutton = Back
-acquire_vehiclelookup.button = Next
-acquire_vehiclelookup.button2 = Edit
-acquire_vehiclelookup.exitbutton = Finish
-acquire_vehiclelookup.tradernamelabel = Trader name
-acquire_vehiclelookup.traderaddresslabel = Address
-acquire_vehiclelookup.traderpostcodelabel = Postcode
-acquire_vehiclelookup.traderemaillabel = Email
-
-acquire_vehiclelookup.vehiclesoldto.label = Is the vehicle being sold to a private individual or a business?
-acquire_vehiclelookup.vehiclesoldto.private = Private individual
-acquire_vehiclelookup.vehiclesoldto.business = Business
+change_keeper_vehiclelookup.name = Sell a vehicle into the motor trade
+change_keeper_vehiclelookup.p1 = Vehicle being sold
+change_keeper_vehiclelookup.p2 = Vehicle being sold from
+change_keeper_vehiclelookup.warning.p1 = Do not dispose of a vehicle with a personal registration unless the current keeper understands that the registration will be disposed of along with the vehicle.
+change_keeper_vehiclelookup.warning.p2 = Retain or transfer personal registrations before disposing to the trade.
+change_keeper_vehiclelookup.img.h2 = Help finding your V5C document reference number?
+change_keeper_vehiclelookup.img.alt = V5C document reference number
+change_keeper_vehiclelookup.refnumlabel = Latest V5C document reference number
+change_keeper_vehiclelookup.vrninputlabel = Vehicle registration number
+change_keeper_vehiclelookup.backbutton = Back
+change_keeper_vehiclelookup.button = Next
+change_keeper_vehiclelookup.button2 = Edit
+change_keeper_vehiclelookup.exitbutton = Finish
+change_keeper_vehiclelookup.tradernamelabel = Trader name
+change_keeper_vehiclelookup.traderaddresslabel = Address
+change_keeper_vehiclelookup.traderpostcodelabel = Postcode
+change_keeper_vehiclelookup.traderemaillabel = Email
+change_keeper_vehiclelookup.vehiclesoldto.label = Is the vehicle being bought by a private individual or a business?
+change_keeper_vehiclelookup.vehiclesoldto.private = Private individual
+change_keeper_vehiclelookup.vehiclesoldto.business = Business
 
 vehicleRegistrationNumber = Vehicle registration number
 documentReferenceNumber = Document reference number

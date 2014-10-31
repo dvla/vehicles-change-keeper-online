@@ -1,16 +1,80 @@
-@()(implicit lang: Lang,
+@(viewModel: models.VehicleLookupViewModel)(implicit lang: Lang,
 token: uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction.CsrfPreventionToken,
 config: utils.helpers.Config)
 
 @import controllers.routes.VehicleLookup
+@import views.changekeeper.VehicleLookup.{BackId, SubmitId, VehicleSoldTo_Private, VehicleSoldTo_Business}
 @import views.changekeeper.BeforeYouStart.NextId
+@import views.html.helper.form
+@import models.VehicleLookupFormModel.Form.{DocumentReferenceNumberId, VehicleRegistrationNumberId, VehicleSoldToId}
 @import uk.gov.dvla.vehicles.presentation.common
+@import common.mappings.{DocumentReferenceNumber, VehicleRegistrationNumber}
 @import common.views.html.widgets.base.csrfTokenHiddenField
+@import common.views.helpers.BaseTemplate.fieldConstructor
+@import common.views.html.widgets.base.valtechInputText
+@import common.views.html.widgets.listRadioGroup
 
 @main(
 progress = Some(Messages("change_keeper_progress_2")),
-title = Messages("change_keeper_vehiclelookup.title")
+title = Messages("change_keeper_vehiclelookup.title"),
+currentForm = Some(viewModel.form)
 ) {
-<p>content</p>
 
+<div class="two-col clearfix vehicle-lookup">
+
+    <div class="second-col uppercase-input">
+        <div class="form-steps">
+            <div class="step uppercase-input">
+                @form(action = controllers.routes.VehicleLookup.submit()) {
+                @csrfTokenHiddenField()
+
+                <h2>@Messages("change_keeper_vehiclelookup.p1")</h2>
+
+                @valtechInputText(viewModel.form(VehicleRegistrationNumberId), args =
+                Map('_label -> Messages("change_keeper_vehiclelookup.vrninputlabel"),
+                'maxLength -> VehicleRegistrationNumber.MaxLength,
+                '_showConstraints -> false,
+                'autofocus -> true
+                )
+                )
+
+                @valtechInputText(viewModel.form(DocumentReferenceNumberId), args =
+                Map('_label -> Messages("change_keeper_vehiclelookup.refnumlabel"),
+                '_showConstraints -> false,
+                'typeTel -> true,
+                'maxLength -> DocumentReferenceNumber.MaxLength, // Must be set independently of the pattern as the pattern is only checked when the user submits.
+                //'title -> Messages("error.validDocumentReferenceNumber")
+                'title -> Messages("")) ++ // [SKW] for accessibility Tony removed have 'title text as the screen reader reads it twice, the knock-on effect is that our custom validation messages aren't displayed so the user has no idea what is wrong.
+                (if(config.isHtml5ValidationEnabled) Map('pattern -> DocumentReferenceNumber.Pattern) else Nil)
+                )
+
+                @listRadioGroup(field = viewModel.form(VehicleSoldToId),
+                args = Map(
+                'items -> Seq(
+                VehicleSoldTo_Private -> Messages("change_keeper_vehiclelookup.vehiclesoldto.private"),
+                VehicleSoldTo_Business -> Messages("change_keeper_vehiclelookup.vehiclesoldto.business")
+                ),
+                '_label -> Messages("change_keeper_vehiclelookup.vehiclesoldto.label")
+                )
+                )
+
+                <div class="img-wrap img-wrap-mobile">
+                    <h2>@Messages("change_keeper_vehiclelookup.img.h2")</h2>
+                    <img src="@routes.Assets.at("images/document-reference-number.png")" alt="@Messages("change_keeper_vehiclelookup.img.alt")" />
+                </div>
+
+                <div class="form-steps">
+                    <button id="@SubmitId" type="submit" name="action" class="button">
+                        @Messages("change_keeper_vehiclelookup.button")
+                    </button>
+                    <br/>
+
+
+
+                </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
 }
