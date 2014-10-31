@@ -11,12 +11,13 @@ import common.webserviceclients.addresslookup.gds.domain.{Address, Details, Loca
 import common.webserviceclients.addresslookup.ordnanceservey.PostcodeToAddressResponseDto
 import common.webserviceclients.addresslookup.ordnanceservey.UprnAddressPairDto
 import common.webserviceclients.addresslookup.ordnanceservey.UprnToAddressResponseDto
-import pages.changekeeper.SetupTradeDetailsPage.{PostcodeWithoutAddresses, PostcodeValid}
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 final class FakeAddressLookupWebServiceImpl(responseOfPostcodeWebService: Future[WSResponse],
                                             responseOfUprnWebService: Future[WSResponse]) extends AddressLookupWebService {
+  final val PostcodeWithoutAddresses = "xx99xx"
+
   override def callPostcodeWebService(postcode: String, trackingId: String)
                                      (implicit lang: Lang): Future[WSResponse] =
     if (postcode == PostcodeWithoutAddresses.toUpperCase) Future {
@@ -29,6 +30,7 @@ final class FakeAddressLookupWebServiceImpl(responseOfPostcodeWebService: Future
 }
 
 object FakeAddressLookupWebServiceImpl {
+  final val PostcodeValid = "QQ99QQ"
   final val UprnValid = 12345L
   final val UprnValid2 = 4567L
 
