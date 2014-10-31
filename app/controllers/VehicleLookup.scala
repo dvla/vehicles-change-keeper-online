@@ -38,20 +38,13 @@ class VehicleLookup @Inject()()(implicit clientSideSessionFactory: ClientSideSes
   private def formWithReplacedErrors(form: Form[VehicleLookupFormModel]) = {
     form.replaceError(
       VehicleRegistrationNumberId, FormError(
-        key = VehicleRegistrationNumberId,
-        message = "error.restricted.validVrnOnly",
-        args = Seq.empty)
+        key = VehicleRegistrationNumberId, message = "error.restricted.validVrnOnly", args = Seq.empty)
     ).replaceError(
         DocumentReferenceNumberId,FormError(
-          key = DocumentReferenceNumberId,
-          message = "error.validDocumentReferenceNumber",
-          args = Seq.empty)
+          key = DocumentReferenceNumberId, message = "error.validDocumentReferenceNumber", args = Seq.empty)
       ).replaceError(
         VehicleSoldToId,FormError(
-      key = VehicleSoldToId,
-      message = "error.validBougtByType",
-      args = Seq.empty)
+          key = VehicleSoldToId, message = "error.validBougtByType", args = Seq.empty)
       ).distinctErrors
   }
-
 }
