@@ -1,14 +1,16 @@
 package controllers
 
-import play.api.mvc.{Action, Controller}
-import models.VehicleLookupFormModel
+import play.api.mvc.Controller
+import models.VehicleLookupFormModel.Form.{DocumentReferenceNumberId, VehicleRegistrationNumberId}
 import com.google.inject.Inject
-import play.api.data.Form
+import play.api.data.{Form, FormError}
+import play.api.mvc.Action
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.ClientSideSessionFactory
 import common.clientsidesession.CookieImplicits.{RichCookies, RichForm, RichResult}
+import common.views.helpers.FormExtensions.formBinding
 import utils.helpers.Config
-import models.VehicleLookupViewModel
+import models.{VehicleLookupFormModel, VehicleLookupViewModel}
 
 
 class VehicleLookup @Inject()()(implicit clientSideSessionFactory: ClientSideSessionFactory,
@@ -19,11 +21,32 @@ class VehicleLookup @Inject()()(implicit clientSideSessionFactory: ClientSideSes
   )
 
   def present = Action { implicit request =>
-    Ok(views.html.changekeeper.vehicle_lookup(VehicleLookupViewModel(form.fill())))
+    Ok(views.html.changekeeper.vehicle_lookup(
+      VehicleLookupViewModel(form.fill()))
+    )
   }
 
   def submit = Action { implicit request =>
-    Ok("success")
+    form.bindFromRequest.fold(
+      invalidForm => BadRequest(views.html.changekeeper.vehicle_lookup(
+        VehicleLookupViewModel(formWithReplacedErrors(invalidForm)))
+      ),
+      validForm => Ok("success")
+    )
+  }
+
+  private def formWithReplacedErrors(form: Form[VehicleLookupFormModel]) = {
+    form.replaceError(
+      VehicleRegistrationNumberId, FormError(
+        key = VehicleRegistrationNumberId,
+        message = "error.restricted.validVrnOnly",
+        args = Seq.empty)
+    ).replaceError(
+        DocumentReferenceNumberId,FormError(
+          key = DocumentReferenceNumberId,
+          message = "error.validDocumentReferenceNumber",
+          args = Seq.empty)
+      ).distinctErrors
   }
 
 }
