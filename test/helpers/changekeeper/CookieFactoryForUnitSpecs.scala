@@ -5,9 +5,11 @@ import pages.changekeeper.HelpPage
 import play.api.libs.json.{Json, Writes}
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.{ClearTextClientSideSession, ClientSideSessionFactory, CookieFlags}
-import models.SeenCookieMessageCacheKey
+import models.{VehicleLookupFormModel, SeenCookieMessageCacheKey, HelpCacheKey}
+import webserviceclients.fakes.FakeVehicleLookupWebService._
+import models.VehicleLookupFormModel._
 import play.api.mvc.Cookie
-import models.HelpCacheKey
+import views.changekeeper.VehicleLookup.VehicleSoldTo_Private
 
 object CookieFactoryForUnitSpecs extends TestComposition {
 
@@ -51,6 +53,18 @@ object CookieFactoryForUnitSpecs extends TestComposition {
   def help(origin: String = HelpPage.address): Cookie = {
     val key = HelpCacheKey
     val value = origin
+    createCookie(key, value)
+  }
+
+  def vehicleLookupFormModel(referenceNumber: String = ReferenceNumberValid,
+                             registrationNumber: String = RegistrationNumberValid,
+                             vehicleSoldTo: String = VehicleSoldTo_Private): Cookie = {
+    val key = VehicleLookupFormModelCacheKey
+    val value = VehicleLookupFormModel(
+      referenceNumber = referenceNumber,
+      registrationNumber = registrationNumber,
+      vehicleSoldTo = vehicleSoldTo
+    )
     createCookie(key, value)
   }
 }
