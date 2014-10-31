@@ -104,6 +104,13 @@ final class VehicleLookupUnitSpec extends UnitSpec {
       count should equal(2) // The same message is displayed in 2 places - once in the validation-summary at the top of the page and once above the field.
     }
 
+    "replace required error message for new keeper type (private keeper or business)" in new WithApplication {
+      val request = buildCorrectlyPopulatedRequest(soldTo = "")
+      val result = vehicleLookupResponseGenerator().submit(request)
+      val count = "Select whether the buyer is a private individual or business".r.findAllIn(contentAsString(result)).length
+
+      count should equal(3)
+    }
 
     "redirect to MicroserviceError when microservice throws" ignore new WithApplication {
 //      ToDo uncomment when microservice error is implemented into application

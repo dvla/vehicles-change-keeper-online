@@ -1,7 +1,7 @@
 package controllers
 
 import play.api.mvc.Controller
-import models.VehicleLookupFormModel.Form.{DocumentReferenceNumberId, VehicleRegistrationNumberId}
+import models.VehicleLookupFormModel.Form.{DocumentReferenceNumberId, VehicleRegistrationNumberId, VehicleSoldToId}
 import com.google.inject.Inject
 import play.api.data.{Form, FormError}
 import play.api.mvc.Action
@@ -46,6 +46,11 @@ class VehicleLookup @Inject()()(implicit clientSideSessionFactory: ClientSideSes
           key = DocumentReferenceNumberId,
           message = "error.validDocumentReferenceNumber",
           args = Seq.empty)
+      ).replaceError(
+        VehicleSoldToId,FormError(
+      key = VehicleSoldToId,
+      message = "error.validBougtByType",
+      args = Seq.empty)
       ).distinctErrors
   }
 

@@ -55,9 +55,11 @@ error.dateOfBirth.110yearsInThePast = Date of birth cannot be in more than 110 y
 error.fleetNumber = The fleet number can only be a 6 digit number, please try again.
 error.address.characterInvalid = Must only contain valid characters A-Z, 0-9, etc
 error.postTown.characterInvalid = Town or city contains invalid characters
+error.validBougtByType = Select whether the buyer is a private individual or business
 error.validDriverNumber = The Driver Number that you have entered does not appear to be in an acceptable format. Please amend your entry or delete and re-submit.
 error.fleetNumber = The fleet number can only be a 6 digit number, please try again.
 error.titlePlusFirstName.tooLong = The combined length of your Title e.g. Mr/Mrs/Miss etc and First name(s) cannot exceed 26 characters. Please amend your entry and re-submit.
+error.validDocumentReferenceNumber = Document reference number must be an 11-digit number
 
 datePlaceholder.day=Day
 datePlaceholder.month=Month
@@ -147,10 +149,9 @@ change_keeper_vehiclelookup.traderemaillabel = Email
 change_keeper_vehiclelookup.vehiclesoldto.label = Is the vehicle being bought by a private individual or a business?
 change_keeper_vehiclelookup.vehiclesoldto.private = Private individual
 change_keeper_vehiclelookup.vehiclesoldto.business = Business
-
+vehicleSoldTo = Vehicle bought by
 vehicleRegistrationNumber = Vehicle registration number
 documentReferenceNumber = Document reference number
-error.validDocumentReferenceNumber = Document reference number must be an 11-digit number
 
 #uprn not found
 acquire_uprnnotfound.title = Error confirming post code
