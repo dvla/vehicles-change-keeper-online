@@ -2,7 +2,6 @@ package pages.changekeeper
 
 import helpers.webbrowser.{WebDriverFactory, WebBrowserDSL, Page}
 
-// TODO: fix this when the story is ready
 object SetupTradeDetailsPage extends Page with WebBrowserDSL {
   final val TraderBusinessNameValid = "example trader name"
   final val PostcodeWithoutAddresses = "xx99xx"

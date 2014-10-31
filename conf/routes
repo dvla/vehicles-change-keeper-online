@@ -16,6 +16,11 @@ GET     /                                   @controllers.Application.index
 
 #page 1 - Before You Start
 GET     /before-you-start                   @controllers.BeforeYouStart.present
+POST    /before-you-start                   @controllers.BeforeYouStart.submit
+
+#page 2 - Vehicle Lookup
+GET     /vehicle-lookup                     @controllers.VehicleLookup.present
+
 
 # REMOVE ME WHEN THE STORIES ARE AVAILABLE
 GET     /next                               @controllers.TempController.present

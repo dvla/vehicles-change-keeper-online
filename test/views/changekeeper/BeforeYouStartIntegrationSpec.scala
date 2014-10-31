@@ -5,7 +5,7 @@ import ProgressBar.progressStep
 import helpers.tags.UiTag
 import helpers.UiSpec
 import helpers.webbrowser.TestHarness
-import pages.changekeeper.BeforeYouStartPage
+import pages.changekeeper.{VehicleLookupPage, BeforeYouStartPage}
 import pages.changekeeper.BeforeYouStartPage.startNow
 import pages.common.Feedback.AcquireEmailFeedbackLink
 
@@ -33,13 +33,10 @@ final class BeforeYouStartIntegrationSpec extends UiSpec with TestHarness {
   }
 
   "startNow button" should {
-    // TODO: fix me when the story is ready
-    "go to next page" taggedAs UiTag ignore new WebBrowser {
-      /*
+    "go to next page" taggedAs UiTag in new WebBrowser {
       go to BeforeYouStartPage
       click on startNow
-      page.title should equal(SetupTradeDetailsPage.title)
-      */
+      page.title should equal(VehicleLookupPage.title)
     }
   }
 }

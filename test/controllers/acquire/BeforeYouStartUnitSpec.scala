@@ -8,6 +8,7 @@ import play.api.test.{WithApplication, FakeRequest}
 import play.api.test.Helpers.{OK, LOCATION, contentAsString, defaultAwaitTimeout, status}
 import uk.gov.dvla.vehicles.presentation.common.clientsidesession.ClientSideSessionFactory
 import utils.helpers.Config
+import pages.changekeeper.VehicleLookupPage
 
 class BeforeYouStartUnitSpec extends UnitSpec {
 
@@ -35,11 +36,10 @@ class BeforeYouStartUnitSpec extends UnitSpec {
   }
 
   "submit" should {
-    // TODO: FIX THIS WHEN THE STORY IS READY
-    "redirect to next page after the button is clicked" ignore new WithApplication {
+    "redirect to next page after the button is clicked" in new WithApplication {
       val result = beforeYouStart.submit(FakeRequest())
       whenReady(result) { r =>
-//        r.header.headers.get(LOCATION) should equal(Some(SetupTradeDetailsPage.address))
+        r.header.headers.get(LOCATION) should equal(Some(VehicleLookupPage.address))
       }
     }
   }

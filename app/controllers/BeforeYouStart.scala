@@ -17,7 +17,6 @@ class BeforeYouStart @Inject()()(implicit clientSideSessionFactory: ClientSideSe
   }
 
   def submit = Action { implicit request =>
-//    Redirect(routes.VehicleLookup.present())
-    Ok("Success")
+    Redirect(routes.VehicleLookup.present())
   }
 }

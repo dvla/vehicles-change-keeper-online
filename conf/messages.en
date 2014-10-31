@@ -125,43 +125,8 @@ change_keeper_beforeyoustart.listitem3.2 =, you will need to send the completed 
 change_keeper_beforeyoustart.listitem4 = This vehicle must be taxed before it can be driven on the road.  If you wish to keep this vehicle off the road you can declare SORN. You can tax or SORN your vehicle as part of this service.
 change_keeper_beforeyoustart.button = Start now
 
-#page 2 - Setup trade details
-acquire_setuptradedetails.title = Provide trader details
-acquire_setuptradedetails.name = Sell a vehicle into the motor trade
-acquire_setuptradedetails.p1 = Set-up trade details
-acquire_setuptradedetails.tradernamelabel = Trader name
-acquire_setuptradedetails.traderpostcodelabel = Postcode
-acquire_setuptradedetails.traderpostcode.hint = e.g. AB1 2BA or AB12BA
-acquire_setuptradedetails.traderemaillabel = Trader email address
-acquire_setuptradedetails.traderemail.hint = e.g. example@example.co.uk
-acquire_setuptradedetails.button = Find address
-traderName = Trader name
-traderPostcode = Postcode
-traderEmail = Trader email address
-
-#page 3 - Business Choose Your Address
-disposal_businessChooseYourAddress_addressSelect = Select trader address
-disposal_businessChooseYourAddress.address.required = Please select a valid address
-acquire_businessChooseYourAddress_title = Select trader address
-acquire_businessChooseYourAddress_legend = Set up trade details
-acquire_businessChooseYourAddress_businessName_label = Trader name
-acquire_businessChooseYourAddress_businessName = {0}
-acquire_businessChooseYourAddress_businessEmail_label = Email
-acquire_businessChooseYourAddress_businessEmail = {0}
-acquire_businessChooseYourAddress.emailNotEntered = Not entered
-acquire_businessChooseYourAddress_postcode_label = Postcode
-acquire_businessChooseYourAddress_businessAddress_label = Trader address
-acquire_businessChooseYourAddress_addressSelect = Choose your address
-acquire_businessChooseYourAddress_addressSelect_label = Choose your address
-acquire_businessChooseYourAddress.backbutton = Back
-acquire_businessChooseYourAddress.submitbutton = Next
-acquire_businessChooseYourAddress.manualAddressEntry = My address is not in the list
-acquire_businessChooseYourAddress.manualAddressEntry.enterManuallyButton = Enter address
-acquire_businessChooseYourAddress_noaddressesfound.h2.1 = No addresses found for that postcode.
-acquire_businessChooseYourAddress_noaddressesfound.h2.2 = Please either ''Enter address'' or click ''Back'' to try again.
-
-#page 4 - vehicle Lookup
-acquire_vehiclelookup.title = Enter vehicle details
+#page 2 - vehicle Lookup
+change_keeper_vehiclelookup.title = Enter vehicle details
 acquire_vehiclelookup.name = Sell a vehicle into the motor trade
 acquire_vehiclelookup.p1 = Vehicle being sold
 acquire_vehiclelookup.p2 = Vehicle being sold from
