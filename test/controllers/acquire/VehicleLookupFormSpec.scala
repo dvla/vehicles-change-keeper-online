@@ -21,6 +21,9 @@ import models.VehicleLookupFormModel.Form.{DocumentReferenceNumberId, VehicleReg
 import org.mockito.Matchers.{any, anyString}
 import org.mockito.Mockito.when
 import play.api.libs.json.{JsValue, Json}
+import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperDetailsRequest
+import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupServiceImpl
+import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupWebService
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import utils.helpers.Config
@@ -29,7 +32,7 @@ import webserviceclients.fakes.FakeVehicleLookupWebService.ReferenceNumberValid
 import webserviceclients.fakes.FakeVehicleLookupWebService.RegistrationNumberValid
 import webserviceclients.fakes.FakeVehicleLookupWebService.vehicleDetailsResponseSuccess
 import webserviceclients.fakes.{FakeDateServiceImpl, FakeResponse}
-import views.changekeeper.VehicleLookup.{VehicleSoldTo_Business, VehicleSoldTo_Private}
+import views.changekeeper.VehicleLookup.VehicleSoldTo_Private
 
 final class VehicleLookupFormSpec extends UnitSpec {
 
@@ -137,21 +140,20 @@ final class VehicleLookupFormSpec extends UnitSpec {
   val dateService = new DateServiceImpl
 
   private def vehicleLookupResponseGenerator(fullResponse:(Int, Option[VehicleDetailsResponseDto])) = {
-    val vehicleLookupWebService: VehicleLookupWebService = mock[VehicleLookupWebService]
-    when(vehicleLookupWebService.callVehicleLookupService(any[VehicleDetailsRequestDto], any[String])).thenReturn(Future {
+    val vehicleAndKeeperLookupWebService: VehicleAndKeeperLookupWebService = mock[VehicleAndKeeperLookupWebService]
+    when(vehicleAndKeeperLookupWebService.invoke(any[VehicleAndKeeperDetailsRequest], any[String])).thenReturn(Future {
       val responseAsJson : Option[JsValue] = fullResponse._2 match {
         case Some(e) => Some(Json.toJson(e))
         case _ => None
       }
       new FakeResponse(status = fullResponse._1, fakeJson = responseAsJson)// Any call to a webservice will always return this successful response.
     })
-    val vehicleLookupServiceImpl = new VehicleLookupServiceImpl(vehicleLookupWebService)
+    val vehicleAndKeeperLookupServiceImpl = new VehicleAndKeeperLookupServiceImpl(vehicleAndKeeperLookupWebService)
     implicit val clientSideSessionFactory = injector.getInstance(classOf[ClientSideSessionFactory])
     implicit val config: Config = mock[Config]
     new VehicleLookup(
-      //ToDo uncomment when brute force and lookup microservice are implemented
-      //bruteForceService = bruteForceServiceImpl,
-      //vehicleLookupService = vehicleLookupServiceImpl, dateService
+      bruteForceService = bruteForceServiceImpl,
+      vehicleLookupService = vehicleAndKeeperLookupServiceImpl, dateService
       )
   }
 

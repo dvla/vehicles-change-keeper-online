@@ -18,6 +18,10 @@ import common.webserviceclients.bruteforceprevention.BruteForcePreventionWebServ
 import common.webserviceclients.bruteforceprevention.BruteForcePreventionServiceImpl
 import common.webserviceclients.bruteforceprevention.BruteForcePreventionService
 import webserviceclients.fakes.brute_force_protection.FakeBruteForcePreventionWebServiceImpl
+import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupService
+import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupServiceImpl
+import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupWebService
+import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupWebServiceImpl
 
 class TestModule() extends ScalaModule with MockitoSugar {
   /**
@@ -25,8 +29,12 @@ class TestModule() extends ScalaModule with MockitoSugar {
    */
   def configure() {
     Logger.debug("Guice is loading TestModule")
+
     bind[VehicleLookupWebService].to[FakeVehicleLookupWebService].asEagerSingleton()
     bind[VehicleLookupService].to[VehicleLookupServiceImpl].asEagerSingleton()
+
+    bind[VehicleAndKeeperLookupWebService].to[VehicleAndKeeperLookupWebServiceImpl].asEagerSingleton()
+    bind[VehicleAndKeeperLookupService].to[VehicleAndKeeperLookupServiceImpl].asEagerSingleton()
 
     bind[DateService].to[FakeDateServiceImpl].asEagerSingleton()
     bind[DateTimeZoneService].toInstance(new DateTimeZoneServiceImpl)

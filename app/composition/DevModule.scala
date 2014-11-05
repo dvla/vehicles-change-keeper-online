@@ -20,14 +20,14 @@ import common.services.DateServiceImpl
 import common.webserviceclients.addresslookup.{AddressLookupService, AddressLookupWebService}
 import common.webserviceclients.addresslookup.ordnanceservey.AddressLookupServiceImpl
 import common.webserviceclients.addresslookup.ordnanceservey.WebServiceImpl
-import common.webserviceclients.vehiclelookup.VehicleLookupServiceImpl
-import common.webserviceclients.vehiclelookup.VehicleLookupService
-import common.webserviceclients.vehiclelookup.VehicleLookupWebServiceImpl
-import common.webserviceclients.vehiclelookup.VehicleLookupWebService
 import common.webserviceclients.bruteforceprevention.BruteForcePreventionService
 import common.webserviceclients.bruteforceprevention.BruteForcePreventionServiceImpl
 import common.webserviceclients.bruteforceprevention.BruteForcePreventionWebService
 import uk.gov.dvla.vehicles.presentation.common.filters.{DateTimeZoneServiceImpl, DateTimeZoneService}
+import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupService
+import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupServiceImpl
+import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupWebService
+import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupWebServiceImpl
 
 /**
  * Provides real implementations of traits
@@ -54,8 +54,8 @@ object DevModule extends ScalaModule {
     } else
       bind[ClientSideSessionFactory].to[ClearTextClientSideSessionFactory].asEagerSingleton()
 
-    bind[VehicleLookupWebService].to[VehicleLookupWebServiceImpl].asEagerSingleton()
-    bind[VehicleLookupService].to[VehicleLookupServiceImpl].asEagerSingleton()
+    bind[VehicleAndKeeperLookupWebService].to[VehicleAndKeeperLookupWebServiceImpl].asEagerSingleton()
+    bind[VehicleAndKeeperLookupService].to[VehicleAndKeeperLookupServiceImpl].asEagerSingleton()
 
     bind[BruteForcePreventionWebService].to[uk.gov.dvla.vehicles.presentation.common.webserviceclients.bruteforceprevention.WebServiceImpl].asEagerSingleton()
     bind[BruteForcePreventionService].to[BruteForcePreventionServiceImpl].asEagerSingleton()

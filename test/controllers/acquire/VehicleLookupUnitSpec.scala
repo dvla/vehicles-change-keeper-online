@@ -14,6 +14,9 @@ import play.api.libs.ws.WSResponse
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{LOCATION, contentAsString, defaultAwaitTimeout}
 import uk.gov.dvla.vehicles.presentation.common
+import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperDetailsRequest
+import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupServiceImpl
+import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupWebService
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import common.clientsidesession.ClientSideSessionFactory
@@ -160,41 +163,39 @@ final class VehicleLookupUnitSpec extends UnitSpec {
   private def vehicleLookupResponseGenerator(fullResponse: (Int, Option[VehicleDetailsResponseDto]) = vehicleDetailsResponseSuccess,
                                              bruteForceService: BruteForcePreventionService = bruteForceServiceImpl(permitted = true)) = {
     val (status, vehicleDetailsResponse) = fullResponse
-    val ws: VehicleLookupWebService = mock[VehicleLookupWebService]
-    when(ws.callVehicleLookupService(any[VehicleDetailsRequestDto], any[String])).thenReturn(Future {
+    val ws: VehicleAndKeeperLookupWebService = mock[VehicleAndKeeperLookupWebService]
+    when(ws.invoke(any[VehicleAndKeeperDetailsRequest], any[String])).thenReturn(Future {
       val responseAsJson: Option[JsValue] = vehicleDetailsResponse match {
         case Some(e) => Some(Json.toJson(e))
         case _ => None
       }
       new FakeResponse(status = status, fakeJson = responseAsJson) // Any call to a webservice will always return this successful response.
     })
-    val vehicleLookupServiceImpl = new VehicleLookupServiceImpl(ws)
+    val vehicleAndKeeperLookupServiceImpl = new VehicleAndKeeperLookupServiceImpl(ws)
     implicit val clientSideSessionFactory = injector.getInstance(classOf[ClientSideSessionFactory])
     implicit val config: Config = mock[Config]
 
     new VehicleLookup(
-      //ToDo implement when features developed
-      //bruteForceService = bruteForceService
-      //vehicleLookupService = vehicleLookupServiceImpl,
-      //dateService = dateService
+      bruteForceService = bruteForceService,
+      vehicleLookupService = vehicleAndKeeperLookupServiceImpl,
+      dateService = dateService
     )
   }
 
   private lazy val vehicleLookupError = {
     val permitted = true // The lookup is permitted as we want to test failure on the vehicle lookup micro-service step.
-    val vehicleLookupWebService: VehicleLookupWebService = mock[VehicleLookupWebService]
-    when(vehicleLookupWebService.callVehicleLookupService(any[VehicleDetailsRequestDto], any[String])).thenReturn(Future {
+    val vehicleAndKeeperLookupWebService: VehicleAndKeeperLookupWebService = mock[VehicleAndKeeperLookupWebService]
+    when(vehicleAndKeeperLookupWebService.invoke(any[VehicleAndKeeperDetailsRequest], any[String])).thenReturn(Future {
       throw new IllegalArgumentException
     })
-    val vehicleLookupServiceImpl = new VehicleLookupServiceImpl(vehicleLookupWebService)
+    val vehicleAndKeeperLookupServiceImpl = new VehicleAndKeeperLookupServiceImpl(vehicleAndKeeperLookupWebService)
     implicit val clientSideSessionFactory = injector.getInstance(classOf[ClientSideSessionFactory])
     implicit val config: Config = mock[Config]
 
     new VehicleLookup(
-      //ToDo implement when features developed
-      //bruteForceService = bruteForceServiceImpl(permitted = permitted),
-      //vehicleLookupService = vehicleLookupServiceImpl,
-      //dateService = dateService
+      bruteForceService = bruteForceServiceImpl(permitted = permitted),
+      vehicleLookupService = vehicleAndKeeperLookupServiceImpl,
+      dateService = dateService
     )
   }
 
