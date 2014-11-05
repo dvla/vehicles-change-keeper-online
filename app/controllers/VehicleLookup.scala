@@ -30,7 +30,13 @@ class VehicleLookup @Inject()()(implicit clientSideSessionFactory: ClientSideSes
       invalidForm => BadRequest(views.html.changekeeper.vehicle_lookup(
         VehicleLookupViewModel(formWithReplacedErrors(invalidForm)))
       ),
-      validForm => Redirect(routes.PrivateKeeperDetails.present()).withCookie(validForm)
+      validForm => {
+        validForm.vehicleSoldTo match {
+          case "Private" => Redirect(routes.PrivateKeeperDetails.present()).withCookie(validForm)
+          case "Business" => Redirect(routes.BusinessKeeperDetails.present()).withCookie(validForm)
+          case _ => Redirect(routes.VehicleLookup.present())
+        }
+      }
     )
   }
 

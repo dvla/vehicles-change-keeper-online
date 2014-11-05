@@ -47,11 +47,10 @@ final class VehicleLookupIntegrationSpec extends UiSpec with TestHarness {
       page.title should equal("Enter keeper details")
     }
 
-    "go to the appropriate next page when business keeper data is entered" taggedAs UiTag ignore new WebBrowser {
-//      ToDo uncomment test when process to diferentiate between private and business keeper is implemented
-//      go to VehicleLookupPage
-//      happyPath(isVehicleSoldToPrivateIndividual = false)
-//      page.title should equal("Enter business keeper details")
+    "go to the appropriate next page when business keeper data is entered" taggedAs UiTag in new WebBrowser {
+      go to VehicleLookupPage
+      happyPath(isVehicleSoldToPrivateIndividual = false)
+      page.title should equal("Enter business keeper details")
     }
 
     "clear businessKeeperDetails when private keeper data is entered" taggedAs UiTag ignore new WebBrowser {
