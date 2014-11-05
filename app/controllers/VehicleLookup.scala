@@ -12,7 +12,6 @@ import common.views.helpers.FormExtensions.formBinding
 import utils.helpers.Config
 import models.{VehicleLookupFormModel, VehicleLookupViewModel}
 
-
 class VehicleLookup @Inject()()(implicit clientSideSessionFactory: ClientSideSessionFactory,
                                 config: Config) extends Controller {
 
@@ -31,7 +30,7 @@ class VehicleLookup @Inject()()(implicit clientSideSessionFactory: ClientSideSes
       invalidForm => BadRequest(views.html.changekeeper.vehicle_lookup(
         VehicleLookupViewModel(formWithReplacedErrors(invalidForm)))
       ),
-      validForm => Ok("success")
+      validForm => Redirect(routes.PrivateKeeperDetails.present()).withCookie(validForm)
     )
   }
 

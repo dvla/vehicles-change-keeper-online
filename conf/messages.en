@@ -157,6 +157,16 @@ vehicleSoldTo = Vehicle bought by
 vehicleRegistrationNumber = Vehicle registration number
 documentReferenceNumber = Document reference number
 
+#page 3 - private keeper details
+change_keeper_privatekeeperdetails.title = Enter keeper details
+change_keeper_privatekeeperdetails.nextbutton = Next
+change_keeper_privatekeeperdetails.backbutton = Back
+
+#page 4 - business keeper details
+change_keeper_businesskeeperdetails.title = Enter business keeper details
+change_keeper_businesskeeperdetails.nextbutton = Next
+change_keeper_businesskeeperdetails.backbutton = Back
+
 #uprn not found
 acquire_uprnnotfound.title = Error confirming post code
 acquire_uprnnotfound.p1 = An error has occurred validating your postcode. Please re-enter or enter your details manually
