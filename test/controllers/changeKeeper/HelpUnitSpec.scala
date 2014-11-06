@@ -1,7 +1,7 @@
-package controllers.acquire
+package controllers.changeKeeper
 
 import controllers.Help
-import controllers.acquire.Common.PrototypeHtml
+import controllers.changeKeeper.Common.PrototypeHtml
 import helpers.common.CookieHelper
 import CookieHelper.{fetchCookiesFromHeaders, verifyCookieHasBeenDiscarded}
 import helpers.changekeeper.CookieFactoryForUnitSpecs

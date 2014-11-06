@@ -22,6 +22,13 @@ currentForm = Some(viewModel.form)
 
 <div class="two-col clearfix vehicle-lookup">
 
+    <div class="first-col">
+        <div class="img-wrap img-wrap-desktop">
+            <h2>@Messages("change_keeper_vehiclelookup.img.h2")</h2>
+            <img src="@routes.Assets.at("images/document-reference-number.png")" alt="@Messages("change_keeper_vehiclelookup.img.alt")" />
+        </div>
+    </div>
+
     <div class="second-col uppercase-input">
         <div class="form-steps">
             <div class="step uppercase-input">
@@ -30,29 +37,30 @@ currentForm = Some(viewModel.form)
 
                 <h2>@Messages("change_keeper_vehiclelookup.p1")</h2>
 
-                @valtechInputText(viewModel.form(VehicleRegistrationNumberId), args =
-                Map('_label -> Messages("change_keeper_vehiclelookup.vrninputlabel"),
-                'maxLength -> VehicleRegistrationNumber.MaxLength,
-                '_showConstraints -> false,
-                'autofocus -> true
+                @valtechInputText(viewModel.form(VehicleRegistrationNumberId),
+                hintText = Some(Messages("change_keeper_vehiclelookup.vrninputlabel.hint")),
+                args = Map('_label -> Messages("change_keeper_vehiclelookup.vrninputlabel"),
+                           'maxLength -> VehicleRegistrationNumber.MaxLength,
+                           '_showConstraints -> false,
+                           'autofocus -> true
                 )
                 )
 
-                @valtechInputText(viewModel.form(DocumentReferenceNumberId), args =
-                Map('_label -> Messages("change_keeper_vehiclelookup.refnumlabel"),
-                '_showConstraints -> false,
-                'typeTel -> true,
-                'maxLength -> DocumentReferenceNumber.MaxLength, // Must be set independently of the pattern as the pattern is only checked when the user submits.
-                //'title -> Messages("error.validDocumentReferenceNumber")
-                'title -> Messages("")) ++ // [SKW] for accessibility Tony removed have 'title text as the screen reader reads it twice, the knock-on effect is that our custom validation messages aren't displayed so the user has no idea what is wrong.
+                @valtechInputText(viewModel.form(DocumentReferenceNumberId),
+                hintText = Some(Messages("change_keeper_vehiclelookup.refnumlabel.hint")),
+                args = Map('_label -> Messages("change_keeper_vehiclelookup.refnumlabel"),
+                           '_showConstraints -> false,
+                           'typeTel -> true,
+                           'maxLength -> DocumentReferenceNumber.MaxLength, // Must be set independently of the pattern as the pattern is only checked when the user submits.
+                           //'title -> Messages("error.validDocumentReferenceNumber")
+                           'title -> Messages("")) ++ // [SKW] for accessibility Tony removed have 'title text as the screen reader reads it twice, the knock-on effect is that our custom validation messages aren't displayed so the user has no idea what is wrong.
                 (if(config.isHtml5ValidationEnabled) Map('pattern -> DocumentReferenceNumber.Pattern) else Nil)
                 )
 
                 @listRadioGroup(field = viewModel.form(VehicleSoldToId),
-                args = Map(
-                'items -> Seq(
-                VehicleSoldTo_Private -> Messages("change_keeper_vehiclelookup.vehiclesoldto.private"),
-                VehicleSoldTo_Business -> Messages("change_keeper_vehiclelookup.vehiclesoldto.business")
+                args = Map('items -> Seq(
+                    VehicleSoldTo_Private -> Messages("change_keeper_vehiclelookup.vehiclesoldto.private"),
+                    VehicleSoldTo_Business -> Messages("change_keeper_vehiclelookup.vehiclesoldto.business")
                 ),
                 '_label -> Messages("change_keeper_vehiclelookup.vehiclesoldto.label")
                 )

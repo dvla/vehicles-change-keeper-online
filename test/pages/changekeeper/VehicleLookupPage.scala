@@ -6,12 +6,12 @@ import models.VehicleLookupFormModel.Form.VehicleRegistrationNumberId
 import models.VehicleLookupFormModel.Form.DocumentReferenceNumberId
 import models.VehicleLookupFormModel.Form.VehicleSoldToId
 import views.changekeeper.VehicleLookup._
-import webserviceclients.fakes.FakeVehicleLookupWebService._
+import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService._
 
 object VehicleLookupPage extends Page with WebBrowserDSL {
   final val address = buildAppUrl("vehicle-lookup")
   override val url: String = WebDriverFactory.testUrl + address.substring(1)
-  final override val title: String = "Enter vehicle details"
+  final override val title: String = "Details of the vehicle being sold"
 
   def vehicleRegistrationNumber(implicit driver: WebDriver): TextField = textField(id(VehicleRegistrationNumberId))
 

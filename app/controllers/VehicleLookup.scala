@@ -42,7 +42,7 @@ class VehicleLookup @Inject()(val bruteForceService: BruteForcePreventionService
   override val vrmLocked: Call = routes.BeforeYouStart.present()
   override val microServiceError: Call = routes.MicroServiceError.present()
   // TODO : Redirect to the correct page
-  override val vehicleLookupFailure: Call = routes.BeforeYouStart.present()
+  override val vehicleLookupFailure: Call = routes.MicroServiceError.present()
   override val responseCodeCacheKey: String = VehicleLookupResponseCodeCacheKey
 
   override type Form = VehicleLookupFormModel
@@ -96,7 +96,6 @@ class VehicleLookup @Inject()(val bruteForceService: BruteForcePreventionService
       response.responseCode match {
         case Some(responseCode) =>
           VehicleNotFound(responseCode)
-
         case None =>
           response.vehicleAndKeeperDetailsDto match {
             case Some(dto) => VehicleFound(vehicleFoundResult(dto, form.vehicleSoldTo))
@@ -108,21 +107,11 @@ class VehicleLookup @Inject()(val bruteForceService: BruteForcePreventionService
 
   private def vehicleFoundResult(vehicleAndKeeperDetailsDto: VehicleAndKeeperDetailsDto, soldTo: String)(implicit request: Request[_]) = {
     val model = VehicleAndKeeperDetailsModel.from(vehicleAndKeeperDetailsDto)
-      // TODO : Redirect to the correct page
-      Redirect(routes.BeforeYouStart.present()).withCookie(model)
-  }
 
-  private def vehicleDisposedResult(vehicleDetailsModel: VehicleDetailsModel, soldTo: String)(implicit request: Request[_]) = {
-    val (call, discardedCookies) =
-      if (soldTo == VehicleSoldTo_Private)
-        // TODO : Redirect to the correct page
-        (routes.BeforeYouStart.present(), BusinessKeeperDetailsCacheKeys)
-      else
-        // TODO : Redirect to the correct page
-        (routes.BeforeYouStart.present(), PrivateKeeperDetailsCacheKeys)
-
-    Redirect(call).
-      discardingCookies(discardedCookies).
-      withCookie(vehicleDetailsModel)
+    soldTo match {
+      case "Private" => Redirect(routes.PrivateKeeperDetails.present()).withCookie(model)
+      case "Business" => Redirect(routes.BusinessKeeperDetails.present()).withCookie(model)
+      case _ => Redirect(routes.VehicleLookup.present())
+    }
   }
 }

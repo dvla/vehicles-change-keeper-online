@@ -35,7 +35,7 @@ widget.optional = (optional)
 
 #customer validation messages
 error.restricted.validNumberOnly = This field only accepts numbers
-error.restricted.validVrnOnly = Must be as shown on the latest V5C
+error.restricted.validVrnOnly = Vehicle registration mark must be valid format
 error.restricted.validPostcode = Must be between five and eight characters and in a valid format, e.g. AB1 2BA or AB12BA
 error.validTitle = Must be a valid title
 error.title=An unrecoverable error has occurred
@@ -128,16 +128,18 @@ change_keeper_beforeyoustart.listitem4 = This vehicle must be taxed before it ca
 change_keeper_beforeyoustart.button = Start now
 
 #page 2 - vehicle Lookup
-change_keeper_vehiclelookup.title = Enter vehicle details
+change_keeper_vehiclelookup.title = Details of the vehicle being sold
 change_keeper_vehiclelookup.name = Sell a vehicle into the motor trade
-change_keeper_vehiclelookup.p1 = Vehicle being sold
+change_keeper_vehiclelookup.p1 = Please provide the following details from the latest vehicle registration certificate (V5C)
 change_keeper_vehiclelookup.p2 = Vehicle being sold from
 change_keeper_vehiclelookup.warning.p1 = Do not dispose of a vehicle with a personal registration unless the current keeper understands that the registration will be disposed of along with the vehicle.
 change_keeper_vehiclelookup.warning.p2 = Retain or transfer personal registrations before disposing to the trade.
 change_keeper_vehiclelookup.img.h2 = Help finding your V5C document reference number?
 change_keeper_vehiclelookup.img.alt = V5C document reference number
 change_keeper_vehiclelookup.refnumlabel = Latest V5C document reference number
+change_keeper_vehiclelookup.refnumlabel.hint = This is an 11 digit number, (see image for details)
 change_keeper_vehiclelookup.vrninputlabel = Vehicle registration number
+change_keeper_vehiclelookup.vrninputlabel.hint = You can find this at the top of the front page of the V5C
 change_keeper_vehiclelookup.backbutton = Back
 change_keeper_vehiclelookup.button = Next
 change_keeper_vehiclelookup.button2 = Edit
@@ -146,12 +148,24 @@ change_keeper_vehiclelookup.tradernamelabel = Trader name
 change_keeper_vehiclelookup.traderaddresslabel = Address
 change_keeper_vehiclelookup.traderpostcodelabel = Postcode
 change_keeper_vehiclelookup.traderemaillabel = Email
-change_keeper_vehiclelookup.vehiclesoldto.label = Is the vehicle being bought by a private individual or a business?
+change_keeper_vehiclelookup.vehiclesoldto.label = Is the vehicle being sold to a private individual or a business?
 change_keeper_vehiclelookup.vehiclesoldto.private = Private individual
 change_keeper_vehiclelookup.vehiclesoldto.business = Business
+change_keeper_vehiclelookup.img.h2 = Help finding your V5C document reference number?
+change_keeper_vehiclelookup.img.alt = V5C document reference number
 vehicleSoldTo = Vehicle bought by
 vehicleRegistrationNumber = Vehicle registration number
 documentReferenceNumber = Document reference number
+
+#page 3 - private keeper details
+change_keeper_privatekeeperdetails.title = Enter keeper details
+change_keeper_privatekeeperdetails.nextbutton = Next
+change_keeper_privatekeeperdetails.backbutton = Back
+
+#page 4 - business keeper details
+change_keeper_businesskeeperdetails.title = Enter business keeper details
+change_keeper_businesskeeperdetails.nextbutton = Next
+change_keeper_businesskeeperdetails.backbutton = Back
 
 #uprn not found
 acquire_uprnnotfound.title = Error confirming post code

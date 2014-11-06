@@ -1,4 +1,4 @@
-package controllers.acquire
+package controllers.changeKeeper
 
 import controllers.VehicleLookup
 import helpers.UnitSpec
@@ -22,15 +22,16 @@ import org.mockito.Matchers.{any, anyString}
 import org.mockito.Mockito.when
 import play.api.libs.json.{JsValue, Json}
 import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperDetailsRequest
+import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperDetailsResponse
 import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupServiceImpl
 import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupWebService
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import utils.helpers.Config
-import webserviceclients.fakes.FakeVehicleLookupWebService.ConsentValid
-import webserviceclients.fakes.FakeVehicleLookupWebService.ReferenceNumberValid
-import webserviceclients.fakes.FakeVehicleLookupWebService.RegistrationNumberValid
-import webserviceclients.fakes.FakeVehicleLookupWebService.vehicleDetailsResponseSuccess
+import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.ConsentValid
+import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.ReferenceNumberValid
+import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.RegistrationNumberValid
+import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.vehicleDetailsResponseSuccess
 import webserviceclients.fakes.{FakeDateServiceImpl, FakeResponse}
 import views.changekeeper.VehicleLookup.VehicleSoldTo_Private
 
@@ -139,7 +140,7 @@ final class VehicleLookupFormSpec extends UnitSpec {
 
   val dateService = new DateServiceImpl
 
-  private def vehicleLookupResponseGenerator(fullResponse:(Int, Option[VehicleDetailsResponseDto])) = {
+  private def vehicleLookupResponseGenerator(fullResponse:(Int, Option[VehicleAndKeeperDetailsResponse])) = {
     val vehicleAndKeeperLookupWebService: VehicleAndKeeperLookupWebService = mock[VehicleAndKeeperLookupWebService]
     when(vehicleAndKeeperLookupWebService.invoke(any[VehicleAndKeeperDetailsRequest], any[String])).thenReturn(Future {
       val responseAsJson : Option[JsValue] = fullResponse._2 match {

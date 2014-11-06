@@ -6,7 +6,7 @@ import play.api.libs.json.{Json, Writes}
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.{ClearTextClientSideSession, ClientSideSessionFactory, CookieFlags}
 import models.{VehicleLookupFormModel, SeenCookieMessageCacheKey, HelpCacheKey}
-import webserviceclients.fakes.FakeVehicleLookupWebService._
+import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService._
 import models.VehicleLookupFormModel._
 import play.api.mvc.Cookie
 import views.changekeeper.VehicleLookup.VehicleSoldTo_Private

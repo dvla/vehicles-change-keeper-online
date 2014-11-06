@@ -1,7 +1,7 @@
-package controllers.acquire
+package controllers.changeKeeper
 
 import controllers.BeforeYouStart
-import controllers.acquire.Common.PrototypeHtml
+import controllers.changeKeeper.Common.PrototypeHtml
 import helpers.UnitSpec
 import org.mockito.Mockito.when
 import play.api.test.{WithApplication, FakeRequest}

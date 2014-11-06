@@ -1,4 +1,4 @@
-package controllers.acquire
+package controllers.changeKeeper
 
 import controllers.VehicleLookup
 import helpers.changekeeper.CookieFactoryForUnitSpecs
@@ -15,6 +15,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.{LOCATION, contentAsString, defaultAwaitTimeout}
 import uk.gov.dvla.vehicles.presentation.common
 import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperDetailsRequest
+import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperDetailsResponse
 import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupServiceImpl
 import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupWebService
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -33,9 +34,9 @@ import common.webserviceclients.bruteforceprevention.BruteForcePreventionService
 import utils.helpers.Config
 import views.changekeeper.VehicleLookup.{VehicleSoldTo_Private, VehicleSoldTo_Business}
 import webserviceclients.fakes.{FakeDateServiceImpl, FakeResponse}
-import webserviceclients.fakes.FakeVehicleLookupWebService.ReferenceNumberValid
-import webserviceclients.fakes.FakeVehicleLookupWebService.RegistrationNumberValid
-import webserviceclients.fakes.FakeVehicleLookupWebService.vehicleDetailsResponseSuccess
+import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.ReferenceNumberValid
+import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.RegistrationNumberValid
+import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.vehicleDetailsResponseSuccess
 import webserviceclients.fakes.brute_force_protection.FakeBruteForcePreventionWebServiceImpl
 import webserviceclients.fakes.brute_force_protection.FakeBruteForcePreventionWebServiceImpl.responseFirstAttempt
 import webserviceclients.fakes.brute_force_protection.FakeBruteForcePreventionWebServiceImpl.responseSecondAttempt
@@ -94,7 +95,7 @@ final class VehicleLookupUnitSpec extends UnitSpec {
     "replace max length error message for vehicle registration number with standard error message (US43)" in new WithApplication {
       val request = buildCorrectlyPopulatedRequest(registrationNumber = "PJ05YYYX")
       val result = vehicleLookupResponseGenerator().submit(request)
-      val count = "Must be as shown on the latest V5C".r.findAllIn(contentAsString(result)).length
+      val count = "Vehicle registration mark must be valid format".r.findAllIn(contentAsString(result)).length
 
       count should equal(2)
     }
@@ -102,7 +103,7 @@ final class VehicleLookupUnitSpec extends UnitSpec {
     "replace required and min length error messages for vehicle registration number with standard error message" in new WithApplication {
       val request = buildCorrectlyPopulatedRequest(registrationNumber = "")
       val result = vehicleLookupResponseGenerator().submit(request)
-      val count = "Must be as shown on the latest V5C".r.findAllIn(contentAsString(result)).length
+      val count = "Vehicle registration mark must be valid format".r.findAllIn(contentAsString(result)).length
 
       count should equal(2) // The same message is displayed in 2 places - once in the validation-summary at the top of the page and once above the field.
     }
@@ -160,7 +161,7 @@ final class VehicleLookupUnitSpec extends UnitSpec {
     )
   }
 
-  private def vehicleLookupResponseGenerator(fullResponse: (Int, Option[VehicleDetailsResponseDto]) = vehicleDetailsResponseSuccess,
+  private def vehicleLookupResponseGenerator(fullResponse: (Int, Option[VehicleAndKeeperDetailsResponse]) = vehicleDetailsResponseSuccess,
                                              bruteForceService: BruteForcePreventionService = bruteForceServiceImpl(permitted = true)) = {
     val (status, vehicleDetailsResponse) = fullResponse
     val ws: VehicleAndKeeperLookupWebService = mock[VehicleAndKeeperLookupWebService]
