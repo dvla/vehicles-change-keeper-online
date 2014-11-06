@@ -73,6 +73,7 @@ fpm -n $RPM_NAME \
   -C workdir \
   -s dir .
 
+# Versioning, stage 1
 rm -rf $WORKSPACE/target2/*.rpm
 mkdir -p $WORKSPACE/target2
 cp $WORKSPACE/target/$RPM_NAME.rpm $WORKSPACE/target2/$RPM_NAME-$VERSION-$BUILD_NUMBER.rpm
