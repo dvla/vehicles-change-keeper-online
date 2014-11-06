@@ -75,4 +75,4 @@ fpm -n $RPM_NAME \
 
 rm -rf $WORKSPACE/target2/*.rpm
 mkdir -p $WORKSPACE/target2
-cp $WORKSPACE/target2/$RPM_NAME.rpm $WORKSPACE/target2/$RPM_NAME-$VERSION-$BUILD_NUMBER.rpm
+cp $WORKSPACE/target/$RPM_NAME.rpm $WORKSPACE/target2/$RPM_NAME-$VERSION-$BUILD_NUMBER.rpm
