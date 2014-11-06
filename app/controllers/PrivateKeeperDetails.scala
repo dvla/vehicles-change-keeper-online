@@ -1,17 +1,18 @@
 package controllers
 
-import uk.gov.dvla.vehicles.presentation.common.model.{VehicleDetailsModel, VehicleAndKeeperDetailsModel}
+import uk.gov.dvla.vehicles.presentation.common.model.VehicleAndKeeperDetailsModel
 import com.google.inject.Inject
 import play.api.mvc.{Action, Controller}
 import play.api.Logger
 import models.PrivateKeeperDetailsFormModel
+import models.PrivateKeeperDetailsFormModel.Form.LastNameId
 import play.api.data.{FormError, Form}
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.ClientSideSessionFactory
 import common.clientsidesession.CookieImplicits.RichCookies
+import common.views.helpers.FormExtensions.formBinding
 import common.clientsidesession.CookieImplicits.{RichForm, RichResult}
 import utils.helpers.Config
-import scala.Some
 
 class PrivateKeeperDetails @Inject()()(implicit clientSideSessionFactory: ClientSideSessionFactory,
                                        config: Config) extends Controller {
@@ -34,10 +35,16 @@ class PrivateKeeperDetails @Inject()()(implicit clientSideSessionFactory: Client
     request.cookies.getModel[VehicleAndKeeperDetailsModel] match {
       case Some(vehicleDetails) =>
         form.bindFromRequest.fold(
-          invalidForm => BadRequest(views.html.changekeeper.private_keeper_details(invalidForm)),
+          invalidForm => BadRequest(views.html.changekeeper.private_keeper_details(formWithReplacedErrors(invalidForm))),
           validForm => Ok("success"))
-      case _ => redirectToVehicleLookup(NoValidCookiePresent)
+      case _ => redirectToVehicleLookup(NoValidCookieSubmit)
     }
+  }
+
+  private def formWithReplacedErrors(form: Form[PrivateKeeperDetailsFormModel]) = {
+    form.replaceError(
+      LastNameId, FormError(key = LastNameId,message = "error.validLastName", args = Seq.empty)
+    ).distinctErrors
   }
 
   private def redirectToVehicleLookup(message: String) = {
