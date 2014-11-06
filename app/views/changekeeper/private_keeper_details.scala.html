@@ -22,7 +22,8 @@
 
 @main(
     progress = Some(Messages("change_keeper_progress_3")),
-    title = Messages("change_keeper_privatekeeperdetails.title")
+    title = Messages("change_keeper_privatekeeperdetails.title"),
+    currentForm = Some(privateKeeperDetailsForm)
 ){
     @form(action = PrivateKeeperDetails.submit) {
     @csrfTokenHiddenField()

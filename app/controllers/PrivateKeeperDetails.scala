@@ -1,6 +1,6 @@
 package controllers
 
-import uk.gov.dvla.vehicles.presentation.common.model.VehicleAndKeeperDetailsModel
+import uk.gov.dvla.vehicles.presentation.common.model.{VehicleDetailsModel, VehicleAndKeeperDetailsModel}
 import com.google.inject.Inject
 import play.api.mvc.{Action, Controller}
 import play.api.Logger
@@ -11,11 +11,13 @@ import common.clientsidesession.ClientSideSessionFactory
 import common.clientsidesession.CookieImplicits.RichCookies
 import common.clientsidesession.CookieImplicits.{RichForm, RichResult}
 import utils.helpers.Config
+import scala.Some
 
 class PrivateKeeperDetails @Inject()()(implicit clientSideSessionFactory: ClientSideSessionFactory,
                                        config: Config) extends Controller {
 
-  private final val NoValidCookiePresent = "Appropriate cookie not found to access PrivateKeeperDetails, redirecting..."
+  private final val NoValidCookiePresent = "Appropriate cookie not found to present PrivateKeeperDetails, redirecting..."
+  private final val NoValidCookieSubmit = "Appropriate cookie not found to submit PrivateKeeperDetails, redirecting..."
 
   private[controllers] val form = Form(
     PrivateKeeperDetailsFormModel.Form.Mapping
@@ -29,7 +31,13 @@ class PrivateKeeperDetails @Inject()()(implicit clientSideSessionFactory: Client
   }
 
   def submit = Action { implicit request =>
-    Ok("success")
+    request.cookies.getModel[VehicleAndKeeperDetailsModel] match {
+      case Some(vehicleDetails) =>
+        form.bindFromRequest.fold(
+          invalidForm => BadRequest(views.html.changekeeper.private_keeper_details(invalidForm)),
+          validForm => Ok("success"))
+      case _ => redirectToVehicleLookup(NoValidCookiePresent)
+    }
   }
 
   private def redirectToVehicleLookup(message: String) = {
