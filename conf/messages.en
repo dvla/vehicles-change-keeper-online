@@ -158,8 +158,14 @@ vehicleRegistrationNumber = Vehicle registration number
 documentReferenceNumber = Document reference number
 
 #page 3 - private keeper details
-change_keeper_privatekeeperdetails.title = Enter keeper details
+change_keeper_privatekeeperdetails.title = Enter the details of the person buying this vehicle
+change_keeper_privatekeeperdetails.p1 = We will use these details to create a new vehicle registration certificate (V5C). This person will become the new keeper of the vehicle
 change_keeper_privatekeeperdetails.nextbutton = Next
+change_keeper_privatekeeperdetails.backbutton = Back
+change_keeper_privatekeeperdetails.p3 = If the details above do not match the vehicle to be sold, please contact the DVLA
+change_keeper_privatekeeperdetails.firstnamelabel = First name(s)
+change_keeper_privatekeeperdetails.lastnamelabel = Last name
+change_keeper_privatekeeperdetails.submitbutton = Next
 change_keeper_privatekeeperdetails.backbutton = Back
 
 #page 4 - business keeper details

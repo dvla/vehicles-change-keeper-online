@@ -1,4 +1,5 @@
-@()(implicit lang: Lang,
+@(privateKeeperDetailsForm: Form[models.PrivateKeeperDetailsFormModel]
+)(implicit lang: Lang,
     token: uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction.CsrfPreventionToken,
     config: utils.helpers.Config)
 
@@ -16,21 +17,62 @@
 @import common.views.html.widgets.base.valtechInputText
 @import common.views.html.widgets.titlePicker
 @import common.mappings.Postcode
+@import models.PrivateKeeperDetailsFormModel.Form.{TitleId, DateOfBirthId, EmailId, FirstNameId, FirstNameAndTitleMaxLength, PostcodeId}
+@import models.PrivateKeeperDetailsFormModel.Form.{LastNameId, LastNameMaxLength, DriverNumberId, DriverNumberMaxLength}
 
 @main(
     progress = Some(Messages("change_keeper_progress_3")),
     title = Messages("change_keeper_privatekeeperdetails.title")
 ){
+    @form(action = PrivateKeeperDetails.submit) {
+    @csrfTokenHiddenField()
 
-    <div class="form-steps">
-        <button id="@SubmitId" type="submit" name="action" class="button">
-            @Messages("change_keeper_privatekeeperdetails.nextbutton")
-        </button>
-        <br/>
-        <a class="back" id="@BackId" href="@controllers.routes.VehicleLookup.present()">
-            @Messages("change_keeper_privatekeeperdetails.backbutton")
-        </a>
+    <div class="two-col clearfix">
+        <div class="first-col">
+            <h1 class="mobile-only">@Messages("change_keeper_privatekeeperdetails.title")</h1>
+
+            <div class="alert-warning print-message">
+                <p><strong>@Messages("change_keeper_privatekeeperdetails.p3")</strong></p>
+            </div>
+        </div>
+
+        <div class="second-col">
+            <p>@Messages("change_keeper_privatekeeperdetails.p1")</p>
+
+            <div class="uppercase-input">
+                @titlePicker(
+                field = privateKeeperDetailsForm(TitleId),
+                args = Map('autofocus ->true)
+                )
+            </div>
+            <div class="uppercase-input">
+                @valtechInputText(privateKeeperDetailsForm(FirstNameId), args =
+                Map('_label -> Messages("change_keeper_privatekeeperdetails.firstnamelabel"),
+                '_showConstraints -> false,
+                'maxLength -> FirstNameAndTitleMaxLength
+                )
+                )
+            </div>
+            <div class="uppercase-input">
+                @valtechInputText(privateKeeperDetailsForm(LastNameId), args =
+                Map('_label -> Messages("change_keeper_privatekeeperdetails.lastnamelabel"),
+                '_showConstraints -> false,
+                'maxLength -> LastNameMaxLength
+                )
+                )
+            </div>
+
+            <div class="form-steps">
+                <button id="@SubmitId" type="submit" name="action" class="button">
+                    @Messages("change_keeper_privatekeeperdetails.submitbutton")
+                </button>
+                <br/>
+                <a class="back" id="@BackId" href="@controllers.routes.VehicleLookup.present()">
+                    @Messages("change_keeper_privatekeeperdetails.backbutton")
+                </a>
+            </div>
+        </div>
     </div>
+    }
 
 }
-
