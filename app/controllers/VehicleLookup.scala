@@ -3,6 +3,7 @@ package controllers
 import models.BusinessKeeperDetailsCacheKeys
 import models.PrivateKeeperDetailsCacheKeys
 import models.VehicleLookupFormModel.VehicleLookupResponseCodeCacheKey
+import play.Logger
 import play.api.mvc.Call
 import models.VehicleLookupFormModel.Form.{DocumentReferenceNumberId, VehicleRegistrationNumberId, VehicleSoldToId}
 import com.google.inject.Inject
@@ -37,12 +38,11 @@ class VehicleLookup @Inject()(val bruteForceService: BruteForcePreventionService
                               dateService: DateService)
                              (implicit val clientSideSessionFactory: ClientSideSessionFactory,
                               config: Config) extends VehicleLookupBase {
-
   // TODO : Redirect to the correct page
-  override val vrmLocked: Call = routes.BeforeYouStart.present()
+  override val vrmLocked: Call = routes.VrmLocked.present()
   override val microServiceError: Call = routes.MicroServiceError.present()
   // TODO : Redirect to the correct page
-  override val vehicleLookupFailure: Call = routes.MicroServiceError.present()
+  override val vehicleLookupFailure: Call = routes.VehicleLookupFailure.present()
   override val responseCodeCacheKey: String = VehicleLookupResponseCodeCacheKey
 
   override type Form = VehicleLookupFormModel
@@ -62,13 +62,15 @@ class VehicleLookup @Inject()(val bruteForceService: BruteForcePreventionService
       invalidForm =>
         Future {
               BadRequest(views.html.changekeeper.vehicle_lookup(
-                VehicleLookupViewModel(formWithReplacedErrors(invalidForm))))
+                VehicleLookupViewModel(formWithReplacedErrors(invalidForm)))
+              )
         },
       validForm => {
         bruteForceAndLookup(
           validForm.registrationNumber,
           validForm.referenceNumber,
-          validForm)
+          validForm
+        )
       }
     )
   }

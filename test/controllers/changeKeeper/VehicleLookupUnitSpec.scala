@@ -8,7 +8,9 @@ import helpers.WithApplication
 import models.VehicleLookupFormModel.Form.{DocumentReferenceNumberId, VehicleRegistrationNumberId, VehicleSoldToId}
 import org.mockito.Matchers.any
 import org.mockito.Mockito.when
-import pages.changekeeper.MicroServiceErrorPage
+import pages.changekeeper.{VrmLockedPage, MicroServiceErrorPage, VehicleLookupPage}
+import pages.disposal_of_vehicle.VehicleLookupFailurePage
+import pages.disposal_of_vehicle.VrmLockedPage
 import play.api.libs.json.{JsValue, Json}
 import play.api.libs.ws.WSResponse
 import play.api.test.FakeRequest
@@ -18,6 +20,8 @@ import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeep
 import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperDetailsResponse
 import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupServiceImpl
 import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupWebService
+import webserviceclients.fakes.FakeVehicleLookupWebService.RegistrationNumberValid
+import webserviceclients.fakes.FakeVehicleLookupWebService.vehicleDetailsResponseDocRefNumberNotLatest
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import common.clientsidesession.ClientSideSessionFactory
@@ -38,10 +42,7 @@ import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.ReferenceNum
 import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.RegistrationNumberValid
 import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.vehicleDetailsResponseSuccess
 import webserviceclients.fakes.brute_force_protection.FakeBruteForcePreventionWebServiceImpl
-import webserviceclients.fakes.brute_force_protection.FakeBruteForcePreventionWebServiceImpl.responseFirstAttempt
-import webserviceclients.fakes.brute_force_protection.FakeBruteForcePreventionWebServiceImpl.responseSecondAttempt
-import webserviceclients.fakes.brute_force_protection.FakeBruteForcePreventionWebServiceImpl.VrmThrows
-import pages.changekeeper.VehicleLookupPage
+import webserviceclients.fakes.brute_force_protection.FakeBruteForcePreventionWebServiceImpl.{VrmAttempt2, VrmLocked, responseFirstAttempt, responseSecondAttempt, VrmThrows}
 import helpers.changekeeper.CookieFactoryForUnitSpecs
 
 final class VehicleLookupUnitSpec extends UnitSpec {
@@ -124,6 +125,35 @@ final class VehicleLookupUnitSpec extends UnitSpec {
 //      whenReady(result) { r =>
 //        r.header.headers.get(LOCATION) should equal(Some(MicroServiceErrorPage.address))
 //      }
+    }
+
+    "redirect to vrm locked when valid submit and brute force prevention returns not permitted" in new WithApplication {
+      val request = buildCorrectlyPopulatedRequest(registrationNumber = VrmLocked)
+      val result = vehicleLookupResponseGenerator(
+        vehicleDetailsResponseDocRefNumberNotLatest,
+        bruteForceService = bruteForceServiceImpl(permitted = false)
+      ).submit(request)
+      result.futureValue.header.headers.get(LOCATION) should equal(Some(VrmLockedPage.address))
+    }
+
+    "redirect to VehicleLookupFailure and display 1st attempt message when document reference number not found and security service returns 1st attempt" in new WithApplication {
+      val request = buildCorrectlyPopulatedRequest(registrationNumber = RegistrationNumberValid)
+      val result = vehicleLookupResponseGenerator(
+        vehicleDetailsResponseDocRefNumberNotLatest,
+        bruteForceService = bruteForceServiceImpl(permitted = true)
+      ).submit(request)
+
+      result.futureValue.header.headers.get(LOCATION) should equal(Some(VehicleLookupFailurePage.address))
+    }
+
+    "redirect to VehicleLookupFailure and display 2nd attempt message when document reference number not found and security service returns 2nd attempt" in new WithApplication {
+      val request = buildCorrectlyPopulatedRequest(registrationNumber = VrmAttempt2)
+      val result = vehicleLookupResponseGenerator(
+        vehicleDetailsResponseDocRefNumberNotLatest,
+        bruteForceService = bruteForceServiceImpl(permitted = true)
+      ).submit(request)
+
+      result.futureValue.header.headers.get(LOCATION) should equal(Some(VehicleLookupFailurePage.address))
     }
   }
 

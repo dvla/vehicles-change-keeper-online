@@ -44,3 +44,12 @@ GET     /help                               @controllers.Help.present
 GET     /help/back                          @controllers.Help.back
 
 GET     /healthcheck                        @uk.gov.dvla.vehicles.presentation.common.controllers.HealthCheck.respond
+
+# Brute force vrm locked
+GET     /vrm-locked                         @controllers.VrmLocked.present
+POST    /vrm-locked/buy-another             @controllers.VrmLocked.buyAnotherVehicle
+POST    /vrm-locked/exit                    @controllers.VrmLocked.exit
+
+GET         /vehicle-lookup-failure                   @controllers.VehicleLookupFailure.present
+POST        /vehicle-lookup-failure                   @controllers.VehicleLookupFailure.submit
+
