@@ -137,7 +137,6 @@ class PrivateKeeperDetailsUnitSpec extends UnitSpec {
         val result = privateKeeperDetails.submit(request)
         val errorMessage = "First name - Must contain between 1 and 25 characters from the following a-z, A-Z, 0-9 and .,- “’ and space"
         val count = errorMessage.r.findAllIn(contentAsString(result)).length
-        println(contentAsString(result))
         count should equal(1)
       }
 
@@ -147,7 +146,6 @@ class PrivateKeeperDetailsUnitSpec extends UnitSpec {
       val result = privateKeeperDetails.submit(request)
       val errorMessage = "Last name - Must contain between 1 and 25 characters from the following a-z, A-Z, 0-9 and .,- “’ and space"
       val count = errorMessage.r.findAllIn(contentAsString(result)).length
-      println(contentAsString(result))
       count should equal(1)
     }
 
