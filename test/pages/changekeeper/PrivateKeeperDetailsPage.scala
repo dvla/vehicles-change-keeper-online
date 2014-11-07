@@ -10,7 +10,7 @@ import views.changekeeper.PrivateKeeperDetails.{BackId, SubmitId}
 object PrivateKeeperDetailsPage extends Page with WebBrowserDSL with Matchers {
   final val address = buildAppUrl("private-keeper-details")
   override val url: String = WebDriverFactory.testUrl + address.substring(1)
-  final override val title: String = "Enter keeper details"
+  final override val title: String = "Enter the details of the person buying this vehicle"
 
   final val TitleInvalid = "other"
   final val FirstNameValid = "fn"
@@ -90,12 +90,12 @@ object PrivateKeeperDetailsPage extends Page with WebBrowserDSL with Matchers {
     selectTitle(title)
     firstNameTextBox enter firstName
     lastNameTextBox enter lastName
-    dayDateOfBirthTextBox enter dayDateOfBirth
-    monthDateOfBirthTextBox enter monthDateOfBirth
-    yearDateOfBirthTextBox enter yearDateOfBirth
-    emailTextBox enter email
-    driverNumberTextBox enter driverNumber
-    postcodeTextBox enter postcode
+//    dayDateOfBirthTextBox enter dayDateOfBirth
+//    monthDateOfBirthTextBox enter monthDateOfBirth
+//    yearDateOfBirthTextBox enter yearDateOfBirth
+//    emailTextBox enter email
+//    driverNumberTextBox enter driverNumber
+//    postcodeTextBox enter postcode
 
     click on next
   }
