@@ -4,7 +4,7 @@ import uk.gov.dvla.vehicles.sandbox.ProjectDefinitions.gatlingTests
 import uk.gov.dvla.vehicles.sandbox.ProjectDefinitions.legacyStubs
 import uk.gov.dvla.vehicles.sandbox.ProjectDefinitions.osAddressLookup
 import uk.gov.dvla.vehicles.sandbox.ProjectDefinitions.vehiclesAcquireFulfil
-import uk.gov.dvla.vehicles.sandbox.ProjectDefinitions.vehiclesLookup
+import uk.gov.dvla.vehicles.sandbox.ProjectDefinitions.vehicleAndKeeperLookup
 import uk.gov.dvla.vehicles.sandbox.Sandbox
 import uk.gov.dvla.vehicles.sandbox.SandboxSettings
 import uk.gov.dvla.vehicles.sandbox.Tasks
@@ -94,7 +94,7 @@ net.virtualvoid.sbt.graph.Plugin.graphSettings
 
 // ====================== Sandbox Settings ==========================
 lazy val osAddressLookupProject = osAddressLookup("0.5-SNAPSHOT").disablePlugins(PlayScala, SassPlugin, SbtWeb)
-lazy val vehiclesLookupProject = vehiclesLookup("0.4-SNAPSHOT").disablePlugins(PlayScala, SassPlugin, SbtWeb)
+lazy val vehicleAndKeeperLookupProject = vehicleAndKeeperLookup("0.2-SNAPSHOT").disablePlugins(PlayScala, SassPlugin, SbtWeb)
 lazy val legacyStubsProject = legacyStubs("1.0-SNAPSHOT").disablePlugins(PlayScala, SassPlugin, SbtWeb)
 lazy val gatlingProject = gatlingTests().disablePlugins(PlayScala, SassPlugin, SbtWeb)
 
@@ -106,7 +106,7 @@ SandboxSettings.webAppSecrets := "ui/dev/vehicles-change-keeper-online.conf.enc"
 
 SandboxSettings.osAddressLookupProject := osAddressLookupProject
 
-SandboxSettings.vehiclesLookupProject := vehiclesLookupProject
+SandboxSettings.vehicleAndKeeperLookupProject := vehicleAndKeeperLookupProject
 
 SandboxSettings.legacyStubsProject := legacyStubsProject
 
@@ -115,7 +115,7 @@ SandboxSettings.gatlingTestsProject := gatlingProject
 SandboxSettings.runAllMicroservices := {
   Tasks.runLegacyStubs.value
   Tasks.runOsAddressLookup.value
-  Tasks.runVehiclesLookup.value
+  Tasks.runVehicleAndKeeperLookup.value
 }
 
 SandboxSettings.gatlingSimulation := ""

@@ -1,7 +1,5 @@
 package controllers
 
-import models.BusinessKeeperDetailsCacheKeys
-import models.PrivateKeeperDetailsCacheKeys
 import models.VehicleLookupFormModel.VehicleLookupResponseCodeCacheKey
 import play.Logger
 import play.api.mvc.Call
