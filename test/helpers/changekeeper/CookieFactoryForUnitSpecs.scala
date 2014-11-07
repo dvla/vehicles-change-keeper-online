@@ -5,11 +5,19 @@ import pages.changekeeper.HelpPage
 import play.api.libs.json.{Json, Writes}
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.{ClearTextClientSideSession, ClientSideSessionFactory, CookieFlags}
-import models.{VehicleLookupFormModel, SeenCookieMessageCacheKey, HelpCacheKey}
+import models.{PrivateKeeperDetailsFormModel, VehicleLookupFormModel, SeenCookieMessageCacheKey, HelpCacheKey}
 import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService._
-import models.VehicleLookupFormModel._
-import play.api.mvc.Cookie
+import models.VehicleLookupFormModel.VehicleLookupFormModelCacheKey
 import views.changekeeper.VehicleLookup.VehicleSoldTo_Private
+import uk.gov.dvla.vehicles.presentation.common.model.VehicleAndKeeperDetailsModel.VehicleAndKeeperLookupDetailsCacheKey
+import uk.gov.dvla.vehicles.presentation.common.model.{AddressModel, VehicleAndKeeperDetailsModel, VehicleDetailsModel}
+import uk.gov.dvla.vehicles.presentation.common.mappings.TitleType
+import org.joda.time.LocalDate
+import pages.changekeeper.PrivateKeeperDetailsPage.{FirstNameValid, LastNameValid}
+import models.PrivateKeeperDetailsFormModel.PrivateKeeperDetailsCacheKey
+import uk.gov.dvla.vehicles.presentation.common.mappings.TitleType
+import scala.Some
+import play.api.mvc.Cookie
 
 object CookieFactoryForUnitSpecs extends TestComposition {
 
@@ -64,6 +72,53 @@ object CookieFactoryForUnitSpecs extends TestComposition {
       referenceNumber = referenceNumber,
       registrationNumber = registrationNumber,
       vehicleSoldTo = vehicleSoldTo
+    )
+    createCookie(key, value)
+  }
+
+  def vehicleAndKeeperDetailsModel(registrationNumber: String = RegistrationNumberValid,
+                                   vehicleMake: Option[String] = Some(VehicleMakeValid),
+                                   vehicleModel: Option[String] = Some(VehicleModelValid),
+                                   title: Option[String] = None,
+                                   firstName: Option[String] = None,
+                                   lastName: Option[String] = None,
+                                   address: Option[AddressModel] = None): Cookie = {
+    val key = VehicleAndKeeperLookupDetailsCacheKey
+    val value = VehicleAndKeeperDetailsModel(
+      registrationNumber = registrationNumber,
+      make = vehicleMake,
+      model = vehicleModel,
+      title = title,
+      firstName = firstName,
+      lastName = lastName,
+      address = address
+    )
+    createCookie(key, value)
+  }
+
+  def privateKeeperDetailsModel(title: TitleType = TitleType(1, ""),
+                                firstName: String = FirstNameValid,
+                                lastName: String = LastNameValid
+//                                dateOfBirth: Option[LocalDate] = Some(
+//                                  new LocalDate(
+//                                    YearDateOfBirthValid.toInt,
+//                                    MonthDateOfBirthValid.toInt,
+//                                    DayDateOfBirthValid.toInt
+//                                  )
+//                                ),
+//                                email: Option[String] = Some(EmailValid),
+//                                driverNumber: Option[String] = Some(DriverNumberValid),
+//                                postcode: String = PostcodeValid
+                                ): Cookie = {
+    val key = PrivateKeeperDetailsCacheKey
+    val value = PrivateKeeperDetailsFormModel(
+      title = title,
+      firstName = firstName,
+      lastName = lastName
+//      dateOfBirth,
+//      email = email,
+//      driverNumber = driverNumber,
+//      postcode = postcode
     )
     createCookie(key, value)
   }
