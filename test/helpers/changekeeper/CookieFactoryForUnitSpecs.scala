@@ -6,16 +6,18 @@ import play.api.libs.json.{Json, Writes}
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.{ClearTextClientSideSession, ClientSideSessionFactory, CookieFlags}
 import models.{PrivateKeeperDetailsFormModel, VehicleLookupFormModel, SeenCookieMessageCacheKey, HelpCacheKey}
+import uk.gov.dvla.vehicles.presentation.common.model.BruteForcePreventionModel.BruteForcePreventionViewModelCacheKey
 import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService._
-import models.VehicleLookupFormModel.VehicleLookupFormModelCacheKey
+import models.VehicleLookupFormModel.{VehicleLookupResponseCodeCacheKey, VehicleLookupFormModelCacheKey}
 import views.changekeeper.VehicleLookup.VehicleSoldTo_Private
 import uk.gov.dvla.vehicles.presentation.common.model.VehicleAndKeeperDetailsModel.VehicleAndKeeperLookupDetailsCacheKey
-import uk.gov.dvla.vehicles.presentation.common.model.{AddressModel, VehicleAndKeeperDetailsModel, VehicleDetailsModel}
+import uk.gov.dvla.vehicles.presentation.common.model.{BruteForcePreventionModel, AddressModel, VehicleAndKeeperDetailsModel, VehicleDetailsModel}
 import uk.gov.dvla.vehicles.presentation.common.mappings.TitleType
 import org.joda.time.LocalDate
 import pages.changekeeper.PrivateKeeperDetailsPage.{FirstNameValid, LastNameValid}
 import models.PrivateKeeperDetailsFormModel.PrivateKeeperDetailsCacheKey
 import uk.gov.dvla.vehicles.presentation.common.mappings.TitleType
+import webserviceclients.fakes.brute_force_protection.FakeBruteForcePreventionWebServiceImpl.MaxAttempts
 import scala.Some
 import play.api.mvc.Cookie
 
@@ -26,7 +28,7 @@ object CookieFactoryForUnitSpecs extends TestComposition {
   final val KeeperEmail = "abc@def.com"
   final val SeenCookieTrue = "yes"
   final val ConsentTrue = "true"
-  final val VehicleLookupFailureResponseCode = "disposal_vehiclelookupfailure"
+  final val VehicleLookupFailureResponseCode = "400 - vehiclelookupfailure"
   private val session = new ClearTextClientSideSession(TrackingIdValue)
 
   private def createCookie[A](key: String, value: A)(implicit tjs: Writes[A]): Cookie = {
@@ -122,4 +124,21 @@ object CookieFactoryForUnitSpecs extends TestComposition {
     )
     createCookie(key, value)
   }
+
+  def bruteForcePreventionViewModel(permitted: Boolean = true,
+                                    attempts: Int = 0,
+                                    maxAttempts: Int = MaxAttempts,
+                                    dateTimeISOChronology: String = org.joda.time.DateTime.now().toString): Cookie = {
+    val key = BruteForcePreventionViewModelCacheKey
+    val value = BruteForcePreventionModel(
+      permitted,
+      attempts,
+      maxAttempts,
+      dateTimeISOChronology = dateTimeISOChronology
+    )
+    createCookie(key, value)
+  }
+
+  def vehicleLookupResponseCode(responseCode: String = VehicleLookupFailureResponseCode): Cookie =
+    createCookie(VehicleLookupResponseCodeCacheKey, responseCode)
 }

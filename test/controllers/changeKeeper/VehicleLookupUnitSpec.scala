@@ -9,8 +9,8 @@ import models.VehicleLookupFormModel.Form.{DocumentReferenceNumberId, VehicleReg
 import org.mockito.Matchers.any
 import org.mockito.Mockito.when
 import pages.changekeeper.{VrmLockedPage, MicroServiceErrorPage, VehicleLookupPage}
-import pages.disposal_of_vehicle.VehicleLookupFailurePage
-import pages.disposal_of_vehicle.VrmLockedPage
+import pages.changekeeper.VehicleLookupFailurePage
+import pages.changekeeper.VrmLockedPage
 import play.api.libs.json.{JsValue, Json}
 import play.api.libs.ws.WSResponse
 import play.api.test.FakeRequest
@@ -20,8 +20,8 @@ import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeep
 import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperDetailsResponse
 import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupServiceImpl
 import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupWebService
-import webserviceclients.fakes.FakeVehicleLookupWebService.RegistrationNumberValid
-import webserviceclients.fakes.FakeVehicleLookupWebService.vehicleDetailsResponseDocRefNumberNotLatest
+import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.RegistrationNumberValid
+import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.vehicleDetailsResponseDocRefNumberNotLatest
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import common.clientsidesession.ClientSideSessionFactory

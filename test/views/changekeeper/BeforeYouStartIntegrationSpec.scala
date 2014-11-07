@@ -7,7 +7,7 @@ import helpers.UiSpec
 import helpers.webbrowser.TestHarness
 import pages.changekeeper.{VehicleLookupPage, BeforeYouStartPage}
 import pages.changekeeper.BeforeYouStartPage.startNow
-import pages.common.Feedback.AcquireEmailFeedbackLink
+import pages.common.Feedback.EmailFeedbackLink
 
 final class BeforeYouStartIntegrationSpec extends UiSpec with TestHarness {
   "go to page" should {
@@ -18,7 +18,7 @@ final class BeforeYouStartIntegrationSpec extends UiSpec with TestHarness {
 
     "contain feedback email facility with appropriate subject" taggedAs UiTag in new WebBrowser {
       go to BeforeYouStartPage
-      page.source.contains(AcquireEmailFeedbackLink) should equal(true)
+      page.source.contains(EmailFeedbackLink) should equal(true)
     }
 
     "display the progress of the page when progressBar is set to true" taggedAs UiTag in new ProgressBarTrue {

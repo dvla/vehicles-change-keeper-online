@@ -8,7 +8,7 @@ import helpers.webbrowser.TestHarness
 import org.openqa.selenium.WebDriver
 import pages.changekeeper.MicroServiceErrorPage.{exit, tryAgain}
 import pages.changekeeper.{BeforeYouStartPage, MicroServiceErrorPage}
-import pages.common.Feedback.AcquireEmailFeedbackLink
+import pages.common.Feedback.EmailFeedbackLink
 
 final class MicroServiceErrorIntegrationSpec extends UiSpec with TestHarness {
   "go to page" should {
@@ -20,7 +20,7 @@ final class MicroServiceErrorIntegrationSpec extends UiSpec with TestHarness {
 
     "contain feedback email facility with appropriate subject" taggedAs UiTag ignore new WebBrowser {
       go to MicroServiceErrorPage
-      page.source.contains(AcquireEmailFeedbackLink) should equal(true)
+      page.source.contains(EmailFeedbackLink) should equal(true)
     }
 
     "not display any progress indicator when progressBar is set to true" taggedAs UiTag in new ProgressBarTrue {

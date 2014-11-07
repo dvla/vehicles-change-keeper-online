@@ -1,22 +1,17 @@
 package views.changekeeper
 
-import helpers.common.ProgressBar
-import ProgressBar.progressStep
-import helpers.tags.UiTag
 import helpers.UiSpec
+import helpers.changekeeper.CookieFactoryForUISpecs
+import helpers.common.ProgressBar.progressStep
+import helpers.tags.UiTag
 import helpers.webbrowser.TestHarness
-import org.openqa.selenium.{By, WebElement, WebDriver}
+import org.openqa.selenium.{By, WebDriver, WebElement}
+import pages.changekeeper.PrivateKeeperDetailsPage.{FirstNameInvalid, LastNameInvalid, TitleInvalid, back, navigate}
+import pages.changekeeper.{BeforeYouStartPage, PrivateKeeperDetailsPage, VehicleLookupPage}
 import pages.common.ErrorPanel
+import pages.common.Feedback.EmailFeedbackLink
 import play.api.i18n.Messages
 import uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction
-import pages.changekeeper.PrivateKeeperDetailsPage.{navigate, back}
-import pages.changekeeper.PrivateKeeperDetailsPage.{FirstNameInvalid, LastNameInvalid, TitleInvalid}
-import pages.changekeeper.PrivateKeeperDetailsPage.DriverNumberInvalid
-import pages.common.Feedback.AcquireEmailFeedbackLink
-import helpers.common.HtmlTestHelper.{htmlRegex, whitespaceRegex}
-import pages.changekeeper.{VehicleLookupPage, PrivateKeeperDetailsPage, BeforeYouStartPage}
-import helpers.changekeeper.CookieFactoryForUISpecs
-import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.RegistrationNumberValid
 
 final class PrivateKeeperDetailsIntegrationSpec extends UiSpec with TestHarness {
 
@@ -37,7 +32,7 @@ final class PrivateKeeperDetailsIntegrationSpec extends UiSpec with TestHarness 
       go to BeforeYouStartPage
       cacheSetup()
       go to PrivateKeeperDetailsPage
-      page.source.contains(AcquireEmailFeedbackLink) should equal(true)
+      page.source.contains(EmailFeedbackLink) should equal(true)
     }
 
     "display the progress of the page when progressBar is set to true" taggedAs UiTag in new ProgressBarTrue {

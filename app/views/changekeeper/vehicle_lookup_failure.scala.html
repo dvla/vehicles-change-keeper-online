@@ -7,9 +7,9 @@
 @import views.html.changekeeper.main
 
 @main(
-    title = Messages("disposal_vehiclelookupfailure.title")
+    title = Messages("change_keeper_vehiclelookupfailure.title")
 ) {
-    <h1>@Messages("disposal_vehiclelookupfailure.title")</h1>
+    <h1>@Messages("change_keeper_vehiclelookupfailure.title")</h1>
     <p>@Messages(s"$responseCodeVehicleLookupMSErrorMessage.p1")</p>
     <p>@Messages(s"$responseCodeVehicleLookupMSErrorMessage.p2")</p>
     <p>@Messages(s"$responseCodeVehicleLookupMSErrorMessage.p3")</p>
@@ -18,7 +18,7 @@
     @{/* Note primary button moved to first button as per https://www.gov.uk/service-manual/user-centered-design/resources/forms.html#buttons */}
     <div class="form-steps">
         @{ /* Note the reverse routing syntax for the hyperlink */ }
-        <a class="button" id="@VehicleLookupId" href="@controllers.routes.VehicleLookup.present()">@Messages("disposal_vehiclelookupfailure.button")</a>
-        <a class="button-secondary" id="@BeforeYouStartId" href="@controllers.routes.BeforeYouStart.present()">@Messages("disposal_vehiclelookupfailure.button2")</a>
+        <a class="button" id="@VehicleLookupId" href="@controllers.routes.VehicleLookup.present()">@Messages("change_keeper_vehiclelookupfailure.button")</a>
+        <a class="button-secondary" id="@BeforeYouStartId" href="@controllers.routes.BeforeYouStart.present()">@Messages("change_keeper_vehiclelookupfailure.button2")</a>
     </div>
 }
