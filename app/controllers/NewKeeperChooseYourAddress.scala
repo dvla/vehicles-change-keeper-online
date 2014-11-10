@@ -115,10 +115,7 @@ class NewKeeperChooseYourAddress @Inject()(addressLookupService: AddressLookupSe
           email,
           addresses
         ))
-      case _ => {
-   //     println(">>>>>>>>>>>>>")
-        error(VehicleDetailsNotInCacheMessage)
-      }
+      case _ => error(VehicleDetailsNotInCacheMessage)
     }
   }
 
