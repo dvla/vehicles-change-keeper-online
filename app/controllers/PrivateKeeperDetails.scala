@@ -45,8 +45,6 @@ class PrivateKeeperDetails @Inject()()(implicit clientSideSessionFactory: Client
     form.replaceError(
        LastNameId, FormError(key = LastNameId,message = "error.validLastName", args = Seq.empty)
      ).replaceError(
-//       DateOfBirthId, FormError(key = DateOfBirthId, message = "error.date.invalid", args = Seq.empty)
-//     ).replaceError(
        DriverNumberId, FormError(key = DriverNumberId, message = "error.validDriverNumber", args = Seq.empty)
      ).replaceError(
        EmailId, FormError(key = EmailId, message = "error.email", args = Seq.empty)
