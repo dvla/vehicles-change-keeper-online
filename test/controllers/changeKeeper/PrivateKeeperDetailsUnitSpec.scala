@@ -9,6 +9,8 @@ import models.PrivateKeeperDetailsFormModel.Form.LastNameId
 import models.PrivateKeeperDetailsFormModel.Form.TitleId
 import models.PrivateKeeperDetailsFormModel.Form.DriverNumberId
 import org.mockito.Mockito.when
+import pages.changekeeper.PrivateKeeperDetailsPage.DayDateOfBirthValid
+import pages.changekeeper.PrivateKeeperDetailsPage.MonthDateOfBirthValid
 import pages.changekeeper.PrivateKeeperDetailsPage.YearDateOfBirthValid
 import pages.changekeeper.PrivateKeeperDetailsPage.EmailValid
 import pages.changekeeper.PrivateKeeperDetailsPage.FirstNameValid
@@ -59,10 +61,10 @@ class PrivateKeeperDetailsUnitSpec extends UnitSpec {
       content should include(Messages(standardOptions(0)))
       content should include(FirstNameValid)
       content should include(LastNameValid)
-//      content should include(DayDateOfBirthValid)
-//      content should include(MonthDateOfBirthValid)
-//      content should include(YearDateOfBirthValid)
-//      content should include(EmailValid)
+      content should include(DayDateOfBirthValid)
+      content should include(MonthDateOfBirthValid)
+      content should include(YearDateOfBirthValid)
+      content should include(EmailValid)
     }
 
     "display populated other title when cookie exists" in new WithApplication {
@@ -170,9 +172,9 @@ class PrivateKeeperDetailsUnitSpec extends UnitSpec {
     FakeRequest().withFormUrlEncodedBody(
       s"$TitleId.${TitlePickerString.TitleRadioKey}" -> title,
       FirstNameId -> firstName,
-      LastNameId -> lastName
-//      EmailId -> email,
-//      DriverNumberId -> driverNumber,
+      LastNameId -> lastName,
+      EmailId -> email,
+      DriverNumberId -> driverNumber
 //      PostcodeId -> postcode
     )
   }
