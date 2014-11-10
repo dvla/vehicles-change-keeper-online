@@ -151,15 +151,14 @@ class PrivateKeeperDetailsUnitSpec extends UnitSpec {
       count should equal(1)
     }
 
-    //    ToDo uncomment test when postcode is implemented
-    //    "replace required error message for postcode with standard error message" in new WithApplication {
-    //      val request = buildCorrectlyPopulatedRequest(postcode = "")
-    //        .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
-    //      val result = privateKeeperDetails.submit(request)
-    //      val errorMessage = "Must be between five and eight characters and in a valid format, e.g. AB1 2BA or AB12BA"
-    //      val count = errorMessage.r.findAllIn(contentAsString(result)).length
-    //      count should equal(2)
-    //    }
+    "replace required error message for postcode with standard error message" in new WithApplication {
+      val request = buildCorrectlyPopulatedRequest(postcode = "")
+        .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
+      val result = privateKeeperDetails.submit(request)
+      val errorMessage = "Must be between five and eight characters and in a valid format, e.g. AB1 2BA or AB12BA"
+      val count = errorMessage.r.findAllIn(contentAsString(result)).length
+      count should equal(2)
+    }
   }
 
   private def buildCorrectlyPopulatedRequest(title: String = "1",

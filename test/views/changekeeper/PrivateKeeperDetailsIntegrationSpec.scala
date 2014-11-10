@@ -7,7 +7,7 @@ import helpers.tags.UiTag
 import helpers.webbrowser.TestHarness
 import org.openqa.selenium.{By, WebDriver, WebElement}
 import pages.changekeeper.PrivateKeeperDetailsPage.{FirstNameInvalid, LastNameInvalid, back, navigate}
-import pages.changekeeper.PrivateKeeperDetailsPage.{TitleInvalid, EmailInvalid, DriverNumberInvalid}
+import pages.changekeeper.PrivateKeeperDetailsPage.{TitleInvalid, EmailInvalid, DriverNumberInvalid, PostcodeInvalid}
 import pages.changekeeper.{BeforeYouStartPage, PrivateKeeperDetailsPage, VehicleLookupPage}
 import pages.common.ErrorPanel
 import pages.common.Feedback.EmailFeedbackLink
@@ -150,13 +150,12 @@ final class PrivateKeeperDetailsIntegrationSpec extends UiSpec with TestHarness 
       ErrorPanel.numberOfErrors should equal(1)
     }
 
-//    ToDo uncomment test when postcode is implemented
-//    "display one validation error message when an incorrect postcode is entered" taggedAs UiTag in new WebBrowser {
-//      go to BeforeYouStartPage
-//      cacheSetup()
-//      navigate(postcode = PostcodeInvalid)
-//      ErrorPanel.numberOfErrors should equal(1)
-//    }
+    "display one validation error message when an incorrect postcode is entered" taggedAs UiTag in new WebBrowser {
+      go to BeforeYouStartPage
+      cacheSetup()
+      navigate(postcode = PostcodeInvalid)
+      ErrorPanel.numberOfErrors should equal(1)
+    }
 
     "display one validation error message when the title and the first name are longer then 26" taggedAs UiTag in new WebBrowser {
       go to BeforeYouStartPage
