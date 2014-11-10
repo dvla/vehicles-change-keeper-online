@@ -15,6 +15,8 @@ import models.PrivateKeeperDetailsFormModel.Form.LastNameMaxLength
 import models.PrivateKeeperDetailsFormModel.Form.LastNameMinLength
 import models.PrivateKeeperDetailsFormModel.Form.DateOfBirthId
 import uk.gov.dvla.vehicles.presentation.common.mappings.DayMonthYear.DayId
+import uk.gov.dvla.vehicles.presentation.common.mappings.DayMonthYear.MonthId
+import uk.gov.dvla.vehicles.presentation.common.mappings.DayMonthYear.YearId
 import uk.gov.dvla.vehicles.presentation.common.mappings.{TitleType, TitlePickerString}
 import TitlePickerString.standardOptions
 import pages.changekeeper.PrivateKeeperDetailsPage._
@@ -28,12 +30,12 @@ class PrivateKeeperDetailsFormSpec extends UnitSpec {
       model.title should equal(TitleType(1, ""))
       model.firstName should equal(FirstNameValid)
       model.lastName should equal(LastNameValid)
-//      model.dateOfBirth should equal(Some(new LocalDate(
-//        YearDateOfBirthValid.toInt,
-//        MonthDateOfBirthValid.toInt,
-//        DayDateOfBirthValid.toInt)))
-//      model.email should equal(Some(EmailValid))
-//      model.driverNumber should equal(Some(DriverNumberValid))
+      model.dateOfBirth should equal(Some(new LocalDate(
+        YearDateOfBirthValid.toInt,
+        MonthDateOfBirthValid.toInt,
+        DayDateOfBirthValid.toInt)))
+      model.email should equal(Some(EmailValid))
+      model.driverNumber should equal(Some(DriverNumberValid))
 //      model.postcode should equal(PostcodeValid)
     }
 
@@ -47,9 +49,9 @@ class PrivateKeeperDetailsFormSpec extends UnitSpec {
       model.title should equal(TitleType(1, ""))
       model.firstName should equal(FirstNameValid)
       model.lastName should equal(LastNameValid)
-//      model.dateOfBirth should equal(None)
-//      model.email should equal(None)
-//      model.driverNumber should equal(None)
+      model.dateOfBirth should equal(None)
+      model.email should equal(None)
+      model.driverNumber should equal(None)
 //      model.postcode should equal(PostcodeValid)
     }
 
@@ -240,98 +242,98 @@ class PrivateKeeperDetailsFormSpec extends UnitSpec {
     }
   }
 
-//  ToDo uncomment tests below once email, dob and postcode are implemented
-//  "email" should {
-//    "accept in valid format" in {
-//      val model = formWithValidDefaults(email = EmailValid).get
-//      model.email should equal(Some(EmailValid))
-//    }
-//
-//    "accept with no entry" in {
-//      val model = formWithValidDefaults(email = "").get
-//      model.email should equal(None)
-//    }
-//
-//    "reject if incorrect format" in {
-//      formWithValidDefaults(email = "no_at_symbol.com").errors.flatMap(_.messages) should contain theSameElementsAs
-//        List("error.email")
-//    }
-//
-//    "reject if less than min length" in {
-//      formWithValidDefaults(email = "no").errors.flatMap(_.messages) should contain theSameElementsAs
-//        List("error.email")
-//    }
-//
-//    "reject if greater than max length" in {
-//      formWithValidDefaults(email = "n@" + ("a" * 248) + ".com").errors.flatMap(_.messages) should contain theSameElementsAs
-//        List("error.email")
-//    }
-//  }
+  "email" should {
+    "accept in valid format" in {
+      val model = formWithValidDefaults(email = EmailValid).get
+      model.email should equal(Some(EmailValid))
+    }
 
-//  "date of birth" should {
-//    "not accept an invalid day of month of 0" in {
-//      formWithValidDefaults(dayDateOfBirth = "0").errors.flatMap(_.messages) should contain theSameElementsAs
-//        List("error.dateOfBirth.invalid")
-//    }
-//
-//    "not accept an invalid day of month of 32" in {
-//      formWithValidDefaults(dayDateOfBirth = "32").errors.flatMap(_.messages) should contain theSameElementsAs
-//        List("error.dateOfBirth.invalid")
-//    }
-//
-//    "not accept an invalid month of 0" in {
-//      formWithValidDefaults(monthDateOfBirth = "0").errors.flatMap(_.messages) should contain theSameElementsAs
-//        List("error.dateOfBirth.invalid")
-//    }
-//
-//    "not accept an invalid month of 13" in {
-//      formWithValidDefaults(monthDateOfBirth = "13").errors.flatMap(_.messages) should contain theSameElementsAs
-//        List("error.dateOfBirth.invalid")
-//    }
-//
-//    "not accept special characters in day field" in {
-//      formWithValidDefaults(dayDateOfBirth = "$").errors.flatMap(_.messages) should contain theSameElementsAs
-//        List("error.dateOfBirth.invalid")
-//    }
-//
-//    "not accept special characters in month field" in {
-//      formWithValidDefaults(monthDateOfBirth = "$").errors.flatMap(_.messages) should contain theSameElementsAs
-//        List("error.dateOfBirth.invalid")
-//    }
-//
-//    "not accept special characters in year field" in {
-//      formWithValidDefaults(yearDateOfBirth = "$").errors.flatMap(_.messages) should contain theSameElementsAs
-//        List("error.dateOfBirth.invalid")
-//    }
-//
-//    "not accept letters in day field" in {
-//      formWithValidDefaults(dayDateOfBirth = "a").errors.flatMap(_.messages) should contain theSameElementsAs
-//        List("error.dateOfBirth.invalid")
-//    }
-//
-//    "not accept letters in month field" in {
-//      formWithValidDefaults(monthDateOfBirth = "a").errors.flatMap(_.messages) should contain theSameElementsAs
-//        List("error.dateOfBirth.invalid")
-//    }
-//
-//    "not accept lettersin year field" in {
-//      formWithValidDefaults(yearDateOfBirth = "a").errors.flatMap(_.messages) should contain theSameElementsAs
-//        List("error.dateOfBirth.invalid")
-//    }
-//
-//    "accept if date of birth is entered correctly" in {
-//      val model = formWithValidDefaults(
-//        dayDateOfBirth = DayDateOfBirthValid,
-//        monthDateOfBirth = MonthDateOfBirthValid,
-//        yearDateOfBirth = YearDateOfBirthValid).get
-//
-//      model.dateOfBirth should equal(Some(new LocalDate(
-//        YearDateOfBirthValid.toInt,
-//        MonthDateOfBirthValid.toInt,
-//        DayDateOfBirthValid.toInt)))
-//    }
-//  }
+    "accept with no entry" in {
+      val model = formWithValidDefaults(email = "").get
+      model.email should equal(None)
+    }
 
+    "reject if incorrect format" in {
+      formWithValidDefaults(email = "no_at_symbol.com").errors.flatMap(_.messages) should contain theSameElementsAs
+        List("error.email")
+    }
+
+    "reject if less than min length" in {
+      formWithValidDefaults(email = "no").errors.flatMap(_.messages) should contain theSameElementsAs
+        List("error.email")
+    }
+
+    "reject if greater than max length" in {
+      formWithValidDefaults(email = "n@" + ("a" * 248) + ".com").errors.flatMap(_.messages) should contain theSameElementsAs
+        List("error.email")
+    }
+  }
+
+  "date of birth" should {
+    "not accept an invalid day of month of 0" in {
+      formWithValidDefaults(dayDateOfBirth = "0").errors.flatMap(_.messages) should contain theSameElementsAs
+        List("error.dateOfBirth.invalid")
+    }
+
+    "not accept an invalid day of month of 32" in {
+      formWithValidDefaults(dayDateOfBirth = "32").errors.flatMap(_.messages) should contain theSameElementsAs
+        List("error.dateOfBirth.invalid")
+    }
+
+    "not accept an invalid month of 0" in {
+      formWithValidDefaults(monthDateOfBirth = "0").errors.flatMap(_.messages) should contain theSameElementsAs
+        List("error.dateOfBirth.invalid")
+    }
+
+    "not accept an invalid month of 13" in {
+      formWithValidDefaults(monthDateOfBirth = "13").errors.flatMap(_.messages) should contain theSameElementsAs
+        List("error.dateOfBirth.invalid")
+    }
+
+    "not accept special characters in day field" in {
+      formWithValidDefaults(dayDateOfBirth = "$").errors.flatMap(_.messages) should contain theSameElementsAs
+        List("error.dateOfBirth.invalid")
+    }
+
+    "not accept special characters in month field" in {
+      formWithValidDefaults(monthDateOfBirth = "$").errors.flatMap(_.messages) should contain theSameElementsAs
+        List("error.dateOfBirth.invalid")
+    }
+
+    "not accept special characters in year field" in {
+      formWithValidDefaults(yearDateOfBirth = "$").errors.flatMap(_.messages) should contain theSameElementsAs
+        List("error.dateOfBirth.invalid")
+    }
+
+    "not accept letters in day field" in {
+      formWithValidDefaults(dayDateOfBirth = "a").errors.flatMap(_.messages) should contain theSameElementsAs
+        List("error.dateOfBirth.invalid")
+    }
+
+    "not accept letters in month field" in {
+      formWithValidDefaults(monthDateOfBirth = "a").errors.flatMap(_.messages) should contain theSameElementsAs
+        List("error.dateOfBirth.invalid")
+    }
+
+    "not accept lettersin year field" in {
+      formWithValidDefaults(yearDateOfBirth = "a").errors.flatMap(_.messages) should contain theSameElementsAs
+        List("error.dateOfBirth.invalid")
+    }
+
+    "accept if date of birth is entered correctly" in {
+      val model = formWithValidDefaults(
+        dayDateOfBirth = DayDateOfBirthValid,
+        monthDateOfBirth = MonthDateOfBirthValid,
+        yearDateOfBirth = YearDateOfBirthValid).get
+
+      model.dateOfBirth should equal(Some(new LocalDate(
+        YearDateOfBirthValid.toInt,
+        MonthDateOfBirthValid.toInt,
+        DayDateOfBirthValid.toInt)))
+    }
+  }
+
+//    ToDo uncomment tests below once postcode is implemented
 //  "postcode" should {
 //    "reject if postcode is empty" in {
 //      formWithValidDefaults(postcode = "M15A").errors.flatMap(_.messages) should contain theSameElementsAs
@@ -379,12 +381,12 @@ class PrivateKeeperDetailsFormSpec extends UnitSpec {
       title,
       otherTitle,
       firstName,
-      lastName
-//      dayDateOfBirth,
-//      monthDateOfBirth,
-//      yearDateOfBirth,
-//      email,
-//      driverNumber,
+      lastName,
+      dayDateOfBirth,
+      monthDateOfBirth,
+      yearDateOfBirth,
+      email,
+      driverNumber
 //      postcode
     ) match {
       case form if form.hasErrors => throw new Exception(form.errors.foldLeft("")((str, error) => str + " " + error))
@@ -408,12 +410,12 @@ class PrivateKeeperDetailsFormSpec extends UnitSpec {
           s"$TitleId.${TitlePickerString.TitleRadioKey}" -> title,
           s"$TitleId.${TitlePickerString.TitleTextKey}" -> otherTitle,
           FirstNameId -> firstName,
-          LastNameId -> lastName
-//          s"$DateOfBirthId.$DayId" -> dayDateOfBirth,
-//          s"$DateOfBirthId.$MonthId" -> monthDateOfBirth,
-//          s"$DateOfBirthId.$YearId" -> yearDateOfBirth,
-//          EmailId -> email,
-//          DriverNumberId -> driverNumber,
+          LastNameId -> lastName,
+          s"$DateOfBirthId.$DayId" -> dayDateOfBirth,
+          s"$DateOfBirthId.$MonthId" -> monthDateOfBirth,
+          s"$DateOfBirthId.$YearId" -> yearDateOfBirth,
+          EmailId -> email,
+          DriverNumberId -> driverNumber
 //          PostcodeId -> postcode
         )
       )
