@@ -18,10 +18,10 @@ import uk.gov.dvla.vehicles.presentation.common.mappings.{TitleType, TitlePicker
 
 case class PrivateKeeperDetailsFormModel(title: TitleType,
                                          firstName: String, 
-                                         lastName: String
-//                                         dateOfBirth: Option[LocalDate],
-//                                         email: Option[String],
-//                                         driverNumber: Option[String],
+                                         lastName: String,
+                                         dateOfBirth: Option[LocalDate],
+                                         email: Option[String],
+                                         driverNumber: Option[String]
 //                                         postcode: String
                                          )
 
@@ -62,10 +62,10 @@ object PrivateKeeperDetailsFormModel {
     final val Mapping = mapping(
       TitleId -> TitlePickerString.mapping,
       FirstNameId -> firstNameMapping,
-      LastNameId -> lastNameMapping
-//      DateOfBirthId -> optionalDateOfBirth,
-//      EmailId -> optional(email),
-//      DriverNumberId -> optional(driverNumber),
+      LastNameId -> lastNameMapping,
+      DateOfBirthId -> optionalDateOfBirth,
+      EmailId -> optional(email),
+      DriverNumberId -> optional(driverNumber)
 //      PostcodeId -> postcode
     )(PrivateKeeperDetailsFormModel.apply)(PrivateKeeperDetailsFormModel.unapply)
   }

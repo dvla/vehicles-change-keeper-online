@@ -14,7 +14,8 @@ import uk.gov.dvla.vehicles.presentation.common.model.VehicleAndKeeperDetailsMod
 import uk.gov.dvla.vehicles.presentation.common.model.{BruteForcePreventionModel, AddressModel, VehicleAndKeeperDetailsModel, VehicleDetailsModel}
 import uk.gov.dvla.vehicles.presentation.common.mappings.TitleType
 import org.joda.time.LocalDate
-import pages.changekeeper.PrivateKeeperDetailsPage.{FirstNameValid, LastNameValid}
+import pages.changekeeper.PrivateKeeperDetailsPage.{FirstNameValid, LastNameValid, EmailValid, DriverNumberValid}
+import pages.changekeeper.PrivateKeeperDetailsPage.{DayDateOfBirthValid, MonthDateOfBirthValid, YearDateOfBirthValid}
 import models.PrivateKeeperDetailsFormModel.PrivateKeeperDetailsCacheKey
 import uk.gov.dvla.vehicles.presentation.common.mappings.TitleType
 import webserviceclients.fakes.brute_force_protection.FakeBruteForcePreventionWebServiceImpl.MaxAttempts
@@ -100,26 +101,26 @@ object CookieFactoryForUnitSpecs extends TestComposition {
 
   def privateKeeperDetailsModel(title: TitleType = TitleType(1, ""),
                                 firstName: String = FirstNameValid,
-                                lastName: String = LastNameValid
-//                                dateOfBirth: Option[LocalDate] = Some(
-//                                  new LocalDate(
-//                                    YearDateOfBirthValid.toInt,
-//                                    MonthDateOfBirthValid.toInt,
-//                                    DayDateOfBirthValid.toInt
-//                                  )
-//                                ),
-//                                email: Option[String] = Some(EmailValid),
-//                                driverNumber: Option[String] = Some(DriverNumberValid),
+                                lastName: String = LastNameValid,
+                                dateOfBirth: Option[LocalDate] = Some(
+                                  new LocalDate(
+                                    YearDateOfBirthValid.toInt,
+                                    MonthDateOfBirthValid.toInt,
+                                    DayDateOfBirthValid.toInt
+                                  )
+                                ),
+                                email: Option[String] = Some(EmailValid),
+                                driverNumber: Option[String] = Some(DriverNumberValid)
 //                                postcode: String = PostcodeValid
                                 ): Cookie = {
     val key = PrivateKeeperDetailsCacheKey
     val value = PrivateKeeperDetailsFormModel(
       title = title,
       firstName = firstName,
-      lastName = lastName
-//      dateOfBirth,
-//      email = email,
-//      driverNumber = driverNumber,
+      lastName = lastName,
+      dateOfBirth,
+      email = email,
+      driverNumber = driverNumber
 //      postcode = postcode
     )
     createCookie(key, value)

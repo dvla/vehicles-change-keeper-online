@@ -63,6 +63,31 @@
                 )
             </div>
 
+        </div>
+
+        @valtechDate(
+        privateKeeperDetailsForm(DateOfBirthId),
+        Messages("change_keeper_privatekeeper_dateofbirth"),
+        Some(Messages("change_keeper_privatekeeperdetails.dateofbirth.hint")
+        ))
+
+        <div class="uppercase-input">
+            @valtechInputText(privateKeeperDetailsForm(DriverNumberId),
+            hintText = Some(Messages("change_keeper_privatekeeperdetails.drivernumber.hint")),
+            args = Map('_label -> Messages("change_keeper_privatekeeperdetails.drivernumberlabel"),
+            '_showConstraints -> false,
+            'maxLength -> DriverNumberMaxLength
+            )
+            )
+        </div>
+
+        @valtechInputText(privateKeeperDetailsForm(EmailId), args =
+        Map('_label -> Messages("change_keeper_privatekeeperdetails.emaillabel"),
+        '_showConstraints -> false,
+        'maxLength -> EmailMaxLength
+        )
+        )
+
             <div class="form-steps">
                 <button id="@SubmitId" type="submit" name="action" class="button">
                     @Messages("change_keeper_privatekeeperdetails.submitbutton")

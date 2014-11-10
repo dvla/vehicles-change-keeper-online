@@ -165,6 +165,11 @@ change_keeper_privatekeeperdetails.backbutton = Back
 change_keeper_privatekeeperdetails.p3 = If the details above do not match the vehicle to be sold, please contact the DVLA
 change_keeper_privatekeeperdetails.firstnamelabel = First name(s)
 change_keeper_privatekeeperdetails.lastnamelabel = Last name
+change_keeper_privatekeeperdetails.dateofbirth.hint = for example, 20 3 1976
+change_keeper_privatekeeper_dateofbirth = Date of birth of new keeper
+change_keeper_privatekeeperdetails.drivernumberlabel = Driving license number of new keeper
+change_keeper_privatekeeperdetails.drivernumber.hint = For example, MORGA657054SM9IJ
+change_keeper_privatekeeperdetails.emaillabel = Email address
 change_keeper_privatekeeperdetails.submitbutton = Next
 change_keeper_privatekeeperdetails.backbutton = Back
 

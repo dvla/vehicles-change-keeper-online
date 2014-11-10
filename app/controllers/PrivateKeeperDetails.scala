@@ -5,7 +5,7 @@ import com.google.inject.Inject
 import play.api.mvc.{Action, Controller}
 import play.api.Logger
 import models.PrivateKeeperDetailsFormModel
-import models.PrivateKeeperDetailsFormModel.Form.LastNameId
+import models.PrivateKeeperDetailsFormModel.Form.{LastNameId, DateOfBirthId, DriverNumberId, EmailId}
 import play.api.data.{FormError, Form}
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.ClientSideSessionFactory
@@ -43,8 +43,14 @@ class PrivateKeeperDetails @Inject()()(implicit clientSideSessionFactory: Client
 
   private def formWithReplacedErrors(form: Form[PrivateKeeperDetailsFormModel]) = {
     form.replaceError(
-      LastNameId, FormError(key = LastNameId,message = "error.validLastName", args = Seq.empty)
-    ).distinctErrors
+       LastNameId, FormError(key = LastNameId,message = "error.validLastName", args = Seq.empty)
+     ).replaceError(
+//       DateOfBirthId, FormError(key = DateOfBirthId, message = "error.date.invalid", args = Seq.empty)
+//     ).replaceError(
+       DriverNumberId, FormError(key = DriverNumberId, message = "error.validDriverNumber", args = Seq.empty)
+     ).replaceError(
+       EmailId, FormError(key = EmailId, message = "error.email", args = Seq.empty)
+     ).distinctErrors
   }
 
   private def redirectToVehicleLookup(message: String) = {
