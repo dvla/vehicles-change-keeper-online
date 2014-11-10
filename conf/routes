@@ -27,8 +27,12 @@ GET     /private-keeper-details             @controllers.PrivateKeeperDetails.pr
 POST    /private-keeper-details             @controllers.PrivateKeeperDetails.submit
 
 #page 3 - Business Keeper Details
-GET     /business-keeper-details             @controllers.BusinessKeeperDetails.present
-POST    /business-keeper-details             @controllers.BusinessKeeperDetails.submit
+GET     /business-keeper-details            @controllers.BusinessKeeperDetails.present
+POST    /business-keeper-details            @controllers.BusinessKeeperDetails.submit
+
+#page 4 - New keeper choose your address
+GET     /new-keeper-choose-your-address     @controllers.NewKeeperChooseYourAddress.present
+POST    /new-keeper-choose-your-address    @controllers.NewKeeperChooseYourAddress.submit
 
 # REMOVE ME WHEN THE STORIES ARE AVAILABLE
 GET     /next                               @controllers.TempController.present

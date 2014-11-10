@@ -28,43 +28,43 @@ object NewKeeperDetailsViewModel {
   final val NewKeeperDetailsCacheKey = "newKeeperDetails"
   implicit val Key = CacheKey[NewKeeperDetailsViewModel](value = NewKeeperDetailsCacheKey)
 
-//  def createNewKeeper(address: AddressModel)(implicit request: Request[_],
-//                                             clientSideSessionFactory: ClientSideSessionFactory): Option[NewKeeperDetailsViewModel] = {
-//    val privateKeeperDetailsOpt = request.cookies.getModel[PrivateKeeperDetailsFormModel]
-//    val businessKeeperDetailsOpt = request.cookies.getModel[BusinessKeeperDetailsFormModel]
-//
-//    (privateKeeperDetailsOpt, businessKeeperDetailsOpt) match {
-//      case (Some(privateKeeperDetails), _) =>
-//        Some(NewKeeperDetailsViewModel(
-//          title = Some(privateKeeperDetails.title),
-//          firstName = Some(privateKeeperDetails.firstName),
-//          lastName = Some(privateKeeperDetails.lastName),
-//          dateOfBirth = privateKeeperDetails.dateOfBirth,
-//          driverNumber = privateKeeperDetails.driverNumber,
-//          email = privateKeeperDetails.email,
-//          address = address,
-//          businessName = None,
-//          fleetNumber = None,
-//          isBusinessKeeper = false,
-//          displayName = s"${getTitle(privateKeeperDetails.title)} ${privateKeeperDetails.firstName} ${privateKeeperDetails.lastName}"
-//        ))
-//      case (_, Some(businessKeeperDetails))  =>
-//        Some(NewKeeperDetailsViewModel(
-//          title = None,
-//          firstName = None,
-//          lastName = None,
-//          dateOfBirth = None,
-//          driverNumber = None,
-//          email = businessKeeperDetails.email,
-//          address = address,
-//          businessName = Some(businessKeeperDetails.businessName),
-//          fleetNumber = businessKeeperDetails.fleetNumber,
-//          isBusinessKeeper = true,
-//          displayName = businessKeeperDetails.businessName
-//        ))
-//      case _ => None
-//    }
-//  }
+  def createNewKeeper(address: AddressModel)(implicit request: Request[_],
+                                             clientSideSessionFactory: ClientSideSessionFactory): Option[NewKeeperDetailsViewModel] = {
+    val privateKeeperDetailsOpt = request.cookies.getModel[PrivateKeeperDetailsFormModel]
+    val businessKeeperDetailsOpt = request.cookies.getModel[BusinessKeeperDetailsFormModel]
+
+    (privateKeeperDetailsOpt, businessKeeperDetailsOpt) match {
+      case (Some(privateKeeperDetails), _) =>
+        Some(NewKeeperDetailsViewModel(
+          title = Some(privateKeeperDetails.title),
+          firstName = Some(privateKeeperDetails.firstName),
+          lastName = Some(privateKeeperDetails.lastName),
+          dateOfBirth = privateKeeperDetails.dateOfBirth,
+          driverNumber = privateKeeperDetails.driverNumber,
+          email = privateKeeperDetails.email,
+          address = address,
+          businessName = None,
+          fleetNumber = None,
+          isBusinessKeeper = false,
+          displayName = s"${getTitle(privateKeeperDetails.title)} ${privateKeeperDetails.firstName} ${privateKeeperDetails.lastName}"
+        ))
+      case (_, Some(businessKeeperDetails))  =>
+        Some(NewKeeperDetailsViewModel(
+          title = None,
+          firstName = None,
+          lastName = None,
+          dateOfBirth = None,
+          driverNumber = None,
+          email = businessKeeperDetails.email,
+          address = address,
+          businessName = Some(businessKeeperDetails.businessName),
+          fleetNumber = businessKeeperDetails.fleetNumber,
+          isBusinessKeeper = true,
+          displayName = businessKeeperDetails.businessName
+        ))
+      case _ => None
+    }
+  }
 
   def getTitle(title: TitleType ): String = {
     if (title.titleType > 0 && title.titleType < 4) Messages(TitlePickerString.standardOptions(title.titleType - 1))

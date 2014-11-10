@@ -173,10 +173,34 @@ change_keeper_privatekeeperdetails.emaillabel = Email address
 change_keeper_privatekeeperdetails.submitbutton = Next
 change_keeper_privatekeeperdetails.backbutton = Back
 
-#page 4 - business keeper details
+#page 3 - business keeper details
 change_keeper_businesskeeperdetails.title = Enter business keeper details
 change_keeper_businesskeeperdetails.nextbutton = Next
 change_keeper_businesskeeperdetails.backbutton = Back
+
+#page 4 - new keeper choose your address
+change_keeper_newKeeperChooseYourAddress_title = Select new keeper address
+change_keeper_newKeeperChooseYourAddress_newKeeperName_label = Name
+change_keeper_newKeeperChooseYourAddress_newKeeperName = {0}
+change_keeper_newKeeperChooseYourAddress_newKeeperEmail_label = Email
+change_keeper_newKeeperChooseYourAddress_newKeeperEmail = {0}
+change_keeper_newKeeperChooseYourAddress.emailNotEntered = Not entered
+change_keeper_newKeeperChooseYourAddress_newKeeperpostcode_label = Postcode
+change_keeper_newKeeperChooseYourAddress_newKeeperAddress_label = New keeper address
+change_keeper_newKeeperChooseYourAddress_addressSelect = Choose the new keeper's address
+change_keeper_newKeeperChooseYourAddress_addressSelect_label = Choose the new keeper's address
+change_keeper_newKeeperChooseYourAddress.backbutton = Back
+change_keeper_newKeeperChooseYourAddress.submitbutton = Next
+change_keeper_newKeeperChooseYourAddress.manualAddressEntry = My address is not in the list
+change_keeper_newKeeperChooseYourAddress.manualAddressEntry.enterManuallyButton = Enter address
+change_keeper_newKeeperChooseYourAddress_noaddressesfound.h2.1 = No addresses found for that postcode.
+change_keeper_newKeeperChooseYourAddress_noaddressesfound.h2.2 = Please either ''Enter address'' or click ''Back'' to try again.
+change_keeper_newKeeperChooseYourAddress.vehicledetails = Vehicle details
+change_keeper_newKeeperChooseYourAddress.vehiclereg = Registration
+change_keeper_newKeeperChooseYourAddress.vehiclemake = Make
+change_keeper_newKeeperChooseYourAddress.vehiclemodel = Model
+change_keeper_newKeeperChooseYourAddress.p4 = If the details above do not match the vehicle to be sold, please contact the DVLA.
+
 
 #uprn not found
 acquire_uprnnotfound.title = Error confirming post code
@@ -289,29 +313,6 @@ businesskeeper_postcode = Business postcode
 businesskeeper_email = Business email
 businessName = Business name
 acquire_email_not_entered = Not entered
-
-#new keeper choose your address
-acquire_newKeeperChooseYourAddress_title = Select new keeper address
-acquire_newKeeperChooseYourAddress_newKeeperName_label = Name
-acquire_newKeeperChooseYourAddress_newKeeperName = {0}
-acquire_newKeeperChooseYourAddress_newKeeperEmail_label = Email
-acquire_newKeeperChooseYourAddress_newKeeperEmail = {0}
-acquire_newKeeperChooseYourAddress.emailNotEntered = Not entered
-acquire_newKeeperChooseYourAddress_newKeeperpostcode_label = Postcode
-acquire_newKeeperChooseYourAddress_newKeeperAddress_label = New keeper address
-acquire_newKeeperChooseYourAddress_addressSelect = Choose the new keeper's address
-acquire_newKeeperChooseYourAddress_addressSelect_label = Choose the new keeper's address
-acquire_newKeeperChooseYourAddress.backbutton = Back
-acquire_newKeeperChooseYourAddress.submitbutton = Next
-acquire_newKeeperChooseYourAddress.manualAddressEntry = My address is not in the list
-acquire_newKeeperChooseYourAddress.manualAddressEntry.enterManuallyButton = Enter address
-acquire_newKeeperChooseYourAddress_noaddressesfound.h2.1 = No addresses found for that postcode.
-acquire_newKeeperChooseYourAddress_noaddressesfound.h2.2 = Please either ''Enter address'' or click ''Back'' to try again.
-acquire_newKeeperChooseYourAddress.vehicledetails = Vehicle details
-acquire_newKeeperChooseYourAddress.vehiclereg = Registration
-acquire_newKeeperChooseYourAddress.vehiclemake = Make
-acquire_newKeeperChooseYourAddress.vehiclemodel = Model
-acquire_newKeeperChooseYourAddress.p4 = If the details above do not match the vehicle to be sold, please contact the DVLA.
 
 #[optional] - new keeper manual address entry
 acquire_newKeeperEnterAddressManually.title = Enter keeper address
