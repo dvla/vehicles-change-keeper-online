@@ -90,11 +90,11 @@ object PrivateKeeperDetailsPage extends Page with WebBrowserDSL with Matchers {
     selectTitle(title)
     firstNameTextBox enter firstName
     lastNameTextBox enter lastName
-//    dayDateOfBirthTextBox enter dayDateOfBirth
-//    monthDateOfBirthTextBox enter monthDateOfBirth
-//    yearDateOfBirthTextBox enter yearDateOfBirth
-//    emailTextBox enter email
-//    driverNumberTextBox enter driverNumber
+    dayDateOfBirthTextBox enter dayDateOfBirth
+    monthDateOfBirthTextBox enter monthDateOfBirth
+    yearDateOfBirthTextBox enter yearDateOfBirth
+    emailTextBox enter email
+    driverNumberTextBox enter driverNumber
 //    postcodeTextBox enter postcode
 
     click on next

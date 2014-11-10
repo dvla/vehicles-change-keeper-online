@@ -6,12 +6,14 @@ import helpers.common.ProgressBar.progressStep
 import helpers.tags.UiTag
 import helpers.webbrowser.TestHarness
 import org.openqa.selenium.{By, WebDriver, WebElement}
-import pages.changekeeper.PrivateKeeperDetailsPage.{FirstNameInvalid, LastNameInvalid, TitleInvalid, back, navigate}
+import pages.changekeeper.PrivateKeeperDetailsPage.{FirstNameInvalid, LastNameInvalid, back, navigate}
+import pages.changekeeper.PrivateKeeperDetailsPage.{TitleInvalid, EmailInvalid, DriverNumberInvalid}
 import pages.changekeeper.{BeforeYouStartPage, PrivateKeeperDetailsPage, VehicleLookupPage}
 import pages.common.ErrorPanel
 import pages.common.Feedback.EmailFeedbackLink
 import play.api.i18n.Messages
 import uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction
+import helpers.common.HtmlTestHelper.{htmlRegex, whitespaceRegex}
 
 final class PrivateKeeperDetailsIntegrationSpec extends UiSpec with TestHarness {
 
@@ -22,10 +24,9 @@ final class PrivateKeeperDetailsIntegrationSpec extends UiSpec with TestHarness 
       go to PrivateKeeperDetailsPage
       page.title should equal(PrivateKeeperDetailsPage.title)
 
-//      ToDo uncomment three lines below when date of birth is implemented
-//      PrivateKeeperDetailsPage.yearDateOfBirthTextBox.text should equal("")
-//      PrivateKeeperDetailsPage.monthDateOfBirthTextBox.text should equal("")
-//      PrivateKeeperDetailsPage.dayDateOfBirthTextBox.text should equal("")
+      PrivateKeeperDetailsPage.yearDateOfBirthTextBox.text should equal("")
+      PrivateKeeperDetailsPage.monthDateOfBirthTextBox.text should equal("")
+      PrivateKeeperDetailsPage.dayDateOfBirthTextBox.text should equal("")
     }
 
     "contain feedback email facility with appropriate subject" taggedAs UiTag in new WebBrowser {
@@ -62,44 +63,41 @@ final class PrivateKeeperDetailsIntegrationSpec extends UiSpec with TestHarness 
       csrf.getAttribute("value").size > 0 should equal(true)
     }
 
-//    ToDo uncomment when driver number is implemented
-//    "display optional for driving license number of new keeper input" taggedAs UiTag in new ProgressBarFalse {
-//      go to BeforeYouStartPage
-//      cacheSetup()
-//      go to PrivateKeeperDetailsPage
-//
-//      val pageChars = htmlRegex.replaceAllIn(page.source, "")
-//      val pageCharsNoWhitespace = whitespaceRegex.replaceAllIn(pageChars, "")
-//      val optionalLabelValue = "Drivinglicensenumberofnewkeeper(optional)"
-//
-//      pageCharsNoWhitespace.contains(optionalLabelValue) should equal(true)
-//    }
+    "display optional for driving license number of new keeper input" taggedAs UiTag in new ProgressBarFalse {
+      go to BeforeYouStartPage
+      cacheSetup()
+      go to PrivateKeeperDetailsPage
 
-//    ToDo uncomment when date of birth is implemented
-//    "display optional for date of birth input" taggedAs UiTag in new ProgressBarFalse {
-//      go to BeforeYouStartPage
-//      cacheSetup()
-//      go to PrivateKeeperDetailsPage
-//
-//      val pageChars = htmlRegex.replaceAllIn(page.source, "")
-//      val pageCharsNoWhitespace = whitespaceRegex.replaceAllIn(pageChars, "")
-//      val optionalLabelValue = "Dateofbirthofnewkeeper(optional)"
-//
-//      pageCharsNoWhitespace.contains(optionalLabelValue) should equal(true)
-//    }
+      val pageChars = htmlRegex.replaceAllIn(page.source, "")
+      val pageCharsNoWhitespace = whitespaceRegex.replaceAllIn(pageChars, "")
+      val optionalLabelValue = "Drivinglicensenumberofnewkeeper(optional)"
 
-//    ToDo uncomment when email address is implemented
-//    "display optional for email address input" taggedAs UiTag in new ProgressBarFalse {
-//      go to BeforeYouStartPage
-//      cacheSetup()
-//      go to PrivateKeeperDetailsPage
-//
-//      val pageChars = htmlRegex.replaceAllIn(page.source, "")
-//      val pageCharsNoWhitespace = whitespaceRegex.replaceAllIn(pageChars, "")
-//      val optionalLabelValue = "Emailaddress(optional)"
-//
-//      pageCharsNoWhitespace.contains(optionalLabelValue) should equal(true)
-//    }
+      pageCharsNoWhitespace.contains(optionalLabelValue) should equal(true)
+    }
+
+    "display optional for date of birth input" taggedAs UiTag in new ProgressBarFalse {
+      go to BeforeYouStartPage
+      cacheSetup()
+      go to PrivateKeeperDetailsPage
+
+      val pageChars = htmlRegex.replaceAllIn(page.source, "")
+      val pageCharsNoWhitespace = whitespaceRegex.replaceAllIn(pageChars, "")
+      val optionalLabelValue = "Dateofbirthofnewkeeper(optional)"
+
+      pageCharsNoWhitespace.contains(optionalLabelValue) should equal(true)
+    }
+
+    "display optional for email address input" taggedAs UiTag in new ProgressBarFalse {
+      go to BeforeYouStartPage
+      cacheSetup()
+      go to PrivateKeeperDetailsPage
+
+      val pageChars = htmlRegex.replaceAllIn(page.source, "")
+      val pageCharsNoWhitespace = whitespaceRegex.replaceAllIn(pageChars, "")
+      val optionalLabelValue = "Emailaddress(optional)"
+
+      pageCharsNoWhitespace.contains(optionalLabelValue) should equal(true)
+    }
   }
 
   "next button" should {
@@ -124,21 +122,19 @@ final class PrivateKeeperDetailsIntegrationSpec extends UiSpec with TestHarness 
       ErrorPanel.numberOfErrors should equal(1)
     }
 
-//    ToDo uncomment test when email is implemented
-//    "display one validation error message when an incorrect email is entered" taggedAs UiTag in new WebBrowser {
-//      go to BeforeYouStartPage
-//      cacheSetup()
-//      navigate(email = EmailInvalid)
-//      ErrorPanel.numberOfErrors should equal(1)
-//    }
-//
-//    ToDo uncomment test when driver number is implemented
-//    "display one validation error message when an incorrect driver number is entered" taggedAs UiTag in new WebBrowser {
-//      go to BeforeYouStartPage
-//      cacheSetup()
-//      navigate(driverNumber = DriverNumberInvalid)
-//      ErrorPanel.numberOfErrors should equal(1)
-//    }
+    "display one validation error message when an incorrect email is entered" taggedAs UiTag in new WebBrowser {
+      go to BeforeYouStartPage
+      cacheSetup()
+      navigate(email = EmailInvalid)
+      ErrorPanel.numberOfErrors should equal(1)
+    }
+
+    "display one validation error message when an incorrect driver number is entered" taggedAs UiTag in new WebBrowser {
+      go to BeforeYouStartPage
+      cacheSetup()
+      navigate(driverNumber = DriverNumberInvalid)
+      ErrorPanel.numberOfErrors should equal(1)
+    }
 
     "display one validation error message when no firstname is entered" taggedAs UiTag in new WebBrowser {
       go to BeforeYouStartPage
