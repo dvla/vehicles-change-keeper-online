@@ -5,7 +5,7 @@ import com.google.inject.Inject
 import play.api.mvc.{Action, Controller}
 import play.api.Logger
 import models.PrivateKeeperDetailsFormModel
-import models.PrivateKeeperDetailsFormModel.Form.{LastNameId, DateOfBirthId, DriverNumberId, EmailId}
+import models.PrivateKeeperDetailsFormModel.Form.{LastNameId, PostcodeId, DriverNumberId, EmailId}
 import play.api.data.{FormError, Form}
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.ClientSideSessionFactory
@@ -48,6 +48,8 @@ class PrivateKeeperDetails @Inject()()(implicit clientSideSessionFactory: Client
        DriverNumberId, FormError(key = DriverNumberId, message = "error.validDriverNumber", args = Seq.empty)
      ).replaceError(
        EmailId, FormError(key = EmailId, message = "error.email", args = Seq.empty)
+     ).replaceError(
+       PostcodeId, FormError(key = PostcodeId, message = "error.restricted.validPostcode", args = Seq.empty)
      ).distinctErrors
   }
 

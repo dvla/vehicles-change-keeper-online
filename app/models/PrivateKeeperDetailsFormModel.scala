@@ -21,8 +21,8 @@ case class PrivateKeeperDetailsFormModel(title: TitleType,
                                          lastName: String,
                                          dateOfBirth: Option[LocalDate],
                                          email: Option[String],
-                                         driverNumber: Option[String]
-//                                         postcode: String
+                                         driverNumber: Option[String],
+                                         postcode: String
                                          )
 
 object PrivateKeeperDetailsFormModel {
@@ -65,8 +65,8 @@ object PrivateKeeperDetailsFormModel {
       LastNameId -> lastNameMapping,
       DateOfBirthId -> optionalDateOfBirth,
       EmailId -> optional(email),
-      DriverNumberId -> optional(driverNumber)
-//      PostcodeId -> postcode
+      DriverNumberId -> optional(driverNumber),
+      PostcodeId -> postcode
     )(PrivateKeeperDetailsFormModel.apply)(PrivateKeeperDetailsFormModel.unapply)
   }
 

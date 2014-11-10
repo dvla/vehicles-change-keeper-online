@@ -95,7 +95,7 @@ object PrivateKeeperDetailsPage extends Page with WebBrowserDSL with Matchers {
     yearDateOfBirthTextBox enter yearDateOfBirth
     emailTextBox enter email
     driverNumberTextBox enter driverNumber
-//    postcodeTextBox enter postcode
+    postcodeTextBox enter postcode
 
     click on next
   }

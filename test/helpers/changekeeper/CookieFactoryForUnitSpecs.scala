@@ -11,11 +11,10 @@ import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService._
 import models.VehicleLookupFormModel.{VehicleLookupResponseCodeCacheKey, VehicleLookupFormModelCacheKey}
 import views.changekeeper.VehicleLookup.VehicleSoldTo_Private
 import uk.gov.dvla.vehicles.presentation.common.model.VehicleAndKeeperDetailsModel.VehicleAndKeeperLookupDetailsCacheKey
-import uk.gov.dvla.vehicles.presentation.common.model.{BruteForcePreventionModel, AddressModel, VehicleAndKeeperDetailsModel, VehicleDetailsModel}
-import uk.gov.dvla.vehicles.presentation.common.mappings.TitleType
+import uk.gov.dvla.vehicles.presentation.common.model.{BruteForcePreventionModel, AddressModel, VehicleAndKeeperDetailsModel}
 import org.joda.time.LocalDate
 import pages.changekeeper.PrivateKeeperDetailsPage.{FirstNameValid, LastNameValid, EmailValid, DriverNumberValid}
-import pages.changekeeper.PrivateKeeperDetailsPage.{DayDateOfBirthValid, MonthDateOfBirthValid, YearDateOfBirthValid}
+import pages.changekeeper.PrivateKeeperDetailsPage.{DayDateOfBirthValid, MonthDateOfBirthValid, YearDateOfBirthValid, PostcodeValid}
 import models.PrivateKeeperDetailsFormModel.PrivateKeeperDetailsCacheKey
 import uk.gov.dvla.vehicles.presentation.common.mappings.TitleType
 import webserviceclients.fakes.brute_force_protection.FakeBruteForcePreventionWebServiceImpl.MaxAttempts
@@ -110,8 +109,8 @@ object CookieFactoryForUnitSpecs extends TestComposition {
                                   )
                                 ),
                                 email: Option[String] = Some(EmailValid),
-                                driverNumber: Option[String] = Some(DriverNumberValid)
-//                                postcode: String = PostcodeValid
+                                driverNumber: Option[String] = Some(DriverNumberValid),
+                                postcode: String = PostcodeValid
                                 ): Cookie = {
     val key = PrivateKeeperDetailsCacheKey
     val value = PrivateKeeperDetailsFormModel(
@@ -120,8 +119,8 @@ object CookieFactoryForUnitSpecs extends TestComposition {
       lastName = lastName,
       dateOfBirth,
       email = email,
-      driverNumber = driverNumber
-//      postcode = postcode
+      driverNumber = driverNumber,
+      postcode = postcode
     )
     createCookie(key, value)
   }

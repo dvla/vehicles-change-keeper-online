@@ -88,6 +88,16 @@
         )
         )
 
+        <div class="uppercase-input">
+            @valtechInputText(privateKeeperDetailsForm(PostcodeId),
+            hintText = Some(Messages("acquire_privatekeeperdetails.postcode.hint")),
+            args = Map('_label -> Messages("acquire_privatekeeperdetails.postcodelabel"),
+            '_showConstraints -> false,
+            'maxLength -> Postcode.MaxLength
+            )
+            )
+        </div>
+
             <div class="form-steps">
                 <button id="@SubmitId" type="submit" name="action" class="button">
                     @Messages("change_keeper_privatekeeperdetails.submitbutton")

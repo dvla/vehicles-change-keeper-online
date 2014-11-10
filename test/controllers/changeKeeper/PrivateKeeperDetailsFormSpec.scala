@@ -386,8 +386,8 @@ class PrivateKeeperDetailsFormSpec extends UnitSpec {
       monthDateOfBirth,
       yearDateOfBirth,
       email,
-      driverNumber
-//      postcode
+      driverNumber,
+      postcode
     ) match {
       case form if form.hasErrors => throw new Exception(form.errors.foldLeft("")((str, error) => str + " " + error))
       case form => form.get
@@ -415,8 +415,8 @@ class PrivateKeeperDetailsFormSpec extends UnitSpec {
           s"$DateOfBirthId.$MonthId" -> monthDateOfBirth,
           s"$DateOfBirthId.$YearId" -> yearDateOfBirth,
           EmailId -> email,
-          DriverNumberId -> driverNumber
-//          PostcodeId -> postcode
+          DriverNumberId -> driverNumber,
+          PostcodeId -> postcode
         )
       )
   }
