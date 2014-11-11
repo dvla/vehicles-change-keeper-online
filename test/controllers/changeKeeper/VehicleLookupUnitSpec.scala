@@ -155,6 +155,16 @@ final class VehicleLookupUnitSpec extends UnitSpec {
 
       result.futureValue.header.headers.get(LOCATION) should equal(Some(VehicleLookupFailurePage.address))
     }
+
+    "redirect to VrmLocked when document reference number when vehicles lookup not permitted" in new WithApplication {
+      val request = buildCorrectlyPopulatedRequest(registrationNumber = VrmLocked)
+      val result = vehicleLookupResponseGenerator(
+        vehicleDetailsResponseDocRefNumberNotLatest,
+        bruteForceService = bruteForceServiceImpl(permitted = false)
+      ).submit(request)
+
+      result.futureValue.header.headers.get(LOCATION) should equal(Some(VrmLockedPage.address))
+    }
   }
 
   private def responseThrows: Future[WSResponse] = Future {
