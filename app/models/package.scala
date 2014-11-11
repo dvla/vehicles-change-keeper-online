@@ -1,20 +1,21 @@
 import models.VehicleLookupFormModel.VehicleLookupFormModelCacheKey
 import models.PrivateKeeperDetailsFormModel.PrivateKeeperDetailsCacheKey
+import uk.gov.dvla.vehicles.presentation.common.model.VehicleAndKeeperDetailsModel.VehicleAndKeeperLookupDetailsCacheKey
 
 package object models {
   final val HelpCacheKey = "help"
   final val SeenCookieMessageCacheKey = "seen_cookie_message"
 
-  // The full set of cache keys. These are removed at the start of the process in the "before_you_start" page
-  final val AllCacheKeys = Set(
+  final val VehicleDetailsCacheKeys = Set(
     VehicleLookupFormModelCacheKey,
-    PrivateKeeperDetailsCacheKey
+    VehicleAndKeeperLookupDetailsCacheKey
   )
 
-  // Set of cookies related to all data entered for a private keeper
-  final val PrivateKeeperDetailsCacheKeys = Set("fixMe")
+  final val PrivateKeeperDetailsCacheKeys = Set(PrivateKeeperDetailsCacheKey)
 
-  // Set of cookies related to all data entered for a business keeper
-  final val BusinessKeeperDetailsCacheKeys = Set("fixMe")
+  final val BusinessKeeperDetailsCacheKeys = Set("enter business keeper cache keys here")
 
+  final val AllCacheKeys =
+    VehicleDetailsCacheKeys
+      .++(PrivateKeeperDetailsCacheKeys)
 }
