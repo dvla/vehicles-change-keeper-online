@@ -1,7 +1,7 @@
 package helpers.changekeeper
 
 import helpers.changekeeper.CookieFactoryForUnitSpecs._
-import models.VehicleLookupFormModel
+import models.{PrivateKeeperDetailsFormModel, VehicleLookupFormModel}
 import models.VehicleLookupFormModel._
 import org.openqa.selenium.WebDriver
 import pages.changekeeper.PrivateKeeperDetailsPage._
@@ -18,6 +18,10 @@ import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.{Registratio
 import uk.gov.dvla.vehicles.presentation.common.model.{VehicleDetailsModel, BruteForcePreventionModel, VehicleAndKeeperDetailsModel, AddressModel}
 import uk.gov.dvla.vehicles.presentation.common.model.VehicleAndKeeperDetailsModel._
 import org.openqa.selenium.Cookie
+import org.joda.time.LocalDate
+import uk.gov.dvla.vehicles.presentation.common.mappings.TitleType
+import models.PrivateKeeperDetailsFormModel.PrivateKeeperDetailsCacheKey
+
 //import webserviceclients.fakes.FakeVehicleLookupWebService._
 import webserviceclients.fakes.brute_force_protection.FakeBruteForcePreventionWebServiceImpl._
 import scala.Some
@@ -110,6 +114,34 @@ object CookieFactoryForUISpecs {
       vehicleMake,
       vehicleModel,
       disposeFlag)
+    addCookie(key, value)
+    this
+  }
+
+  def privateKeeperDetailsModel(title: TitleType = TitleType(1, ""),
+                                firstName: String = FirstNameValid,
+                                lastName: String = LastNameValid,
+                                dateOfBirth: Option[LocalDate] = Some(
+                                  new LocalDate(
+                                    YearDateOfBirthValid.toInt,
+                                    MonthDateOfBirthValid.toInt,
+                                    DayDateOfBirthValid.toInt
+                                  )
+                                ),
+                                email: Option[String] = Some(EmailValid),
+                                driverNumber: Option[String] = Some(DriverNumberValid),
+                                postcode: String = PostcodeValid
+                                 )(implicit webDriver: WebDriver) = {
+    val key = PrivateKeeperDetailsCacheKey
+    val value = PrivateKeeperDetailsFormModel(
+      title = title,
+      firstName = firstName,
+      lastName = lastName,
+      dateOfBirth,
+      email = email,
+      driverNumber = driverNumber,
+      postcode = postcode
+    )
     addCookie(key, value)
     this
   }

@@ -11,6 +11,7 @@ import pages.common.Feedback.EmailFeedbackLink
 import helpers.changekeeper.CookieFactoryForUISpecs
 import models.VehicleLookupFormModel.VehicleLookupFormModelCacheKey
 import uk.gov.dvla.vehicles.presentation.common.model.VehicleAndKeeperDetailsModel.VehicleAndKeeperLookupDetailsCacheKey
+import models.PrivateKeeperDetailsFormModel._
 
 final class BeforeYouStartIntegrationSpec extends UiSpec with TestHarness {
   "go to page" should {
@@ -38,11 +39,13 @@ final class BeforeYouStartIntegrationSpec extends UiSpec with TestHarness {
       go to BeforeYouStartPage
       CookieFactoryForUISpecs.vehicleLookupFormModel()
       CookieFactoryForUISpecs.vehicleAndKeeperDetails()
+      CookieFactoryForUISpecs.privateKeeperDetailsModel()
 
       go to BeforeYouStartPage
 
       webDriver.manage().getCookieNamed(VehicleLookupFormModelCacheKey) should equal(null)
       webDriver.manage().getCookieNamed(VehicleAndKeeperLookupDetailsCacheKey) should equal(null)
+      webDriver.manage().getCookieNamed(PrivateKeeperDetailsCacheKey) should equal(null)
     }
   }
 
