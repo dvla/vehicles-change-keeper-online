@@ -1,30 +1,38 @@
 package helpers.changekeeper
 
-import helpers.changekeeper.CookieFactoryForUnitSpecs._
+import helpers.changekeeper.CookieFactoryForUnitSpecs.VehicleLookupFailureResponseCode
 import models.{PrivateKeeperDetailsFormModel, VehicleLookupFormModel}
-import models.VehicleLookupFormModel._
+import models.VehicleLookupFormModel.{VehicleLookupFormModelCacheKey, VehicleLookupResponseCodeCacheKey}
 import org.openqa.selenium.WebDriver
-import pages.changekeeper.PrivateKeeperDetailsPage._
+import pages.changekeeper.PrivateKeeperDetailsPage.FirstNameValid
+import pages.changekeeper.PrivateKeeperDetailsPage.LastNameValid
+import pages.changekeeper.PrivateKeeperDetailsPage.DayDateOfBirthValid
+import pages.changekeeper.PrivateKeeperDetailsPage.MonthDateOfBirthValid
+import pages.changekeeper.PrivateKeeperDetailsPage.YearDateOfBirthValid
+import pages.changekeeper.PrivateKeeperDetailsPage.PostcodeValid
+import pages.changekeeper.PrivateKeeperDetailsPage.ModelValid
+import pages.changekeeper.PrivateKeeperDetailsPage.EmailValid
+import pages.changekeeper.PrivateKeeperDetailsPage.DriverNumberValid
 import play.api.Play
 import play.api.Play.current
 import play.api.libs.json.{Json, Writes}
 import uk.gov.dvla.vehicles.presentation.common
 import common.controllers.AlternateLanguages.{CyId, EnId}
-import uk.gov.dvla.vehicles.presentation.common.model.BruteForcePreventionModel._
-import uk.gov.dvla.vehicles.presentation.common.model.VehicleDetailsModel._
-import views.changekeeper.VehicleLookup._
+import uk.gov.dvla.vehicles.presentation.common.model.BruteForcePreventionModel.BruteForcePreventionViewModelCacheKey
+import uk.gov.dvla.vehicles.presentation.common.model.VehicleDetailsModel.VehicleLookupDetailsCacheKey
+import views.changekeeper.VehicleLookup.VehicleSoldTo_Private
 import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService
 import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.{RegistrationNumberValid, VehicleMakeValid, VehicleModelValid}
-import uk.gov.dvla.vehicles.presentation.common.model.{VehicleDetailsModel, BruteForcePreventionModel, VehicleAndKeeperDetailsModel, AddressModel}
-import uk.gov.dvla.vehicles.presentation.common.model.VehicleAndKeeperDetailsModel._
+import uk.gov.dvla.vehicles.presentation.common.model.VehicleDetailsModel
+import uk.gov.dvla.vehicles.presentation.common.model.BruteForcePreventionModel
+import uk.gov.dvla.vehicles.presentation.common.model.VehicleAndKeeperDetailsModel
+import uk.gov.dvla.vehicles.presentation.common.model.AddressModel
+import uk.gov.dvla.vehicles.presentation.common.model.VehicleAndKeeperDetailsModel.VehicleAndKeeperLookupDetailsCacheKey
 import org.openqa.selenium.Cookie
 import org.joda.time.LocalDate
 import uk.gov.dvla.vehicles.presentation.common.mappings.TitleType
 import models.PrivateKeeperDetailsFormModel.PrivateKeeperDetailsCacheKey
-
-//import webserviceclients.fakes.FakeVehicleLookupWebService._
-import webserviceclients.fakes.brute_force_protection.FakeBruteForcePreventionWebServiceImpl._
-import scala.Some
+import webserviceclients.fakes.brute_force_protection.FakeBruteForcePreventionWebServiceImpl.MaxAttempts
 
 object CookieFactoryForUISpecs {
   private def addCookie[A](key: String, value: A)(implicit tjs: Writes[A], webDriver: WebDriver): Unit = {
