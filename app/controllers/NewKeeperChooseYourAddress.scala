@@ -18,8 +18,6 @@ import views.html.changekeeper.new_keeper_choose_your_address
 import scala.Some
 import play.api.mvc.Result
 import models.NewKeeperDetailsViewModel.getTitle
-import uk.gov.dvla.vehicles.presentation.common.mappings.{TitlePickerString, TitleType}
-import play.api.i18n.Messages
 
 class NewKeeperChooseYourAddress @Inject()(addressLookupService: AddressLookupService)
                                           (implicit clientSideSessionFactory: ClientSideSessionFactory,
@@ -48,55 +46,43 @@ class NewKeeperChooseYourAddress @Inject()(addressLookupService: AddressLookupSe
     }
   }
 
-  private def error(message: String): Result = {
-    Logger.warn(message)
-    Redirect(routes.VehicleLookup.present())
-  }
-
   def present = Action.async {
     implicit request =>
       switch(
-        privateKeeperDetails =>
-          fetchAddresses(privateKeeperDetails.postcode).map {
-            addresses =>
-              if (config.ordnanceSurveyUseUprn) {
-                openView(
-                  constructPrivateKeeperName(privateKeeperDetails),
-                  privateKeeperDetails.postcode,
-                  privateKeeperDetails.email,
-                  addresses
-                )
-              } else {
-                openView(
-                  constructPrivateKeeperName(privateKeeperDetails),
-                  privateKeeperDetails.postcode,
-                  privateKeeperDetails.email,
-                  index(addresses)
-                )
-              }
+        privateKeeperDetails => fetchAddresses(privateKeeperDetails.postcode).map {
+          addresses =>
+            if (config.ordnanceSurveyUseUprn) {
+              openView(
+                buildKeeperName(privateKeeperDetails), privateKeeperDetails.postcode, privateKeeperDetails.email, addresses
+              )
+            } else {
+              openView(
+                buildKeeperName(privateKeeperDetails), privateKeeperDetails.postcode, privateKeeperDetails.email, index(addresses)
+              )
+            }
           },
-        businessKeeperDetails =>
-          fetchAddresses(businessKeeperDetails.postcode).map {
-            addresses =>
-              if (config.ordnanceSurveyUseUprn) {
-                openView(businessKeeperDetails.businessName,
-                  businessKeeperDetails.postcode,
-                  businessKeeperDetails.email,
-                  addresses
-                )
-              } else {
-                openView(businessKeeperDetails.businessName,
-                  businessKeeperDetails.postcode,
-                  businessKeeperDetails.email,
-                  index(addresses)
-                )
-              }
+        businessKeeperDetails => fetchAddresses(businessKeeperDetails.postcode).map {
+          addresses =>
+            if (config.ordnanceSurveyUseUprn) {
+              openView(
+                businessKeeperDetails.businessName, businessKeeperDetails.postcode, businessKeeperDetails.email, addresses
+              )
+            } else {
+              openView(
+                businessKeeperDetails.businessName, businessKeeperDetails.postcode, businessKeeperDetails.email, index(addresses)
+              )
+            }
           },
         message => Future.successful(error(message))
       )
   }
 
-  private def constructPrivateKeeperName(privateKeeperDetails: PrivateKeeperDetailsFormModel): String =
+  private def error(message: String): Result = {
+    Logger.warn(message)
+    Redirect(routes.VehicleLookup.present())
+  }
+
+  private def buildKeeperName(privateKeeperDetails: PrivateKeeperDetailsFormModel): String =
     s"${getTitle(privateKeeperDetails.title)} ${privateKeeperDetails.firstName} ${privateKeeperDetails.lastName}"
 
   private def fetchAddresses(postcode: String)(implicit request: Request[_]) = {
@@ -105,21 +91,16 @@ class NewKeeperChooseYourAddress @Inject()(addressLookupService: AddressLookupSe
   }
 
   private def openView(name: String, postcode: String, email: Option[String], addresses: Seq[(String, String)])
-                      (implicit request: Request[_]) = {
+                      (implicit request: Request[_]) =
     request.cookies.getModel[VehicleAndKeeperDetailsModel] match {
       case Some(vehicleAndKeeperDetails) =>
         Ok(views.html.changekeeper.new_keeper_choose_your_address(
-          NewKeeperChooseYourAddressViewModel(form.fill(), vehicleAndKeeperDetails),
-          name,
-          postcode,
-          email,
-          addresses
-        ))
+          NewKeeperChooseYourAddressViewModel(form.fill(), vehicleAndKeeperDetails), name, postcode, email, addresses)
+        )
       case _ => error(VehicleDetailsNotInCacheMessage)
     }
-  }
 
-  private def index(addresses: Seq[(String, String)]) = {
+  private def index(addresses: Seq[(String, String)]) =
     addresses.map {
       case (uprn, address) => address
     }. // Extract the address.
@@ -127,7 +108,6 @@ class NewKeeperChooseYourAddress @Inject()(addressLookupService: AddressLookupSe
       map {
       case (address, index) => (index.toString, address)
     } // Flip them around so index comes first.
-  }
 
   def submit = Action.async { implicit request => Future(Ok("success")) }
 
