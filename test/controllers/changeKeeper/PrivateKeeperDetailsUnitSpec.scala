@@ -26,7 +26,7 @@ import TitlePickerString.standardOptions
 import utils.helpers.Config
 import helpers.changekeeper.CookieFactoryForUnitSpecs
 import controllers.changeKeeper.Common.PrototypeHtml
-import pages.changekeeper.{VehicleLookupPage, BeforeYouStartPage}
+import pages.changekeeper.{VehicleLookupPage, NewKeeperChooseYourAddressPage}
 
 class PrivateKeeperDetailsUnitSpec extends UnitSpec {
 
@@ -101,7 +101,7 @@ class PrivateKeeperDetailsUnitSpec extends UnitSpec {
         .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
       val result = privateKeeperDetails.submit(request)
       whenReady(result) { r =>
-        r.header.headers.get(LOCATION) should equal(None) //ToDo amend location when next page is implemented, this has been tested
+        r.header.headers.get(LOCATION) should equal (Some(NewKeeperChooseYourAddressPage.address))
       }
     }
 
@@ -110,7 +110,7 @@ class PrivateKeeperDetailsUnitSpec extends UnitSpec {
         .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
       val result = privateKeeperDetails.submit(request)
       whenReady(result) { r =>
-        r.header.headers.get(LOCATION) should equal(None) //ToDo amend location when next page is implemented, this has been tested
+        r.header.headers.get(LOCATION) should equal (Some(NewKeeperChooseYourAddressPage.address))
       }
     }
 
@@ -173,8 +173,8 @@ class PrivateKeeperDetailsUnitSpec extends UnitSpec {
       FirstNameId -> firstName,
       LastNameId -> lastName,
       EmailId -> email,
-      DriverNumberId -> driverNumber
-//      PostcodeId -> postcode
+      DriverNumberId -> driverNumber,
+      PostcodeId -> postcode
     )
   }
 
