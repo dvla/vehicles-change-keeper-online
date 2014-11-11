@@ -8,7 +8,7 @@ import helpers.changekeeper.CookieFactoryForUnitSpecs
 import helpers.{UnitSpec, WithApplication}
 import models.HelpCacheKey
 import org.mockito.Mockito.when
-import pages.changekeeper.BeforeYouStartPage
+import pages.changekeeper.{VehicleLookupPage, BeforeYouStartPage}
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{LOCATION, OK, REFERER, contentAsString, defaultAwaitTimeout, status}
 import uk.gov.dvla.vehicles.presentation.common.clientsidesession.ClientSideSessionFactory
@@ -40,10 +40,8 @@ final class HelpUnitSpec extends UnitSpec {
       contentAsString(result) should not include PrototypeHtml
     }
 
-    // FIXME: FIX THIS WHEN THE STORY IS READY
-    "write help cookie" ignore new WithApplication {
-      /*
-      val origin = SetupTradeDetailsPage.address
+    "write help cookie" in new WithApplication {
+      val origin = VehicleLookupPage.address
       val request = FakeRequest().
         withHeaders(REFERER -> origin)
       // Set the previous page.
@@ -52,7 +50,6 @@ final class HelpUnitSpec extends UnitSpec {
         val cookies = fetchCookiesFromHeaders(r)
         cookies.find(_.name == HelpCacheKey).get.value should equal(origin)
       }
-      */
     }
   }
 
@@ -67,18 +64,15 @@ final class HelpUnitSpec extends UnitSpec {
       }
     }
 
-    // FIXME: FIX THIS WHEN THE STORY IS READY
-    "redirect to previous page and discard the referer cookie" ignore new WithApplication {
-/*
+    "redirect to previous page and discard the referer cookie" in new WithApplication {
       val request = FakeRequest().
-        withCookies(CookieFactoryForUnitSpecs.help(origin = SetupTradeDetailsPage.address))
+        withCookies(CookieFactoryForUnitSpecs.help(origin = VehicleLookupPage.address))
       val result = help.back(request)
       whenReady(result) { r =>
-        r.header.headers.get(LOCATION) should equal(Some(SetupTradeDetailsPage.address))
+        r.header.headers.get(LOCATION) should equal(Some(VehicleLookupPage.address))
         val cookies = fetchCookiesFromHeaders(r)
         verifyCookieHasBeenDiscarded(HelpCacheKey, cookies)
       }
-*/
     }
   }
 
