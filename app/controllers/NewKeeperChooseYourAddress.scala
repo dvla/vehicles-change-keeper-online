@@ -111,4 +111,12 @@ class NewKeeperChooseYourAddress @Inject()(addressLookupService: AddressLookupSe
 
   def submit = Action.async { implicit request => Future(Ok("success")) }
 
+  def back = Action { implicit request =>
+    switch(
+      privateKeeperDetails => Redirect(routes.PrivateKeeperDetails.present()),
+      businessKeeperDetails => Redirect(routes.BusinessKeeperDetails.present()),
+      message => error(message)
+    )
+  }
+
 }

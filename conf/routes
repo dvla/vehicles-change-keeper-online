@@ -32,7 +32,8 @@ POST    /business-keeper-details            @controllers.BusinessKeeperDetails.s
 
 #page 4 - New keeper choose your address
 GET     /new-keeper-choose-your-address     @controllers.NewKeeperChooseYourAddress.present
-POST    /new-keeper-choose-your-address    @controllers.NewKeeperChooseYourAddress.submit
+POST    /new-keeper-choose-your-address     @controllers.NewKeeperChooseYourAddress.submit
+GET     /new-keeper-choose-your-address/back @controllers.NewKeeperChooseYourAddress.back
 
 # REMOVE ME WHEN THE STORIES ARE AVAILABLE
 GET     /next                               @controllers.TempController.present
