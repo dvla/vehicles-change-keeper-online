@@ -26,7 +26,7 @@ import TitlePickerString.standardOptions
 import utils.helpers.Config
 import helpers.changekeeper.CookieFactoryForUnitSpecs
 import controllers.changeKeeper.Common.PrototypeHtml
-import pages.changekeeper.{VehicleLookupPage, BeforeYouStartPage}
+import pages.changekeeper.{VehicleLookupPage, NewKeeperChooseYourAddressPage}
 
 class PrivateKeeperDetailsUnitSpec extends UnitSpec {
 
@@ -101,7 +101,7 @@ class PrivateKeeperDetailsUnitSpec extends UnitSpec {
         .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
       val result = privateKeeperDetails.submit(request)
       whenReady(result) { r =>
-        r.header.headers.get(LOCATION) should equal(None) //ToDo amend location when next page is implemented, this has been tested
+        r.header.headers.get(LOCATION) should equal (Some(NewKeeperChooseYourAddressPage.address))
       }
     }
 
@@ -110,7 +110,7 @@ class PrivateKeeperDetailsUnitSpec extends UnitSpec {
         .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
       val result = privateKeeperDetails.submit(request)
       whenReady(result) { r =>
-        r.header.headers.get(LOCATION) should equal(None) //ToDo amend location when next page is implemented, this has been tested
+        r.header.headers.get(LOCATION) should equal (Some(NewKeeperChooseYourAddressPage.address))
       }
     }
 
@@ -133,14 +133,14 @@ class PrivateKeeperDetailsUnitSpec extends UnitSpec {
       }
     }
 
-      "replace required error message for first name with standard error message" in new WithApplication {
-        val request = buildCorrectlyPopulatedRequest(firstName = "")
-          .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
-        val result = privateKeeperDetails.submit(request)
-        val errorMessage = "First name - Must contain between 1 and 25 characters from the following a-z, A-Z, 0-9 and .,- “’ and space"
-        val count = errorMessage.r.findAllIn(contentAsString(result)).length
-        count should equal(1)
-      }
+    "replace required error message for first name with standard error message" in new WithApplication {
+      val request = buildCorrectlyPopulatedRequest(firstName = "")
+        .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
+      val result = privateKeeperDetails.submit(request)
+      val errorMessage = "First name - Must contain between 1 and 25 characters from the following a-z, A-Z, 0-9 and .,- “’ and space"
+      val count = errorMessage.r.findAllIn(contentAsString(result)).length
+      count should equal(1)
+    }
 
     "replace required error message for last name with standard error message" in new WithApplication {
       val request = buildCorrectlyPopulatedRequest(lastName = "")
@@ -173,8 +173,8 @@ class PrivateKeeperDetailsUnitSpec extends UnitSpec {
       FirstNameId -> firstName,
       LastNameId -> lastName,
       EmailId -> email,
-      DriverNumberId -> driverNumber
-//      PostcodeId -> postcode
+      DriverNumberId -> driverNumber,
+      PostcodeId -> postcode
     )
   }
 

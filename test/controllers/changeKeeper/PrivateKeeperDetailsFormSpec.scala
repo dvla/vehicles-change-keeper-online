@@ -36,7 +36,7 @@ class PrivateKeeperDetailsFormSpec extends UnitSpec {
         DayDateOfBirthValid.toInt)))
       model.email should equal(Some(EmailValid))
       model.driverNumber should equal(Some(DriverNumberValid))
-//      model.postcode should equal(PostcodeValid)
+      model.postcode should equal(PostcodeValid)
     }
 
     "accept if form is completed with mandatory fields only" in {
@@ -52,7 +52,7 @@ class PrivateKeeperDetailsFormSpec extends UnitSpec {
       model.dateOfBirth should equal(None)
       model.email should equal(None)
       model.driverNumber should equal(None)
-//      model.postcode should equal(PostcodeValid)
+      model.postcode should equal(PostcodeValid)
     }
 
     "reject if form has no fields completed" in {

@@ -9,7 +9,7 @@ import pages.changekeeper.HelpPage.{back, exit}
 import pages.common.HelpPanel
 import models.HelpCacheKey
 import helpers.changekeeper.CookieFactoryForUISpecs
-import pages.changekeeper.{HelpPage, BeforeYouStartPage}
+import pages.changekeeper.{PrivateKeeperDetailsPage, VehicleLookupPage, HelpPage, BeforeYouStartPage}
 import pages.common.Feedback.EmailFeedbackLink
 
 final class HelpIntegrationSpec extends UiSpec with TestHarness {
@@ -31,15 +31,13 @@ final class HelpIntegrationSpec extends UiSpec with TestHarness {
   }
 
   "back button" should {
-    "redirect to the users previous page" taggedAs UiTag ignore new WebBrowser {
-      /*
+    "redirect to the users previous page" taggedAs UiTag in new WebBrowser {
       go to BeforeYouStartPage
       cacheSetup()
-      go to VehicleLookupPage
+      go to PrivateKeeperDetailsPage
       click on HelpPanel.help
       click on back
-      page.title should equal(VehicleLookupPage.title)
-      */
+      page.title should equal(PrivateKeeperDetailsPage.title)
     }
 
     "remove cookie" taggedAs UiTag in new WebBrowser {
@@ -51,20 +49,15 @@ final class HelpIntegrationSpec extends UiSpec with TestHarness {
   }
 
   "exit" should {
-    "redirect to the start page" taggedAs UiTag ignore new WebBrowser {
-      /*
+    "redirect to the start page" taggedAs UiTag in new WebBrowser {
       go to BeforeYouStartPage
       cacheSetup()
-      go to VehicleLookupPage
+      go to PrivateKeeperDetailsPage
       click on HelpPanel.help
       click on exit
       page.title should equal(BeforeYouStartPage.title)
-      */
     }
   }
 
-  private def cacheSetup()(implicit webDriver: WebDriver) =
-    CookieFactoryForUISpecs.withLanguageEn() // TODO: remove this
-//      setupTradeDetails().
-//      dealerDetails()
+  private def cacheSetup()(implicit webDriver: WebDriver) = CookieFactoryForUISpecs.vehicleAndKeeperDetails()
 }

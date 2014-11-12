@@ -14,6 +14,7 @@ import pages.common.Feedback.EmailFeedbackLink
 import play.api.i18n.Messages
 import uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction
 import helpers.common.HtmlTestHelper.{htmlRegex, whitespaceRegex}
+import pages.changekeeper.NewKeeperChooseYourAddressPage
 
 final class PrivateKeeperDetailsIntegrationSpec extends UiSpec with TestHarness {
 
@@ -162,6 +163,14 @@ final class PrivateKeeperDetailsIntegrationSpec extends UiSpec with TestHarness 
       cacheSetup()
       navigate(title = "tenchartdd", firstName = "15characterssdyff")
       ErrorPanel.text should include(Messages("error.titlePlusFirstName.tooLong"))
+    }
+
+    "convert lower case driver number to upper case" taggedAs UiTag in new WebBrowser {
+      go to BeforeYouStartPage
+      cacheSetup()
+      navigate(driverNumber = "abcd9711215eflgh")
+      click on NewKeeperChooseYourAddressPage.back
+      page.source should include("ABCD9711215EFLGH")
     }
   }
 
