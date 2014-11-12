@@ -9,52 +9,55 @@
 # Guice to provide the actual instance complete with its injected dependencies
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file                       controllers.Assets.at(path="/public", file)
+GET         /assets/*file                               controllers.Assets.at(path="/public", file)
 
 # Home page
-GET     /                                   @controllers.Application.index
+GET         /                                           @controllers.Application.index
 
 #page 1 - Before You Start
-GET     /before-you-start                   @controllers.BeforeYouStart.present
-POST    /before-you-start                   @controllers.BeforeYouStart.submit
+GET         /before-you-start                           @controllers.BeforeYouStart.present
+POST        /before-you-start                           @controllers.BeforeYouStart.submit
 
 #page 2 - Vehicle Lookup
-GET     /vehicle-lookup                     @controllers.VehicleLookup.present
-POST    /vehicle-lookup                     @controllers.VehicleLookup.submit
+GET         /vehicle-lookup                             @controllers.VehicleLookup.present
+POST        /vehicle-lookup                             @controllers.VehicleLookup.submit
 
 #page 3 - Private Keeper Details
-GET     /private-keeper-details             @controllers.PrivateKeeperDetails.present
-POST    /private-keeper-details             @controllers.PrivateKeeperDetails.submit
+GET         /private-keeper-details                     @controllers.PrivateKeeperDetails.present
+POST        /private-keeper-details                     @controllers.PrivateKeeperDetails.submit
 
 #page 3 - Business Keeper Details
-GET     /business-keeper-details            @controllers.BusinessKeeperDetails.present
-POST    /business-keeper-details            @controllers.BusinessKeeperDetails.submit
+GET         /business-keeper-details                    @controllers.BusinessKeeperDetails.present
+POST        /business-keeper-details                    @controllers.BusinessKeeperDetails.submit
 
 #page 4 - New keeper choose your address
-GET     /new-keeper-choose-your-address     @controllers.NewKeeperChooseYourAddress.present
-POST    /new-keeper-choose-your-address     @controllers.NewKeeperChooseYourAddress.submit
-GET     /new-keeper-choose-your-address/back @controllers.NewKeeperChooseYourAddress.back
+GET         /new-keeper-choose-your-address             @controllers.NewKeeperChooseYourAddress.present
+POST        /new-keeper-choose-your-address             @controllers.NewKeeperChooseYourAddress.submit
+GET         /new-keeper-choose-your-address/back        @controllers.NewKeeperChooseYourAddress.back
 
 # REMOVE ME WHEN THE STORIES ARE AVAILABLE
-GET     /next                               @controllers.TempController.present
+GET         /next                                       @controllers.TempController.present
 
 # Micro service error
-GET     /service-error                      @controllers.MicroServiceError.present
-GET     /service-error/try-again            @controllers.MicroServiceError.back
+GET         /service-error                              @controllers.MicroServiceError.present
+GET         /service-error/try-again                    @controllers.MicroServiceError.back
 
-GET     /error/:exceptionDigest             @controllers.Error.present(exceptionDigest)
-POST    /error/:exceptionDigest             @controllers.Error.submit(exceptionDigest)
+GET         /error/:exceptionDigest                     @controllers.Error.present(exceptionDigest)
+POST        /error/:exceptionDigest                     @controllers.Error.submit(exceptionDigest)
 
-GET     /help                               @controllers.Help.present
-GET     /help/back                          @controllers.Help.back
+GET         /help                                       @controllers.Help.present
+GET         /help/back                                  @controllers.Help.back
 
-GET     /healthcheck                        @uk.gov.dvla.vehicles.presentation.common.controllers.HealthCheck.respond
+GET         /healthcheck                                @uk.gov.dvla.vehicles.presentation.common.controllers.HealthCheck.respond
 
 # Brute force vrm locked
-GET     /vrm-locked                         @controllers.VrmLocked.present
-POST    /vrm-locked/buy-another             @controllers.VrmLocked.buyAnotherVehicle
-POST    /vrm-locked/exit                    @controllers.VrmLocked.exit
+GET         /vrm-locked                                 @controllers.VrmLocked.present
+POST        /vrm-locked/buy-another                     @controllers.VrmLocked.buyAnotherVehicle
+POST        /vrm-locked/exit                            @controllers.VrmLocked.exit
 
-GET         /vehicle-lookup-failure                   @controllers.VehicleLookupFailure.present
-POST        /vehicle-lookup-failure                   @controllers.VehicleLookupFailure.submit
+GET         /vehicle-lookup-failure                     @controllers.VehicleLookupFailure.present
+POST        /vehicle-lookup-failure                     @controllers.VehicleLookupFailure.submit
+
+GET     /uprn-not-found                     @controllers.UprnNotFound.present
+
 

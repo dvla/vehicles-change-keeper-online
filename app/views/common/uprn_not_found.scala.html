@@ -1,0 +1,18 @@
+@()(implicit lang: Lang,
+        token: uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction.CsrfPreventionToken,
+        config: utils.helpers.Config)
+
+@import views.common.UprnNotFound.{ManualaddressbuttonId, VehicleLookupId}
+@import views.html.changekeeper.main
+
+@main(
+    title = Messages("change_keeper_uprnnotfound.title")
+) {
+    <p>@Messages("change_keeper_uprnnotfound.p1")</p>
+
+    <div class="form-steps">
+        @* Note the reverse routing syntax for the hyperlink *@
+        <a class="button" id="@ManualaddressbuttonId" href="@controllers.routes.TempController.present()">@Messages("change_keeper_uprnnotfound.manualaddressbutton")</a>
+        <a class="button-secondary" id="@VehicleLookupId" href="@controllers.routes.VehicleLookup.present()">@Messages("change_keeper_uprnnotfound.setuptradedetailsbutton")</a>
+    </div>
+}
