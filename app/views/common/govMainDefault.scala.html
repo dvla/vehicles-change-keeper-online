@@ -123,6 +123,7 @@
 
                 ga('create', '@play.Configuration.root().getString("googleAnalytics.id")', '@play.Configuration.root().getString("googleAnalytics.domain")', {'siteSpeedSampleRate': 25});
                 ga('send', 'pageview');
+                ga('set', 'anonymizeIp', true);
             </script>
         }
     </body>
