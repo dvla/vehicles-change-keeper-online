@@ -17,7 +17,7 @@ object NewKeeperChooseYourAddressPage extends Page with WebBrowserDSL {
 
 //  def chooseAddress(implicit driver: WebDriver): SingleSel = singleSel(id(AddressSelectId))
 //
-//  def back(implicit driver: WebDriver): Element = find(id(BackId)).get
+  def back(implicit driver: WebDriver): Element = find(id(BackId)).get
 //
 //  def manualAddress(implicit driver: WebDriver): Element = find(id(EnterAddressManuallyButtonId)).get
 //
