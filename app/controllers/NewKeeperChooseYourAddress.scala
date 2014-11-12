@@ -19,9 +19,9 @@ import common.webserviceclients.addresslookup.AddressLookupService
 import common.views.helpers.FormExtensions.formBinding
 import utils.helpers.Config
 import views.html.changekeeper.new_keeper_choose_your_address
-import scala.Some
 import play.api.mvc.Result
-import models.NewKeeperDetailsViewModel._
+import models.NewKeeperEnterAddressManuallyFormModel.NewKeeperEnterAddressManuallyCacheKey
+import models.NewKeeperDetailsViewModel.{createNewKeeper, getTitle}
 
 class NewKeeperChooseYourAddress @Inject()(addressLookupService: AddressLookupService)
                                           (implicit clientSideSessionFactory: ClientSideSessionFactory,
@@ -193,8 +193,8 @@ class NewKeeperChooseYourAddress @Inject()(addressLookupService: AddressLookupSe
       case Some(addressViewModel) =>
         createNewKeeper(addressViewModel) match {
           case Some(newKeeperDetails) =>
-            Redirect(routes.TempController.present())
-//              .discardingCookie(NewKeeperEnterAddressManuallyCacheKey)
+            Redirect(routes.CompleteAndConfirm.present())
+              .discardingCookie(NewKeeperEnterAddressManuallyCacheKey)
               .withCookie(model)
               .withCookie(newKeeperDetails)
           case _ => error("No new keeper details found in cache, redirecting to vehicle lookup")
@@ -253,8 +253,8 @@ class NewKeeperChooseYourAddress @Inject()(addressLookupService: AddressLookupSe
     /* The redirect is done as the final step within the map so that:
      1) we are not blocking threads
      2) the browser does not change page before the future has completed and written to the cache. */
-    Redirect(routes.TempController.present()).
-//      discardingCookie(NewKeeperEnterAddressManuallyCacheKey).
+    Redirect(routes.CompleteAndConfirm.present()).
+      discardingCookie(NewKeeperEnterAddressManuallyCacheKey).
       withCookie(newKeeperDetailsmodel).
       withCookie(newKeeperDetailsChooseYourAddressModel)
   }
