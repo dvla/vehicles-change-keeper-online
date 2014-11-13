@@ -1,8 +1,9 @@
 package pages.changekeeper
 
+import helpers.webbrowser.{Element, Page, TextField, WebBrowserDSL, WebDriverFactory}
+import models.BusinessKeeperDetailsFormModel.Form.{BusinessNameId, EmailId, FleetNumberId, PostcodeId}
+import views.changekeeper.BusinessKeeperDetails.{BackId, NextId}
 import org.openqa.selenium.WebDriver
-import helpers.webbrowser.{Element, EmailField, Page, TextField, WebBrowserDSL, WebDriverFactory}
-import models.BusinessKeeperDetailsFormModel.Form.{FleetNumberId, BusinessNameId, EmailId, PostcodeId}
 
 object BusinessKeeperDetailsPage extends Page with WebBrowserDSL {
   final val address = buildAppUrl("business-keeper-details")
@@ -22,10 +23,10 @@ object BusinessKeeperDetailsPage extends Page with WebBrowserDSL {
   def emailField(implicit driver: WebDriver): TextField = textField(id(EmailId))
 
   def postcodeField(implicit driver: WebDriver): TextField = textField(id(PostcodeId))
-  
-//  def back(implicit driver: WebDriver): Element = find(id(BackId)).get
-//
-//  def next(implicit driver: WebDriver): Element = find(id(NextId)).get
+
+  def back(implicit driver: WebDriver): Element = find(id(BackId)).get
+
+  def next(implicit driver: WebDriver): Element = find(id(NextId)).get
 
   def navigate(fleetNumber: String = FleetNumberValid,
                businessName: String = BusinessNameValid,
@@ -38,7 +39,7 @@ object BusinessKeeperDetailsPage extends Page with WebBrowserDSL {
     emailField enter email
     postcodeField enter postcode
 
-//    click on next
+    click on next
   }
 
   def submitPostcodeWithoutAddresses(implicit driver: WebDriver) = {

@@ -1,12 +1,17 @@
 package helpers.changekeeper
 
 import composition.TestComposition
+import models.BusinessKeeperDetailsFormModel._
+import models.NewKeeperDetailsViewModel._
+import pages.changekeeper.BusinessKeeperDetailsPage._
 import pages.changekeeper.HelpPage
 import play.api.libs.json.{Json, Writes}
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.{ClearTextClientSideSession, ClientSideSessionFactory, CookieFlags}
-import models.{PrivateKeeperDetailsFormModel, VehicleLookupFormModel, SeenCookieMessageCacheKey, HelpCacheKey}
+import models._
 import uk.gov.dvla.vehicles.presentation.common.model.BruteForcePreventionModel.BruteForcePreventionViewModelCacheKey
+import webserviceclients.fakes.FakeAddressLookupService._
+import webserviceclients.fakes.FakeAddressLookupWebServiceImpl._
 import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService._
 import models.VehicleLookupFormModel.{VehicleLookupResponseCodeCacheKey, VehicleLookupFormModelCacheKey}
 import views.changekeeper.VehicleLookup.VehicleSoldTo_Private
@@ -18,7 +23,6 @@ import pages.changekeeper.PrivateKeeperDetailsPage.{DayDateOfBirthValid, MonthDa
 import models.PrivateKeeperDetailsFormModel.PrivateKeeperDetailsCacheKey
 import uk.gov.dvla.vehicles.presentation.common.mappings.TitleType
 import webserviceclients.fakes.brute_force_protection.FakeBruteForcePreventionWebServiceImpl.MaxAttempts
-import scala.Some
 import play.api.mvc.Cookie
 
 object CookieFactoryForUnitSpecs extends TestComposition {
@@ -121,6 +125,65 @@ object CookieFactoryForUnitSpecs extends TestComposition {
       email = email,
       driverNumber = driverNumber,
       postcode = postcode
+    )
+    createCookie(key, value)
+  }
+
+  def businessKeeperDetailsModel(fleetNumber: Option[String] = Some(FleetNumberValid),
+                                 businessName: String = BusinessNameValid,
+                                 email: Option[String] = Some(EmailValid),
+                                 postcode: String = PostcodeValid) : Cookie = {
+    val key = BusinessKeeperDetailsCacheKey
+    val value = BusinessKeeperDetailsFormModel(
+      fleetNumber = fleetNumber,
+      businessName = businessName,
+      email = email,
+      postcode = postcode
+    )
+    createCookie(key, value)
+  }
+
+  def newKeeperChooseYourAddressUseUprn(uprnSelected: String = UprnValid.toString): Cookie = {
+    val key = NewKeeperChooseYourAddressFormModel.NewKeeperChooseYourAddressCacheKey
+    val value = NewKeeperChooseYourAddressFormModel(uprnSelected = uprnSelected)
+    createCookie(key, value)
+  }
+
+  def newKeeperChooseYourAddress(uprnSelected: String = "0"): Cookie = {
+    val key = NewKeeperChooseYourAddressFormModel.NewKeeperChooseYourAddressCacheKey
+    val value = NewKeeperChooseYourAddressFormModel(uprnSelected = uprnSelected)
+    createCookie(key, value)
+  }
+
+  def newKeeperDetailsModel(title: Option[TitleType] = None,
+                            firstName: Option[String] = None,
+                            lastName: Option[String] = None,
+                            dateOfBirth: Option[LocalDate] = None,
+                            driverNumber: Option[String] = None,
+                            businessName: Option[String] = None,
+                            fleetNumber: Option[String] = None,
+                            email: Option[String] = None,
+                            isBusinessKeeper: Boolean = false,
+                            uprn: Option[Long] = None,
+                            buildingNameOrNumber: String = BuildingNameOrNumberValid,
+                            line2: String = Line2Valid,
+                            line3: String = Line3Valid,
+                            postTown: String = PostTownValid,
+                            postcode: String = PostcodeValid): Cookie = {
+    val key = NewKeeperDetailsCacheKey
+    val value = NewKeeperDetailsViewModel(
+      title = title,
+      firstName = firstName,
+      lastName = lastName,
+      dateOfBirth = dateOfBirth,
+      driverNumber = driverNumber,
+      businessName = businessName,
+      fleetNumber = fleetNumber,
+      address = AddressModel(uprn = uprn, address = Seq(buildingNameOrNumber, line2, line3, postTown, postcode)),
+      email = email,
+      isBusinessKeeper = isBusinessKeeper,
+      displayName = if (businessName == None) firstName + " " + lastName
+      else businessName.getOrElse("")
     )
     createCookie(key, value)
   }

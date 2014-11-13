@@ -58,6 +58,8 @@ object PrivateKeeperDetailsPage extends Page with WebBrowserDSL with Matchers {
 
   private def titleRadioButtons(implicit driver: WebDriver) = Seq(mr, miss, mrs, other)
 
+  def errorTextForTitle(text:String)(implicit driver: WebDriver):Boolean= find(tagName("body")).get.text.contains(text)
+
   def selectTitle(title: String)(implicit driver: WebDriver): Unit = {
     titleRadioButtons.find(_.underlying.getAttribute("id") endsWith titleType(title)).fold {
       click on other

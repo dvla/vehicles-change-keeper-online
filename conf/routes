@@ -35,6 +35,9 @@ GET         /new-keeper-choose-your-address             @controllers.NewKeeperCh
 POST        /new-keeper-choose-your-address             @controllers.NewKeeperChooseYourAddress.submit
 GET         /new-keeper-choose-your-address/back        @controllers.NewKeeperChooseYourAddress.back
 
+GET         /new-keeper-enter-address-manually          @controllers.NewKeeperEnterAddressManually.present
+POST        /new-keeper-enter-address-manually          @controllers.NewKeeperEnterAddressManually.submit
+
 # REMOVE ME WHEN THE STORIES ARE AVAILABLE
 GET         /next                                       @controllers.TempController.present
 
@@ -55,9 +58,11 @@ GET         /vrm-locked                                 @controllers.VrmLocked.p
 POST        /vrm-locked/buy-another                     @controllers.VrmLocked.buyAnotherVehicle
 POST        /vrm-locked/exit                            @controllers.VrmLocked.exit
 
+GET         /complete-and-confirm                       @controllers.CompleteAndConfirm.present
+
 GET         /vehicle-lookup-failure                     @controllers.VehicleLookupFailure.present
 POST        /vehicle-lookup-failure                     @controllers.VehicleLookupFailure.submit
 
-GET     /uprn-not-found                     @controllers.UprnNotFound.present
+GET         /uprn-not-found                             @controllers.UprnNotFound.present
 
 

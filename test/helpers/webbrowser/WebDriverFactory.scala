@@ -73,7 +73,7 @@ object WebDriverFactory {
   private def chromeDriver = {
     systemProperties.setProperty(
       "webdriver.chrome.driver",
-      getProperty("webdriver.chrome.driver", s"test/resources/drivers/chromedriver-2.9_$driverSuffix"))
+      getProperty("webdriver.chrome.driver", s"test/resources/drivers/chromedriver"))
     new ChromeDriver()
   }
 
