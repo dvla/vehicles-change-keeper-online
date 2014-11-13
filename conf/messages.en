@@ -55,7 +55,7 @@ error.dateOfBirth.110yearsInThePast = Date of birth cannot be more than 110 year
 error.fleetNumber = The fleet number can only be a 6 digit number, please try again.
 error.address.characterInvalid = Must only contain valid characters A-Z, 0-9, etc
 error.postTown.characterInvalid = Town or city contains invalid characters
-error.validBougtByType = Select whether the buyer is a private individual or business
+error.validBougtByType = Select whether the vehicle is being sold to a private individual or business
 error.validDriverNumber = The Driver Number that you have entered does not appear to be in an acceptable format. Please amend your entry or delete and re-submit.
 error.fleetNumber = The fleet number can only be a 6 digit number, please try again.
 error.titlePlusFirstName.tooLong = The combined length of your Title e.g. Mr/Mrs/Miss etc and First name(s) cannot exceed 26 characters. Please amend your entry and re-submit.
@@ -153,7 +153,7 @@ change_keeper_vehiclelookup.vehiclesoldto.private = Private individual
 change_keeper_vehiclelookup.vehiclesoldto.business = Business
 change_keeper_vehiclelookup.img.h2 = Help finding your V5C document reference number?
 change_keeper_vehiclelookup.img.alt = V5C document reference number
-vehicleSoldTo = Vehicle bought by
+vehicleSoldTo = Vehicle sold to
 vehicleRegistrationNumber = Vehicle registration number
 documentReferenceNumber = Document reference number
 
