@@ -1,6 +1,5 @@
 package controllers
 
-import uk.gov.dvla.vehicles.presentation.common.model.VehicleAndKeeperDetailsModel
 import com.google.inject.Inject
 import play.api.mvc.{Action, Controller}
 import play.api.Logger
@@ -14,7 +13,8 @@ import common.views.helpers.FormExtensions.formBinding
 import common.clientsidesession.CookieImplicits.{RichForm, RichResult}
 import utils.helpers.Config
 import models.NewKeeperChooseYourAddressFormModel.NewKeeperChooseYourAddressCacheKey
-import scala.Some
+import uk.gov.dvla.vehicles.presentation.common.model.VehicleAndKeeperDetailsModel
+
 
 class PrivateKeeperDetails @Inject()()(implicit clientSideSessionFactory: ClientSideSessionFactory,
                                        config: Config) extends Controller {

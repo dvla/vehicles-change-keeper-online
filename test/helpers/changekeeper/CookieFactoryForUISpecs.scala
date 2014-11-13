@@ -1,7 +1,7 @@
 package helpers.changekeeper
 
 import helpers.changekeeper.CookieFactoryForUnitSpecs.VehicleLookupFailureResponseCode
-import models.{PrivateKeeperDetailsFormModel, VehicleLookupFormModel}
+import models.{BusinessKeeperDetailsFormModel, PrivateKeeperDetailsFormModel, VehicleLookupFormModel}
 import models.VehicleLookupFormModel.{VehicleLookupFormModelCacheKey, VehicleLookupResponseCodeCacheKey}
 import org.openqa.selenium.WebDriver
 import pages.changekeeper.PrivateKeeperDetailsPage.FirstNameValid
@@ -30,9 +30,13 @@ import uk.gov.dvla.vehicles.presentation.common.model.AddressModel
 import uk.gov.dvla.vehicles.presentation.common.model.VehicleAndKeeperDetailsModel.VehicleAndKeeperLookupDetailsCacheKey
 import org.openqa.selenium.Cookie
 import org.joda.time.LocalDate
-import uk.gov.dvla.vehicles.presentation.common.mappings.TitleType
+import pages.changekeeper.BusinessKeeperDetailsPage.{FleetNumberValid, BusinessNameValid}
 import models.PrivateKeeperDetailsFormModel.PrivateKeeperDetailsCacheKey
 import webserviceclients.fakes.brute_force_protection.FakeBruteForcePreventionWebServiceImpl.MaxAttempts
+
+import models.BusinessKeeperDetailsFormModel._
+import uk.gov.dvla.vehicles.presentation.common.mappings.TitleType
+import scala.Some
 
 object CookieFactoryForUISpecs {
   private def addCookie[A](key: String, value: A)(implicit tjs: Writes[A], webDriver: WebDriver): Unit = {
@@ -148,6 +152,21 @@ object CookieFactoryForUISpecs {
       dateOfBirth,
       email = email,
       driverNumber = driverNumber,
+      postcode = postcode
+    )
+    addCookie(key, value)
+    this
+  }
+
+  def businessKeeperDetails(fleetNumber: Option[String] = Some(FleetNumberValid),
+                            businessName: String = BusinessNameValid,
+                            email: Option[String] = Some(EmailValid),
+                            postcode: String = PostcodeValid)(implicit webDriver: WebDriver) = {
+    val key = BusinessKeeperDetailsCacheKey
+    val value = BusinessKeeperDetailsFormModel(
+      fleetNumber = fleetNumber,
+      businessName = businessName,
+      email = email,
       postcode = postcode
     )
     addCookie(key, value)

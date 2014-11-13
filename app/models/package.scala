@@ -1,5 +1,6 @@
 import models.VehicleLookupFormModel.VehicleLookupFormModelCacheKey
 import models.PrivateKeeperDetailsFormModel.PrivateKeeperDetailsCacheKey
+import models.BusinessKeeperDetailsFormModel.BusinessKeeperDetailsCacheKey
 import uk.gov.dvla.vehicles.presentation.common.model.VehicleAndKeeperDetailsModel.VehicleAndKeeperLookupDetailsCacheKey
 
 package object models {
@@ -13,9 +14,10 @@ package object models {
 
   final val PrivateKeeperDetailsCacheKeys = Set(PrivateKeeperDetailsCacheKey)
 
-  final val BusinessKeeperDetailsCacheKeys = Set("enter business keeper cache keys here")
+  final val BusinessKeeperDetailsCacheKeys = Set(BusinessKeeperDetailsCacheKey)
 
   final val AllCacheKeys =
     VehicleDetailsCacheKeys
       .++(PrivateKeeperDetailsCacheKeys)
+      .++(BusinessKeeperDetailsCacheKeys)
 }

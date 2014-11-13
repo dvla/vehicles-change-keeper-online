@@ -8,10 +8,10 @@ import play.api.Logger
 import utils.helpers.Config
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.ClientSideSessionFactory
-import uk.gov.dvla.vehicles.presentation.common.model.{VehicleAndKeeperDetailsModel, VehicleDetailsModel}
 import common.clientsidesession.CookieImplicits.{RichCookies, RichForm, RichResult}
 import common.views.helpers.FormExtensions.formBinding
 import models.NewKeeperChooseYourAddressFormModel.NewKeeperChooseYourAddressCacheKey
+import uk.gov.dvla.vehicles.presentation.common.model.VehicleAndKeeperDetailsModel
 
 class BusinessKeeperDetails @Inject()()(implicit clientSideSessionFactory: ClientSideSessionFactory,
                                         config: Config) extends Controller {

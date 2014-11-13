@@ -35,7 +35,6 @@ object VehicleLookupPage extends Page with WebBrowserDSL {
 
     if (isVehicleSoldToPrivateIndividual) click on vehicleSoldToPrivateIndividual
     else click on vehicleSoldToBusiness
-
     click on next
   }
 }
