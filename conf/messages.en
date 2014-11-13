@@ -201,6 +201,7 @@ change_keeper_businesskeeperdetails.postcode.hint = e.g. AB1 2BA or AB12BA
 businesskeeper_postcode = Postcode
 businesskeeper_email = Business email
 businessName = Business name
+fleetNumber = Fleet number
 change_keeper_email_not_entered = Not entered
 
 #page 4 - new keeper choose your address

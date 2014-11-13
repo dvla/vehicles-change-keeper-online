@@ -112,7 +112,7 @@ final class VehicleLookupUnitSpec extends UnitSpec {
     "replace required error message for new keeper type (private keeper or business)" in new WithApplication {
       val request = buildCorrectlyPopulatedRequest(soldTo = "")
       val result = vehicleLookupResponseGenerator().submit(request)
-      val count = "Select whether the buyer is a private individual or business".r.findAllIn(contentAsString(result)).length
+      val count = "Select whether the vehicle is being sold to a private individual or business".r.findAllIn(contentAsString(result)).length
 
       count should equal(3)
     }
