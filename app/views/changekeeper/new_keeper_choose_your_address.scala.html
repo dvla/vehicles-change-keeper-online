@@ -24,7 +24,15 @@ currentForm = Some(viewModel.form)
 <div class="two-col clearfix">
     <div class="first-col">
         <h1 class="mobile-only">@Messages("change_keeper_newKeeperChooseYourAddress_title")</h1>
-
+        <dl class="playback">
+            <dt><h2>@Messages("change_keeper_newKeeperChooseYourAddress.vehicledetails")</h2></dt>
+            <dt>@Messages("change_keeper_newKeeperChooseYourAddress.vehiclereg")</dt>
+            <dd>@viewModel.vehicleDetails.registrationNumber</dd>
+            <dt>@Messages("change_keeper_newKeeperChooseYourAddress.vehiclemake")</dt>
+            <dd>@viewModel.vehicleDetails.make</dd>
+            <dt>@Messages("change_keeper_newKeeperChooseYourAddress.vehiclemodel")</dt>
+            <dd>@viewModel.vehicleDetails.model</dd>
+        </dl>
         <div class="alert-warning print-message">
             <p><strong>@Messages("change_keeper_newKeeperChooseYourAddress.p4")</strong></p>
         </div>
