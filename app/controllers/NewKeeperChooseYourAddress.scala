@@ -2,14 +2,11 @@ package controllers
 
 import javax.inject.Inject
 import models.NewKeeperChooseYourAddressFormModel.Form._
-
-//import models.NewKeeperEnterAddressManuallyFormModel._
 import models._
 import play.api.Logger
 import play.api.data.{Form, FormError}
 import play.api.mvc.{AnyContent, Action, Controller, Request, Result}
 import uk.gov.dvla.vehicles.presentation.common.model.{VehicleAndKeeperDetailsModel, AddressModel, VehicleDetailsModel}
-import views.html.changekeeper.new_keeper_choose_your_address
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import uk.gov.dvla.vehicles.presentation.common

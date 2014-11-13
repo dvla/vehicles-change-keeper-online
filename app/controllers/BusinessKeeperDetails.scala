@@ -8,10 +8,10 @@ import play.api.Logger
 import utils.helpers.Config
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.ClientSideSessionFactory
-import uk.gov.dvla.vehicles.presentation.common.model.{VehicleAndKeeperDetailsModel, VehicleDetailsModel}
 import common.clientsidesession.CookieImplicits.{RichCookies, RichForm, RichResult}
 import common.views.helpers.FormExtensions.formBinding
 import models.NewKeeperChooseYourAddressFormModel.NewKeeperChooseYourAddressCacheKey
+import uk.gov.dvla.vehicles.presentation.common.model.VehicleAndKeeperDetailsModel
 
 class BusinessKeeperDetails @Inject()()(implicit clientSideSessionFactory: ClientSideSessionFactory,
                                         config: Config) extends Controller {
@@ -26,7 +26,7 @@ class BusinessKeeperDetails @Inject()()(implicit clientSideSessionFactory: Clien
     request.cookies.getModel[VehicleAndKeeperDetailsModel] match {
       case Some(vehicleDetails) =>
         Ok(views.html.changekeeper.business_keeper_details(
-          BusinessKeeperDetailsViewModel(form.fill())
+          BusinessKeeperDetailsViewModel(form.fill(), vehicleDetails)
         ))
       case _ => redirectToVehicleLookup(CookieErrorMessage)
     }
@@ -37,7 +37,7 @@ class BusinessKeeperDetails @Inject()()(implicit clientSideSessionFactory: Clien
       invalidForm => request.cookies.getModel[VehicleAndKeeperDetailsModel] match {
           case Some(vehicleDetails) =>
             BadRequest(views.html.changekeeper.business_keeper_details(
-              BusinessKeeperDetailsViewModel(formWithReplacedErrors(invalidForm))
+              BusinessKeeperDetailsViewModel(formWithReplacedErrors(invalidForm), vehicleDetails)
             ))
           case None => redirectToVehicleLookup(CookieErrorMessage)
         },

@@ -1,6 +1,5 @@
 package controllers
 
-import uk.gov.dvla.vehicles.presentation.common.model.VehicleAndKeeperDetailsModel
 import com.google.inject.Inject
 import play.api.mvc.{Action, Controller}
 import play.api.Logger
@@ -14,7 +13,8 @@ import common.views.helpers.FormExtensions.formBinding
 import common.clientsidesession.CookieImplicits.{RichForm, RichResult}
 import utils.helpers.Config
 import models.NewKeeperChooseYourAddressFormModel.NewKeeperChooseYourAddressCacheKey
-import scala.Some
+import uk.gov.dvla.vehicles.presentation.common.model.VehicleAndKeeperDetailsModel
+
 
 class PrivateKeeperDetails @Inject()()(implicit clientSideSessionFactory: ClientSideSessionFactory,
                                        config: Config) extends Controller {
@@ -28,7 +28,7 @@ class PrivateKeeperDetails @Inject()()(implicit clientSideSessionFactory: Client
 
   def present = Action { implicit request =>
     request.cookies.getModel[VehicleAndKeeperDetailsModel] match {
-      case Some(vehicleDetails) => Ok(views.html.changekeeper.private_keeper_details(form.fill()))
+      case Some(vehicleDetails) => Ok(views.html.changekeeper.private_keeper_details(vehicleDetails, form.fill()))
       case _ => redirectToVehicleLookup(NoValidCookiePresent)
     }
   }
@@ -37,7 +37,9 @@ class PrivateKeeperDetails @Inject()()(implicit clientSideSessionFactory: Client
     request.cookies.getModel[VehicleAndKeeperDetailsModel] match {
       case Some(vehicleDetails) =>
         form.bindFromRequest.fold(
-          invalidForm => BadRequest(views.html.changekeeper.private_keeper_details(formWithReplacedErrors(invalidForm))),
+          invalidForm => BadRequest(views.html.changekeeper.private_keeper_details(
+            vehicleDetails,
+            formWithReplacedErrors(invalidForm))),
           validForm => Redirect(routes.NewKeeperChooseYourAddress.present()).withCookie(validForm)
                         .discardingCookie(NewKeeperChooseYourAddressCacheKey))
       case _ => redirectToVehicleLookup(NoValidCookieSubmit)

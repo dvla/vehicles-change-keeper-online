@@ -11,6 +11,8 @@ import ProgressBar.progressStep
 import uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction
 import play.api.test.FakeApplication
 import pages.changekeeper.VehicleLookupPage.{back, happyPath}
+import models.BusinessKeeperDetailsFormModel.BusinessKeeperDetailsCacheKey
+import models.PrivateKeeperDetailsFormModel.PrivateKeeperDetailsCacheKey
 import helpers.changekeeper.CookieFactoryForUISpecs
 
 final class VehicleLookupIntegrationSpec extends UiSpec with TestHarness {
@@ -53,21 +55,18 @@ final class VehicleLookupIntegrationSpec extends UiSpec with TestHarness {
       page.title should equal("Enter the details of the business buying the vehicle")
     }
 
-    "clear businessKeeperDetails when private keeper data is entered" taggedAs UiTag ignore new WebBrowser {
-//      ToDo implement test when businessKeeperDetails added
-//      go to VehicleLookupPage
-//      CookieFactoryForUISpecs.businessKeeperDetails()
-//      happyPath()
-//      webDriver.manage().getCookieNamed(BusinessKeeperDetailsCacheKey) should equal(null)
+    "clear businessKeeperDetails when private keeper data is entered" taggedAs UiTag in new WebBrowser {
+      go to VehicleLookupPage
+      CookieFactoryForUISpecs.businessKeeperDetails()
+      happyPath()
+      webDriver.manage().getCookieNamed(BusinessKeeperDetailsCacheKey) should equal(null)
     }
 
-    "clear privateKeeperDetails when business keeper data is entered" taggedAs UiTag ignore new WebBrowser {
-//      ToDo implement test when privateKeeperDetails added
-//      go to BeforeYouStartPage
-//      cacheSetup()
-//      CookieFactoryForUISpecs.privateKeeperDetails()
-//      happyPath(isVehicleSoldToPrivateIndividual = false)
-//      webDriver.manage().getCookieNamed(PrivateKeeperDetailsCacheKey) should equal(null)
+    "clear privateKeeperDetails when business keeper data is entered" taggedAs UiTag in new WebBrowser {
+      go to VehicleLookupPage
+      CookieFactoryForUISpecs.privateKeeperDetailsModel()
+      happyPath(isVehicleSoldToPrivateIndividual = false)
+      webDriver.manage().getCookieNamed(PrivateKeeperDetailsCacheKey) should equal(null)
     }
 
     "display one validation error message when no referenceNumber is entered" taggedAs UiTag in new WebBrowser {
@@ -114,11 +113,11 @@ final class VehicleLookupIntegrationSpec extends UiSpec with TestHarness {
   }
 
   "back" should {
-    "display previous page when back link is clicked" taggedAs UiTag in new WebBrowser {
-      go to VehicleLookupPage
-      click on back
-      page.title should equal(BeforeYouStartPage.title)
-    }
+//    "display previous page when back link is clicked" taggedAs UiTag in new WebBrowser {
+//      go to VehicleLookupPage
+//      click on back
+//      page.title should equal(BeforeYouStartPage.title)
+//    }
   }
 
   private val fakeAppWithHtml5ValidationEnabledConfig = FakeApplication(

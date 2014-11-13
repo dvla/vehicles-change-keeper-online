@@ -25,10 +25,15 @@ import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeep
 import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperDetailsRequest
 import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupService
 import utils.helpers.Config
-import models.{VehicleLookupFormModel, VehicleLookupViewModel}
+import models._
 import views.changekeeper.VehicleLookup.VehicleSoldTo_Private
 
 import scala.concurrent.Future
+import scala.Some
+import uk.gov.dvla.vehicles.presentation.common.controllers.VehicleLookupBase.VehicleFound
+import uk.gov.dvla.vehicles.presentation.common.controllers.VehicleLookupBase.VehicleNotFound
+import play.api.mvc.Call
+import models.VehicleLookupViewModel
 
 
 class VehicleLookup @Inject()(val bruteForceService: BruteForcePreventionService,
@@ -107,11 +112,14 @@ class VehicleLookup @Inject()(val bruteForceService: BruteForcePreventionService
 
   private def vehicleFoundResult(vehicleAndKeeperDetailsDto: VehicleAndKeeperDetailsDto, soldTo: String)(implicit request: Request[_]) = {
     val model = VehicleAndKeeperDetailsModel.from(vehicleAndKeeperDetailsDto)
+    val (call, discardedCookies) =
+      if (soldTo == VehicleSoldTo_Private)
+        (routes.PrivateKeeperDetails.present(), BusinessKeeperDetailsCacheKeys)
+      else
+        (routes.BusinessKeeperDetails.present(), PrivateKeeperDetailsCacheKeys)
 
-    soldTo match {
-      case "Private" => Redirect(routes.PrivateKeeperDetails.present()).withCookie(model)
-      case "Business" => Redirect(routes.BusinessKeeperDetails.present()).withCookie(model)
-      case _ => Redirect(routes.VehicleLookup.present())
-    }
+    Redirect(call).
+      discardingCookies(discardedCookies).
+      withCookie(model)
   }
 }
