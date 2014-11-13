@@ -172,6 +172,7 @@ change_keeper_privatekeeperdetails.drivernumber.hint = For example, MORGA657054S
 change_keeper_privatekeeperdetails.emaillabel = Email address
 change_keeper_privatekeeperdetails.submitbutton = Next
 change_keeper_privatekeeperdetails.backbutton = Back
+change_keeper_privatekeeperdetails.vehicledetails = Vehicle details
 change_keeper_privatekeeperdetails.vehiclereg = Registration
 change_keeper_privatekeeperdetails.vehiclemake = Make
 change_keeper_privatekeeperdetails.vehiclemodel = Model
