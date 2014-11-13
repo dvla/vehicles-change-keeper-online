@@ -1,10 +1,10 @@
 @(viewModel: models.NewKeeperChooseYourAddressViewModel,
-    newKeeperName: String,
-    newKeeperPostcode: String,
-    newKeeperEmail: Option[String],
-    dropDownOptions: Seq[(String, String)])(implicit lang: Lang,
-    token: uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction.CsrfPreventionToken,
-    config: utils.helpers.Config)
+  newKeeperName: String,
+  newKeeperPostcode: String,
+  newKeeperEmail: Option[String],
+  dropDownOptions: Seq[(String, String)])(implicit lang: Lang,
+  token: uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction.CsrfPreventionToken,
+  config: utils.helpers.Config)
 
 @import controllers.routes.NewKeeperChooseYourAddress
 @import uk.gov.dvla.vehicles.presentation.common
@@ -17,72 +17,79 @@
 @import models.NewKeeperChooseYourAddressFormModel.Form.AddressSelectId
 
 @main(
-progress = Some(Messages("acquire_progress_6")),
-title = Messages("change_keeper_newKeeperChooseYourAddress_title"),
-currentForm = Some(viewModel.form)
+  progress = Some(Messages("change_keeper_progress_6")),
+  title = Messages("change_keeper_newKeeperChooseYourAddress_title"),
+  currentForm = Some(viewModel.form)
 ) {
-<div class="two-col clearfix">
+  <div class="two-col clearfix">
     <div class="first-col">
-        <h1 class="mobile-only">@Messages("change_keeper_newKeeperChooseYourAddress_title")</h1>
-
-        <div class="alert-warning print-message">
-            <p><strong>@Messages("change_keeper_newKeeperChooseYourAddress.p4")</strong></p>
-        </div>
+      <dl class="playback">
+        <dt><h2>@Messages("change_keeper_newKeeperChooseYourAddress.vehicledetails")</h2></dt>
+        <dt>@Messages("change_keeper_newKeeperChooseYourAddress.vehiclereg")</dt>
+        <dd>@viewModel.vehicleDetails.registrationNumber</dd>
+        <dt>@Messages("change_keeper_newKeeperChooseYourAddress.vehiclemake")</dt>
+        <dd>@viewModel.vehicleDetails.make</dd>
+        <dt>@Messages("change_keeper_newKeeperChooseYourAddress.vehiclemodel")</dt>
+        <dd>@viewModel.vehicleDetails.model</dd>
+      </dl>
+      <div class="alert-warning print-message">
+        <p><strong>@Messages("change_keeper_newKeeperChooseYourAddress.p4")</strong></p>
+      </div>
     </div>
 
     <div class="second-col">
-        @form(action = NewKeeperChooseYourAddress.submit()) {
-        @csrfTokenHiddenField()
-        <dl class="playback">
-            <dt>@Messages("change_keeper_newKeeperChooseYourAddress_newKeeperName_label")</dt>
-            <dd>@Messages("change_keeper_newKeeperChooseYourAddress_newKeeperName", newKeeperName)</dd>
-            <dt>@Messages("change_keeper_newKeeperChooseYourAddress_newKeeperEmail_label")</dt>
-            @if(newKeeperEmail == None) {
-            <dd>@Messages("change_keeper_newKeeperChooseYourAddress.emailNotEntered")</dd>
-            } else {
-            <dd>@newKeeperEmail.get</dd>
-            }
-            <dt>@Messages("change_keeper_newKeeperChooseYourAddress_newKeeperpostcode_label")</dt>
-            <dd>@newKeeperPostcode</dd>
-        </dl>
+    @form(action = NewKeeperChooseYourAddress.submit()) {
+      @csrfTokenHiddenField()
+      <dl class="playback">
+        <dt>@Messages("change_keeper_newKeeperChooseYourAddress_newKeeperName_label")</dt>
+        <dd>@Messages("change_keeper_newKeeperChooseYourAddress_newKeeperName", newKeeperName)</dd>
+        <dt>@Messages("change_keeper_newKeeperChooseYourAddress_newKeeperEmail_label")</dt>
+        @if(newKeeperEmail == None) {
+          <dd>@Messages("change_keeper_newKeeperChooseYourAddress.emailNotEntered")</dd>
+        } else {
+          <dd>@newKeeperEmail.get</dd>
+        }
+        <dt>@Messages("change_keeper_newKeeperChooseYourAddress_newKeeperpostcode_label")</dt>
+        <dd>@newKeeperPostcode</dd>
+      </dl>
 
-        <br/>
+      <br/>
 
-        @if(dropDownOptions.isEmpty) {
+      @if(dropDownOptions.isEmpty) {
         <h2>@Messages("change_keeper_newKeeperChooseYourAddress_noaddressesfound.h2.1")</h2>
         <h2>@Messages("change_keeper_newKeeperChooseYourAddress_noaddressesfound.h2.2")</h2>
-        } else {
+      } else {
         @valtechSelect(viewModel.form(AddressSelectId),
-        options = dropDownOptions.toSeq,
-        args = Map(
-        '_label -> Messages("change_keeper_newKeeperChooseYourAddress_addressSelect_label"),
-        'autofocus -> true
+          options = dropDownOptions.toSeq,
+          args = Map(
+            '_label -> Messages("change_keeper_newKeeperChooseYourAddress_addressSelect_label"),
+            'autofocus -> true
+          )
         )
-        )
-        }
+      }
 
-        @if(dropDownOptions.nonEmpty) {
-        <a id="@EnterAddressManuallyButtonId" href="">
-            @Messages("change_keeper_newKeeperChooseYourAddress.manualAddressEntry")
+      @if(dropDownOptions.nonEmpty) {
+        <a id="@EnterAddressManuallyButtonId" href="@controllers.routes.NewKeeperEnterAddressManually.present()">
+        @Messages("change_keeper_newKeeperChooseYourAddress.manualAddressEntry")
         </a>
+      }
+      <div class="form-steps">
+        @if(dropDownOptions.isEmpty) {
+          <a id="@EnterAddressManuallyButtonId" href="@controllers.routes.NewKeeperEnterAddressManually.present()" class="button">
+          @Messages("change_keeper_newKeeperChooseYourAddress.manualAddressEntry.enterManuallyButton")
+          </a>
         }
-        <div class="form-steps">
-            @if(dropDownOptions.isEmpty) {
-            <a id="@EnterAddressManuallyButtonId" href="" class="button">
-                @Messages("change_keeper_newKeeperChooseYourAddress.manualAddressEntry.enterManuallyButton")
-            </a>
-            }
-            @if(dropDownOptions.nonEmpty) {
-            <button id="@SelectId" type="submit" name="action" class="button">
-                @Messages("change_keeper_newKeeperChooseYourAddress.submitbutton")
-            </button>
-            }
-            <br/>
-            <a class="back" id="@BackId" href="@controllers.routes.NewKeeperChooseYourAddress.back()">
-                @Messages("change_keeper_newKeeperChooseYourAddress.backbutton")
-            </a>
-        </div>
+        @if(dropDownOptions.nonEmpty) {
+          <button id="@SelectId" type="submit" name="action" class="button">
+          @Messages("change_keeper_newKeeperChooseYourAddress.submitbutton")
+          </button>
         }
+        <br/>
+        <a class="back" id="@BackId" href="@controllers.routes.NewKeeperChooseYourAddress.back()">
+        @Messages("change_keeper_newKeeperChooseYourAddress.backbutton")
+        </a>
+      </div>
+    }
     </div>
-</div>
+  </div>
 }
