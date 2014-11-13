@@ -205,7 +205,7 @@ fleetNumber = Fleet number
 change_keeper_email_not_entered = Not entered
 
 #page 4 - new keeper choose your address
-change_keeper_newKeeperChooseYourAddress_title = Select new keeper address
+change_keeper_newKeeperChooseYourAddress_title = Select the address of the buyer
 change_keeper_newKeeperChooseYourAddress_newKeeperName_label = Name
 change_keeper_newKeeperChooseYourAddress_newKeeperName = {0}
 change_keeper_newKeeperChooseYourAddress_newKeeperEmail_label = Email

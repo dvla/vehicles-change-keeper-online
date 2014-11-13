@@ -106,14 +106,14 @@ final class PrivateKeeperDetailsIntegrationSpec extends UiSpec with TestHarness 
       go to BeforeYouStartPage
       cacheSetup()
       navigate()
-      page.title should equal("Select new keeper address")
+      page.title should equal("Select the address of the buyer")
     }
 
     "go to the appropriate next page when mandatory private keeper details are entered" taggedAs UiTag in new WebBrowser {
       go to BeforeYouStartPage
       cacheSetup()
       navigate(email = "")
-      page.title should equal("Select new keeper address")
+      page.title should equal("Select the address of the buyer")
     }
 
     "display one validation error message when no title is entered" taggedAs UiTag in new WebBrowser {

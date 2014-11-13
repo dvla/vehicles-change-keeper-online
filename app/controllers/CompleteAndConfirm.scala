@@ -9,6 +9,6 @@ class CompleteAndConfirm @Inject()(implicit clientSideSessionFactory: ClientSide
                                    config: Config) extends Controller {
 
   def present = Action { implicit request =>
-    Ok("Success")
+    Ok("Complete and Confirm")
   }
 }
