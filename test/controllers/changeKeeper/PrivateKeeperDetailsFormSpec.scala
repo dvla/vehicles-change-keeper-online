@@ -18,8 +18,14 @@ import uk.gov.dvla.vehicles.presentation.common.mappings.DayMonthYear.DayId
 import uk.gov.dvla.vehicles.presentation.common.mappings.DayMonthYear.MonthId
 import uk.gov.dvla.vehicles.presentation.common.mappings.DayMonthYear.YearId
 import uk.gov.dvla.vehicles.presentation.common.mappings.{TitleType, TitlePickerString}
-import TitlePickerString.standardOptions
-import pages.changekeeper.PrivateKeeperDetailsPage._
+import pages.changekeeper.PrivateKeeperDetailsPage.FirstNameValid
+import pages.changekeeper.PrivateKeeperDetailsPage.LastNameValid
+import pages.changekeeper.PrivateKeeperDetailsPage.DayDateOfBirthValid
+import pages.changekeeper.PrivateKeeperDetailsPage.MonthDateOfBirthValid
+import pages.changekeeper.PrivateKeeperDetailsPage.YearDateOfBirthValid
+import pages.changekeeper.PrivateKeeperDetailsPage.EmailValid
+import pages.changekeeper.PrivateKeeperDetailsPage.DriverNumberValid
+import pages.changekeeper.PrivateKeeperDetailsPage.PostcodeValid
 import org.joda.time.LocalDate
 
 class PrivateKeeperDetailsFormSpec extends UnitSpec {

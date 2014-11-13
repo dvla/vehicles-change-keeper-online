@@ -238,7 +238,6 @@ change_keeper_newKeeperEnterAddressManually.vehicleModel = Model
 change_keeper_newKeeperEnterAddressManually.p1 = As we do not have an address for this postcode, please enter one below
 change_keeper_newKeeperEnterAddressManually.p4 = If the details above do not match the vehicle to be sold, please contact the DVLA.
 
-
 #uprn not found
 acquire_uprnnotfound.title = Error confirming post code
 acquire_uprnnotfound.p1 = An error has occurred validating your postcode. Please re-enter or enter your details manually

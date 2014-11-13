@@ -9,10 +9,6 @@ import play.api.http.Status.OK
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.ClientSideSessionFactory
 import common.services.DateServiceImpl
-import common.webserviceclients.vehiclelookup.VehicleLookupWebService
-import common.webserviceclients.vehiclelookup.VehicleLookupServiceImpl
-import common.webserviceclients.vehiclelookup.VehicleDetailsResponseDto
-import common.webserviceclients.vehiclelookup.VehicleDetailsRequestDto
 import common.webserviceclients.bruteforceprevention.BruteForcePreventionConfig
 import common.webserviceclients.bruteforceprevention.BruteForcePreventionServiceImpl
 import common.webserviceclients.bruteforceprevention.BruteForcePreventionWebService

@@ -3,21 +3,17 @@ package controllers.changeKeeper
 import controllers.NewKeeperChooseYourAddress
 import helpers.changekeeper.CookieFactoryForUnitSpecs
 import helpers.{UnitSpec, WithApplication}
-import helpers.common.CookieHelper
 import helpers.common.CookieHelper.{fetchCookiesFromHeaders, verifyCookieHasBeenDiscarded, verifyCookieHasNotBeenDiscarded}
 import models.NewKeeperChooseYourAddressFormModel.Form.AddressSelectId
 import models.NewKeeperChooseYourAddressFormModel.NewKeeperChooseYourAddressCacheKey
 import models.NewKeeperDetailsViewModel.NewKeeperDetailsCacheKey
 import org.mockito.Mockito.when
-import pages.changekeeper.PrivateKeeperDetailsPage._
-import pages.changekeeper.BusinessKeeperDetailsPage._
 import pages.changekeeper.{CompleteAndConfirmPage, VehicleLookupPage}
 import pages.common.UprnNotFoundPage
 import play.api.mvc.Cookies
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{BAD_REQUEST, LOCATION, OK, SET_COOKIE, contentAsString, defaultAwaitTimeout}
 import uk.gov.dvla.vehicles.presentation.common.clientsidesession.ClientSideSessionFactory
-import uk.gov.dvla.vehicles.presentation.common.model.TraderDetailsModel
 import uk.gov.dvla.vehicles.presentation.common.model.TraderDetailsModel.TraderDetailsCacheKey
 import uk.gov.dvla.vehicles.presentation.common.webserviceclients.addresslookup.ordnanceservey.AddressLookupServiceImpl
 import utils.helpers.Config
@@ -26,7 +22,11 @@ import pages.changekeeper.PrivateKeeperDetailsPage.{FirstNameValid, LastNameVali
 import pages.changekeeper.BusinessKeeperDetailsPage.BusinessNameValid
 import Common.PrototypeHtml
 import models.NewKeeperEnterAddressManuallyFormModel.NewKeeperEnterAddressManuallyCacheKey
-import webserviceclients.fakes.FakeAddressLookupWebServiceImpl.{UprnValid, responseValidForPostcodeToAddress, responseValidForPostcodeToAddressNotFound, responseValidForUprnToAddress, responseValidForUprnToAddressNotFound}
+import webserviceclients.fakes.FakeAddressLookupWebServiceImpl.UprnValid
+import webserviceclients.fakes.FakeAddressLookupWebServiceImpl.responseValidForPostcodeToAddress
+import webserviceclients.fakes.FakeAddressLookupWebServiceImpl.responseValidForPostcodeToAddressNotFound
+import webserviceclients.fakes.FakeAddressLookupWebServiceImpl.responseValidForUprnToAddress
+import webserviceclients.fakes.FakeAddressLookupWebServiceImpl.responseValidForUprnToAddressNotFound
 
 final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
   "present (use UPRN enabled)" should {

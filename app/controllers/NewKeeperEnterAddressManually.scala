@@ -9,7 +9,7 @@ import play.api.mvc.{Action, AnyContent, Controller, Request, Result}
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.ClientSideSessionFactory
 import common.clientsidesession.CookieImplicits.{RichCookies, RichResult}
-import uk.gov.dvla.vehicles.presentation.common.model.{VehicleAndKeeperDetailsModel, AddressModel, VehicleDetailsModel}
+import uk.gov.dvla.vehicles.presentation.common.model.{VehicleAndKeeperDetailsModel, AddressModel}
 import uk.gov.dvla.vehicles.presentation.common.views.helpers.FormExtensions.formBinding
 import utils.helpers.Config
 import views.html.changekeeper.new_keeper_enter_address_manually
