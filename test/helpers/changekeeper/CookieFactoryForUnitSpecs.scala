@@ -24,6 +24,11 @@ import models.PrivateKeeperDetailsFormModel.PrivateKeeperDetailsCacheKey
 import uk.gov.dvla.vehicles.presentation.common.mappings.TitleType
 import webserviceclients.fakes.brute_force_protection.FakeBruteForcePreventionWebServiceImpl.MaxAttempts
 import play.api.mvc.Cookie
+import models.NewKeeperEnterAddressManuallyFormModel._
+import scala.Some
+import play.api.mvc.Cookie
+import uk.gov.dvla.vehicles.presentation.common.mappings.TitleType
+import uk.gov.dvla.vehicles.presentation.common.views.models.{AddressLinesViewModel, AddressAndPostcodeViewModel}
 
 object CookieFactoryForUnitSpecs extends TestComposition {
 
@@ -184,6 +189,21 @@ object CookieFactoryForUnitSpecs extends TestComposition {
       isBusinessKeeper = isBusinessKeeper,
       displayName = if (businessName == None) firstName + " " + lastName
       else businessName.getOrElse("")
+    )
+    createCookie(key, value)
+  }
+
+  def newKeeperEnterAddressManually(): Cookie = {
+    val key = NewKeeperEnterAddressManuallyCacheKey
+    val value = NewKeeperEnterAddressManuallyFormModel(
+      addressAndPostcodeModel = AddressAndPostcodeViewModel(
+        addressLinesModel = AddressLinesViewModel(
+          buildingNameOrNumber = BuildingNameOrNumberValid,
+          line2 = Some(Line2Valid),
+          line3 = Some(Line3Valid),
+          postTown = PostTownValid
+        )
+      )
     )
     createCookie(key, value)
   }
