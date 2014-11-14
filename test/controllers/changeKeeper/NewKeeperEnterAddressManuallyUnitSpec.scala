@@ -4,7 +4,6 @@ import controllers.NewKeeperEnterAddressManually
 import controllers.changeKeeper.Common.PrototypeHtml
 import helpers.JsonUtils.deserializeJsonToModel
 import helpers.common.CookieHelper.fetchCookiesFromHeaders
-import helpers.changekeeper.CookieFactoryForUnitSpecs
 import views.changekeeper.NewKeeperEnterAddressManually.PostcodeId
 import helpers.{UnitSpec, WithApplication}
 import org.mockito.Mockito.when
