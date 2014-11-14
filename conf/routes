@@ -66,4 +66,6 @@ POST        /vehicle-lookup-failure                     @controllers.VehicleLook
 
 GET         /uprn-not-found                             @controllers.UprnNotFound.present
 
+GET         /version                                    @controllers.Version.version
+
 
