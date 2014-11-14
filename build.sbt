@@ -5,6 +5,7 @@ import uk.gov.dvla.vehicles.sandbox.ProjectDefinitions.legacyStubs
 import uk.gov.dvla.vehicles.sandbox.ProjectDefinitions.osAddressLookup
 import uk.gov.dvla.vehicles.sandbox.ProjectDefinitions.vehiclesAcquireFulfil
 import uk.gov.dvla.vehicles.sandbox.ProjectDefinitions.vehicleAndKeeperLookup
+import uk.gov.dvla.vehicles.sandbox.Runner._
 import uk.gov.dvla.vehicles.sandbox.Sandbox
 import uk.gov.dvla.vehicles.sandbox.SandboxSettings
 import uk.gov.dvla.vehicles.sandbox.Tasks
@@ -57,6 +58,11 @@ libraryDependencies ++= Seq(
   "junit" % "junit" % "4.11",
   "junit" % "junit-dep" % "4.11"
 )
+
+compile.in(root):= {
+  saveBuildDetails(root).value
+  compile.in(root).in(Compile).value
+}
 
 pipelineStages := Seq(rjs, digest, gzip)
 
