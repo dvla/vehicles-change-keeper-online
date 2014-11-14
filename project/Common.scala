@@ -37,18 +37,21 @@ object Common {
   val sbtCredentials = Credentials(Path.userHome / ".sbt/.credentials")
 
   def prop(name: String) = sys.props.getOrElse(name, "Unknown")
-  def buildDetails(name: String, version: String): String =
-    s"""Project: $name-$version by $organisationNameString
+  def buildDetails(name: String, version: String, sbtVersion: String): String =
+    s"""Name: $name
+       |Version: $version
+       |
        |Build on: ${new Date()} by ${prop("user.name")}@${java.net.InetAddress.getLocalHost.getHostName}
        |Build OS: ${prop("os.name")}-${prop("os.version")}
-       |Build Java version: ${prop("java.version")} ${prop("java.vendor")}
+       |Build Java: ${prop("java.version")} ${prop("java.vendor")}
+       |Build SBT: $sbtVersion
     """.stripMargin
 
   def saveBuildDetails(root: Project) = Def.task {
     val buildDetailsName = "build-details.txt"
     val buildDetailsFile = new File(classDirectory.in(root).in(Compile).value, buildDetailsName)
-    IO.write(buildDetailsFile, buildDetails(name.in(root).value, version.in(root).value))
-    println(s"Build details written to: $buildDetailsFile \n ${buildDetails(name.in(root).value, version.in(root).value)}")
+    IO.write(buildDetailsFile, buildDetails(name.in(root).value, version.in(root).value, sbtVersion.value))
+    println(s"Build details written to: $buildDetailsFile \n ${buildDetails(name.in(root).value, version.in(root).value, sbtVersion.value)}")
     Seq((new File(resourceDirectory.in(root).in(Compile).value, buildDetailsName), buildDetailsFile))
   }
 }
