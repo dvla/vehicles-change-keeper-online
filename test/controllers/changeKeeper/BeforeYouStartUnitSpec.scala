@@ -51,7 +51,7 @@ class BeforeYouStartUnitSpec extends UnitSpec {
       contentAsString(result) should include("TEST-GA-ID")
     }
 
-    "include the GA code if GA id is not set" in new WithApplication {
+    "Don't include the GA code if GA id is not set" in new WithApplication {
       val request = FakeRequest()
       implicit val clientSideSessionFactory = injector.getInstance(classOf[ClientSideSessionFactory])
       implicit val config: Config = mock[Config]
