@@ -1,10 +1,15 @@
 package controllers.changeKeeper
 
+import com.google.inject.Injector
+import com.tzavellas.sse.guice.ScalaModule
+import composition.{TestComposition, GlobalLike}
 import controllers.BeforeYouStart
 import controllers.changeKeeper.Common.PrototypeHtml
 import helpers.UnitSpec
+import helpers.webbrowser.TestGlobal
 import org.mockito.Mockito.when
-import play.api.test.{WithApplication, FakeRequest}
+import org.scalatest.mock.MockitoSugar
+import play.api.test.{FakeApplication, WithApplication, FakeRequest}
 import play.api.test.Helpers.{OK, LOCATION, contentAsString, defaultAwaitTimeout, status}
 import uk.gov.dvla.vehicles.presentation.common.clientsidesession.ClientSideSessionFactory
 import utils.helpers.Config
@@ -32,6 +37,29 @@ class BeforeYouStartUnitSpec extends UnitSpec {
 
       val result = beforeYouStartPrototypeNotVisible.present(request)
       contentAsString(result) should not include PrototypeHtml
+    }
+
+    "include the GA code if GA id is set" in new WithApplication {
+      val request = FakeRequest()
+      implicit val clientSideSessionFactory = injector.getInstance(classOf[ClientSideSessionFactory])
+      implicit val config: Config = mock[Config]
+      when(config.googleAnalyticsTrackingId).thenReturn("TEST-GA-ID") // Stub this config value.
+      val beforeYouStartPrototypeNotVisible = new BeforeYouStart()
+
+      val result = beforeYouStartPrototypeNotVisible.present(request)
+      contentAsString(result) should include("GoogleAnalyticsObject")
+      contentAsString(result) should include("TEST-GA-ID")
+    }
+
+    "include the GA code if GA id is not set" in new WithApplication {
+      val request = FakeRequest()
+      implicit val clientSideSessionFactory = injector.getInstance(classOf[ClientSideSessionFactory])
+      implicit val config: Config = mock[Config]
+      when(config.googleAnalyticsTrackingId).thenReturn("NOT FOUND") // Stub this config value.
+      val beforeYouStartPrototypeNotVisible = new BeforeYouStart()
+
+      val result = beforeYouStartPrototypeNotVisible.present(request)
+      contentAsString(result) should not include "GoogleAnalyticsObject"
     }
   }
 
