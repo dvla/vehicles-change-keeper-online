@@ -2,15 +2,14 @@ package controllers
 
 import com.google.inject.Inject
 import models.VehicleLookupFormModel.VehicleLookupFormModelCacheKey
-import models.{VrmLockedViewModel, AllCacheKeys}
+import models.{AllCacheKeys, VrmLockedViewModel}
 import org.joda.time.DateTime
 import play.api.Logger
 import play.api.mvc.{Action, Controller}
 import uk.gov.dvla.vehicles.presentation.common
-import common.clientsidesession.CookieImplicits.{RichCookies, RichResult}
 import common.clientsidesession.ClientSideSessionFactory
-import common.clientsidesession.CookieImplicits.RichResult
-import common.model.{BruteForcePreventionModel, TraderDetailsModel}
+import common.clientsidesession.CookieImplicits.{RichCookies, RichResult}
+import common.model.BruteForcePreventionModel
 import utils.helpers.Config
 
 class VrmLocked @Inject()()(implicit clientSideSessionFactory: ClientSideSessionFactory,
@@ -35,12 +34,8 @@ class VrmLocked @Inject()()(implicit clientSideSessionFactory: ClientSideSession
   }
 
   def buyAnotherVehicle = Action { implicit request =>
-    request.cookies.getModel[TraderDetailsModel] match {
-      case (Some(traderDetails)) =>
-        Redirect(routes.VehicleLookup.present()).
-          discardingCookies(Set(VehicleLookupFormModelCacheKey))
-      case _ => Redirect(routes.BeforeYouStart.present())
-    }
+    Redirect(routes.VehicleLookup.present())
+      .discardingCookies(Set(VehicleLookupFormModelCacheKey))
   }
 
   def exit = Action { implicit request =>
