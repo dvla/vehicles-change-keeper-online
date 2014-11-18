@@ -15,8 +15,9 @@ object NewKeeperEnterAddressManuallyFormModel {
 
   object Form {
     final val AddressAndPostcodeId = "addressAndPostcode"
+    final val PostTownMaxLength = 20
     final val Mapping = mapping(
-      AddressAndPostcodeId -> AddressAndPostcodeViewModel.Form.Mapping
+      AddressAndPostcodeId -> AddressAndPostcodeViewModel.Form.mappingWithCustomPostTownMaxLength(postTownMaxLength = PostTownMaxLength)
     )(NewKeeperEnterAddressManuallyFormModel.apply)(NewKeeperEnterAddressManuallyFormModel.unapply)
   }
 }
