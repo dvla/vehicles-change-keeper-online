@@ -59,8 +59,6 @@ libraryDependencies ++= Seq(
   "junit" % "junit-dep" % "4.11"
 )
 
-compile.in(Compile) := runSequentially(saveBuildDetails, compile.in(Compile)).value
-
 pipelineStages := Seq(rjs, digest, gzip)
 
 val myTestOptions =
