@@ -47,11 +47,11 @@ object Common {
        |Build SBT: $sbtVersion
     """.stripMargin
 
-  def saveBuildDetails(root: Project) = Def.task {
+  def saveBuildDetails = Def.task {
     val buildDetailsName = "build-details.txt"
-    val buildDetailsFile = new File(classDirectory.in(root).in(Compile).value, buildDetailsName)
-    IO.write(buildDetailsFile, buildDetails(name.in(root).value, version.in(root).value, sbtVersion.value))
-    println(s"Build details written to: $buildDetailsFile \n ${buildDetails(name.in(root).value, version.in(root).value, sbtVersion.value)}")
-    Seq((new File(resourceDirectory.in(root).in(Compile).value, buildDetailsName), buildDetailsFile))
+    val buildDetailsFile = new File(classDirectory.in(ThisProject).in(Compile).value, buildDetailsName)
+    IO.write(buildDetailsFile, buildDetails(name.in(ThisProject).value, version.in(ThisProject).value, sbtVersion.value))
+    println(s"Build details written to: $buildDetailsFile \n ${buildDetails(name.in(ThisProject).value, version.in(ThisProject).value, sbtVersion.value)}")
+    Seq((new File(resourceDirectory.in(ThisProject).in(Compile).value, buildDetailsName), buildDetailsFile))
   }
 }

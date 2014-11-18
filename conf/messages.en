@@ -226,6 +226,7 @@ change_keeper_newKeeperChooseYourAddress.vehiclereg = Registration
 change_keeper_newKeeperChooseYourAddress.vehiclemake = Make
 change_keeper_newKeeperChooseYourAddress.vehiclemodel = Model
 change_keeper_newKeeperChooseYourAddress.p4 = If the details above do not match the vehicle to be sold, please contact the DVLA.
+change_keeper_newKeeperChooseYourAddress.address.required = Please select a valid address
 
 #page 4 [optional] - new keeper manual address entry
 change_keeper_newKeeperEnterAddressManually.title = Enter an address

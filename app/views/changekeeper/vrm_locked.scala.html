@@ -25,7 +25,8 @@ config: utils.helpers.Config)
             @form(action = controllers.routes.VrmLocked.exit()) {
                 @csrfTokenHiddenField()
                 <br/>
-                <button class="exit" id="@ExitId" type="submit">@Messages("vrm_locked.exit.button")</button>
+
+              <button class="button-secondary" id="@ExitId" type="submit">@Messages("vrm_locked.exit.button")</button>
             }
         </div>
     </div>
