@@ -38,13 +38,12 @@ final class SelectKeeperAddress(webBrowserDriver: WebBrowserDriver) extends Scal
 
   @When("^the user selects Next button$")
   def the_user_selects_Next_button()  {
-
     click on NewKeeperChooseYourAddressPage.next
   }
 
-  @Then("^the user is presented with an error message$")
-  def the_user_is_presented_with_an_error_message() {
-
+  @Then("^the user is presented with an error message \"(.*?)\"$")
+  def the_user_is_presented_with_an_error_message(errMsg:String)  {
+    NewKeeperChooseYourAddressPage.errorTextForTitle(errMsg) shouldBe true
   }
 
   @Given("^the user has selected an address from the returned lookup on the Select new keeper address page$")
@@ -71,19 +70,18 @@ final class SelectKeeperAddress(webBrowserDriver: WebBrowserDriver) extends Scal
 
   @Then("^the user is progressed to the previous page$")
   def the_user_is_progressed_to_the_previous_page()  {
-
     page.title should equal(PrivateKeeperDetailsPage.title)
 
   }
 
   @When("^the user selects Address not listed link$")
   def the_user_selects_Address_not_listed_link()  {
-
+    click on NewKeeperChooseYourAddressPage.manualAddress
   }
 
   @Then("^the user is progressed to the Manual Address page$")
   def the_user_is_progressed_to_the_Manual_Address_page()  {
-
+     page.title should equal(NewKeeperEnterAddressManuallyPage.title)
   }
 
 

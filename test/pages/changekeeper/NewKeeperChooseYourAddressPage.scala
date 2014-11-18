@@ -21,7 +21,9 @@ object NewKeeperChooseYourAddressPage extends Page with WebBrowserDSL {
 
   def next(implicit driver: WebDriver): Element = find(id(SelectId)).get
 //
-//  def manualAddress(implicit driver: WebDriver): Element = find(id(EnterAddressManuallyButtonId)).get
+  def manualAddress(implicit driver: WebDriver): Element = find(id(EnterAddressManuallyButtonId)).get
+
+  def errorTextForTitle(text:String)(implicit driver: WebDriver):Boolean= find(tagName("body")).get.text.contains(text)
 //
 //  def getList(implicit driver: WebDriver) = singleSel(id(AddressSelectId)).getOptions
 //

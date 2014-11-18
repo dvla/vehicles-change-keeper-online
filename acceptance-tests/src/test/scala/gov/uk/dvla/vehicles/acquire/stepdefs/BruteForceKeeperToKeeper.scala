@@ -7,8 +7,6 @@ import cucumber.api.java.en.{Then, When, Given}
 import org.openqa.selenium.WebDriver
 import org.scalatest.Matchers
 import pages.changekeeper._
-import scala.util.control.Breaks.break
-
 
 
 final class BruteForceKeeperToKeeper(webBrowserDriver: WebBrowserDriver) extends ScalaDsl with EN with WebBrowserDSL with Matchers {
@@ -42,9 +40,9 @@ final class BruteForceKeeperToKeeper(webBrowserDriver: WebBrowserDriver) extends
 
   }
   @Then("^there will be an error message displayed see error message \"(.*?)\"$")
-  def there_will_be_an_error_message_displayed_see_error_message(as:String) {
+  def there_will_be_an_error_message_displayed_see_error_message(unsucFulMsg:String) {
 
-      VehicleLookupFailurePage.errorTextForTitle(as) shouldEqual (true)
+      VehicleLookupFailurePage.errorTextForTitle(unsucFulMsg) shouldEqual (true)
   }
 
   @Then("^the primary action control is \"(.*?)\" which will take the user back to the vehicle look-up screen with the original VRM & DRN data pre-populated$")
@@ -73,7 +71,7 @@ final class BruteForceKeeperToKeeper(webBrowserDriver: WebBrowserDriver) extends
   }
 
   @Then("^there will be an error message display see error message \"(.*?)\"$")
-  def there_will_be_an_error_message_display_see_error_message(s:String) {
+  def there_will_be_an_error_message_display_see_error_message(msg:String) {
 
     //page.title shouldEqual VrmLockedPage.title
   }
