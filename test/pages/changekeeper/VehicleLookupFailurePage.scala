@@ -15,4 +15,7 @@ object VehicleLookupFailurePage extends Page with WebBrowserDSL {
   def beforeYouStart(implicit driver: WebDriver): Element = find(id(BeforeYouStartId)).get
 
   def vehicleLookup(implicit driver: WebDriver): Element = find(id(VehicleLookupId)).get
+
+  def errorTextForTitle(text:String)(implicit driver: WebDriver):Boolean= find(tagName("body")).get.text.contains(text)
+
 }
