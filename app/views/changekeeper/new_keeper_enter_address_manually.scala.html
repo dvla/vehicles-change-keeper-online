@@ -38,7 +38,7 @@
             @csrfTokenHiddenField()
             <p>@Messages("change_keeper_newKeeperEnterAddressManually.p1")</p>
 
-            @addressAndPostcode(viewModel.form(AddressAndPostcodeId))
+            @addressAndPostcode(viewModel.form(AddressAndPostcodeId), args = Map('_postTownMaxLength -> 20))
 
             <legend>@Messages("address.postcode.label")</legend>
             <div class="read-only-input">@newKeeperPostcode</div>
