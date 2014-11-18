@@ -1,14 +1,11 @@
 package controllers.changeKeeper
 
 import controllers.VehicleLookup
-import helpers.changekeeper.CookieFactoryForUnitSpecs
-import helpers.common.CookieHelper.{fetchCookiesFromHeaders, verifyCookieHasBeenDiscarded}
 import helpers.UnitSpec
 import helpers.WithApplication
 import models.VehicleLookupFormModel.Form.{DocumentReferenceNumberId, VehicleRegistrationNumberId, VehicleSoldToId}
 import org.mockito.Matchers.any
 import org.mockito.Mockito.when
-import pages.changekeeper.{VrmLockedPage, MicroServiceErrorPage, VehicleLookupPage}
 import pages.changekeeper.VehicleLookupFailurePage
 import pages.changekeeper.VrmLockedPage
 import play.api.libs.json.{JsValue, Json}
@@ -20,29 +17,28 @@ import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeep
 import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperDetailsResponse
 import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupServiceImpl
 import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupWebService
-import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.RegistrationNumberValid
 import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.vehicleDetailsResponseDocRefNumberNotLatest
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import common.clientsidesession.ClientSideSessionFactory
 import common.mappings.DocumentReferenceNumber
 import common.services.DateServiceImpl
-import common.webserviceclients.vehiclelookup.VehicleDetailsRequestDto
-import common.webserviceclients.vehiclelookup.VehicleDetailsResponseDto
-import common.webserviceclients.vehiclelookup.VehicleLookupServiceImpl
-import common.webserviceclients.vehiclelookup.VehicleLookupWebService
 import common.webserviceclients.bruteforceprevention.BruteForcePreventionConfig
 import common.webserviceclients.bruteforceprevention.BruteForcePreventionServiceImpl
 import common.webserviceclients.bruteforceprevention.BruteForcePreventionWebService
 import common.webserviceclients.bruteforceprevention.BruteForcePreventionService
 import utils.helpers.Config
-import views.changekeeper.VehicleLookup.{VehicleSoldTo_Private, VehicleSoldTo_Business}
+import views.changekeeper.VehicleLookup.VehicleSoldTo_Private
 import webserviceclients.fakes.{FakeDateServiceImpl, FakeResponse}
 import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.ReferenceNumberValid
 import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.RegistrationNumberValid
 import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.vehicleDetailsResponseSuccess
 import webserviceclients.fakes.brute_force_protection.FakeBruteForcePreventionWebServiceImpl
-import webserviceclients.fakes.brute_force_protection.FakeBruteForcePreventionWebServiceImpl.{VrmAttempt2, VrmLocked, responseFirstAttempt, responseSecondAttempt, VrmThrows}
+import webserviceclients.fakes.brute_force_protection.FakeBruteForcePreventionWebServiceImpl.VrmAttempt2
+import webserviceclients.fakes.brute_force_protection.FakeBruteForcePreventionWebServiceImpl.VrmLocked
+import webserviceclients.fakes.brute_force_protection.FakeBruteForcePreventionWebServiceImpl.responseFirstAttempt
+import webserviceclients.fakes.brute_force_protection.FakeBruteForcePreventionWebServiceImpl.responseSecondAttempt
+import webserviceclients.fakes.brute_force_protection.FakeBruteForcePreventionWebServiceImpl.VrmThrows
 import helpers.changekeeper.CookieFactoryForUnitSpecs
 
 final class VehicleLookupUnitSpec extends UnitSpec {
@@ -112,7 +108,7 @@ final class VehicleLookupUnitSpec extends UnitSpec {
     "replace required error message for new keeper type (private keeper or business)" in new WithApplication {
       val request = buildCorrectlyPopulatedRequest(soldTo = "")
       val result = vehicleLookupResponseGenerator().submit(request)
-      val count = "Select whether the buyer is a private individual or business".r.findAllIn(contentAsString(result)).length
+      val count = "Select whether the vehicle is being sold to a private individual or business".r.findAllIn(contentAsString(result)).length
 
       count should equal(3)
     }

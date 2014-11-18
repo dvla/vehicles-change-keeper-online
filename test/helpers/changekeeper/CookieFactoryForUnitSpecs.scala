@@ -1,18 +1,21 @@
 package helpers.changekeeper
 
 import composition.TestComposition
-import models.BusinessKeeperDetailsFormModel._
-import models.NewKeeperDetailsViewModel._
-import pages.changekeeper.BusinessKeeperDetailsPage._
+import models.BusinessKeeperDetailsFormModel.BusinessKeeperDetailsCacheKey
+import models.NewKeeperDetailsViewModel.NewKeeperDetailsCacheKey
+import pages.changekeeper.BusinessKeeperDetailsPage.{FleetNumberValid, BusinessNameValid}
 import pages.changekeeper.HelpPage
 import play.api.libs.json.{Json, Writes}
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.{ClearTextClientSideSession, ClientSideSessionFactory, CookieFlags}
 import models._
 import uk.gov.dvla.vehicles.presentation.common.model.BruteForcePreventionModel.BruteForcePreventionViewModelCacheKey
-import webserviceclients.fakes.FakeAddressLookupService._
-import webserviceclients.fakes.FakeAddressLookupWebServiceImpl._
-import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService._
+import webserviceclients.fakes.FakeAddressLookupService.{BuildingNameOrNumberValid, Line2Valid, Line3Valid, PostTownValid}
+import webserviceclients.fakes.FakeAddressLookupWebServiceImpl.UprnValid
+import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.RegistrationNumberValid
+import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.ReferenceNumberValid
+import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.VehicleMakeValid
+import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.VehicleModelValid
 import models.VehicleLookupFormModel.{VehicleLookupResponseCodeCacheKey, VehicleLookupFormModelCacheKey}
 import views.changekeeper.VehicleLookup.VehicleSoldTo_Private
 import uk.gov.dvla.vehicles.presentation.common.model.VehicleAndKeeperDetailsModel.VehicleAndKeeperLookupDetailsCacheKey
@@ -21,9 +24,12 @@ import org.joda.time.LocalDate
 import pages.changekeeper.PrivateKeeperDetailsPage.{FirstNameValid, LastNameValid, EmailValid, DriverNumberValid}
 import pages.changekeeper.PrivateKeeperDetailsPage.{DayDateOfBirthValid, MonthDateOfBirthValid, YearDateOfBirthValid, PostcodeValid}
 import models.PrivateKeeperDetailsFormModel.PrivateKeeperDetailsCacheKey
-import uk.gov.dvla.vehicles.presentation.common.mappings.TitleType
 import webserviceclients.fakes.brute_force_protection.FakeBruteForcePreventionWebServiceImpl.MaxAttempts
+import models.NewKeeperEnterAddressManuallyFormModel.NewKeeperEnterAddressManuallyCacheKey
+import scala.Some
 import play.api.mvc.Cookie
+import uk.gov.dvla.vehicles.presentation.common.mappings.TitleType
+import uk.gov.dvla.vehicles.presentation.common.views.models.{AddressLinesViewModel, AddressAndPostcodeViewModel}
 
 object CookieFactoryForUnitSpecs extends TestComposition {
 
@@ -184,6 +190,21 @@ object CookieFactoryForUnitSpecs extends TestComposition {
       isBusinessKeeper = isBusinessKeeper,
       displayName = if (businessName == None) firstName + " " + lastName
       else businessName.getOrElse("")
+    )
+    createCookie(key, value)
+  }
+
+  def newKeeperEnterAddressManually(): Cookie = {
+    val key = NewKeeperEnterAddressManuallyCacheKey
+    val value = NewKeeperEnterAddressManuallyFormModel(
+      addressAndPostcodeModel = AddressAndPostcodeViewModel(
+        addressLinesModel = AddressLinesViewModel(
+          buildingNameOrNumber = BuildingNameOrNumberValid,
+          line2 = Some(Line2Valid),
+          line3 = Some(Line3Valid),
+          postTown = PostTownValid
+        )
+      )
     )
     createCookie(key, value)
   }

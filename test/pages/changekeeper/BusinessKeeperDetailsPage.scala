@@ -1,6 +1,6 @@
 package pages.changekeeper
 
-import helpers.webbrowser.{Element, Page, TextField, WebBrowserDSL, WebDriverFactory}
+import helpers.webbrowser.{Element, Page, TextField, TelField, WebBrowserDSL, WebDriverFactory}
 import models.BusinessKeeperDetailsFormModel.Form.{BusinessNameId, EmailId, FleetNumberId, PostcodeId}
 import views.changekeeper.BusinessKeeperDetails.{BackId, NextId}
 import org.openqa.selenium.WebDriver
@@ -16,7 +16,7 @@ object BusinessKeeperDetailsPage extends Page with WebBrowserDSL {
   final val PostcodeValid = "QQ99QQ"
   final val PostcodeInvalid = "XX99XX"
 
-  def fleetNumberField(implicit driver: WebDriver): TextField = textField(id(FleetNumberId))
+  def fleetNumberField(implicit driver: WebDriver): TelField = telField(id(FleetNumberId))
 
   def businessNameField(implicit driver: WebDriver): TextField = textField(id(BusinessNameId))
 

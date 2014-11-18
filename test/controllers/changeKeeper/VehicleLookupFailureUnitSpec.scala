@@ -1,17 +1,6 @@
 package controllers.changeKeeper
 
 import controllers.VehicleLookupFailure
-import controllers.changeKeeper.Common.PrototypeHtml
-import helpers.changekeeper.CookieFactoryForUnitSpecs
-import helpers.{UnitSpec, WithApplication}
-import org.mockito.Mockito.when
-import pages.changekeeper.BeforeYouStartPage
-import pages.changekeeper.VehicleLookupPage
-import play.api.test.Helpers.{LOCATION, OK, contentAsString}
-import uk.gov.dvla.vehicles.presentation.common.clientsidesession.ClientSideSessionFactory
-import utils.helpers.Config
-
-import controllers.VehicleLookupFailure
 import Common.PrototypeHtml
 import helpers.{UnitSpec, WithApplication}
 import helpers.changekeeper.CookieFactoryForUnitSpecs

@@ -35,6 +35,7 @@ GET         /new-keeper-choose-your-address             @controllers.NewKeeperCh
 POST        /new-keeper-choose-your-address             @controllers.NewKeeperChooseYourAddress.submit
 GET         /new-keeper-choose-your-address/back        @controllers.NewKeeperChooseYourAddress.back
 
+#page 4 - New keeper enter address manually
 GET         /new-keeper-enter-address-manually          @controllers.NewKeeperEnterAddressManually.present
 POST        /new-keeper-enter-address-manually          @controllers.NewKeeperEnterAddressManually.submit
 
@@ -64,5 +65,7 @@ GET         /vehicle-lookup-failure                     @controllers.VehicleLook
 POST        /vehicle-lookup-failure                     @controllers.VehicleLookupFailure.submit
 
 GET         /uprn-not-found                             @controllers.UprnNotFound.present
+
+GET         /version                                    @controllers.Version.version
 
 

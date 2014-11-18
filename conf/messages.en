@@ -199,8 +199,9 @@ change_keeper_businesskeeperdetails.consentError = You must have the consent of 
 change_keeper_businesskeeperdetails.postcodelabel = Postcode
 change_keeper_businesskeeperdetails.postcode.hint = e.g. AB1 2BA or AB12BA
 businesskeeper_postcode = Postcode
-businesskeeper_email = Business email
+businesskeeper_email = Contact email address
 businessName = Business name
+fleetNumber = Fleet number
 change_keeper_email_not_entered = Not entered
 
 #page 4 - new keeper choose your address
@@ -225,7 +226,18 @@ change_keeper_newKeeperChooseYourAddress.vehiclereg = Registration
 change_keeper_newKeeperChooseYourAddress.vehiclemake = Make
 change_keeper_newKeeperChooseYourAddress.vehiclemodel = Model
 change_keeper_newKeeperChooseYourAddress.p4 = If the details above do not match the vehicle to be sold, please contact the DVLA.
+change_keeper_newKeeperChooseYourAddress.address.required = Please select a valid address
 
+#page 4 [optional] - new keeper manual address entry
+change_keeper_newKeeperEnterAddressManually.title = Enter an address
+change_keeper_newKeeperEnterAddressManually.submitbutton = Next
+change_keeper_newKeeperEnterAddressManually.backbutton = Back
+change_keeper_newKeeperEnterAddressManually.vehicleDetails = Vehicle details
+change_keeper_newKeeperEnterAddressManually.vehicleReg = Registration
+change_keeper_newKeeperEnterAddressManually.vehicleMake = Make
+change_keeper_newKeeperEnterAddressManually.vehicleModel = Model
+change_keeper_newKeeperEnterAddressManually.p1 = As we do not have an address for this postcode, please enter one below
+change_keeper_newKeeperEnterAddressManually.p4 = If the details above do not match the vehicle to be sold, please contact the DVLA.
 
 #uprn not found
 acquire_uprnnotfound.title = Error confirming post code
@@ -314,16 +326,6 @@ acquire_privatekeeperdetails.postcodelabel = Postcode
 acquire_privatekeeperdetails.postcode.hint = e.g. AB1 2BA or AB12BA
 acquire_privatekeeperdetails.dateofbirth.hint = for example, 20 3 1976
 privatekeeper_dateofbirth = Date of birth of new keeper
-
-#[optional] - new keeper manual address entry
-acquire_newKeeperEnterAddressManually.title = Enter keeper address
-acquire_newKeeperEnterAddressManually.submitbutton = Next
-acquire_newKeeperEnterAddressManually.backbutton = Back
-acquire_newKeeperEnterAddressManually.vehicleDetails = Vehicle details
-acquire_newKeeperEnterAddressManually.vehicleReg = Registration
-acquire_newKeeperEnterAddressManually.vehicleMake = Make
-acquire_newKeeperEnterAddressManually.vehicleModel = Model
-acquire_newKeeperEnterAddressManually.p4 = If the details above do not match the vehicle to be sold, please contact the DVLA.
 
 #vehicle tax or sorn
 acquire_vehicleTaxOrSorn_title = Vehicle tax or SORN

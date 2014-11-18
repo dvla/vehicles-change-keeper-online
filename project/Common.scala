@@ -1,4 +1,7 @@
-import sbt.Keys.version
+import java.io.File
+import java.util.Date
+
+import sbt.Keys._
 import sbt._
 
 object Common {
@@ -32,4 +35,23 @@ object Common {
   }
 
   val sbtCredentials = Credentials(Path.userHome / ".sbt/.credentials")
+
+  def prop(name: String) = sys.props.getOrElse(name, "Unknown")
+  def buildDetails(name: String, version: String, sbtVersion: String): String =
+    s"""Name: $name
+       |Version: $version
+       |
+       |Build on: ${new Date()} by ${prop("user.name")}@${java.net.InetAddress.getLocalHost.getHostName}
+       |Build OS: ${prop("os.name")}-${prop("os.version")}
+       |Build Java: ${prop("java.version")} ${prop("java.vendor")}
+       |Build SBT: $sbtVersion
+    """.stripMargin
+
+  def saveBuildDetails = Def.task {
+    val buildDetailsName = "build-details.txt"
+    val buildDetailsFile = new File(classDirectory.in(ThisProject).in(Compile).value, buildDetailsName)
+    IO.write(buildDetailsFile, buildDetails(name.in(ThisProject).value, version.in(ThisProject).value, sbtVersion.value))
+    println(s"Build details written to: $buildDetailsFile \n ${buildDetails(name.in(ThisProject).value, version.in(ThisProject).value, sbtVersion.value)}")
+    Seq((new File(resourceDirectory.in(ThisProject).in(Compile).value, buildDetailsName), buildDetailsFile))
+  }
 }

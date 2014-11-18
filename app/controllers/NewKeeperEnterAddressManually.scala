@@ -9,7 +9,7 @@ import play.api.mvc.{Action, AnyContent, Controller, Request, Result}
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.ClientSideSessionFactory
 import common.clientsidesession.CookieImplicits.{RichCookies, RichResult}
-import common.model.{AddressModel, VehicleDetailsModel}
+import uk.gov.dvla.vehicles.presentation.common.model.{VehicleAndKeeperDetailsModel, AddressModel}
 import uk.gov.dvla.vehicles.presentation.common.views.helpers.FormExtensions.formBinding
 import utils.helpers.Config
 import views.html.changekeeper.new_keeper_enter_address_manually
@@ -71,7 +71,7 @@ class NewKeeperEnterAddressManually @Inject()()
 
   private def openView(postcode: String)
                       (implicit request: Request[_]) = {
-    request.cookies.getModel[VehicleDetailsModel] match {
+    request.cookies.getModel[VehicleAndKeeperDetailsModel] match {
       case Some(vehicleDetails) =>
         Ok(new_keeper_enter_address_manually(
           NewKeeperEnterAddressManuallyViewModel(form.fill(), vehicleDetails),
@@ -89,7 +89,7 @@ class NewKeeperEnterAddressManually @Inject()()
   private def handleInvalidForm(invalidForm: Form[NewKeeperEnterAddressManuallyFormModel],
                                 postcode: String)
                                (implicit request: Request[_]) = {
-    request.cookies.getModel[VehicleDetailsModel] match {
+    request.cookies.getModel[VehicleAndKeeperDetailsModel] match {
       case Some(vehicleDetails) =>
         BadRequest(new_keeper_enter_address_manually(
           NewKeeperEnterAddressManuallyViewModel(formWithReplacedErrors(invalidForm), vehicleDetails),
