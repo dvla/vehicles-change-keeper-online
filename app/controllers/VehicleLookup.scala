@@ -1,40 +1,31 @@
 package controllers
 
-import models.VehicleLookupFormModel.VehicleLookupResponseCodeCacheKey
-import play.Logger
-import play.api.mvc.Call
-import models.VehicleLookupFormModel.Form.{DocumentReferenceNumberId, VehicleRegistrationNumberId, VehicleSoldToId}
 import com.google.inject.Inject
+import models.VehicleLookupViewModel
+import models.VehicleLookupFormModel
+import models.VehicleLookupFormModel.VehicleLookupResponseCodeCacheKey
+import models.VehicleLookupFormModel.Form.{DocumentReferenceNumberId, VehicleRegistrationNumberId, VehicleSoldToId}
+import models.{BusinessKeeperDetailsCacheKeys, PrivateKeeperDetailsCacheKeys}
 import play.api.data.{Form => PlayForm, FormError}
-import play.api.mvc.Action
-import play.api.mvc.Request
+import play.api.mvc.{Action, Call, Request}
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.ClientSideSessionFactory
 import common.clientsidesession.CookieImplicits.{RichForm, RichResult}
-import uk.gov.dvla.vehicles.presentation.common.model.VehicleAndKeeperDetailsModel
-import scala.concurrent.ExecutionContext.Implicits.global
+import common.model.VehicleAndKeeperDetailsModel
 import common.views.helpers.FormExtensions.formBinding
-import uk.gov.dvla.vehicles.presentation.common.controllers.VehicleLookupBase
-import uk.gov.dvla.vehicles.presentation.common.controllers.VehicleLookupBase.LookupResult
-import uk.gov.dvla.vehicles.presentation.common.controllers.VehicleLookupBase.VehicleFound
-import uk.gov.dvla.vehicles.presentation.common.controllers.VehicleLookupBase.VehicleNotFound
-import uk.gov.dvla.vehicles.presentation.common.model.VehicleDetailsModel
-import uk.gov.dvla.vehicles.presentation.common.services.DateService
-import uk.gov.dvla.vehicles.presentation.common.webserviceclients.bruteforceprevention.BruteForcePreventionService
-import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperDetailsDto
-import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperDetailsRequest
-import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupService
+import common.controllers.VehicleLookupBase
+import common.controllers.VehicleLookupBase.LookupResult
+import common.controllers.VehicleLookupBase.VehicleFound
+import common.controllers.VehicleLookupBase.VehicleNotFound
+import common.services.DateService
+import common.webserviceclients.bruteforceprevention.BruteForcePreventionService
+import common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperDetailsDto
+import common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperDetailsRequest
+import common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupService
 import utils.helpers.Config
-import models._
 import views.changekeeper.VehicleLookup.VehicleSoldTo_Private
-
-import scala.concurrent.Future
-import scala.Some
-import uk.gov.dvla.vehicles.presentation.common.controllers.VehicleLookupBase.VehicleFound
-import uk.gov.dvla.vehicles.presentation.common.controllers.VehicleLookupBase.VehicleNotFound
-import play.api.mvc.Call
-import models.VehicleLookupViewModel
-
 
 class VehicleLookup @Inject()(val bruteForceService: BruteForcePreventionService,
                               vehicleLookupService: VehicleAndKeeperLookupService,

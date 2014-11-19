@@ -2,6 +2,7 @@ package controllers
 
 import com.google.inject.Inject
 import models.{BusinessKeeperDetailsViewModel, BusinessKeeperDetailsFormModel}
+import models.NewKeeperChooseYourAddressFormModel.NewKeeperChooseYourAddressCacheKey
 import play.api.data.{FormError, Form}
 import play.api.mvc.{Action, Controller}
 import play.api.Logger
@@ -9,9 +10,8 @@ import utils.helpers.Config
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.ClientSideSessionFactory
 import common.clientsidesession.CookieImplicits.{RichCookies, RichForm, RichResult}
+import common.model.VehicleAndKeeperDetailsModel
 import common.views.helpers.FormExtensions.formBinding
-import models.NewKeeperChooseYourAddressFormModel.NewKeeperChooseYourAddressCacheKey
-import uk.gov.dvla.vehicles.presentation.common.model.VehicleAndKeeperDetailsModel
 
 class BusinessKeeperDetails @Inject()()(implicit clientSideSessionFactory: ClientSideSessionFactory,
                                         config: Config) extends Controller {

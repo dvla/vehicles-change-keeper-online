@@ -18,5 +18,4 @@ class Version extends Controller {
        """.stripMargin
     )
   }
-
 }
