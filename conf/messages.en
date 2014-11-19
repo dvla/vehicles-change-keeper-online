@@ -205,10 +205,13 @@ fleetNumber = Fleet number
 change_keeper_email_not_entered = Not entered
 
 #page 4 - new keeper choose your address
-change_keeper_newKeeperChooseYourAddress_title = Select the address of the buyer
-change_keeper_newKeeperChooseYourAddress_newKeeperName_label = Name
+change_keeper_newKeeperChooseYourAddress_addresses_found_title = Select the address of the buyer
+change_keeper_newKeeperChooseYourAddress_no_address_found_title = No address found
+change_keeper_newKeeperChooseYourAddress_newBusinessFleetNumber_label = Business fleet number
+change_keeper_newKeeperChooseYourAddress_newPrivateKeeperName_label = Name
+change_keeper_newKeeperChooseYourAddress_newBusinessKeeperName_label = Business name
 change_keeper_newKeeperChooseYourAddress_newKeeperName = {0}
-change_keeper_newKeeperChooseYourAddress_newKeeperEmail_label = Email
+change_keeper_newKeeperChooseYourAddress_newKeeperEmail_label = Contact email address
 change_keeper_newKeeperChooseYourAddress_newKeeperEmail = {0}
 change_keeper_newKeeperChooseYourAddress.emailNotEntered = Not entered
 change_keeper_newKeeperChooseYourAddress_newKeeperpostcode_label = Postcode
@@ -219,7 +222,7 @@ change_keeper_newKeeperChooseYourAddress.backbutton = Back
 change_keeper_newKeeperChooseYourAddress.submitbutton = Next
 change_keeper_newKeeperChooseYourAddress.manualAddressEntry = My address is not in the list
 change_keeper_newKeeperChooseYourAddress.manualAddressEntry.enterManuallyButton = Enter address
-change_keeper_newKeeperChooseYourAddress_noaddressesfound.h2.1 = No addresses found for that postcode.
+change_keeper_newKeeperChooseYourAddress_noaddressesfound.h2.1 = No address found for that postcode.
 change_keeper_newKeeperChooseYourAddress_noaddressesfound.h2.2 = Please either ''Enter address'' or click ''Back'' to try again.
 change_keeper_newKeeperChooseYourAddress.vehicledetails = Vehicle details
 change_keeper_newKeeperChooseYourAddress.vehiclereg = Registration
