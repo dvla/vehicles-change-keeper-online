@@ -57,13 +57,13 @@ class NewKeeperChooseYourAddress @Inject()(addressLookupService: AddressLookupSe
         privateKeeperDetails.postcode,
         privateKeeperDetails.email,
         addresses,
-        false
+        isBusinessKeeper = false
       ) else openView(
         constructPrivateKeeperName(privateKeeperDetails),
         privateKeeperDetails.postcode,
         privateKeeperDetails.email,
         index(addresses),
-        false
+        isBusinessKeeper = false
       )
     },
     businessKeeperDetails => fetchAddresses(businessKeeperDetails.postcode).map { addresses =>
@@ -72,13 +72,13 @@ class NewKeeperChooseYourAddress @Inject()(addressLookupService: AddressLookupSe
         businessKeeperDetails.postcode,
         businessKeeperDetails.email,
         addresses,
-        true
+        isBusinessKeeper = true
       ) else openView(
         businessKeeperDetails.businessName,
         businessKeeperDetails.postcode,
         businessKeeperDetails.email,
         index(addresses),
-        true
+        isBusinessKeeper = true
       )
     },
     message => Future.successful(error(message))
@@ -92,13 +92,13 @@ class NewKeeperChooseYourAddress @Inject()(addressLookupService: AddressLookupSe
           privateKeeperDetails.postcode,
           privateKeeperDetails.email,
           addresses,
-          false
+          isBusinessKeeper = false
         ) else handleInvalidForm(
           constructPrivateKeeperName(privateKeeperDetails),
           privateKeeperDetails.postcode,
           privateKeeperDetails.email,
           index(addresses),
-          false
+          isBusinessKeeper = false
         )
       },
       businessKeeperDetails => fetchAddresses(businessKeeperDetails.postcode).map { addresses =>
@@ -107,13 +107,13 @@ class NewKeeperChooseYourAddress @Inject()(addressLookupService: AddressLookupSe
           businessKeeperDetails.postcode,
           businessKeeperDetails.email,
           addresses,
-          true
+          isBusinessKeeper = true
         ) else handleInvalidForm(
           businessKeeperDetails.businessName,
           businessKeeperDetails.postcode,
           businessKeeperDetails.email,
           index(addresses),
-          true
+          isBusinessKeeper = true
         )
       },
       message => Future.successful(error(message))
@@ -178,10 +178,6 @@ class NewKeeperChooseYourAddress @Inject()(addressLookupService: AddressLookupSe
     ).distinctErrors
 
   private def constructPrivateKeeperName(privateKeeperDetails: PrivateKeeperDetailsFormModel): String =
-    s"${getTitle(privateKeeperDetails.title)} ${privateKeeperDetails.firstName} ${privateKeeperDetails.lastName}"
-
-
-  private def buildKeeperName(privateKeeperDetails: PrivateKeeperDetailsFormModel): String =
     s"${getTitle(privateKeeperDetails.title)} ${privateKeeperDetails.firstName} ${privateKeeperDetails.lastName}"
 
   private def fetchAddresses(postcode: String)(implicit request: Request[_]) = {
