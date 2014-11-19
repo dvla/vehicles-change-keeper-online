@@ -3,7 +3,8 @@
   newKeeperPostcode: String,
   newKeeperEmail: Option[String],
   dropDownOptions: Seq[(String, String)],
-  isBusinessKeeper: Boolean)(implicit lang: Lang,
+  isBusinessKeeper: Boolean,
+  businessFleetNumber: Option[String])(implicit lang: Lang,
   token: uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction.CsrfPreventionToken,
   config: utils.helpers.Config)
 
@@ -45,7 +46,11 @@
       <dl class="playback">
         @if(isBusinessKeeper) {
           <dt>@Messages("change_keeper_newKeeperChooseYourAddress_newBusinessFleetNumber_label")</dt>
-          <dd>FILL ME IN</dd>
+          @if(businessFleetNumber == None) {
+            <dd>@Messages("change_keeper_newKeeperChooseYourAddress.fleetNumberNotEntered")</dd>
+          } else {
+            <dd>@businessFleetNumber.get</dd>
+          }
         }
         @if(isBusinessKeeper) {
             <dt>@Messages("change_keeper_newKeeperChooseYourAddress_newBusinessKeeperName_label")</dt>
