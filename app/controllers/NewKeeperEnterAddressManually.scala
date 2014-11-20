@@ -8,12 +8,11 @@ import play.api.data.{Form, FormError}
 import play.api.mvc.{Action, AnyContent, Controller, Request, Result}
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.ClientSideSessionFactory
-import common.clientsidesession.CookieImplicits.{RichCookies, RichResult}
-import uk.gov.dvla.vehicles.presentation.common.model.{VehicleAndKeeperDetailsModel, AddressModel}
-import uk.gov.dvla.vehicles.presentation.common.views.helpers.FormExtensions.formBinding
+import common.clientsidesession.CookieImplicits.{RichCookies, RichResult, RichForm}
+import common.model.{VehicleAndKeeperDetailsModel, AddressModel}
+import common.views.helpers.FormExtensions.formBinding
 import utils.helpers.Config
 import views.html.changekeeper.new_keeper_enter_address_manually
-import uk.gov.dvla.vehicles.presentation.common.clientsidesession.CookieImplicits.RichForm
 
 class NewKeeperEnterAddressManually @Inject()()
                                           (implicit clientSideSessionFactory: ClientSideSessionFactory,

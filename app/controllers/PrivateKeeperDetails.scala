@@ -1,20 +1,19 @@
 package controllers
 
 import com.google.inject.Inject
-import play.api.mvc.{Action, Controller}
-import play.api.Logger
+import models.NewKeeperChooseYourAddressFormModel.NewKeeperChooseYourAddressCacheKey
 import models.PrivateKeeperDetailsFormModel
 import models.PrivateKeeperDetailsFormModel.Form.{LastNameId, PostcodeId, DriverNumberId, EmailId}
 import play.api.data.{FormError, Form}
+import play.api.Logger
+import play.api.mvc.{Action, Controller}
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.ClientSideSessionFactory
 import common.clientsidesession.CookieImplicits.RichCookies
-import common.views.helpers.FormExtensions.formBinding
 import common.clientsidesession.CookieImplicits.{RichForm, RichResult}
+import common.model.VehicleAndKeeperDetailsModel
+import common.views.helpers.FormExtensions.formBinding
 import utils.helpers.Config
-import models.NewKeeperChooseYourAddressFormModel.NewKeeperChooseYourAddressCacheKey
-import uk.gov.dvla.vehicles.presentation.common.model.VehicleAndKeeperDetailsModel
-
 
 class PrivateKeeperDetails @Inject()()(implicit clientSideSessionFactory: ClientSideSessionFactory,
                                        config: Config) extends Controller {

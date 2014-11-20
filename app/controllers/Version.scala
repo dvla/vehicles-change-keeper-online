@@ -1,5 +1,5 @@
 package controllers
 
-class Version extends uk.gov.dvla.vehicles.presentation.common.controllers.Version {
+import uk.gov.dvla.vehicles.presentation.common.controllers
 
-}
+class Version extends controllers.Version

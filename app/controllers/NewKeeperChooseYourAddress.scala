@@ -1,24 +1,27 @@
 package controllers
 
 import javax.inject.Inject
-import models.NewKeeperChooseYourAddressFormModel.Form._
-import models._
-import play.api.Logger
+import models.NewKeeperChooseYourAddressFormModel.Form.AddressSelectId
+import models.BusinessKeeperDetailsFormModel
+import models.NewKeeperChooseYourAddressFormModel
+import models.NewKeeperChooseYourAddressViewModel
+import models.NewKeeperDetailsViewModel
+import models.NewKeeperDetailsViewModel.{createNewKeeper, getTitle}
+import models.NewKeeperEnterAddressManuallyFormModel.NewKeeperEnterAddressManuallyCacheKey
+import models.PrivateKeeperDetailsFormModel
 import play.api.data.{Form, FormError}
+import play.api.Logger
 import play.api.mvc.{AnyContent, Action, Controller, Request, Result}
-import uk.gov.dvla.vehicles.presentation.common.model.{VehicleAndKeeperDetailsModel, AddressModel, VehicleDetailsModel}
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.CookieImplicits.{RichCookies, RichForm, RichResult}
 import common.clientsidesession.ClientSideSessionFactory
-import common.webserviceclients.addresslookup.AddressLookupService
+import common.model.{VehicleAndKeeperDetailsModel, AddressModel}
 import common.views.helpers.FormExtensions.formBinding
+import common.webserviceclients.addresslookup.AddressLookupService
 import utils.helpers.Config
 import views.html.changekeeper.new_keeper_choose_your_address
-import play.api.mvc.Result
-import models.NewKeeperEnterAddressManuallyFormModel.NewKeeperEnterAddressManuallyCacheKey
-import models.NewKeeperDetailsViewModel.{createNewKeeper, getTitle}
 
 class NewKeeperChooseYourAddress @Inject()(addressLookupService: AddressLookupService)
                                           (implicit clientSideSessionFactory: ClientSideSessionFactory,
@@ -53,12 +56,16 @@ class NewKeeperChooseYourAddress @Inject()(addressLookupService: AddressLookupSe
         constructPrivateKeeperName(privateKeeperDetails),
         privateKeeperDetails.postcode,
         privateKeeperDetails.email,
-        addresses
+        addresses,
+        isBusinessKeeper = false,
+        None
       ) else openView(
         constructPrivateKeeperName(privateKeeperDetails),
         privateKeeperDetails.postcode,
         privateKeeperDetails.email,
-        index(addresses)
+        index(addresses),
+        isBusinessKeeper = false,
+        None
       )
     },
     businessKeeperDetails => fetchAddresses(businessKeeperDetails.postcode).map { addresses =>
@@ -66,18 +73,20 @@ class NewKeeperChooseYourAddress @Inject()(addressLookupService: AddressLookupSe
         businessKeeperDetails.businessName,
         businessKeeperDetails.postcode,
         businessKeeperDetails.email,
-        addresses
+        addresses,
+        isBusinessKeeper = true,
+        businessKeeperDetails.fleetNumber
       ) else openView(
         businessKeeperDetails.businessName,
         businessKeeperDetails.postcode,
         businessKeeperDetails.email,
-        index(addresses)
+        index(addresses),
+        isBusinessKeeper = true,
+        businessKeeperDetails.fleetNumber
       )
     },
     message => Future.successful(error(message))
   )}
-
-
 
   def submit = Action.async { implicit request =>
     def onInvalidForm(implicit invalidForm: Form[NewKeeperChooseYourAddressFormModel]) = switch(
@@ -86,12 +95,16 @@ class NewKeeperChooseYourAddress @Inject()(addressLookupService: AddressLookupSe
           constructPrivateKeeperName(privateKeeperDetails),
           privateKeeperDetails.postcode,
           privateKeeperDetails.email,
-          addresses
+          addresses,
+          isBusinessKeeper = false,
+          None
         ) else handleInvalidForm(
           constructPrivateKeeperName(privateKeeperDetails),
           privateKeeperDetails.postcode,
           privateKeeperDetails.email,
-          index(addresses)
+          index(addresses),
+          isBusinessKeeper = false,
+          None
         )
       },
       businessKeeperDetails => fetchAddresses(businessKeeperDetails.postcode).map { addresses =>
@@ -99,12 +112,16 @@ class NewKeeperChooseYourAddress @Inject()(addressLookupService: AddressLookupSe
           businessKeeperDetails.businessName,
           businessKeeperDetails.postcode,
           businessKeeperDetails.email,
-          addresses
+          addresses,
+          isBusinessKeeper = true,
+          businessKeeperDetails.fleetNumber
         ) else handleInvalidForm(
           businessKeeperDetails.businessName,
           businessKeeperDetails.postcode,
           businessKeeperDetails.email,
-          index(addresses)
+          index(addresses),
+          isBusinessKeeper = true,
+          businessKeeperDetails.fleetNumber
         )
       },
       message => Future.successful(error(message))
@@ -139,7 +156,12 @@ class NewKeeperChooseYourAddress @Inject()(addressLookupService: AddressLookupSe
     )
   }
 
-  private def handleInvalidForm(name: String, postcode: String, email: Option[String], addresses: Seq[(String, String)])
+  private def handleInvalidForm(name: String,
+                                postcode: String,
+                                email: Option[String],
+                                addresses: Seq[(String, String)],
+                                isBusinessKeeper: Boolean,
+                                fleetNumber: Option[String])
                                (implicit invalidForm: Form[NewKeeperChooseYourAddressFormModel], request: Request[_]) = {
     request.cookies.getModel[VehicleAndKeeperDetailsModel] match {
       case Some(vehicleDetails) =>
@@ -148,7 +170,9 @@ class NewKeeperChooseYourAddress @Inject()(addressLookupService: AddressLookupSe
           name,
           postcode,
           email,
-          addresses
+          addresses,
+          isBusinessKeeper,
+          fleetNumber
         ))
       case _ => error(VehicleDetailsNotInCacheMessage)
     }
@@ -168,10 +192,6 @@ class NewKeeperChooseYourAddress @Inject()(addressLookupService: AddressLookupSe
     ).distinctErrors
 
   private def constructPrivateKeeperName(privateKeeperDetails: PrivateKeeperDetailsFormModel): String =
-    s"${getTitle(privateKeeperDetails.title)} ${privateKeeperDetails.firstName} ${privateKeeperDetails.lastName}"
-
-
-  private def buildKeeperName(privateKeeperDetails: PrivateKeeperDetailsFormModel): String =
     s"${getTitle(privateKeeperDetails.title)} ${privateKeeperDetails.firstName} ${privateKeeperDetails.lastName}"
 
   private def fetchAddresses(postcode: String)(implicit request: Request[_]) = {
@@ -200,12 +220,18 @@ class NewKeeperChooseYourAddress @Inject()(addressLookupService: AddressLookupSe
     }
   }
 
-  private def openView(name: String, postcode: String, email: Option[String], addresses: Seq[(String, String)])
+  private def openView(name: String,
+                       postcode: String,
+                       email: Option[String],
+                       addresses: Seq[(String, String)],
+                       isBusinessKeeper: Boolean,
+                       fleetNumber: Option[String])
                       (implicit request: Request[_]) =
     request.cookies.getModel[VehicleAndKeeperDetailsModel] match {
       case Some(vehicleAndKeeperDetails) =>
         Ok(views.html.changekeeper.new_keeper_choose_your_address(
-          NewKeeperChooseYourAddressViewModel(form.fill(), vehicleAndKeeperDetails), name, postcode, email, addresses)
+          NewKeeperChooseYourAddressViewModel(form.fill(), vehicleAndKeeperDetails),
+          name, postcode, email, addresses, isBusinessKeeper, fleetNumber)
         )
       case _ => error(VehicleDetailsNotInCacheMessage)
     }
@@ -255,5 +281,4 @@ class NewKeeperChooseYourAddress @Inject()(addressLookupService: AddressLookupSe
       withCookie(newKeeperDetailsmodel).
       withCookie(newKeeperDetailsChooseYourAddressModel)
   }
-
 }
