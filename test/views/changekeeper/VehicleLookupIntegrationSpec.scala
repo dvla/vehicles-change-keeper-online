@@ -4,18 +4,20 @@ import helpers.common.ProgressBar
 import helpers.tags.UiTag
 import helpers.UiSpec
 import helpers.webbrowser.{TestGlobal, TestHarness}
-import org.openqa.selenium.{By, WebElement, WebDriver}
+import org.openqa.selenium.{By, WebElement}
 import pages.common.ErrorPanel
-import pages.changekeeper.{BeforeYouStartPage, VehicleLookupPage}
+import pages.changekeeper.VehicleLookupPage
 import ProgressBar.progressStep
 import uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction
 import play.api.test.FakeApplication
-import pages.changekeeper.VehicleLookupPage.{back, happyPath}
+import pages.changekeeper.VehicleLookupPage.happyPath
 import models.BusinessKeeperDetailsFormModel.BusinessKeeperDetailsCacheKey
 import models.PrivateKeeperDetailsFormModel.PrivateKeeperDetailsCacheKey
 import helpers.changekeeper.CookieFactoryForUISpecs
 
-final class VehicleLookupIntegrationSpec extends UiSpec with TestHarness {
+class VehicleLookupIntegrationSpec extends UiSpec with TestHarness {
+
+  final val ProgressStepNumber = 2
 
   "go to page" should {
     "display the page" taggedAs UiTag in new WebBrowser {
@@ -25,12 +27,12 @@ final class VehicleLookupIntegrationSpec extends UiSpec with TestHarness {
 
     "display the progress of the page when progressBar is set to true" taggedAs UiTag in new ProgressBarTrue {
       go to VehicleLookupPage
-      page.source.contains(progressStep(2)) should equal(true)
+      page.source.contains(progressStep(ProgressStepNumber)) should equal(true)
     }
 
     "not display the progress of the page when progressBar is set to false" taggedAs UiTag in new ProgressBarFalse {
       go to VehicleLookupPage
-      page.source.contains(progressStep(2)) should equal(false)
+      page.source.contains(progressStep(ProgressStepNumber)) should equal(false)
     }
 
     "contain the hidden csrfToken field" taggedAs UiTag in new WebBrowser {
@@ -64,7 +66,7 @@ final class VehicleLookupIntegrationSpec extends UiSpec with TestHarness {
 
     "clear privateKeeperDetails when business keeper data is entered" taggedAs UiTag in new WebBrowser {
       go to VehicleLookupPage
-      CookieFactoryForUISpecs.privateKeeperDetailsModel()
+      CookieFactoryForUISpecs.privateKeeperDetails()
       happyPath(isVehicleSoldToPrivateIndividual = false)
       webDriver.manage().getCookieNamed(PrivateKeeperDetailsCacheKey) should equal(null)
     }

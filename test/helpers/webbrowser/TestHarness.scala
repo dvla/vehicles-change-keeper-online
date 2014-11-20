@@ -23,8 +23,6 @@ trait TestHarness {
                              )
       extends Around with Scope with WebBrowserDSL {
 
-
-
     override def around[T: AsResult](t: => T): Result = {
       try {
         Helpers.running(TestServer(port, app))(AsResult.effectively(t))

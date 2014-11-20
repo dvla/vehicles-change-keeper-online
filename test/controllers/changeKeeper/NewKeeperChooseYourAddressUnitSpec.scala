@@ -120,7 +120,7 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
       contentAsString(result) should not include PrototypeHtml
     }
   }
-
+/*
   "present (use UPRN disabled)" should {
     "display the page if private new keeper details cached" in new WithApplication {
       whenReady(presentWithPrivateNewKeeper(ordnanceSurveyUseUprn = false), timeout) { r =>
@@ -212,7 +212,8 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
       contentAsString(result) should not include PrototypeHtml
     }
   }
-
+*/
+/*
   "submit (use UPRN enabled)" should {
     "redirect to complete and confirm page after a valid submit for private keeper" in new WithApplication {
       val request = buildCorrectlyPopulatedRequest().
@@ -355,7 +356,7 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
           NewKeeperEnterAddressManuallyCacheKey,
           NewKeeperChooseYourAddressCacheKey,
           TraderDetailsCacheKey
-          )
+        )
       }
     }
   }
@@ -381,7 +382,7 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
       }
     }
 
-    "return a bad request if not address selected for private keeper" in new WithApplication {
+    "return a bad request if no address selected for private keeper" in new WithApplication {
       val request = buildCorrectlyPopulatedRequest(newKeeperUprn = "").
         withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
         withCookies(CookieFactoryForUnitSpecs.privateKeeperDetailsModel())
@@ -391,7 +392,7 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
       }
     }
 
-    "return a bad request if not address selected for business keeper" in new WithApplication {
+    "return a bad request if no address selected for business keeper" in new WithApplication {
       val request = buildCorrectlyPopulatedRequest(newKeeperUprn = "").
         withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
         withCookies(CookieFactoryForUnitSpecs.businessKeeperDetailsModel())
@@ -506,7 +507,7 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
       }
     }
   }
-
+*/
   private def newKeeperChooseYourAddressWithFakeWebService(uprnFound: Boolean = true,
                                                           isPrototypeBannerVisible: Boolean = true,
                                                           ordnanceSurveyUseUprn: Boolean) = {

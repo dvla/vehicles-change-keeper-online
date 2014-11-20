@@ -13,7 +13,9 @@ import models.VehicleLookupFormModel.VehicleLookupFormModelCacheKey
 import uk.gov.dvla.vehicles.presentation.common.model.VehicleAndKeeperDetailsModel.VehicleAndKeeperLookupDetailsCacheKey
 import models.PrivateKeeperDetailsFormModel.PrivateKeeperDetailsCacheKey
 
-final class BeforeYouStartIntegrationSpec extends UiSpec with TestHarness {
+class BeforeYouStartIntegrationSpec extends UiSpec with TestHarness {
+  final val ProgressStepNumber = 1
+
   "go to page" should {
     "display the page" taggedAs UiTag in new WebBrowser {
       go to BeforeYouStartPage
@@ -27,19 +29,19 @@ final class BeforeYouStartIntegrationSpec extends UiSpec with TestHarness {
 
     "display the progress of the page when progressBar is set to true" taggedAs UiTag in new ProgressBarTrue {
       go to BeforeYouStartPage
-      page.source.contains(progressStep(1)) should equal(true)
+      page.source.contains(progressStep(ProgressStepNumber)) should equal(true)
     }
 
     "not display the progress of the page when progressBar is set to false" taggedAs UiTag in new ProgressBarFalse {
       go to BeforeYouStartPage
-      page.source.contains(progressStep(1)) should equal(false)
+      page.source.contains(progressStep(ProgressStepNumber)) should equal(false)
     }
 
     "clear all cookies stored in cache" taggedAs UiTag in new WebBrowser {
       go to BeforeYouStartPage
       CookieFactoryForUISpecs.vehicleLookupFormModel()
       CookieFactoryForUISpecs.vehicleAndKeeperDetails()
-      CookieFactoryForUISpecs.privateKeeperDetailsModel()
+      CookieFactoryForUISpecs.privateKeeperDetails()
 
       go to BeforeYouStartPage
 

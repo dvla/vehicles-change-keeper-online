@@ -2,7 +2,7 @@
 main.banner = Private sale of a vehicle
 main.banner.help = Help
 main.banner.feedback = Feedback
-main.banner.feedback.link = mailto:vm.feedback@digital.dvla.gov.uk?Subject=Buy%20from%20the%20trade%20feedback
+main.banner.feedback.link = mailto:vm.feedback@digital.dvla.gov.uk?Subject=Selling%20my%20vehicle%20privately%20feedback
 
 global.cookiemessage = GOV.UK uses cookies to make the site simpler.
 global.cookiefindoutmore = Find out more about cookies
@@ -208,7 +208,7 @@ change_keeper_email_not_entered = Not entered
 change_keeper_newKeeperChooseYourAddress_addresses_found_title = Select the address of the buyer
 change_keeper_newKeeperChooseYourAddress_no_address_found_title = No address found
 change_keeper_newKeeperChooseYourAddress_newBusinessFleetNumber_label = Business fleet number
-change_keeper_newKeeperChooseYourAddress.fleetNumberNotEntered = No fleet number
+change_keeper_newKeeperChooseYourAddress.fleetNumberNotEntered = Not entered
 change_keeper_newKeeperChooseYourAddress_newPrivateKeeperName_label = Name
 change_keeper_newKeeperChooseYourAddress_newBusinessKeeperName_label = Business name
 change_keeper_newKeeperChooseYourAddress_newKeeperName = {0}

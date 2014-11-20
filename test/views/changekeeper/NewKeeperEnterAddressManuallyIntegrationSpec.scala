@@ -12,7 +12,10 @@ import uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction
 import pages.common.Feedback.EmailFeedbackLink
 import helpers.changekeeper.CookieFactoryForUISpecs
 
-final class NewKeeperEnterAddressManuallyIntegrationSpec extends UiSpec with TestHarness {
+class NewKeeperEnterAddressManuallyIntegrationSpec extends UiSpec with TestHarness {
+
+  final val ProgressStepNumber = 4
+
   "go to page" should {
     "display the page" taggedAs UiTag in new WebBrowser {
       go to BeforeYouStartPage
@@ -32,14 +35,14 @@ final class NewKeeperEnterAddressManuallyIntegrationSpec extends UiSpec with Tes
       go to BeforeYouStartPage
       cacheSetup()
       go to NewKeeperEnterAddressManuallyPage
-      page.source.contains(progressStep(6)) should equal(true)
+      page.source.contains(progressStep(ProgressStepNumber)) should equal(true)
     }
 
     "not display the progress of the page when progressBar is set to false" taggedAs UiTag in new ProgressBarFalse {
       go to BeforeYouStartPage
       cacheSetup()
       go to NewKeeperEnterAddressManuallyPage
-      page.source.contains(progressStep(6)) should equal(false)
+      page.source.contains(progressStep(ProgressStepNumber)) should equal(false)
     }
 
     "contain the hidden csrfToken field" taggedAs UiTag in new WebBrowser {

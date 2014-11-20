@@ -3,40 +3,39 @@ package helpers.changekeeper
 import helpers.changekeeper.CookieFactoryForUnitSpecs.VehicleLookupFailureResponseCode
 import models.{BusinessKeeperDetailsFormModel, PrivateKeeperDetailsFormModel, VehicleLookupFormModel}
 import models.VehicleLookupFormModel.{VehicleLookupFormModelCacheKey, VehicleLookupResponseCodeCacheKey}
+import models.PrivateKeeperDetailsFormModel.PrivateKeeperDetailsCacheKey
 import org.openqa.selenium.WebDriver
+import org.openqa.selenium.Cookie
+import org.joda.time.LocalDate
+import pages.changekeeper.BusinessKeeperDetailsPage.{FleetNumberValid, BusinessNameValid}
+import pages.changekeeper.PrivateKeeperDetailsPage.DayDateOfBirthValid
+import pages.changekeeper.PrivateKeeperDetailsPage.DriverNumberValid
+import pages.changekeeper.PrivateKeeperDetailsPage.EmailValid
 import pages.changekeeper.PrivateKeeperDetailsPage.FirstNameValid
 import pages.changekeeper.PrivateKeeperDetailsPage.LastNameValid
-import pages.changekeeper.PrivateKeeperDetailsPage.DayDateOfBirthValid
 import pages.changekeeper.PrivateKeeperDetailsPage.MonthDateOfBirthValid
-import pages.changekeeper.PrivateKeeperDetailsPage.YearDateOfBirthValid
-import pages.changekeeper.PrivateKeeperDetailsPage.PostcodeValid
 import pages.changekeeper.PrivateKeeperDetailsPage.ModelValid
-import pages.changekeeper.PrivateKeeperDetailsPage.EmailValid
-import pages.changekeeper.PrivateKeeperDetailsPage.DriverNumberValid
+import pages.changekeeper.PrivateKeeperDetailsPage.PostcodeValid
+import pages.changekeeper.PrivateKeeperDetailsPage.YearDateOfBirthValid
 import play.api.Play
 import play.api.Play.current
 import play.api.libs.json.{Json, Writes}
 import uk.gov.dvla.vehicles.presentation.common
 import common.controllers.AlternateLanguages.{CyId, EnId}
-import uk.gov.dvla.vehicles.presentation.common.model.BruteForcePreventionModel.BruteForcePreventionViewModelCacheKey
-import uk.gov.dvla.vehicles.presentation.common.model.VehicleDetailsModel.VehicleLookupDetailsCacheKey
+import common.model.AddressModel
+import common.model.BruteForcePreventionModel
+import common.model.BruteForcePreventionModel.BruteForcePreventionViewModelCacheKey
+import common.model.VehicleAndKeeperDetailsModel
+import common.model.VehicleAndKeeperDetailsModel.VehicleAndKeeperLookupDetailsCacheKey
+import common.model.VehicleDetailsModel
+import common.model.VehicleDetailsModel.VehicleLookupDetailsCacheKey
 import views.changekeeper.VehicleLookup.VehicleSoldTo_Private
+import webserviceclients.fakes.brute_force_protection.FakeBruteForcePreventionWebServiceImpl.MaxAttempts
 import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService
 import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.{RegistrationNumberValid, VehicleMakeValid, VehicleModelValid}
-import uk.gov.dvla.vehicles.presentation.common.model.VehicleDetailsModel
-import uk.gov.dvla.vehicles.presentation.common.model.BruteForcePreventionModel
-import uk.gov.dvla.vehicles.presentation.common.model.VehicleAndKeeperDetailsModel
-import uk.gov.dvla.vehicles.presentation.common.model.AddressModel
-import uk.gov.dvla.vehicles.presentation.common.model.VehicleAndKeeperDetailsModel.VehicleAndKeeperLookupDetailsCacheKey
-import org.openqa.selenium.Cookie
-import org.joda.time.LocalDate
-import pages.changekeeper.BusinessKeeperDetailsPage.{FleetNumberValid, BusinessNameValid}
-import models.PrivateKeeperDetailsFormModel.PrivateKeeperDetailsCacheKey
-import webserviceclients.fakes.brute_force_protection.FakeBruteForcePreventionWebServiceImpl.MaxAttempts
 
 import models.BusinessKeeperDetailsFormModel._
 import uk.gov.dvla.vehicles.presentation.common.mappings.TitleType
-import scala.Some
 
 object CookieFactoryForUISpecs {
   private def addCookie[A](key: String, value: A)(implicit tjs: Writes[A], webDriver: WebDriver): Unit = {
@@ -130,7 +129,7 @@ object CookieFactoryForUISpecs {
     this
   }
 
-  def privateKeeperDetailsModel(title: TitleType = TitleType(1, ""),
+  def privateKeeperDetails(title: TitleType = TitleType(1, ""),
                                 firstName: String = FirstNameValid,
                                 lastName: String = LastNameValid,
                                 dateOfBirth: Option[LocalDate] = Some(
