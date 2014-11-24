@@ -8,7 +8,6 @@ import uk.gov.dvla.vehicles.presentation.common.filters.{DateTimeZoneServiceImpl
 import uk.gov.dvla.vehicles.presentation.common.services.DateService
 import webserviceclients.fakes.{FakeAddressLookupWebServiceImpl, FakeDateServiceImpl, FakeVehicleAndKeeperLookupWebService}
 import uk.gov.dvla.vehicles.presentation.common
-import common.webserviceclients.vehiclelookup.{VehicleLookupServiceImpl, VehicleLookupService, VehicleLookupWebService}
 import common.clientsidesession.CookieFlags
 import common.clientsidesession.NoCookieFlags
 import common.clientsidesession.ClientSideSessionFactory
@@ -21,7 +20,6 @@ import webserviceclients.fakes.brute_force_protection.FakeBruteForcePreventionWe
 import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupService
 import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupServiceImpl
 import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupWebService
-import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupWebServiceImpl
 import uk.gov.dvla.vehicles.presentation.common.webserviceclients.addresslookup.{AddressLookupWebService, AddressLookupService}
 
 class TestModule() extends ScalaModule with MockitoSugar {

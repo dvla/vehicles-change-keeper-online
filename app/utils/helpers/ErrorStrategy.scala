@@ -2,7 +2,6 @@ package utils.helpers
 
 import java.util.Date
 import javax.crypto.BadPaddingException
-
 import com.google.inject.Inject
 import com.google.inject.name.Named
 import controllers.routes

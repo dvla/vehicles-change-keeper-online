@@ -6,9 +6,8 @@ import models.VehicleLookupFormModel.VehicleLookupResponseCodeCacheKey
 import play.Logger
 import play.api.mvc.{AnyContent, Controller, Action, Request, DiscardingCookie}
 import uk.gov.dvla.vehicles.presentation.common.clientsidesession.CookieImplicits.RichCookies
-import uk.gov.dvla.vehicles.presentation.common.clientsidesession.CookieImplicits.RichResult
 import uk.gov.dvla.vehicles.presentation.common.clientsidesession.ClientSideSessionFactory
-import uk.gov.dvla.vehicles.presentation.common.model.{BruteForcePreventionModel, TraderDetailsModel}
+import uk.gov.dvla.vehicles.presentation.common.model.BruteForcePreventionModel
 import utils.helpers.Config
 
 final class VehicleLookupFailure @Inject()()
