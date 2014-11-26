@@ -2,7 +2,7 @@ package controllers
 
 import com.google.inject.Inject
 import models.NewKeeperDetailsViewModel.createNewKeeper
-import models.{NewKeeperEnterAddressManuallyViewModel, NewKeeperEnterAddressManuallyFormModel, BusinessKeeperDetailsFormModel, PrivateKeeperDetailsFormModel}
+import models.{NewKeeperEnterAddressManuallyFormModel, BusinessKeeperDetailsFormModel, PrivateKeeperDetailsFormModel}
 import play.api.Logger
 import play.api.data.{Form, FormError}
 import play.api.mvc.{Action, AnyContent, Controller, Request, Result}
@@ -14,6 +14,7 @@ import common.views.helpers.FormExtensions.formBinding
 import utils.helpers.Config
 import views.html.changekeeper.new_keeper_enter_address_manually
 import models.CompleteAndConfirmFormModel._
+import models.NewKeeperChooseYourAddressFormModel.NewKeeperChooseYourAddressCacheKey
 import scala.Some
 import models.NewKeeperEnterAddressManuallyViewModel
 import play.api.mvc.Result
@@ -110,6 +111,7 @@ class NewKeeperEnterAddressManually @Inject()()
     )) match {
       case Some(keeperDetails) =>
         Redirect(routes.CompleteAndConfirm.present()).
+          discardingCookie(NewKeeperChooseYourAddressCacheKey).
           withCookie(validForm).
           withCookie(keeperDetails).
           withCookie(AllowGoingToCompleteAndConfirmPageCacheKey, "true")

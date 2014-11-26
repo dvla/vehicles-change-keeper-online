@@ -4,7 +4,6 @@ import javax.inject.Inject
 import models.NewKeeperChooseYourAddressFormModel.Form.AddressSelectId
 import models.BusinessKeeperDetailsFormModel
 import models.NewKeeperChooseYourAddressFormModel
-import models.NewKeeperChooseYourAddressViewModel
 import models.NewKeeperDetailsViewModel
 import models.NewKeeperDetailsViewModel.{createNewKeeper, getTitle}
 import models.NewKeeperEnterAddressManuallyFormModel.NewKeeperEnterAddressManuallyCacheKey
@@ -22,7 +21,7 @@ import common.views.helpers.FormExtensions.formBinding
 import common.webserviceclients.addresslookup.AddressLookupService
 import utils.helpers.Config
 import views.html.changekeeper.new_keeper_choose_your_address
-import models.CompleteAndConfirmFormModel._
+import models.CompleteAndConfirmFormModel.AllowGoingToCompleteAndConfirmPageCacheKey
 import models.NewKeeperChooseYourAddressViewModel
 import scala.Some
 import play.api.mvc.Result

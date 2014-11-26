@@ -267,7 +267,8 @@ change_keeper_privatekeeperdetailscomplete.mileage.validation  = You must enter 
 change_keeper_completeAndConfirm.dateofsale.label = Date of sale
 change_keeper_completeandconfirm.dateofsale.hint = For example, 20 3 1976
 dateofsale = Date of sale
-change_keeper_mileage = Mileage
+mileage = Mileage
+consent = Consent
 change_keeper_keeperdetailscomplete.consent = I have the consent of the party named above to notify DVLA that they are the new keeper of this vehicle.
 change_keeper_keeperdetailscomplete.consentError = You must have the consent of the new keeper to notify DVLA of the purchase of this vehicle
 

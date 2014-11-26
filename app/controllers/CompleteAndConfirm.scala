@@ -44,8 +44,8 @@ class CompleteAndConfirm @Inject()(implicit clientSideSessionFactory: ClientSide
     CompleteAndConfirmFormModel.Form.Mapping
   )
 
-  private final val NoCookiesFoundMessage = "Failed to find new keeper details and or vehicle details and or " +
-    "vehicle sorn details in cache. Now redirecting to vehicle lookup"
+  private final val NoCookiesFoundMessage = "Failed to find new keeper details and or vehicle details in cache" +
+    "Now redirecting to vehicle lookup"
 
   def present = Action { implicit request =>
     canPerformPresent {
@@ -61,7 +61,20 @@ class CompleteAndConfirm @Inject()(implicit clientSideSessionFactory: ClientSide
   }
 
   def submit = Action { implicit request =>
-    Ok("Summary")
+    form.bindFromRequest.fold(
+      invalidForm =>
+        (request.cookies.getModel[NewKeeperDetailsViewModel], request.cookies.getModel[VehicleAndKeeperDetailsModel]) match {
+        case (Some(newKeeperDetails), Some(vehicleAndKeeperDetails)) =>
+          BadRequest(complete_and_confirm(
+            CompleteAndConfirmViewModel(
+              formWithReplacedErrors(invalidForm),
+              vehicleAndKeeperDetails,
+              newKeeperDetails),
+            dateService))
+        case _ => redirectToVehicleLookup(NoCookiesFoundMessage)
+      },
+      validForm => Ok("success")
+    )
   }
 
 //  def submit = Action.async { implicit request =>
@@ -132,11 +145,10 @@ class CompleteAndConfirm @Inject()(implicit clientSideSessionFactory: ClientSide
   }
 
   def back = Action { implicit request =>
-    request.cookies.getModel[NewKeeperDetailsViewModel] match {
-      case Some(keeperDetails) =>
-        if (keeperDetails.address.uprn.isDefined) Redirect(routes.NewKeeperChooseYourAddress.present())
-        else Redirect(routes.NewKeeperEnterAddressManually.present())
-      case None => Redirect(routes.VehicleLookup.present())
+    request.cookies.getModel[NewKeeperEnterAddressManuallyFormModel] match {
+      case Some(manualAddress) =>
+        Redirect(routes.NewKeeperEnterAddressManually.present())
+      case None => Redirect(routes.NewKeeperChooseYourAddress.present())
     }
   }
 
@@ -144,11 +156,11 @@ class CompleteAndConfirm @Inject()(implicit clientSideSessionFactory: ClientSide
     form.replaceError(
       ConsentId,
       "error.required",
-      FormError(key = ConsentId, message = "acquire_keeperdetailscomplete.consentError", args = Seq.empty)
+      FormError(key = ConsentId, message = "change_keeper_keeperdetailscomplete.consentError", args = Seq.empty)
     ).replaceError(
         MileageId,
         "error.number",
-        FormError(key = MileageId, message = "acquire_privatekeeperdetailscomplete.mileage.validation", args = Seq.empty)
+        FormError(key = MileageId, message = "change_keeper_privatekeeperdetailscomplete.mileage.validation", args = Seq.empty)
       ).distinctErrors
   }
 
