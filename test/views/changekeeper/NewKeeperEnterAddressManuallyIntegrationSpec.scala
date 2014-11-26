@@ -61,14 +61,14 @@ class NewKeeperEnterAddressManuallyIntegrationSpec extends UiSpec with TestHarne
       go to BeforeYouStartPage
       cacheSetup()
       happyPath()
-      page.source should equal("Complete and Confirm") //ToDo when next page is implemented amend page.source to page.title
+      page.title should equal("Complete and confirm")
     }
 
     "accept when only mandatory fields only are input" taggedAs UiTag in new WebBrowser {
       go to BeforeYouStartPage
       cacheSetup()
       happyPathMandatoryFieldsOnly()
-      page.source should equal("Complete and Confirm") //ToDo when next page is implemented amend page.source to page.title
+      page.title should equal("Complete and confirm")
     }
 
     "display validation error messages when no details are entered" taggedAs UiTag in new WebBrowser {

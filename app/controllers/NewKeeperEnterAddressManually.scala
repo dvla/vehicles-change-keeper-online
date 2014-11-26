@@ -13,6 +13,10 @@ import common.model.{VehicleAndKeeperDetailsModel, AddressModel}
 import common.views.helpers.FormExtensions.formBinding
 import utils.helpers.Config
 import views.html.changekeeper.new_keeper_enter_address_manually
+import models.CompleteAndConfirmFormModel._
+import scala.Some
+import models.NewKeeperEnterAddressManuallyViewModel
+import play.api.mvc.Result
 
 class NewKeeperEnterAddressManually @Inject()()
                                           (implicit clientSideSessionFactory: ClientSideSessionFactory,
@@ -107,7 +111,8 @@ class NewKeeperEnterAddressManually @Inject()()
       case Some(keeperDetails) =>
         Redirect(routes.CompleteAndConfirm.present()).
           withCookie(validForm).
-          withCookie(keeperDetails)
+          withCookie(keeperDetails).
+          withCookie(AllowGoingToCompleteAndConfirmPageCacheKey, "true")
       case _ => error("No new keeper details found in cache, redirecting to vehicle lookup")
     }
   }

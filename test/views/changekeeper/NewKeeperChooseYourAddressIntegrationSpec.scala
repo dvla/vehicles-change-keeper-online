@@ -248,14 +248,14 @@ class NewKeeperChooseYourAddressIntegrationSpec extends UiSpec with TestHarness 
       go to BeforeYouStartPage
       cacheSetupPrivateKeeper
       happyPath
-      page.source should equal("Complete and Confirm") // TODO: change this once the real next page is built
+      page.title should equal("Complete and confirm")
     }
 
     "go to the next page when correct data is entered for a new business keeper" taggedAs UiTag in new WebBrowser {
       go to BeforeYouStartPage
       cacheSetupBusinessKeeper
       happyPath
-      page.source should equal("Complete and Confirm") // TODO: change this once the real next page is built
+      page.title should equal("Complete and confirm")
     }
 
     "display validation error messages when addressSelected is not in the list for a new private keeper" taggedAs UiTag in new WebBrowser {

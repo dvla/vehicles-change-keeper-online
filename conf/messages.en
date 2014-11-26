@@ -243,6 +243,34 @@ change_keeper_newKeeperEnterAddressManually.vehicleModel = Model
 change_keeper_newKeeperEnterAddressManually.p1 = As we do not have an address for this postcode, please enter one below
 change_keeper_newKeeperEnterAddressManually.p4 = If the details above do not match the vehicle to be sold, please contact the DVLA.
 
+#page 5 - complete and confirm
+change_keeper_completeAndConfirm.title = Complete and confirm
+change_keeper_completeandconfirm.taxOrSorn = Tax or SORN
+change_keeper_completeandconfirm.sornEntered = SORN from today
+change_keeper_completeandconfirm.sornNotEntered = This vehicle is taxed, or will be taxed
+change_keeper_completeandconfirm.newkeeperDetails = New keeper details
+change_keeper_completeandconfirm.displayName = Name
+change_keeper_completeandconfirm.address = Address
+change_keeper_completeandconfirm.email = Email
+change_keeper_completeandconfirm.emailNotEntered = Not entered
+change_keeper_completeandconfirm.fleetNumber = Fleet number
+change_keeper_completeandconfirm.fleetNumberNotEntered = Not entered
+change_keeper_completeandconfirm.vehicleDetails = Vehicle details
+change_keeper_completeandconfirm.vehicleReg = Registration
+change_keeper_completeandconfirm.vehicleMake = Make
+change_keeper_completeandconfirm.vehicleModel = Model
+change_keeper_completeAndConfirm.p1 = Please provide final details and confirm that the named individual has consented to become the new keeper of this vehicle
+change_keeper_completeAndConfirm.mileage.label = Vehicle mileage
+change_keeper_completeAndConfirm.submitbutton = Confirm new keeper
+change_keeper_completeAndConfirm.backbutton = Back
+change_keeper_privatekeeperdetailscomplete.mileage.validation  = You must enter a valid mileage between 0 and 999999
+change_keeper_completeAndConfirm.dateofsale.label = Date of sale
+change_keeper_completeandconfirm.dateofsale.hint = For example, 20 3 1976
+dateofsale = Date of sale
+change_keeper_mileage = Mileage
+change_keeper_keeperdetailscomplete.consent = I have the consent of the party named above to notify DVLA that they are the new keeper of this vehicle.
+change_keeper_keeperdetailscomplete.consentError = You must have the consent of the new keeper to notify DVLA of the purchase of this vehicle
+
 #uprn not found
 acquire_uprnnotfound.title = Error confirming post code
 acquire_uprnnotfound.p1 = An error has occurred validating your postcode. Please re-enter or enter your details manually
@@ -351,35 +379,6 @@ acquire_vehicleTaxOrSorn.sornVehicleText = Do you want to make a Statutory Off R
 acquire_vehicleTaxOrSorn.sornVehicle = Yes, SORN vehicle now
 acquire_vehicleTaxOrSorn.submitbutton = Next
 acquire_vehicleTaxOrSorn.backbutton = Back
-
-#complete and confirm
-acquire_completeAndConfirm.title = Complete and confirm
-acquire_completeandconfirm.taxOrSorn = Tax or SORN
-acquire_completeandconfirm.sornEntered = SORN from today
-acquire_completeandconfirm.sornNotEntered = This vehicle is taxed, or will be taxed
-acquire_completeandconfirm.newkeeperDetails = New keeper details
-acquire_completeandconfirm.displayName = Name
-acquire_completeandconfirm.address = Address
-acquire_completeandconfirm.email = Email
-acquire_completeandconfirm.emailNotEntered = Not entered
-acquire_completeandconfirm.fleetNumber = Fleet number
-acquire_completeandconfirm.fleetNumberNotEntered = Not entered
-acquire_completeandconfirm.vehicleDetails = Vehicle details
-acquire_completeandconfirm.vehicleReg = Registration
-acquire_completeandconfirm.vehicleMake = Make
-acquire_completeandconfirm.vehicleModel = Model
-acquire_completeAndConfirm.p1 = Please provide the following optional details and confirm that the named individual has consented to become the new keeper of this vehicle
-acquire_completeAndConfirm.mileage.label = Vehicle mileage
-acquire_completeAndConfirm.submitbutton = Confirm new keeper
-acquire_completeAndConfirm.backbutton = Back
-acquire_privatekeeperdetailscomplete.mileage.validation  = You must enter a valid mileage between 0 and 999999
-acquire_completeAndConfirm.dateofsale.label = Date of sale
-acquire_completeandconfirm.dateofsale.hint = For example, 20 3 1976
-dateofsale = Date of sale
-privatekeeper_mileage = Mileage
-
-acquire_keeperdetailscomplete.consent = I have the consent of the party named above to notify DVLA that they are the new keeper of this vehicle.
-acquire_keeperdetailscomplete.consentError = You must have the consent of the new keeper to notify DVLA of the purchase of this vehicle
 
 #acquire success
 acquire_success.complete.header = Thank You
