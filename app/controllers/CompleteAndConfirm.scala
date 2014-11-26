@@ -62,16 +62,19 @@ class CompleteAndConfirm @Inject()(implicit clientSideSessionFactory: ClientSide
 
   def submit = Action { implicit request =>
     form.bindFromRequest.fold(
-      invalidForm =>
-        (request.cookies.getModel[NewKeeperDetailsViewModel], request.cookies.getModel[VehicleAndKeeperDetailsModel]) match {
-        case (Some(newKeeperDetails), Some(vehicleAndKeeperDetails)) =>
-          BadRequest(complete_and_confirm(
-            CompleteAndConfirmViewModel(
-              formWithReplacedErrors(invalidForm),
-              vehicleAndKeeperDetails,
-              newKeeperDetails),
-            dateService))
-        case _ => redirectToVehicleLookup(NoCookiesFoundMessage)
+      invalidForm => {
+        val newKeeperDetailsOpt = request.cookies.getModel[NewKeeperDetailsViewModel]
+        val vehicleDetailsOpt = request.cookies.getModel[VehicleAndKeeperDetailsModel]
+        (newKeeperDetailsOpt, vehicleDetailsOpt) match {
+          case (Some(newKeeperDetails), Some(vehicleAndKeeperDetails)) =>
+            BadRequest(complete_and_confirm(
+              CompleteAndConfirmViewModel(
+                formWithReplacedErrors(invalidForm),
+                vehicleAndKeeperDetails,
+                newKeeperDetails),
+              dateService))
+          case _ => redirectToVehicleLookup(NoCookiesFoundMessage)
+        }
       },
       validForm => Ok("success")
     )
