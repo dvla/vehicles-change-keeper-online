@@ -120,7 +120,7 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
       contentAsString(result) should not include PrototypeHtml
     }
   }
-/*
+
   "present (use UPRN disabled)" should {
     "display the page if private new keeper details cached" in new WithApplication {
       whenReady(presentWithPrivateNewKeeper(ordnanceSurveyUseUprn = false), timeout) { r =>
@@ -212,8 +212,7 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
       contentAsString(result) should not include PrototypeHtml
     }
   }
-*/
-/*
+
   "submit (use UPRN enabled)" should {
     "redirect to complete and confirm page after a valid submit for private keeper" in new WithApplication {
       val request = buildCorrectlyPopulatedRequest().
@@ -507,7 +506,7 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
       }
     }
   }
-*/
+
   private def newKeeperChooseYourAddressWithFakeWebService(uprnFound: Boolean = true,
                                                           isPrototypeBannerVisible: Boolean = true,
                                                           ordnanceSurveyUseUprn: Boolean) = {
