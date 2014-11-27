@@ -156,18 +156,17 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
 //      }
 //    }
 
-//    "return a bad request if consent is not ticked" in new WithApplication { //ToDo uncomment test when us1684 is developed
-//      val request = buildCorrectlyPopulatedRequest(consent = "")
-//        .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
-//        .withCookies(CookieFactoryForUnitSpecs.vehicleDetailsModel())
-//        .withCookies(CookieFactoryForUnitSpecs.vehicleTaxOrSornFormModel())
-//        .withCookies(CookieFactoryForUnitSpecs.allowGoingToCompleteAndConfirm())
-//
-//      val result = completeAndConfirm.submit(request)
-//      whenReady(result) { r =>
-//        r.header.status should equal(BAD_REQUEST)
-//      }
-//    }
+    "return a bad request if consent is not ticked" in new WithApplication {
+      val request = buildCorrectlyPopulatedRequest(consent = "")
+        .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
+        .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
+        .withCookies(CookieFactoryForUnitSpecs.allowGoingToCompleteAndConfirm())
+
+      val result = completeAndConfirm.submit(request)
+      whenReady(result) { r =>
+        r.header.status should equal(BAD_REQUEST)
+      }
+    }
   }
 
 //  private def acquireWebService(acquireServiceStatus: Int = OK,
@@ -241,7 +240,6 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
       .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
       .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
       .withCookies(CookieFactoryForUnitSpecs.allowGoingToCompleteAndConfirm())
-
     completeAndConfirm.present(request)
   }
 }
