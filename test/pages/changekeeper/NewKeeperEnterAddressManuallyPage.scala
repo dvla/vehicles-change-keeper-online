@@ -30,6 +30,8 @@ object NewKeeperEnterAddressManuallyPage extends Page with WebBrowserDSL {
 
   def back(implicit driver: WebDriver): Element = find(id(BackId)).get
 
+  def errorTextForFields(text:String)(implicit driver: WebDriver):Boolean= find(tagName("body")).get.text.contains(text)
+
   def happyPath(buildingNameOrNumber: String = BuildingNameOrNumberValid,
                 line2: String = Line2Valid,
                 line3: String = Line3Valid,
