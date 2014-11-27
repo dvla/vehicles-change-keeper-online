@@ -38,9 +38,9 @@
 
                 <p>@Messages("change_keeper_completeAndConfirm.p1")</p>
 
-                @valtechInputText(
-                    data.form(MileageId), args =
-                    Map('_label -> Messages("change_keeper_completeAndConfirm.mileage.label"),
+                @valtechInputText(data.form(MileageId),
+                    hintText = Some(Messages("change_keeper_completeAndConfirm.mileage.hint")),
+                    args = Map('_label -> Messages("change_keeper_completeAndConfirm.mileage.label"),
                         '_showConstraints -> false,
                         'typeTel -> true,
                         'maxLength -> Mileage.MaxLength, // Must be set independently of the pattern as the pattern is only checked when the user submits.
