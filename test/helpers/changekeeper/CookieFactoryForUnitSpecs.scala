@@ -26,10 +26,14 @@ import pages.changekeeper.PrivateKeeperDetailsPage.{DayDateOfBirthValid, MonthDa
 import models.PrivateKeeperDetailsFormModel.PrivateKeeperDetailsCacheKey
 import webserviceclients.fakes.brute_force_protection.FakeBruteForcePreventionWebServiceImpl.MaxAttempts
 import models.NewKeeperEnterAddressManuallyFormModel.NewKeeperEnterAddressManuallyCacheKey
+import uk.gov.dvla.vehicles.presentation.common.views.models.{AddressLinesViewModel, AddressAndPostcodeViewModel}
+import pages.changekeeper.CompleteAndConfirmPage.MileageValid
+import pages.changekeeper.CompleteAndConfirmPage.DayDateOfSaleValid
+import pages.changekeeper.CompleteAndConfirmPage.MonthDateOfSaleValid
+import pages.changekeeper.CompleteAndConfirmPage.YearDateOfSaleValid
 import scala.Some
 import play.api.mvc.Cookie
 import uk.gov.dvla.vehicles.presentation.common.mappings.TitleType
-import uk.gov.dvla.vehicles.presentation.common.views.models.{AddressLinesViewModel, AddressAndPostcodeViewModel}
 
 object CookieFactoryForUnitSpecs extends TestComposition {
 
@@ -225,4 +229,22 @@ object CookieFactoryForUnitSpecs extends TestComposition {
 
   def vehicleLookupResponseCode(responseCode: String = VehicleLookupFailureResponseCode): Cookie =
     createCookie(VehicleLookupResponseCodeCacheKey, responseCode)
+
+  def allowGoingToCompleteAndConfirm(): Cookie =
+    createCookie(CompleteAndConfirmFormModel.AllowGoingToCompleteAndConfirmPageCacheKey, "")
+
+  def completeAndConfirmModel(mileage: Option[Int] = Some(MileageValid.toInt),
+                              dateOfSale: LocalDate = new LocalDate(
+                                YearDateOfSaleValid.toInt,
+                                MonthDateOfSaleValid.toInt,
+                                DayDateOfSaleValid.toInt),
+                              consent: String = ConsentTrue): Cookie = {
+    val key = CompleteAndConfirmFormModel.CompleteAndConfirmCacheKey
+    val value = CompleteAndConfirmFormModel(
+      mileage,
+      dateOfSale,
+      consent
+    )
+    createCookie(key, value)
+  }
 }
