@@ -5,6 +5,7 @@ import uk.gov.dvla.vehicles.presentation.common.views.models.AddressLinesViewMod
 import AddressLinesViewModel.Form.LineMaxLength
 import helpers.UnitSpec
 import models.NewKeeperEnterAddressManuallyFormModel
+import models.NewKeeperEnterAddressManuallyFormModel.Form.PostTownMaxLength
 import NewKeeperEnterAddressManuallyFormModel.Form.AddressAndPostcodeId
 import AddressLinesViewModel.Form.{AddressLinesId, BuildingNameOrNumberId, Line2Id, Line3Id, PostTownId}
 import webserviceclients.fakes.FakeAddressLookupService.{BuildingNameOrNumberValid, Line2Valid, Line3Valid, PostTownValid}
@@ -98,7 +99,7 @@ final class NewKeeperEnterAddressManuallyFormSpec extends UnitSpec {
     }
 
     "reject if postTown is more than max length" in {
-      formWithValidDefaults(line2 = "", line3 = "", postTown = "a" * (LineMaxLength + 1)).
+      formWithValidDefaults(line2 = "", line3 = "", postTown = "a" * (PostTownMaxLength + 1)).
         errors.flatMap(_.messages) should contain theSameElementsAs List("error.maxLength")
     }
 
@@ -112,7 +113,7 @@ final class NewKeeperEnterAddressManuallyFormSpec extends UnitSpec {
         buildingNameOrNumber = "a" * LineMaxLength + 1,
         line2 = "b" * LineMaxLength,
         line3 = "c" * LineMaxLength,
-        postTown = "d" * LineMaxLength
+        postTown = "d" * PostTownMaxLength
       ).errors should have length 1
     }
 

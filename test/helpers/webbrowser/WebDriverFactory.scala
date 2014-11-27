@@ -65,8 +65,8 @@ object WebDriverFactory {
     }
     else {
       // Default if testing locally
-      Logger.info(s"WebDriver local testUrl: http://localhost:9004")
-      new String("http://localhost:9004/")
+      Logger.info(s"WebDriver local testUrl: http://localhost:9005")
+      new String("http://localhost:9005/")
     }
   }
 

@@ -39,6 +39,12 @@ GET         /new-keeper-choose-your-address/back        @controllers.NewKeeperCh
 GET         /new-keeper-enter-address-manually          @controllers.NewKeeperEnterAddressManually.present
 POST        /new-keeper-enter-address-manually          @controllers.NewKeeperEnterAddressManually.submit
 
+#page 5 - Complete and Confirm
+GET         /complete-and-confirm                       @controllers.CompleteAndConfirm.present
+GET         /complete-and-confirm/back                  @controllers.CompleteAndConfirm.back
+POST        /complete-and-confirm                       @controllers.CompleteAndConfirm.submit
+
+
 # REMOVE ME WHEN THE STORIES ARE AVAILABLE
 GET         /next                                       @controllers.TempController.present
 

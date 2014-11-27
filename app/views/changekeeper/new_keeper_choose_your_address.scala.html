@@ -2,7 +2,9 @@
   newKeeperName: String,
   newKeeperPostcode: String,
   newKeeperEmail: Option[String],
-  dropDownOptions: Seq[(String, String)])(implicit lang: Lang,
+  dropDownOptions: Seq[(String, String)],
+  isBusinessKeeper: Boolean,
+  businessFleetNumber: Option[String])(implicit lang: Lang,
   token: uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction.CsrfPreventionToken,
   config: utils.helpers.Config)
 
@@ -17,8 +19,9 @@
 @import models.NewKeeperChooseYourAddressFormModel.Form.AddressSelectId
 
 @main(
-  progress = Some(Messages("change_keeper_progress_6")),
-  title = Messages("change_keeper_newKeeperChooseYourAddress_title"),
+  progress = Some(Messages("change_keeper_progress_4")),
+  title = if(dropDownOptions.isEmpty) Messages("change_keeper_newKeeperChooseYourAddress_no_address_found_title")
+          else Messages("change_keeper_newKeeperChooseYourAddress_addresses_found_title"),
   currentForm = Some(viewModel.form)
 ) {
   <div class="two-col clearfix">
@@ -41,7 +44,19 @@
     @form(action = NewKeeperChooseYourAddress.submit()) {
       @csrfTokenHiddenField()
       <dl class="playback">
-        <dt>@Messages("change_keeper_newKeeperChooseYourAddress_newKeeperName_label")</dt>
+        @if(isBusinessKeeper) {
+          <dt>@Messages("change_keeper_newKeeperChooseYourAddress_newBusinessFleetNumber_label")</dt>
+          @if(businessFleetNumber == None) {
+            <dd>@Messages("change_keeper_newKeeperChooseYourAddress.fleetNumberNotEntered")</dd>
+          } else {
+            <dd>@businessFleetNumber.get</dd>
+          }
+        }
+        @if(isBusinessKeeper) {
+            <dt>@Messages("change_keeper_newKeeperChooseYourAddress_newBusinessKeeperName_label")</dt>
+        } else {
+            <dt>@Messages("change_keeper_newKeeperChooseYourAddress_newPrivateKeeperName_label")</dt>
+        }
         <dd>@Messages("change_keeper_newKeeperChooseYourAddress_newKeeperName", newKeeperName)</dd>
         <dt>@Messages("change_keeper_newKeeperChooseYourAddress_newKeeperEmail_label")</dt>
         @if(newKeeperEmail == None) {
@@ -56,8 +71,10 @@
       <br/>
 
       @if(dropDownOptions.isEmpty) {
-        <h2>@Messages("change_keeper_newKeeperChooseYourAddress_noaddressesfound.h2.1")</h2>
-        <h2>@Messages("change_keeper_newKeeperChooseYourAddress_noaddressesfound.h2.2")</h2>
+        <div class="info-notice">
+            <h2>@Messages("change_keeper_newKeeperChooseYourAddress_noaddressesfound.h2.1")</h2>
+            <h2>@Messages("change_keeper_newKeeperChooseYourAddress_noaddressesfound.h2.2")</h2>
+        </div>
       } else {
         @valtechSelect(viewModel.form(AddressSelectId),
           options = dropDownOptions.toSeq,

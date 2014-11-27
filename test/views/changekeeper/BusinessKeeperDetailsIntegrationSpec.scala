@@ -14,7 +14,9 @@ import pages.changekeeper.BusinessKeeperDetailsPage.{back, navigate}
 import helpers.common.HtmlTestHelper.{htmlRegex, whitespaceRegex}
 import pages.common.Feedback.EmailFeedbackLink
 
-final class BusinessKeeperDetailsIntegrationSpec extends UiSpec with TestHarness {
+class BusinessKeeperDetailsIntegrationSpec extends UiSpec with TestHarness {
+
+  final val ProgressStepNumber = 3
 
   "go to page" should {
     "display the page" taggedAs UiTag in new WebBrowser {
@@ -36,14 +38,14 @@ final class BusinessKeeperDetailsIntegrationSpec extends UiSpec with TestHarness
       go to BeforeYouStartPage
       cacheSetup()
       go to BusinessKeeperDetailsPage
-      page.source.contains(progressStep(5)) should equal(true)
+      page.source.contains(progressStep(ProgressStepNumber)) should equal(true)
     }
 
     "not display the progress of the page when progressBar is set to false" taggedAs UiTag in new ProgressBarFalse {
       go to BeforeYouStartPage
       cacheSetup()
       go to BusinessKeeperDetailsPage
-      page.source.contains(progressStep(5)) should equal(false)
+      page.source.contains(progressStep(ProgressStepNumber)) should equal(false)
     }
 
     "contain the hidden csrfToken field" taggedAs UiTag in new WebBrowser {

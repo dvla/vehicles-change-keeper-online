@@ -1,0 +1,92 @@
+@(data: models.CompleteAndConfirmViewModel,
+  dateService: uk.gov.dvla.vehicles.presentation.common.services.DateService)(implicit lang: Lang,
+  token: uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction.CsrfPreventionToken,
+  config: utils.helpers.Config)
+
+@import views.html.helper.form
+@import controllers.routes.CompleteAndConfirm
+@import uk.gov.dvla.vehicles.presentation.common
+@import common.mappings.Mileage
+@import common.views.html.widgets.dates.inputDayMonthYearTextbox
+@import common.views.html.widgets.base.csrfTokenHiddenField
+@import common.views.helpers.BaseTemplate.fieldConstructor
+@import common.views.html.widgets.base.{valtechInputText, valtechDeclareCheck}
+@import common.views.helpers.LabelHelper.optionalFieldKey
+@import models.CompleteAndConfirmFormModel.Form.{MileageId, ConsentId, DateOfSaleId, TodaysDateId}
+@import views.changekeeper.CompleteAndConfirm.{BackId, SubmitId}
+
+@main(
+    progress = Some(Messages("change_keeper_progress_5")),
+    title = Messages("change_keeper_completeAndConfirm.title"),
+    currentForm = Some(data.form)
+) {
+
+    <script src="@routes.Assets.at("lib/vehicles-presentation-common/javascripts/autofill-todays-date.js")" type="text/javascript"></script>
+
+    <div class="two-col clearfix acquire-complete-confirm">
+        <div class="first-col">
+            <h1 class="mobile-only">@Messages("change_keeper_completeAndConfirm.title")</h1>
+            <dl class="playback">
+                playback here
+            </dl>
+
+        </div>
+
+        <div class="second-col">
+            @form(action = CompleteAndConfirm.submit) {
+                @csrfTokenHiddenField()
+
+                <p>@Messages("change_keeper_completeAndConfirm.p1")</p>
+
+                @valtechInputText(data.form(MileageId),
+                    hintText = Some(Messages("change_keeper_completeAndConfirm.mileage.hint")),
+                    args = Map('_label -> Messages("change_keeper_completeAndConfirm.mileage.label"),
+                        '_showConstraints -> false,
+                        'typeTel -> true,
+                        'maxLength -> Mileage.MaxLength, // Must be set independently of the pattern as the pattern is only checked when the user submits.
+                        'autofocus -> true,
+                        'optionalFieldKey -> true
+                        //'title -> Messages("change_keeper_keeperdetailscomplete.mileage.validation")
+                    ) ++
+                    (if(config.isHtml5ValidationEnabled) Map('pattern -> Mileage.Pattern) else Nil)
+                )
+
+                <div id=@DateOfSaleId>
+                    @inputDayMonthYearTextbox(
+                        field = data.form(DateOfSaleId),
+                        args = Map(
+                            '_label -> Messages("change_keeper_completeAndConfirm.dateofsale.label"),
+                            'autofocus -> true
+                        ),
+                        dateService = dateService,
+                        showTodaysDateButton = true,
+                        showTodaysDateButtonId = Some(TodaysDateId),
+                        hintText = Some(Messages("change_keeper_completeandconfirm.dateofsale.hint"))
+                    )
+                </div>
+
+                @valtechDeclareCheck(
+                    data.form(ConsentId),
+                    args = Map(
+                        '_showConstraints -> false,
+                        '_label -> Messages("change_keeper_keeperdetailscomplete.consent")
+                    )
+                )
+
+                <div class="form-steps">
+                    <button id="@SubmitId"
+                        type="submit"
+                        name="action"
+                        class="button">
+                        @Messages("change_keeper_completeAndConfirm.submitbutton")
+                    </button>
+                    <br/>
+                    <a class="back" id="@BackId" href="@controllers.routes.CompleteAndConfirm.back()">
+                        @Messages("change_keeper_completeAndConfirm.backbutton")
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+    <script src="@routes.Assets.at("javascripts/firefox-dont-cache-page.js")" type="text/javascript"></script>
+}

@@ -355,7 +355,7 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
           NewKeeperEnterAddressManuallyCacheKey,
           NewKeeperChooseYourAddressCacheKey,
           TraderDetailsCacheKey
-          )
+        )
       }
     }
   }
@@ -381,7 +381,7 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
       }
     }
 
-    "return a bad request if not address selected for private keeper" in new WithApplication {
+    "return a bad request if no address selected for private keeper" in new WithApplication {
       val request = buildCorrectlyPopulatedRequest(newKeeperUprn = "").
         withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
         withCookies(CookieFactoryForUnitSpecs.privateKeeperDetailsModel())
@@ -391,7 +391,7 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
       }
     }
 
-    "return a bad request if not address selected for business keeper" in new WithApplication {
+    "return a bad request if no address selected for business keeper" in new WithApplication {
       val request = buildCorrectlyPopulatedRequest(newKeeperUprn = "").
         withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
         withCookies(CookieFactoryForUnitSpecs.businessKeeperDetailsModel())

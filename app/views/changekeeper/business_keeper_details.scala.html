@@ -19,7 +19,7 @@ config: utils.helpers.Config
 @import mappings.BusinessKeeperName
 
 @main(
-progress = Some(Messages("change_keeper_progress_5")),
+progress = Some(Messages("change_keeper_progress_3")),
 title = Messages("change_keeper_businesskeeperdetails.title"),
 currentForm = Some(viewModel.form)
 ) {
@@ -47,21 +47,19 @@ currentForm = Some(viewModel.form)
             @form(action = controllers.routes.BusinessKeeperDetails.submit()) {
             @csrfTokenHiddenField()
 
-            <div class="info-notice">
-                <p><strong>@Messages("change_keeper_businesskeeperdetails.p3")</strong></p>
-                <p>@Messages("change_keeper_businesskeeperdetails.p4")</p><br>
+            <p><strong>@Messages("change_keeper_businesskeeperdetails.p3")</strong></p>
+            <p>@Messages("change_keeper_businesskeeperdetails.p4")</p>
 
-                @valtechInputText(viewModel.form(FleetNumberId),
-                hintText = Some(Messages("change_keeper_businesskeeperdetails.businessname.hint")), args =
-                Map('_label -> Messages("change_keeper_businesskeeperdetails.fleetnumber"),
-                'maxLength -> FleetNumber.MaxLength,
-                'typeFleetNumber -> true,
-                '_showConstraints -> false,
-                'autofocus -> true
-                ) ++
-                (if(config.isHtml5ValidationEnabled) Map('pattern -> FleetNumber.Pattern) else Nil)
-                )
-            </div>
+            @valtechInputText(viewModel.form(FleetNumberId),
+            hintText = Some(Messages("change_keeper_businesskeeperdetails.businessname.hint")), args =
+            Map('_label -> Messages("change_keeper_businesskeeperdetails.fleetnumber"),
+            'maxLength -> FleetNumber.MaxLength,
+            'typeFleetNumber -> true,
+            '_showConstraints -> false,
+            'autofocus -> true
+            ) ++
+            (if(config.isHtml5ValidationEnabled) Map('pattern -> FleetNumber.Pattern) else Nil)
+            )
 
             <div class="uppercase-input">
                 @valtechInputText(viewModel.form(BusinessNameId), args =

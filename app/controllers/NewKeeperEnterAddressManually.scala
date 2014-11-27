@@ -2,18 +2,22 @@ package controllers
 
 import com.google.inject.Inject
 import models.NewKeeperDetailsViewModel.createNewKeeper
-import models.{NewKeeperEnterAddressManuallyViewModel, NewKeeperEnterAddressManuallyFormModel, BusinessKeeperDetailsFormModel, PrivateKeeperDetailsFormModel}
+import models.{NewKeeperEnterAddressManuallyFormModel, BusinessKeeperDetailsFormModel, PrivateKeeperDetailsFormModel}
 import play.api.Logger
 import play.api.data.{Form, FormError}
 import play.api.mvc.{Action, AnyContent, Controller, Request, Result}
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.ClientSideSessionFactory
-import common.clientsidesession.CookieImplicits.{RichCookies, RichResult}
-import uk.gov.dvla.vehicles.presentation.common.model.{VehicleAndKeeperDetailsModel, AddressModel}
-import uk.gov.dvla.vehicles.presentation.common.views.helpers.FormExtensions.formBinding
+import common.clientsidesession.CookieImplicits.{RichCookies, RichResult, RichForm}
+import common.model.{VehicleAndKeeperDetailsModel, AddressModel}
+import common.views.helpers.FormExtensions.formBinding
 import utils.helpers.Config
 import views.html.changekeeper.new_keeper_enter_address_manually
-import uk.gov.dvla.vehicles.presentation.common.clientsidesession.CookieImplicits.RichForm
+import models.CompleteAndConfirmFormModel._
+import models.NewKeeperChooseYourAddressFormModel.NewKeeperChooseYourAddressCacheKey
+import scala.Some
+import models.NewKeeperEnterAddressManuallyViewModel
+import play.api.mvc.Result
 
 class NewKeeperEnterAddressManually @Inject()()
                                           (implicit clientSideSessionFactory: ClientSideSessionFactory,
@@ -107,8 +111,10 @@ class NewKeeperEnterAddressManually @Inject()()
     )) match {
       case Some(keeperDetails) =>
         Redirect(routes.CompleteAndConfirm.present()).
+          discardingCookie(NewKeeperChooseYourAddressCacheKey).
           withCookie(validForm).
-          withCookie(keeperDetails)
+          withCookie(keeperDetails).
+          withCookie(AllowGoingToCompleteAndConfirmPageCacheKey, "true")
       case _ => error("No new keeper details found in cache, redirecting to vehicle lookup")
     }
   }

@@ -2,5 +2,5 @@ package pages.common
 
 object Feedback {
   final val EmailFeedbackLink = "<a id=\"feedback\" href=\"mailto:vm.feedback@digital.dvla.gov.uk?" +
-    "Subject=Buy%20from%20the%20trade%20feedback\">"
+    "Subject=Private%20sale%20of%20a%20vehicle%20feedback\">"
 }
