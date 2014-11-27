@@ -363,7 +363,7 @@ privatekeeper_dateofbirth = Date of birth of new keeper
 
 #vehicle tax or sorn
 acquire_vehicleTaxOrSorn_title = Vehicle tax or SORN
-acquire_vehicleTaxOrSorn.newkeeperDetails = New keeper details
+acquire_vehicleTaxOrSorn.newkeeperDetails = Buyer's Details
 acquire_vehicleTaxOrSorn.displayName = Name
 acquire_vehicleTaxOrSorn.address = Address
 acquire_vehicleTaxOrSorn.email = Email
