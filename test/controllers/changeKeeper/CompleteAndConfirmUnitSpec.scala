@@ -74,38 +74,37 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
       }
     }
 
-//    "play back business keeper details as expected" in new WithApplication() { //ToDo uncomment test when us1685 is developed
-//      val request = FakeRequest().
-//        withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel(
-//        businessName = Some(BusinessNameValid),
-//        fleetNumber = Some(FleetNumberValid),
-//        email = Some(EmailValid),
-//        isBusinessKeeper = true))
-//      .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
-//      .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
-//      .withCookies(CookieFactoryForUnitSpecs.privateKeeperDetailsModel())
-//      val content = contentAsString(completeAndConfirm.present(request))
-//      content should include("<dt>Fleet number</dt>")
-//      content should include(s"$BusinessNameValid")
-//      content should include(s"$FleetNumberValid")
-//      content should include(s"$EmailValid")
-//    }
+    "play back business keeper details as expected" in new WithApplication() {
+      val request = FakeRequest().
+        withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel(
+        businessName = Some(BusinessNameValid),
+        fleetNumber = Some(FleetNumberValid),
+        email = Some(EmailValid),
+        isBusinessKeeper = true))
+      .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
+      .withCookies(CookieFactoryForUnitSpecs.allowGoingToCompleteAndConfirm())
+      val content = contentAsString(completeAndConfirm.present(request))
+      content should include("<dt>Fleet number</dt>")
+      content should include(s"$BusinessNameValid")
+      content should include(s"$FleetNumberValid")
+      content should include(s"$EmailValid")
+    }
 
-//    "play back private keeper details as expected" in new WithApplication() { //ToDo uncomment test when us1685 is developed
-//      val request = FakeRequest().
-//        withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel(
-//        firstName = Some(FirstNameValid),
-//        lastName = Some(LastNameValid),
-//        email = Some(EmailValid),
-//        isBusinessKeeper = false
-//      )).withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
-//        .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
-//        .withCookies(CookieFactoryForUnitSpecs.privateKeeperDetailsModel())
-//      val content = contentAsString(completeAndConfirm.present(request))
-//      content should include(s"$FirstNameValid")
-//      content should include(s"$LastNameValid")
-//      content should include(s"$EmailValid")
-//    }
+    "play back private keeper details as expected" in new WithApplication() { //ToDo uncomment test when us1685 is developed
+      val request = FakeRequest().
+        withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel(
+        firstName = Some(FirstNameValid),
+        lastName = Some(LastNameValid),
+        email = Some(EmailValid),
+        isBusinessKeeper = false
+      )).withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
+        .withCookies(CookieFactoryForUnitSpecs.privateKeeperDetailsModel())
+        .withCookies(CookieFactoryForUnitSpecs.allowGoingToCompleteAndConfirm())
+      val content = contentAsString(completeAndConfirm.present(request))
+      content should include(s"$FirstNameValid")
+      content should include(s"$LastNameValid")
+      content should include(s"$EmailValid")
+    }
   }
 
   "submit" should {
