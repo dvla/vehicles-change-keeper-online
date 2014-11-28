@@ -90,7 +90,7 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
       content should include(s"$EmailValid")
     }
 
-    "play back private keeper details as expected" in new WithApplication() { //ToDo uncomment test when us1685 is developed
+    "play back private keeper details as expected" in new WithApplication() { 
       val request = FakeRequest().
         withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel(
         firstName = Some(FirstNameValid),
