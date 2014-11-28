@@ -6,6 +6,7 @@ import models.VehicleLookupFormModel
 import models.VehicleLookupFormModel.VehicleLookupResponseCodeCacheKey
 import models.VehicleLookupFormModel.Form.{DocumentReferenceNumberId, VehicleRegistrationNumberId, VehicleSoldToId}
 import models.{BusinessKeeperDetailsCacheKeys, PrivateKeeperDetailsCacheKeys}
+import org.joda.time.DateTime
 import play.api.data.{Form => PlayForm, FormError}
 import play.api.mvc.{Action, Call, Request}
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -85,7 +86,8 @@ class VehicleLookup @Inject()(val bruteForceService: BruteForcePreventionService
   override protected def callLookupService(trackingId: String, form: Form)(implicit request: Request[_]): Future[LookupResult] = {
     val vehicleAndKeeperDetailsRequest = VehicleAndKeeperDetailsRequest(
       referenceNumber = form.referenceNumber,
-      registrationNumber = form.registrationNumber
+      registrationNumber = form.registrationNumber,
+      transactionTimestamp = new DateTime
     )
 
     vehicleLookupService.invoke(vehicleAndKeeperDetailsRequest, trackingId) map { response =>
