@@ -95,15 +95,6 @@ change_keeper_progress_7 = Step 7 of 9
 change_keeper_progress_8 = Step 8 of 9
 change_keeper_progress_9 = Step 9 of 9
 
-# help
-#disposal.help.title = Help
-#disposal.help.p1 = This service is in Private Beta phase
-#disposal.help.p2.1 = If you require any help using it then please contact Julie Riseley on 01792 788410 or
-#disposal.help.p2.2 = send an email
-#disposal.help.email =  mailto:julie.riseley@dvla.gsi.gov.uk?Subject=Sell%20to%20the%20Trade%20Help
-#disposal.help.exit_button = Exit
-#disposal.help.back_button = Back
-
 # 404 onHandlerNotFound
 onHandlerNotFound.title=This page cannot be found
 onHandlerNotFound.header=This page cannot be found
@@ -476,16 +467,16 @@ ms.vehiclesService.response.unableToProcessApplication = We are unable to proces
 ms.vehiclesService.response.unableToProcessApplication-address = DVLA, Swansea, SA99 1BA
 
 # help
-acquire.help.title = Help
-acquire.help.p1 = This service is in Private Beta phase
-acquire.help.p2.1 = If you require any help using it then please contact Julie Riseley on 01792 788410 or
-acquire.help.p2.2 = send an email
-acquire.help.email =  mailto:julie.riseley@dvla.gsi.gov.uk?Subject=Buy%20from%20the%20trade%20help
-acquire.help.exit_button = Exit
-acquire.help.back_button = Back
+help.title = Help
+help.p1 = This service is in Private Beta phase
+help.p2.1 = If you require any help using it then please contact Julie Riseley on 01792 788410 or
+help.p2.2 = send an email
+help.email =  mailto:julie.riseley@dvla.gsi.gov.uk?Subject=Private%20sale%20of%20a%20vehicle%20help
+help.exit_button = Exit
+help.back_button = Back
 
 # closed
-acquire.closed.title = Service Closed
-acquire.closed.p1 = The supporting systems for this service are currently unavailable.
-acquire.closed.p2 = The normal hours of operation are Monday to Saturday - 08:00 to 18:00. Please complete your transaction during these hours.
-acquire.closed.exit_button = Exit
+serviceClosed.title = Service Closed
+serviceClosed.p1 = The supporting systems for this service are currently unavailable.
+serviceClosed.p2 = The normal hours of operation are Monday to Saturday - 08:00 to 18:00. Please complete your transaction during these hours.
+serviceClosed.exit_button = Exit
