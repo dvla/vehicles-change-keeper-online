@@ -471,7 +471,7 @@ help.title = Help
 help.p1 = This service is in Private Beta phase
 help.p2.1 = If you require any help using it then please contact Julie Riseley on 01792 788410 or
 help.p2.2 = send an email
-help.email =  mailto:julie.riseley@dvla.gsi.gov.uk?Subject=Private%20sale%20of%20a%20vehicle%20help
+help.email = mailto:julie.riseley@dvla.gsi.gov.uk?Subject=Private%20sale%20of%20a%20vehicle%20help
 help.exit_button = Exit
 help.back_button = Back
 
