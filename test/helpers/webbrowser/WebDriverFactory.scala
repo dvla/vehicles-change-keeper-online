@@ -55,6 +55,8 @@ object WebDriverFactory {
     getProperty("test.remote", default = defaultRemote.toBoolean)
   }
 
+  def testUrlx: String = TestConfiguration.testUrl
+
   def testUrl: String = {
     if (testRemote) {
       val testUrlEnvVar = sys.env.get("test.url") getOrElse

@@ -41,5 +41,6 @@ trait TestHarness {
 
   object WebBrowser {
     private lazy val fakeAppWithTestGlobal: FakeApplication = FakeApplication(withGlobal = Some(TestGlobal))
+    private lazy val testPort: Int = TestConfiguration.testPort
   }
 }
