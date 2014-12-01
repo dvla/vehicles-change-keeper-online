@@ -9,8 +9,8 @@ import pages.changekeeper.HelpPage.{back, exit}
 import pages.common.HelpPanel
 import models.HelpCacheKey
 import helpers.changekeeper.CookieFactoryForUISpecs
-import pages.changekeeper.{PrivateKeeperDetailsPage, VehicleLookupPage, HelpPage, BeforeYouStartPage}
-import pages.common.Feedback.EmailFeedbackLink
+import pages.changekeeper.{PrivateKeeperDetailsPage, HelpPage, BeforeYouStartPage}
+import pages.common.Feedback.{EmailFeedbackLink, EmailHelpLink}
 
 final class HelpIntegrationSpec extends UiSpec with TestHarness {
   "go to page" should {
@@ -22,6 +22,11 @@ final class HelpIntegrationSpec extends UiSpec with TestHarness {
     "contain feedback email facility with appropriate subject" taggedAs UiTag in new WebBrowser {
       go to HelpPage
       page.source.contains(EmailFeedbackLink) should equal(true)
+    }
+
+    "contain help email facility with appropriate subject" taggedAs UiTag in new WebBrowser {
+      go to HelpPage
+      page.source.contains(EmailHelpLink) should equal(true)
     }
 
     "not display any progress indicator when progressBar is set to true" taggedAs UiTag in new ProgressBarTrue {
