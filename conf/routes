@@ -44,6 +44,10 @@ GET         /complete-and-confirm                       @controllers.CompleteAnd
 GET         /complete-and-confirm/back                  @controllers.CompleteAndConfirm.back
 POST        /complete-and-confirm                       @controllers.CompleteAndConfirm.submit
 
+#page 6 - Change keeper success
+GET         /change-keeper-success                      @controllers.ChangeKeeperSuccess.present
+GET         /change-keeper-another                      @controllers.ChangeKeeperSuccess.buyAnother
+GET         /change-keeper-finish                       @controllers.ChangeKeeperSuccess.finish
 
 # REMOVE ME WHEN THE STORIES ARE AVAILABLE
 GET         /next                                       @controllers.TempController.present
