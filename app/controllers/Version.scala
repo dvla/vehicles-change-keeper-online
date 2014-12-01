@@ -10,7 +10,4 @@ class Version @Inject()(vehiclesKeeperConfig: VehicleAndKeeperLookupConfig,osAdd
   extends controllers.Version(
     vehiclesKeeperConfig.vehicleAndKeeperLookupMicroServiceBaseUrl + "/version",
     osAddressLookupConfig.baseUrl + "/version"
-  ) {
-
-  println("ordnancesurvey.baseUrl:" + sys.props.get("ordnancesurvey.baseUrl").get)
-}
+  )
