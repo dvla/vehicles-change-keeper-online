@@ -1,5 +1,6 @@
 package helpers.webbrowser
 
+import org.specs2.execute.Result
 import play.api.Logger
 
 object TestConfiguration {
@@ -16,15 +17,16 @@ object TestConfiguration {
     sysOrEnvProp
   }
 
-  def testPort: Int = {
-    val sysOrEnvProp = sys.props.get(TestPort)
+  def testPort: Int = sys.props.get(TestPort)
       .orElse(sys.env.get(environmentVariableName(TestPort)))
-      .getOrElse(DefaultTestPort)
-    Logger.debug(s"testPort - $TestPort from system or environment properties or default value, value = $sysOrEnvProp")
-    val value = s"http://localhost:$sysOrEnvProp/"
+      .getOrElse(DefaultTestPort).toInt
+
+  def configureTestUrl(port: Int = testPort)(code: => Result): Result = {
+    val value = s"http://localhost:$port/"
+    Logger.debug(s"TestHarness - Set system property ${TestUrl} to value $value")
     sys.props += ((TestUrl, value))
-    Logger.debug(s"testPort - Set system property $TestUrl to value $value")
-    sysOrEnvProp.toInt
+    try code
+    finally sys.props -= TestUrl
   }
 
   // The environment variables have underscore instead of full stop

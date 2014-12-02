@@ -2,6 +2,7 @@ package helpers.webbrowser
 
 import helpers.common.ProgressBar
 import ProgressBar.{fakeApplicationWithProgressBarFalse, fakeApplicationWithProgressBarTrue}
+import play.api.Logger
 import play.api.test._
 import org.openqa.selenium.WebDriver
 import org.specs2.mutable.Around
@@ -19,15 +20,13 @@ trait TestHarness {
   import WebBrowser._
   abstract class WebBrowser(val app: FakeApplication = fakeAppWithTestGlobal,
                             val port: Int = testPort,
-                            implicit protected val webDriver: WebDriver = WebDriverFactory.webDriver
-                             )
+                            implicit protected val webDriver: WebDriver = WebDriverFactory.webDriver)
       extends Around with Scope with WebBrowserDSL {
 
     override def around[T: AsResult](t: => T): Result = {
-      try {
-        Helpers.running(TestServer(port, app))(AsResult.effectively(t))
-      } finally {
-        webDriver.quit()
+      TestConfiguration.configureTestUrl(port) {
+        try Helpers.running(TestServer(port, app))(AsResult.effectively(t))
+        finally webDriver.quit()
       }
     }
   }
