@@ -8,7 +8,6 @@ import org.openqa.selenium.htmlunit.HtmlUnitDriver
 import org.openqa.selenium.firefox.{FirefoxDriver, FirefoxProfile}
 import org.openqa.selenium.phantomjs.{PhantomJSDriver, PhantomJSDriverService}
 import org.openqa.selenium.remote.DesiredCapabilities
-import play.api.Logger
 import uk.gov.dvla.vehicles.presentation.common.ConfigProperties.getProperty
 
 import java.util.concurrent.TimeUnit
@@ -49,26 +48,7 @@ object WebDriverFactory {
     webDriver(browserType, javascriptEnabled)
   }
 
-  def testRemote: Boolean = {
-    val defaultRemote = sys.env.get("test.remote") getOrElse
-      sys.props.get("test.remote").getOrElse("false")
-    getProperty("test.remote", default = defaultRemote.toBoolean)
-  }
-
-  def testUrl: String = {
-    if (testRemote) {
-      val testUrlEnvVar = sys.env.get("test.url") getOrElse
-        sys.props.get("test.url").getOrElse("http://localhost:9000/")
-      val testUrl = getProperty("test.url", testUrlEnvVar)
-      Logger.info(s"WebDriver remote testUrl: $testUrl")
-      testUrl
-    }
-    else {
-      // Default if testing locally
-      Logger.info(s"WebDriver local testUrl: http://localhost:9005")
-      new String("http://localhost:9005/")
-    }
-  }
+  def testUrl: String = TestConfiguration.testUrl
 
   private def chromeDriver = {
     systemProperties.setProperty(

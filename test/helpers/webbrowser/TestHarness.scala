@@ -18,7 +18,7 @@ import org.specs2.execute.{Result, AsResult}
 trait TestHarness {
   import WebBrowser._
   abstract class WebBrowser(val app: FakeApplication = fakeAppWithTestGlobal,
-                            val port: Int = 9005,
+                            val port: Int = testPort,
                             implicit protected val webDriver: WebDriver = WebDriverFactory.webDriver
                              )
       extends Around with Scope with WebBrowserDSL {
@@ -41,5 +41,6 @@ trait TestHarness {
 
   object WebBrowser {
     private lazy val fakeAppWithTestGlobal: FakeApplication = FakeApplication(withGlobal = Some(TestGlobal))
+    private lazy val testPort: Int = TestConfiguration.testPort
   }
 }
