@@ -6,7 +6,6 @@ import org.junit.Ignore
 import org.junit.runner.RunWith
 
 @RunWith(classOf[Cucumber])
-@Ignore
 @CucumberOptions(
   features = Array("acceptance-tests/src/test/resources/gherkin/US1626.feature"),
   glue = Array("gov.uk.dvla.vehicles.acquire.stepdefs"),
