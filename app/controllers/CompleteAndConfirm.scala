@@ -36,7 +36,7 @@ import play.api.mvc.Result
 
 class CompleteAndConfirm @Inject()(implicit clientSideSessionFactory: ClientSideSessionFactory,
                                                                dateService: DateService,
-                                                               config: Config) extends Controller {
+                                                               config: Config) extends Controller with CanPerformAction {
   private val cookiesToBeDiscardeOnRedirectAway =
     VehicleNewKeeperCompletionCacheKeys ++ Set(AllowGoingToCompleteAndConfirmPageCacheKey)
 
@@ -48,7 +48,7 @@ class CompleteAndConfirm @Inject()(implicit clientSideSessionFactory: ClientSide
     "Now redirecting to vehicle lookup"
 
   def present = Action { implicit request =>
-    canPerformPresent {
+    canPerform {
       val newKeeperDetailsOpt = request.cookies.getModel[NewKeeperDetailsViewModel]
       val vehicleDetailsOpt = request.cookies.getModel[VehicleAndKeeperDetailsModel]
       (newKeeperDetailsOpt, vehicleDetailsOpt) match {
@@ -57,7 +57,7 @@ class CompleteAndConfirm @Inject()(implicit clientSideSessionFactory: ClientSide
         case _ =>
           redirectToVehicleLookup(NoCookiesFoundMessage).discardingCookie(AllowGoingToCompleteAndConfirmPageCacheKey)
       }
-    }
+    }(Redirect(routes.VehicleLookup.present()).discardingCookies(cookiesToBeDiscardeOnRedirectAway))
   }
 
   def submit = Action { implicit request =>
@@ -128,19 +128,6 @@ class CompleteAndConfirm @Inject()(implicit clientSideSessionFactory: ClientSide
 //    }
 //  }
 
-  private def canPerformPresent[R](action: => Result)(implicit request: Request[_]) =
-    request.cookies.getString(AllowGoingToCompleteAndConfirmPageCacheKey).fold {
-      Logger.warn(s"Could not find AllowGoingToCompleteAndConfirmPageCacheKey in the request. " +
-        s"Redirect to VehicleLookup discarding cookies $cookiesToBeDiscardeOnRedirectAway")
-      Redirect(routes.VehicleLookup.present()).discardingCookies(cookiesToBeDiscardeOnRedirectAway)
-    }(c => action)
-
-  private def canPerformSubmit[R](action: => Future[Result])(implicit request: Request[_]) =
-    request.cookies.getString(AllowGoingToCompleteAndConfirmPageCacheKey).fold {
-      Logger.warn(s"Could not find AllowGoingToCompleteAndConfirmPageCacheKey in the request. " +
-        s"Redirect to VehicleLookup discarding cookies $cookiesToBeDiscardeOnRedirectAway")
-      Future.successful(Redirect(routes.VehicleLookup.present()).discardingCookies(cookiesToBeDiscardeOnRedirectAway))
-    }(c => action)
 
   private def redirectToVehicleLookup(message: String) = {
     Logger.warn(message)
