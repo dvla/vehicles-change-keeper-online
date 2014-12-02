@@ -20,23 +20,14 @@ trait TestHarness {
   import WebBrowser._
   abstract class WebBrowser(val app: FakeApplication = fakeAppWithTestGlobal,
                             val port: Int = testPort,
-                            implicit protected val webDriver: WebDriver = WebDriverFactory.webDriver
-                             )
+                            implicit protected val webDriver: WebDriver = WebDriverFactory.webDriver)
       extends Around with Scope with WebBrowserDSL {
 
     override def around[T: AsResult](t: => T): Result = {
-      configureTestUrl(port) {
+      TestConfiguration.configureTestUrl(port) {
         try Helpers.running(TestServer(port, app))(AsResult.effectively(t))
         finally webDriver.quit()
       }
-    }
-
-    private def configureTestUrl(port: Int)(code: => Result): Result = {
-      val value = s"http://localhost:$port/"
-      Logger.debug(s"TestHarness - Set system property ${TestConfiguration.TestUrl} to value $value")
-      sys.props += ((TestConfiguration.TestUrl, value))
-      try code
-      finally sys.props -= TestConfiguration.TestUrl
     }
   }
 
