@@ -28,13 +28,7 @@ class ChangeKeeperSuccess @Inject()()(implicit clientSideSessionFactory: ClientS
         Ok(views.html.changekeeper.change_keeper_success(ChangeKeeperCompletionViewModel(
           vehicleAndKeeperDetailsModel, newKeeperDetailsModel, completeAndConfirmModel, responseModel
         )))
-      case _ => {
-        println(request.cookies.getModel[VehicleDetailsModel])
-        println(request.cookies.getModel[NewKeeperDetailsViewModel])
-        println(request.cookies.getModel[CompleteAndConfirmFormModel])
-        println(request.cookies.getModel[CompleteAndConfirmResponseModel])
-        redirectToStart(MissingCookiesAcquireSuccess)
-      }
+      case _ => redirectToStart(MissingCookiesAcquireSuccess)
     }
   }
 
