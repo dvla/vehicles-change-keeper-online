@@ -36,7 +36,7 @@ import play.api.mvc.Result
 
 class CompleteAndConfirm @Inject()(implicit clientSideSessionFactory: ClientSideSessionFactory,
                                                                dateService: DateService,
-                                                               config: Config) extends Controller with CanPerformAction {
+                                                               config: Config) extends Controller {
   private val cookiesToBeDiscardeOnRedirectAway =
     VehicleNewKeeperCompletionCacheKeys ++ Set(AllowGoingToCompleteAndConfirmPageCacheKey)
 
@@ -282,5 +282,38 @@ class CompleteAndConfirm @Inject()(implicit clientSideSessionFactory: ClientSide
     val excludeLines = 2
     val getLines = if (lines <= address.length - excludeLines) lines else address.length - excludeLines
     address.take(getLines)
+  }
+
+  /**
+   * Checks the presence of <code>AllowGoingToCompleteAndConfirmPageCacheKey</code> to allow the completion of
+   * the request, otherwise calls redirect function.
+   *
+   * Example:
+   * def present = Action { implicit request =>
+   *  canPerform {
+   *    Ok("success")
+   *  }(Redirect(routes.VehicleLookup.present()).discardingCookies(cookiesToBeDiscardeOnRedirectAway))
+   * }
+   *
+   * or
+   * def present = Action.async { implicit request =>
+   *  canPerform {
+   *    ...
+   *  }(Future.successful(Redirect(routes.VehicleLookup.present()).discardingCookies(cookiesToBeDiscardeOnRedirectAway)))
+   * }
+   *
+   * @param action the action body
+   * @param redirect the Result function to be called if the cookie is not present
+   * @param request implicit request
+   * @tparam T for the purposes of the application this should be Either a Result of Future[Result]
+   * @return T by either calling the action of the redirect
+   */
+  private def canPerform[T](action: => T)(redirect: => T)
+                             (implicit request: Request[_])= {
+    request.cookies.getString(AllowGoingToCompleteAndConfirmPageCacheKey).fold {
+      Logger.warn(s"Could not find AllowGoingToCompleteAndConfirmPageCacheKey in the request. " +
+        s"Redirect to starting page discarding cookies")
+      redirect
+    }(c => action)
   }
 }
