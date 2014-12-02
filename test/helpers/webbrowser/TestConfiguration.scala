@@ -3,7 +3,7 @@ package helpers.webbrowser
 import play.api.Logger
 
 object TestConfiguration {
-  private final val TestUrl = "test.url"
+  final val TestUrl = "test.url"
   private final val TestPort = "test.port"
   private final val DefaultTestPort = "9001"
 
@@ -16,16 +16,9 @@ object TestConfiguration {
     sysOrEnvProp
   }
 
-  def testPort: Int = {
-    val sysOrEnvProp = sys.props.get(TestPort)
+  def testPort: Int = sys.props.get(TestPort)
       .orElse(sys.env.get(environmentVariableName(TestPort)))
-      .getOrElse(DefaultTestPort)
-    Logger.debug(s"testPort - $TestPort from system or environment properties or default value, value = $sysOrEnvProp")
-    val value = s"http://localhost:$sysOrEnvProp/"
-    sys.props += ((TestUrl, value))
-    Logger.debug(s"testPort - Set system property $TestUrl to value $value")
-    sysOrEnvProp.toInt
-  }
+      .getOrElse(DefaultTestPort).toInt
 
   // The environment variables have underscore instead of full stop
   private def environmentVariableName(systemProperty: String) : String = systemProperty.replace('.', '_')
