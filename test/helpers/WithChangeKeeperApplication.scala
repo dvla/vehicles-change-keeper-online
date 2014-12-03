@@ -1,0 +1,5 @@
+package helpers
+
+import helpers.webbrowser.WithDefaultApplication
+
+trait WithChangeKeeperApplication extends WithDefaultApplication with TestGlobalCreator

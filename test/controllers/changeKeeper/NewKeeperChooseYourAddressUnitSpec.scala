@@ -2,7 +2,7 @@ package controllers.changeKeeper
 
 import controllers.NewKeeperChooseYourAddress
 import helpers.changekeeper.CookieFactoryForUnitSpecs
-import helpers.{UnitSpec, WithApplication}
+import helpers.{WithChangeKeeperApplication, UnitSpec}
 import helpers.common.CookieHelper.{fetchCookiesFromHeaders, verifyCookieHasBeenDiscarded, verifyCookieHasNotBeenDiscarded}
 import models.NewKeeperChooseYourAddressFormModel.Form.AddressSelectId
 import models.NewKeeperChooseYourAddressFormModel.NewKeeperChooseYourAddressCacheKey
@@ -30,19 +30,19 @@ import webserviceclients.fakes.FakeAddressLookupWebServiceImpl.responseValidForU
 
 final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
   "present (use UPRN enabled)" should {
-    "display the page if private new keeper details cached" in new WithApplication {
+    "display the page if private new keeper details cached" in new WithChangeKeeperApplication {
       whenReady(presentWithPrivateNewKeeper(ordnanceSurveyUseUprn = true), timeout) { r =>
         r.header.status should equal(OK)
       }
     }
 
-    "display the page if business new keeper details cached" in new WithApplication {
+    "display the page if business new keeper details cached" in new WithChangeKeeperApplication {
       whenReady(presentWithBusinessNewKeeper(ordnanceSurveyUseUprn = true), timeout) { r =>
         r.header.status should equal(OK)
       }
     }
 
-    "display selected field when private new keeper cookie exists" in new WithApplication {
+    "display selected field when private new keeper cookie exists" in new WithChangeKeeperApplication {
       val request = FakeRequest().
         withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
         withCookies(CookieFactoryForUnitSpecs.privateKeeperDetailsModel()).
@@ -54,7 +54,7 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
       content should include( s"""<option value="$UprnValid" selected>""")
     }
 
-    "display selected field when business new keeper cookie exists" in new WithApplication {
+    "display selected field when business new keeper cookie exists" in new WithChangeKeeperApplication {
       val request = FakeRequest().
         withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
         withCookies(CookieFactoryForUnitSpecs.businessKeeperDetailsModel()).
@@ -65,7 +65,7 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
       content should include( s"""<option value="$UprnValid" selected>""")
     }
 
-    "display expected drop-down values for private keeper" in new WithApplication {
+    "display expected drop-down values for private keeper" in new WithChangeKeeperApplication {
       val request = buildCorrectlyPopulatedRequest("").
         withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
         withCookies(CookieFactoryForUnitSpecs.privateKeeperDetailsModel())
@@ -74,7 +74,7 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
       content should include( s"""<option value="$UprnValid" >""")
     }
 
-    "display expected drop-down values for business keeper" in new WithApplication {
+    "display expected drop-down values for business keeper" in new WithChangeKeeperApplication {
       val request = buildCorrectlyPopulatedRequest("").
         withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
         withCookies(CookieFactoryForUnitSpecs.businessKeeperDetailsModel())
@@ -83,20 +83,20 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
       content should include( s"""<option value="$UprnValid" >""")
     }
 
-    "display unselected field when cookie does not exist for private new keeper" in new WithApplication {
+    "display unselected field when cookie does not exist for private new keeper" in new WithChangeKeeperApplication {
       val content = contentAsString(presentWithPrivateNewKeeper(ordnanceSurveyUseUprn = true))
       content should include(FirstNameValid)
       content should include(LastNameValid)
       content should not include "selected"
     }
 
-    "display unselected field when cookie does not exist for business new keeper" in new WithApplication {
+    "display unselected field when cookie does not exist for business new keeper" in new WithChangeKeeperApplication {
       val content = contentAsString(presentWithBusinessNewKeeper(ordnanceSurveyUseUprn = true))
       content should include(BusinessNameValid)
       content should not include "selected"
     }
 
-    "redirect to vehicle lookup page when present is called with no keeper details cached" in new WithApplication {
+    "redirect to vehicle lookup page when present is called with no keeper details cached" in new WithChangeKeeperApplication {
       val request = buildCorrectlyPopulatedRequest()
       val result = newKeeperChooseYourAddressWithUprnFound(ordnanceSurveyUseUprn = true).present(request)
       whenReady(result) { r =>
@@ -104,15 +104,15 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
       }
     }
 
-    "display prototype message when config set to true for new private keeper" in new WithApplication {
+    "display prototype message when config set to true for new private keeper" in new WithChangeKeeperApplication {
       contentAsString(presentWithPrivateNewKeeper(ordnanceSurveyUseUprn = true)) should include(PrototypeHtml)
     }
 
-    "display prototype message when config set to true for new business keeper" in new WithApplication {
+    "display prototype message when config set to true for new business keeper" in new WithChangeKeeperApplication {
       contentAsString(presentWithBusinessNewKeeper(ordnanceSurveyUseUprn = true)) should include(PrototypeHtml)
     }
 
-    "not display prototype message when config set to false" in new WithApplication {
+    "not display prototype message when config set to false" in new WithChangeKeeperApplication {
       val request = FakeRequest().
         withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
         withCookies(CookieFactoryForUnitSpecs.privateKeeperDetailsModel())
@@ -122,19 +122,19 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
   }
 
   "present (use UPRN disabled)" should {
-    "display the page if private new keeper details cached" in new WithApplication {
+    "display the page if private new keeper details cached" in new WithChangeKeeperApplication {
       whenReady(presentWithPrivateNewKeeper(ordnanceSurveyUseUprn = false), timeout) { r =>
         r.header.status should equal(OK)
       }
     }
 
-    "display the page if business new keeper details cached" in new WithApplication {
+    "display the page if business new keeper details cached" in new WithChangeKeeperApplication {
       whenReady(presentWithBusinessNewKeeper(ordnanceSurveyUseUprn = false), timeout) { r =>
         r.header.status should equal(OK)
       }
     }
 
-    "display selected field when private new keeper cookie exists" in new WithApplication {
+    "display selected field when private new keeper cookie exists" in new WithChangeKeeperApplication {
       val request = FakeRequest().
         withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
         withCookies(CookieFactoryForUnitSpecs.privateKeeperDetailsModel()).
@@ -146,7 +146,7 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
       content should include( s"""<option value="0" selected>""")
     }
 
-    "display selected field when business new keeper cookie exists" in new WithApplication {
+    "display selected field when business new keeper cookie exists" in new WithChangeKeeperApplication {
       val request = FakeRequest().
         withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
         withCookies(CookieFactoryForUnitSpecs.businessKeeperDetailsModel()).
@@ -157,7 +157,7 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
       content should include( s"""<option value="0" selected>""")
     }
 
-    "display expected drop-down values for private keeper" in new WithApplication {
+    "display expected drop-down values for private keeper" in new WithChangeKeeperApplication {
       val request = buildCorrectlyPopulatedRequest("").
         withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
         withCookies(CookieFactoryForUnitSpecs.privateKeeperDetailsModel())
@@ -166,7 +166,7 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
       content should include( s"""<option value="0" >""")
     }
 
-    "display expected drop-down values for business keeper" in new WithApplication {
+    "display expected drop-down values for business keeper" in new WithChangeKeeperApplication {
       val request = buildCorrectlyPopulatedRequest("").
         withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
         withCookies(CookieFactoryForUnitSpecs.businessKeeperDetailsModel())
@@ -175,20 +175,20 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
       content should include( s"""<option value="0" >""")
     }
 
-    "display unselected field when cookie does not exist for private new keeper" in new WithApplication {
+    "display unselected field when cookie does not exist for private new keeper" in new WithChangeKeeperApplication {
       val content = contentAsString(presentWithPrivateNewKeeper(ordnanceSurveyUseUprn = false))
       content should include(FirstNameValid)
       content should include(LastNameValid)
       content should not include "selected"
     }
 
-    "display unselected field when cookie does not exist for business new keeper" in new WithApplication {
+    "display unselected field when cookie does not exist for business new keeper" in new WithChangeKeeperApplication {
       val content = contentAsString(presentWithBusinessNewKeeper(ordnanceSurveyUseUprn = false))
       content should include(BusinessNameValid)
       content should not include "selected"
     }
 
-    "redirect to vehicle lookup page when present is called with no keeper details cached" in new WithApplication {
+    "redirect to vehicle lookup page when present is called with no keeper details cached" in new WithChangeKeeperApplication {
       val request = buildCorrectlyPopulatedRequest()
       val result = newKeeperChooseYourAddressWithUprnFound(ordnanceSurveyUseUprn = false).present(request)
       whenReady(result) { r =>
@@ -196,15 +196,15 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
       }
     }
 
-    "display prototype message when config set to true for new private keeper" in new WithApplication {
+    "display prototype message when config set to true for new private keeper" in new WithChangeKeeperApplication {
       contentAsString(presentWithPrivateNewKeeper(ordnanceSurveyUseUprn = false)) should include(PrototypeHtml)
     }
 
-    "display prototype message when config set to true for new business keeper" in new WithApplication {
+    "display prototype message when config set to true for new business keeper" in new WithChangeKeeperApplication {
       contentAsString(presentWithBusinessNewKeeper(ordnanceSurveyUseUprn = false)) should include(PrototypeHtml)
     }
 
-    "not display prototype message when config set to false" in new WithApplication {
+    "not display prototype message when config set to false" in new WithChangeKeeperApplication {
       val request = FakeRequest().
         withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
         withCookies(CookieFactoryForUnitSpecs.privateKeeperDetailsModel())
@@ -214,7 +214,7 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
   }
 
   "submit (use UPRN enabled)" should {
-    "redirect to complete and confirm page after a valid submit for private keeper" in new WithApplication {
+    "redirect to complete and confirm page after a valid submit for private keeper" in new WithChangeKeeperApplication {
       val request = buildCorrectlyPopulatedRequest().
         withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
         withCookies(CookieFactoryForUnitSpecs.privateKeeperDetailsModel())
@@ -224,7 +224,7 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
       }
     }
 
-    "redirect to vehicle tax or sorn page after a valid submit for business keeper" in new WithApplication {
+    "redirect to vehicle tax or sorn page after a valid submit for business keeper" in new WithChangeKeeperApplication {
       val request = buildCorrectlyPopulatedRequest().
         withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
         withCookies(CookieFactoryForUnitSpecs.businessKeeperDetailsModel())
@@ -234,7 +234,7 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
       }
     }
 
-    "return a bad request if not address selected for private keeper" in new WithApplication {
+    "return a bad request if not address selected for private keeper" in new WithChangeKeeperApplication {
       val request = buildCorrectlyPopulatedRequest(newKeeperUprn = "").
         withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
         withCookies(CookieFactoryForUnitSpecs.privateKeeperDetailsModel())
@@ -244,7 +244,7 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
       }
     }
 
-    "return a bad request if not address selected for business keeper" in new WithApplication {
+    "return a bad request if not address selected for business keeper" in new WithChangeKeeperApplication {
       val request = buildCorrectlyPopulatedRequest(newKeeperUprn = "").
         withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
         withCookies(CookieFactoryForUnitSpecs.businessKeeperDetailsModel())
@@ -254,7 +254,7 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
       }
     }
 
-    "display expected drop-down values when no address selected for private keeper" in new WithApplication {
+    "display expected drop-down values when no address selected for private keeper" in new WithChangeKeeperApplication {
       val request = buildCorrectlyPopulatedRequest("").
         withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
         withCookies(CookieFactoryForUnitSpecs.privateKeeperDetailsModel())
@@ -263,7 +263,7 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
       content should include( s"""<option value="$UprnValid" >""")
     }
 
-    "display expected drop-down values when no address selected for business keeper" in new WithApplication {
+    "display expected drop-down values when no address selected for business keeper" in new WithChangeKeeperApplication {
       val request = buildCorrectlyPopulatedRequest("").
         withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
         withCookies(CookieFactoryForUnitSpecs.businessKeeperDetailsModel())
@@ -272,7 +272,7 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
       content should include( s"""<option value="$UprnValid" >""")
     }
 
-    "redirect to vehicle lookup page when valid submit with keeper details cached" in new WithApplication {
+    "redirect to vehicle lookup page when valid submit with keeper details cached" in new WithChangeKeeperApplication {
       val request = buildCorrectlyPopulatedRequest()
       val result = newKeeperChooseYourAddressWithUprnFound(ordnanceSurveyUseUprn = true).submit(request)
       whenReady(result) { r =>
@@ -280,7 +280,7 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
       }
     }
 
-    "redirect to vehicle lookup page when bad submit with no keeper details cached" in new WithApplication {
+    "redirect to vehicle lookup page when bad submit with no keeper details cached" in new WithChangeKeeperApplication {
       val request = buildCorrectlyPopulatedRequest(newKeeperUprn = "").
         withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
       val result = newKeeperChooseYourAddressWithUprnFound(ordnanceSurveyUseUprn = true).submit(request)
@@ -289,7 +289,7 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
       }
     }
 
-    "redirect to UprnNotFound page when submit with but uprn not found by the webservice using new private keeper" in new WithApplication {
+    "redirect to UprnNotFound page when submit with but uprn not found by the webservice using new private keeper" in new WithChangeKeeperApplication {
       val request = buildCorrectlyPopulatedRequest().
         withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
         withCookies(CookieFactoryForUnitSpecs.privateKeeperDetailsModel())
@@ -299,7 +299,7 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
       }
     }
 
-    "redirect to UprnNotFound page when submit with but uprn not found by the webservice using new business keeper" in new WithApplication {
+    "redirect to UprnNotFound page when submit with but uprn not found by the webservice using new business keeper" in new WithChangeKeeperApplication {
       val request = buildCorrectlyPopulatedRequest().
         withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
         withCookies(CookieFactoryForUnitSpecs.businessKeeperDetailsModel())
@@ -309,7 +309,7 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
       }
     }
 
-    "write cookies and remove enter address manually cookie when uprn found for private keeper" in new WithApplication {
+    "write cookies and remove enter address manually cookie when uprn found for private keeper" in new WithChangeKeeperApplication {
       val request = buildCorrectlyPopulatedRequest().
         withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
         withCookies(CookieFactoryForUnitSpecs.privateKeeperDetailsModel())
@@ -327,7 +327,7 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
       }
     }
 
-    "write cookies and remove enter address manually cookie when uprn found for business keeper" in new WithApplication {
+    "write cookies and remove enter address manually cookie when uprn found for business keeper" in new WithChangeKeeperApplication {
       val request = buildCorrectlyPopulatedRequest().
         withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
         withCookies(CookieFactoryForUnitSpecs.businessKeeperDetailsModel())
@@ -345,7 +345,7 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
       }
     }
 
-    "does not write cookies when uprn not found" in new WithApplication {
+    "does not write cookies when uprn not found" in new WithChangeKeeperApplication {
       val request = buildCorrectlyPopulatedRequest().
         withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
       val result = newKeeperChooseYourAddressWithUprnNotFound(ordnanceSurveyUseUprn = true).submit(request)
@@ -361,7 +361,7 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
   }
 
   "submit (use UPRN disabled)" should {
-    "redirect to vehicle tax or sorn page after a valid submit for private keeper" in new WithApplication {
+    "redirect to vehicle tax or sorn page after a valid submit for private keeper" in new WithChangeKeeperApplication {
       val request = buildCorrectlyPopulatedRequest(newKeeperUprn = "0").
         withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
         withCookies(CookieFactoryForUnitSpecs.privateKeeperDetailsModel())
@@ -371,7 +371,7 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
       }
     }
 
-    "redirect to vehicle tax or sorn page after a valid submit for business keeper" in new WithApplication {
+    "redirect to vehicle tax or sorn page after a valid submit for business keeper" in new WithChangeKeeperApplication {
       val request = buildCorrectlyPopulatedRequest(newKeeperUprn = "0").
         withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
         withCookies(CookieFactoryForUnitSpecs.businessKeeperDetailsModel())
@@ -381,7 +381,7 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
       }
     }
 
-    "return a bad request if no address selected for private keeper" in new WithApplication {
+    "return a bad request if no address selected for private keeper" in new WithChangeKeeperApplication {
       val request = buildCorrectlyPopulatedRequest(newKeeperUprn = "").
         withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
         withCookies(CookieFactoryForUnitSpecs.privateKeeperDetailsModel())
@@ -391,7 +391,7 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
       }
     }
 
-    "return a bad request if no address selected for business keeper" in new WithApplication {
+    "return a bad request if no address selected for business keeper" in new WithChangeKeeperApplication {
       val request = buildCorrectlyPopulatedRequest(newKeeperUprn = "").
         withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
         withCookies(CookieFactoryForUnitSpecs.businessKeeperDetailsModel())
@@ -401,7 +401,7 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
       }
     }
 
-    "display expected drop-down values when no address selected for private keeper" in new WithApplication {
+    "display expected drop-down values when no address selected for private keeper" in new WithChangeKeeperApplication {
       val request = buildCorrectlyPopulatedRequest("").
         withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
         withCookies(CookieFactoryForUnitSpecs.privateKeeperDetailsModel())
@@ -410,7 +410,7 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
       content should include( s"""<option value="0" >""")
     }
 
-    "display expected drop-down values when no address selected for business keeper" in new WithApplication {
+    "display expected drop-down values when no address selected for business keeper" in new WithChangeKeeperApplication {
       val request = buildCorrectlyPopulatedRequest("").
         withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
         withCookies(CookieFactoryForUnitSpecs.businessKeeperDetailsModel())
@@ -419,7 +419,7 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
       content should include( s"""<option value="0" >""")
     }
 
-    "redirect to vehicle lookup page when valid submit with keeper details cached" in new WithApplication {
+    "redirect to vehicle lookup page when valid submit with keeper details cached" in new WithChangeKeeperApplication {
       val request = buildCorrectlyPopulatedRequest()
       val result = newKeeperChooseYourAddressWithUprnFound(ordnanceSurveyUseUprn = false).submit(request)
       whenReady(result) { r =>
@@ -427,7 +427,7 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
       }
     }
 
-    "redirect to vehicle lookup page when bad submit with no keeper details cached" in new WithApplication {
+    "redirect to vehicle lookup page when bad submit with no keeper details cached" in new WithChangeKeeperApplication {
       val request = buildCorrectlyPopulatedRequest(newKeeperUprn = "").
         withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
       val result = newKeeperChooseYourAddressWithUprnFound(ordnanceSurveyUseUprn = false).submit(request)
@@ -436,7 +436,7 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
       }
     }
 
-    "redirect to UprnNotFound page when submit with but uprn not found by the webservice using new private keeper" in new WithApplication {
+    "redirect to UprnNotFound page when submit with but uprn not found by the webservice using new private keeper" in new WithChangeKeeperApplication {
       val request = buildCorrectlyPopulatedRequest().
         withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
         withCookies(CookieFactoryForUnitSpecs.privateKeeperDetailsModel())
@@ -446,7 +446,7 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
       }
     }
 
-    "redirect to UprnNotFound page when submit with but uprn not found by the webservice using new business keeper" in new WithApplication {
+    "redirect to UprnNotFound page when submit with but uprn not found by the webservice using new business keeper" in new WithChangeKeeperApplication {
       val request = buildCorrectlyPopulatedRequest().
         withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
         withCookies(CookieFactoryForUnitSpecs.businessKeeperDetailsModel())
@@ -456,7 +456,7 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
       }
     }
 
-    "write cookies and remove enter address manually cookie when uprn found for private keeper" in new WithApplication {
+    "write cookies and remove enter address manually cookie when uprn found for private keeper" in new WithChangeKeeperApplication {
       val request = buildCorrectlyPopulatedRequest("0").
         withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
         withCookies(CookieFactoryForUnitSpecs.privateKeeperDetailsModel())
@@ -474,7 +474,7 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
       }
     }
 
-    "write cookies and remove enter address manually cookie when uprn found for business keeper" in new WithApplication {
+    "write cookies and remove enter address manually cookie when uprn found for business keeper" in new WithChangeKeeperApplication {
       val request = buildCorrectlyPopulatedRequest("0").
         withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
         withCookies(CookieFactoryForUnitSpecs.businessKeeperDetailsModel())
@@ -492,7 +492,7 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
       }
     }
 
-    "does not write cookies when uprn not found" in new WithApplication {
+    "does not write cookies when uprn not found" in new WithChangeKeeperApplication {
       val request = buildCorrectlyPopulatedRequest().
         withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
       val result = newKeeperChooseYourAddressWithUprnNotFound(ordnanceSurveyUseUprn = false).submit(request)

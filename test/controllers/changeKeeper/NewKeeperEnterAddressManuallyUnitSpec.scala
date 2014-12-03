@@ -5,7 +5,7 @@ import controllers.changeKeeper.Common.PrototypeHtml
 import helpers.JsonUtils.deserializeJsonToModel
 import helpers.common.CookieHelper.fetchCookiesFromHeaders
 import views.changekeeper.NewKeeperEnterAddressManually.PostcodeId
-import helpers.{UnitSpec, WithApplication}
+import helpers.{WithChangeKeeperApplication, UnitSpec}
 import org.mockito.Mockito.when
 import play.api.mvc.Result
 import play.api.test.FakeRequest
@@ -29,19 +29,19 @@ import pages.changekeeper.VehicleLookupPage
 
 final class NewKeeperEnterAddressManuallyUnitSpec extends UnitSpec {
   "present" should {
-    "display the page when new business keeper has been chosen" in new WithApplication {
+    "display the page when new business keeper has been chosen" in new WithChangeKeeperApplication {
       whenReady(presentWithBusinessNewKeeper) { r =>
         r.header.status should equal(OK)
       }
     }
 
-    "display the page when new private keeper has been chosen" in new WithApplication {
+    "display the page when new private keeper has been chosen" in new WithChangeKeeperApplication {
       whenReady(presentWithPrivateNewKeeper) { r =>
         r.header.status should equal(OK)
       }
     }
 
-    "redirect to VehicleLookup page when present is called but no new keeper is cached" in new WithApplication {
+    "redirect to VehicleLookup page when present is called but no new keeper is cached" in new WithChangeKeeperApplication {
       val request = FakeRequest()
       val result = newKeeperEnterAddressManually.present(request)
       whenReady(result) { r =>
@@ -49,7 +49,7 @@ final class NewKeeperEnterAddressManuallyUnitSpec extends UnitSpec {
       }
     }
 
-    "redirect to VehicleLookup page when present is called and both keeper types are cached in error" in new WithApplication {
+    "redirect to VehicleLookup page when present is called and both keeper types are cached in error" in new WithChangeKeeperApplication {
       val request = FakeRequest().
         withCookies(CookieFactoryForUnitSpecs.privateKeeperDetailsModel()).
         withCookies(CookieFactoryForUnitSpecs.businessKeeperDetailsModel())
@@ -59,7 +59,7 @@ final class NewKeeperEnterAddressManuallyUnitSpec extends UnitSpec {
       }
     }
 
-    "display populated fields when cookie exists" in new WithApplication {
+    "display populated fields when cookie exists" in new WithChangeKeeperApplication {
       val request = FakeRequest().
         withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
         withCookies(CookieFactoryForUnitSpecs.privateKeeperDetailsModel()).
@@ -72,7 +72,7 @@ final class NewKeeperEnterAddressManuallyUnitSpec extends UnitSpec {
       content should include(filledValue(PostTownValid))
     }
 
-    "display empty fields when cookie does not exist" in new WithApplication {
+    "display empty fields when cookie does not exist" in new WithChangeKeeperApplication {
       val content = contentAsString(presentWithBusinessNewKeeper)
       content should not include filledValue(BuildingNameOrNumberValid)
       content should not include filledValue(Line2Valid)
@@ -80,11 +80,11 @@ final class NewKeeperEnterAddressManuallyUnitSpec extends UnitSpec {
       content should not include filledValue(PostTownValid)
     }
 
-    "display prototype message when config set to true" in new WithApplication {
+    "display prototype message when config set to true" in new WithChangeKeeperApplication {
       contentAsString(presentWithBusinessNewKeeper) should include(PrototypeHtml)
     }
 
-    "not display prototype message when config set to false" in new WithApplication {
+    "not display prototype message when config set to false" in new WithChangeKeeperApplication {
       val request = FakeRequest()
       implicit val clientSideSessionFactory = injector.getInstance(classOf[ClientSideSessionFactory])
       implicit val config: Config = mock[Config]
@@ -97,7 +97,7 @@ final class NewKeeperEnterAddressManuallyUnitSpec extends UnitSpec {
   }
 
   "submit" should {
-    "redirect to vehicle tax or sorn after a valid submission of mandatory fields" ignore new WithApplication {
+    "redirect to vehicle tax or sorn after a valid submission of mandatory fields" ignore new WithChangeKeeperApplication {
       val request = FakeRequest().withFormUrlEncodedBody(
         s"$AddressAndPostcodeId.$AddressLinesId.$BuildingNameOrNumberId" -> BuildingNameOrNumberValid,
         s"$AddressAndPostcodeId.$AddressLinesId.$PostTownId" -> PostTownValid,
@@ -110,7 +110,7 @@ final class NewKeeperEnterAddressManuallyUnitSpec extends UnitSpec {
       }
     }
 
-    "redirect to vehicle tax or sorn after a valid submission of all fields" ignore new WithApplication {
+    "redirect to vehicle tax or sorn after a valid submission of all fields" ignore new WithChangeKeeperApplication {
       val request = FakeRequest().withFormUrlEncodedBody(
         s"$AddressAndPostcodeId.$AddressLinesId.$BuildingNameOrNumberId" -> BuildingNameOrNumberValid,
         s"$AddressAndPostcodeId.$AddressLinesId.$Line2Id" -> Line2Valid,
@@ -125,7 +125,7 @@ final class NewKeeperEnterAddressManuallyUnitSpec extends UnitSpec {
       }
     }
 
-    "return bad request when no data is entered" in new WithApplication {
+    "return bad request when no data is entered" in new WithChangeKeeperApplication {
       val request = FakeRequest().
         withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
         withCookies(CookieFactoryForUnitSpecs.privateKeeperDetailsModel())
@@ -136,7 +136,7 @@ final class NewKeeperEnterAddressManuallyUnitSpec extends UnitSpec {
       }
     }
 
-    "return bad request a valid postcode is entered without an address" in new WithApplication {
+    "return bad request a valid postcode is entered without an address" in new WithChangeKeeperApplication {
       val request = FakeRequest().withFormUrlEncodedBody(
         s"$AddressAndPostcodeId.$PostcodeId" -> PostcodeValid).
         withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
@@ -147,7 +147,7 @@ final class NewKeeperEnterAddressManuallyUnitSpec extends UnitSpec {
       }
     }
 
-    "remove commas and full stops from the end of each address line" in new WithApplication {
+    "remove commas and full stops from the end of each address line" in new WithChangeKeeperApplication {
       val result = newKeeperEnterAddressManually.submit(requestWithValidDefaults(
         buildingName = "my house,",
         line2 = "my street.",
@@ -163,7 +163,7 @@ final class NewKeeperEnterAddressManuallyUnitSpec extends UnitSpec {
       )
     }
 
-    "remove multiple commas and full stops from the end of each address line" in new WithApplication {
+    "remove multiple commas and full stops from the end of each address line" in new WithChangeKeeperApplication {
       val result = newKeeperEnterAddressManually.submit(requestWithValidDefaults(
         buildingName = "my house,.,..,,",
         line2 = "my street...,,.,",
@@ -179,7 +179,7 @@ final class NewKeeperEnterAddressManuallyUnitSpec extends UnitSpec {
       )
     }
 
-    "not remove multiple commas and full stops from the middle of address lines" in new WithApplication {
+    "not remove multiple commas and full stops from the middle of address lines" in new WithChangeKeeperApplication {
       val result = newKeeperEnterAddressManually.submit(requestWithValidDefaults(
         buildingName = "my house 1.1,",
         line2 = "st. something street",
@@ -195,7 +195,7 @@ final class NewKeeperEnterAddressManuallyUnitSpec extends UnitSpec {
       )
     }
 
-    "remove commas, but still applies the min length rule" in new WithApplication {
+    "remove commas, but still applies the min length rule" in new WithChangeKeeperApplication {
       FormExtensions.trimNonWhiteListedChars("""[A-Za-z0-9\-]""")(",, m...,,,,   ") should equal("m")
       val result = newKeeperEnterAddressManually.submit(requestWithValidDefaults(
         buildingName = "m...,,,,   "  // This should be a min length of 4 chars
@@ -205,7 +205,7 @@ final class NewKeeperEnterAddressManuallyUnitSpec extends UnitSpec {
       }
     }
 
-    "not accept an address containing only full stops" in new WithApplication {
+    "not accept an address containing only full stops" in new WithChangeKeeperApplication {
       val result = newKeeperEnterAddressManually.submit(requestWithValidDefaults(
         buildingName = "...")
       )
@@ -215,7 +215,7 @@ final class NewKeeperEnterAddressManuallyUnitSpec extends UnitSpec {
       }
     }
 
-    "redirect to vehicle lookup page when valid submit with no new keeper cached" in new WithApplication {
+    "redirect to vehicle lookup page when valid submit with no new keeper cached" in new WithChangeKeeperApplication {
       val request = FakeRequest().withFormUrlEncodedBody(
         s"$AddressAndPostcodeId.$AddressLinesId.$BuildingNameOrNumberId" -> BuildingNameOrNumberValid,
         s"$AddressAndPostcodeId.$AddressLinesId.$Line2Id" -> Line2Valid,
@@ -228,7 +228,7 @@ final class NewKeeperEnterAddressManuallyUnitSpec extends UnitSpec {
       }
     }
 
-    "redirect to vehicle lookup page when bad submit with no new keeper cached" in new WithApplication {
+    "redirect to vehicle lookup page when bad submit with no new keeper cached" in new WithChangeKeeperApplication {
       val request = FakeRequest()
       val result = newKeeperEnterAddressManually.submit(request)
       whenReady(result) { r =>
@@ -236,7 +236,7 @@ final class NewKeeperEnterAddressManuallyUnitSpec extends UnitSpec {
       }
     }
 
-    "write cookie after a valid submission of all fields" in new WithApplication {
+    "write cookie after a valid submission of all fields" in new WithChangeKeeperApplication {
       val request = requestWithValidDefaults()
       val result = newKeeperEnterAddressManually.submit(request)
       whenReady(result) { r =>
@@ -245,7 +245,7 @@ final class NewKeeperEnterAddressManuallyUnitSpec extends UnitSpec {
       }
     }
 
-    "collapse error messages for buildingNameOrNumber" in new WithApplication {
+    "collapse error messages for buildingNameOrNumber" in new WithChangeKeeperApplication {
       val request = FakeRequest().withFormUrlEncodedBody(
         s"$AddressAndPostcodeId.$AddressLinesId.$BuildingNameOrNumberId" -> "",
         s"$AddressAndPostcodeId.$AddressLinesId.$PostTownId" -> PostTownValid,
@@ -257,7 +257,7 @@ final class NewKeeperEnterAddressManuallyUnitSpec extends UnitSpec {
       content should include("Building/number and street must contain between 4 and 30 characters")
     }
 
-    "collapse error messages for post town" in new WithApplication {
+    "collapse error messages for post town" in new WithChangeKeeperApplication {
       val request = FakeRequest().withFormUrlEncodedBody(
         s"$AddressAndPostcodeId.$AddressLinesId.$BuildingNameOrNumberId" -> BuildingNameOrNumberValid,
         s"$AddressAndPostcodeId.$AddressLinesId.$PostTownId" -> "",

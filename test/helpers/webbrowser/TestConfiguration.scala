@@ -21,7 +21,7 @@ object TestConfiguration {
       .orElse(sys.env.get(environmentVariableName(TestPort)))
       .getOrElse(DefaultTestPort).toInt
 
-  def configureTestUrl(port: Int = testPort)(code: => Result): Result = {
+  def configureTestUrl[T](port: Int = testPort)(code: => T): T = {
     val value = s"http://localhost:$port/"
     Logger.debug(s"TestHarness - Set system property ${TestUrl} to value $value")
     sys.props += ((TestUrl, value))
