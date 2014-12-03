@@ -1,14 +1,13 @@
 package views.changekeeper
 
-import helpers.UiSpec
+import helpers.{ChangeKeeperTestHarness, UiSpec}
 import helpers.changekeeper.CookieFactoryForUISpecs
 import helpers.tags.UiTag
-import helpers.webbrowser.TestHarness
 import org.openqa.selenium.WebDriver
 import pages.changekeeper.{VehicleLookupPage, BeforeYouStartPage, VrmLockedPage}
 import models.VehicleLookupFormModel.VehicleLookupFormModelCacheKey
 
-class VrmLockedIntegrationSpec extends UiSpec with TestHarness {
+class VrmLockedIntegrationSpec extends UiSpec with ChangeKeeperTestHarness {
 
   "go to page" should {
     "display the page if appropriate cookies exist" taggedAs UiTag in new WebBrowser {

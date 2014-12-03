@@ -1,10 +1,9 @@
 package views.changekeeper
 
-import helpers.UiSpec
+import helpers.{ChangeKeeperTestHarness, UiSpec}
 import helpers.changekeeper.CookieFactoryForUISpecs
 import helpers.common.ProgressBar
 import helpers.tags.UiTag
-import helpers.webbrowser.TestHarness
 import models.VehicleLookupFormModel.VehicleLookupResponseCodeCacheKey
 import org.openqa.selenium.WebDriver
 import pages.changekeeper.VehicleLookupFailurePage.{beforeYouStart, vehicleLookup}
@@ -12,7 +11,7 @@ import pages.changekeeper.{BeforeYouStartPage, VehicleLookupFailurePage, Vehicle
 import pages.common.Feedback.EmailFeedbackLink
 import webserviceclients.fakes.brute_force_protection.FakeBruteForcePreventionWebServiceImpl.MaxAttempts
 
-final class VehicleLookupFailureIntegrationSpec extends UiSpec with TestHarness {
+final class VehicleLookupFailureIntegrationSpec extends UiSpec with ChangeKeeperTestHarness {
   "go to page" should {
     "display the page" taggedAs UiTag in new WebBrowser {
       go to BeforeYouStartPage

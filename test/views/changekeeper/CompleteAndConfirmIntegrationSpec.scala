@@ -7,8 +7,7 @@ import helpers.common.ProgressBar
 import helpers.changekeeper.CookieFactoryForUISpecs
 import ProgressBar.progressStep
 import helpers.tags.UiTag
-import helpers.UiSpec
-import helpers.webbrowser.{TestGlobal, TestHarness}
+import helpers.{ChangeKeeperTestHarness, UiSpec}
 import models.{VehicleNewKeeperCompletionCacheKeys, NewKeeperDetailsViewModel, CompleteAndConfirmFormModel}
 import org.openqa.selenium.{By, WebElement, WebDriver}
 import org.scalatest.mock.MockitoSugar
@@ -41,7 +40,7 @@ import scala.Some
 import play.api.test.FakeApplication
 import uk.gov.dvla.vehicles.presentation.common.mappings.TitleType
 
-final class CompleteAndConfirmIntegrationSpec extends UiSpec with TestHarness {
+final class CompleteAndConfirmIntegrationSpec extends UiSpec with ChangeKeeperTestHarness {
   final val ProgressStepNumber = 5
 
   "go to page" should {

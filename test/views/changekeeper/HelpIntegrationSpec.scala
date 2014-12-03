@@ -1,9 +1,8 @@
 package views.changekeeper
 
-import helpers.UiSpec
+import helpers.{ChangeKeeperTestHarness, UiSpec}
 import helpers.common.ProgressBar
 import helpers.tags.UiTag
-import helpers.webbrowser.TestHarness
 import org.openqa.selenium.WebDriver
 import pages.changekeeper.HelpPage.{back, exit}
 import pages.common.HelpPanel
@@ -12,7 +11,7 @@ import helpers.changekeeper.CookieFactoryForUISpecs
 import pages.changekeeper.{PrivateKeeperDetailsPage, HelpPage, BeforeYouStartPage}
 import pages.common.Feedback.{EmailFeedbackLink, EmailHelpLink}
 
-final class HelpIntegrationSpec extends UiSpec with TestHarness {
+final class HelpIntegrationSpec extends UiSpec with ChangeKeeperTestHarness {
   "go to page" should {
     "display the page containing correct title" taggedAs UiTag in new WebBrowser {
       go to HelpPage

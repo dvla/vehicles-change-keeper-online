@@ -4,8 +4,7 @@ import helpers.common.ProgressBar
 import helpers.changekeeper.CookieFactoryForUISpecs
 import ProgressBar.progressStep
 import helpers.tags.UiTag
-import helpers.UiSpec
-import helpers.webbrowser.TestHarness
+import helpers.{ChangeKeeperTestHarness, UiSpec}
 import org.openqa.selenium.{By, WebElement, WebDriver}
 import pages.common.ErrorPanel
 import pages.changekeeper._
@@ -14,7 +13,7 @@ import pages.changekeeper.BusinessKeeperDetailsPage.{back, navigate}
 import helpers.common.HtmlTestHelper.{htmlRegex, whitespaceRegex}
 import pages.common.Feedback.EmailFeedbackLink
 
-class BusinessKeeperDetailsIntegrationSpec extends UiSpec with TestHarness {
+class BusinessKeeperDetailsIntegrationSpec extends UiSpec with ChangeKeeperTestHarness {
 
   final val ProgressStepNumber = 3
 
