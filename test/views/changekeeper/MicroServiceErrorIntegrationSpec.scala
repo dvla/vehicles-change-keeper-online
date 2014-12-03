@@ -1,16 +1,15 @@
 package views.changekeeper
 
-import helpers.UiSpec
+import helpers.{ChangeKeeperTestHarness, UiSpec}
 import helpers.common.ProgressBar
 import helpers.changekeeper.CookieFactoryForUISpecs
 import helpers.tags.UiTag
-import helpers.webbrowser.TestHarness
 import org.openqa.selenium.WebDriver
 import pages.changekeeper.MicroServiceErrorPage.{exit, tryAgain}
 import pages.changekeeper.{BeforeYouStartPage, MicroServiceErrorPage}
 import pages.common.Feedback.EmailFeedbackLink
 
-final class MicroServiceErrorIntegrationSpec extends UiSpec with TestHarness {
+final class MicroServiceErrorIntegrationSpec extends UiSpec with ChangeKeeperTestHarness {
   "go to page" should {
     // TODO: fix me
     "display the page" taggedAs UiTag ignore new WebBrowser {
