@@ -1,6 +1,9 @@
 package webserviceclients.acquire
 
-import play.api.libs.json.Json
+import org.joda.time.DateTime
+import org.joda.time.format.ISODateTimeFormat
+import play.api.libs.json.{JsString, JsValue, Writes, Json}
+import uk.gov.dvla.vehicles.presentation.common.webserviceclients.common.{VssWebEndUserDto, VssWebHeaderDto}
 
 case class TitleTypeDto(titleType: Option[Int], other: Option[String])
 
@@ -33,7 +36,8 @@ object TraderDetailsDto{
   implicit val JsonFormat = Json.writes[TraderDetailsDto]
 }
 
-final case class AcquireRequestDto(referenceNumber: String,
+final case class AcquireRequestDto(webHeader: VssWebHeaderDto,
+                                   referenceNumber: String,
                                    registrationNumber: String,
                                    keeperDetails: KeeperDetailsDto,
                                    traderDetails: Option[TraderDetailsDto],
@@ -45,6 +49,17 @@ final case class AcquireRequestDto(referenceNumber: String,
                                    requiresSorn: Boolean = false)
 
 object AcquireRequestDto {
+
+  // Handles this type of formatted string 2014-03-04T00:00:00.000Z
+  implicit val jodaISODateWrites: Writes[DateTime] = new Writes[DateTime] {
+    override def writes(dateTime: DateTime): JsValue = {
+      val formatter = ISODateTimeFormat.dateTime
+      JsString(formatter.print(dateTime))
+    }
+  }
+
+  implicit val JsonFormatVssWebEndUserDto = Json.writes[VssWebEndUserDto]
+  implicit val JsonFormatVssWebHeaderDto = Json.writes[VssWebHeaderDto]
   implicit val JsonFormat = Json.writes[AcquireRequestDto]
 }
 

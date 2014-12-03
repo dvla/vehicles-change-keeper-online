@@ -115,6 +115,9 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
         .withCookies(CookieFactoryForUnitSpecs.privateKeeperDetailsModel())
 
       val result = completeAndConfirm.submit(request)
+
+      println(result)
+
       val replacementMileageErrorMessage = "You must enter a valid mileage between 0 and 999999"
       replacementMileageErrorMessage.r.findAllIn(contentAsString(result)).length should equal(2)
     }
@@ -228,6 +231,9 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
       s"$DateOfSaleId.$YearId" -> yearDateOfSale,
       ConsentId -> consent
     )
+      .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
+      .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
+      .withCookies(CookieFactoryForUnitSpecs.allowGoingToCompleteAndConfirm())
   }
 
   private def completeAndConfirm = {

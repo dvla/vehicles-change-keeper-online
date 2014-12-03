@@ -6,7 +6,8 @@ import org.scalatest.mock.MockitoSugar
 import play.api.{LoggerLike, Logger}
 import uk.gov.dvla.vehicles.presentation.common.filters.{DateTimeZoneServiceImpl, DateTimeZoneService}
 import uk.gov.dvla.vehicles.presentation.common.services.DateService
-import webserviceclients.fakes.{FakeAddressLookupWebServiceImpl, FakeDateServiceImpl, FakeVehicleAndKeeperLookupWebService}
+import webserviceclients.acquire.{AcquireServiceImpl, AcquireService, AcquireWebService}
+import webserviceclients.fakes.{FakeAcquireWebServiceImpl, FakeAddressLookupWebServiceImpl, FakeDateServiceImpl, FakeVehicleAndKeeperLookupWebService}
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.CookieFlags
 import common.clientsidesession.NoCookieFlags
@@ -34,6 +35,10 @@ class TestModule() extends ScalaModule with MockitoSugar {
 
     bind[DateService].to[FakeDateServiceImpl].asEagerSingleton()
     bind[DateTimeZoneService].toInstance(new DateTimeZoneServiceImpl)
+
+    bind[AcquireWebService].to[FakeAcquireWebServiceImpl].asEagerSingleton()
+    bind[AcquireService].to[AcquireServiceImpl].asEagerSingleton()
+
     bind[CookieFlags].to[NoCookieFlags].asEagerSingleton()
     bind[ClientSideSessionFactory].to[ClearTextClientSideSessionFactory].asEagerSingleton()
 

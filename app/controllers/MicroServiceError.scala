@@ -14,11 +14,11 @@ class MicroServiceError @Inject()(implicit clientSideSessionFactory: ClientSideS
   private final val DefaultRedirectUrl = BeforeYouStart.present().url
 
   def present = Action { implicit request =>
-    val referer = request.headers.get(REFERER).getOrElse(DefaultRedirectUrl)
-    //    Ok(views.html.changekeeper.micro_service_error()).
-    //      Save the previous page URL (from the referer header) into a cookie.
-    //      withCookie(MicroServiceError.MicroServiceErrorRefererCacheKey, referer)
-    Ok("You need to fix me")
+//    val referer = request.headers.get(REFERER).getOrElse(DefaultRedirectUrl)
+//        Ok(views.html.changekeeper.micro_service_error()).
+//          Save the previous page URL (from the referer header) into a cookie.
+//          withCookie(MicroServiceError.MicroServiceErrorRefererCacheKey, referer)
+    Ok(views.html.changekeeper.micro_service_error())
   }
 
   def back = Action { implicit request =>
