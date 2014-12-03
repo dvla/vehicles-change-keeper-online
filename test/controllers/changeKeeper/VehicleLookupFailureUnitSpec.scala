@@ -1,8 +1,9 @@
 package controllers.changeKeeper
 
+import composition.WithChangeKeeperApplication
 import controllers.VehicleLookupFailure
 import Common.PrototypeHtml
-import helpers.{WithChangeKeeperApplication, UnitSpec}
+import helpers.UnitSpec
 import helpers.changekeeper.CookieFactoryForUnitSpecs
 import org.mockito.Mockito.when
 import pages.changekeeper.{BeforeYouStartPage, VehicleLookupPage}

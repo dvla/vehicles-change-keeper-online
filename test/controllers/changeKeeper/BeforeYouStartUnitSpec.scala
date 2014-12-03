@@ -2,11 +2,11 @@ package controllers.changeKeeper
 
 import com.google.inject.Injector
 import com.tzavellas.sse.guice.ScalaModule
-import composition.{TestComposition, GlobalLike}
+import composition.{WithChangeKeeperApplication, TestComposition, GlobalLike}
 import controllers.BeforeYouStart
 import controllers.changeKeeper.Common.PrototypeHtml
 import helpers.webbrowser.WithDefaultApplication
-import helpers.{WithChangeKeeperApplication, TestGlobal, UnitSpec}
+import helpers.UnitSpec
 import org.mockito.Mockito.when
 import org.scalatest.mock.MockitoSugar
 import play.api.test.{FakeApplication, WithApplication, FakeRequest}

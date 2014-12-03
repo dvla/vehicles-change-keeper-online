@@ -1,6 +1,7 @@
 package views.changekeeper
 
-import helpers.{ChangeKeeperTestHarness, UiSpec}
+import composition.ChangeKeeperTestHarness
+import helpers.UiSpec
 import helpers.webbrowser.WebDriverFactory
 import pages.ApplicationContext.applicationContext
 import scala.io.Source.fromInputStream

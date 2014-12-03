@@ -1,7 +1,8 @@
 package controllers.changeKeeper
 
+import composition.WithChangeKeeperApplication
 import controllers.VehicleLookup
-import helpers.{WithChangeKeeperApplication, UnitSpec}
+import helpers.UnitSpec
 import models.VehicleLookupFormModel.Form.{DocumentReferenceNumberId, VehicleRegistrationNumberId, VehicleSoldToId}
 import org.mockito.Matchers.any
 import org.mockito.Mockito.when

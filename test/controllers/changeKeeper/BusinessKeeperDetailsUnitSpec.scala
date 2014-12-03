@@ -1,8 +1,9 @@
 package controllers.changeKeeper
 
+import composition.WithChangeKeeperApplication
 import controllers.changeKeeper.Common.PrototypeHtml
 import controllers.BusinessKeeperDetails
-import helpers.{WithChangeKeeperApplication, UnitSpec}
+import helpers.UnitSpec
 import models.BusinessKeeperDetailsFormModel.Form.{FleetNumberId, BusinessNameId, EmailId, PostcodeId}
 import org.mockito.Mockito.when
 import pages.changekeeper.BusinessKeeperDetailsPage.{EmailValid, BusinessNameValid, PostcodeValid}

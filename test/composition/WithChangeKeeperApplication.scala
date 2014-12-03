@@ -1,4 +1,4 @@
-package helpers
+package composition
 
 import helpers.webbrowser.WithDefaultApplication
 

@@ -1,6 +1,7 @@
 package views.changekeeper
 
-import helpers.{ChangeKeeperTestHarness, UiSpec}
+import composition.ChangeKeeperTestHarness
+import helpers.UiSpec
 import helpers.changekeeper.CookieFactoryForUISpecs
 import helpers.tags.UiTag
 import org.openqa.selenium.WebDriver

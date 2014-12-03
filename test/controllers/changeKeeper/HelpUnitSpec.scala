@@ -1,11 +1,12 @@
 package controllers.changeKeeper
 
+import composition.WithChangeKeeperApplication
 import controllers.Help
 import controllers.changeKeeper.Common.PrototypeHtml
 import helpers.common.CookieHelper
 import CookieHelper.{fetchCookiesFromHeaders, verifyCookieHasBeenDiscarded}
 import helpers.changekeeper.CookieFactoryForUnitSpecs
-import helpers.{WithChangeKeeperApplication, UnitSpec}
+import helpers.UnitSpec
 import models.HelpCacheKey
 import org.mockito.Mockito.when
 import pages.changekeeper.{VehicleLookupPage, BeforeYouStartPage}

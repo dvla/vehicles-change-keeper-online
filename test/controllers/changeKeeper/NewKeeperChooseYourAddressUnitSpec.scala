@@ -1,8 +1,9 @@
 package controllers.changeKeeper
 
+import composition.WithChangeKeeperApplication
 import controllers.NewKeeperChooseYourAddress
 import helpers.changekeeper.CookieFactoryForUnitSpecs
-import helpers.{WithChangeKeeperApplication, UnitSpec}
+import helpers.UnitSpec
 import helpers.common.CookieHelper.{fetchCookiesFromHeaders, verifyCookieHasBeenDiscarded, verifyCookieHasNotBeenDiscarded}
 import models.NewKeeperChooseYourAddressFormModel.Form.AddressSelectId
 import models.NewKeeperChooseYourAddressFormModel.NewKeeperChooseYourAddressCacheKey

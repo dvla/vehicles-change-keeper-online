@@ -1,11 +1,12 @@
 package controllers.changeKeeper
 
+import composition.WithChangeKeeperApplication
 import controllers.NewKeeperEnterAddressManually
 import controllers.changeKeeper.Common.PrototypeHtml
 import helpers.JsonUtils.deserializeJsonToModel
 import helpers.common.CookieHelper.fetchCookiesFromHeaders
 import views.changekeeper.NewKeeperEnterAddressManually.PostcodeId
-import helpers.{WithChangeKeeperApplication, UnitSpec}
+import helpers.UnitSpec
 import org.mockito.Mockito.when
 import play.api.mvc.Result
 import play.api.test.FakeRequest

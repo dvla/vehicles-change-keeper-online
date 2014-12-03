@@ -1,9 +1,10 @@
 package controllers.changeKeeper
 
+import composition.WithChangeKeeperApplication
 import controllers.MicroServiceError
 import Common.PrototypeHtml
 import helpers.common.CookieHelper
-import helpers.{WithChangeKeeperApplication, UnitSpec}
+import helpers.UnitSpec
 import CookieHelper.{fetchCookiesFromHeaders, verifyCookieHasBeenDiscarded}
 import helpers.changekeeper.CookieFactoryForUnitSpecs
 import uk.gov.dvla.vehicles.presentation.common.clientsidesession.ClientSideSessionFactory

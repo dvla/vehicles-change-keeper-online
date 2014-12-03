@@ -39,7 +39,7 @@ import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeep
  *
  * Look in build.scala for where we import the sse-guice library
  */
-object DevModule extends ScalaModule {
+class DevModule extends ScalaModule {
   def configure() {
     bind[AddressLookupService].to[AddressLookupServiceImpl].asEagerSingleton()
     bind[AddressLookupWebService].to[WebServiceImpl].asEagerSingleton()
@@ -47,12 +47,7 @@ object DevModule extends ScalaModule {
     bind[DateService].to[DateServiceImpl].asEagerSingleton()
     bind[CookieFlags].to[CookieFlagsFromConfig].asEagerSingleton()
 
-    if (getProperty("encryptCookies", default = true)) {
-      bind[CookieEncryption].toInstance(new AesEncryption with CookieEncryption)
-      bind[CookieNameHashGenerator].toInstance(new Sha1HashGenerator with CookieNameHashGenerator)
-      bind[ClientSideSessionFactory].to[EncryptedClientSideSessionFactory].asEagerSingleton()
-    } else
-      bind[ClientSideSessionFactory].to[ClearTextClientSideSessionFactory].asEagerSingleton()
+    bindSessionFactory()
 
     bind[VehicleAndKeeperLookupWebService].to[VehicleAndKeeperLookupWebServiceImpl].asEagerSingleton()
     bind[VehicleAndKeeperLookupService].to[VehicleAndKeeperLookupServiceImpl].asEagerSingleton()
@@ -62,5 +57,14 @@ object DevModule extends ScalaModule {
 
     bind[LoggerLike].annotatedWith(Names.named(AccessLoggerName)).toInstance(Logger("dvla.pages.common.AccessLogger"))
     bind[DateTimeZoneService].toInstance(new DateTimeZoneServiceImpl)
+  }
+
+  protected def bindSessionFactory(): Unit = {
+    if (getProperty("encryptCookies", default = true)) {
+      bind[CookieEncryption].toInstance(new AesEncryption with CookieEncryption)
+      bind[CookieNameHashGenerator].toInstance(new Sha1HashGenerator with CookieNameHashGenerator)
+      bind[ClientSideSessionFactory].to[EncryptedClientSideSessionFactory].asEagerSingleton()
+    } else
+      bind[ClientSideSessionFactory].to[ClearTextClientSideSessionFactory].asEagerSingleton()
   }
 }
