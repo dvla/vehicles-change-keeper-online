@@ -1,5 +1,5 @@
 package helpers
 
-import helpers.webbrowser.{TestHarness, TestGlobalCreator}
+import helpers.webbrowser.TestHarness
 
 trait ChangeKeeperTestHarness extends TestHarness with TestGlobalCreator

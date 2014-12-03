@@ -1,8 +1,9 @@
 package views.changekeeper
 
+import helpers.webbrowser.ProgressBar
 import helpers.{ChangeKeeperTestHarness, UiSpec}
 import helpers.changekeeper.CookieFactoryForUISpecs
-import helpers.common.ProgressBar.progressStep
+import ProgressBar.progressStep
 import helpers.tags.UiTag
 import org.openqa.selenium.{By, WebDriver, WebElement}
 import pages.changekeeper.PrivateKeeperDetailsPage.{FirstNameInvalid, LastNameInvalid, back, navigate}

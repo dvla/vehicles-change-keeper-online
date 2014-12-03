@@ -1,7 +1,7 @@
 package helpers
 
 import helpers.WithApplication.fakeAppWithTestGlobal
-import helpers.webbrowser.{TestConfiguration, TestGlobal}
+import helpers.webbrowser.TestConfiguration
 import org.specs2.execute.{AsResult, Result}
 import play.api.test.FakeApplication
 

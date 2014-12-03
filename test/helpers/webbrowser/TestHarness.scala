@@ -1,6 +1,6 @@
 package helpers.webbrowser
 
-import helpers.common.ProgressBar
+import helpers.webbrowser.ProgressBar
 import org.openqa.selenium.WebDriver
 import org.specs2.execute.{AsResult, Result}
 import org.specs2.mutable.Around

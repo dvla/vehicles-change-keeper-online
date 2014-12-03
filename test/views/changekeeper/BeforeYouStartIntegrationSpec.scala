@@ -1,8 +1,9 @@
 package views.changekeeper
 
-import helpers.common.ProgressBar
+import helpers.webbrowser.ProgressBar
 import ProgressBar.progressStep
 import helpers.tags.UiTag
+import helpers.webbrowser.ProgressBar
 import helpers.{ChangeKeeperTestHarness, UiSpec}
 import pages.changekeeper.{VehicleLookupPage, BeforeYouStartPage}
 import pages.changekeeper.BeforeYouStartPage.startNow

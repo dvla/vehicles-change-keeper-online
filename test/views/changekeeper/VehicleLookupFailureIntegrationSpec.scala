@@ -1,8 +1,8 @@
 package views.changekeeper
 
+import helpers.webbrowser.ProgressBar
 import helpers.{ChangeKeeperTestHarness, UiSpec}
 import helpers.changekeeper.CookieFactoryForUISpecs
-import helpers.common.ProgressBar
 import helpers.tags.UiTag
 import models.VehicleLookupFormModel.VehicleLookupResponseCodeCacheKey
 import org.openqa.selenium.WebDriver

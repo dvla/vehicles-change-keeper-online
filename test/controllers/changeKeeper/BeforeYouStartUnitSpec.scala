@@ -5,8 +5,7 @@ import com.tzavellas.sse.guice.ScalaModule
 import composition.{TestComposition, GlobalLike}
 import controllers.BeforeYouStart
 import controllers.changeKeeper.Common.PrototypeHtml
-import helpers.UnitSpec
-import helpers.webbrowser.TestGlobal
+import helpers.{TestGlobal, UnitSpec}
 import org.mockito.Mockito.when
 import org.scalatest.mock.MockitoSugar
 import play.api.test.{FakeApplication, WithApplication, FakeRequest}
