@@ -230,9 +230,7 @@ class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSi
     acquireResponseCode match {
       case "ms.vehiclesService.error.generalError" =>
         Logger.warn("Acquire soap endpoint redirecting to acquire failure page")
-// TODO : Should redirect to acquire failure
-//        routes.AcquireFailure.present()
-        routes.MicroServiceError.present()
+        routes.ChangeKeeperFailure.present()
       case _ =>
         Logger.warn(s"Acquire micro-service failed so now redirecting to micro service error page. " +
           s"Code returned from ms was $acquireResponseCode")
