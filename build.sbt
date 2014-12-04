@@ -42,7 +42,7 @@ lazy val acceptanceTestsProject = Project("acceptance-tests", file("acceptance-t
 libraryDependencies ++= Seq(
   cache,
   filters,
-  "dvla" %% "vehicles-presentation-common" % "2.7-SNAPSHOT" withSources() withJavadoc() exclude("junit", "junit-dep"),
+  "dvla" %% "vehicles-presentation-common" % "2.8-SNAPSHOT" withSources() withJavadoc() exclude("junit", "junit-dep"),
   "dvla" %% "common-test" % "2.7-SNAPSHOT" % "test" classifier "tests" withSources() withJavadoc(),
   "com.google.guava" % "guava" % "15.0" withSources() withJavadoc(), // See: http://stackoverflow.com/questions/16614794/illegalstateexception-impossible-to-get-artifacts-when-data-has-not-been-loaded
   "org.seleniumhq.selenium" % "selenium-java" % "2.43.0" % "test" withSources() withJavadoc(),
@@ -99,6 +99,7 @@ net.virtualvoid.sbt.graph.Plugin.graphSettings
 // ====================== Sandbox Settings ==========================
 lazy val osAddressLookupProject = osAddressLookup("0.7-SNAPSHOT").disablePlugins(PlayScala, SassPlugin, SbtWeb)
 lazy val vehicleAndKeeperLookupProject = vehicleAndKeeperLookup("0.3-SNAPSHOT").disablePlugins(PlayScala, SassPlugin, SbtWeb)
+lazy val vehiclesAcquireFulfilProject = vehiclesAcquireFulfil("0.3-SNAPSHOT").disablePlugins(PlayScala, SassPlugin, SbtWeb)
 lazy val legacyStubsProject = legacyStubs("1.0-SNAPSHOT").disablePlugins(PlayScala, SassPlugin, SbtWeb)
 lazy val gatlingProject = gatlingTests().disablePlugins(PlayScala, SassPlugin, SbtWeb)
 
@@ -112,6 +113,8 @@ SandboxSettings.osAddressLookupProject := osAddressLookupProject
 
 SandboxSettings.vehicleAndKeeperLookupProject := vehicleAndKeeperLookupProject
 
+SandboxSettings.vehiclesAcquireFulfilProject := vehiclesAcquireFulfilProject
+
 SandboxSettings.legacyStubsProject := legacyStubsProject
 
 SandboxSettings.gatlingTestsProject := gatlingProject
@@ -120,6 +123,7 @@ SandboxSettings.runAllMicroservices := {
   Tasks.runLegacyStubs.value
   Tasks.runOsAddressLookup.value
   Tasks.runVehicleAndKeeperLookup.value
+  Tasks.runVehiclesAcquireFulfil.value
 }
 
 SandboxSettings.gatlingSimulation := ""

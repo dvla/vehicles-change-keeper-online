@@ -20,7 +20,7 @@ import models.VehicleLookupFormModel.{VehicleLookupResponseCodeCacheKey, Vehicle
 import views.changekeeper.VehicleLookup.VehicleSoldTo_Private
 import uk.gov.dvla.vehicles.presentation.common.model.VehicleAndKeeperDetailsModel.VehicleAndKeeperLookupDetailsCacheKey
 import uk.gov.dvla.vehicles.presentation.common.model.{BruteForcePreventionModel, AddressModel, VehicleAndKeeperDetailsModel}
-import org.joda.time.LocalDate
+import org.joda.time.{DateTime, LocalDate}
 import pages.changekeeper.PrivateKeeperDetailsPage.{FirstNameValid, LastNameValid, EmailValid, DriverNumberValid}
 import pages.changekeeper.PrivateKeeperDetailsPage.{DayDateOfBirthValid, MonthDateOfBirthValid, YearDateOfBirthValid, PostcodeValid}
 import models.PrivateKeeperDetailsFormModel.PrivateKeeperDetailsCacheKey
@@ -34,6 +34,8 @@ import pages.changekeeper.CompleteAndConfirmPage.YearDateOfSaleValid
 import scala.Some
 import play.api.mvc.Cookie
 import uk.gov.dvla.vehicles.presentation.common.mappings.TitleType
+import models.CompleteAndConfirmResponseModel.ChangeKeeperCompletionResponseCacheKey
+import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.{TransactionIdValid, TransactionTimestampValid}
 
 object CookieFactoryForUnitSpecs extends TestComposition {
 
@@ -245,6 +247,13 @@ object CookieFactoryForUnitSpecs extends TestComposition {
       dateOfSale,
       consent
     )
+    createCookie(key, value)
+  }
+
+  def completeAndConfirmResponseModelModel(id: String = TransactionIdValid,
+                                           timestamp: DateTime = TransactionTimestampValid): Cookie = {
+    val key = ChangeKeeperCompletionResponseCacheKey
+    val value = CompleteAndConfirmResponseModel(id, timestamp)
     createCookie(key, value)
   }
 }

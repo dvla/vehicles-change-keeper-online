@@ -1,9 +1,10 @@
 package controllers.changeKeeper
 
+import composition.WithChangeKeeperApplication
 import controllers.MicroServiceError
 import Common.PrototypeHtml
 import helpers.common.CookieHelper
-import helpers.{UnitSpec, WithApplication}
+import helpers.UnitSpec
 import CookieHelper.{fetchCookiesFromHeaders, verifyCookieHasBeenDiscarded}
 import helpers.changekeeper.CookieFactoryForUnitSpecs
 import uk.gov.dvla.vehicles.presentation.common.clientsidesession.ClientSideSessionFactory
@@ -13,21 +14,21 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.{LOCATION, OK, REFERER, contentAsString, defaultAwaitTimeout, status}
 import utils.helpers.Config
 
-final class MicroServiceErrorUnitSpec extends UnitSpec {
+final class MicroServiceErrorUnitSpec extends UnitSpec  {
   "present" should {
-    "display the page" in new WithApplication {
+    "display the page" in new WithChangeKeeperApplication {
       status(present) should equal(OK)
     }
 
-    "not display progress bar" in new WithApplication {
+    "not display progress bar" in new WithChangeKeeperApplication {
       contentAsString(present) should not include "Step "
     }
 
-    "display prototype message when config set to true" ignore new WithApplication {
+    "display prototype message when config set to true" ignore new WithChangeKeeperApplication {
       contentAsString(present) should include(PrototypeHtml)
     }
 
-    "not display prototype message when config set to false" in new WithApplication {
+    "not display prototype message when config set to false" in new WithChangeKeeperApplication {
       val request = FakeRequest()
       implicit val clientSideSessionFactory = injector.getInstance(classOf[ClientSideSessionFactory])
       implicit val config: Config = mock[Config]
@@ -39,7 +40,7 @@ final class MicroServiceErrorUnitSpec extends UnitSpec {
     }
 
     // TODO: fix these ignored tests
-    "write micro service error referer cookie" ignore new WithApplication {
+    "write micro service error referer cookie" ignore new WithChangeKeeperApplication {
       /*
       val referer = VehicleLookupPage.address
       val request = FakeRequest().
@@ -55,7 +56,7 @@ final class MicroServiceErrorUnitSpec extends UnitSpec {
   }
 
   "try again" should {
-    "redirect to vehicle lookup page when there is no referer" ignore new WithApplication {
+    "redirect to vehicle lookup page when there is no referer" ignore new WithChangeKeeperApplication {
       /*
       val request = FakeRequest()
       // No previous page cookie, which can only happen if they wiped their cookies after
@@ -67,7 +68,7 @@ final class MicroServiceErrorUnitSpec extends UnitSpec {
       */
     }
 
-    "redirect to previous page and discard the referer cookie" ignore new WithApplication {
+    "redirect to previous page and discard the referer cookie" ignore new WithChangeKeeperApplication {
       /*
       val request = FakeRequest().
         withCookies(CookieFactoryForUnitSpecs.microServiceError(VehicleLookupPage.address))

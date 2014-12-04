@@ -1,10 +1,11 @@
 package views.changekeeper
 
+import composition.ChangeKeeperTestHarness
 import helpers.webbrowser.ProgressBar
 import ProgressBar.progressStep
 import helpers.tags.UiTag
 import helpers.webbrowser.ProgressBar
-import helpers.{ChangeKeeperTestHarness, UiSpec}
+import helpers.UiSpec
 import pages.changekeeper.{VehicleLookupPage, BeforeYouStartPage}
 import pages.changekeeper.BeforeYouStartPage.startNow
 import pages.common.Feedback.EmailFeedbackLink

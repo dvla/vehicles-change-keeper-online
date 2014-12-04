@@ -1,8 +1,8 @@
 package controllers.changeKeeper
 
+import composition.WithChangeKeeperApplication
 import controllers.VehicleLookup
 import helpers.UnitSpec
-import helpers.WithApplication
 import models.VehicleLookupFormModel.Form.{DocumentReferenceNumberId, VehicleRegistrationNumberId, VehicleSoldToId}
 import org.mockito.Matchers.any
 import org.mockito.Mockito.when
@@ -44,11 +44,11 @@ import helpers.changekeeper.CookieFactoryForUnitSpecs
 final class VehicleLookupUnitSpec extends UnitSpec {
 
   "present" should {
-    "display the page" in new WithApplication {
+    "display the page" in new WithChangeKeeperApplication {
       present.futureValue.header.status should equal(play.api.http.Status.OK)
     }
 
-    "display populated fields when cookie exists" in new WithApplication {
+    "display populated fields when cookie exists" in new WithChangeKeeperApplication {
       val request = FakeRequest().
         withCookies(CookieFactoryForUnitSpecs.vehicleLookupFormModel())
       val result = vehicleLookupResponseGenerator().present(request)
@@ -57,7 +57,7 @@ final class VehicleLookupUnitSpec extends UnitSpec {
       content should include(RegistrationNumberValid)
     }
 
-    "display empty fields when cookie does not exist" in new WithApplication {
+    "display empty fields when cookie does not exist" in new WithChangeKeeperApplication {
       val request = FakeRequest()
       val result = vehicleLookupResponseGenerator().present(request)
       val content = contentAsString(result)
@@ -67,7 +67,7 @@ final class VehicleLookupUnitSpec extends UnitSpec {
   }
 
   "submit" should {
-    "replace max length error message for document reference number with standard error message" in new WithApplication {
+    "replace max length error message for document reference number with standard error message" in new WithChangeKeeperApplication {
       val request = buildCorrectlyPopulatedRequest(referenceNumber = "1" * (DocumentReferenceNumber.MaxLength + 1))
       val result = vehicleLookupResponseGenerator().submit(request)
       // check the validation summary text
@@ -78,7 +78,7 @@ final class VehicleLookupUnitSpec extends UnitSpec {
         r.findAllIn(contentAsString(result)).length should equal(1)
     }
 
-    "replace required and min length error messages for document reference number with standard error message" in new WithApplication {
+    "replace required and min length error messages for document reference number with standard error message" in new WithChangeKeeperApplication {
       val request = buildCorrectlyPopulatedRequest(referenceNumber = "")
       val result = vehicleLookupResponseGenerator().submit(request)
       // check the validation summary text
@@ -89,7 +89,7 @@ final class VehicleLookupUnitSpec extends UnitSpec {
         r.findAllIn(contentAsString(result)).length should equal(1)
     }
 
-    "replace max length error message for vehicle registration number with standard error message (US43)" in new WithApplication {
+    "replace max length error message for vehicle registration number with standard error message (US43)" in new WithChangeKeeperApplication {
       val request = buildCorrectlyPopulatedRequest(registrationNumber = "PJ05YYYX")
       val result = vehicleLookupResponseGenerator().submit(request)
       val count = "Vehicle registration mark must be valid format".r.findAllIn(contentAsString(result)).length
@@ -97,7 +97,7 @@ final class VehicleLookupUnitSpec extends UnitSpec {
       count should equal(2)
     }
 
-    "replace required and min length error messages for vehicle registration number with standard error message" in new WithApplication {
+    "replace required and min length error messages for vehicle registration number with standard error message" in new WithChangeKeeperApplication {
       val request = buildCorrectlyPopulatedRequest(registrationNumber = "")
         val result = vehicleLookupResponseGenerator().submit(request)
       val count = "Vehicle registration mark must be valid format".r.findAllIn(contentAsString(result)).length
@@ -105,7 +105,7 @@ final class VehicleLookupUnitSpec extends UnitSpec {
       count should equal(2) // The same message is displayed in 2 places - once in the validation-summary at the top of the page and once above the field.
     }
 
-    "replace required error message for new keeper type (private keeper or business)" in new WithApplication {
+    "replace required error message for new keeper type (private keeper or business)" in new WithChangeKeeperApplication {
       val request = buildCorrectlyPopulatedRequest(soldTo = "")
       val result = vehicleLookupResponseGenerator().submit(request)
       val count = "Select whether the vehicle is being sold to a private individual or business".r.findAllIn(contentAsString(result)).length
@@ -113,7 +113,7 @@ final class VehicleLookupUnitSpec extends UnitSpec {
       count should equal(3)
     }
 
-    "redirect to MicroserviceError when microservice throws" ignore new WithApplication {
+    "redirect to MicroserviceError when microservice throws" ignore new WithChangeKeeperApplication {
 //      ToDo uncomment when microservice error is implemented into application
 //      val request = buildCorrectlyPopulatedRequest()
 //      val result = vehicleLookupError.submit(request)
@@ -123,7 +123,7 @@ final class VehicleLookupUnitSpec extends UnitSpec {
 //      }
     }
 
-    "redirect to vrm locked when valid submit and brute force prevention returns not permitted" in new WithApplication {
+    "redirect to vrm locked when valid submit and brute force prevention returns not permitted" in new WithChangeKeeperApplication {
       val request = buildCorrectlyPopulatedRequest(registrationNumber = VrmLocked)
       val result = vehicleLookupResponseGenerator(
         vehicleDetailsResponseDocRefNumberNotLatest,
@@ -132,7 +132,7 @@ final class VehicleLookupUnitSpec extends UnitSpec {
       result.futureValue.header.headers.get(LOCATION) should equal(Some(VrmLockedPage.address))
     }
 
-    "redirect to VehicleLookupFailure and display 1st attempt message when document reference number not found and security service returns 1st attempt" in new WithApplication {
+    "redirect to VehicleLookupFailure and display 1st attempt message when document reference number not found and security service returns 1st attempt" in new WithChangeKeeperApplication {
       val request = buildCorrectlyPopulatedRequest(registrationNumber = RegistrationNumberValid)
       val result = vehicleLookupResponseGenerator(
         vehicleDetailsResponseDocRefNumberNotLatest,
@@ -142,7 +142,7 @@ final class VehicleLookupUnitSpec extends UnitSpec {
       result.futureValue.header.headers.get(LOCATION) should equal(Some(VehicleLookupFailurePage.address))
     }
 
-    "redirect to VehicleLookupFailure and display 2nd attempt message when document reference number not found and security service returns 2nd attempt" in new WithApplication {
+    "redirect to VehicleLookupFailure and display 2nd attempt message when document reference number not found and security service returns 2nd attempt" in new WithChangeKeeperApplication {
       val request = buildCorrectlyPopulatedRequest(registrationNumber = VrmAttempt2)
       val result = vehicleLookupResponseGenerator(
         vehicleDetailsResponseDocRefNumberNotLatest,
@@ -152,7 +152,7 @@ final class VehicleLookupUnitSpec extends UnitSpec {
       result.futureValue.header.headers.get(LOCATION) should equal(Some(VehicleLookupFailurePage.address))
     }
 
-    "redirect to VrmLocked when document reference number when vehicles lookup not permitted" in new WithApplication {
+    "redirect to VrmLocked when document reference number when vehicles lookup not permitted" in new WithChangeKeeperApplication {
       val request = buildCorrectlyPopulatedRequest(registrationNumber = VrmLocked)
       val result = vehicleLookupResponseGenerator(
         vehicleDetailsResponseDocRefNumberNotLatest,

@@ -5,7 +5,9 @@ import models.NewKeeperEnterAddressManuallyFormModel.NewKeeperEnterAddressManual
 import models.NewKeeperChooseYourAddressFormModel.NewKeeperChooseYourAddressCacheKey
 import uk.gov.dvla.vehicles.presentation.common.model.BruteForcePreventionModel._
 import uk.gov.dvla.vehicles.presentation.common.model.VehicleAndKeeperDetailsModel.VehicleAndKeeperLookupDetailsCacheKey
-import uk.gov.dvla.vehicles.presentation.common.model.VehicleDetailsModel._
+import models.NewKeeperDetailsViewModel.NewKeeperDetailsCacheKey
+import models.CompleteAndConfirmFormModel.CompleteAndConfirmCacheKey
+import models.CompleteAndConfirmResponseModel.ChangeKeeperCompletionResponseCacheKey
 
 package object models {
   final val HelpCacheKey = "help"
@@ -23,12 +25,14 @@ package object models {
 
   final val PrivateKeeperDetailsCacheKeys = Set(
     PrivateKeeperDetailsCacheKey,
+    NewKeeperDetailsCacheKey,
     NewKeeperChooseYourAddressCacheKey,
     NewKeeperEnterAddressManuallyCacheKey
   )
 
   final val BusinessKeeperDetailsCacheKeys = Set(
     BusinessKeeperDetailsCacheKey,
+    NewKeeperDetailsCacheKey,
     NewKeeperChooseYourAddressCacheKey,
     NewKeeperEnterAddressManuallyCacheKey
   )
@@ -40,8 +44,16 @@ package object models {
       .++(BusinessKeeperDetailsCacheKeys)
       .++(Set(HelpCacheKey))
 
+  final val CompletionCacheKeys = Set(
+    NewKeeperDetailsCacheKey,
+    CompleteAndConfirmCacheKey,
+    VehicleLookupResponseCodeCacheKey,
+    ChangeKeeperCompletionResponseCacheKey
+  )
+
   final val AllCacheKeys =
     VehicleDetailsCacheKeys
       .++(PrivateKeeperDetailsCacheKeys)
       .++(BusinessKeeperDetailsCacheKeys)
+      .++(CompletionCacheKeys)
 }
