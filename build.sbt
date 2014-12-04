@@ -55,6 +55,8 @@ libraryDependencies ++= Seq(
   "com.tzavellas" % "sse-guice" % "0.7.1" withSources() withJavadoc(), // Scala DSL for Guice
   "commons-codec" % "commons-codec" % "1.9" withSources() withJavadoc(),
   "org.apache.httpcomponents" % "httpclient" % "4.3.4" withSources() withJavadoc(),
+  "org.apache.commons" % "commons-io" % "1.3.2",
+  "org.apache.commons" % "commons-email" % "1.2",
   "org.webjars" % "requirejs" % "2.1.14-1",
   "junit" % "junit" % "4.11",
   "junit" % "junit-dep" % "4.11"
