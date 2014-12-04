@@ -1,10 +1,11 @@
 package views.changekeeper
 
+import composition.ChangeKeeperTestHarness
+import helpers.webbrowser.ProgressBar
 import helpers.UiSpec
 import helpers.changekeeper.CookieFactoryForUISpecs
-import helpers.common.ProgressBar.progressStep
+import ProgressBar.progressStep
 import helpers.tags.UiTag
-import helpers.webbrowser.TestHarness
 import org.openqa.selenium.{By, WebDriver, WebElement}
 import pages.changekeeper.PrivateKeeperDetailsPage.{FirstNameInvalid, LastNameInvalid, back, navigate}
 import pages.changekeeper.PrivateKeeperDetailsPage.{TitleInvalid, EmailInvalid, DriverNumberInvalid, PostcodeInvalid}
@@ -16,7 +17,7 @@ import uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction
 import helpers.common.HtmlTestHelper.{htmlRegex, whitespaceRegex}
 import pages.changekeeper.NewKeeperChooseYourAddressPage
 
-final class PrivateKeeperDetailsIntegrationSpec extends UiSpec with TestHarness {
+final class PrivateKeeperDetailsIntegrationSpec extends UiSpec with ChangeKeeperTestHarness {
 
   "go to page" should {
     "display the page" taggedAs UiTag in new WebBrowser {

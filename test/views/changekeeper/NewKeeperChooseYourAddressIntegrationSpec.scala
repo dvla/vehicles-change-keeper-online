@@ -1,10 +1,10 @@
 package views.changekeeper
 
-import helpers.common.ProgressBar
+import composition.ChangeKeeperTestHarness
 import helpers.changekeeper.CookieFactoryForUISpecs
 import helpers.tags.UiTag
+import helpers.webbrowser.ProgressBar
 import helpers.UiSpec
-import helpers.webbrowser.TestHarness
 import org.openqa.selenium.{By, WebElement, WebDriver}
 import pages.common.ErrorPanel
 import pages.changekeeper.BeforeYouStartPage
@@ -20,12 +20,12 @@ import webserviceclients.fakes.FakeAddressLookupService
 import webserviceclients.fakes.FakeAddressLookupService.PostcodeValid
 import pages.common.Feedback.EmailFeedbackLink
 
-class NewKeeperChooseYourAddressIntegrationSpec extends UiSpec with TestHarness {
+class NewKeeperChooseYourAddressIntegrationSpec extends UiSpec with ChangeKeeperTestHarness {
   final val ProgressStepNumber = 4
   final val PrivateKeeperNameLabel = " Name"
   final val BusinessKeeperNameLabel = "Business name"
   final val BusinessFleetNumberLabel = "Business fleet number"
-  
+
   "new keeper choose your address page" should {
     "display the page for a new private keeper" taggedAs UiTag in new WebBrowser {
       go to BeforeYouStartPage

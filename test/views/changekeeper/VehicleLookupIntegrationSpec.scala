@@ -1,9 +1,9 @@
 package views.changekeeper
 
-import helpers.common.ProgressBar
+import composition.ChangeKeeperTestHarness
 import helpers.tags.UiTag
+import helpers.webbrowser.ProgressBar
 import helpers.UiSpec
-import helpers.webbrowser.{TestGlobal, TestHarness}
 import org.openqa.selenium.{By, WebElement}
 import pages.common.ErrorPanel
 import pages.changekeeper.VehicleLookupPage
@@ -15,7 +15,7 @@ import models.BusinessKeeperDetailsFormModel.BusinessKeeperDetailsCacheKey
 import models.PrivateKeeperDetailsFormModel.PrivateKeeperDetailsCacheKey
 import helpers.changekeeper.CookieFactoryForUISpecs
 
-class VehicleLookupIntegrationSpec extends UiSpec with TestHarness {
+class VehicleLookupIntegrationSpec extends UiSpec with ChangeKeeperTestHarness {
 
   final val ProgressStepNumber = 2
 
@@ -123,10 +123,10 @@ class VehicleLookupIntegrationSpec extends UiSpec with TestHarness {
   }
 
   private val fakeAppWithHtml5ValidationEnabledConfig = FakeApplication(
-    withGlobal = Some(TestGlobal),
+    withGlobal = Some(global),
     additionalConfiguration = Map("html5Validation.enabled" -> true))
 
   private val fakeAppWithHtml5ValidationDisabledConfig = FakeApplication(
-    withGlobal = Some(TestGlobal),
+    withGlobal = Some(global),
     additionalConfiguration = Map("html5Validation.enabled" -> false))
 }

@@ -1,11 +1,12 @@
 package views.changekeeper
 
+import composition.ChangeKeeperTestHarness
 import helpers.UiSpec
-import helpers.webbrowser.{WebDriverFactory, TestHarness}
+import helpers.webbrowser.WebDriverFactory
 import pages.ApplicationContext.applicationContext
 import scala.io.Source.fromInputStream
 
-class VersionIntegrationSpec extends UiSpec with TestHarness {
+class VersionIntegrationSpec extends UiSpec with ChangeKeeperTestHarness {
   "Version endpoint" should {
     "be declared and should include the build-details.txt from classpath" in new WebBrowser {
       go.to(WebDriverFactory.testUrl + s"$applicationContext/version")

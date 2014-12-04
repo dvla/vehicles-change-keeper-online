@@ -1,9 +1,10 @@
 package views.changekeeper
 
+import composition.ChangeKeeperTestHarness
+import helpers.webbrowser.ProgressBar
 import helpers.UiSpec
-import helpers.common.ProgressBar.progressStep
+import ProgressBar.progressStep
 import helpers.tags.UiTag
-import helpers.webbrowser.TestHarness
 import org.openqa.selenium.{By, WebDriver, WebElement}
 import pages.common.ErrorPanel
 import pages.changekeeper.NewKeeperEnterAddressManuallyPage.{sadPath, happyPath, happyPathMandatoryFieldsOnly}
@@ -12,7 +13,7 @@ import uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction
 import pages.common.Feedback.EmailFeedbackLink
 import helpers.changekeeper.CookieFactoryForUISpecs
 
-class NewKeeperEnterAddressManuallyIntegrationSpec extends UiSpec with TestHarness {
+class NewKeeperEnterAddressManuallyIntegrationSpec extends UiSpec with ChangeKeeperTestHarness {
 
   final val ProgressStepNumber = 4
 
