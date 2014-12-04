@@ -6,7 +6,6 @@ import org.scalatest.mock.MockitoSugar
 import play.api.{LoggerLike, Logger}
 import uk.gov.dvla.vehicles.presentation.common.filters.{DateTimeZoneServiceImpl, DateTimeZoneService}
 import uk.gov.dvla.vehicles.presentation.common.services.DateService
-import webserviceclients.acquire.{AcquireServiceImpl, AcquireService, AcquireWebService}
 import webserviceclients.fakes.{FakeAcquireWebServiceImpl, FakeAddressLookupWebServiceImpl, FakeDateServiceImpl, FakeVehicleAndKeeperLookupWebService}
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.CookieFlags
@@ -17,6 +16,7 @@ import common.filters.AccessLoggingFilter.AccessLoggerName
 import common.webserviceclients.bruteforceprevention.BruteForcePreventionWebService
 import common.webserviceclients.bruteforceprevention.BruteForcePreventionServiceImpl
 import common.webserviceclients.bruteforceprevention.BruteForcePreventionService
+import common.webserviceclients.acquire.{AcquireServiceImpl, AcquireService, AcquireWebService}
 import webserviceclients.fakes.brute_force_protection.FakeBruteForcePreventionWebServiceImpl
 import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupService
 import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupServiceImpl

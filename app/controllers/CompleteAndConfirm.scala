@@ -11,7 +11,7 @@ import play.api.mvc.{Action, AnyContent, Call, Controller, Request, Result}
 import play.api.Logger
 import uk.gov.dvla.vehicles.presentation.common.views.html.widgets.addressLines
 import uk.gov.dvla.vehicles.presentation.common.webserviceclients.common.{VssWebEndUserDto, VssWebHeaderDto}
-import webserviceclients.acquire._
+import uk.gov.dvla.vehicles.presentation.common.webserviceclients.acquire._
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import uk.gov.dvla.vehicles.presentation.common

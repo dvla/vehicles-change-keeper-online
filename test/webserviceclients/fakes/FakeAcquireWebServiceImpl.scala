@@ -4,7 +4,8 @@ import play.api.Logger
 import play.api.http.Status.OK
 import play.api.libs.json.Json
 import play.api.libs.ws.WSResponse
-import webserviceclients.acquire.{AcquireRequestDto, AcquireResponseDto, AcquireWebService}
+import uk.gov.dvla.vehicles.presentation.common
+import common.webserviceclients.acquire.{AcquireRequestDto, AcquireResponseDto, AcquireWebService}
 
 import scala.concurrent.Future
 
