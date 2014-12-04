@@ -1,0 +1,48 @@
+@()(implicit lang: Lang,
+token: uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction.CsrfPreventionToken,
+config: utils.helpers.Config)
+
+@import views.html.helper.form
+@import uk.gov.dvla.vehicles.presentation.common
+@import common.views.html.widgets.base.csrfTokenHiddenField
+
+@main(
+title = Messages("acquire_acquirefailure.title")
+) {
+
+<div class="two-col clearfix">
+    <div class="first-col">
+        <dl class="playback">
+            <h2>@Messages("acquire_failure.transaction_details.header")</h2>
+            <dt>@Messages("acquire_failure.transaction_details.transaction_id")</dt>
+            <dt>@Messages("acquire_failure.transaction_details.transaction_date")</dt>
+        </dl>
+    </div>
+    <div class="second-col">
+        <div class="alert-failed">
+            <h2>@Messages("ms.vehiclesService.response.unableToProcessApplication-title")</h2>
+            <p>
+                @Messages("ms.vehiclesService.response.unableToProcessApplication")
+                <br>
+                @Messages("ms.vehiclesService.response.unableToProcessApplication-address")
+            </p>
+        </div>
+    </div>
+
+
+    <div class="form-steps">
+        <div class="step">
+            <button id="printDisposalSuccess" type="button" name="action" value="printDisposalSuccess" class="button js-only print-button">@Messages("acquire_failure.buttonnavprint")</button>
+        </div>
+
+        <div class="step">
+            @csrfTokenHiddenField()
+        </div>
+
+        <div class="step">
+            @csrfTokenHiddenField()
+        </div>
+
+    </div>
+</div>
+}

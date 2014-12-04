@@ -7,33 +7,23 @@ import models.CompleteAndConfirmFormModel.Form.{MileageId, ConsentId}
 import org.joda.time.DateTime
 import org.joda.time.format.ISODateTimeFormat
 import play.api.data.{FormError, Form}
-import play.api.mvc.{Action, AnyContent, Call, Controller, Request, Result}
+import play.api.mvc.{Action, AnyContent, Controller, Request}
 import play.api.Logger
-import uk.gov.dvla.vehicles.presentation.common.views.html.widgets.addressLines
 import uk.gov.dvla.vehicles.presentation.common.webserviceclients.common.{VssWebEndUserDto, VssWebHeaderDto}
-import uk.gov.dvla.vehicles.presentation.common.webserviceclients.acquire._
+import uk.gov.dvla.vehicles.presentation.common.webserviceclients.acquire.{AcquireService,
+        AcquireResponseDto, AcquireRequestDto, TitleTypeDto, KeeperDetailsDto}
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.ClientSideSessionFactory
 import common.clientsidesession.CookieImplicits.{RichCookies, RichForm, RichResult}
-import common.mappings.TitleType
-import uk.gov.dvla.vehicles.presentation.common.model.{VehicleAndKeeperDetailsModel, VehicleDetailsModel, TraderDetailsModel}
+import uk.gov.dvla.vehicles.presentation.common.model.VehicleAndKeeperDetailsModel
 import common.services.DateService
 import common.views.helpers.FormExtensions.formBinding
 import utils.helpers.Config
-import views.html.changekeeper.complete_and_confirm
-import scala.Some
-import play.api.mvc.Result
-import uk.gov.dvla.vehicles.presentation.common.mappings.TitleType
-import play.api.mvc.Call
-import scala.Some
-import models.CompleteAndConfirmViewModel
-import play.api.mvc.Result
 import uk.gov.dvla.vehicles.presentation.common.mappings.TitleType
 import play.api.mvc.Call
 import views.html.changekeeper.complete_and_confirm
-import scala.Some
 import models.CompleteAndConfirmViewModel
 import play.api.mvc.Result
 
@@ -51,7 +41,7 @@ class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSi
     "Now redirecting to vehicle lookup"
 
   def present = Action { implicit request =>
-    canPerformPresent {
+    canPerform {
       val newKeeperDetailsOpt = request.cookies.getModel[NewKeeperDetailsViewModel]
       val vehicleDetailsOpt = request.cookies.getModel[VehicleAndKeeperDetailsModel]
       (newKeeperDetailsOpt, vehicleDetailsOpt) match {
@@ -60,11 +50,11 @@ class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSi
         case _ =>
           redirectToVehicleLookup(NoCookiesFoundMessage).discardingCookie(AllowGoingToCompleteAndConfirmPageCacheKey)
       }
-    }
+    }(Redirect(routes.VehicleLookup.present()).discardingCookies(cookiesToBeDiscardeOnRedirectAway))
   }
 
   def submit = Action.async { implicit request =>
-    canPerformSubmit {
+    canPerform {
       form.bindFromRequest.fold(
         invalidForm => Future.successful {
           val newKeeperDetailsOpt = request.cookies.getModel[NewKeeperDetailsViewModel]
@@ -98,15 +88,9 @@ class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSi
           validFormResult.map(_.discardingCookie(AllowGoingToCompleteAndConfirmPageCacheKey))
         }
       )
-    }
+    }(Future.successful(Redirect(routes.VehicleLookup.present()).discardingCookies(cookiesToBeDiscardeOnRedirectAway)))
   }
 
-  private def canPerformPresent[R](action: => Result)(implicit request: Request[_]) =
-    request.cookies.getString(AllowGoingToCompleteAndConfirmPageCacheKey).fold {
-      Logger.warn(s"Could not find AllowGoingToCompleteAndConfirmPageCacheKey in the request. " +
-        s"Redirect to VehicleLookup discarding cookies $cookiesToBeDiscardeOnRedirectAway")
-      Redirect(routes.VehicleLookup.present()).discardingCookies(cookiesToBeDiscardeOnRedirectAway)
-    }(c => action)
 
   private def canPerformSubmit[R](action: => Future[Result])(implicit request: Request[_]) =
     request.cookies.getString(AllowGoingToCompleteAndConfirmPageCacheKey).fold {
@@ -161,8 +145,7 @@ class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSi
     }.recover {
       case e: Throwable =>
         Logger.warn(s"Acquire micro-service call failed.", e)
-        null
-//        Redirect(routes.MicroServiceError.present())
+        Redirect(routes.MicroServiceError.present())
     }
   }
 
@@ -230,9 +213,7 @@ class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSi
     acquireResponseCode match {
       case "ms.vehiclesService.error.generalError" =>
         Logger.warn("Acquire soap endpoint redirecting to acquire failure page")
-// TODO : Should redirect to acquire failure
-//        routes.AcquireFailure.present()
-        routes.MicroServiceError.present()
+        routes.ChangeKeeperFailure.present()
       case _ =>
         Logger.warn(s"Acquire micro-service failed so now redirecting to micro service error page. " +
           s"Code returned from ms was $acquireResponseCode")
@@ -277,5 +258,37 @@ class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSi
  private def buildEndUser(): VssWebEndUserDto = {
    VssWebEndUserDto(endUserId = config.orgBusinessUnit, orgBusUnit = config.orgBusinessUnit)
  }
+  /**
+   * Checks the presence of <code>AllowGoingToCompleteAndConfirmPageCacheKey</code> to allow the completion of
+   * the request, otherwise calls redirect function.
+   *
+   * Example:
+   * def present = Action { implicit request =>
+   *  canPerform {
+   *    Ok("success")
+   *  }(Redirect(routes.VehicleLookup.present()).discardingCookies(cookiesToBeDiscardeOnRedirectAway))
+   * }
+   *
+   * or
+   * def present = Action.async { implicit request =>
+   *  canPerform {
+   *    ...
+   *  }(Future.successful(Redirect(routes.VehicleLookup.present()).discardingCookies(cookiesToBeDiscardeOnRedirectAway)))
+   * }
+   *
+   * @param action the action body
+   * @param redirect the Result function to be called if the cookie is not present
+   * @param request implicit request
+   * @tparam T for the purposes of the application this should be Either a Result of Future[Result]
+   * @return T by either calling the action of the redirect
+   */
+  private def canPerform[T](action: => T)(redirect: => T)
+                           (implicit request: Request[_])= {
+    request.cookies.getString(AllowGoingToCompleteAndConfirmPageCacheKey).fold {
+      Logger.warn(s"Could not find AllowGoingToCompleteAndConfirmPageCacheKey in the request. " +
+        s"Redirect to starting page discarding cookies")
+      redirect
+    }(c => action)
+  }
 
 }
