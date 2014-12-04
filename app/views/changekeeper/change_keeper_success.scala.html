@@ -13,12 +13,11 @@
     title = "Summary"
 ){
 <div class="two-col clearfix acquire-success">
-    <div class="first-col">
+    <div class="second-col">
 
         <div class="alert-complete">
             <h2>@Messages("change_keeper_success.complete.header")</h2>
             <p>@Messages("change_keeper_success.complete.p1")</p>
-            <p>@Messages("change_keeper_success.complete.p2")</p>
         </div>
 
         <dl class="playback transaction-details mobile-only">
@@ -52,7 +51,7 @@
             </dl>
         </div>
 
-        <p>@Messages("achange_keeper_success.new_keeper_details.p1")</p>
+        <p>@Messages("change_keeper_success.new_keeper_details.p1")</p>
 
         <div class="info-notice">
             <dl class="playback">
@@ -86,13 +85,6 @@
             <div class="step">
                 <button id="printDisposalSuccess" type="button" name="action" value="printDisposalSuccess" class="button js-only print-button">@Messages("change_keeper_success.buttonnavprint")</button>
             </div>
-
-            <div class="step">
-                @form(action = controllers.routes.ChangeKeeperSuccess.buyAnother()) {
-                @csrfTokenHiddenField()
-                <button id="@BuyAnotherId" type="submit" name="action" class="button button-new-disposal button-secondary">@Messages("change_keeper_success.buyAnother")</button>
-                }
-            </div>
             <div class="step">
                 @form(action = controllers.routes.ChangeKeeperSuccess.finish()) {
                 @csrfTokenHiddenField()
@@ -101,7 +93,7 @@
             </div>
         </div>
     </div>
-    <div class="second-col">
+    <div class="first-col">
 
         <div class="print-only">
             <h2>@Messages("change_keeper_success.complete.header")</h2>
@@ -115,10 +107,6 @@
             <dd>@viewModel.completeAndConfirmResponseModel.transactionTimestamp.toString("dd/MM/yyyy")</dd>
         </dl>
         <div class="related vehicle-sold-by desktop-only">
-            <dl class="playback bg-plain">
-                <dt>@Messages("change_keeper_success.date_of_sale.label")</dt>
-                <dd>@viewModel.completeAndConfirmDetails.dateOfSale.toString("dd/MM/yyyy")</dd>
-            </dl>
         </div>
     </div>
 </div>

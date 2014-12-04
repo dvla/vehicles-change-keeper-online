@@ -291,6 +291,14 @@ change_keeper_success.vehicle_details.name = Name
 change_keeper_success.vehicle_details.address = Address
 change_keeper_success.vehicle_details.postcode = Postcode
 change_keeper_success.vehicle_details.email = Contact email address
+change_keeper_success.further_information.alert = Please print this page and give it to the buyer with the V5C/2 slip from the vehicle registration certificate (V5C)
+change_keeper_success.vehicle_details.p1 = Details of the vehicle being sold
+change_keeper_success.new_keeper_details.p1 = Details of the buyer who will become the new keeper on the new registration certificate
+change_keeper_success.further_information.header = What happens next?
+change_keeper_success.further_information.p1 = Within 5 working days we will send a new vehicle registration certificate (V5C) to the buyer who is the new keeper
+change_keeper_success.further_information.p2 = If they do not receive a new V5C in one week they must contact DVLA Customer Enquiries on 0300 790 6802
+change_keeper_success.buttonnavprint = Print
+change_keeper_success.finish = Finish
 
 #uprn not found
 acquire_uprnnotfound.title = Error confirming post code
