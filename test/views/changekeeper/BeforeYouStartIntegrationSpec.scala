@@ -4,7 +4,6 @@ import composition.ChangeKeeperTestHarness
 import helpers.webbrowser.ProgressBar
 import ProgressBar.progressStep
 import helpers.tags.UiTag
-import helpers.webbrowser.ProgressBar
 import helpers.UiSpec
 import pages.changekeeper.{VehicleLookupPage, BeforeYouStartPage}
 import pages.changekeeper.BeforeYouStartPage.startNow

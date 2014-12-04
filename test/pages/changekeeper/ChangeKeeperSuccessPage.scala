@@ -1,7 +1,6 @@
 package pages.changekeeper
 
-import helpers.webbrowser.{Element, Page, WebBrowserDSL, WebDriverFactory}
-import org.openqa.selenium.WebDriver
+import helpers.webbrowser.{Page, WebBrowserDSL, WebDriverFactory}
 
 object ChangeKeeperSuccessPage extends Page with WebBrowserDSL {
   final val address = buildAppUrl("change-keeper-success")
