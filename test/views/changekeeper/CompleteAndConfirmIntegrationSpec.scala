@@ -2,12 +2,13 @@ package views.changekeeper
 
 import com.google.inject.Injector
 import com.tzavellas.sse.guice.ScalaModule
-import composition.{GlobalLike, TestComposition}
-import helpers.common.ProgressBar
+import composition.{ChangeKeeperTestHarness, GlobalLike, TestComposition}
 import helpers.changekeeper.CookieFactoryForUISpecs
+import helpers.webbrowser.ProgressBar
 import ProgressBar.progressStep
 import helpers.tags.UiTag
-import helpers.{ChangeKeeperTestHarness, UiSpec}
+import helpers.webbrowser.ProgressBar
+import helpers.UiSpec
 import models.{VehicleNewKeeperCompletionCacheKeys, NewKeeperDetailsViewModel, CompleteAndConfirmFormModel}
 import org.openqa.selenium.{By, WebElement, WebDriver}
 import org.scalatest.mock.MockitoSugar

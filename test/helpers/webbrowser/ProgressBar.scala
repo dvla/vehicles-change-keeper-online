@@ -1,6 +1,5 @@
-package helpers.common
+package helpers.webbrowser
 
-import helpers.webbrowser.GlobalCreator
 import play.api.test.FakeApplication
 
 trait ProgressBar {

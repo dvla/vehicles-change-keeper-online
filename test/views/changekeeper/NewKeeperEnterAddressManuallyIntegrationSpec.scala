@@ -1,7 +1,9 @@
 package views.changekeeper
 
-import helpers.{ChangeKeeperTestHarness, UiSpec}
-import helpers.common.ProgressBar.progressStep
+import composition.ChangeKeeperTestHarness
+import helpers.webbrowser.ProgressBar
+import helpers.UiSpec
+import ProgressBar.progressStep
 import helpers.tags.UiTag
 import org.openqa.selenium.{By, WebDriver, WebElement}
 import pages.common.ErrorPanel
