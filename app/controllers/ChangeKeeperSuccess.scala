@@ -32,14 +32,6 @@ class ChangeKeeperSuccess @Inject()()(implicit clientSideSessionFactory: ClientS
     }
   }
 
-  def buyAnother = Action { implicit request =>
-    val result = for {
-      acquireCompletionViewModel <- request.cookies.getModel[TraderDetailsModel]
-    } yield Redirect(routes.VehicleLookup.present())
-      .discardingCookies(VehicleNewKeeperCompletionCacheKeys)
-    result getOrElse redirectToStart(MissingCookies)
-  }
-
   def finish = Action { implicit request =>
     Redirect(routes.BeforeYouStart.present())
       .discardingCookies(AllCacheKeys)

@@ -46,7 +46,6 @@ POST        /complete-and-confirm                       @controllers.CompleteAnd
 
 #page 6 - Change keeper success
 GET         /change-keeper-success                      @controllers.ChangeKeeperSuccess.present
-GET         /change-keeper-another                      @controllers.ChangeKeeperSuccess.buyAnother
 GET         /change-keeper-finish                       @controllers.ChangeKeeperSuccess.finish
 
 # Failure
