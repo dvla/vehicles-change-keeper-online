@@ -49,9 +49,9 @@ GET         /change-keeper-success                      @controllers.ChangeKeepe
 GET         /change-keeper-finish                       @controllers.ChangeKeeperSuccess.finish
 
 # Failure
-GET     /buy-from-the-trade-failure                     @controllers.ChangeKeeperFailure.present
-GET     /failure-acquire-another                        @controllers.ChangeKeeperFailure.buyAnother
-GET     /failure-acquire-finish                         @controllers.ChangeKeeperFailure.finish
+GET     /change-keeper-failure                          @controllers.ChangeKeeperFailure.present
+GET     /failure-change-keeper-another                  @controllers.ChangeKeeperFailure.buyAnother
+GET     /failure-change-keeper-finish                   @controllers.ChangeKeeperFailure.finish
 
 # REMOVE ME WHEN THE STORIES ARE AVAILABLE
 GET         /next                                       @controllers.TempController.present

@@ -145,8 +145,7 @@ class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSi
     }.recover {
       case e: Throwable =>
         Logger.warn(s"Acquire micro-service call failed.", e)
-        null
-//        Redirect(routes.MicroServiceError.present())
+        Redirect(routes.MicroServiceError.present())
     }
   }
 
