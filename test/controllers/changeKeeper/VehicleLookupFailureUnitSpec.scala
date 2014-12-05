@@ -1,6 +1,6 @@
 package controllers.changeKeeper
 
-import composition.WithChangeKeeperApplication
+import composition.WithApplication
 import controllers.VehicleLookupFailure
 import Common.PrototypeHtml
 import helpers.UnitSpec
@@ -15,13 +15,13 @@ import utils.helpers.Config
 final class VehicleLookupFailureUnitSpec extends UnitSpec {
 
   "present" should {
-    "display the page" in new WithChangeKeeperApplication {
+    "display the page" in new WithApplication {
       whenReady(present) { r =>
         r.header.status should equal(OK)
       }
     }
 
-    "redirect to before you start if bruteForcePreventionViewModel is not in cache" in new WithChangeKeeperApplication {
+    "redirect to before you start if bruteForcePreventionViewModel is not in cache" in new WithApplication {
       val request = FakeRequest()
         .withCookies(CookieFactoryForUnitSpecs.vehicleLookupFormModel())
         .withCookies(CookieFactoryForUnitSpecs.vehicleLookupResponseCode())
@@ -31,7 +31,7 @@ final class VehicleLookupFailureUnitSpec extends UnitSpec {
       }
     }
 
-    "redirect to before you start if VehicleLookupFormModelCache is not in cache" in new WithChangeKeeperApplication {
+    "redirect to before you start if VehicleLookupFormModelCache is not in cache" in new WithApplication {
       val request = FakeRequest()
         .withCookies(CookieFactoryForUnitSpecs.bruteForcePreventionViewModel())
         .withCookies(CookieFactoryForUnitSpecs.vehicleLookupResponseCode())
@@ -41,7 +41,7 @@ final class VehicleLookupFailureUnitSpec extends UnitSpec {
       }
     }
 
-    "redirect to before you start if only vehicleLookupResponseCode is not in cache" in new WithChangeKeeperApplication {
+    "redirect to before you start if only vehicleLookupResponseCode is not in cache" in new WithApplication {
       val request = FakeRequest()
         .withCookies(CookieFactoryForUnitSpecs.bruteForcePreventionViewModel())
         .withCookies(CookieFactoryForUnitSpecs.vehicleLookupFormModel())
@@ -51,15 +51,15 @@ final class VehicleLookupFailureUnitSpec extends UnitSpec {
       }
     }
 
-    "not display progress bar" in new WithChangeKeeperApplication {
+    "not display progress bar" in new WithApplication {
       contentAsString(present) should not include "Step "
     }
 
-    "display prototype message when config set to true" in new WithChangeKeeperApplication {
+    "display prototype message when config set to true" in new WithApplication {
       contentAsString(present) should include(PrototypeHtml)
     }
 
-    "not display prototype message when config set to false" in new WithChangeKeeperApplication {
+    "not display prototype message when config set to false" in new WithApplication {
       val request = FakeRequest()
       implicit val clientSideSessionFactory = injector.getInstance(classOf[ClientSideSessionFactory])
       implicit val config: Config = mock[Config]
@@ -72,7 +72,7 @@ final class VehicleLookupFailureUnitSpec extends UnitSpec {
   }
 
   "submit" should {
-    "redirect to vehiclelookup on submit" in new WithChangeKeeperApplication {
+    "redirect to vehiclelookup on submit" in new WithApplication {
       val request = FakeRequest()
         .withCookies(CookieFactoryForUnitSpecs.vehicleLookupFormModel())
       val result = vehicleLookupFailure.submit(request)
@@ -81,7 +81,7 @@ final class VehicleLookupFailureUnitSpec extends UnitSpec {
       }
     }
 
-    "redirect to setuptraderdetails on submit when cache is empty" in new WithChangeKeeperApplication {
+    "redirect to setuptraderdetails on submit when cache is empty" in new WithApplication {
       val request = FakeRequest()
       val result = vehicleLookupFailure.submit(request)
       whenReady(result) { r =>

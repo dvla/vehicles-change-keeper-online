@@ -1,6 +1,6 @@
 package views.changekeeper
 
-import composition.ChangeKeeperTestHarness
+import composition.TestHarness
 import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.ProgressBar
 import helpers.UiSpec
 import helpers.changekeeper.CookieFactoryForUISpecs
@@ -10,7 +10,7 @@ import pages.changekeeper.MicroServiceErrorPage.{exit, tryAgain}
 import pages.changekeeper.{BeforeYouStartPage, MicroServiceErrorPage}
 import pages.common.Feedback.EmailFeedbackLink
 
-final class MicroServiceErrorIntegrationSpec extends UiSpec with ChangeKeeperTestHarness {
+final class MicroServiceErrorIntegrationSpec extends UiSpec with TestHarness {
   "go to page" should {
     // TODO: fix me
     "display the page" taggedAs UiTag ignore new WebBrowser {

@@ -1,6 +1,7 @@
 package gov.uk.dvla.vehicles.acquire.stepdefs
 
   import cucumber.api.scala.{EN, ScalaDsl}
+import uk.gov.dvla.vehicles.presentation.common.helpers
   import helpers.webbrowser.{WebBrowserDSL, WebBrowserDriver}
   import cucumber.api.java.en.{Then, When, Given}
   import org.openqa.selenium.WebDriver

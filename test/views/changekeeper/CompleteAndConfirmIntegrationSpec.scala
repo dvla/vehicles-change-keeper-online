@@ -2,7 +2,7 @@ package views.changekeeper
 
 import com.google.inject.Injector
 import com.tzavellas.sse.guice.ScalaModule
-import composition.{ChangeKeeperTestHarness, GlobalLike, TestComposition}
+import composition.{TestHarness, GlobalLike, TestComposition}
 import helpers.changekeeper.CookieFactoryForUISpecs
 import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.ProgressBar.progressStep
 import helpers.tags.UiTag
@@ -39,7 +39,7 @@ import scala.Some
 import play.api.test.FakeApplication
 import uk.gov.dvla.vehicles.presentation.common.mappings.TitleType
 
-final class CompleteAndConfirmIntegrationSpec extends UiSpec with ChangeKeeperTestHarness {
+final class CompleteAndConfirmIntegrationSpec extends UiSpec with TestHarness {
   final val ProgressStepNumber = 5
 
   "go to page" should {

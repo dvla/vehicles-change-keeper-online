@@ -1,6 +1,6 @@
 package views.changekeeper
 
-import composition.ChangeKeeperTestHarness
+import composition.TestHarness
 import helpers.tags.UiTag
 import helpers.UiSpec
 import org.openqa.selenium.{By, WebElement}
@@ -14,7 +14,7 @@ import models.PrivateKeeperDetailsFormModel.PrivateKeeperDetailsCacheKey
 import helpers.changekeeper.CookieFactoryForUISpecs
 import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.ProgressBar.progressStep
 
-class VehicleLookupIntegrationSpec extends UiSpec with ChangeKeeperTestHarness {
+class VehicleLookupIntegrationSpec extends UiSpec with TestHarness {
 
   final val ProgressStepNumber = 2
 

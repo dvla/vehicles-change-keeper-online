@@ -1,6 +1,6 @@
 package views.changekeeper
 
-import composition.ChangeKeeperTestHarness
+import composition.TestHarness
 import helpers.UiSpec
 import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.ProgressBar.progressStep
 import helpers.tags.UiTag
@@ -12,7 +12,7 @@ import uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction
 import pages.common.Feedback.EmailFeedbackLink
 import helpers.changekeeper.CookieFactoryForUISpecs
 
-class NewKeeperEnterAddressManuallyIntegrationSpec extends UiSpec with ChangeKeeperTestHarness {
+class NewKeeperEnterAddressManuallyIntegrationSpec extends UiSpec with TestHarness {
 
   final val ProgressStepNumber = 4
 

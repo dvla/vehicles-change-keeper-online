@@ -1,6 +1,6 @@
 package views.changekeeper
 
-import composition.ChangeKeeperTestHarness
+import composition.TestHarness
 import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.ProgressBar.progressStep
 import helpers.UiSpec
 import helpers.changekeeper.CookieFactoryForUISpecs
@@ -16,7 +16,7 @@ import uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction
 import helpers.common.HtmlTestHelper.{htmlRegex, whitespaceRegex}
 import pages.changekeeper.NewKeeperChooseYourAddressPage
 
-final class PrivateKeeperDetailsIntegrationSpec extends UiSpec with ChangeKeeperTestHarness {
+final class PrivateKeeperDetailsIntegrationSpec extends UiSpec with TestHarness {
 
   "go to page" should {
     "display the page" taggedAs UiTag in new WebBrowser {

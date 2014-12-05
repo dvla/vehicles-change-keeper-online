@@ -1,6 +1,6 @@
 package controllers.changeKeeper
 
-import composition.WithChangeKeeperApplication
+import composition.WithApplication
 import controllers.changeKeeper.Common.PrototypeHtml
 import controllers.BusinessKeeperDetails
 import helpers.UnitSpec
@@ -12,7 +12,6 @@ import pages.changekeeper.NewKeeperChooseYourAddressPage
 import pages.changekeeper.BusinessKeeperDetailsPage.FleetNumberValid
 import play.api.test.Helpers.{BAD_REQUEST, LOCATION, OK, contentAsString, defaultAwaitTimeout}
 import play.api.test.FakeRequest
-import play.api.test.WithApplication
 import uk.gov.dvla.vehicles.presentation.common.clientsidesession.ClientSideSessionFactory
 import utils.helpers.Config
 import helpers.changekeeper.CookieFactoryForUnitSpecs
@@ -20,13 +19,13 @@ import helpers.changekeeper.CookieFactoryForUnitSpecs
 class BusinessKeeperDetailsUnitSpec extends UnitSpec {
 
   "present" should {
-    "display the page" in new WithChangeKeeperApplication {
+    "display the page" in new WithApplication {
       whenReady(present) { r =>
         r.header.status should equal(OK)
       }
     }
 
-    "display prototype message when config set to true" in new WithChangeKeeperApplication {
+    "display prototype message when config set to true" in new WithApplication {
       contentAsString(present) should include(PrototypeHtml)
     }
 
@@ -41,7 +40,7 @@ class BusinessKeeperDetailsUnitSpec extends UnitSpec {
       contentAsString(result) should not include PrototypeHtml
     }
 
-    "display populated fields when cookie exists" in new WithChangeKeeperApplication {
+    "display populated fields when cookie exists" in new WithApplication {
       val request = FakeRequest().
         withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
         withCookies(CookieFactoryForUnitSpecs.businessKeeperDetailsModel())
@@ -53,7 +52,7 @@ class BusinessKeeperDetailsUnitSpec extends UnitSpec {
       content should include(s"""value="$PostcodeValid"""")
     }
 
-    "redirect to setup trade details when no cookie is present" in new WithChangeKeeperApplication {
+    "redirect to setup trade details when no cookie is present" in new WithApplication {
       val request = buildRequest()
       val result = businessKeeperDetails.present(request)
       whenReady(result) { r =>
@@ -63,7 +62,7 @@ class BusinessKeeperDetailsUnitSpec extends UnitSpec {
   }
 
   "submit" should {
-    "redirect to next page when only mandatory fields are filled in" in new WithChangeKeeperApplication {
+    "redirect to next page when only mandatory fields are filled in" in new WithApplication {
       val request = buildRequest(fleetNumber = "", email = "")
         .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
       val result = businessKeeperDetails.submit(request)
@@ -72,7 +71,7 @@ class BusinessKeeperDetailsUnitSpec extends UnitSpec {
       }
     }
 
-    "redirect to next page when all fields are complete" in new WithChangeKeeperApplication {
+    "redirect to next page when all fields are complete" in new WithApplication {
       val request = buildRequest()
         .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
       val result = businessKeeperDetails.submit(request)
@@ -81,7 +80,7 @@ class BusinessKeeperDetailsUnitSpec extends UnitSpec {
       }
     }
 
-    "redirect to setup trade details when no cookie is present with invalid submission" in new WithChangeKeeperApplication {
+    "redirect to setup trade details when no cookie is present with invalid submission" in new WithApplication {
       val request = buildRequest(fleetNumber = "-12345")
       val result = businessKeeperDetails.submit(request)
       whenReady(result) { r =>
@@ -89,7 +88,7 @@ class BusinessKeeperDetailsUnitSpec extends UnitSpec {
       }
     }
 
-    "return a bad request if no details are entered" in new WithChangeKeeperApplication {
+    "return a bad request if no details are entered" in new WithApplication {
       val request = buildRequest(businessName = "", postcode = "")
         .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
       val result = businessKeeperDetails.submit(request)
@@ -98,7 +97,7 @@ class BusinessKeeperDetailsUnitSpec extends UnitSpec {
       }
     }
 
-    "replace required error message for business name with standard error message " in new WithChangeKeeperApplication {
+    "replace required error message for business name with standard error message " in new WithApplication {
       val request = buildRequest(businessName = "")
         .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
       val result = businessKeeperDetails.submit(request)
@@ -107,7 +106,7 @@ class BusinessKeeperDetailsUnitSpec extends UnitSpec {
       count should equal(2)
     }
 
-    "replace required error message for business postcode with standard error message " in new WithChangeKeeperApplication {
+    "replace required error message for business postcode with standard error message " in new WithApplication {
       val request = buildRequest(postcode = "")
         .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
       val result = businessKeeperDetails.submit(request)

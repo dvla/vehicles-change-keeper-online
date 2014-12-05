@@ -1,6 +1,6 @@
 package views.changekeeper
 
-import composition.ChangeKeeperTestHarness
+import composition.TestHarness
 import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.ProgressBar
 import helpers.UiSpec
 import helpers.changekeeper.CookieFactoryForUISpecs
@@ -12,7 +12,7 @@ import pages.changekeeper.{BeforeYouStartPage, VehicleLookupFailurePage, Vehicle
 import pages.common.Feedback.EmailFeedbackLink
 import webserviceclients.fakes.brute_force_protection.FakeBruteForcePreventionWebServiceImpl.MaxAttempts
 
-final class VehicleLookupFailureIntegrationSpec extends UiSpec with ChangeKeeperTestHarness {
+final class VehicleLookupFailureIntegrationSpec extends UiSpec with TestHarness {
   "go to page" should {
     "display the page" taggedAs UiTag in new WebBrowser {
       go to BeforeYouStartPage

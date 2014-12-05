@@ -8,9 +8,9 @@ import pages.changekeeper.{ChangeKeeperSuccessPage, BeforeYouStartPage}
 import uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction
 import pages.common.Feedback.EmailFeedbackLink
 import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.ProgressBar.progressStep
-import composition.ChangeKeeperTestHarness
+import composition.TestHarness
 
-class ChangeKeeperSuccessIntegrationSpec extends UiSpec with ChangeKeeperTestHarness {
+class ChangeKeeperSuccessIntegrationSpec extends UiSpec with TestHarness {
 
   "go to page" should {
     "display the page" taggedAs UiTag in new WebBrowser {

@@ -1,6 +1,6 @@
 package views.changekeeper
 
-import composition.ChangeKeeperTestHarness
+import composition.TestHarness
 import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.ProgressBar
 import helpers.UiSpec
 import helpers.tags.UiTag
@@ -12,7 +12,7 @@ import helpers.changekeeper.CookieFactoryForUISpecs
 import pages.changekeeper.{PrivateKeeperDetailsPage, HelpPage, BeforeYouStartPage}
 import pages.common.Feedback.{EmailFeedbackLink, EmailHelpLink}
 
-final class HelpIntegrationSpec extends UiSpec with ChangeKeeperTestHarness {
+final class HelpIntegrationSpec extends UiSpec with TestHarness {
   "go to page" should {
     "display the page containing correct title" taggedAs UiTag in new WebBrowser {
       go to HelpPage
