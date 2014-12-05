@@ -7,8 +7,7 @@ import org.openqa.selenium.{By, WebElement, WebDriver}
 import pages.changekeeper.{ChangeKeeperSuccessPage, BeforeYouStartPage}
 import uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction
 import pages.common.Feedback.EmailFeedbackLink
-import helpers.webbrowser.ProgressBar
-import ProgressBar.progressStep
+import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.ProgressBar.progressStep
 import composition.ChangeKeeperTestHarness
 
 class ChangeKeeperSuccessIntegrationSpec extends UiSpec with ChangeKeeperTestHarness {

@@ -1,5 +1,6 @@
 package pages.common
 
+import uk.gov.dvla.vehicles.presentation.common.helpers
 import helpers.webbrowser.{Element, WebBrowserDSL}
 import views.common.Help
 import Help.HelpLinkId

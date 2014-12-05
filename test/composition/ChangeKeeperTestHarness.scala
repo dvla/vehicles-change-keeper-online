@@ -1,5 +1,6 @@
 package composition
 
-import helpers.webbrowser.TestHarness
+import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.TestHarnessBase
 
-trait ChangeKeeperTestHarness extends TestHarness with TestGlobalCreator
+
+trait ChangeKeeperTestHarness extends TestHarnessBase with ChangeKeeperGlobalCreator

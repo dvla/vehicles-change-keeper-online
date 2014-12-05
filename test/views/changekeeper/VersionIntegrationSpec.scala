@@ -2,8 +2,8 @@ package views.changekeeper
 
 import composition.ChangeKeeperTestHarness
 import helpers.UiSpec
-import helpers.webbrowser.WebDriverFactory
 import pages.ApplicationContext.applicationContext
+import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.WebDriverFactory
 import scala.io.Source.fromInputStream
 
 class VersionIntegrationSpec extends UiSpec with ChangeKeeperTestHarness {

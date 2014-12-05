@@ -1,19 +1,15 @@
 package controllers.changeKeeper
 
-import com.google.inject.Injector
-import com.tzavellas.sse.guice.ScalaModule
-import composition.{WithChangeKeeperApplication, TestComposition, GlobalLike}
+import composition.WithChangeKeeperApplication
 import controllers.BeforeYouStart
 import controllers.changeKeeper.Common.PrototypeHtml
-import helpers.webbrowser.WithDefaultApplication
 import helpers.UnitSpec
 import org.mockito.Mockito.when
-import org.scalatest.mock.MockitoSugar
-import play.api.test.{FakeApplication, WithApplication, FakeRequest}
-import play.api.test.Helpers.{OK, LOCATION, contentAsString, defaultAwaitTimeout, status}
+import pages.changekeeper.VehicleLookupPage
+import play.api.test.FakeRequest
+import play.api.test.Helpers.{LOCATION, OK, contentAsString, defaultAwaitTimeout, status}
 import uk.gov.dvla.vehicles.presentation.common.clientsidesession.ClientSideSessionFactory
 import utils.helpers.Config
-import pages.changekeeper.VehicleLookupPage
 
 class BeforeYouStartUnitSpec extends UnitSpec {
 

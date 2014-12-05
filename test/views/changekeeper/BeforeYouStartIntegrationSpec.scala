@@ -1,8 +1,7 @@
 package views.changekeeper
 
 import composition.ChangeKeeperTestHarness
-import helpers.webbrowser.ProgressBar
-import ProgressBar.progressStep
+import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.ProgressBar.progressStep
 import helpers.tags.UiTag
 import helpers.UiSpec
 import pages.changekeeper.{VehicleLookupPage, BeforeYouStartPage}

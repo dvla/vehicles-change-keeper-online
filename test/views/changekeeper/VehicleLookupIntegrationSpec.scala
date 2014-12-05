@@ -2,18 +2,17 @@ package views.changekeeper
 
 import composition.ChangeKeeperTestHarness
 import helpers.tags.UiTag
-import helpers.webbrowser.ProgressBar
 import helpers.UiSpec
 import org.openqa.selenium.{By, WebElement}
 import pages.common.ErrorPanel
 import pages.changekeeper.VehicleLookupPage
-import ProgressBar.progressStep
 import uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction
 import play.api.test.FakeApplication
 import pages.changekeeper.VehicleLookupPage.happyPath
 import models.BusinessKeeperDetailsFormModel.BusinessKeeperDetailsCacheKey
 import models.PrivateKeeperDetailsFormModel.PrivateKeeperDetailsCacheKey
 import helpers.changekeeper.CookieFactoryForUISpecs
+import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.ProgressBar.progressStep
 
 class VehicleLookupIntegrationSpec extends UiSpec with ChangeKeeperTestHarness {
 

@@ -1,5 +1,6 @@
 package pages.changekeeper
 
+import uk.gov.dvla.vehicles.presentation.common.helpers
 import helpers.webbrowser.{Element, EmailField, Page, TelField, TextField, WebBrowserDSL, WebDriverFactory}
 import models.PrivateKeeperDetailsFormModel.Form.{DateOfBirthId, DriverNumberId, EmailId, FirstNameId, LastNameId, PostcodeId, TitleId}
 import org.openqa.selenium.WebDriver
@@ -88,7 +89,7 @@ object PrivateKeeperDetailsPage extends Page with WebBrowserDSL with Matchers {
                 driverNumber: String = DriverNumberValid,
                 postcode: String = PostcodeValid)(implicit driver: WebDriver) = {
     go to PrivateKeeperDetailsPage
-    
+
     selectTitle(title)
     firstNameTextBox enter firstName
     lastNameTextBox enter lastName

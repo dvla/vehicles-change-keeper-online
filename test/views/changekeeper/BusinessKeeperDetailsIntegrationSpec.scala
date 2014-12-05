@@ -2,10 +2,9 @@ package views.changekeeper
 
 import composition.ChangeKeeperTestHarness
 import helpers.changekeeper.CookieFactoryForUISpecs
-import helpers.webbrowser.ProgressBar
+import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.ProgressBar
 import ProgressBar.progressStep
 import helpers.tags.UiTag
-import helpers.webbrowser.ProgressBar
 import helpers.UiSpec
 import org.openqa.selenium.{By, WebElement, WebDriver}
 import pages.common.ErrorPanel

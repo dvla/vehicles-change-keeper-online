@@ -1,10 +1,9 @@
 package views.changekeeper
 
 import composition.ChangeKeeperTestHarness
-import helpers.webbrowser.ProgressBar
+import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.ProgressBar.progressStep
 import helpers.UiSpec
 import helpers.changekeeper.CookieFactoryForUISpecs
-import ProgressBar.progressStep
 import helpers.tags.UiTag
 import org.openqa.selenium.{By, WebDriver, WebElement}
 import pages.changekeeper.PrivateKeeperDetailsPage.{FirstNameInvalid, LastNameInvalid, back, navigate}

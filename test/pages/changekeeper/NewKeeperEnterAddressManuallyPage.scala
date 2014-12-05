@@ -1,5 +1,6 @@
 package pages.changekeeper
 
+import uk.gov.dvla.vehicles.presentation.common.helpers
 import helpers.webbrowser.{Element, Page, TextField, WebBrowserDSL, WebDriverFactory}
 import views.changekeeper.NewKeeperEnterAddressManually
 import NewKeeperEnterAddressManually.{BackId, NextId}

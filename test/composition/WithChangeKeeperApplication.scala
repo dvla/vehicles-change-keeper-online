@@ -1,5 +1,6 @@
 package composition
 
-import helpers.webbrowser.WithDefaultApplication
+import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.WithDefaultApplication
 
-trait WithChangeKeeperApplication extends WithDefaultApplication with TestGlobalCreator
+
+trait WithChangeKeeperApplication extends WithDefaultApplication with ChangeKeeperGlobalCreator
