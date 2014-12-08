@@ -92,12 +92,12 @@ class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSi
   }
 
 
-  private def canPerformSubmit[R](action: => Future[Result])(implicit request: Request[_]) =
-    request.cookies.getString(AllowGoingToCompleteAndConfirmPageCacheKey).fold {
-      Logger.warn(s"Could not find AllowGoingToCompleteAndConfirmPageCacheKey in the request. " +
-        s"Redirect to VehicleLookup discarding cookies $cookiesToBeDiscardeOnRedirectAway")
-      Future.successful(Redirect(routes.VehicleLookup.present()).discardingCookies(cookiesToBeDiscardeOnRedirectAway))
-    }(c => action)
+//  private def canPerformSubmit[R](action: => Future[Result])(implicit request: Request[_]) =
+//    request.cookies.getString(AllowGoingToCompleteAndConfirmPageCacheKey).fold {
+//      Logger.warn(s"Could not find AllowGoingToCompleteAndConfirmPageCacheKey in the request. " +
+//        s"Redirect to VehicleLookup discarding cookies $cookiesToBeDiscardeOnRedirectAway")
+//      Future.successful(Redirect(routes.VehicleLookup.present()).discardingCookies(cookiesToBeDiscardeOnRedirectAway))
+//    }(c => action)
 
   private def redirectToVehicleLookup(message: String) = {
     Logger.warn(message)

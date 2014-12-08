@@ -1,6 +1,7 @@
 package email
 
 import org.apache.commons.mail.{Email => ApacheEmail, HtmlEmail}
+import play.api.Logger
 
 
 /**
@@ -56,14 +57,15 @@ object SEND {
   case class WhiteListEmailOps(email: Email) extends EmailOps {
     def send(implicit config: EmailConfiguration) = {
       val message = s"""Got email with contents: (${email.subject} - ${email.message} ) to be sent to ${email.toPeople.mkString(" ")}
-         ||with cc (${email.ccPeople.mkString(" ")}) and configuration: ${config.port} ${config.username}""".stripMargin
+         ||with cc (${email.ccPeople.mkString(" ")}) and configuration: ${config.port} ${config.username} from email
+         |${config.from.email}. Receiver was in whitelist""".stripMargin
 
-      println(message)
+      Logger.info(message)
     }
   }
   /** A no-ops email service that denotes an error in the email */
   object NoEmailOps extends EmailOps {
-    def send(implicit config: EmailConfiguration) = println("The email is incomplete. you cannot send that")
+    def send(implicit config: EmailConfiguration) = Logger.info("The email is incomplete. you cannot send that")
 
   }
 
