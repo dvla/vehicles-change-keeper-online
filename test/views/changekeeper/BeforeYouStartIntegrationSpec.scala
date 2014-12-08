@@ -1,10 +1,8 @@
 package views.changekeeper
 
-import composition.ChangeKeeperTestHarness
-import helpers.webbrowser.ProgressBar
-import ProgressBar.progressStep
+import composition.TestHarness
+import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.ProgressBar.progressStep
 import helpers.tags.UiTag
-import helpers.webbrowser.ProgressBar
 import helpers.UiSpec
 import pages.changekeeper.{VehicleLookupPage, BeforeYouStartPage}
 import pages.changekeeper.BeforeYouStartPage.startNow
@@ -14,7 +12,7 @@ import models.VehicleLookupFormModel.VehicleLookupFormModelCacheKey
 import uk.gov.dvla.vehicles.presentation.common.model.VehicleAndKeeperDetailsModel.VehicleAndKeeperLookupDetailsCacheKey
 import models.PrivateKeeperDetailsFormModel.PrivateKeeperDetailsCacheKey
 
-class BeforeYouStartIntegrationSpec extends UiSpec with ChangeKeeperTestHarness {
+class BeforeYouStartIntegrationSpec extends UiSpec with TestHarness {
   final val ProgressStepNumber = 1
 
   "go to page" should {

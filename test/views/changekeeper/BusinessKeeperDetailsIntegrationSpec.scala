@@ -1,11 +1,10 @@
 package views.changekeeper
 
-import composition.ChangeKeeperTestHarness
+import composition.TestHarness
 import helpers.changekeeper.CookieFactoryForUISpecs
-import helpers.webbrowser.ProgressBar
+import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.ProgressBar
 import ProgressBar.progressStep
 import helpers.tags.UiTag
-import helpers.webbrowser.ProgressBar
 import helpers.UiSpec
 import org.openqa.selenium.{By, WebElement, WebDriver}
 import pages.common.ErrorPanel
@@ -15,7 +14,7 @@ import pages.changekeeper.BusinessKeeperDetailsPage.{back, navigate}
 import helpers.common.HtmlTestHelper.{htmlRegex, whitespaceRegex}
 import pages.common.Feedback.EmailFeedbackLink
 
-class BusinessKeeperDetailsIntegrationSpec extends UiSpec with ChangeKeeperTestHarness {
+class BusinessKeeperDetailsIntegrationSpec extends UiSpec with TestHarness {
 
   final val ProgressStepNumber = 3
 

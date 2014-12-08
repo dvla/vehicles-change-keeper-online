@@ -1,5 +1,6 @@
 package pages.changekeeper
 
+import uk.gov.dvla.vehicles.presentation.common.helpers
 import helpers.webbrowser.{Element, Page, WebBrowserDSL, WebDriverFactory}
 import views.common.Help.{BackId, ExitId}
 import org.openqa.selenium.WebDriver

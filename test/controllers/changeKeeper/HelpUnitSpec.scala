@@ -1,6 +1,6 @@
 package controllers.changeKeeper
 
-import composition.WithChangeKeeperApplication
+import composition.WithApplication
 import controllers.Help
 import controllers.changeKeeper.Common.PrototypeHtml
 import helpers.common.CookieHelper
@@ -17,19 +17,19 @@ import utils.helpers.Config
 
 final class HelpUnitSpec extends UnitSpec {
   "present" should {
-    "display the help page" in new WithChangeKeeperApplication {
+    "display the help page" in new WithApplication {
       status(present) should equal(OK)
     }
 
-    "not display progress bar" in new WithChangeKeeperApplication {
+    "not display progress bar" in new WithApplication {
       contentAsString(present) should not include "Step "
     }
 
-    "display prototype message when config set to true" in new WithChangeKeeperApplication {
+    "display prototype message when config set to true" in new WithApplication {
       contentAsString(present) should include(PrototypeHtml)
     }
 
-    "not display prototype message when config set to false" in new WithChangeKeeperApplication {
+    "not display prototype message when config set to false" in new WithApplication {
       val request = FakeRequest()
       implicit val clientSideSessionFactory = injector.getInstance(classOf[ClientSideSessionFactory])
       implicit val config: Config = mock[Config]
@@ -41,7 +41,7 @@ final class HelpUnitSpec extends UnitSpec {
       contentAsString(result) should not include PrototypeHtml
     }
 
-    "write help cookie" in new WithChangeKeeperApplication {
+    "write help cookie" in new WithApplication {
       val origin = VehicleLookupPage.address
       val request = FakeRequest().
         withHeaders(REFERER -> origin)
@@ -55,7 +55,7 @@ final class HelpUnitSpec extends UnitSpec {
   }
 
   "back" should {
-    "redirect to first page when there is no referer" in new WithChangeKeeperApplication {
+    "redirect to first page when there is no referer" in new WithApplication {
       val request = FakeRequest()
       // No previous page cookie, which can only happen if they wiped their cookies after
       // page presented or they are calling the route directly.
@@ -65,7 +65,7 @@ final class HelpUnitSpec extends UnitSpec {
       }
     }
 
-    "redirect to previous page and discard the referer cookie" in new WithChangeKeeperApplication {
+    "redirect to previous page and discard the referer cookie" in new WithApplication {
       val request = FakeRequest().
         withCookies(CookieFactoryForUnitSpecs.help(origin = VehicleLookupPage.address))
       val result = help.back(request)

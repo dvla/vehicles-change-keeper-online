@@ -1,34 +1,30 @@
 package controllers.changeKeeper
 
-import com.google.inject.Injector
-import com.tzavellas.sse.guice.ScalaModule
-import composition.{WithChangeKeeperApplication, TestComposition, GlobalLike}
+import composition.WithApplication
 import controllers.BeforeYouStart
 import controllers.changeKeeper.Common.PrototypeHtml
-import helpers.webbrowser.WithDefaultApplication
 import helpers.UnitSpec
 import org.mockito.Mockito.when
-import org.scalatest.mock.MockitoSugar
-import play.api.test.{FakeApplication, WithApplication, FakeRequest}
-import play.api.test.Helpers.{OK, LOCATION, contentAsString, defaultAwaitTimeout, status}
+import pages.changekeeper.VehicleLookupPage
+import play.api.test.FakeRequest
+import play.api.test.Helpers.{LOCATION, OK, contentAsString, defaultAwaitTimeout, status}
 import uk.gov.dvla.vehicles.presentation.common.clientsidesession.ClientSideSessionFactory
 import utils.helpers.Config
-import pages.changekeeper.VehicleLookupPage
 
 class BeforeYouStartUnitSpec extends UnitSpec {
 
   "present" should {
-    "display the page" in new WithChangeKeeperApplication {
+    "display the page" in new WithApplication {
       val result = beforeYouStart.present(FakeRequest())
       status(result) should equal(OK)
     }
 
-    "display prototype message when config set to true" in new WithChangeKeeperApplication {
+    "display prototype message when config set to true" in new WithApplication {
       val result = beforeYouStart.present(FakeRequest())
       contentAsString(result) should include(PrototypeHtml)
     }
 
-    "not display prototype message when config set to false" in new WithChangeKeeperApplication {
+    "not display prototype message when config set to false" in new WithApplication {
       val request = FakeRequest()
       implicit val clientSideSessionFactory = injector.getInstance(classOf[ClientSideSessionFactory])
       implicit val config: Config = mock[Config]
@@ -39,7 +35,7 @@ class BeforeYouStartUnitSpec extends UnitSpec {
       contentAsString(result) should not include PrototypeHtml
     }
 
-    "include the GA code if GA id is set" in new WithChangeKeeperApplication {
+    "include the GA code if GA id is set" in new WithApplication {
       val request = FakeRequest()
       implicit val clientSideSessionFactory = injector.getInstance(classOf[ClientSideSessionFactory])
       implicit val config: Config = mock[Config]
@@ -51,7 +47,7 @@ class BeforeYouStartUnitSpec extends UnitSpec {
       contentAsString(result) should include("TEST-GA-ID")
     }
 
-    "Don't include the GA code if GA id is not set" in new WithChangeKeeperApplication {
+    "Don't include the GA code if GA id is not set" in new WithApplication {
       val request = FakeRequest()
       implicit val clientSideSessionFactory = injector.getInstance(classOf[ClientSideSessionFactory])
       implicit val config: Config = mock[Config]
@@ -64,7 +60,7 @@ class BeforeYouStartUnitSpec extends UnitSpec {
   }
 
   "submit" should {
-    "redirect to next page after the button is clicked" in new WithChangeKeeperApplication {
+    "redirect to next page after the button is clicked" in new WithApplication {
       val result = beforeYouStart.submit(FakeRequest())
       whenReady(result) { r =>
         r.header.headers.get(LOCATION) should equal(Some(VehicleLookupPage.address))

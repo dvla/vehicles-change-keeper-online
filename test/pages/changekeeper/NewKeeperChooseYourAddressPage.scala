@@ -1,5 +1,6 @@
 package pages.changekeeper
 
+import uk.gov.dvla.vehicles.presentation.common.helpers
 import helpers.webbrowser.{Element, Page, SingleSel, WebBrowserDSL, WebDriverFactory}
 import models.NewKeeperChooseYourAddressFormModel.Form.AddressSelectId
 import views.changekeeper.NewKeeperChooseYourAddress

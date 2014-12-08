@@ -1,5 +1,6 @@
 package pages.changekeeper
 
+import uk.gov.dvla.vehicles.presentation.common.helpers
 import helpers.webbrowser.{Page, WebBrowserDSL, WebDriverFactory, Element, TelField, TextField, RadioButton}
 import org.openqa.selenium.WebDriver
 import models.VehicleLookupFormModel.Form.VehicleRegistrationNumberId

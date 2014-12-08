@@ -1,9 +1,9 @@
 package views.changekeeper
 
-import composition.ChangeKeeperTestHarness
+import composition.TestHarness
 import helpers.changekeeper.CookieFactoryForUISpecs
 import helpers.tags.UiTag
-import helpers.webbrowser.ProgressBar
+import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.ProgressBar
 import helpers.UiSpec
 import org.openqa.selenium.{By, WebElement, WebDriver}
 import pages.common.ErrorPanel
@@ -20,7 +20,7 @@ import webserviceclients.fakes.FakeAddressLookupService
 import webserviceclients.fakes.FakeAddressLookupService.PostcodeValid
 import pages.common.Feedback.EmailFeedbackLink
 
-class NewKeeperChooseYourAddressIntegrationSpec extends UiSpec with ChangeKeeperTestHarness {
+class NewKeeperChooseYourAddressIntegrationSpec extends UiSpec with TestHarness {
   final val ProgressStepNumber = 4
   final val PrivateKeeperNameLabel = " Name"
   final val BusinessKeeperNameLabel = "Business name"

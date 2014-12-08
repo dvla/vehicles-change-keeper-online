@@ -1,12 +1,17 @@
 package helpers.changekeeper
 
 import helpers.changekeeper.CookieFactoryForUnitSpecs.VehicleLookupFailureResponseCode
-import models._
+import models.VehicleLookupFormModel
+import models.PrivateKeeperDetailsFormModel
+import models.BusinessKeeperDetailsFormModel
+import models.NewKeeperDetailsViewModel
+import models.CompleteAndConfirmFormModel
+import models.CompleteAndConfirmResponseModel
 import models.VehicleLookupFormModel.{VehicleLookupFormModelCacheKey, VehicleLookupResponseCodeCacheKey}
 import models.PrivateKeeperDetailsFormModel.PrivateKeeperDetailsCacheKey
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.Cookie
-import org.joda.time.LocalDate
+import org.joda.time.{DateTime, LocalDate}
 import pages.changekeeper.BusinessKeeperDetailsPage.{FleetNumberValid, BusinessNameValid}
 import pages.changekeeper.PrivateKeeperDetailsPage.DayDateOfBirthValid
 import pages.changekeeper.PrivateKeeperDetailsPage.DriverNumberValid
@@ -35,11 +40,16 @@ import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService
 import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.{RegistrationNumberValid, VehicleMakeValid, VehicleModelValid}
 import models.NewKeeperDetailsViewModel.NewKeeperDetailsCacheKey
 import webserviceclients.fakes.FakeAddressLookupService.{BuildingNameOrNumberValid, Line2Valid, Line3Valid, PostTownValid}
-
-import models.BusinessKeeperDetailsFormModel._
-import uk.gov.dvla.vehicles.presentation.common.mappings.TitleType
-import uk.gov.dvla.vehicles.presentation.common.mappings.TitleType
+import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.{TransactionIdValid, TransactionTimestampValid}
+import models.BusinessKeeperDetailsFormModel.BusinessKeeperDetailsCacheKey
+import models.CompleteAndConfirmResponseModel.ChangeKeeperCompletionResponseCacheKey
 import scala.Some
+import uk.gov.dvla.vehicles.presentation.common.mappings.TitleType
+import pages.changekeeper.CompleteAndConfirmPage.YearDateOfSaleValid
+import pages.changekeeper.CompleteAndConfirmPage.MonthDateOfSaleValid
+import pages.changekeeper.CompleteAndConfirmPage.DayDateOfSaleValid
+import pages.changekeeper.CompleteAndConfirmPage.MileageValid
+import pages.changekeeper.CompleteAndConfirmPage.ConsentTrue
 
 object CookieFactoryForUISpecs {
   private def addCookie[A](key: String, value: A)(implicit tjs: Writes[A], webDriver: WebDriver): Unit = {
@@ -212,5 +222,29 @@ object CookieFactoryForUISpecs {
 
   def allowGoingToCompleteAndConfirmPageCookie()(implicit webDriver: WebDriver) = {
     addCookie(CompleteAndConfirmFormModel.AllowGoingToCompleteAndConfirmPageCacheKey, "")
+  }
+
+  def completeAndConfirmResponseModelModel(id: String = TransactionIdValid,
+                                           timestamp: DateTime = TransactionTimestampValid)(implicit webDriver: WebDriver) = {
+    val key = ChangeKeeperCompletionResponseCacheKey
+    val value = CompleteAndConfirmResponseModel(id, timestamp)
+    addCookie(key, value)
+    this
+  }
+
+  def completeAndConfirmDetails(mileage: Option[Int] = Some(MileageValid.toInt),
+                                dateOfSale: LocalDate = new LocalDate(
+                                  YearDateOfSaleValid.toInt,
+                                  MonthDateOfSaleValid.toInt,
+                                  DayDateOfSaleValid.toInt),
+                                consent: String = ConsentTrue)(implicit webDriver: WebDriver) = {
+    val key = CompleteAndConfirmFormModel.CompleteAndConfirmCacheKey
+    val value = CompleteAndConfirmFormModel(
+      mileage,
+      dateOfSale,
+      consent
+    )
+    addCookie(key, value)
+    this
   }
 }

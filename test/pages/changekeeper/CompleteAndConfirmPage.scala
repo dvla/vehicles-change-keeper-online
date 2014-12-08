@@ -1,5 +1,6 @@
 package pages.changekeeper
 
+import uk.gov.dvla.vehicles.presentation.common.helpers
 import helpers.webbrowser._
 import models.CompleteAndConfirmFormModel.Form.{ConsentId, DateOfSaleId, MileageId, TodaysDateId}
 import org.openqa.selenium.WebDriver

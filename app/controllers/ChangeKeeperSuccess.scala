@@ -14,9 +14,8 @@ import scala.Some
 class ChangeKeeperSuccess @Inject()()(implicit clientSideSessionFactory: ClientSideSessionFactory,
                                        config: Config) extends Controller {
 
-  private final val MissingCookiesAcquireSuccess = "Missing cookies in cache. Change of keeper was successful, " +
+  private final val MissingCookiesSuccess = "Missing cookies in cache. Change of keeper was successful, " +
     "however cannot display success page. Redirecting to BeforeYouStart"
-  private final val MissingCookies = "Missing cookies in cache. Redirecting to BeforeYouStart"
 
   def present = Action { implicit request =>
     (request.cookies.getModel[VehicleAndKeeperDetailsModel],
@@ -28,7 +27,7 @@ class ChangeKeeperSuccess @Inject()()(implicit clientSideSessionFactory: ClientS
         Ok(views.html.changekeeper.change_keeper_success(ChangeKeeperCompletionViewModel(
           vehicleAndKeeperDetailsModel, newKeeperDetailsModel, completeAndConfirmModel, responseModel
         )))
-      case _ => redirectToStart(MissingCookiesAcquireSuccess)
+      case _ => redirectToStart(MissingCookiesSuccess)
     }
   }
 

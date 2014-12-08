@@ -1,5 +1,6 @@
 package pages.common
 
+import uk.gov.dvla.vehicles.presentation.common.helpers
 import helpers.webbrowser.{Element, Page, WebBrowserDSL, WebDriverFactory}
 import org.openqa.selenium.WebDriver
 import views.common.UprnNotFound.{VehicleLookupId, ManualaddressbuttonId}
