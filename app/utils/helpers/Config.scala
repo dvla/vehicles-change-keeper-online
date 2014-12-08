@@ -1,6 +1,9 @@
 package utils.helpers
 
-import uk.gov.dvla.vehicles.presentation.common.ConfigProperties.getProperty
+import email.SEND.EmailConfiguration
+import email.SEND.From
+
+import uk.gov.dvla.vehicles.presentation.common.ConfigProperties.{getProperty, getStringListProperty}
 
 class Config {
 
@@ -29,5 +32,15 @@ class Config {
   val applicationCode: String = getProperty("webHeader.applicationCode", notFound)
   val serviceTypeCode: String = getProperty("webHeader.serviceTypeCode", notFound)
   val orgBusinessUnit: String = getProperty("webHeader.orgBusinessUnit", notFound)
+
+
+  val emailConfiguration: EmailConfiguration = EmailConfiguration(
+    getProperty("smtp.host", notFound),
+    getProperty("smtp.port", 25),
+    getProperty("smtp.user", notFound),
+    getProperty("smtp.password", notFound),
+    From(getProperty("email.senderAddress", notFound), "DO-NOT-REPLY"),
+    getStringListProperty("email.whitelist")
+  )
 
 }

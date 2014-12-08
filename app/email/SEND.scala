@@ -32,11 +32,17 @@ object SEND {
                    toPeople: Option[List[String]] = None,
                    ccPeople: Option[List[String]] = None) {
 
-    def to (people: String*): Email = this.copy(toPeople = toPeople.map( _ ++ people.toList))
-    def to (people: List[String]): Email = this.copy(toPeople = toPeople.map(_ ++ people))
+    def to (people: String*): Email = to(people.toList)
+    def to (people: List[String]): Email = toPeople match {
+      case None => this.copy(toPeople = Some(people.toList))
+      case Some(_) => this.copy(toPeople = toPeople.map( _ ++ people.toList))
+    }
 
-    def cc (people: String*): Email = this.copy(ccPeople = ccPeople.map( _ ++ people.toList))
-    def cc (people: List[String]): Email = this.copy(ccPeople = ccPeople.map( _ ++ people))
+    def cc (people: String*): Email = cc(people.toList)
+    def cc (people: List[String]): Email = toPeople match {
+      case None => this.copy(toPeople = Some(people.toList))
+      case Some(_) => this.copy(toPeople = toPeople.map( _ ++ people.toList))
+    }
 
 
   }
@@ -68,7 +74,7 @@ object SEND {
 //      s"""Got email with contents: (${email.subject} - ${email.message} ) to be sent to ${email.toPeople.mkString(" ")}
 //       |with cc (${email.ccPeople.mkString(" ")}) and configuration: ${config.port} ${config.username}""".stripMargin
 
-      def createService(config: EmailConfiguration): HtmlEmail = {
+      def createEmail(config: EmailConfiguration): HtmlEmail = {
         val htmlEmail = new HtmlEmail
         //configure server
         htmlEmail.setHostName(config.host)
@@ -95,7 +101,7 @@ object SEND {
 
       }
 
-      populateReceivers(email)(createService(config)).
+      populateReceivers(email)(createEmail(config)).
         setHtmlMsg(email.message.htmlMessage).
         setTextMsg(email.message.plainMessage).
         send()
@@ -123,10 +129,13 @@ object SEND {
    * @param configuration
    * @return
    */
-  private def isWhiteListed(addresses: List[String])(implicit configuration: EmailConfiguration): Boolean = (for {
+  def isWhiteListed(addresses: List[String])(implicit configuration: EmailConfiguration): Boolean = (for {
     address <- addresses
     whiteList <- configuration.whiteList
-  } yield whiteList.contains(address)).foldLeft (false) (_||_)
+  } yield whiteList.filter((domain: String) => address.endsWith(domain))).flatten match {
+    case List() => false
+    case _ => true
+  }
 
 
 

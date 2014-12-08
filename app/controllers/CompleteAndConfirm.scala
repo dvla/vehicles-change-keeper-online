@@ -1,7 +1,7 @@
 package controllers
 
 import com.google.inject.Inject
-import email.SEND
+import email.{EmailMessageBuilder, SEND}
 import models.CompleteAndConfirmFormModel._
 import models._
 import models.CompleteAndConfirmFormModel.Form.{MileageId, ConsentId}
@@ -138,6 +138,9 @@ class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSi
 
     webService.invoke(disposeRequest, trackingId).map {
       case (httpResponseCode, response) =>
+        //send the email
+        createAndSendEmail(vehicleDetails, newKeeperDetailsView)
+        //redirect
         Some(Redirect(nextPage(httpResponseCode, response)))
           .map(_.withCookie(CompleteAndConfirmResponseModel(response.get.transactionId, transactionTimestamp)))
           .map(_.withCookie(completeAndConfirmForm))
@@ -296,16 +299,19 @@ class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSi
    * @param keeperDetails the keeper model from the cookie.
    * @return
    */
-  def createAndSendEmail(keeperDetails: NewKeeperDetailsViewModel) = keeperDetails.email match {
-    case Some(emailAddr) =>
-      import scala.language.postfixOps
-      println("send an email")
-      import SEND._ // Keep this local so that we don't pollute rest of the class with unnecessary imports.
-      implicit val emailConfiguration = EmailConfiguration("host", 25, "username", "password", From("email", "name"), None)
-      val template = Contents("html", "text")
+  def createAndSendEmail(vehicleDetails: VehicleAndKeeperDetailsModel, keeperDetails: NewKeeperDetailsViewModel) =
+    keeperDetails.email match {
+      case Some(emailAddr) =>
+        import scala.language.postfixOps
 
-      // This sends the email.
-      SEND email template withSubject "subject" to (emailAddr,emailAddr) to "" send
-    case None =>
-  }
+        import SEND._ // Keep this local so that we don't pollute rest of the class with unnecessary imports.
+
+        implicit val emailConfiguration = config.emailConfiguration
+        val template = EmailMessageBuilder.buildWith(vehicleDetails, keeperDetails)
+
+        // This sends the email.
+        SEND email template withSubject "subject" to emailAddr send
+
+      case None => Logger.error(s"tried to send an email with no keeper details")
+    }
 }
