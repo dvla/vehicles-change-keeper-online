@@ -1,6 +1,6 @@
 package email
 
-import org.apache.commons.mail.{Email => ApacheEmail, HtmlEmail}
+import org.apache.commons.mail.{Email => ApacheEmail, EmailException, HtmlEmail}
 import play.api.Logger
 
 
@@ -102,11 +102,14 @@ object SEND {
         htmlEmail
 
       }
-
-      populateReceivers(email)(createEmail(config)).
-        setHtmlMsg(email.message.htmlMessage).
-        setTextMsg(email.message.plainMessage).
-        send()
+      try {
+        populateReceivers(email)(createEmail(config)).
+          setHtmlMsg(email.message.htmlMessage).
+          setTextMsg(email.message.plainMessage).
+          send()
+      } catch {
+        case ex: EmailException => Logger.error(s"""Failed to send email for ${email.toPeople.mkString(" ")} reason was ${ex.getMessage}""")
+      }
 
     }
 
