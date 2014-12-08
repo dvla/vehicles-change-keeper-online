@@ -1,6 +1,7 @@
 package controllers
 
 import com.google.inject.Inject
+import email.SEND
 import models.CompleteAndConfirmFormModel._
 import models._
 import models.CompleteAndConfirmFormModel.Form.{MileageId, ConsentId}
@@ -24,7 +25,6 @@ import utils.helpers.Config
 import uk.gov.dvla.vehicles.presentation.common.mappings.TitleType
 import play.api.mvc.Call
 import views.html.changekeeper.complete_and_confirm
-import models.CompleteAndConfirmViewModel
 import play.api.mvc.Result
 
 class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSideSessionFactory: ClientSideSessionFactory,
@@ -291,4 +291,21 @@ class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSi
     }(c => action)
   }
 
+  /**
+   * Calling this method on a successful submission, will send an email if we have the new keeper details.
+   * @param keeperDetails the keeper model from the cookie.
+   * @return
+   */
+  def createAndSendEmail(keeperDetails: NewKeeperDetailsViewModel) = keeperDetails.email match {
+    case Some(emailAddr) =>
+      import scala.language.postfixOps
+      println("send an email")
+      import SEND._ // Keep this local so that we don't pollute rest of the class with unnecessary imports.
+      implicit val emailConfiguration = EmailConfiguration("host", 25, "username", "password", From("email", "name"), None)
+      val template = Contents("html", "text")
+
+      // This sends the email.
+      SEND email template withSubject "subject" to (emailAddr,emailAddr) to "" send
+    case None =>
+  }
 }

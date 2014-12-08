@@ -8,7 +8,8 @@ import org.apache.commons.mail.{Email => ApacheEmail, HtmlEmail}
  *
  * Usage:
  *  val from = EmailAddress("dvla@co.uk", "DVLA Department of..")
- *  implicit configuration = SEND.EmailConfiguration("host", 25, "username", "passwd", from)
+ *  implicit configuration = SEND.EmailConfiguration("host", 25, "username", "passwd", from, None)
+ *
  *  SEND email 'message withSubject 'subject to 'peopleList cc 'ccList send
  *
  * Created by gerasimosarvanitis on 03/12/2014.
@@ -22,7 +23,8 @@ object SEND {
   import scala.language.reflectiveCalls
 
   case class From(email: String, name: String)
-  case class EmailConfiguration(host: String, port: Int, username: String, password: String, from: From)
+  case class EmailConfiguration(host: String, port: Int, username: String, password: String,
+                                from: From, whiteList: Option[List[String]])
 
   case class Contents(htmlMessage: String, plainMessage: String)
 
@@ -30,19 +32,43 @@ object SEND {
                    toPeople: Option[List[String]] = None,
                    ccPeople: Option[List[String]] = None) {
 
-    def to (people: List[String]): Email = this.copy(toPeople = Some(people))
-    def cc (people: List[String]): Email = this.copy(ccPeople = Some(people))
+    def to (people: String*): Email = this.copy(toPeople = toPeople.map( _ ++ people.toList))
+    def to (people: List[String]): Email = this.copy(toPeople = toPeople.map(_ ++ people))
+
+    def cc (people: String*): Email = this.copy(ccPeople = ccPeople.map( _ ++ people.toList))
+    def cc (people: List[String]): Email = this.copy(ccPeople = ccPeople.map( _ ++ people))
 
 
   }
 
-  case class EmailOps(email: Email) {
+  /** Generic trait to represent the Email Service */
+  sealed trait EmailOps {
+    def send(implicit config: EmailConfiguration): Unit
+  }
+
+  /** A dummy email service, to send the white listed emails. */
+  case class WhiteListEmailOps(email: Email) extends EmailOps {
+    def send(implicit config: EmailConfiguration) = {
+      val message = s"""Got email with contents: (${email.subject} - ${email.message} ) to be sent to ${email.toPeople.mkString(" ")}
+         ||with cc (${email.ccPeople.mkString(" ")}) and configuration: ${config.port} ${config.username}""".stripMargin
+
+      println(message)
+    }
+  }
+  /** A no-ops email service that denotes an error in the email */
+  object NoEmailOps extends EmailOps {
+    def send(implicit config: EmailConfiguration) = println("The email is incomplete. you cannot send that")
+
+  }
+
+  /** An smtp email service. Currently implemented using the Apache commons email library */
+  case class SmtpEmailOps(email: Email) extends EmailOps{
 
     def send(implicit config: EmailConfiguration) = {
 //      s"""Got email with contents: (${email.subject} - ${email.message} ) to be sent to ${email.toPeople.mkString(" ")}
 //       |with cc (${email.ccPeople.mkString(" ")}) and configuration: ${config.port} ${config.username}""".stripMargin
 
-      def createHtml(config: EmailConfiguration): HtmlEmail = {
+      def createService(config: EmailConfiguration): HtmlEmail = {
         val htmlEmail = new HtmlEmail
         //configure server
         htmlEmail.setHostName(config.host)
@@ -69,7 +95,7 @@ object SEND {
 
       }
 
-      populateReceivers(email)(createHtml(config)).
+      populateReceivers(email)(createService(config)).
         setHtmlMsg(email.message.htmlMessage).
         setTextMsg(email.message.plainMessage).
         send()
@@ -78,9 +104,39 @@ object SEND {
 
   }
 
-  implicit def mailtoOps (mail: Email): EmailOps = EmailOps(mail)
+  /**
+   * Validation method that will return the correct service implementation depending on the email.
+   * @param mail the email to send
+   * @param configuration the configuration needed
+   * @return an appropriate instance of an email.
+   */
+  implicit def mailtoOps (mail: Email)(implicit configuration: EmailConfiguration): EmailOps = mail match {
+    case Email(message, _, Some(toPeople), _) if isWhiteListed(toPeople) => WhiteListEmailOps(mail)
+    case Email(message, _, Some(toPeople), _)                            => SmtpEmailOps(mail)
+    case _                                                               => NoEmailOps
+  }
+
+  /**
+   * private method to decide if the email has a white listed address. In case there is a white listed address then the
+   * method will return true.
+   * @param addresses
+   * @param configuration
+   * @return
+   */
+  private def isWhiteListed(addresses: List[String])(implicit configuration: EmailConfiguration): Boolean = (for {
+    address <- addresses
+    whiteList <- configuration.whiteList
+  } yield whiteList.contains(address)).foldLeft (false) (_||_)
 
 
+
+
+
+  /**
+   * Main entry point for the send email.
+   * @param message the contents of the email.
+   * @return an instance if the email message.
+   */
   def email(message: Contents) = new { def withSubject(subject: String) = Email(message, subject) }
 
   //def test = SEND email "template" withSubject "Subject" to List.empty[String] cc List.empty[String] send SEND.EmailConfiguration("port", "username")
