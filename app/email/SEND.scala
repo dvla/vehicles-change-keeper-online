@@ -15,9 +15,6 @@ import play.api.Logger
  *
  * Created by gerasimosarvanitis on 03/12/2014.
  */
-
-
-
 object SEND {
   import scala.language.implicitConversions
   import scala.language.postfixOps
@@ -73,8 +70,6 @@ object SEND {
   case class SmtpEmailOps(email: Email) extends EmailOps{
 
     def send(implicit config: EmailConfiguration) = {
-//      s"""Got email with contents: (${email.subject} - ${email.message} ) to be sent to ${email.toPeople.mkString(" ")}
-//       |with cc (${email.ccPeople.mkString(" ")}) and configuration: ${config.port} ${config.username}""".stripMargin
 
       def createEmail(config: EmailConfiguration): HtmlEmail = {
         val htmlEmail = new HtmlEmail
@@ -130,9 +125,6 @@ object SEND {
   /**
    * private method to decide if the email has a white listed address. In case there is a white listed address then the
    * method will return true.
-   * @param addresses
-   * @param configuration
-   * @return
    */
   def isWhiteListed(addresses: List[String])(implicit configuration: EmailConfiguration): Boolean = (for {
     address <- addresses
@@ -142,18 +134,12 @@ object SEND {
     case _ => true
   }
 
-
-
-
-
   /**
    * Main entry point for the send email.
    * @param message the contents of the email.
    * @return an instance if the email message.
    */
   def email(message: Contents) = new { def withSubject(subject: String) = Email(message, subject) }
-
-  //def test = SEND email "template" withSubject "Subject" to List.empty[String] cc List.empty[String] send SEND.EmailConfiguration("port", "username")
 
 }
 
