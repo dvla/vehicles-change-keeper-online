@@ -1,6 +1,7 @@
 package controllers
 
 import com.google.inject.Inject
+import email.{EmailMessageBuilder, SEND}
 import models.CompleteAndConfirmFormModel._
 import models._
 import models.CompleteAndConfirmFormModel.Form.{MileageId, ConsentId}
@@ -24,7 +25,6 @@ import utils.helpers.Config
 import uk.gov.dvla.vehicles.presentation.common.mappings.TitleType
 import play.api.mvc.Call
 import views.html.changekeeper.complete_and_confirm
-import models.CompleteAndConfirmViewModel
 import play.api.mvc.Result
 
 class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSideSessionFactory: ClientSideSessionFactory,
@@ -92,12 +92,12 @@ class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSi
   }
 
 
-  private def canPerformSubmit[R](action: => Future[Result])(implicit request: Request[_]) =
-    request.cookies.getString(AllowGoingToCompleteAndConfirmPageCacheKey).fold {
-      Logger.warn(s"Could not find AllowGoingToCompleteAndConfirmPageCacheKey in the request. " +
-        s"Redirect to VehicleLookup discarding cookies $cookiesToBeDiscardeOnRedirectAway")
-      Future.successful(Redirect(routes.VehicleLookup.present()).discardingCookies(cookiesToBeDiscardeOnRedirectAway))
-    }(c => action)
+//  private def canPerformSubmit[R](action: => Future[Result])(implicit request: Request[_]) =
+//    request.cookies.getString(AllowGoingToCompleteAndConfirmPageCacheKey).fold {
+//      Logger.warn(s"Could not find AllowGoingToCompleteAndConfirmPageCacheKey in the request. " +
+//        s"Redirect to VehicleLookup discarding cookies $cookiesToBeDiscardeOnRedirectAway")
+//      Future.successful(Redirect(routes.VehicleLookup.present()).discardingCookies(cookiesToBeDiscardeOnRedirectAway))
+//    }(c => action)
 
   private def redirectToVehicleLookup(message: String) = {
     Logger.warn(message)
@@ -138,6 +138,9 @@ class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSi
 
     webService.invoke(disposeRequest, trackingId).map {
       case (httpResponseCode, response) =>
+        //send the email
+        createAndSendEmail(vehicleDetails, newKeeperDetailsView)
+        //redirect
         Some(Redirect(nextPage(httpResponseCode, response)))
           .map(_.withCookie(CompleteAndConfirmResponseModel(response.get.transactionId, transactionTimestamp)))
           .map(_.withCookie(completeAndConfirmForm))
@@ -291,4 +294,24 @@ class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSi
     }(c => action)
   }
 
+  /**
+   * Calling this method on a successful submission, will send an email if we have the new keeper details.
+   * @param keeperDetails the keeper model from the cookie.
+   * @return
+   */
+  def createAndSendEmail(vehicleDetails: VehicleAndKeeperDetailsModel, keeperDetails: NewKeeperDetailsViewModel) =
+    keeperDetails.email match {
+      case Some(emailAddr) =>
+        import scala.language.postfixOps
+
+        import SEND._ // Keep this local so that we don't pollute rest of the class with unnecessary imports.
+
+        implicit val emailConfiguration = config.emailConfiguration
+        val template = EmailMessageBuilder.buildWith(vehicleDetails, keeperDetails)
+
+        // This sends the email.
+        SEND email template withSubject "subject" to emailAddr send
+
+      case None => Logger.error(s"tried to send an email with no keeper details")
+    }
 }
