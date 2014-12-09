@@ -420,20 +420,19 @@ acquire_success.buyAnother = Buy another vehicle
 acquire_success.finish = Finish
 
 #page 7 - acquire failure
-acquire_acquirefailure.title = Buy a vehicle from the motor trade: failure
+change_keeper_failure.complete.header = Buy a vehicle from the motor trade: failure
 acquire_acquirefailure.name = Failure
-acquire_acquirefailure.p1 = It has not been possible to complete your transaction. Please call 0300 790 6802
+change_keeper_failure.complete.p1 = It has not been possible to complete your transaction. Please call 0300 790 6802
 acquire_acquirefailure.button = Buy another vehicle
 acquire_acquirefailure.button2 = Finish
 acquire_acquirefailure.button3 = Print
 acquire_acquirefailure.transactiontext = Your transaction ID is:
 acquire_acquirefailure.transactionid = {0}
-acquire_failure.transaction_details.header = Transaction details
-acquire_failure.transaction_details.transaction_id = Transaction ID
-acquire_failure.transaction_details.transaction_date = Transaction date
-acquire_failure.buttonnavprint = Print
-acquire_failure.buyAnother = Buy another vehicle
-acquire_failure.finish = Finish
+change_keeper_failure.transaction_details.header = Transaction details
+change_keeper_failure.transaction_details.transaction_id = Transaction ID
+change_keeper_failure.transaction_details.transaction_date = Transaction date
+change_keeper_failure.buttonnavprint = Print
+change_keeper_failure.finish = Finish
 
 #micro-service error page
 micro_service_error.title=We are sorry

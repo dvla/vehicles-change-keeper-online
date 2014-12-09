@@ -1,16 +1,13 @@
 package controllers
 
 import com.google.inject.Inject
-import models.CompleteAndConfirmFormModel
-import models.CompleteAndConfirmResponseModel
-import models.NewKeeperDetailsViewModel
-import models.{AllCacheKeys, VehicleNewKeeperCompletionCacheKeys}
+import models._
 import play.api.Logger
 import play.api.mvc.{Action, Controller}
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.ClientSideSessionFactory
 import common.clientsidesession.CookieImplicits.{RichCookies, RichResult}
-import common.model.{VehicleDetailsModel, TraderDetailsModel}
+import uk.gov.dvla.vehicles.presentation.common.model.{VehicleAndKeeperDetailsModel, VehicleDetailsModel, TraderDetailsModel}
 import utils.helpers.Config
 
 class ChangeKeeperFailure @Inject()()(implicit clientSideSessionFactory: ClientSideSessionFactory,
@@ -21,19 +18,17 @@ class ChangeKeeperFailure @Inject()()(implicit clientSideSessionFactory: ClientS
   private final val MissingCookies = "Missing cookies in cache."
 
   def present = Action { implicit request =>
-//    (request.cookies.getModel[VehicleDetailsModel],
-//      request.cookies.getModel[TraderDetailsModel],
-//      request.cookies.getModel[NewKeeperDetailsViewModel],
-//      request.cookies.getModel[CompleteAndConfirmFormModel],
-//      request.cookies.getModel[CompleteAndConfirmResponseModel]
-//      ) match {
-//      case (Some(vehicleDetailsModel), Some(traderDetailsModel), Some(newKeeperDetailsModel),
-//      Some(completeAndConfirmModel), Some(taxOrSornModel), Some(responseModel)) =>
-//        Ok(views.html.changekeeper.acquire_failure(AcquireCompletionViewModel(vehicleDetailsModel,
-//          traderDetailsModel, newKeeperDetailsModel, completeAndConfirmModel, taxOrSornModel, responseModel)))
-//      case _ => redirectToStart(MissingCookiesAcquireFailure)
-//    }
-    Ok(views.html.changekeeper.acquire_failure())
+    (request.cookies.getModel[VehicleAndKeeperDetailsModel],
+      request.cookies.getModel[NewKeeperDetailsViewModel],
+      request.cookies.getModel[CompleteAndConfirmFormModel],
+      request.cookies.getModel[CompleteAndConfirmResponseModel]
+      ) match {
+      case (Some(vehicleAndKeeperDetailsModel), Some(newKeeperDetailsModel), Some(completeAndConfirmModel), Some(responseModel)) =>
+        Ok(views.html.changekeeper.change_keeper_failure(ChangeKeeperCompletionViewModel(
+          vehicleAndKeeperDetailsModel, newKeeperDetailsModel, completeAndConfirmModel, responseModel
+        )))
+      case _ => redirectToStart(MissingCookiesAcquireFailure)
+    }
   }
 
   def buyAnother = Action { implicit request =>
