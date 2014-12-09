@@ -41,7 +41,9 @@ class PrivateKeeperDetails @Inject()()(implicit clientSideSessionFactory: Client
             formWithReplacedErrors(invalidForm))),
           validForm => Redirect(routes.NewKeeperChooseYourAddress.present()).withCookie(validForm)
                         .discardingCookie(NewKeeperChooseYourAddressCacheKey))
-      case _ => redirectToVehicleLookup(NoValidCookieSubmit)
+      case _ =>
+        Logger.debug("form ->")
+        redirectToVehicleLookup(NoValidCookieSubmit)
     }
   }
 
