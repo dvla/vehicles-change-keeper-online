@@ -1,4 +1,4 @@
-package helpers.disposal_of_vehicle
+package helpers
 
 object InvalidVRMFormat {
   val allInvalidVrmFormats = Seq(

@@ -2,8 +2,8 @@ package views.changekeeper
 
 import composition.TestHarness
 import helpers.UiSpec
-import helpers.changekeeper.CookieFactoryForUISpecs
-import helpers.tags.UiTag
+import helpers.CookieFactoryForUISpecs
+import uk.gov.dvla.vehicles.presentation.common.testhelpers.UiTag
 import org.openqa.selenium.WebDriver
 import pages.changekeeper.{VehicleLookupPage, BeforeYouStartPage, VrmLockedPage}
 import models.VehicleLookupFormModel.VehicleLookupFormModelCacheKey

@@ -3,7 +3,7 @@ package controllers.changeKeeper
 import controllers.changeKeeper.Common.PrototypeHtml
 import controllers.{PrivateKeeperDetails, CompleteAndConfirm}
 import helpers.UnitSpec
-import helpers.changekeeper.CookieFactoryForUnitSpecs
+import helpers.CookieFactoryForUnitSpecs
 import models.CompleteAndConfirmFormModel.Form.{MileageId, DateOfSaleId, ConsentId}
 import org.joda.time.Instant
 import org.mockito.Mockito.when
@@ -114,7 +114,7 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
       content should include(s"$EmailValid")
     }
 
-    "play back private keeper details as expected" in new WithApplication() { 
+    "play back private keeper details as expected" in new WithApplication() {
       val request = FakeRequest().
         withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel(
         firstName = Some(FirstNameValid),

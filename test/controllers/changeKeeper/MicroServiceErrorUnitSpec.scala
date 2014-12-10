@@ -3,10 +3,10 @@ package controllers.changeKeeper
 import composition.WithApplication
 import controllers.MicroServiceError
 import Common.PrototypeHtml
-import helpers.common.CookieHelper
+import uk.gov.dvla.vehicles.presentation.common.testhelpers.CookieHelper
 import helpers.UnitSpec
 import CookieHelper.{fetchCookiesFromHeaders, verifyCookieHasBeenDiscarded}
-import helpers.changekeeper.CookieFactoryForUnitSpecs
+import helpers.CookieFactoryForUnitSpecs
 import uk.gov.dvla.vehicles.presentation.common.clientsidesession.ClientSideSessionFactory
 import MicroServiceError.MicroServiceErrorRefererCacheKey
 import org.mockito.Mockito.when

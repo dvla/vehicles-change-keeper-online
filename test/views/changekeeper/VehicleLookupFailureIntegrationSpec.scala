@@ -3,8 +3,8 @@ package views.changekeeper
 import composition.TestHarness
 import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.ProgressBar
 import helpers.UiSpec
-import helpers.changekeeper.CookieFactoryForUISpecs
-import helpers.tags.UiTag
+import helpers.CookieFactoryForUISpecs
+import uk.gov.dvla.vehicles.presentation.common.testhelpers.UiTag
 import models.VehicleLookupFormModel.VehicleLookupResponseCodeCacheKey
 import org.openqa.selenium.WebDriver
 import pages.changekeeper.VehicleLookupFailurePage.{beforeYouStart, vehicleLookup}

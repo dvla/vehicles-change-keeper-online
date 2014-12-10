@@ -3,9 +3,9 @@ package views.changekeeper
 import com.google.inject.Injector
 import com.tzavellas.sse.guice.ScalaModule
 import composition.{TestHarness, GlobalLike, TestComposition}
-import helpers.changekeeper.CookieFactoryForUISpecs
+import helpers.CookieFactoryForUISpecs
 import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.ProgressBar.progressStep
-import helpers.tags.UiTag
+import uk.gov.dvla.vehicles.presentation.common.testhelpers.UiTag
 import helpers.UiSpec
 import models.{VehicleNewKeeperCompletionCacheKeys, NewKeeperDetailsViewModel, CompleteAndConfirmFormModel}
 import org.openqa.selenium.{By, WebElement, WebDriver}
@@ -34,7 +34,7 @@ import uk.gov.dvla.vehicles.presentation.common.mappings.TitleType
 import CompleteAndConfirmFormModel.AllowGoingToCompleteAndConfirmPageCacheKey
 import scala.concurrent.Future
 import play.api.test.FakeApplication
-import helpers.common.HtmlTestHelper.{htmlRegex, whitespaceRegex}
+import uk.gov.dvla.vehicles.presentation.common.testhelpers.HtmlTestHelper.{htmlRegex, whitespaceRegex}
 import scala.Some
 import play.api.test.FakeApplication
 import uk.gov.dvla.vehicles.presentation.common.mappings.TitleType

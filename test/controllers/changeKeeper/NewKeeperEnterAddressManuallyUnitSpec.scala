@@ -3,10 +3,11 @@ package controllers.changeKeeper
 import composition.WithApplication
 import controllers.NewKeeperEnterAddressManually
 import controllers.changeKeeper.Common.PrototypeHtml
-import helpers.JsonUtils.deserializeJsonToModel
-import helpers.common.CookieHelper.fetchCookiesFromHeaders
+import uk.gov.dvla.vehicles.presentation.common.testhelpers.JsonUtils
+import JsonUtils.deserializeJsonToModel
+import uk.gov.dvla.vehicles.presentation.common.testhelpers.CookieHelper.fetchCookiesFromHeaders
 import views.changekeeper.NewKeeperEnterAddressManually.PostcodeId
-import helpers.UnitSpec
+import helpers.{CookieFactoryForUnitSpecs, UnitSpec}
 import org.mockito.Mockito.when
 import play.api.mvc.Result
 import play.api.test.FakeRequest
@@ -25,7 +26,6 @@ import webserviceclients.fakes.FakeAddressLookupService.Line3Valid
 import webserviceclients.fakes.FakeAddressLookupService.PostTownValid
 import webserviceclients.fakes.FakeAddressLookupService.PostcodeValid
 import scala.concurrent.Future
-import helpers.changekeeper.CookieFactoryForUnitSpecs
 import pages.changekeeper.VehicleLookupPage
 
 final class NewKeeperEnterAddressManuallyUnitSpec extends UnitSpec {

@@ -3,12 +3,12 @@ package views.changekeeper
 import composition.TestHarness
 import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.ProgressBar
 import helpers.UiSpec
-import helpers.tags.UiTag
+import uk.gov.dvla.vehicles.presentation.common.testhelpers.UiTag
 import org.openqa.selenium.WebDriver
 import pages.changekeeper.HelpPage.{back, exit}
 import pages.common.HelpPanel
 import models.HelpCacheKey
-import helpers.changekeeper.CookieFactoryForUISpecs
+import helpers.CookieFactoryForUISpecs
 import pages.changekeeper.{PrivateKeeperDetailsPage, HelpPage, BeforeYouStartPage}
 import pages.common.Feedback.{EmailFeedbackLink, EmailHelpLink}
 

@@ -2,9 +2,9 @@ package controllers.changeKeeper
 
 import controllers.changeKeeper.Common.PrototypeHtml
 import controllers.ChangeKeeperSuccess
-import helpers.UnitSpec
-import helpers.changekeeper.CookieFactoryForUnitSpecs
-import helpers.common.CookieHelper.{fetchCookiesFromHeaders, verifyCookieHasBeenDiscarded}
+import helpers.{CookieFactoryForUnitSpecs, UnitSpec}
+import CookieFactoryForUnitSpecs._
+import uk.gov.dvla.vehicles.presentation.common.testhelpers.CookieHelper.{fetchCookiesFromHeaders, verifyCookieHasBeenDiscarded}
 import models.{BusinessKeeperDetailsFormModel, PrivateKeeperDetailsFormModel, NewKeeperDetailsViewModel}
 import models.{VehicleLookupFormModel, CompleteAndConfirmFormModel}
 import CompleteAndConfirmFormModel.CompleteAndConfirmCacheKey

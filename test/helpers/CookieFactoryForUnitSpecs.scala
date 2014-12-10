@@ -1,4 +1,4 @@
-package helpers.changekeeper
+package helpers
 
 import composition.TestComposition
 import models.BusinessKeeperDetailsFormModel.BusinessKeeperDetailsCacheKey

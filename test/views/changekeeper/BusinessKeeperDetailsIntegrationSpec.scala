@@ -1,17 +1,17 @@
 package views.changekeeper
 
 import composition.TestHarness
-import helpers.changekeeper.CookieFactoryForUISpecs
+import helpers.CookieFactoryForUISpecs
 import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.ProgressBar
 import ProgressBar.progressStep
-import helpers.tags.UiTag
+import uk.gov.dvla.vehicles.presentation.common.testhelpers.UiTag
 import helpers.UiSpec
 import org.openqa.selenium.{By, WebElement, WebDriver}
 import pages.common.ErrorPanel
 import pages.changekeeper._
 import uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction
 import pages.changekeeper.BusinessKeeperDetailsPage.{back, navigate}
-import helpers.common.HtmlTestHelper.{htmlRegex, whitespaceRegex}
+import uk.gov.dvla.vehicles.presentation.common.testhelpers.HtmlTestHelper.{htmlRegex, whitespaceRegex}
 import pages.common.Feedback.EmailFeedbackLink
 
 class BusinessKeeperDetailsIntegrationSpec extends UiSpec with TestHarness {

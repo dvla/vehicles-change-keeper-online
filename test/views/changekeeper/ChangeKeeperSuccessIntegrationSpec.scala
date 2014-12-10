@@ -1,7 +1,7 @@
 package views.changekeeper
 
-import helpers.changekeeper.CookieFactoryForUISpecs
-import helpers.tags.UiTag
+import helpers.CookieFactoryForUISpecs
+import uk.gov.dvla.vehicles.presentation.common.testhelpers.UiTag
 import helpers.UiSpec
 import org.openqa.selenium.{By, WebElement, WebDriver}
 import pages.changekeeper.{ChangeKeeperSuccessPage, BeforeYouStartPage}

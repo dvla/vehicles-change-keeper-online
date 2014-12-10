@@ -1,55 +1,33 @@
-package helpers.changekeeper
+package helpers
 
-import helpers.changekeeper.CookieFactoryForUnitSpecs.VehicleLookupFailureResponseCode
-import models.VehicleLookupFormModel
-import models.PrivateKeeperDetailsFormModel
-import models.BusinessKeeperDetailsFormModel
-import models.NewKeeperDetailsViewModel
-import models.CompleteAndConfirmFormModel
-import models.CompleteAndConfirmResponseModel
-import models.VehicleLookupFormModel.{VehicleLookupFormModelCacheKey, VehicleLookupResponseCodeCacheKey}
+import CookieFactoryForUnitSpecs.VehicleLookupFailureResponseCode
+
+import models.BusinessKeeperDetailsFormModel.BusinessKeeperDetailsCacheKey
+import models.CompleteAndConfirmResponseModel.ChangeKeeperCompletionResponseCacheKey
+import models.NewKeeperDetailsViewModel.NewKeeperDetailsCacheKey
 import models.PrivateKeeperDetailsFormModel.PrivateKeeperDetailsCacheKey
-import org.openqa.selenium.WebDriver
-import org.openqa.selenium.Cookie
+import models.{BusinessKeeperDetailsFormModel, CompleteAndConfirmFormModel, CompleteAndConfirmResponseModel, NewKeeperDetailsViewModel, PrivateKeeperDetailsFormModel, VehicleLookupFormModel}
+import models.VehicleLookupFormModel.{VehicleLookupFormModelCacheKey, VehicleLookupResponseCodeCacheKey}
 import org.joda.time.{DateTime, LocalDate}
-import pages.changekeeper.BusinessKeeperDetailsPage.{FleetNumberValid, BusinessNameValid}
-import pages.changekeeper.PrivateKeeperDetailsPage.DayDateOfBirthValid
-import pages.changekeeper.PrivateKeeperDetailsPage.DriverNumberValid
-import pages.changekeeper.PrivateKeeperDetailsPage.EmailValid
-import pages.changekeeper.PrivateKeeperDetailsPage.FirstNameValid
-import pages.changekeeper.PrivateKeeperDetailsPage.LastNameValid
-import pages.changekeeper.PrivateKeeperDetailsPage.MonthDateOfBirthValid
-import pages.changekeeper.PrivateKeeperDetailsPage.ModelValid
-import pages.changekeeper.PrivateKeeperDetailsPage.PostcodeValid
-import pages.changekeeper.PrivateKeeperDetailsPage.YearDateOfBirthValid
+import org.openqa.selenium.{Cookie, WebDriver}
+import pages.changekeeper.BusinessKeeperDetailsPage.{BusinessNameValid, FleetNumberValid}
+import pages.changekeeper.CompleteAndConfirmPage.{ConsentTrue, DayDateOfSaleValid, MileageValid, MonthDateOfSaleValid, YearDateOfSaleValid}
+import pages.changekeeper.PrivateKeeperDetailsPage.{DayDateOfBirthValid, DriverNumberValid, EmailValid, FirstNameValid, LastNameValid, ModelValid, MonthDateOfBirthValid, PostcodeValid, YearDateOfBirthValid}
 import play.api.Play
 import play.api.Play.current
 import play.api.libs.json.{Json, Writes}
 import uk.gov.dvla.vehicles.presentation.common
-import common.controllers.AlternateLanguages.{CyId, EnId}
-import common.model.AddressModel
-import common.model.BruteForcePreventionModel
-import common.model.BruteForcePreventionModel.BruteForcePreventionViewModelCacheKey
-import common.model.VehicleAndKeeperDetailsModel
-import common.model.VehicleAndKeeperDetailsModel.VehicleAndKeeperLookupDetailsCacheKey
-import common.model.VehicleDetailsModel
-import common.model.VehicleDetailsModel.VehicleLookupDetailsCacheKey
-import views.changekeeper.VehicleLookup.VehicleSoldTo_Private
-import webserviceclients.fakes.brute_force_protection.FakeBruteForcePreventionWebServiceImpl.MaxAttempts
-import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService
-import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.{RegistrationNumberValid, VehicleMakeValid, VehicleModelValid}
-import models.NewKeeperDetailsViewModel.NewKeeperDetailsCacheKey
-import webserviceclients.fakes.FakeAddressLookupService.{BuildingNameOrNumberValid, Line2Valid, Line3Valid, PostTownValid}
-import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.{TransactionIdValid, TransactionTimestampValid}
-import models.BusinessKeeperDetailsFormModel.BusinessKeeperDetailsCacheKey
-import models.CompleteAndConfirmResponseModel.ChangeKeeperCompletionResponseCacheKey
-import scala.Some
+import uk.gov.dvla.vehicles.presentation.common.controllers.AlternateLanguages.{CyId, EnId}
 import uk.gov.dvla.vehicles.presentation.common.mappings.TitleType
-import pages.changekeeper.CompleteAndConfirmPage.YearDateOfSaleValid
-import pages.changekeeper.CompleteAndConfirmPage.MonthDateOfSaleValid
-import pages.changekeeper.CompleteAndConfirmPage.DayDateOfSaleValid
-import pages.changekeeper.CompleteAndConfirmPage.MileageValid
-import pages.changekeeper.CompleteAndConfirmPage.ConsentTrue
+import uk.gov.dvla.vehicles.presentation.common.model.BruteForcePreventionModel.BruteForcePreventionViewModelCacheKey
+import uk.gov.dvla.vehicles.presentation.common.model.VehicleAndKeeperDetailsModel.VehicleAndKeeperLookupDetailsCacheKey
+import uk.gov.dvla.vehicles.presentation.common.model.{AddressModel, BruteForcePreventionModel, VehicleAndKeeperDetailsModel, VehicleDetailsModel}
+import uk.gov.dvla.vehicles.presentation.common.model.VehicleDetailsModel.VehicleLookupDetailsCacheKey
+import views.changekeeper.VehicleLookup.VehicleSoldTo_Private
+import webserviceclients.fakes.FakeAddressLookupService.{BuildingNameOrNumberValid, Line2Valid, Line3Valid, PostTownValid}
+import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService
+import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.{RegistrationNumberValid, TransactionIdValid, TransactionTimestampValid, VehicleMakeValid, VehicleModelValid}
+import webserviceclients.fakes.brute_force_protection.FakeBruteForcePreventionWebServiceImpl.MaxAttempts
 
 object CookieFactoryForUISpecs {
   private def addCookie[A](key: String, value: A)(implicit tjs: Writes[A], webDriver: WebDriver): Unit = {
