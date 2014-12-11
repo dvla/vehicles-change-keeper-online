@@ -25,7 +25,7 @@ object CompleteAndConfirmFormModel {
     final val TodaysDateId = "todays_date"
     final val ConsentId = "consent"
 
-    final val Mapping = mapping(
+    final def Mapping = mapping(
       MileageId -> mileage,
       DateOfSaleId -> dateMapping.verifying(notInTheFuture()),
       ConsentId -> consent
