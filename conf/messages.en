@@ -485,5 +485,5 @@ help.back_button = Back
 # closed
 serviceClosed.title = Service Closed
 serviceClosed.p1 = The supporting systems for this service are currently unavailable.
-serviceClosed.p2 = The normal hours of operation are Monday to Saturday - 08:00 to 18:00. Please complete your transaction during these hours.
+serviceClosed.p2 = The normal hours of operation are Monday to Saturday - {0} to {1}. Please complete your transaction during these hours.
 serviceClosed.exit_button = Exit
