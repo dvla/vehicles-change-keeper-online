@@ -9,4 +9,4 @@
     Scenario:-More than 27 characters - Fail
       Given that a customer has selected the any title button in private keeper details page
       When the total number of characters is greater than "27" including title, space and first name
-      Then they will be presented with an error message displayed "The combined length of your Title e.g. Mr/Mrs/Miss etc and First name(s) cannot exceed 26 characters. Please amend your entry and re-submit"
+      Then they will be presented with an error message displayed "First name - The combined length of your Title e.g. Mr/Mrs/Miss etc and First name(s) cannot exceed 26 characters. Please amend your entry and re-submit."

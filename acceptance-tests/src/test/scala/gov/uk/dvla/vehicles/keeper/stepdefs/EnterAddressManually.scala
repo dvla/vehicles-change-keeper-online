@@ -1,5 +1,4 @@
-package gov.uk.dvla.vehicles.acquire.stepdefs
-
+package gov.uk.dvla.vehicles.keeper.stepdefs
 
 import cucumber.api.java.en.{Then, When, Given}
 import cucumber.api.scala.{EN, ScalaDsl}
@@ -8,12 +7,9 @@ import org.openqa.selenium.WebDriver
 import org.scalatest.Matchers
 import pages.changekeeper._
 
-
-final class EnterAddressManually(webBrowserDriver: WebBrowserDriver) extends ScalaDsl with EN with WebBrowserDSL with Matchers {
+class EnterAddressManually(webBrowserDriver: WebBrowserDriver) extends ScalaDsl with EN with WebBrowserDSL with Matchers {
 
   implicit val webDriver = webBrowserDriver.asInstanceOf[WebDriver]
-
-
 
   def goToEnterKeeperAddressManuallyPage() {
     go to VehicleLookupPage
@@ -21,7 +17,7 @@ final class EnterAddressManually(webBrowserDriver: WebBrowserDriver) extends Sca
     VehicleLookupPage.documentReferenceNumber enter "11111111111"
     click on VehicleLookupPage.vehicleSoldToPrivateIndividual
     click on VehicleLookupPage.next
-    page.title shouldEqual (PrivateKeeperDetailsPage.title)
+    page.title shouldEqual  PrivateKeeperDetailsPage.title
     click on PrivateKeeperDetailsPage.mr
     PrivateKeeperDetailsPage.firstNameTextBox enter "tue"
     PrivateKeeperDetailsPage.lastNameTextBox enter "nny"
@@ -36,21 +32,20 @@ final class EnterAddressManually(webBrowserDriver: WebBrowserDriver) extends Sca
 
   @When("^the user tries to enter the new keeper address$")
   def the_user_tries_to_enter_the_new_keeper_address()  {
-
   }
 
   @Then("^the user will have the field labels \"(.*?)\" Line two of address with no label Line three of address with no label Town or City with field label \"(.*?)\" Postcode  with field label \"(.*?)\"$")
   def the_user_will_have_the_field_labels_Line_two_of_address_with_no_label_Line_three_of_address_with_no_label_Town_or_City_with_field_label_Postcode_with_field_label(a1:String,  a2:String, a3:String)  {
-     click on NewKeeperChooseYourAddressPage.manualAddress
-     page.text.contains(a1.trim) shouldBe(true)
-     page.text.contains(a2.trim) shouldBe(true)
-     page.text.contains(a3.trim) shouldBe(true)
+    click on NewKeeperChooseYourAddressPage.manualAddress
+    page.text.contains(a1.trim) shouldBe true
+    page.text.contains(a2.trim) shouldBe true
+    page.text.contains(a3.trim) shouldBe true
   }
 
   @Then("^there will be hint text stating \"(.*?)\" below the field Building name/number and street$")
   def there_will_be_hint_text_stating_below_the_field_Building_name_number_and_street(a1:String) {
     click on NewKeeperChooseYourAddressPage.manualAddress
-    page.text.contains(a1) shouldBe(true)
+    page.text.contains(a1) shouldBe true
   }
 
   @When("^the user has selected the submit control$")
@@ -60,20 +55,19 @@ final class EnterAddressManually(webBrowserDriver: WebBrowserDriver) extends Sca
 
   @Given("^the address is not blank and has a valid format$")
   def the_address_is_not_blank_and_has_a_valid_format()  {
-     goToEnterKeeperAddressManuallyPage()
-     click on NewKeeperChooseYourAddressPage.manualAddress
-     NewKeeperEnterAddressManuallyPage.addressBuildingNameOrNumber enter "1 first lane"
-     NewKeeperEnterAddressManuallyPage.addressPostTown enter "hghjg"
+    goToEnterKeeperAddressManuallyPage()
+    click on NewKeeperChooseYourAddressPage.manualAddress
+    NewKeeperEnterAddressManuallyPage.addressBuildingNameOrNumber enter "1 first lane"
+    NewKeeperEnterAddressManuallyPage.addressPostTown enter "hghjg"
   }
 
   @Then("^there is no address error message is displayed \"(.*?)\"$")
   def there_is_no_address_error_message_is_displayed(f:String)  {
-
   }
 
   @Then("^the trader details are retained$")
   def the_trader_details_are_retained()  {
-    page.title shouldEqual(CompleteAndConfirmPage.title)
+    page.title shouldEqual CompleteAndConfirmPage.title
   }
 
   @Given("^the data in Line one of the address has less than (\\d+) characters$")
@@ -110,12 +104,10 @@ final class EnterAddressManually(webBrowserDriver: WebBrowserDriver) extends Sca
 
   @When("^the manual address page is invoked$")
   def the_manual_address_page_is_invoked()  {
-
   }
 
   @Then("^the postcode field is prepopulated and is non editable$")
   def the_postcode_field_is_prepopulated_and_is_non_editable(): Unit =  {
-
   }
 
   @Given("^the user is on the manual address page$")
@@ -128,7 +120,7 @@ final class EnterAddressManually(webBrowserDriver: WebBrowserDriver) extends Sca
 
   @Then("^the user is taken to the Complete & Confirm page$")
   def the_user_is_taken_to_the_Complete_Confirm_page() {
-     page.title shouldEqual(CompleteAndConfirmPage.title)
+     page.title shouldEqual CompleteAndConfirmPage.title
   }
 
   @When("^the user has selected the Back control$")
@@ -140,7 +132,6 @@ final class EnterAddressManually(webBrowserDriver: WebBrowserDriver) extends Sca
 
   @Then("^the user is taken to the previous Address not found page$")
   def the_user_is_taken_to_the_previous_Address_not_found_page() {
-    //page.title shouldEqual(NewKeeperChooseYourAddressPage.title)
   }
 
 }

@@ -1,14 +1,13 @@
-package gov.uk.dvla.vehicles.acquire.stepdefs
+package gov.uk.dvla.vehicles.keeper.stepdefs
 
 import cucumber.api.scala.{EN, ScalaDsl}
+import cucumber.api.java.en.{Then, When}
 import helpers.webbrowser.{WebBrowserDSL, WebBrowserDriver}
-import cucumber.api.java.en.{Then, When, Given}
 import org.openqa.selenium.WebDriver
 import org.scalatest.Matchers
 import pages.changekeeper.{VehicleLookupPage, PrivateKeeperDetailsPage, NewKeeperChooseYourAddressPage}
 
-
-final class PostCodeValidation(webBrowserDriver: WebBrowserDriver) extends ScalaDsl with EN with WebBrowserDSL with Matchers {
+class PostCodeValidation(webBrowserDriver: WebBrowserDriver) extends ScalaDsl with EN with WebBrowserDSL with Matchers {
 
   implicit val webDriver = webBrowserDriver.asInstanceOf[WebDriver]
 
@@ -39,7 +38,7 @@ final class PostCodeValidation(webBrowserDriver: WebBrowserDriver) extends Scala
 
   @Then("^the user will presented with a list of addresses$")
   def the_user_will_presented_with_a_list_of_addresses()  {
-    page.title shouldEqual(NewKeeperChooseYourAddressPage.title)
+    page.title shouldEqual NewKeeperChooseYourAddressPage.title
 
   }
 
@@ -50,7 +49,7 @@ final class PostCodeValidation(webBrowserDriver: WebBrowserDriver) extends Scala
 
   @Then("^the user is taken to either postcode lookup success or postcode lookup failure screen$")
   def the_user_is_taken_to_either_postcode_lookup_success_or_postcode_lookup_failure_screen() {
-    page.title shouldEqual(NewKeeperChooseYourAddressPage.title)
+    page.title shouldEqual NewKeeperChooseYourAddressPage.title
   }
 
   @When("^the user selects the 'Back' button and no errors persist$")

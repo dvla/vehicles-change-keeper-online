@@ -1,4 +1,4 @@
-package gov.uk.dvla.vehicles.acquire.stepdefs
+package gov.uk.dvla.vehicles.keeper.stepdefs
 
 import cucumber.api.java.en.{Then, When, Given}
 import cucumber.api.scala.{EN, ScalaDsl}
@@ -7,8 +7,7 @@ import org.openqa.selenium.WebDriver
 import org.scalatest.Matchers
 import pages.changekeeper._
 
-
-final class PKeeperTitleFirstLastName(webBrowserDriver: WebBrowserDriver) extends ScalaDsl with EN with WebBrowserDSL with Matchers {
+class PKeeperTitleFirstLastName(webBrowserDriver: WebBrowserDriver) extends ScalaDsl with EN with WebBrowserDSL with Matchers {
 
   implicit val webDriver = webBrowserDriver.asInstanceOf[WebDriver]
 
@@ -18,10 +17,11 @@ final class PKeeperTitleFirstLastName(webBrowserDriver: WebBrowserDriver) extend
     VehicleLookupPage.documentReferenceNumber enter "11111111111"
     click on VehicleLookupPage.vehicleSoldToPrivateIndividual
     click on VehicleLookupPage.next
-    page.title shouldEqual (PrivateKeeperDetailsPage.title)
+    page.title shouldEqual PrivateKeeperDetailsPage.title
   }
+
   @Given("^that the user selects NO Title option$")
-  def  that_the_user_selects_NO_Title_option()  {
+  def that_the_user_selects_NO_Title_option()  {
     goToPrivateKeeperDetailsPage()
     PrivateKeeperDetailsPage.assertNoTitleSelected()
   }
@@ -111,8 +111,5 @@ final class PKeeperTitleFirstLastName(webBrowserDriver: WebBrowserDriver) extend
   def  error_message_will_be_display(errMsgFirstName:String){
     PrivateKeeperDetailsPage.errorTextForTitle(errMsgFirstName) shouldBe  true
   }
-
-
-
 
 }

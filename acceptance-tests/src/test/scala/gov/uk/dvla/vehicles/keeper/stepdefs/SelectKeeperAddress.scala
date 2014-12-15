@@ -1,16 +1,13 @@
-package gov.uk.dvla.vehicles.acquire.stepdefs
-
+package gov.uk.dvla.vehicles.keeper.stepdefs
 
 import cucumber.api.scala.{EN, ScalaDsl}
-import helpers.webbrowser.{WebBrowserDSL, WebBrowserDriver}
 import cucumber.api.java.en.{Then, When, Given}
+import helpers.webbrowser.{WebBrowserDSL, WebBrowserDriver}
 import org.openqa.selenium.WebDriver
 import org.scalatest.Matchers
 import pages.changekeeper._
 
-
-
-final class SelectKeeperAddress(webBrowserDriver: WebBrowserDriver) extends ScalaDsl with EN with WebBrowserDSL with Matchers {
+class SelectKeeperAddress(webBrowserDriver: WebBrowserDriver) extends ScalaDsl with EN with WebBrowserDSL with Matchers {
 
   implicit val webDriver = webBrowserDriver.asInstanceOf[WebDriver]
 
@@ -20,15 +17,14 @@ final class SelectKeeperAddress(webBrowserDriver: WebBrowserDriver) extends Scal
     VehicleLookupPage.documentReferenceNumber enter "11111111111"
     click on VehicleLookupPage.vehicleSoldToPrivateIndividual
     click on VehicleLookupPage.next
-    page.title shouldEqual (PrivateKeeperDetailsPage.title)
+    page.title shouldEqual PrivateKeeperDetailsPage.title
     click on PrivateKeeperDetailsPage.mr
     PrivateKeeperDetailsPage.firstNameTextBox enter "tue"
     PrivateKeeperDetailsPage.lastNameTextBox enter "nny"
     PrivateKeeperDetailsPage.postcodeTextBox enter "qq99qq"
     click on PrivateKeeperDetailsPage.next
-    page.title should equal(NewKeeperChooseYourAddressPage.title)
+    page.title shouldEqual NewKeeperChooseYourAddressPage.title
   }
-
 
   @Given("^the user has not selected an address on the Select new keeper address page$")
   def the_user_has_not_selected_an_address_on_the_Select_new_keeper_address_page()  {
@@ -53,7 +49,7 @@ final class SelectKeeperAddress(webBrowserDriver: WebBrowserDriver) extends Scal
 
   @Then("^the user is progressed to the next page$")
   def the_user_is_progressed_to_the_next_page()  {
-    //page.title should equal(CompleteAndConfirmPage.title)
+    page.title shouldEqual CompleteAndConfirmPage.title
   }
 
   @Given("^the user is on the Select new keeper address page$")
@@ -64,13 +60,11 @@ final class SelectKeeperAddress(webBrowserDriver: WebBrowserDriver) extends Scal
   @When("^the user selects Back button$")
   def the_user_selects_Back_button()  {
     click on NewKeeperChooseYourAddressPage.back
-
   }
 
   @Then("^the user is progressed to the previous page$")
   def the_user_is_progressed_to_the_previous_page()  {
-    page.title should equal(PrivateKeeperDetailsPage.title)
-
+    page.title shouldEqual PrivateKeeperDetailsPage.title
   }
 
   @When("^the user selects Address not listed link$")
@@ -80,8 +74,7 @@ final class SelectKeeperAddress(webBrowserDriver: WebBrowserDriver) extends Scal
 
   @Then("^the user is progressed to the Manual Address page$")
   def the_user_is_progressed_to_the_Manual_Address_page()  {
-     page.title should equal(NewKeeperEnterAddressManuallyPage.title)
+    page.title shouldEqual NewKeeperEnterAddressManuallyPage.title
   }
-
 
 }

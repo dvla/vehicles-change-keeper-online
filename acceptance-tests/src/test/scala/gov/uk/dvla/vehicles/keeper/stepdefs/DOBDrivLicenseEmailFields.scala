@@ -1,14 +1,13 @@
-package gov.uk.dvla.vehicles.acquire.stepdefs
+package gov.uk.dvla.vehicles.keeper.stepdefs
 
 import cucumber.api.scala.{EN, ScalaDsl}
-import helpers.webbrowser.{WebBrowserDSL, WebBrowserDriver}
 import cucumber.api.java.en.{Then, When, Given}
+import helpers.webbrowser.{WebBrowserDSL, WebBrowserDriver}
 import org.openqa.selenium.WebDriver
 import org.scalatest.Matchers
 import pages.changekeeper.{PrivateKeeperDetailsPage, VehicleLookupPage}
 
-
-final class DOBDrivLicenseEmailFields(webBrowserDriver: WebBrowserDriver) extends ScalaDsl with EN with WebBrowserDSL with Matchers {
+class DOBDrivLicenseEmailFields(webBrowserDriver: WebBrowserDriver) extends ScalaDsl with EN with WebBrowserDSL with Matchers {
 
   implicit val webDriver = webBrowserDriver.asInstanceOf[WebDriver]
 
@@ -18,7 +17,7 @@ final class DOBDrivLicenseEmailFields(webBrowserDriver: WebBrowserDriver) extend
     VehicleLookupPage.documentReferenceNumber enter "11111111111"
     click on VehicleLookupPage.vehicleSoldToPrivateIndividual
     click on VehicleLookupPage.next
-    page.title shouldEqual (PrivateKeeperDetailsPage.title)
+    page.title shouldEqual PrivateKeeperDetailsPage.title
   }
 
   @Given("^the user enters a validate date of birth$")
@@ -44,7 +43,7 @@ final class DOBDrivLicenseEmailFields(webBrowserDriver: WebBrowserDriver) extend
 
   @When("^the user press the submit control$")
   def the_user_press_the_submit_control()  {
-      click on PrivateKeeperDetailsPage.next
+    click on PrivateKeeperDetailsPage.next
   }
 
   @Then("^there will be an error message displayed \"(.*?)\"$")
@@ -91,7 +90,7 @@ final class DOBDrivLicenseEmailFields(webBrowserDriver: WebBrowserDriver) extend
 
   @Then("^the character is capitalised$")
   def the_character_is_capitalised()  {
-    PrivateKeeperDetailsPage.driverNumberTextBox.value.toUpperCase shouldEqual("MORGA657052SM9JK")
+    PrivateKeeperDetailsPage.driverNumberTextBox.value.toUpperCase shouldEqual "MORGA657052SM9JK"
   }
 
   @When("^the user has entered a driver number into the \"(.*?)\" control$")
