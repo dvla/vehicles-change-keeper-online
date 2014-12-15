@@ -1,4 +1,4 @@
-@()(implicit lang: Lang,
+@(opening: String, closing: String)(implicit lang: Lang,
 config: utils.helpers.Config)
 
 @import views.html.changekeeper.main
@@ -7,7 +7,7 @@ config: utils.helpers.Config)
     title = Messages("serviceClosed.title")
 ) {
     <p>@Messages("serviceClosed.p1")</p>
-    <p>@Messages("serviceClosed.p2")</p>
+    <p>@Messages("serviceClosed.p2", opening, closing)</p>
     <div class="form-steps">
         <a id="exit-button" href="https://www.gov.uk/" class="button">@Messages("serviceClosed.exit_button")</a>
     </div>

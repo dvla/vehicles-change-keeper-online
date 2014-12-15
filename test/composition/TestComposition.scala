@@ -44,7 +44,6 @@ private class TestModule() extends ScalaModule with MockitoSugar {
     Logger.debug("Guice is loading TestModule")
     ordnanceSurveyAddressLookup()
     bind[VehicleAndKeeperLookupWebService].to[FakeVehicleAndKeeperLookupWebService].asEagerSingleton()
-    bind[VehicleAndKeeperLookupService].to[VehicleAndKeeperLookupServiceImpl].asEagerSingleton()
 
     bind[DateService].to[FakeDateServiceImpl].asEagerSingleton()
     bind[DateTimeZoneService].toInstance(new DateTimeZoneServiceImpl)
@@ -52,9 +51,6 @@ private class TestModule() extends ScalaModule with MockitoSugar {
     bind[ClientSideSessionFactory].to[ClearTextClientSideSessionFactory].asEagerSingleton()
 
     bind[BruteForcePreventionWebService].to[FakeBruteForcePreventionWebServiceImpl].asEagerSingleton()
-    bind[BruteForcePreventionService].to[BruteForcePreventionServiceImpl].asEagerSingleton()
-
-    bind[LoggerLike].annotatedWith(Names.named(AccessLoggerName)).toInstance(Logger("dvla.pages.common.AccessLogger"))
   }
 
   private def ordnanceSurveyAddressLookup() = {
