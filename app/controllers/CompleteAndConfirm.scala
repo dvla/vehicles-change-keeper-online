@@ -138,10 +138,7 @@ class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSi
 
     webService.invoke(disposeRequest, trackingId).map {
       case (httpResponseCode, response) =>
-        //send the email
-        createAndSendEmail(vehicleDetails, newKeeperDetailsView)
-        //redirect
-        Some(Redirect(nextPage(httpResponseCode, response)))
+        Some(Redirect(nextPage(httpResponseCode, response)(vehicleDetails, newKeeperDetailsView)))
           .map(_.withCookie(CompleteAndConfirmResponseModel(response.get.transactionId, transactionTimestamp)))
           .map(_.withCookie(completeAndConfirmForm))
           .get
@@ -152,10 +149,11 @@ class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSi
     }
   }
 
-  def nextPage(httpResponseCode: Int, response: Option[AcquireResponseDto]) =
+  def nextPage(httpResponseCode: Int, response: Option[AcquireResponseDto])
+              (vehicleDetails: VehicleAndKeeperDetailsModel, keeperDetails: NewKeeperDetailsViewModel) =
     response match {
       case Some(r) if r.responseCode.isDefined => handleResponseCode(r.responseCode.get)
-      case _ => handleHttpStatusCode(httpResponseCode)
+      case _ => handleHttpStatusCode(httpResponseCode)(vehicleDetails, keeperDetails)
     }
 
   def buildMicroServiceRequest(vehicleLookup: VehicleLookupFormModel,
@@ -223,9 +221,13 @@ class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSi
         routes.MicroServiceError.present()
     }
 
-  def handleHttpStatusCode(statusCode: Int): Call =
+  def handleHttpStatusCode(statusCode: Int)
+                          (vehicleDetails: VehicleAndKeeperDetailsModel, keeperDetails: NewKeeperDetailsViewModel): Call =
     statusCode match {
       case OK =>
+        //send the email
+        createAndSendEmail(vehicleDetails, keeperDetails)
+        //redirect
         routes.ChangeKeeperSuccess.present()
       case _ =>
         routes.MicroServiceError.present()
