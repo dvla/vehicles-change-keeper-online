@@ -38,8 +38,8 @@ object SEND {
 
     def cc (people: String*): Email = cc(people.toList)
     def cc (people: List[String]): Email = toPeople match {
-      case None => this.copy(toPeople = Some(people.toList))
-      case Some(_) => this.copy(toPeople = toPeople.map( _ ++ people.toList))
+      case None => this.copy(ccPeople = Some(people.toList))
+      case Some(_) => this.copy(ccPeople = ccPeople.map( _ ++ people.toList))
     }
 
 
