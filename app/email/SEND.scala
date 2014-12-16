@@ -101,6 +101,7 @@ object SEND {
         populateReceivers(email)(createEmail(config)).
           setHtmlMsg(email.message.htmlMessage).
           setTextMsg(email.message.plainMessage).
+          setSubject(email.subject).
           send()
       } catch {
         case ex: EmailException => Logger.error(s"""Failed to send email for ${email.toPeople.mkString(" ")} reason was ${ex.getMessage}""")

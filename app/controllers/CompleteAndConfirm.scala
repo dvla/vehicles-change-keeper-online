@@ -33,6 +33,8 @@ class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSi
   private val cookiesToBeDiscardeOnRedirectAway =
     VehicleNewKeeperCompletionCacheKeys ++ Set(AllowGoingToCompleteAndConfirmPageCacheKey)
 
+  private val EMAIL_SUBJECT = "Test email for the Keeper to Keeper service"
+
   private[controllers] val form = Form(
     CompleteAndConfirmFormModel.Form.Mapping
   )
@@ -312,7 +314,7 @@ class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSi
         val template = EmailMessageBuilder.buildWith(vehicleDetails, keeperDetails)
 
         // This sends the email.
-        SEND email template withSubject "subject" to emailAddr send
+        SEND email template withSubject EMAIL_SUBJECT to emailAddr send
 
       case None => Logger.error(s"tried to send an email with no keeper details")
     }

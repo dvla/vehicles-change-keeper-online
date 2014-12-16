@@ -20,12 +20,17 @@ object EmailMessageBuilder {
 
   private def buildHtml(vehicleDetails: VehicleAndKeeperDetailsModel, keeperDetails: NewKeeperDetailsViewModel): String =
     s"""
-        |<H1>${keeperDetails.displayName}</H1>
+        |<h2>Test email for the Keeper to Keeper service</h2>
+        |
+        |<p>Welcome ${keeperDetails.displayName}</p>
       """.stripMargin
 
   private def buildText(vehicleDetails: VehicleAndKeeperDetailsModel, keeperDetails: NewKeeperDetailsViewModel): String =
     s"""
-        |${keeperDetails.displayName}
+        |Test email for the Keeper to Keeper service
+        |-------------------------------------------
+        |
+        |Welcome ${keeperDetails.displayName}
       """.stripMargin
 
 }
