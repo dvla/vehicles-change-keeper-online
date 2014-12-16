@@ -455,13 +455,13 @@ dateOfBirth.month = Month
 dateOfBirth.year = Year
 
 #titlePicker widget
-titlePicker.label = What is your title?
+titlePicker.label = Title
 titlePicker.mr = Mr
 titlePicker.miss = Miss
 titlePicker.mrs = Mrs
 titlePicker.other = Other
 titlePicker.or = Or
-titlePicker.textLabel = Please provide your 'Other' title
+titlePicker.textLabel = Other title
 titlePicker.textHint = (10 characters maximum)
 error.title.unknownOption = Please enter the title of the new keeper
 error.title.missing = Other - This is a required field
