@@ -48,6 +48,16 @@ class SendSpec extends UnitSpec {
 
       appendedEmail.toPeople.getOrElse(List()).toArray should equal (Array(person1, person2))
     }
+
+    "add people ic cc" in {
+      val template = Contents("<h1>Email</h1>", "text email")
+      val person1 = "test1@valtech.co.uk"
+      val person2 = "test2@valtech.co.uk"
+
+      val email = SEND email template withSubject "" cc (person1, person2)
+
+      email.ccPeople.getOrElse(List()).toArray should equal (Array(person1, person2))
+    }
   }
 
   "Adding a template and some addresses" should {
