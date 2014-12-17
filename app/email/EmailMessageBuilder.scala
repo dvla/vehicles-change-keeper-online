@@ -20,17 +20,24 @@ object EmailMessageBuilder {
 
   private def buildHtml(vehicleDetails: VehicleAndKeeperDetailsModel, keeperDetails: NewKeeperDetailsViewModel): String =
     s"""
-        |<h2>Test email for the Keeper to Keeper service</h2>
+        |<p>Dear Sir / Madam,</p>
         |
-        |<p>Welcome ${keeperDetails.displayName}</p>
+        |<p>We have been notified that you are now the registered keeper of this vehicle.
+        |<br /><br />
+        |You should receive your registration certificate (V5C) within 2 weeks.
+        |<br /><br />
+        |If you do not receive your V5C within this time or this information is incorrect then please contact DVLA on 0300 790 6802’</p>
       """.stripMargin
 
   private def buildText(vehicleDetails: VehicleAndKeeperDetailsModel, keeperDetails: NewKeeperDetailsViewModel): String =
     s"""
-        |Test email for the Keeper to Keeper service
-        |-------------------------------------------
+        |Dear Sir / Madam,
         |
-        |Welcome ${keeperDetails.displayName}
+        |We have been notified that you are now the registered keeper of this vehicle.
+        |
+        |You should receive your registration certificate (V5C) within 2 weeks.
+        |
+        |If you do not receive your V5C within this time or this information is incorrect then please contact DVLA on 0300 790 6802’
       """.stripMargin
 
 }

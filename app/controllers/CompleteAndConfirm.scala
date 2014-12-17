@@ -314,7 +314,7 @@ class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSi
         val template = EmailMessageBuilder.buildWith(vehicleDetails, keeperDetails)
 
         // This sends the email.
-        SEND email template withSubject EMAIL_SUBJECT to emailAddr send
+        SEND email template withSubject vehicleDetails.registrationNumber to emailAddr send
 
       case None => Logger.error(s"tried to send an email with no keeper details")
     }
