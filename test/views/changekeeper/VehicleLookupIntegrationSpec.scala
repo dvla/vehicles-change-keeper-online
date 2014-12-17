@@ -1,19 +1,18 @@
 package views.changekeeper
 
-import helpers.common.ProgressBar
-import helpers.tags.UiTag
+import composition.TestHarness
+import uk.gov.dvla.vehicles.presentation.common.testhelpers.UiTag
 import helpers.UiSpec
-import helpers.webbrowser.{TestGlobal, TestHarness}
 import org.openqa.selenium.{By, WebElement}
 import pages.common.ErrorPanel
 import pages.changekeeper.VehicleLookupPage
-import ProgressBar.progressStep
 import uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction
 import play.api.test.FakeApplication
 import pages.changekeeper.VehicleLookupPage.happyPath
 import models.BusinessKeeperDetailsFormModel.BusinessKeeperDetailsCacheKey
 import models.PrivateKeeperDetailsFormModel.PrivateKeeperDetailsCacheKey
-import helpers.changekeeper.CookieFactoryForUISpecs
+import helpers.CookieFactoryForUISpecs
+import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.ProgressBar.progressStep
 
 class VehicleLookupIntegrationSpec extends UiSpec with TestHarness {
 
@@ -123,10 +122,10 @@ class VehicleLookupIntegrationSpec extends UiSpec with TestHarness {
   }
 
   private val fakeAppWithHtml5ValidationEnabledConfig = FakeApplication(
-    withGlobal = Some(TestGlobal),
+    withGlobal = Some(global),
     additionalConfiguration = Map("html5Validation.enabled" -> true))
 
   private val fakeAppWithHtml5ValidationDisabledConfig = FakeApplication(
-    withGlobal = Some(TestGlobal),
+    withGlobal = Some(global),
     additionalConfiguration = Map("html5Validation.enabled" -> false))
 }

@@ -1,5 +1,6 @@
 package pages.changekeeper
 
+import uk.gov.dvla.vehicles.presentation.common.helpers
 import helpers.webbrowser.{Element, Page, WebBrowserDSL, WebDriverFactory}
 import views.changekeeper.VehicleLookupFailure
 import VehicleLookupFailure.{BeforeYouStartId, VehicleLookupId}

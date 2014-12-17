@@ -1,5 +1,6 @@
 package pages.common
 
+import uk.gov.dvla.vehicles.presentation.common.helpers
 import helpers.webbrowser.WebBrowserDSL
 import org.openqa.selenium.{By, WebDriver}
 

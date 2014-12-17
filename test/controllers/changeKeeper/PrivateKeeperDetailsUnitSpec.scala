@@ -24,7 +24,7 @@ import uk.gov.dvla.vehicles.presentation.common.clientsidesession.ClientSideSess
 import uk.gov.dvla.vehicles.presentation.common.mappings.{TitleType, TitlePickerString}
 import TitlePickerString.standardOptions
 import utils.helpers.Config
-import helpers.changekeeper.CookieFactoryForUnitSpecs
+import helpers.CookieFactoryForUnitSpecs
 import controllers.changeKeeper.Common.PrototypeHtml
 import pages.changekeeper.{VehicleLookupPage, NewKeeperChooseYourAddressPage}
 

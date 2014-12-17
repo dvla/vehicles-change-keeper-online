@@ -2,9 +2,9 @@ package controllers.changeKeeper
 
 import controllers.VehicleLookup
 import helpers.UnitSpec
-import helpers.common.RandomVrmGenerator
-import helpers.disposal_of_vehicle.InvalidVRMFormat.allInvalidVrmFormats
-import helpers.disposal_of_vehicle.ValidVRMFormat.allValidVrmFormats
+import uk.gov.dvla.vehicles.presentation.common.testhelpers.RandomVrmGenerator
+import helpers.InvalidVRMFormat.allInvalidVrmFormats
+import helpers.ValidVRMFormat.allValidVrmFormats
 import play.api.http.Status.OK
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.ClientSideSessionFactory

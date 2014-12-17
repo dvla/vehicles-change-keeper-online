@@ -25,11 +25,36 @@
 
     <div class="two-col clearfix acquire-complete-confirm">
         <div class="first-col">
-            <h1 class="mobile-only">@Messages("change_keeper_completeAndConfirm.title")</h1>
             <dl class="playback">
-                playback here
+                <dt><h2>@Messages("change_keeper_completeandconfirm.newkeeperDetails")</h2></dt>
+                <dt>@Messages("change_keeper_completeandconfirm.displayName")</dt>
+                <dd>@data.keeperDetails.displayName</dd>
+                <dt>@Messages("change_keeper_completeandconfirm.address")</dt>
+                <dd>@for(addr <- data.keeperDetails.address.address) {@addr<br/>}</dd>
+                <dt>@Messages("change_keeper_completeandconfirm.email")</dt>
+                @if(data.keeperDetails.email == None) {
+                    <dd>@Messages("change_keeper_completeandconfirm.emailNotEntered")</dd>
+                } else {
+                    <dd>@data.keeperDetails.email.get</dd>
+                }
+                @if(data.keeperDetails.isBusinessKeeper) {
+                    <dt>@Messages("change_keeper_completeandconfirm.fleetNumber")</dt>
+                    @if(data.keeperDetails.fleetNumber == None) {
+                        <dd>@Messages("change_keeper_completeandconfirm.fleetNumberNotEntered")</dd>
+                    } else {
+                        <dd>@data.keeperDetails.fleetNumber.get</dd>
+                    }
+                }
             </dl>
-
+            <dl class="playback">
+                <dt><h2>@Messages("change_keeper_completeandconfirm.vehicleDetails")</h2></dt>
+                <dt>@Messages("change_keeper_completeandconfirm.vehicleReg")</dt>
+                <dd>@data.vehicleAndKeeperDetails.registrationNumber</dd>
+                <dt>@Messages("change_keeper_completeandconfirm.vehicleMake")</dt>
+                <dd>@data.vehicleAndKeeperDetails.make</dd>
+                <dt>@Messages("change_keeper_completeandconfirm.vehicleModel")</dt>
+                <dd>@data.vehicleAndKeeperDetails.model</dd>
+            </dl>
         </div>
 
         <div class="second-col">

@@ -16,12 +16,10 @@
       Then there is no address error message is displayed "Building/number and street must contain between 4 and 30 characters"
       And the trader details are retained
 
-
     Scenario: - Address entry - line 1 less than 4 characters
       Given the data in Line one of the address has less than 4 characters
       When the user has selected the submit control
       Then an error message is displayed "Building/number and street must contain between 4 and 30 characters"
-
 
     Scenario: - Address entry - Town or city - null or less than three characters
       Given the town or city is null OR the town or city has less than 3 characters
@@ -29,7 +27,6 @@
       Then there is a error message displayed "Town or city must contain between 3 and 20 characters"
 
     Scenario: - Postcode - non editable
-
       Given the user has entered a postcode on either the private or business keeper page
       When the manual address page is invoked
       Then the postcode field is prepopulated and is non editable

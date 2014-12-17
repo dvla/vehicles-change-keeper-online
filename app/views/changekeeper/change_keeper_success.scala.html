@@ -1,0 +1,113 @@
+@(viewModel: models.ChangeKeeperCompletionViewModel)(implicit lang: Lang,
+    token: uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction.CsrfPreventionToken,
+    config: utils.helpers.Config)
+
+@import views.changekeeper.BeforeYouStart.NextId
+@import uk.gov.dvla.vehicles.presentation.common
+@import views.html.helper.form
+@import views.changekeeper.ChangeKeeperSuccess.{BuyAnotherId, FinishId}
+@import common.views.html.widgets.base.csrfTokenHiddenField
+
+@main(
+    progress = Some(Messages("change_keeper_progress_6")),
+    title = "Summary"
+){
+<div class="two-col clearfix acquire-success">
+    <div class="second-col">
+
+        <div class="alert-complete">
+            <h2>@Messages("change_keeper_success.complete.header")</h2>
+            <p>@Messages("change_keeper_success.complete.p1")</p>
+        </div>
+
+        <dl class="playback transaction-details mobile-only">
+            <h2>@Messages("change_keeper.transaction_details.header")</h2>
+            <dt>@Messages("change_keeper.transaction_details.transaction_id")</dt>
+            <dd>@viewModel.completeAndConfirmResponseModel.transactionId</dd>
+            <dt>@Messages("change_keeper_success.transaction_details.transaction_date")</dt>
+            <dd>@viewModel.completeAndConfirmResponseModel.transactionTimestamp.toString("dd/MM/yyyy")</dd>
+        </dl>
+
+        <div class="alert-warning">
+            <p><strong>@Messages("change_keeper_success.further_information.alert")</strong></p>
+        </div>
+
+        <h2 class="vehicle-details-header">@Messages("change_keeper_success.vehicle_details.header")</h2>
+        <p>@Messages("change_keeper_success.vehicle_details.p1")</p>
+        <div class="info-notice">
+            <dl class="playback">
+                <dt>@Messages("change_keeper_success.vehicle_details.registration_number")</dt>
+                <dd class="uppercase-text">@viewModel.vehicleAndKeeperDetails.registrationNumber</dd>
+                <dt>@Messages("change_keeper_success.vehicle_details.make")</dt>
+                <dd class="uppercase-text">@viewModel.vehicleAndKeeperDetails.make</dd>
+                <dt>@Messages("change_keeper_success.vehicle_details.model")</dt>
+                <dd class="uppercase-text">@viewModel.vehicleAndKeeperDetails.model</dd>
+                <dt>@Messages("change_keeper_success.vehicle_details.mileage")</dt>
+                @if(viewModel.completeAndConfirmDetails.mileage == None) {
+                    <dd class="uppercase-text">@Messages("change_keeper_success.vehicle_details.mileage_not_entered")</dd>
+                } else {
+                    <dd class="uppercase-text">@{java.text.NumberFormat.getIntegerInstance().format(viewModel.completeAndConfirmDetails.mileage.get)}</dd>
+                }
+            </dl>
+        </div>
+
+        <p>@Messages("change_keeper_success.new_keeper_details.p1")</p>
+
+        <div class="info-notice">
+            <dl class="playback">
+                <dt>@Messages("change_keeper_success.vehicle_details.name")</dt>
+                <dd class="uppercase-text">@viewModel.newKeeperDetails.displayName</dd>
+                <dt>@Messages("change_keeper_success.vehicle_details.address")</dt>
+                <dd class="uppercase-text">@for(addr <- viewModel.newKeeperDetails.address.address) {@addr<br/>}</dd>
+                <dt>@Messages("change_keeper_success.vehicle_details.email")</dt>
+                <dd class="uppercase-text">@viewModel.newKeeperDetails.email.getOrElse(Messages("change_keeper_email_not_entered"))</dd>
+            </dl>
+        </div>
+
+        <div class="related vehicle-sold-by mobile-only">
+            <dl class="playback bg-plain">
+                <dt>@Messages("change_keeper_success.date_of_sale.label")</dt>
+                <dd>@viewModel.completeAndConfirmDetails.dateOfSale.toString("dd/MM/yyyy")</dd>
+            </dl>
+        </div>
+
+
+        <h2>@Messages("change_keeper_success.further_information.header")</h2>
+        <p>@Messages("change_keeper_success.further_information.p1")</p>
+        <p>@Messages("change_keeper_success.further_information.p2")</p>
+
+        <div class="alert-warning">
+            <p><strong>@Messages("change_keeper_success.further_information.alert")</strong></p>
+        </div>
+
+        <div class="form-steps">
+
+            <div class="step">
+                <button id="printDisposalSuccess" type="button" name="action" value="printDisposalSuccess" class="button js-only print-button">@Messages("change_keeper_success.buttonnavprint")</button>
+            </div>
+            <div class="step">
+                @form(action = controllers.routes.ChangeKeeperSuccess.finish()) {
+                @csrfTokenHiddenField()
+                <button id="@FinishId" type="submit" name="action" class="button button-new-disposal button-secondary">@Messages("change_keeper_success.finish")</button>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="first-col">
+
+        <div class="print-only">
+            <h2>@Messages("change_keeper_success.complete.header")</h2>
+            <p>@Messages("change_keeper_success.complete.p1")</p>
+        </div>
+        <dl class="playback transaction-details desktop-only">
+            <h2>@Messages("change_keeper_success.transaction_details.header")</h2>
+            <dt>@Messages("change_keeper_success.transaction_details.transaction_id")</dt>
+            <dd>@viewModel.completeAndConfirmResponseModel.transactionId</dd>
+            <dt>@Messages("change_keeper_success.transaction_details.transaction_date")</dt>
+            <dd>@viewModel.completeAndConfirmResponseModel.transactionTimestamp.toString("dd/MM/yyyy")</dd>
+        </dl>
+        <div class="related vehicle-sold-by desktop-only">
+        </div>
+    </div>
+</div>
+}

@@ -2,10 +2,11 @@ package gov.uk.dvla.vehicles.keeper.stepdefs
 
 import cucumber.api.scala.{EN, ScalaDsl}
 import cucumber.api.java.en.{Then, When, Given}
-import helpers.webbrowser.{WebBrowserDSL, WebBrowserDriver}
 import org.openqa.selenium.WebDriver
 import org.scalatest.Matchers
 import pages.changekeeper.{CompleteAndConfirmPage, NewKeeperChooseYourAddressPage, BusinessKeeperDetailsPage, VehicleLookupPage}
+import uk.gov.dvla.vehicles.presentation.common.helpers
+import helpers.webbrowser.{WebBrowserDSL, WebBrowserDriver}
 
 class CompleteAndConfirmTest(webBrowserDriver: WebBrowserDriver) extends ScalaDsl with EN with WebBrowserDSL with Matchers {
 
@@ -43,7 +44,8 @@ class CompleteAndConfirmTest(webBrowserDriver: WebBrowserDriver) extends ScalaDs
   }
 
   @When("^there is a labelled Date of Sale and hint text$")
-  def there_is_a_labelled_Date_of_Sale_and_hint_text() {
+  def there_is_a_labelled_Date_of_Sale_and_hint_text(): Unit = {
+     webDriver.getPageSource().contains("Date of sale")
   }
 
   @When("^the Date of sale section will contain the Month label Month entry control Year label Year entry control$")

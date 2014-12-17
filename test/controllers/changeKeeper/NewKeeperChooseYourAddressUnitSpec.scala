@@ -1,9 +1,10 @@
 package controllers.changeKeeper
 
+import composition.WithApplication
 import controllers.NewKeeperChooseYourAddress
-import helpers.changekeeper.CookieFactoryForUnitSpecs
-import helpers.{UnitSpec, WithApplication}
-import helpers.common.CookieHelper.{fetchCookiesFromHeaders, verifyCookieHasBeenDiscarded, verifyCookieHasNotBeenDiscarded}
+import helpers.CookieFactoryForUnitSpecs
+import helpers.UnitSpec
+import uk.gov.dvla.vehicles.presentation.common.testhelpers.CookieHelper.{fetchCookiesFromHeaders, verifyCookieHasBeenDiscarded, verifyCookieHasNotBeenDiscarded}
 import models.NewKeeperChooseYourAddressFormModel.Form.AddressSelectId
 import models.NewKeeperChooseYourAddressFormModel.NewKeeperChooseYourAddressCacheKey
 import models.NewKeeperDetailsViewModel.NewKeeperDetailsCacheKey

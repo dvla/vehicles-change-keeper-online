@@ -1,12 +1,12 @@
 package gov.uk.dvla.vehicles.keeper.stepdefs
 
-import cucumber.api.scala.{EN, ScalaDsl}
-import helpers.webbrowser.{WebBrowserDSL, WebBrowserDriver}
 import cucumber.api.java.en.{Then, When, Given}
+import cucumber.api.scala.{EN, ScalaDsl}
 import org.openqa.selenium.WebDriver
 import org.scalatest.Matchers
-import pages.changekeeper._
-
+import pages.changekeeper.{BusinessKeeperDetailsPage, NewKeeperChooseYourAddressPage, VehicleLookupPage}
+import uk.gov.dvla.vehicles.presentation.common.helpers
+import helpers.webbrowser.{WebBrowserDSL, WebBrowserDriver}
 
 class BusinessKeeperDetailsTest(webBrowserDriver: WebBrowserDriver) extends ScalaDsl with EN with WebBrowserDSL with Matchers {
 
@@ -18,19 +18,16 @@ class BusinessKeeperDetailsTest(webBrowserDriver: WebBrowserDriver) extends Scal
     VehicleLookupPage.documentReferenceNumber enter "11111111111"
     click on VehicleLookupPage.vehicleSoldToBusiness
     click on VehicleLookupPage.next
-
   }
 
   @Given("^that the user has selected Business on the vehicle lookup page$")
   def that_the_user_has_selected_Business_on_the_vehicle_lookup_page() {
     gotoBusinessKeeperDetailsPage()
   }
-
   @When("^the user is on the new-business-keeper-details page$")
   def the_user_is_on_the_new_business_keeper_details_page() {
     page.title shouldEqual BusinessKeeperDetailsPage.title
   }
-
   @Then("^there is a label titled \"(.*?)\"$")
   def there_is_a_label_titled(fleetNo:String ) {
     page.text contains fleetNo
@@ -43,7 +40,7 @@ class BusinessKeeperDetailsTest(webBrowserDriver: WebBrowserDriver) extends Scal
 
   @Then("^there will be help text displayed above the fleet number field \"(.*?)\"$")
   def there_will_be_help_text_displayed_above_the_fleet_number_field(helpText:String)  {
-    page.text contains helpText
+     page.text contains helpText
   }
 
   @Given("^the fleet number is blank in business keeper details page$")
@@ -70,7 +67,7 @@ class BusinessKeeperDetailsTest(webBrowserDriver: WebBrowserDriver) extends Scal
 
   @Then("^there is a fleet number error message displayed \"(.*?)\"$")
   def there_is_a_fleet_number_error_message_displayed(fleetNoErrMsg:String)  {
-      BusinessKeeperDetailsPage.errorTextInBusinessKeeperPage(fleetNoErrMsg) shouldBe true
+    BusinessKeeperDetailsPage.errorTextInBusinessKeeperPage(fleetNoErrMsg) shouldBe true
   }
 
   @When("^the user selects the field labelled Business name$")
@@ -79,7 +76,7 @@ class BusinessKeeperDetailsTest(webBrowserDriver: WebBrowserDriver) extends Scal
 
   @Then("^the user can enter a business name of up to (\\d+) characters$")
   def the_user_can_enter_a_business_name_of_up_to_characters(charLength:Int) {
-      BusinessKeeperDetailsPage.businessNameField enter "abcdefghijklmnopqrstsdgfhtajs"
+    BusinessKeeperDetailsPage.businessNameField enter "abcdefghijklmnopqrstsdgfhtajs"
   }
 
   @Given("^the business name contains invalid characters$")
@@ -91,12 +88,12 @@ class BusinessKeeperDetailsTest(webBrowserDriver: WebBrowserDriver) extends Scal
 
   @When("^the user has selected the submit control on the new-business-keeper-details screen$")
   def the_user_has_selected_the_submit_control_on_the_new_business_keeper_details_screen() {
-       click on BusinessKeeperDetailsPage.next
+    click on BusinessKeeperDetailsPage.next
   }
 
   @Then("^the user will receive an error message \"(.*?)\"$")
   def the_user_will_receive_an_error_message(BusinessNameErrMsg:String)  {
-       BusinessKeeperDetailsPage.errorTextInBusinessKeeperPage(BusinessNameErrMsg) shouldBe true
+    BusinessKeeperDetailsPage.errorTextInBusinessKeeperPage(BusinessNameErrMsg) shouldBe true
   }
 
   @Given("^the user has entered values into the business name$")
@@ -107,7 +104,7 @@ class BusinessKeeperDetailsTest(webBrowserDriver: WebBrowserDriver) extends Scal
 
   @When("^the user select the submit control$")
   def the_user_select_the_submit_control() {
-      click on BusinessKeeperDetailsPage.next
+    click on BusinessKeeperDetailsPage.next
   }
 
   @Then("^invalid white space will be stripped from the start and end of the business name but spaces are allowed within the business name$")
@@ -145,12 +142,11 @@ class BusinessKeeperDetailsTest(webBrowserDriver: WebBrowserDriver) extends Scal
   @Then("^the system will display an error for invalid email address \"(.*?)\"$")
   def the_system_will_display_an_error_for_invalid_email_address(emailErrMsg:String) {
     BusinessKeeperDetailsPage.errorTextInBusinessKeeperPage(emailErrMsg) shouldBe true
-
   }
 
   @Given("^the user has entered an invalid email address$")
   def the_user_has_entered_an_invalid_email_address() {
-    BusinessKeeperDetailsPage.emailField enter "aa"
+     BusinessKeeperDetailsPage.emailField enter "aa"
   }
 
   @When("^the user tries to search on an invalid postcode$")
@@ -158,10 +154,9 @@ class BusinessKeeperDetailsTest(webBrowserDriver: WebBrowserDriver) extends Scal
     BusinessKeeperDetailsPage.postcodeField enter "adsadsds"
     click on BusinessKeeperDetailsPage.next
   }
-
   @Then("^the user does not progress to the next stage of the service$")
   def the_user_does_not_progress_to_the_next_stage_of_the_service() {
-    page.title shouldEqual BusinessKeeperDetailsPage.title
+     page.title shouldEqual BusinessKeeperDetailsPage.title
   }
 
   @When("^the user tries to search on a blank postcode$")
@@ -181,8 +176,9 @@ class BusinessKeeperDetailsTest(webBrowserDriver: WebBrowserDriver) extends Scal
     page.title shouldEqual NewKeeperChooseYourAddressPage.title
   }
 
-  @Then("^an error message  displays \"(.*?)\"$")
-  def an_error_message_displays(postcoderErrMsg:String)  {
-    BusinessKeeperDetailsPage.errorTextInBusinessKeeperPage(postcoderErrMsg) shouldBe true
+  @Then("^an error message is displays \"(.*?)\"$")
+  def an_error_message_is_displayed(postcodErrMsg:String)  {
+    BusinessKeeperDetailsPage.errorTextInBusinessKeeperPage(postcodErrMsg) shouldBe true
   }
+
 }

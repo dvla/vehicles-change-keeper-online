@@ -1,0 +1,58 @@
+@(viewModel: models.ChangeKeeperCompletionViewModel)(implicit lang: Lang,
+        token: uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction.CsrfPreventionToken,
+        config: utils.helpers.Config)
+
+@import views.changekeeper.ChangeKeeperSuccess.FinishId
+@import views.html.helper.form
+@import uk.gov.dvla.vehicles.presentation.common
+@import common.views.html.widgets.base.csrfTokenHiddenField
+
+@main(
+    progress = Some(Messages("change_keeper_progress_6")),
+    title = ""
+) {
+
+    <div class="two-col clearfix">
+        <div class="first-col">
+
+            <div class="print-only">
+                <h2>@Messages("change_keeper_failure.complete.header")</h2>
+                <p>@Messages("change_keeper_failure.complete.p1")</p>
+            </div>
+            <dl class="playback transaction-details desktop-only">
+                <h2>@Messages("change_keeper_failure.transaction_details.header")</h2>
+                <dt>@Messages("change_keeper_failure.transaction_details.transaction_id")</dt>
+                <dd>@viewModel.completeAndConfirmResponseModel.transactionId</dd>
+                <dt>@Messages("change_keeper_failure.transaction_details.transaction_date")</dt>
+                <dd>@viewModel.completeAndConfirmResponseModel.transactionTimestamp.toString("dd/MM/yyyy")</dd>
+            </dl>
+            <div class="related vehicle-sold-by desktop-only">
+            </div>
+        </div>
+
+        <div class="second-col">
+            <div class="alert-failed">
+                <h2>@Messages("ms.vehiclesService.response.unableToProcessApplication-title")</h2>
+                <p>
+                    @Messages("ms.vehiclesService.response.unableToProcessApplication")
+                    <br>
+                    @Messages("ms.vehiclesService.response.unableToProcessApplication-address")
+                </p>
+            </div>
+        </div>
+
+
+        <div class="form-steps">
+            <div class="step">
+                <button id="printDisposalSuccess" type="button" name="action" value="printDisposalSuccess" class="button js-only print-button">@Messages("change_keeper_failure.buttonnavprint")</button>
+            </div>
+            <div class="step">
+            @form(action = controllers.routes.ChangeKeeperFailure.finish()) {
+                @csrfTokenHiddenField()
+                <button id="@FinishId" type="submit" name="action" class="button button-new-disposal button-secondary">@Messages("change_keeper_failure.finish")</button>
+            }
+            </div>
+
+        </div>
+    </div>
+}

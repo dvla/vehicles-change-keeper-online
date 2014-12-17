@@ -1,10 +1,10 @@
 package views.changekeeper
 
-import helpers.common.ProgressBar
-import helpers.changekeeper.CookieFactoryForUISpecs
-import helpers.tags.UiTag
+import composition.TestHarness
+import helpers.CookieFactoryForUISpecs
+import uk.gov.dvla.vehicles.presentation.common.testhelpers.UiTag
+import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.ProgressBar
 import helpers.UiSpec
-import helpers.webbrowser.TestHarness
 import org.openqa.selenium.{By, WebElement, WebDriver}
 import pages.common.ErrorPanel
 import pages.changekeeper.BeforeYouStartPage
@@ -25,7 +25,7 @@ class NewKeeperChooseYourAddressIntegrationSpec extends UiSpec with TestHarness 
   final val PrivateKeeperNameLabel = " Name"
   final val BusinessKeeperNameLabel = "Business name"
   final val BusinessFleetNumberLabel = "Business fleet number"
-  
+
   "new keeper choose your address page" should {
     "display the page for a new private keeper" taggedAs UiTag in new WebBrowser {
       go to BeforeYouStartPage

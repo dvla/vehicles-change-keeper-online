@@ -1,11 +1,12 @@
 package controllers.changeKeeper
 
+import composition.WithApplication
 import controllers.MicroServiceError
 import Common.PrototypeHtml
-import helpers.common.CookieHelper
-import helpers.{UnitSpec, WithApplication}
+import uk.gov.dvla.vehicles.presentation.common.testhelpers.CookieHelper
+import helpers.UnitSpec
 import CookieHelper.{fetchCookiesFromHeaders, verifyCookieHasBeenDiscarded}
-import helpers.changekeeper.CookieFactoryForUnitSpecs
+import helpers.CookieFactoryForUnitSpecs
 import uk.gov.dvla.vehicles.presentation.common.clientsidesession.ClientSideSessionFactory
 import MicroServiceError.MicroServiceErrorRefererCacheKey
 import org.mockito.Mockito.when
@@ -13,7 +14,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.{LOCATION, OK, REFERER, contentAsString, defaultAwaitTimeout, status}
 import utils.helpers.Config
 
-final class MicroServiceErrorUnitSpec extends UnitSpec {
+final class MicroServiceErrorUnitSpec extends UnitSpec  {
   "present" should {
     "display the page" in new WithApplication {
       status(present) should equal(OK)

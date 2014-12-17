@@ -1,10 +1,10 @@
 package views.changekeeper
 
+import composition.TestHarness
+import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.ProgressBar.progressStep
 import helpers.UiSpec
-import helpers.changekeeper.CookieFactoryForUISpecs
-import helpers.common.ProgressBar.progressStep
-import helpers.tags.UiTag
-import helpers.webbrowser.TestHarness
+import helpers.CookieFactoryForUISpecs
+import uk.gov.dvla.vehicles.presentation.common.testhelpers.UiTag
 import org.openqa.selenium.{By, WebDriver, WebElement}
 import pages.changekeeper.PrivateKeeperDetailsPage.{FirstNameInvalid, LastNameInvalid, back, navigate}
 import pages.changekeeper.PrivateKeeperDetailsPage.{TitleInvalid, EmailInvalid, DriverNumberInvalid, PostcodeInvalid}
@@ -13,7 +13,7 @@ import pages.common.ErrorPanel
 import pages.common.Feedback.EmailFeedbackLink
 import play.api.i18n.Messages
 import uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction
-import helpers.common.HtmlTestHelper.{htmlRegex, whitespaceRegex}
+import uk.gov.dvla.vehicles.presentation.common.testhelpers.HtmlTestHelper.{htmlRegex, whitespaceRegex}
 import pages.changekeeper.NewKeeperChooseYourAddressPage
 
 final class PrivateKeeperDetailsIntegrationSpec extends UiSpec with TestHarness {

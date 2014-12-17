@@ -1,8 +1,8 @@
 package controllers.changeKeeper
 
+import composition.WithApplication
 import controllers.VehicleLookup
 import helpers.UnitSpec
-import helpers.WithApplication
 import models.VehicleLookupFormModel.Form.{DocumentReferenceNumberId, VehicleRegistrationNumberId, VehicleSoldToId}
 import org.mockito.Matchers.any
 import org.mockito.Mockito.when
@@ -39,7 +39,7 @@ import webserviceclients.fakes.brute_force_protection.FakeBruteForcePreventionWe
 import webserviceclients.fakes.brute_force_protection.FakeBruteForcePreventionWebServiceImpl.responseFirstAttempt
 import webserviceclients.fakes.brute_force_protection.FakeBruteForcePreventionWebServiceImpl.responseSecondAttempt
 import webserviceclients.fakes.brute_force_protection.FakeBruteForcePreventionWebServiceImpl.VrmThrows
-import helpers.changekeeper.CookieFactoryForUnitSpecs
+import helpers.CookieFactoryForUnitSpecs
 
 final class VehicleLookupUnitSpec extends UnitSpec {
 

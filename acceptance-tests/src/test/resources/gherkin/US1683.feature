@@ -1,6 +1,6 @@
 @tag
   Feature:
-   Background:
+    Background:
       Given that the user is on the complete and confirm page
 
     Scenario: mileage lable

@@ -1,16 +1,16 @@
 package views.changekeeper
 
+import composition.TestHarness
 import helpers.UiSpec
-import helpers.common.ProgressBar.progressStep
-import helpers.tags.UiTag
-import helpers.webbrowser.TestHarness
+import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.ProgressBar.progressStep
+import uk.gov.dvla.vehicles.presentation.common.testhelpers.UiTag
 import org.openqa.selenium.{By, WebDriver, WebElement}
 import pages.common.ErrorPanel
 import pages.changekeeper.NewKeeperEnterAddressManuallyPage.{sadPath, happyPath, happyPathMandatoryFieldsOnly}
 import pages.changekeeper.{NewKeeperEnterAddressManuallyPage, BeforeYouStartPage}
 import uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction
 import pages.common.Feedback.EmailFeedbackLink
-import helpers.changekeeper.CookieFactoryForUISpecs
+import helpers.CookieFactoryForUISpecs
 
 class NewKeeperEnterAddressManuallyIntegrationSpec extends UiSpec with TestHarness {
 

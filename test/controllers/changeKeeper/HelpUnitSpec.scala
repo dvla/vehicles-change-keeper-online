@@ -1,11 +1,13 @@
 package controllers.changeKeeper
 
+import composition.WithApplication
 import controllers.Help
 import controllers.changeKeeper.Common.PrototypeHtml
-import helpers.common.CookieHelper
+import utils.helpers.Config
+import uk.gov.dvla.vehicles.presentation.common.testhelpers.CookieHelper
 import CookieHelper.{fetchCookiesFromHeaders, verifyCookieHasBeenDiscarded}
-import helpers.changekeeper.CookieFactoryForUnitSpecs
-import helpers.{UnitSpec, WithApplication}
+import helpers.CookieFactoryForUnitSpecs
+import helpers.UnitSpec
 import models.HelpCacheKey
 import org.mockito.Mockito.when
 import pages.changekeeper.{VehicleLookupPage, BeforeYouStartPage}

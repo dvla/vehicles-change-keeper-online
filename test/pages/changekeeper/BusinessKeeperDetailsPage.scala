@@ -1,5 +1,6 @@
 package pages.changekeeper
 
+import uk.gov.dvla.vehicles.presentation.common.helpers
 import helpers.webbrowser.{Element, Page, TextField, TelField, WebBrowserDSL, WebDriverFactory}
 import models.BusinessKeeperDetailsFormModel.Form.{BusinessNameId, EmailId, FleetNumberId, PostcodeId}
 import views.changekeeper.BusinessKeeperDetails.{BackId, NextId}
@@ -7,7 +8,7 @@ import org.openqa.selenium.WebDriver
 
 object BusinessKeeperDetailsPage extends Page with WebBrowserDSL {
   final val address = buildAppUrl("business-keeper-details")
-  override val url: String = WebDriverFactory.testUrl + address.substring(1)
+  override def url: String = WebDriverFactory.testUrl + address.substring(1)
   final override val title: String = "Enter the details of the business buying the vehicle"
 
   final val FleetNumberValid = "123456"

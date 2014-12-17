@@ -1,5 +1,6 @@
 package pages.changekeeper
 
+import uk.gov.dvla.vehicles.presentation.common.helpers
 import helpers.webbrowser.{Element, Page, SingleSel, WebBrowserDSL, WebDriverFactory}
 import models.NewKeeperChooseYourAddressFormModel.Form.AddressSelectId
 import views.changekeeper.NewKeeperChooseYourAddress
@@ -10,7 +11,7 @@ import org.openqa.selenium.WebDriver
 
 object NewKeeperChooseYourAddressPage extends Page with WebBrowserDSL {
   final val address = buildAppUrl("new-keeper-choose-your-address")
-  override val url: String = WebDriverFactory.testUrl + address.substring(1)
+  override def url: String = WebDriverFactory.testUrl + address.substring(1)
   final override val title = "Select the address of the buyer"
 
   def chooseAddress(implicit driver: WebDriver): SingleSel = singleSel(id(AddressSelectId))

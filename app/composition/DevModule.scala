@@ -23,11 +23,12 @@ import common.webserviceclients.addresslookup.ordnanceservey.WebServiceImpl
 import common.webserviceclients.bruteforceprevention.BruteForcePreventionService
 import common.webserviceclients.bruteforceprevention.BruteForcePreventionServiceImpl
 import common.webserviceclients.bruteforceprevention.BruteForcePreventionWebService
-import uk.gov.dvla.vehicles.presentation.common.filters.{DateTimeZoneServiceImpl, DateTimeZoneService}
-import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupService
-import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupServiceImpl
-import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupWebService
-import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupWebServiceImpl
+import common.filters.{DateTimeZoneServiceImpl, DateTimeZoneService}
+import common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupService
+import common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupServiceImpl
+import common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupWebService
+import common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupWebServiceImpl
+import common.webserviceclients.acquire.{AcquireServiceImpl, AcquireService, AcquireWebServiceImpl, AcquireWebService}
 
 /**
  * Provides real implementations of traits
@@ -39,7 +40,7 @@ import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeep
  *
  * Look in build.scala for where we import the sse-guice library
  */
-object DevModule extends ScalaModule {
+class DevModule extends ScalaModule {
   def configure() {
     bind[AddressLookupService].to[AddressLookupServiceImpl].asEagerSingleton()
     bind[AddressLookupWebService].to[WebServiceImpl].asEagerSingleton()
@@ -47,20 +48,27 @@ object DevModule extends ScalaModule {
     bind[DateService].to[DateServiceImpl].asEagerSingleton()
     bind[CookieFlags].to[CookieFlagsFromConfig].asEagerSingleton()
 
-    if (getProperty("encryptCookies", default = true)) {
-      bind[CookieEncryption].toInstance(new AesEncryption with CookieEncryption)
-      bind[CookieNameHashGenerator].toInstance(new Sha1HashGenerator with CookieNameHashGenerator)
-      bind[ClientSideSessionFactory].to[EncryptedClientSideSessionFactory].asEagerSingleton()
-    } else
-      bind[ClientSideSessionFactory].to[ClearTextClientSideSessionFactory].asEagerSingleton()
+    bindSessionFactory()
 
     bind[VehicleAndKeeperLookupWebService].to[VehicleAndKeeperLookupWebServiceImpl].asEagerSingleton()
     bind[VehicleAndKeeperLookupService].to[VehicleAndKeeperLookupServiceImpl].asEagerSingleton()
+
+    bind[AcquireWebService].to[AcquireWebServiceImpl].asEagerSingleton()
+    bind[AcquireService].to[AcquireServiceImpl].asEagerSingleton()
 
     bind[BruteForcePreventionWebService].to[uk.gov.dvla.vehicles.presentation.common.webserviceclients.bruteforceprevention.WebServiceImpl].asEagerSingleton()
     bind[BruteForcePreventionService].to[BruteForcePreventionServiceImpl].asEagerSingleton()
 
     bind[LoggerLike].annotatedWith(Names.named(AccessLoggerName)).toInstance(Logger("dvla.pages.common.AccessLogger"))
     bind[DateTimeZoneService].toInstance(new DateTimeZoneServiceImpl)
+  }
+
+  protected def bindSessionFactory(): Unit = {
+    if (getProperty("encryptCookies", default = true)) {
+      bind[CookieEncryption].toInstance(new AesEncryption with CookieEncryption)
+      bind[CookieNameHashGenerator].toInstance(new Sha1HashGenerator with CookieNameHashGenerator)
+      bind[ClientSideSessionFactory].to[EncryptedClientSideSessionFactory].asEagerSingleton()
+    } else
+      bind[ClientSideSessionFactory].to[ClearTextClientSideSessionFactory].asEagerSingleton()
   }
 }

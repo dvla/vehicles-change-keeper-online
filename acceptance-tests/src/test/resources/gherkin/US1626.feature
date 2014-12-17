@@ -1,6 +1,5 @@
 @tag
   Feature:
-
   Scenario:Title - No entry
     Given that the user selects NO Title option
     When the user selects the Submit function
@@ -31,7 +30,6 @@
     Given the user has entered invalid firstName
     When the user selects the Submit function
     Then error message will be display "First name - Must contain between 1 and 25 characters from the following a-z, A-Z, 0-9 and .,- “’ and space"
-
 
   Scenario: - Last name - null entry
     Given the user enter null value in lastname textbox

@@ -1,9 +1,10 @@
 package controllers.changeKeeper
 
+import composition.WithApplication
 import controllers.VehicleLookupFailure
 import Common.PrototypeHtml
-import helpers.{UnitSpec, WithApplication}
-import helpers.changekeeper.CookieFactoryForUnitSpecs
+import helpers.UnitSpec
+import helpers.CookieFactoryForUnitSpecs
 import org.mockito.Mockito.when
 import pages.changekeeper.{BeforeYouStartPage, VehicleLookupPage}
 import play.api.test.FakeRequest

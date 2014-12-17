@@ -1,14 +1,14 @@
 package views.changekeeper
 
+import composition.TestHarness
+import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.ProgressBar
 import helpers.UiSpec
-import helpers.common.ProgressBar
-import helpers.changekeeper.CookieFactoryForUISpecs
-import helpers.tags.UiTag
-import helpers.webbrowser.TestHarness
+import helpers.CookieFactoryForUISpecs
 import org.openqa.selenium.WebDriver
 import pages.changekeeper.MicroServiceErrorPage.{exit, tryAgain}
 import pages.changekeeper.{BeforeYouStartPage, MicroServiceErrorPage}
 import pages.common.Feedback.EmailFeedbackLink
+import uk.gov.dvla.vehicles.presentation.common.testhelpers.UiTag
 
 final class MicroServiceErrorIntegrationSpec extends UiSpec with TestHarness {
   "go to page" should {

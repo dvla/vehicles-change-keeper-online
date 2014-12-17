@@ -1,5 +1,6 @@
 package pages.changekeeper
 
+import uk.gov.dvla.vehicles.presentation.common.helpers
 import helpers.webbrowser.{Element, Page, WebBrowserDSL, WebDriverFactory}
 import views.changekeeper.MicroServiceError
 import MicroServiceError.{ExitId, TryAgainId}
@@ -9,7 +10,7 @@ object MicroServiceErrorPage extends Page with WebBrowserDSL {
   final val address = buildAppUrl("service-error")
   final override val title = "We are sorry"
 
-  override val url: String = WebDriverFactory.testUrl + address.substring(1)
+  override def url: String = WebDriverFactory.testUrl + address.substring(1)
 
   def tryAgain(implicit driver: WebDriver): Element = find(id(TryAgainId)).get
 

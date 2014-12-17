@@ -1,8 +1,9 @@
 package controllers.changeKeeper
 
+import composition.WithApplication
 import controllers.changeKeeper.Common.PrototypeHtml
 import controllers.BusinessKeeperDetails
-import helpers.UnitSpec
+import helpers.{CookieFactoryForUnitSpecs, UnitSpec}
 import models.BusinessKeeperDetailsFormModel.Form.{FleetNumberId, BusinessNameId, EmailId, PostcodeId}
 import org.mockito.Mockito.when
 import pages.changekeeper.BusinessKeeperDetailsPage.{EmailValid, BusinessNameValid, PostcodeValid}
@@ -11,10 +12,8 @@ import pages.changekeeper.NewKeeperChooseYourAddressPage
 import pages.changekeeper.BusinessKeeperDetailsPage.FleetNumberValid
 import play.api.test.Helpers.{BAD_REQUEST, LOCATION, OK, contentAsString, defaultAwaitTimeout}
 import play.api.test.FakeRequest
-import play.api.test.WithApplication
 import uk.gov.dvla.vehicles.presentation.common.clientsidesession.ClientSideSessionFactory
 import utils.helpers.Config
-import helpers.changekeeper.CookieFactoryForUnitSpecs
 
 class BusinessKeeperDetailsUnitSpec extends UnitSpec {
 

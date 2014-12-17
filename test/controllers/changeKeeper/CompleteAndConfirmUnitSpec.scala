@@ -3,7 +3,7 @@ package controllers.changeKeeper
 import controllers.changeKeeper.Common.PrototypeHtml
 import controllers.{PrivateKeeperDetails, CompleteAndConfirm}
 import helpers.UnitSpec
-import helpers.changekeeper.CookieFactoryForUnitSpecs
+import helpers.CookieFactoryForUnitSpecs
 import models.CompleteAndConfirmFormModel.Form.{MileageId, DateOfSaleId, ConsentId}
 import org.joda.time.Instant
 import org.mockito.Mockito.when
@@ -12,7 +12,7 @@ import pages.changekeeper.BusinessKeeperDetailsPage.{BusinessNameValid, FleetNum
 import pages.changekeeper.PrivateKeeperDetailsPage.{FirstNameValid, LastNameValid}
 import pages.changekeeper.CompleteAndConfirmPage.{MileageValid, ConsentTrue}
 import pages.changekeeper.CompleteAndConfirmPage.{DayDateOfSaleValid, YearDateOfSaleValid, MonthDateOfSaleValid}
-import pages.changekeeper.VehicleLookupPage
+import pages.changekeeper.{CompleteAndConfirmPage, VehicleLookupPage}
 import play.api.test.Helpers.{LOCATION, BAD_REQUEST, OK, contentAsString, defaultAwaitTimeout}
 import play.api.test.{FakeRequest, WithApplication}
 import play.api.libs.json.Json
@@ -66,46 +66,69 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
       content should not include MileageValid
     }
 
-    "redirect to vehicle lookup when no new keeper details cookie is present" in new WithApplication {
-      val request = FakeRequest()
+    "redirect to vehicle lookup when no new keeper details cookie is present" in new WithApplication { // Tests The US1700
+    val request = FakeRequest()
       val result = completeAndConfirm.present(request)
       whenReady(result) { r =>
         r.header.headers.get(LOCATION) should equal(Some(VehicleLookupPage.address))
       }
     }
 
-//    "play back business keeper details as expected" in new WithApplication() { //ToDo uncomment test when us1685 is developed
-//      val request = FakeRequest().
-//        withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel(
-//        businessName = Some(BusinessNameValid),
-//        fleetNumber = Some(FleetNumberValid),
-//        email = Some(EmailValid),
-//        isBusinessKeeper = true))
-//      .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
-//      .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
-//      .withCookies(CookieFactoryForUnitSpecs.privateKeeperDetailsModel())
-//      val content = contentAsString(completeAndConfirm.present(request))
-//      content should include("<dt>Fleet number</dt>")
-//      content should include(s"$BusinessNameValid")
-//      content should include(s"$FleetNumberValid")
-//      content should include(s"$EmailValid")
-//    }
+    "present the form when new keeper details cookie is present" in new WithApplication { // Tests The US1700
+    val request = FakeRequest()
+        .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
+        .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
+        .withCookies(CookieFactoryForUnitSpecs.allowGoingToCompleteAndConfirm())
+        .withCookies(CookieFactoryForUnitSpecs.completeAndConfirmModel())
+      val result = completeAndConfirm.present(request)
+      whenReady(result) { r =>
+        r.header.status should equal(200)
+      }
+    }
 
-//    "play back private keeper details as expected" in new WithApplication() { //ToDo uncomment test when us1685 is developed
-//      val request = FakeRequest().
-//        withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel(
-//        firstName = Some(FirstNameValid),
-//        lastName = Some(LastNameValid),
-//        email = Some(EmailValid),
-//        isBusinessKeeper = false
-//      )).withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
+//    "redirect to vehicle lookup when you already submitted" in new WithApplication { // @TODO Uncomment to test The US1700 when submit is completed
+//    val request = buildCorrectlyPopulatedRequest(mileage = "$$")
+//        .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
 //        .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
 //        .withCookies(CookieFactoryForUnitSpecs.privateKeeperDetailsModel())
-//      val content = contentAsString(completeAndConfirm.present(request))
-//      content should include(s"$FirstNameValid")
-//      content should include(s"$LastNameValid")
-//      content should include(s"$EmailValid")
+//
+//      val result = completeAndConfirm.submit(request)
+//      whenReady(result) { r =>
+//        r.header.headers.get(LOCATION) should equal(Some(VehicleLookupPage.address))
+//      }
 //    }
+
+    "play back business keeper details as expected" in new WithApplication() {
+      val request = FakeRequest().
+        withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel(
+        businessName = Some(BusinessNameValid),
+        fleetNumber = Some(FleetNumberValid),
+        email = Some(EmailValid),
+        isBusinessKeeper = true))
+      .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
+      .withCookies(CookieFactoryForUnitSpecs.allowGoingToCompleteAndConfirm())
+      val content = contentAsString(completeAndConfirm.present(request))
+      content should include("<dt>Fleet number</dt>")
+      content should include(s"$BusinessNameValid")
+      content should include(s"$FleetNumberValid")
+      content should include(s"$EmailValid")
+    }
+
+    "play back private keeper details as expected" in new WithApplication() {
+      val request = FakeRequest().
+        withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel(
+        firstName = Some(FirstNameValid),
+        lastName = Some(LastNameValid),
+        email = Some(EmailValid),
+        isBusinessKeeper = false
+      )).withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
+        .withCookies(CookieFactoryForUnitSpecs.privateKeeperDetailsModel())
+        .withCookies(CookieFactoryForUnitSpecs.allowGoingToCompleteAndConfirm())
+      val content = contentAsString(completeAndConfirm.present(request))
+      content should include(s"$FirstNameValid")
+      content should include(s"$LastNameValid")
+      content should include(s"$EmailValid")
+    }
   }
 
   "submit" should {
@@ -116,6 +139,9 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
         .withCookies(CookieFactoryForUnitSpecs.privateKeeperDetailsModel())
 
       val result = completeAndConfirm.submit(request)
+
+      println(result)
+
       val replacementMileageErrorMessage = "You must enter a valid mileage between 0 and 999999"
       replacementMileageErrorMessage.r.findAllIn(contentAsString(result)).length should equal(2)
     }
@@ -229,6 +255,9 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
       s"$DateOfSaleId.$YearId" -> yearDateOfSale,
       ConsentId -> consent
     )
+      .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
+      .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
+      .withCookies(CookieFactoryForUnitSpecs.allowGoingToCompleteAndConfirm())
   }
 
   private def completeAndConfirm = {
