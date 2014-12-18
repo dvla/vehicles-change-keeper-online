@@ -26,7 +26,7 @@ object EmailMessageBuilder {
         |<br /><br />
         |You should receive your registration certificate (V5C) within 2 weeks.
         |<br /><br />
-        |If you do not receive your V5C within this time or this information is incorrect then please contact DVLA on 0300 790 6802’</p>
+        |If you do not receive your V5C within this time or this information is incorrect then please contact DVLA on 0300 790 6802</p>
       """.stripMargin
 
   private def buildText(vehicleDetails: VehicleAndKeeperDetailsModel, keeperDetails: NewKeeperDetailsViewModel): String =
@@ -37,7 +37,7 @@ object EmailMessageBuilder {
         |
         |You should receive your registration certificate (V5C) within 2 weeks.
         |
-        |If you do not receive your V5C within this time or this information is incorrect then please contact DVLA on 0300 790 6802’
+        |If you do not receive your V5C within this time or this information is incorrect then please contact DVLA on 0300 790 6802
       """.stripMargin
 
 }
