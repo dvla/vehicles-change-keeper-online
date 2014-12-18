@@ -6,9 +6,9 @@ resolvers += "Nexus snapshots" at "http://rep002-01.skyscape.preview-dvla.co.uk:
 
 resolvers += "Nexus releases" at "http://rep002-01.skyscape.preview-dvla.co.uk:8081/nexus/content/repositories/releases"
 
-addSbtPlugin("dvla" % "build-details-generator" % "1.0.0-SNAPSHOT")
+addSbtPlugin("dvla" % "build-details-generator" % "1.1")
 
-addSbtPlugin("dvla" % "microservices-sandbox" % "1.0.1-SNAPSHOT")
+addSbtPlugin("dvla" % "microservices-sandbox" % "1.1")
 
 // The Typesafe repository
 resolvers += "Typesafe repository" at "http://repo.typesafe.com/typesafe/releases/"
