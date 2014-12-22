@@ -13,7 +13,7 @@ import pages.changekeeper.{PrivateKeeperDetailsPage, HelpPage, BeforeYouStartPag
 import pages.common.Feedback.{EmailFeedbackLink, EmailHelpLink}
 
 final class HelpIntegrationSpec extends UiSpec with TestHarness {
-  "go to page" should {
+  "go to page" ignore {
     "display the page containing correct title" taggedAs UiTag in new WebBrowser {
       go to HelpPage
       page.title should equal(HelpPage.title)
@@ -35,7 +35,7 @@ final class HelpIntegrationSpec extends UiSpec with TestHarness {
     }
   }
 
-  "back button" should {
+  "back button" ignore {
     "redirect to the users previous page" taggedAs UiTag in new WebBrowser {
       go to BeforeYouStartPage
       cacheSetup()
@@ -53,7 +53,7 @@ final class HelpIntegrationSpec extends UiSpec with TestHarness {
     }
   }
 
-  "exit" should {
+  "exit" ignore {
     "redirect to the start page" taggedAs UiTag in new WebBrowser {
       go to BeforeYouStartPage
       cacheSetup()
