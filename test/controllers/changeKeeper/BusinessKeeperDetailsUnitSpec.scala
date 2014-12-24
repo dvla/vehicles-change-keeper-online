@@ -100,7 +100,7 @@ class BusinessKeeperDetailsUnitSpec extends UnitSpec {
       val request = buildRequest(businessName = "")
         .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
       val result = businessKeeperDetails.submit(request)
-      val errorMessage = "Must be between two and 30 characters and only contain valid characters"
+      val errorMessage = "Must be between 2 and 30 characters and only contain valid characters"
       val count = errorMessage.r.findAllIn(contentAsString(result)).length
       count should equal(2)
     }

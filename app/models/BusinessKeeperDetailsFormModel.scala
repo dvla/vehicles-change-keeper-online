@@ -7,7 +7,7 @@ import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.CacheKey
 import common.mappings.Email.email
 import common.mappings.Postcode.postcode
-import mappings.BusinessKeeperName.businessKeeperNameMapping
+import common.mappings.BusinessKeeperName.businessKeeperNameMapping
 
 final case class BusinessKeeperDetailsFormModel(fleetNumber: Option[String],
                                                 businessName: String,
