@@ -45,11 +45,14 @@ class CompleteAndConfirmTest(webBrowserDriver: WebBrowserDriver) extends ScalaDs
 
   @When("^there is a labelled Date of Sale and hint text$")
   def there_is_a_labelled_Date_of_Sale_and_hint_text(): Unit = {
-     webDriver.getPageSource().contains("Date of sale")
+    webDriver.getPageSource().contains("Date of sale") shouldBe true
   }
 
   @When("^the Date of sale section will contain the Month label Month entry control Year label Year entry control$")
-  def the_Date_of_sale_section_will_contain_the_Month_label_Month_entry_control_Year_label_Year_entry_control() {
+  def the_Date_of_sale_section_will_contain_the_Month_label_Month_entry_control_Year_label_Year_entry_control(): Unit = {
+    webDriver.getPageSource().contains("Day") shouldBe true
+    webDriver.getPageSource().contains("Month") shouldBe true
+    webDriver.getPageSource().contains("Year") shouldBe true
   }
 
   @When("^the user selects the data entry control labelled Day$")
@@ -57,7 +60,8 @@ class CompleteAndConfirmTest(webBrowserDriver: WebBrowserDriver) extends ScalaDs
   }
 
   @Then("^the user can enter the (\\d+) or (\\d+) digit day of the month$")
-  def the_user_can_enter_the_or_digit_day_of_the_month(digitOne:Int,digitTwo:Int) {
+  def the_user_can_enter_the_or_digit_day_of_the_month(digitOne:Int,digitTwo:Int): Unit = {
+    CompleteAndConfirmPage.dayDateOfSaleTextBox enter "12"
   }
 
   @Then("^the field will only accept the values (\\d+)-(\\d+)$")
@@ -65,7 +69,8 @@ class CompleteAndConfirmTest(webBrowserDriver: WebBrowserDriver) extends ScalaDs
   }
 
   @When("^the user selects the data entry control labelled Month$")
-  def the_user_selects_the_data_entry_control_labelled_Month() {
+  def the_user_selects_the_data_entry_control_labelled_Month(): Unit = {
+    CompleteAndConfirmPage.monthDateOfSaleTextBox enter "12"
   }
 
   @Then("^the user can enter the (\\d+) or (\\d+) digit month of the year$")
@@ -77,11 +82,13 @@ class CompleteAndConfirmTest(webBrowserDriver: WebBrowserDriver) extends ScalaDs
   }
 
   @Then("^the user can enter the (\\d+) digit year$")
-  def the_user_can_enter_the_digit_year(four: Int) {
+  def the_user_can_enter_the_digit_year(four: Int): Unit = {
+    CompleteAndConfirmPage.yearDateOfSaleTextBox enter "2016"
   }
 
   @When("^the Date of sale is in the future$")
-  def the_Date_of_sale_is_in_the_future() {
+  def the_Date_of_sale_is_in_the_future(): Unit = {
+    CompleteAndConfirmPage.yearDateOfSaleTextBox
   }
 
   @When("^the user is has selected the submit control$")

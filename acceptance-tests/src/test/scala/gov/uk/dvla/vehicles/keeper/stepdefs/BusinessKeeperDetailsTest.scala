@@ -1,5 +1,7 @@
 package gov.uk.dvla.vehicles.keeper.stepdefs
 
+import java.util.concurrent.TimeUnit
+
 import cucumber.api.java.en.{Then, When, Given}
 import cucumber.api.scala.{EN, ScalaDsl}
 import org.openqa.selenium.WebDriver
