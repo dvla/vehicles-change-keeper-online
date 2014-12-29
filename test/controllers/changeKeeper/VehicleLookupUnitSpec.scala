@@ -110,7 +110,7 @@ final class VehicleLookupUnitSpec extends UnitSpec {
       val result = vehicleLookupResponseGenerator().submit(request)
       val count = "Select whether the vehicle is being sold to a private individual or business".r.findAllIn(contentAsString(result)).length
 
-      count should equal(3)
+      count should equal(2)
     }
 
     "redirect to MicroserviceError when microservice throws" ignore new WithApplication {

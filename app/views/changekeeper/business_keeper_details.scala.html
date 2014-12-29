@@ -1,11 +1,9 @@
 @(viewModel: models.BusinessKeeperDetailsViewModel
 )(implicit lang: Lang,
-token: uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction.CsrfPreventionToken,
-config: utils.helpers.Config
+  token: uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction.CsrfPreventionToken,
+  config: utils.helpers.Config
 )
 
-@import controllers.routes.BeforeYouStart
-@import controllers.routes.VehicleLookup
 @import views.changekeeper.BusinessKeeperDetails.{BackId, NextId}
 @import uk.gov.dvla.vehicles.presentation.common
 @import common.mappings.Email.EmailMaxLength
@@ -13,15 +11,15 @@ config: utils.helpers.Config
 @import common.views.helpers.BaseTemplate.fieldConstructor
 @import common.views.html.widgets.base.valtechInputText
 @import common.mappings.Postcode
+@import common.mappings.BusinessKeeperName
 @import constraints.FleetNumber
 @import views.html.helper.form
 @import models.BusinessKeeperDetailsFormModel.Form.{FleetNumberId, BusinessNameId, EmailId, PostcodeId}
-@import mappings.BusinessKeeperName
 
 @main(
-progress = Some(Messages("change_keeper_progress_3")),
-title = Messages("change_keeper_businesskeeperdetails.title"),
-currentForm = Some(viewModel.form)
+  progress = Some(Messages("change_keeper_progress_3")),
+  title = Messages("change_keeper_businesskeeperdetails.title"),
+  currentForm = Some(viewModel.form)
 ) {
 <div class="two-col clearfix">
     <div class="first-col">
@@ -51,40 +49,40 @@ currentForm = Some(viewModel.form)
             <p>@Messages("change_keeper_businesskeeperdetails.p4")</p>
 
             @valtechInputText(viewModel.form(FleetNumberId),
-            hintText = Some(Messages("change_keeper_businesskeeperdetails.businessname.hint")), args =
-            Map('_label -> Messages("change_keeper_businesskeeperdetails.fleetnumber"),
-            'maxLength -> FleetNumber.MaxLength,
-            'typeFleetNumber -> true,
-            '_showConstraints -> false,
-            'autofocus -> true
-            ) ++
-            (if(config.isHtml5ValidationEnabled) Map('pattern -> FleetNumber.Pattern) else Nil)
+                hintText = Some(Messages("change_keeper_businesskeeperdetails.businessname.hint")), args =
+                Map('_label -> Messages("change_keeper_businesskeeperdetails.fleetnumber"),
+                    'maxLength -> FleetNumber.MaxLength,
+                    'typeFleetNumber -> true,
+                    '_showConstraints -> false,
+                    'autofocus -> true
+                ) ++
+                (if(config.isHtml5ValidationEnabled) Map('pattern -> FleetNumber.Pattern) else Nil)
             )
 
             <div class="uppercase-input">
                 @valtechInputText(viewModel.form(BusinessNameId), args =
-                Map('_label -> Messages("change_keeper_businesskeeperdetails.businessname"),
-                'maxLength -> BusinessKeeperName.MaxLength,
-                '_showConstraints -> false
-                )
+                    Map('_label -> Messages("change_keeper_businesskeeperdetails.businessname"),
+                        'maxLength -> BusinessKeeperName.MaxLength,
+                        '_showConstraints -> false
+                    )
                 )
             </div>
 
             @valtechInputText(viewModel.form(EmailId),
-            hintText = Some(Messages("change_keeper_businesskeeperdetails.email.hint")),
-            args = Map('_label -> Messages("change_keeper_businesskeeperdetails.email"),
-            '_showConstraints -> false,
-            'maxLength -> EmailMaxLength
-            )
+                hintText = Some(Messages("change_keeper_businesskeeperdetails.email.hint")),
+                args = Map('_label -> Messages("change_keeper_businesskeeperdetails.email"),
+                    '_showConstraints -> false,
+                    'maxLength -> EmailMaxLength
+                )
             )
 
             <div class="uppercase-input">
                 @valtechInputText(viewModel.form(PostcodeId),
-                hintText = Some(Messages("change_keeper_businesskeeperdetails.postcode.hint")),
-                args = Map('_label -> Messages("change_keeper_businesskeeperdetails.postcodelabel"),
-                '_showConstraints -> false,
-                'maxLength -> Postcode.MaxLength
-                )
+                    hintText = Some(Messages("change_keeper_businesskeeperdetails.postcode.hint")),
+                    args = Map('_label -> Messages("change_keeper_businesskeeperdetails.postcodelabel"),
+                        '_showConstraints -> false,
+                        'maxLength -> Postcode.MaxLength
+                    )
                 )
             </div>
 

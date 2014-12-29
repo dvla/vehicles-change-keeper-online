@@ -1,0 +1,40 @@
+======== 1.0 ========
+Time of release binaries creation:
+Thu Dec 18 10:57:52 UTC 2014
+
+User stories:
+US2001 Trigger sending email confirmation.
+US1829 Google Analytics Anonymise IP address - Keeper to Keeper
+US1735 Dev Ops Nginx configuration & web application tasks.
+US1679 Manual Address Capture
+US1678 Address not found after postcode lookup (Private & Business)
+US1664 Select new keeper address capture
+US1725 Move the common test code to vehicles-presentation-common-test
+US1387 Provide a way to query the version of each deployed service
+US1663 Brute Force for Keeper to Keeper
+US1626 Capture & Validate Private Title & Name Details
+US1734 Dev Ops - Zabbix monitoring updates
+US1682 Capture
+US1655 Dynamic field length validation depending on Private Title selection.
+US1656 Capture & Validate - Private Date of Birth
+US1660 Capture & Validate Postcode and Private Keeper Navigation
+US1662 Populate 'Before you start' Page
+US1695 Populate 'Failure' Summary Page (Including Navigation off page)
+US1838 Amend 'Brute Force' Text to allow for Delivered Solution
+US1840 Remove Service Title from Black Gov UK Bar
+US1724 Server unavailable unscheduled downtime/service
+US1749 Strip Out Leading Spaces in all Fields of Manual Address Input on Submission
+US1845 Allow Spaces in 'Other' Title Field
+US1720 User help feature
+US1585 Security measures
+US1624 Create and populate 'Vehicle look up' Page
+US1627 Navigation from Vehicle Look up Page Including Call to Micro-Service (Happy Path)
+US1577 Project start up tasks
+US1683 Populate Generic Complete and Confirm Page (Not including Vehicle or Keeper Playback or Page wording)
+US1685 Populate Remainder of Confirmation page with Vehicle / Keeper Playback and Additional Wording
+US1684 Navigation from Complete and Confirm (Including Call to VSS)
+US1694 Populate 'Successful' Summary Page
+US1722 User Feedback link
+US1700 Disable back browser button after submission
+US1699 Disable submission buttons once pressed
+US1723 Out of hours page
