@@ -1,9 +1,7 @@
 package utils.helpers
 
-import email.SEND.EmailConfiguration
-import email.SEND.From
-
 import uk.gov.dvla.vehicles.presentation.common.ConfigProperties.{getProperty, getStringListProperty}
+import uk.gov.dvla.vehicles.presentation.common.services.SEND.{From, EmailConfiguration}
 
 class Config {
 
@@ -40,6 +38,7 @@ class Config {
     getProperty("smtp.user", notFound),
     getProperty("smtp.password", notFound),
     From(getProperty("email.senderAddress", notFound), "DO-NOT-REPLY"),
+    From(getProperty("email.feedbackAddress", notFound), "Feedback"),
     getStringListProperty("email.whitelist")
   )
 

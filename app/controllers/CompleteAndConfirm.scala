@@ -1,7 +1,7 @@
 package controllers
 
 import com.google.inject.Inject
-import email.{EmailMessageBuilder, SEND}
+import email.EmailMessageBuilder
 import models.CompleteAndConfirmFormModel._
 import models._
 import models.CompleteAndConfirmFormModel.Form.{MileageId, ConsentId}
@@ -19,7 +19,7 @@ import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.ClientSideSessionFactory
 import common.clientsidesession.CookieImplicits.{RichCookies, RichForm, RichResult}
 import uk.gov.dvla.vehicles.presentation.common.model.VehicleAndKeeperDetailsModel
-import common.services.DateService
+import uk.gov.dvla.vehicles.presentation.common.services.{SEND, DateService}
 import common.views.helpers.FormExtensions.formBinding
 import utils.helpers.Config
 import uk.gov.dvla.vehicles.presentation.common.mappings.TitleType
