@@ -1,13 +1,13 @@
 package models
 
-import mappings.FleetNumber.fleetNumberMapping
 import play.api.data.Forms.{mapping, optional}
 import play.api.libs.json.Json
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.CacheKey
-import common.mappings.Email.email
-import common.mappings.Postcode.postcode
 import common.mappings.BusinessKeeperName.businessKeeperNameMapping
+import common.mappings.Email.email
+import common.mappings.FleetNumber.fleetNumberMapping
+import common.mappings.Postcode.postcode
 
 final case class BusinessKeeperDetailsFormModel(fleetNumber: Option[String],
                                                 businessName: String,
