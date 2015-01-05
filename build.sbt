@@ -9,6 +9,7 @@ import uk.gov.dvla.vehicles.sandbox.Runner._
 import uk.gov.dvla.vehicles.sandbox.Sandbox
 import uk.gov.dvla.vehicles.sandbox.SandboxSettings
 import uk.gov.dvla.vehicles.sandbox.Tasks
+import io.gatling.sbt.GatlingPlugin
 
 //import Sandbox.accept
 import net.litola.SassPlugin
@@ -38,6 +39,10 @@ lazy val acceptanceTestsProject = Project("acceptance-tests", file("acceptance-t
   .dependsOn(root % "test->test")
   .disablePlugins(PlayScala, SassPlugin, SbtWeb)
   .settings(net.virtualvoid.sbt.graph.Plugin.graphSettings:_*)
+
+lazy val gatlingTestsProject = Project("gatling-tests", file("gatling-tests"))
+  .disablePlugins(PlayScala, SassPlugin, SbtWeb)
+      .enablePlugins(GatlingPlugin)
 
 libraryDependencies ++= Seq(
   cache,
@@ -129,6 +134,8 @@ SandboxSettings.runAllMicroservices := {
 SandboxSettings.gatlingSimulation := ""
 
 SandboxSettings.acceptanceTests := (test in Test in acceptanceTestsProject).value
+
+SandboxSettings.bruteForceEnabled := true
 
 Sandbox.sandboxTask
 

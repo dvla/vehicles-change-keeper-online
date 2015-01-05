@@ -2,6 +2,7 @@ package email
 
 import models.NewKeeperDetailsViewModel
 import uk.gov.dvla.vehicles.presentation.common.model.VehicleAndKeeperDetailsModel
+import uk.gov.dvla.vehicles.presentation.common.services.SEND
 
 /**
  * The email message builder class will create the contents of the message. override the buildHtml and buildText

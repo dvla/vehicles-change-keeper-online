@@ -1,6 +1,6 @@
 @(progress: Option[String] = None,
 title: String,
-currentForm: Option[Form[_]] = None)(content: Html)(implicit lang: Lang,
+currentForm: Option[Form[_]] = None, showBanner: Boolean = true)(content: Html)(implicit lang: Lang,
 config: utils.helpers.Config)
 
 @import views.html.common.{progressBar, protoType}
@@ -10,7 +10,9 @@ config: utils.helpers.Config)
 
 @govMainDefault(title) {
 <div class="app vehicles-change-keeper-online">
-    @protoType()
+    @if(showBanner) {
+        @protoType()
+    }
 
     <div class="section-content">
         @progressBar(progress)
