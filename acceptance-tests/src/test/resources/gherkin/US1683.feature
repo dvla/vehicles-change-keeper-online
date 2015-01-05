@@ -8,7 +8,6 @@
       Then    there is a control for entry of the vehicle mileage using the format N(6)
 
     Scenario: Date of Sale - lable
-      Given that the user is on the complete and confirm page
       When  there is a labelled Date of Sale and hint text
       And   the Date of sale section will contain the Month label Month entry control Year label Year entry control
 
@@ -48,7 +47,7 @@
       Then  an error message displayed "You must have the consent of the new keeper to notify DVLA of the purchase of this vehicle"
       And  the user is not progressed to the next page
 
-    Scenario:complete and confirm-consent checkbox unchecked
+    Scenario:complete and confirm-consent checkbox checked
       When the consent field is checked
       And  the user is has selected the submit control
       Then the user is progressed to the next stage of the service

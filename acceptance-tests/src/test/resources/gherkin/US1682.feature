@@ -39,7 +39,7 @@
     Scenario: - Business name - invalid characters
       Given the business name contains invalid characters
       When  the user select the submit control
-      Then  the user will receive an error message "Business name - Must be between 2 and 30 characters and only contain valid characters (a-z, A-Z, 0-9, &, -,(), /, ‘ and , or .)"
+      Then  the user will receive an error message "Business name - Must be between 2 and 30 characters and only contain valid characters (a-z, A-Z, 0-9, &, -,(), /, ‘ and , or .). The following characters cannot be used at the start of business name (&,-,(), /, ‘ and , or .)"
 
     Scenario: - trimming
       Given the user has entered values into the business name

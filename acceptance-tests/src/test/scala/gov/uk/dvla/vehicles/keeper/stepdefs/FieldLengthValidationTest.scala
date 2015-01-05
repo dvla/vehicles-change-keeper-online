@@ -1,7 +1,5 @@
 package gov.uk.dvla.vehicles.keeper.stepdefs
 
-import java.util.concurrent.TimeUnit
-
 import cucumber.api.scala.{EN, ScalaDsl}
 import uk.gov.dvla.vehicles.presentation.common.helpers
 import helpers.webbrowser.{WebBrowserDSL, WebBrowserDriver}

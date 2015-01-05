@@ -1,7 +1,5 @@
 package gov.uk.dvla.vehicles.keeper.stepdefs
 
-import java.util.concurrent.TimeUnit
-
 import cucumber.api.java.en.{Then, When, Given}
 import cucumber.api.scala.{EN, ScalaDsl}
 import uk.gov.dvla.vehicles.presentation.common.helpers
@@ -134,7 +132,8 @@ class EnterAddressManuallyPageTest(webBrowserDriver: WebBrowserDriver) extends S
   }
 
   @Then("^the user is taken to the previous Address not found page$")
-  def the_user_is_taken_to_the_previous_Address_not_found_page() {
+  def the_user_is_taken_to_the_previous_Address_not_found_page(): Unit = {
+    page.title shouldEqual NewKeeperChooseYourAddressPage.title
   }
 
 }
