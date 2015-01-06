@@ -13,16 +13,18 @@ import common.clientsidesession.CookieImplicits.RichCookies
 import common.clientsidesession.CookieImplicits.{RichForm, RichResult}
 import common.model.VehicleAndKeeperDetailsModel
 import common.views.helpers.FormExtensions.formBinding
+import uk.gov.dvla.vehicles.presentation.common.services.DateService
 import utils.helpers.Config
 
 class PrivateKeeperDetails @Inject()()(implicit clientSideSessionFactory: ClientSideSessionFactory,
+                                       dateService: DateService,
                                        config: Config) extends Controller {
 
   private final val NoValidCookiePresent = "Appropriate cookie not found to present PrivateKeeperDetails, redirecting..."
   private final val NoValidCookieSubmit = "Appropriate cookie not found to submit PrivateKeeperDetails, redirecting..."
 
   private[controllers] val form = Form(
-    PrivateKeeperDetailsFormModel.Form.Mapping
+    PrivateKeeperDetailsFormModel.Form.detailMapping
   )
 
   def present = Action { implicit request =>

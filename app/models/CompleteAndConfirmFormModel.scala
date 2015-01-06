@@ -7,6 +7,7 @@ import play.api.libs.json.Json
 import uk.gov.dvla.vehicles.presentation.common.clientsidesession.CacheKey
 import uk.gov.dvla.vehicles.presentation.common.mappings.Date.{dateMapping, notInTheFuture}
 import uk.gov.dvla.vehicles.presentation.common.mappings.Mileage.mileage
+import uk.gov.dvla.vehicles.presentation.common.services.DateService
 
 case class CompleteAndConfirmFormModel(mileage: Option[Int],
                                        dateOfSale: LocalDate,
@@ -25,7 +26,7 @@ object CompleteAndConfirmFormModel {
     final val TodaysDateId = "todays_date"
     final val ConsentId = "consent"
 
-    final def Mapping = mapping(
+    final def detailMapping(implicit dateService: DateService) = mapping(
       MileageId -> mileage,
       DateOfSaleId -> dateMapping.verifying(notInTheFuture()),
       ConsentId -> consent

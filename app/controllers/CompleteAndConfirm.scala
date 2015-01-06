@@ -36,7 +36,7 @@ class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSi
   private val EMAIL_SUBJECT = "Test email for the Keeper to Keeper service"
 
   private[controllers] val form = Form(
-    CompleteAndConfirmFormModel.Form.Mapping
+    CompleteAndConfirmFormModel.Form.detailMapping
   )
 
   private final val NoCookiesFoundMessage = "Failed to find new keeper details and or vehicle details in cache" +
