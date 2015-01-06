@@ -23,6 +23,7 @@ import play.api.test.{FakeRequest, WithApplication}
 import uk.gov.dvla.vehicles.presentation.common.clientsidesession.ClientSideSessionFactory
 import uk.gov.dvla.vehicles.presentation.common.mappings.{TitleType, TitlePickerString}
 import TitlePickerString.standardOptions
+import uk.gov.dvla.vehicles.presentation.common.services.DateService
 import utils.helpers.Config
 import helpers.CookieFactoryForUnitSpecs
 import controllers.changeKeeper.Common.PrototypeHtml
@@ -45,6 +46,7 @@ class PrivateKeeperDetailsUnitSpec extends UnitSpec {
       val request = FakeRequest()
       implicit val clientSideSessionFactory = injector.getInstance(classOf[ClientSideSessionFactory])
       implicit val config = mock[Config]
+      implicit val dateService = injector.getInstance(classOf[DateService])
       when(config.isPrototypeBannerVisible).thenReturn(false)
 
       val privateKeeperDetailsPrototypeNotVisible = new PrivateKeeperDetails()

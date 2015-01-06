@@ -15,6 +15,7 @@ import common.mappings.DriverNumber.driverNumber
 import common.mappings.Postcode.postcode
 import common.views.helpers.FormExtensions.nonEmptyTextWithTransform
 import uk.gov.dvla.vehicles.presentation.common.mappings.{TitleType, TitlePickerString}
+import uk.gov.dvla.vehicles.presentation.common.services.DateService
 
 case class PrivateKeeperDetailsFormModel(title: TitleType,
                                          firstName: String, 
@@ -59,7 +60,7 @@ object PrivateKeeperDetailsFormModel {
       name = "constraint.validLastName",
       error = "error.validLastName")
 
-    final val Mapping = mapping(
+    final def detailMapping(implicit dateService: DateService) = mapping(
       TitleId -> TitlePickerString.mapping,
       FirstNameId -> firstNameMapping,
       LastNameId -> lastNameMapping,
