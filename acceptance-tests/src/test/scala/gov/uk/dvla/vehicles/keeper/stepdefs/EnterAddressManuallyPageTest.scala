@@ -133,7 +133,7 @@ class EnterAddressManuallyPageTest(webBrowserDriver: WebBrowserDriver) extends S
 
   @Then("^the user is taken to the previous Address not found page$")
   def the_user_is_taken_to_the_previous_Address_not_found_page(): Unit = {
-    page.title shouldEqual NewKeeperChooseYourAddressPage.title
+    page.title shouldEqual "No address found"
   }
 
 }
