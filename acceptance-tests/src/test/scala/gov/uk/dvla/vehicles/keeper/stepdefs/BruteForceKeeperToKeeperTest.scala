@@ -6,7 +6,7 @@ import org.openqa.selenium.WebDriver
 import org.scalatest.Matchers
 import pages.changekeeper.{VrmLockedPage, BeforeYouStartPage, VehicleLookupPage, VehicleLookupFailurePage}
 import uk.gov.dvla.vehicles.presentation.common.helpers
-import helpers.webbrowser.{WebBrowserDSL, WebBrowserDriver,WebDriverFactory}
+import helpers.webbrowser.{WebBrowserDSL, WebBrowserDriver}
 
 class BruteForceKeeperToKeeperTest(webBrowserDriver: WebBrowserDriver) extends ScalaDsl with EN with WebBrowserDSL with Matchers {
 
@@ -63,7 +63,8 @@ class BruteForceKeeperToKeeperTest(webBrowserDriver: WebBrowserDriver) extends S
 
   @Then("^the secondary action control is to \"(.*?)\" the service which will take the user to the GDS driving page$")
   def the_secondary_action_control_is_to_the_service_which_will_take_the_user_to_the_GDS_driving_page(D:String) {
-    click on VehicleLookupPage.next
+    bruteForceUnsuccesfullPage()
+    //click on VehicleLookupPage.next
     click on VehicleLookupFailurePage.beforeYouStart
     page.title shouldEqual BeforeYouStartPage.title
   }

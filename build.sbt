@@ -1,4 +1,5 @@
 import de.johoop.jacoco4sbt.JacocoPlugin._
+import io.gatling.sbt.GatlingPlugin
 import org.scalastyle.sbt.ScalastylePlugin
 import uk.gov.dvla.vehicles.sandbox.ProjectDefinitions.gatlingTests
 import uk.gov.dvla.vehicles.sandbox.ProjectDefinitions.legacyStubs
@@ -10,6 +11,7 @@ import uk.gov.dvla.vehicles.sandbox.Sandbox
 import uk.gov.dvla.vehicles.sandbox.SandboxSettings
 import uk.gov.dvla.vehicles.sandbox.Tasks
 import io.gatling.sbt.GatlingPlugin
+import GatlingPlugin.Gatling
 
 //import Sandbox.accept
 import net.litola.SassPlugin
@@ -131,7 +133,7 @@ SandboxSettings.runAllMicroservices := {
   Tasks.runVehiclesAcquireFulfil.value
 }
 
-SandboxSettings.gatlingSimulation := ""
+SandboxSettings.loadTests := (test in Gatling in gatlingTestsProject).value
 
 SandboxSettings.acceptanceTests := (test in Test in acceptanceTestsProject).value
 

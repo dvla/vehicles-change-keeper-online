@@ -4,7 +4,7 @@ import cucumber.api.scala.{EN, ScalaDsl}
 import cucumber.api.java.en.{Then, When, Given}
 import org.openqa.selenium.WebDriver
 import org.scalatest.Matchers
-import pages.changekeeper.{CompleteAndConfirmPage, NewKeeperChooseYourAddressPage, BusinessKeeperDetailsPage, VehicleLookupPage}
+import pages.changekeeper._
 import uk.gov.dvla.vehicles.presentation.common.helpers
 import helpers.webbrowser.{WebBrowserDSL, WebBrowserDriver}
 
@@ -45,18 +45,19 @@ class CompleteAndConfirmTest(webBrowserDriver: WebBrowserDriver) extends ScalaDs
 
   @When("^there is a labelled Date of Sale and hint text$")
   def there_is_a_labelled_Date_of_Sale_and_hint_text(): Unit = {
-    webDriver.getPageSource().contains("Date of sale") shouldBe true
+    webDriver.getPageSource.contains("Date of sale") shouldBe true
   }
 
   @When("^the Date of sale section will contain the Month label Month entry control Year label Year entry control$")
   def the_Date_of_sale_section_will_contain_the_Month_label_Month_entry_control_Year_label_Year_entry_control(): Unit = {
-    webDriver.getPageSource().contains("Day") shouldBe true
-    webDriver.getPageSource().contains("Month") shouldBe true
-    webDriver.getPageSource().contains("Year") shouldBe true
+    webDriver.getPageSource.contains("Day") shouldBe true
+    webDriver.getPageSource.contains("Month") shouldBe true
+    webDriver.getPageSource.contains("Year") shouldBe true
   }
 
   @When("^the user selects the data entry control labelled Day$")
-  def the_user_selects_the_data_entry_control_labelled_Day() {
+  def the_user_selects_the_data_entry_control_labelled_Day(): Unit = {
+    click on CompleteAndConfirmPage.dayDateOfSaleTextBox
   }
 
   @Then("^the user can enter the (\\d+) or (\\d+) digit day of the month$")
@@ -78,25 +79,31 @@ class CompleteAndConfirmTest(webBrowserDriver: WebBrowserDriver) extends ScalaDs
   }
 
   @When("^the user selects the data entry control labelled Year$")
-  def the_user_selects_the_data_entry_control_labelled_Year() {
+  def the_user_selects_the_data_entry_control_labelled_Year(): Unit = {
+    click on CompleteAndConfirmPage.yearDateOfSaleTextBox
   }
 
   @Then("^the user can enter the (\\d+) digit year$")
   def the_user_can_enter_the_digit_year(four: Int): Unit = {
-    CompleteAndConfirmPage.yearDateOfSaleTextBox enter "2016"
+    CompleteAndConfirmPage.yearDateOfSaleTextBox enter "2010"
   }
 
   @When("^the Date of sale is in the future$")
   def the_Date_of_sale_is_in_the_future(): Unit = {
-    CompleteAndConfirmPage.yearDateOfSaleTextBox
+    CompleteAndConfirmPage.dayDateOfSaleTextBox enter "12"
+    CompleteAndConfirmPage.monthDateOfSaleTextBox enter "12"
+    CompleteAndConfirmPage.yearDateOfSaleTextBox enter "2025"
   }
 
   @When("^the user is has selected the submit control$")
-  def the_user_is_has_selected_the_submit_control() {
+  def the_user_is_has_selected_the_submit_control(): Unit = {
+    click on CompleteAndConfirmPage.next
   }
 
   @When("^the Date of sale is incomplete$")
-  def the_Date_of_sale_is_incomplete() {
+  def the_Date_of_sale_is_incomplete(): Unit = {
+    CompleteAndConfirmPage.monthDateOfSaleTextBox enter "12"
+    CompleteAndConfirmPage.yearDateOfSaleTextBox enter "2025"
   }
 
   @When("^the Date of sale is not a valid gregorian date$")
@@ -108,16 +115,21 @@ class CompleteAndConfirmTest(webBrowserDriver: WebBrowserDriver) extends ScalaDs
   }
 
   @Then("^the user is not progressed to the next page$")
-  def the_user_is_not_progressed_to_the_next_page() {
+  def the_user_is_not_progressed_to_the_next_page(): Unit = {
+    page.title shouldEqual CompleteAndConfirmPage.title
   }
 
   @When("^the consent field is checked$")
   def the_consent_field_is_checked() {
-
+    CompleteAndConfirmPage.dayDateOfSaleTextBox enter "12"
+    CompleteAndConfirmPage.monthDateOfSaleTextBox enter "12"
+    CompleteAndConfirmPage.yearDateOfSaleTextBox enter "2010"
+    click on CompleteAndConfirmPage.consent
   }
+
   @Then("^the user is progressed to the next stage of the service$")
   def the_user_is_progressed_to_the_next_stage_of_the_service() {
-
+    page.title shouldEqual ChangeKeeperSuccessPage.title
   }
   @Then("^an error message displayed \"(.*?)\"$")
   def an_error_message_displayed(err:String)  {

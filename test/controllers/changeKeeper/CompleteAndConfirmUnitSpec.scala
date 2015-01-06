@@ -40,6 +40,7 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
       val request = FakeRequest()
       implicit val clientSideSessionFactory = injector.getInstance(classOf[ClientSideSessionFactory])
       implicit val config: Config = mock[Config]
+      implicit val dateService = injector.getInstance(classOf[DateService])
       when(config.isPrototypeBannerVisible).thenReturn(false)
 
       val privateKeeperDetailsPrototypeNotVisible = new PrivateKeeperDetails()
