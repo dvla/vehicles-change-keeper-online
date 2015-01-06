@@ -135,7 +135,7 @@ SandboxSettings.gatlingSimulation := ""
 
 SandboxSettings.acceptanceTests := (test in Test in acceptanceTestsProject).value
 
-SandboxSettings.bruteForceEnabled := true
+SandboxSettings.bruteForceEnabled := false
 
 Sandbox.sandboxTask
 
