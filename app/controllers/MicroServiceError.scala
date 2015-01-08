@@ -18,7 +18,7 @@ class MicroServiceError @Inject()(implicit clientSideSessionFactory: ClientSideS
 //        Ok(views.html.changekeeper.micro_service_error()).
 //          Save the previous page URL (from the referer header) into a cookie.
 //          withCookie(MicroServiceError.MicroServiceErrorRefererCacheKey, referer)
-    Ok(views.html.changekeeper.micro_service_error())
+    ServiceUnavailable(views.html.changekeeper.micro_service_error())
   }
 
   def back = Action { implicit request =>
