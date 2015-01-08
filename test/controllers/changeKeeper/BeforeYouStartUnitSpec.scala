@@ -39,7 +39,7 @@ class BeforeYouStartUnitSpec extends UnitSpec {
       val request = FakeRequest()
       implicit val clientSideSessionFactory = injector.getInstance(classOf[ClientSideSessionFactory])
       implicit val config: Config = mock[Config]
-      when(config.googleAnalyticsTrackingId).thenReturn("TEST-GA-ID") // Stub this config value.
+      when(config.googleAnalyticsTrackingId).thenReturn(Some("TEST-GA-ID")) // Stub this config value.
       val beforeYouStartPrototypeNotVisible = new BeforeYouStart()
 
       val result = beforeYouStartPrototypeNotVisible.present(request)
@@ -51,7 +51,7 @@ class BeforeYouStartUnitSpec extends UnitSpec {
       val request = FakeRequest()
       implicit val clientSideSessionFactory = injector.getInstance(classOf[ClientSideSessionFactory])
       implicit val config: Config = mock[Config]
-      when(config.googleAnalyticsTrackingId).thenReturn("NOT FOUND") // Stub this config value.
+      when(config.googleAnalyticsTrackingId).thenReturn(Some("NOT FOUND")) // Stub this config value.
       val beforeYouStartPrototypeNotVisible = new BeforeYouStart()
 
       val result = beforeYouStartPrototypeNotVisible.present(request)

@@ -64,7 +64,7 @@ class DevModule extends ScalaModule {
   }
 
   protected def bindSessionFactory(): Unit = {
-    if (getProperty("encryptCookies", default = true)) {
+    if (getProperty[Boolean]("encryptCookies")) {
       bind[CookieEncryption].toInstance(new AesEncryption with CookieEncryption)
       bind[CookieNameHashGenerator].toInstance(new Sha1HashGenerator with CookieNameHashGenerator)
       bind[ClientSideSessionFactory].to[EncryptedClientSideSessionFactory].asEagerSingleton()
