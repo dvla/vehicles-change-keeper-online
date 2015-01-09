@@ -11,13 +11,13 @@ import uk.gov.dvla.vehicles.presentation.common.clientsidesession.ClientSideSess
 import MicroServiceError.MicroServiceErrorRefererCacheKey
 import org.mockito.Mockito.when
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{LOCATION, OK, REFERER, contentAsString, defaultAwaitTimeout, status}
+import play.api.test.Helpers.{LOCATION, SERVICE_UNAVAILABLE, REFERER, contentAsString, defaultAwaitTimeout, status}
 import utils.helpers.Config
 
 final class MicroServiceErrorUnitSpec extends UnitSpec  {
   "present" should {
     "display the page" in new WithApplication {
-      status(present) should equal(OK)
+      status(present) should equal(SERVICE_UNAVAILABLE)
     }
 
     "not display progress bar" in new WithApplication {
