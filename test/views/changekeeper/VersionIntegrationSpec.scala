@@ -2,7 +2,7 @@ package views.changekeeper
 
 import composition.TestHarness
 import helpers.UiSpec
-import pages.ApplicationContext.applicationContext
+//import pages.ApplicationContext.applicationContext
 import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.WebDriverFactory
 import scala.io.Source.fromInputStream
 
