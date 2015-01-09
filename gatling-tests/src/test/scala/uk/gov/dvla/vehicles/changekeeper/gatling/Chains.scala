@@ -9,6 +9,7 @@ class Chains(data: RecordSeqFeederBuilder[String]) {
 
   private final val BeforeYouStartPageTitle = "Private sale of a vehicle"
   private final val VehicleLookupPageTitle = "Details of the vehicle being sold"
+  private final val VehicleLookupFailurePageTitle = "Look-up was unsuccessful"
   private final val BusinessKeeperDetailsPageTitle = "Enter the details of the business buying the vehicle"
   private final val PrivateKeeperDetailsPageTitle = "Enter the details of the person buying this vehicle"
   private final val NewKeeperChooseYourAddressPageTitle = "Select the address of the buyer"
@@ -78,8 +79,8 @@ class Chains(data: RecordSeqFeederBuilder[String]) {
         http(chainTitle)
           .get(url)
           .headers(headers_accept_html)
-          .check(regex( """<input type="hidden" name="csrf_prevention_token" value="(.*)"/>""").saveAs("csrf_prevention_token"))
           // Assertions
+          .check(regex( """<input type="hidden" name="csrf_prevention_token" value="(.*)"/>""").saveAs("csrf_prevention_token"))
           .check(regex(VehicleLookupPageTitle).exists)
       )
     )
@@ -102,8 +103,8 @@ class Chains(data: RecordSeqFeederBuilder[String]) {
             .formParam("vehicleSoldTo", "${vehicleSoldTo}")
             .formParam("csrf_prevention_token", "${csrf_prevention_token}")
             .formParam("action", "")
-            .check(regex( """<input type="hidden" name="csrf_prevention_token" value="(.*)"/>""").saveAs("csrf_prevention_token"))
             // Assertions
+            .check(regex( """<input type="hidden" name="csrf_prevention_token" value="(.*)"/>""").saveAs("csrf_prevention_token"))
             .check(regex(expectedPageTitle).exists)
             .check(regex(VehicleDetailsPlaybackHeading).exists)
             .check(regex("${expected_registrationNumberFormatted}").exists)
@@ -125,8 +126,8 @@ class Chains(data: RecordSeqFeederBuilder[String]) {
           .formParam("businesskeeper_postcode", "${businessPostcode}")
           .formParam("csrf_prevention_token", "${csrf_prevention_token}")
           .formParam("action", "")
-          .check(regex( """<input type="hidden" name="csrf_prevention_token" value="(.*)"/>""").saveAs("csrf_prevention_token"))
           // Assertions
+          .check(regex( """<input type="hidden" name="csrf_prevention_token" value="(.*)"/>""").saveAs("csrf_prevention_token"))
           .check(regex(NewKeeperChooseYourAddressPageTitle).exists)
           .check(regex(VehicleDetailsPlaybackHeading).exists)
           .check(regex("${expected_registrationNumberFormatted}").exists)
@@ -150,8 +151,8 @@ class Chains(data: RecordSeqFeederBuilder[String]) {
           .formParam("privatekeeper_postcode", "${privateKeeperPostcode}")
           .formParam("csrf_prevention_token", "${csrf_prevention_token}")
           .formParam("action", "")
-          .check(regex( """<input type="hidden" name="csrf_prevention_token" value="(.*)"/>""").saveAs("csrf_prevention_token"))
           // Assertions
+          .check(regex( """<input type="hidden" name="csrf_prevention_token" value="(.*)"/>""").saveAs("csrf_prevention_token"))
           .check(regex(NewKeeperChooseYourAddressPageTitle).exists)
           .check(regex(VehicleDetailsPlaybackHeading).exists)
           .check(regex("${expected_registrationNumberFormatted}").exists)
@@ -172,8 +173,8 @@ class Chains(data: RecordSeqFeederBuilder[String]) {
           .formParam("change_keeper_newKeeperChooseYourAddress_addressSelect", "0") // UPRN disabled for Northern Ireland
           .formParam("csrf_prevention_token", "${csrf_prevention_token}")
           .formParam("action", "")
-          .check(regex( """<input type="hidden" name="csrf_prevention_token" value="(.*)"/>""").saveAs("csrf_prevention_token"))
           // Assertions
+          .check(regex( """<input type="hidden" name="csrf_prevention_token" value="(.*)"/>""").saveAs("csrf_prevention_token"))
           .check(regex(CompleteAndConfirmPageTitle).exists)
           .check(regex(BuyersDetailsPlaybackHeading).exists)
           .check(regex("${expected_buyerName}").exists)
@@ -202,13 +203,33 @@ class Chains(data: RecordSeqFeederBuilder[String]) {
           .formParam("consent", "${consent}")
           .formParam("csrf_prevention_token", "${csrf_prevention_token}")
           .formParam("action", "")
-          .check(regex( """<input type="hidden" name="csrf_prevention_token" value="(.*)"/>""").saveAs("csrf_prevention_token"))
           // Assertions
+          .check(regex( """<input type="hidden" name="csrf_prevention_token" value="(.*)"/>""").saveAs("csrf_prevention_token"))
           .check(regex(SummaryPageTitle).exists)
           .check(regex(TransactionDetailsPlaybackHeading).exists)
           .check(regex("${expected_transactionId}").exists)
           .check(regex("${expected_transactionDate}").exists)
       )
+    )
+  }
+
+  def vehicleLookupUnsuccessfulSubmit = {
+    val url = "/vehicle-lookup"
+    val chainTitle = s"POST $url"
+    exitBlockOnFail(
+      feed(data)
+        .exec(
+          http(chainTitle)
+            .post(url)
+            .headers(headers_x_www_form_urlencoded)
+            .formParam("vehicleRegistrationNumber", "${vehicleRegistrationNumber}")
+            .formParam("documentReferenceNumber", "${documentReferenceNumber}")
+            .formParam("vehicleSoldTo", "${vehicleSoldTo}")
+            .formParam("csrf_prevention_token", "${csrf_prevention_token}")
+            .formParam("action", "")
+            // Assertions
+            .check(regex(VehicleLookupFailurePageTitle).exists)
+        )
     )
   }
 }

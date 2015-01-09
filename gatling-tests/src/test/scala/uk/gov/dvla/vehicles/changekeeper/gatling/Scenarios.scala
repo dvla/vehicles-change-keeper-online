@@ -45,4 +45,17 @@ object Scenarios {
         )
       )
   }
+
+  def vehicleLookupUnsuccessful = {
+    val data = csv("data/sad/VehicleLookupUnsuccessful.csv").circular
+    val chain = new Chains(data)
+    scenario("Vehicle lookup is unsuccessful")
+      .exitBlockOnFail(
+        exec(
+          chain.beforeYouStart,
+          chain.vehicleLookup,
+          chain.vehicleLookupUnsuccessfulSubmit
+        )
+      )
+  }
 }
