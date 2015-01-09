@@ -40,8 +40,8 @@ object Scenarios {
           chain.vehicleLookup,
           chain.vehicleLookupSubmitNewPrivateKeeper,
           chain.privateKeeperDetailsSubmit,
-          chain.newKeeperChooseYourAddressSubmit//,
-//          chain.completeAndConfirmSubmit
+          chain.newKeeperChooseYourAddressSubmit,
+          chain.completeAndConfirmSubmit
         )
       )
   }
