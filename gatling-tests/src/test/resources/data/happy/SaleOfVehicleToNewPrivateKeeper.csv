@@ -1,0 +1,2 @@
+vehicleRegistrationNumber,documentReferenceNumber,vehicleSoldTo,expected_registrationNumberFormatted,expected_make,expected_model,privateKeeperTitle,privateKeeperFirstName,privateKeeperLastName,privateKeeperPostcode,expected_buyerName,expected_buyerAddressLine1,expected_buyerAddressLine2,expected_buyerAddressPostcode,consent,dateDay,dateMonth,dateYear,expected_transactionId,expected_transactionDate
+A1,11111111111,Private,A 1,Ford,Focus,1,Joe,Bloggs,qq99qq,Mr Joe Bloggs,Not real street,Not real town,QQ9 9QQ,true,1,1,2015,A1-11111111111,01/01/2015

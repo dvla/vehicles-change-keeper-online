@@ -1,4 +1,5 @@
 import de.johoop.jacoco4sbt.JacocoPlugin._
+import io.gatling.sbt.GatlingPlugin
 import org.scalastyle.sbt.ScalastylePlugin
 import uk.gov.dvla.vehicles.sandbox.ProjectDefinitions.gatlingTests
 import uk.gov.dvla.vehicles.sandbox.ProjectDefinitions.legacyStubs
@@ -10,6 +11,7 @@ import uk.gov.dvla.vehicles.sandbox.Sandbox
 import uk.gov.dvla.vehicles.sandbox.SandboxSettings
 import uk.gov.dvla.vehicles.sandbox.Tasks
 import io.gatling.sbt.GatlingPlugin
+import GatlingPlugin.Gatling
 
 //import Sandbox.accept
 import net.litola.SassPlugin
@@ -47,8 +49,8 @@ lazy val gatlingTestsProject = Project("gatling-tests", file("gatling-tests"))
 libraryDependencies ++= Seq(
   cache,
   filters,
-  "dvla" %% "vehicles-presentation-common" % "2.10-SNAPSHOT" withSources() withJavadoc() exclude("junit", "junit-dep"),
-  "dvla" %% "vehicles-presentation-common" % "2.10-SNAPSHOT" classifier "tests" withSources() withJavadoc() exclude("junit", "junit-dep"),
+  "dvla" %% "vehicles-presentation-common" % "2.11-SNAPSHOT" withSources() withJavadoc() exclude("junit", "junit-dep"),
+  "dvla" %% "vehicles-presentation-common" % "2.11-SNAPSHOT" classifier "tests" withSources() withJavadoc() exclude("junit", "junit-dep"),
   "com.google.guava" % "guava" % "15.0" withSources() withJavadoc(), // See: http://stackoverflow.com/questions/16614794/illegalstateexception-impossible-to-get-artifacts-when-data-has-not-been-loaded
   "org.seleniumhq.selenium" % "selenium-java" % "2.43.0" % "test" withSources() withJavadoc(),
   "com.github.detro" % "phantomjsdriver" % "1.2.0" % "test" withSources() withJavadoc(),
@@ -102,11 +104,10 @@ ScalastylePlugin.Settings
 net.virtualvoid.sbt.graph.Plugin.graphSettings
 
 // ====================== Sandbox Settings ==========================
-lazy val osAddressLookupProject = osAddressLookup("0.8-SNAPSHOT").disablePlugins(PlayScala, SassPlugin, SbtWeb)
+lazy val osAddressLookupProject = osAddressLookup("0.9-SNAPSHOT").disablePlugins(PlayScala, SassPlugin, SbtWeb)
 lazy val vehicleAndKeeperLookupProject = vehicleAndKeeperLookup("0.5-SNAPSHOT").disablePlugins(PlayScala, SassPlugin, SbtWeb)
-lazy val vehiclesAcquireFulfilProject = vehiclesAcquireFulfil("0.4-SNAPSHOT").disablePlugins(PlayScala, SassPlugin, SbtWeb)
+lazy val vehiclesAcquireFulfilProject = vehiclesAcquireFulfil("0.5-SNAPSHOT").disablePlugins(PlayScala, SassPlugin, SbtWeb)
 lazy val legacyStubsProject = legacyStubs("1.0-SNAPSHOT").disablePlugins(PlayScala, SassPlugin, SbtWeb)
-lazy val gatlingProject = gatlingTests().disablePlugins(PlayScala, SassPlugin, SbtWeb)
 
 SandboxSettings.portOffset := 20000
 
@@ -122,8 +123,6 @@ SandboxSettings.vehiclesAcquireFulfilProject := vehiclesAcquireFulfilProject
 
 SandboxSettings.legacyStubsProject := legacyStubsProject
 
-SandboxSettings.gatlingTestsProject := gatlingProject
-
 SandboxSettings.runAllMicroservices := {
   Tasks.runLegacyStubs.value
   Tasks.runOsAddressLookup.value
@@ -131,7 +130,7 @@ SandboxSettings.runAllMicroservices := {
   Tasks.runVehiclesAcquireFulfil.value
 }
 
-SandboxSettings.gatlingSimulation := ""
+SandboxSettings.loadTests := (test in Gatling in gatlingTestsProject).value
 
 SandboxSettings.acceptanceTests := (test in Test in acceptanceTestsProject).value
 
@@ -143,4 +142,8 @@ Sandbox.sandboxAsyncTask
 
 Sandbox.gatlingTask
 
+Sandbox.cucumberTask
+
 Sandbox.acceptTask
+
+Sandbox.acceptRemoteTask

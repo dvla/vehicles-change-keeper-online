@@ -2,6 +2,7 @@ package controllers
 
 import com.google.inject.Inject
 import controllers.routes.BeforeYouStart
+import models.CacheKeyPrefix
 import play.api.mvc.{Action, Controller}
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.ClientSideSessionFactory
@@ -18,7 +19,7 @@ class MicroServiceError @Inject()(implicit clientSideSessionFactory: ClientSideS
 //        Ok(views.html.changekeeper.micro_service_error()).
 //          Save the previous page URL (from the referer header) into a cookie.
 //          withCookie(MicroServiceError.MicroServiceErrorRefererCacheKey, referer)
-    Ok(views.html.changekeeper.micro_service_error())
+    ServiceUnavailable(views.html.changekeeper.micro_service_error())
   }
 
   def back = Action { implicit request =>
@@ -28,5 +29,5 @@ class MicroServiceError @Inject()(implicit clientSideSessionFactory: ClientSideS
 }
 
 object MicroServiceError {
-  final val MicroServiceErrorRefererCacheKey = "msError"
+  final val MicroServiceErrorRefererCacheKey = s"${CacheKeyPrefix}msError"
 }
