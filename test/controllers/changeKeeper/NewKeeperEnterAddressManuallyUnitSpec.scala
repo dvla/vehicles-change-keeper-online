@@ -274,14 +274,12 @@ final class NewKeeperEnterAddressManuallyUnitSpec extends UnitSpec {
     injector.getInstance(classOf[NewKeeperEnterAddressManually])
   }
 
-  private val newKeeperDetailsCookieName = "newKeeperDetails"
-
   private def validateAddressCookieValues(result: Future[Result], buildingName: String, line2: String,
                                           line3: String, postTown: String, postCode: String = PostcodeValid) = {
 
     whenReady(result) { r =>
       val cookies = fetchCookiesFromHeaders(r)
-      cookies.find(_.name == newKeeperDetailsCookieName) match {
+      cookies.find(_.name == NewKeeperDetailsCacheKey) match {
         case Some(cookie) =>
           val json = cookie.value
           val model = deserializeJsonToModel[NewKeeperDetailsViewModel](json)
@@ -291,7 +289,7 @@ final class NewKeeperEnterAddressManuallyUnitSpec extends UnitSpec {
             postTown,
             postCode)
           expectedData should equal(model.address.address)
-        case None => fail(s"$newKeeperDetailsCookieName cookie not found")
+        case None => fail(s"$NewKeeperDetailsCacheKey cookie not found")
       }
     }
   }

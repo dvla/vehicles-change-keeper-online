@@ -9,6 +9,6 @@ final case class CompleteAndConfirmResponseModel(transactionId: String,
 
 object CompleteAndConfirmResponseModel {
   implicit val JsonFormat = Json.format[CompleteAndConfirmResponseModel]
-  final val ChangeKeeperCompletionResponseCacheKey = "acquireCompletionResponse"
+  final val ChangeKeeperCompletionResponseCacheKey = s"${CacheKeyPrefix}acquireCompletionResponse"
   implicit val Key = CacheKey[CompleteAndConfirmResponseModel](ChangeKeeperCompletionResponseCacheKey)
 }
