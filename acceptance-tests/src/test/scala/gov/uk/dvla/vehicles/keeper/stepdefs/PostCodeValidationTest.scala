@@ -25,7 +25,6 @@ class PostCodeValidationTest(webBrowserDriver: WebBrowserDriver) extends ScalaDs
 
   @Then("^an error message  displays \"(.*?)\"$")
   def  an_error_message_displays(g:String) {
-
   }
 
   @When("^the user enters an null in  postcode textbox$")

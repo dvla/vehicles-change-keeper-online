@@ -1,5 +1,6 @@
 @tag
-  Feature:
+  Feature:complete and confirm page field validation
+
     Background:
       Given that the user is on the complete and confirm page
 

@@ -8,13 +8,13 @@ import pages.changekeeper.{BusinessKeeperDetailsPage, NewKeeperChooseYourAddress
 import uk.gov.dvla.vehicles.presentation.common.helpers
 import helpers.webbrowser.{WebBrowserDSL, WebBrowserDriver}
 
-class BusinessKeeperDetailsTest(webBrowserDriver: WebBrowserDriver) extends ScalaDsl with EN with WebBrowserDSL with Matchers {
+class BusinessKeeperDetailsSteps(webBrowserDriver: WebBrowserDriver) extends ScalaDsl with EN with WebBrowserDSL with Matchers {
 
   implicit val webDriver = webBrowserDriver.asInstanceOf[WebDriver]
 
   def gotoBusinessKeeperDetailsPage(){
     go to VehicleLookupPage
-    VehicleLookupPage.vehicleRegistrationNumber enter "A1"
+    VehicleLookupPage.vehicleRegistrationNumber enter "BF51BNN"
     VehicleLookupPage.documentReferenceNumber enter "11111111111"
     click on VehicleLookupPage.vehicleSoldToBusiness
     click on VehicleLookupPage.next
@@ -180,5 +180,32 @@ class BusinessKeeperDetailsTest(webBrowserDriver: WebBrowserDriver) extends Scal
   def an_error_message_is_displayed(postcodErrMsg:String)  {
     BusinessKeeperDetailsPage.errorTextInBusinessKeeperPage(postcodErrMsg) shouldBe true
   }
+
+  @When("^the user enters special characters in businessname with valid data in rest of the fields$")
+  def the_user_enters_special_characters_in_businessname_with_valid_data_in_rest_of_the_fields()  {
+    page.title shouldEqual  BusinessKeeperDetailsPage.title
+    BusinessKeeperDetailsPage.businessNameField enter "hgff(&/,)"
+    BusinessKeeperDetailsPage.postcodeField enter "qq99qq"
+    click on BusinessKeeperDetailsPage.next
+  }
+
+  @Then("^the user will sucessfully navigate to next page$")
+  def the_user_will_sucessfully_navigate_to_next_page()  {
+    page.title shouldEqual NewKeeperChooseYourAddressPage.title
+  }
+
+  @When("^the user enters special charcters at the start of the business name$")
+  def the_user_enters_special_charcters_at_the_start_of_the_business_name()  {
+    page.title shouldEqual  BusinessKeeperDetailsPage.title
+    BusinessKeeperDetailsPage.businessNameField enter "(&/,)GFHF"
+    BusinessKeeperDetailsPage.postcodeField enter "qq99qq"
+    click on BusinessKeeperDetailsPage.next
+  }
+
+  @Then("^will remain in the same page instead of progress to next page$")
+  def will_remain_in_the_same_page_instead_of_progress_to_next_page()  {
+    page.title shouldEqual BusinessKeeperDetailsPage.title
+  }
+
 
 }

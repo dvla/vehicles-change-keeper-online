@@ -8,13 +8,13 @@ import pages.changekeeper._
 import uk.gov.dvla.vehicles.presentation.common.helpers
 import helpers.webbrowser.{WebBrowserDSL, WebBrowserDriver}
 
-class CompleteAndConfirmTest(webBrowserDriver: WebBrowserDriver) extends ScalaDsl with EN with WebBrowserDSL with Matchers {
+class CompleteAndConfirmSteps(webBrowserDriver: WebBrowserDriver) extends ScalaDsl with EN with WebBrowserDSL with Matchers {
 
   implicit val webDriver = webBrowserDriver.asInstanceOf[WebDriver]
 
   def goToCompletAndConfirmPage(){
     go to VehicleLookupPage
-    VehicleLookupPage.vehicleRegistrationNumber enter "A1"
+    VehicleLookupPage.vehicleRegistrationNumber enter "BF51BOV"
     VehicleLookupPage.documentReferenceNumber enter "11111111111"
     click on VehicleLookupPage.vehicleSoldToBusiness
     click on VehicleLookupPage.next

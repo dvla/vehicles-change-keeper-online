@@ -1,5 +1,6 @@
 @tag
-  Feature:
+  Feature:Combined length of title and firstname length should not greater than 27 characters
+
     Scenario:-Less than or equal  27 characters - Pass
       Given that a customer has selected the any title button in private keeper details page
       When the total number of characters is equal to or less than "27" inlcuding title, space and first name
