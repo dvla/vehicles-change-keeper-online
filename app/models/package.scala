@@ -12,7 +12,7 @@ import models.CompleteAndConfirmResponseModel.ChangeKeeperCompletionResponseCach
 package object models {
   final val CacheKeyPrefix = "k2k-"
   final val HelpCacheKey = s"${CacheKeyPrefix}help"
-  final val SeenCookieMessageCacheKey = s"${CacheKeyPrefix}seen_cookie_message"
+  final val SeenCookieMessageCacheKey = "seen_cookie_message" // Same value across all exemplars
 
   final val ChangeKeeperCacheKeys = Set(
     NewKeeperChooseYourAddressCacheKey,
