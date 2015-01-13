@@ -67,10 +67,9 @@ class BruteForceKeeperToKeeperSteps(webBrowserDriver: WebBrowserDriver) extends 
     VehicleLookupPage.documentReferenceNumber enter "11111111119"
     click on VehicleLookupPage.vehicleSoldToPrivateIndividual
     click on VehicleLookupPage.next
-    page.title shouldEqual VrmLockedPage.title
-    click on VrmLockedPage.exit
+    page.title shouldEqual VehicleLookupFailurePage.title
+    click on VehicleLookupFailurePage.beforeYouStart
     page.title shouldEqual BeforeYouStartPage.title
-    click on BeforeYouStartPage.startNow
   }
 
   @When("^the number of sequential attempts for that VRN is more than three times$")
