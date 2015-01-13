@@ -64,14 +64,14 @@ final class PrivateKeeperDetailsIntegrationSpec extends UiSpec with TestHarness 
       csrf.getAttribute("value").size > 0 should equal(true)
     }
 
-    "display optional for driving license number of new keeper input" taggedAs UiTag in new ProgressBarFalse {
+    "display optional for driving licence number of new keeper input" taggedAs UiTag in new ProgressBarFalse {
       go to BeforeYouStartPage
       cacheSetup()
       go to PrivateKeeperDetailsPage
 
       val pageChars = htmlRegex.replaceAllIn(page.source, "")
       val pageCharsNoWhitespace = whitespaceRegex.replaceAllIn(pageChars, "")
-      val optionalLabelValue = "Drivinglicensenumberofnewkeeper(optional)"
+      val optionalLabelValue = "Drivinglicencenumberofnewkeeper(optional)"
 
       pageCharsNoWhitespace.contains(optionalLabelValue) should equal(true)
     }
