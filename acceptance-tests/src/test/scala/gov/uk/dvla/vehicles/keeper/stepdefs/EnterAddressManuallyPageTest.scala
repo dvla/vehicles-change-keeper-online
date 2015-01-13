@@ -2,6 +2,7 @@ package gov.uk.dvla.vehicles.keeper.stepdefs
 
 import cucumber.api.java.en.{Then, When, Given}
 import cucumber.api.scala.{EN, ScalaDsl}
+import pages.changekeeper
 import uk.gov.dvla.vehicles.presentation.common.helpers
 import helpers.webbrowser.{WebBrowserDriver, WebBrowserDSL}
 import org.openqa.selenium.WebDriver
@@ -133,7 +134,8 @@ class EnterAddressManuallyPageTest(webBrowserDriver: WebBrowserDriver) extends S
 
   @Then("^the user is taken to the previous Address not found page$")
   def the_user_is_taken_to_the_previous_Address_not_found_page(): Unit = {
-    page.title shouldEqual "No address found"
+    page.title shouldEqual NewKeeperChooseYourAddressPage.title
+    page.text.contains("No address found for that postcode") shouldBe true
   }
 
 }
