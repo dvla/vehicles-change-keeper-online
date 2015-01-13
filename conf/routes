@@ -86,4 +86,4 @@ GET         /uprn-not-found                             @controllers.UprnNotFoun
 
 GET         /version                                    @controllers.Version.version
 
-
+GET         /cookie-policy                              @controllers.CookiePolicyController.present
