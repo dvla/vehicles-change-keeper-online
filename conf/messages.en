@@ -494,7 +494,7 @@ common_feedback.submit_button = Submit feedback
 common_feedback.thankyou = Thank you for your feedback
 
 # Cookie policy
-footer.cookies = cookies
+footer.cookies = Cookies
 cookie-policy-title = Cookies
 cookie-policy-p1 = Small files (known as ‘cookies’) are put onto your computer to collect information about how you browse the site.
 cookie-policy-p2 = Cookies are used to:
@@ -544,7 +544,7 @@ cookie-policy.expires.4months= 4 months
 cookie-policy.expires.6months = 6 months
 cookie-policy.expires.1year = 1 year
 cookie-policy.expires.2years = 2 years
-cookie-policy.expires.30min = 2 years
+cookie-policy.expires.30min = 30 minutes
 cookie-policy.expires.inactivity = After 15 minutes of inactivity or when you close your browser
 cookie-policy.expires.close = When you close your browser
 
