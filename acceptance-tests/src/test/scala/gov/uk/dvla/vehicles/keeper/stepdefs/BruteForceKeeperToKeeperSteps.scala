@@ -4,7 +4,6 @@ import cucumber.api.scala.{EN, ScalaDsl}
 import cucumber.api.java.en.{Then, When, Given}
 import org.openqa.selenium.WebDriver
 import org.scalatest.Matchers
-import pages.changekeeper
 import pages.changekeeper.{VrmLockedPage, BeforeYouStartPage, VehicleLookupPage, VehicleLookupFailurePage}
 import uk.gov.dvla.vehicles.presentation.common.helpers
 import helpers.webbrowser.{WebBrowserDSL, WebBrowserDriver}
