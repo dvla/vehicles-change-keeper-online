@@ -9,7 +9,9 @@ class Chains(data: RecordSeqFeederBuilder[String]) {
 
   private final val BeforeYouStartPageTitle = "Private sale of a vehicle"
   private final val VehicleLookupPageTitle = "Details of the vehicle being sold"
+  private final val VehicleLookupFailurePageTitle = "Look-up was unsuccessful"
   private final val BusinessKeeperDetailsPageTitle = "Enter the details of the business buying the vehicle"
+  private final val PrivateKeeperDetailsPageTitle = "Enter the details of the person buying this vehicle"
   private final val NewKeeperChooseYourAddressPageTitle = "Select the address of the buyer"
   private final val CompleteAndConfirmPageTitle = "Complete and confirm"
   private final val VehicleDetailsPlaybackHeading = "Vehicle details"
@@ -55,11 +57,12 @@ class Chains(data: RecordSeqFeederBuilder[String]) {
       )
 
   def beforeYouStart = {
-    val chainTitle = "GET /before-you-start"
+    val url = "/before-you-start"
+    val chainTitle = s"GET $url"
     exitBlockOnFail(
       exec(
         http(chainTitle)
-          .get("/before-you-start")
+          .get(url)
           .headers(headers_accept_html)
           // Assertions
           .check(status.is(200))
@@ -69,35 +72,40 @@ class Chains(data: RecordSeqFeederBuilder[String]) {
   }
 
   def vehicleLookup = {
-    val chainTitle = "GET /vehicle-lookup"
+    val url = "/vehicle-lookup"
+    val chainTitle = s"GET $url"
     exitBlockOnFail(
       exec(
         http(chainTitle)
-          .get("/vehicle-lookup")
+          .get(url)
           .headers(headers_accept_html)
-          .check(regex( """<input type="hidden" name="csrf_prevention_token" value="(.*)"/>""").saveAs("csrf_prevention_token"))
           // Assertions
+          .check(regex( """<input type="hidden" name="csrf_prevention_token" value="(.*)"/>""").saveAs("csrf_prevention_token"))
           .check(regex(VehicleLookupPageTitle).exists)
       )
     )
   }
 
-  def vehicleLookupSubmit = {
-    val chainTitle = "POST /setup-trade-details"
+  def vehicleLookupSubmitNewBusinessKeeper = vehicleLookupSubmit(BusinessKeeperDetailsPageTitle)
+  def vehicleLookupSubmitNewPrivateKeeper = vehicleLookupSubmit(PrivateKeeperDetailsPageTitle)
+
+  private def vehicleLookupSubmit(expectedPageTitle: String) = {
+    val url = "/vehicle-lookup"
+    val chainTitle = s"POST $url"
     exitBlockOnFail(
       feed(data)
         .exec(
           http(chainTitle)
-            .post("/vehicle-lookup")
+            .post(url)
             .headers(headers_x_www_form_urlencoded)
             .formParam("vehicleRegistrationNumber", "${vehicleRegistrationNumber}")
             .formParam("documentReferenceNumber", "${documentReferenceNumber}")
             .formParam("vehicleSoldTo", "${vehicleSoldTo}")
             .formParam("csrf_prevention_token", "${csrf_prevention_token}")
             .formParam("action", "")
-            .check(regex( """<input type="hidden" name="csrf_prevention_token" value="(.*)"/>""").saveAs("csrf_prevention_token"))
             // Assertions
-            .check(regex(BusinessKeeperDetailsPageTitle).exists)
+            .check(regex( """<input type="hidden" name="csrf_prevention_token" value="(.*)"/>""").saveAs("csrf_prevention_token"))
+            .check(regex(expectedPageTitle).exists)
             .check(regex(VehicleDetailsPlaybackHeading).exists)
             .check(regex("${expected_registrationNumberFormatted}").exists)
             .check(regex("${expected_make}").exists)
@@ -107,18 +115,44 @@ class Chains(data: RecordSeqFeederBuilder[String]) {
   }
 
   def businessKeeperDetailsSubmit = {
-    val chainTitle = "POST /business-keeper-details"
+    val url = "/business-keeper-details"
+    val chainTitle = s"POST $url"
     exitBlockOnFail(
       exec(
         http(chainTitle)
-          .post("/business-keeper-details")
+          .post(url)
           .headers(headers_x_www_form_urlencoded)
           .formParam("businessName", "${businessName}")
           .formParam("businesskeeper_postcode", "${businessPostcode}")
           .formParam("csrf_prevention_token", "${csrf_prevention_token}")
           .formParam("action", "")
-          .check(regex( """<input type="hidden" name="csrf_prevention_token" value="(.*)"/>""").saveAs("csrf_prevention_token"))
           // Assertions
+          .check(regex( """<input type="hidden" name="csrf_prevention_token" value="(.*)"/>""").saveAs("csrf_prevention_token"))
+          .check(regex(NewKeeperChooseYourAddressPageTitle).exists)
+          .check(regex(VehicleDetailsPlaybackHeading).exists)
+          .check(regex("${expected_registrationNumberFormatted}").exists)
+          .check(regex("${expected_make}").exists)
+          .check(regex("${expected_model}").exists)
+      )
+    )
+  }
+
+  def privateKeeperDetailsSubmit = {
+    val url = "/private-keeper-details"
+    val chainTitle = s"POST $url"
+    exitBlockOnFail(
+      exec(
+        http(chainTitle)
+          .post(url)
+          .headers(headers_x_www_form_urlencoded)
+          .formParam("privatekeeper_title.titleOption", "${privateKeeperTitle}")
+          .formParam("privatekeeper_firstname", "${privateKeeperFirstName}")
+          .formParam("privatekeeper_lastname", "${privateKeeperLastName}")
+          .formParam("privatekeeper_postcode", "${privateKeeperPostcode}")
+          .formParam("csrf_prevention_token", "${csrf_prevention_token}")
+          .formParam("action", "")
+          // Assertions
+          .check(regex( """<input type="hidden" name="csrf_prevention_token" value="(.*)"/>""").saveAs("csrf_prevention_token"))
           .check(regex(NewKeeperChooseYourAddressPageTitle).exists)
           .check(regex(VehicleDetailsPlaybackHeading).exists)
           .check(regex("${expected_registrationNumberFormatted}").exists)
@@ -129,17 +163,18 @@ class Chains(data: RecordSeqFeederBuilder[String]) {
   }
 
   def newKeeperChooseYourAddressSubmit = {
-    val chainTitle = "POST /new-keeper-choose-your-address"
+    val url = "/new-keeper-choose-your-address"
+    val chainTitle = s"POST $url"
     exitBlockOnFail(
       exec(
         http(chainTitle)
-          .post("/new-keeper-choose-your-address")
+          .post(url)
           .headers(headers_x_www_form_urlencoded)
           .formParam("change_keeper_newKeeperChooseYourAddress_addressSelect", "0") // UPRN disabled for Northern Ireland
           .formParam("csrf_prevention_token", "${csrf_prevention_token}")
           .formParam("action", "")
-          .check(regex( """<input type="hidden" name="csrf_prevention_token" value="(.*)"/>""").saveAs("csrf_prevention_token"))
           // Assertions
+          .check(regex( """<input type="hidden" name="csrf_prevention_token" value="(.*)"/>""").saveAs("csrf_prevention_token"))
           .check(regex(CompleteAndConfirmPageTitle).exists)
           .check(regex(BuyersDetailsPlaybackHeading).exists)
           .check(regex("${expected_buyerName}").exists)
@@ -155,11 +190,12 @@ class Chains(data: RecordSeqFeederBuilder[String]) {
   }
 
   def completeAndConfirmSubmit = {
-    val chainTitle = "POST /complete-and-confirm"
+    val url = "/complete-and-confirm"
+    val chainTitle = s"POST $url"
     exitBlockOnFail(
       exec(
         http(chainTitle)
-          .post("/complete-and-confirm")
+          .post(url)
           .headers(headers_x_www_form_urlencoded)
           .formParam("dateofsale.day", "${dateDay}")
           .formParam("dateofsale.month", "${dateMonth}")
@@ -167,13 +203,33 @@ class Chains(data: RecordSeqFeederBuilder[String]) {
           .formParam("consent", "${consent}")
           .formParam("csrf_prevention_token", "${csrf_prevention_token}")
           .formParam("action", "")
-          .check(regex( """<input type="hidden" name="csrf_prevention_token" value="(.*)"/>""").saveAs("csrf_prevention_token"))
           // Assertions
+          .check(regex( """<input type="hidden" name="csrf_prevention_token" value="(.*)"/>""").saveAs("csrf_prevention_token"))
           .check(regex(SummaryPageTitle).exists)
           .check(regex(TransactionDetailsPlaybackHeading).exists)
           .check(regex("${expected_transactionId}").exists)
           .check(regex("${expected_transactionDate}").exists)
       )
+    )
+  }
+
+  def vehicleLookupUnsuccessfulSubmit = {
+    val url = "/vehicle-lookup"
+    val chainTitle = s"POST $url"
+    exitBlockOnFail(
+      feed(data)
+        .exec(
+          http(chainTitle)
+            .post(url)
+            .headers(headers_x_www_form_urlencoded)
+            .formParam("vehicleRegistrationNumber", "${vehicleRegistrationNumber}")
+            .formParam("documentReferenceNumber", "${documentReferenceNumber}")
+            .formParam("vehicleSoldTo", "${vehicleSoldTo}")
+            .formParam("csrf_prevention_token", "${csrf_prevention_token}")
+            .formParam("action", "")
+            // Assertions
+            .check(regex(VehicleLookupFailurePageTitle).exists)
+        )
     )
   }
 }

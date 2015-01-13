@@ -25,7 +25,7 @@ final case class NewKeeperDetailsViewModel(title: Option[TitleType],
 object NewKeeperDetailsViewModel {
   implicit val JsonFormatTitleType = Json.format[TitleType]
   implicit val JsonFormat = Json.format[NewKeeperDetailsViewModel]
-  final val NewKeeperDetailsCacheKey = "newKeeperDetails"
+  final val NewKeeperDetailsCacheKey = s"${CacheKeyPrefix}newKeeperDetails"
   implicit val Key = CacheKey[NewKeeperDetailsViewModel](value = NewKeeperDetailsCacheKey)
 
   def createNewKeeper(address: AddressModel)(implicit request: Request[_],

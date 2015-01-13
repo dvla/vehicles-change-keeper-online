@@ -14,18 +14,47 @@ object Scenarios {
       )
   }
 
-  def endToEnd = {
-    val data = csv("data/happy/EndToEnd.csv").circular
+  def sellToBusinessKeeper = {
+    val data = csv("data/happy/SaleOfVehicleToNewBusinessKeeper.csv").circular
     val chain = new Chains(data)
-    scenario("Single disposal of a vehicle to a new private keeper from start to finish")
+    scenario("Sale of a vehicle to a new business keeper from start to finish")
       .exitBlockOnFail(
         exec(
           chain.beforeYouStart,
           chain.vehicleLookup,
-          chain.vehicleLookupSubmit,
+          chain.vehicleLookupSubmitNewBusinessKeeper,
           chain.businessKeeperDetailsSubmit,
           chain.newKeeperChooseYourAddressSubmit,
           chain.completeAndConfirmSubmit
+        )
+      )
+  }
+
+  def sellToPrivateKeeper = {
+    val data = csv("data/happy/SaleOfVehicleToNewPrivateKeeper.csv").circular
+    val chain = new Chains(data)
+    scenario("Sale of a vehicle to a new private keeper from start to finish")
+      .exitBlockOnFail(
+        exec(
+          chain.beforeYouStart,
+          chain.vehicleLookup,
+          chain.vehicleLookupSubmitNewPrivateKeeper,
+          chain.privateKeeperDetailsSubmit,
+          chain.newKeeperChooseYourAddressSubmit,
+          chain.completeAndConfirmSubmit
+        )
+      )
+  }
+
+  def vehicleLookupUnsuccessful = {
+    val data = csv("data/sad/VehicleLookupUnsuccessful.csv").circular
+    val chain = new Chains(data)
+    scenario("Vehicle lookup is unsuccessful")
+      .exitBlockOnFail(
+        exec(
+          chain.beforeYouStart,
+          chain.vehicleLookup,
+          chain.vehicleLookupUnsuccessfulSubmit
         )
       )
   }
