@@ -194,7 +194,7 @@ change_keeper_email_not_entered = Not entered
 
 #page 4 - new keeper choose your address
 change_keeper_newKeeperChooseYourAddress_addresses_found_title = Select the address of the buyer
-change_keeper_newKeeperChooseYourAddress_no_address_found_title = No address found
+change_keeper_newKeeperChooseYourAddress_no_address_found_title = Select the address of the buyer
 change_keeper_newKeeperChooseYourAddress_newBusinessFleetNumber_label = Business fleet number
 change_keeper_newKeeperChooseYourAddress.fleetNumberNotEntered = Not entered
 change_keeper_newKeeperChooseYourAddress_newPrivateKeeperName_label = Name
