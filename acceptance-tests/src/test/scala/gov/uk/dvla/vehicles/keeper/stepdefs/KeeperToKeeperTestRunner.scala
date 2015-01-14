@@ -10,6 +10,6 @@ import org.junit.runner.RunWith
   glue = Array("gov.uk.dvla.vehicles.keeper.stepdefs"),
   tags = Array("@tag")
 )
-class KeeperTest {
+class KeeperToKeeperTestRunner {
 
 }

@@ -142,6 +142,7 @@ class KeeperToKeeperHappySadPathSteps(webBrowserDriver: WebBrowserDriver) extend
     PrivateKeeperDetailsPage.lastNameTextBox enter "reddy"
     PrivateKeeperDetailsPage.postcodeTextBox enter "qq99hj"
     click on PrivateKeeperDetailsPage.next
+    page.title shouldEqual NewKeeperChooseYourAddressPage.title
     click on NewKeeperChooseYourAddressPage.manualAddress
     page.title shouldEqual NewKeeperEnterAddressManuallyPage.title
     NewKeeperEnterAddressManuallyPage.addressBuildingNameOrNumber enter "2 high street"
@@ -172,6 +173,7 @@ class KeeperToKeeperHappySadPathSteps(webBrowserDriver: WebBrowserDriver) extend
     PrivateKeeperDetailsPage.lastNameTextBox enter "reddy"
     PrivateKeeperDetailsPage.postcodeTextBox enter "qq99hj"
     click on PrivateKeeperDetailsPage.next
+    page.title shouldEqual NewKeeperChooseYourAddressPage.title
     click on NewKeeperChooseYourAddressPage.manualAddress
     page.title shouldEqual NewKeeperEnterAddressManuallyPage.title
     NewKeeperEnterAddressManuallyPage.addressBuildingNameOrNumber enter "2 high street"
@@ -190,8 +192,8 @@ class KeeperToKeeperHappySadPathSteps(webBrowserDriver: WebBrowserDriver) extend
   }
 
   @Then("^the user will be taken to Unsuccesful postcode private keeper details page failure summary page$")
-  def the_user_will_be_taken_to_Unsuccesful_postcode_private_keeper_details_page_failure_summary_page() {
-     //page.title shouldEqual ChangeKeeperFailurePage.title
+  def the_user_will_be_taken_to_Unsuccesful_postcode_private_keeper_details_page_failure_summary_page(): Unit = {
+    page.source.contains("Transaction Unsuccessful")
   }
 
 }

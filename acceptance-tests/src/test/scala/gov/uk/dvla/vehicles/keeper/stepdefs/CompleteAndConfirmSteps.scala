@@ -132,7 +132,8 @@ class CompleteAndConfirmSteps(webBrowserDriver: WebBrowserDriver) extends ScalaD
     page.title shouldEqual ChangeKeeperSuccessPage.title
   }
   @Then("^an error message displayed \"(.*?)\"$")
-  def an_error_message_displayed(err:String)  {
+  def an_error_message_displayed(err:String): Unit =  {
+    page.source.contains("Transaction Unsuccessful")
   }
 }
 

@@ -25,6 +25,7 @@ class KeeperToKeeperAddressFieldsSteps(webBrowserDriver: WebBrowserDriver) exten
     PrivateKeeperDetailsPage.lastNameTextBox enter "nny"
     PrivateKeeperDetailsPage.postcodeTextBox enter "qq99qw"
     click on PrivateKeeperDetailsPage.next
+    page.title shouldEqual NewKeeperChooseYourAddressPage.title
   }
 
   @Given("^that the user is on the Enter Address page$")
