@@ -1,5 +1,6 @@
 @tag
-Feature:
+Feature: keeper address selection
+
   Scenario: AC1 - No address selected
     Given the user has not selected an address on the Select new keeper address page
     When the user selects Next button

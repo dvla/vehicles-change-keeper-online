@@ -167,7 +167,7 @@ class NewKeeperChooseYourAddressIntegrationSpec extends UiSpec with TestHarness 
       CookieFactoryForUISpecs.vehicleAndKeeperDetails()
       go to PrivateKeeperDetailsPage
       PrivateKeeperDetailsPage.submitPostcodeWithoutAddresses
-      page.title should equal("No address found")
+      page.title should equal(NewKeeperChooseYourAddressPage.title)
       page.source should include("No address found for that postcode")
       page.source should include(PrivateKeeperNameLabel)
       page.source should not include BusinessFleetNumberLabel
@@ -179,7 +179,7 @@ class NewKeeperChooseYourAddressIntegrationSpec extends UiSpec with TestHarness 
       CookieFactoryForUISpecs.vehicleAndKeeperDetails()
       go to BusinessKeeperDetailsPage
       BusinessKeeperDetailsPage.submitPostcodeWithoutAddresses
-      page.title should equal("No address found")
+      page.title should equal(NewKeeperChooseYourAddressPage.title)
       page.source should include("No address found for that postcode")
       page.source should not include PrivateKeeperNameLabel
       page.source should include(BusinessFleetNumberLabel)

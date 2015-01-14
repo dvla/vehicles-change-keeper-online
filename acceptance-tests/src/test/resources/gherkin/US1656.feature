@@ -1,5 +1,6 @@
 @tag
-  Feature:
+  Feature:Private keeper optional fields validation
+
    Scenario: - Date of birth - Valid
      Given the user enters a validate date of birth
      When the user press the submit control

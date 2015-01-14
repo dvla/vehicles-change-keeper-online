@@ -8,13 +8,13 @@ import org.openqa.selenium.WebDriver
 import org.scalatest.Matchers
 import pages.changekeeper._
 
-class PrivateKeeperDetailsTest(webBrowserDriver: WebBrowserDriver) extends ScalaDsl with EN with WebBrowserDSL with Matchers {
+class PrivateKeeperDetailsPageSteps(webBrowserDriver: WebBrowserDriver) extends ScalaDsl with EN with WebBrowserDSL with Matchers {
 
   implicit val webDriver = webBrowserDriver.asInstanceOf[WebDriver]
 
   def goToPrivateKeeperDetailsPage() {
     go to VehicleLookupPage
-    VehicleLookupPage.vehicleRegistrationNumber enter "B1"
+    VehicleLookupPage.vehicleRegistrationNumber enter "BF51BMU"
     VehicleLookupPage.documentReferenceNumber enter "11111111111"
     click on VehicleLookupPage.vehicleSoldToPrivateIndividual
     click on VehicleLookupPage.next
