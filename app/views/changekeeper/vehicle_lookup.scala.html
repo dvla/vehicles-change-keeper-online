@@ -30,12 +30,12 @@ currentForm = Some(viewModel.form)
     </div>
 
     <div class="second-col uppercase-input">
+
         <div class="form-steps">
             <div class="step uppercase-input">
+
                 @form(action = controllers.routes.VehicleLookup.submit()) {
                 @csrfTokenHiddenField()
-
-                <h2>@Messages("change_keeper_vehiclelookup.p1")</h2>
 
                 @valtechInputText(viewModel.form(VehicleRegistrationNumberId),
                 hintText = Some(Messages("change_keeper_vehiclelookup.vrninputlabel.hint")),
@@ -81,8 +81,10 @@ currentForm = Some(viewModel.form)
                     </a>
                 </div>
                 }
+
             </div>
         </div>
+
     </div>
 </div>
 }
