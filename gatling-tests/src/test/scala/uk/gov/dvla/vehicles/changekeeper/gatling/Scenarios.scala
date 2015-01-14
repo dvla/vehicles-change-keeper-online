@@ -30,10 +30,42 @@ object Scenarios {
       )
   }
 
+  def sellToBusinessKeeperAllOptionalDataFilledIn = {
+    val data = csv("data/happy/SaleOfVehicleToNewBusinessKeeperAllOptionalDataFilledIn.csv").circular
+    val chain = new Chains(data)
+    scenario("Sale of a vehicle to a new business keeper from start to finish with all optional data filled in")
+      .exitBlockOnFail(
+        exec(
+          chain.beforeYouStart,
+          chain.vehicleLookup,
+          chain.vehicleLookupSubmitNewBusinessKeeper,
+          chain.businessKeeperDetailsSubmit,
+          chain.newKeeperChooseYourAddressSubmit,
+          chain.completeAndConfirmSubmit
+        )
+      )
+  }
+
   def sellToPrivateKeeper = {
     val data = csv("data/happy/SaleOfVehicleToNewPrivateKeeper.csv").circular
     val chain = new Chains(data)
     scenario("Sale of a vehicle to a new private keeper from start to finish")
+      .exitBlockOnFail(
+        exec(
+          chain.beforeYouStart,
+          chain.vehicleLookup,
+          chain.vehicleLookupSubmitNewPrivateKeeper,
+          chain.privateKeeperDetailsSubmit,
+          chain.newKeeperChooseYourAddressSubmit,
+          chain.completeAndConfirmSubmit
+        )
+      )
+  }
+
+  def sellToPrivateKeeperAllOptionalDataFilledIn = {
+    val data = csv("data/happy/SaleOfVehicleToNewPrivateKeeperAllOptionalDataFilledIn.csv").circular
+    val chain = new Chains(data)
+    scenario("Sale of a vehicle to a new private keeper from start to finish with all optional data filled in")
       .exitBlockOnFail(
         exec(
           chain.beforeYouStart,

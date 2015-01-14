@@ -204,7 +204,7 @@ class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSi
       newKeeperDetailsViewModel.businessName,
       newKeeperDetailsViewModel.firstName,
       newKeeperDetailsViewModel.lastName,
-      newKeeperDetailsViewModel.dateOfBirth map (dob => dob.toString()),
+      dateOfBirth,
       getAddressLines(keeperAddress, 4),
       getPostTownFromAddress(keeperAddress).getOrElse(""),
       getPostCodeFromAddress(keeperAddress).getOrElse(""),

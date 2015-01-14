@@ -10,18 +10,20 @@ config: utils.helpers.Config)
 
 @govMainDefault(title) {
 <div class="app vehicles-change-keeper-online">
+
     @if(showBanner) {
         @protoType()
     }
 
     <div class="section-content">
-        @progressBar(progress)
 
-        <h1>@title</h1>
+        @progressBar(progress)
 
         @errorsSummary(currentForm)
 
         @content
+
     </div>
+
 </div>
 }

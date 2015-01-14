@@ -30,15 +30,15 @@ currentForm = Some(viewModel.form)
     </div>
 
     <div class="second-col uppercase-input">
+
         <div class="form-steps">
             <div class="step uppercase-input">
+
                 @form(action = controllers.routes.VehicleLookup.submit()) {
                 @csrfTokenHiddenField()
 
-                <h2>@Messages("change_keeper_vehiclelookup.p1")</h2>
-
                 @valtechInputText(viewModel.form(VehicleRegistrationNumberId),
-                hintText = Some(Messages("change_keeper_vehiclelookup.vrninputlabel.hint")),
+                hintText = Some(Messages("")),
                 args = Map('_label -> Messages("change_keeper_vehiclelookup.vrninputlabel"),
                            'maxLength -> VehicleRegistrationNumber.MaxLength,
                            '_showConstraints -> false,
@@ -57,12 +57,14 @@ currentForm = Some(viewModel.form)
                 (if(config.isHtml5ValidationEnabled) Map('pattern -> DocumentReferenceNumber.Pattern) else Nil)
                 )
 
+                <h3>@Messages("change_keeper_vehiclelookup.vehiclesoldto.label")</h3>
+
                 @listRadioGroup(field = viewModel.form(VehicleSoldToId),
                 args = Map('items -> Seq(
                     VehicleSoldTo_Private -> Messages("change_keeper_vehiclelookup.vehiclesoldto.private"),
                     VehicleSoldTo_Business -> Messages("change_keeper_vehiclelookup.vehiclesoldto.business")
                 ),
-                '_label -> Messages("change_keeper_vehiclelookup.vehiclesoldto.label")
+                '_label -> Messages("change_keeper_vehiclelookup.vehiclesoldto.hint")
                 )
                 )
 
@@ -80,9 +82,12 @@ currentForm = Some(viewModel.form)
                         @Messages("change_keeper_vehiclelookup.backbutton")
                     </a>
                 </div>
+
                 }
+
             </div>
         </div>
+
     </div>
 </div>
 }

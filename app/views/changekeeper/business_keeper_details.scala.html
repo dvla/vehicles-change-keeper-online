@@ -22,8 +22,11 @@
   currentForm = Some(viewModel.form)
 ) {
 <div class="two-col clearfix">
+
     <div class="first-col">
+
         <h1 class="mobile-only">@Messages("changekeeper_businesskeeperdetails.title")</h1>
+
         <dl class="playback">
             <dt><h2>@Messages("change_keeper_businesskeeperdetails.vehicledetails")</h2></dt>
             <dt>@Messages("change_keeper_businesskeeperdetails.vehiclereg")</dt>
@@ -33,12 +36,17 @@
             <dt>@Messages("change_keeper_businesskeeperdetails.vehiclemodel")</dt>
             <dd>@viewModel.vehicleAndKeeperDetails.model</dd>
         </dl>
+
         <div class="alert-warning print-message">
             <p><strong>@Messages("change_keeper_businesskeeperdetails.p2")</strong></p>
         </div>
+
     </div>
 
     <div class="second-col">
+
+        <h1>@Messages("change_keeper_businesskeeperdetails.title")</h1>
+
         <p>@Messages("change_keeper_businesskeeperdetails.p1")</p>
 
         <div class="form-steps">
@@ -95,6 +103,8 @@
             </a>
             }
         </div>
+
     </div>
+    
 </div>
 }
