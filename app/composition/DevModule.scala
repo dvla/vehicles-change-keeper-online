@@ -4,7 +4,7 @@ import com.google.inject.name.Names
 import com.tzavellas.sse.guice.ScalaModule
 import play.api.{Logger, LoggerLike}
 import uk.gov.dvla.vehicles.presentation.common
-import common.ConfigProperties.getProperty
+import common.ConfigProperties.getOptionalProperty
 import common.clientsidesession.AesEncryption
 import common.clientsidesession.ClearTextClientSideSessionFactory
 import common.clientsidesession.ClientSideSessionFactory
@@ -64,7 +64,7 @@ class DevModule extends ScalaModule {
   }
 
   protected def bindSessionFactory(): Unit = {
-    if (getProperty("encryptCookies", default = true)) {
+    if (getOptionalProperty[Boolean]("encryptCookies").getOrElse(true)) {
       bind[CookieEncryption].toInstance(new AesEncryption with CookieEncryption)
       bind[CookieNameHashGenerator].toInstance(new Sha1HashGenerator with CookieNameHashGenerator)
       bind[ClientSideSessionFactory].to[EncryptedClientSideSessionFactory].asEagerSingleton()

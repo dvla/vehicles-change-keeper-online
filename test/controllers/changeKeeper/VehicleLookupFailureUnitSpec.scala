@@ -90,7 +90,7 @@ final class VehicleLookupFailureUnitSpec extends UnitSpec {
     }
   }
 
-  private val vehicleLookupFailure = {
+  private lazy val vehicleLookupFailure = {
     injector.getInstance(classOf[VehicleLookupFailure])
   }
 

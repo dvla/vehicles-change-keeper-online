@@ -5,7 +5,7 @@ import helpers.webbrowser.{Element, Page, WebBrowserDSL, WebDriverFactory}
 import views.changekeeper.VehicleLookupFailure
 import VehicleLookupFailure.{BeforeYouStartId, VehicleLookupId}
 import org.openqa.selenium.WebDriver
-import pages.ApplicationContext.applicationContext
+//import pages.ApplicationContext.applicationContext
 
 object VehicleLookupFailurePage extends Page with WebBrowserDSL {
   final val address = s"$applicationContext/vehicle-lookup-failure"

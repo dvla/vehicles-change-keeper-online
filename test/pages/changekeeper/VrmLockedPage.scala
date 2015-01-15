@@ -5,7 +5,7 @@ import helpers.webbrowser.{Element, Page, WebBrowserDSL, WebDriverFactory}
 import views.changekeeper.VrmLocked
 import VrmLocked.{ExitId, BuyAnotherVehicleId}
 import org.openqa.selenium.WebDriver
-import pages.ApplicationContext.applicationContext
+//import pages.ApplicationContext.applicationContext
 
 object VrmLockedPage extends Page with WebBrowserDSL {
   final val address = s"$applicationContext/vrm-locked"

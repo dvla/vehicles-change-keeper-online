@@ -156,7 +156,7 @@ class ChangeKeeperSuccessUnitSpec extends UnitSpec {
     }
   }
 
-  private val changeKeeperSuccess = {
+  private lazy val changeKeeperSuccess = {
     injector.getInstance(classOf[ChangeKeeperSuccess])
   }
 

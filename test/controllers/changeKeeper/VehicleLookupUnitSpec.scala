@@ -1,6 +1,6 @@
 package controllers.changeKeeper
 
-import composition.WithApplication
+import composition.{TestConfig, WithApplication}
 import controllers.VehicleLookup
 import helpers.UnitSpec
 import models.VehicleLookupFormModel.Form.{DocumentReferenceNumberId, VehicleRegistrationNumberId, VehicleSoldToId}
@@ -13,6 +13,7 @@ import play.api.libs.ws.WSResponse
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{LOCATION, contentAsString, defaultAwaitTimeout}
 import uk.gov.dvla.vehicles.presentation.common
+import uk.gov.dvla.vehicles.presentation.common.ConfigProperties._
 import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperDetailsRequest
 import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperDetailsResponse
 import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupServiceImpl
@@ -23,10 +24,7 @@ import scala.concurrent.Future
 import common.clientsidesession.ClientSideSessionFactory
 import common.mappings.DocumentReferenceNumber
 import common.services.DateServiceImpl
-import common.webserviceclients.bruteforceprevention.BruteForcePreventionConfig
-import common.webserviceclients.bruteforceprevention.BruteForcePreventionServiceImpl
-import common.webserviceclients.bruteforceprevention.BruteForcePreventionWebService
-import common.webserviceclients.bruteforceprevention.BruteForcePreventionService
+import uk.gov.dvla.vehicles.presentation.common.webserviceclients.bruteforceprevention._
 import utils.helpers.Config
 import views.changekeeper.VehicleLookup.VehicleSoldTo_Private
 import webserviceclients.fakes.{FakeDateServiceImpl, FakeResponse}
@@ -191,7 +189,7 @@ final class VehicleLookupUnitSpec extends UnitSpec {
     }
 
     new BruteForcePreventionServiceImpl(
-      config = new BruteForcePreventionConfig,
+      config = new TestBruteForcePreventionConfig,
       ws = bruteForcePreventionWebService,
       dateService = new FakeDateServiceImpl
     )
@@ -210,7 +208,7 @@ final class VehicleLookupUnitSpec extends UnitSpec {
     })
     val vehicleAndKeeperLookupServiceImpl = new VehicleAndKeeperLookupServiceImpl(ws)
     implicit val clientSideSessionFactory = injector.getInstance(classOf[ClientSideSessionFactory])
-    implicit val config: Config = mock[Config]
+    implicit val config: Config = new TestConfig
 
     new VehicleLookup(
       bruteForceService = bruteForceService,

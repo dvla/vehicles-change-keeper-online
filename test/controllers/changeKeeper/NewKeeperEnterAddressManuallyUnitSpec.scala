@@ -270,7 +270,7 @@ final class NewKeeperEnterAddressManuallyUnitSpec extends UnitSpec {
       content should include("Town or city must contain between 3 and 20 characters")
     }
   }
-  private val newKeeperEnterAddressManually = {
+  private lazy val newKeeperEnterAddressManually = {
     injector.getInstance(classOf[NewKeeperEnterAddressManually])
   }
 
