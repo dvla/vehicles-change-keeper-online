@@ -35,6 +35,7 @@ final class HelpUnitSpec extends UnitSpec {
       implicit val clientSideSessionFactory = injector.getInstance(classOf[ClientSideSessionFactory])
       implicit val config: Config = mock[Config]
       when(config.isPrototypeBannerVisible).thenReturn(false)
+      when(config.googleAnalyticsTrackingId).thenReturn(None)
       // Stub this config value.
       val helpPrototypeNotVisible = new Help()
 
@@ -78,6 +79,6 @@ final class HelpUnitSpec extends UnitSpec {
     }
   }
 
-  private val help = injector.getInstance(classOf[Help])
+  private lazy val help = injector.getInstance(classOf[Help])
   private lazy val present = help.present(FakeRequest())
 }
