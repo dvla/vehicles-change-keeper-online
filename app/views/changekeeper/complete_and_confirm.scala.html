@@ -65,6 +65,14 @@
             @form(action = CompleteAndConfirm.submit) {
                 @csrfTokenHiddenField()
 
+                @valtechDeclareCheck(
+                    data.form(ConsentId),
+                    args = Map(
+                        '_showConstraints -> false,
+                        '_label -> Messages("change_keeper_keeperdetailscomplete.consent")
+                    )
+                )
+
                 <p>@Messages("change_keeper_completeAndConfirm.p1")</p>
 
                 @valtechInputText(data.form(MileageId),
@@ -93,14 +101,6 @@
                         hintText = Some(Messages("change_keeper_completeandconfirm.dateofsale.hint"))
                     )
                 </div>
-
-                @valtechDeclareCheck(
-                    data.form(ConsentId),
-                    args = Map(
-                        '_showConstraints -> false,
-                        '_label -> Messages("change_keeper_keeperdetailscomplete.consent")
-                    )
-                )
 
                 <div class="form-steps">
                     <button id="@SubmitId"

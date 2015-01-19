@@ -11,7 +11,7 @@ import views.changekeeper.PrivateKeeperDetails.{BackId, SubmitId}
 object PrivateKeeperDetailsPage extends Page with WebBrowserDSL with Matchers {
   final val address = buildAppUrl("private-keeper-details")
   override def url: String = WebDriverFactory.testUrl + address.substring(1)
-  final override val title: String = "Enter the details of the person buying this vehicle"
+  final override val title: String = "Enter new keeper details"
 
   final val TitleInvalid = "other"
   final val FirstNameValid = "fn"

@@ -77,7 +77,7 @@ class BusinessKeeperDetailsIntegrationSpec extends UiSpec with TestHarness {
       val pageCharsNoWhitespace = whitespaceRegex.replaceAllIn(pageChars, "")
       val optionalLabelValue = "Contactemailaddress(optional)"
 
-      pageCharsNoWhitespace.contains(optionalLabelValue) should equal(true)
+      pageCharsNoWhitespace.contains(optionalLabelValue) should equal(false)
     }
   }
 
