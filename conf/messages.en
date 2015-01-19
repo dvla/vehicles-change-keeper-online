@@ -496,6 +496,7 @@ common_feedback.label = What went wrong, if anything? What went well? How could 
 common_feedback.placeholder = (Limit is 1200 characters)
 common_feedback.submit_button = Submit feedback
 common_feedback.thankyou = Thank you for your feedback
+common_feedback.subject = Private sale of a vehicle - Feedback
 
 # Cookie policy
 footer.cookies = Cookies
