@@ -29,6 +29,7 @@ import common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupSer
 import common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupWebService
 import common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupWebServiceImpl
 import common.webserviceclients.acquire.{AcquireServiceImpl, AcquireService, AcquireWebServiceImpl, AcquireWebService}
+import utils.helpers.{ConfigImpl, Config}
 
 /**
  * Provides real implementations of traits
@@ -42,6 +43,9 @@ import common.webserviceclients.acquire.{AcquireServiceImpl, AcquireService, Acq
  */
 class DevModule extends ScalaModule {
   def configure() {
+
+    bind[Config].to[ConfigImpl]
+
     bind[AddressLookupService].to[AddressLookupServiceImpl].asEagerSingleton()
     bind[AddressLookupWebService].to[WebServiceImpl].asEagerSingleton()
 

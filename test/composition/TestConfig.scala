@@ -11,32 +11,32 @@ import utils.helpers.Config
 class TestConfig extends Config {
 
   // Prototype message in html
-  override lazy val isPrototypeBannerVisible: Boolean = true
+  def isPrototypeBannerVisible: Boolean = getOptionalProperty[Boolean]("prototype.disclaimer").getOrElse(true)
 
   // Google analytics
-  override lazy val googleAnalyticsTrackingId: Option[String] = None
+  def googleAnalyticsTrackingId: Option[String] = None
 
   // Progress step indicator
-  override lazy val isProgressBarEnabled: Boolean = getOptionalProperty[Boolean]("progressBar.enabled").getOrElse(true)
+  def isProgressBarEnabled: Boolean = getOptionalProperty[Boolean]("progressBar.enabled").getOrElse(true)
 
-  override lazy val isHtml5ValidationEnabled: Boolean =
+  def isHtml5ValidationEnabled: Boolean =
     getOptionalProperty[Boolean]("html5Validation.enabled").getOrElse(false)
 
-  override lazy val startUrl: String = "/before-you-start"
+  def startUrl: String = "/before-you-start"
 
-  override lazy val ordnanceSurveyUseUprn: Boolean = false
+  def ordnanceSurveyUseUprn: Boolean = false
 
   // opening and closing times
-  override lazy val opening: Int = 1
-  override lazy val closing: Int = 18
+  def opening: Int = 1
+  def closing: Int = 18
 
   // Web headers
-  override lazy val applicationCode: String = ""
-  override lazy val serviceTypeCode: String = ""
-  override lazy val orgBusinessUnit: String = ""
+  def applicationCode: String = ""
+  def serviceTypeCode: String = ""
+  def orgBusinessUnit: String = ""
 
 
-  override lazy val emailConfiguration: EmailConfiguration = EmailConfiguration(
+  def emailConfiguration: EmailConfiguration = EmailConfiguration(
     "",
     25,
     "",
