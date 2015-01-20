@@ -29,6 +29,8 @@ trait Config {
   def applicationCode: String
   def serviceTypeCode: String
   def orgBusinessUnit: String
+  def channelCode: String
+  def contactId: Long
 
 
   def emailConfiguration: EmailConfiguration

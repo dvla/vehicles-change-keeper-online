@@ -10,13 +10,12 @@ class Chains(data: RecordSeqFeederBuilder[String]) {
   private final val BeforeYouStartPageTitle = "Private sale of a vehicle"
   private final val VehicleLookupPageTitle = "Details of the vehicle being sold"
   private final val VehicleLookupFailurePageTitle = "Look-up was unsuccessful"
-  private final val BusinessKeeperDetailsPageTitle = "Enter the details of the business buying the vehicle"
-  private final val PrivateKeeperDetailsPageTitle = "Enter the details of the person buying this vehicle"
-  private final val NewKeeperChooseYourAddressPageTitle = "Select the address of the buyer"
+  private final val BusinessKeeperDetailsPageTitle = "Enter new business keeper details"
+  private final val PrivateKeeperDetailsPageTitle = "Enter new keeper details"
+  private final val NewKeeperChooseYourAddressPageTitle = "Select new keeper address"
   private final val CompleteAndConfirmPageTitle = "Complete and confirm"
   private final val VehicleDetailsPlaybackHeading = "Vehicle details"
-  private final val XmlEncodedApostrophe = "&#x27;"
-  private final val BuyersDetailsPlaybackHeading = s"Buyer${XmlEncodedApostrophe}s Details" // TODO change the capitalisation in the app (D -> d)
+  private final val BuyersDetailsPlaybackHeading = s"New Keeper Details" // TODO change the capitalisation in the app (D -> d)
   private final val SummaryPageTitle = "Summary"
   private final val TransactionDetailsPlaybackHeading = "Transaction details"
 
