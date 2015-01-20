@@ -53,9 +53,6 @@
             @form(action = controllers.routes.BusinessKeeperDetails.submit()) {
             @csrfTokenHiddenField()
 
-            <p><strong>@Messages("change_keeper_businesskeeperdetails.p3")</strong></p>
-            <p>@Messages("change_keeper_businesskeeperdetails.p4")</p>
-
             @valtechInputText(viewModel.form(FleetNumberId),
                 hintText = Some(Messages("change_keeper_businesskeeperdetails.businessname.hint")), args =
                 Map('_label -> Messages("change_keeper_businesskeeperdetails.fleetnumber"),
@@ -77,7 +74,7 @@
             </div>
 
             @valtechInputText(viewModel.form(EmailId),
-                hintText = Some(Messages("change_keeper_businesskeeperdetails.email.hint")),
+                hintText = Some(Messages("")),
                 args = Map('_label -> Messages("change_keeper_businesskeeperdetails.email"),
                     '_showConstraints -> false,
                     'maxLength -> EmailMaxLength
