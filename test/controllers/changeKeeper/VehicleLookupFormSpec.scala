@@ -1,37 +1,35 @@
 package controllers.changeKeeper
 
-import composition.TestConfig
 import controllers.VehicleLookup
 import helpers.UnitSpec
-import play.api.test.WithApplication
-import uk.gov.dvla.vehicles.presentation.common.testhelpers.RandomVrmGenerator
 import helpers.InvalidVRMFormat.allInvalidVrmFormats
 import helpers.ValidVRMFormat.allValidVrmFormats
-import play.api.http.Status.OK
-import uk.gov.dvla.vehicles.presentation.common
-import common.clientsidesession.ClientSideSessionFactory
-import common.services.DateServiceImpl
-import common.webserviceclients.bruteforceprevention.BruteForcePreventionConfig
-import common.webserviceclients.bruteforceprevention.BruteForcePreventionServiceImpl
-import common.webserviceclients.bruteforceprevention.BruteForcePreventionWebService
-import common.webserviceclients.bruteforceprevention.BruteForcePreventionService
 import models.VehicleLookupFormModel.Form.{DocumentReferenceNumberId, VehicleRegistrationNumberId, VehicleSoldToId}
 import org.mockito.Matchers.{any, anyString}
 import org.mockito.Mockito.when
+import play.api.http.Status.OK
 import play.api.libs.json.{JsValue, Json}
-import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperDetailsRequest
-import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperDetailsResponse
-import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupServiceImpl
-import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupWebService
+import play.api.test.WithApplication
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
+import uk.gov.dvla.vehicles.presentation.common
+import common.clientsidesession.ClientSideSessionFactory
+import common.services.DateServiceImpl
+import common.testhelpers.RandomVrmGenerator
+import common.webserviceclients.bruteforceprevention.BruteForcePreventionServiceImpl
+import common.webserviceclients.bruteforceprevention.BruteForcePreventionWebService
+import common.webserviceclients.bruteforceprevention.BruteForcePreventionService
+import common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperDetailsRequest
+import common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperDetailsResponse
+import common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupServiceImpl
+import common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupWebService
 import utils.helpers.Config
+import views.changekeeper.VehicleLookup.VehicleSoldTo_Private
 import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.ConsentValid
 import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.ReferenceNumberValid
 import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.RegistrationNumberValid
 import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.vehicleDetailsResponseSuccess
 import webserviceclients.fakes.{FakeDateServiceImpl, FakeResponse}
-import views.changekeeper.VehicleLookup.VehicleSoldTo_Private
 
 final class VehicleLookupFormSpec extends UnitSpec {
 
