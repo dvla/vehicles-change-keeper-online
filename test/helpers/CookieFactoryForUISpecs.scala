@@ -26,7 +26,6 @@ import pages.changekeeper.PrivateKeeperDetailsPage.DriverNumberValid
 import pages.changekeeper.PrivateKeeperDetailsPage.EmailValid
 import pages.changekeeper.PrivateKeeperDetailsPage.FirstNameValid
 import pages.changekeeper.PrivateKeeperDetailsPage.LastNameValid
-import pages.changekeeper.PrivateKeeperDetailsPage.ModelValid
 import pages.changekeeper.PrivateKeeperDetailsPage.MonthDateOfBirthValid
 import pages.changekeeper.PrivateKeeperDetailsPage.PostcodeValid
 import pages.changekeeper.PrivateKeeperDetailsPage.YearDateOfBirthValid
@@ -40,8 +39,6 @@ import uk.gov.dvla.vehicles.presentation.common.model.VehicleAndKeeperDetailsMod
 import uk.gov.dvla.vehicles.presentation.common.model.AddressModel
 import uk.gov.dvla.vehicles.presentation.common.model.BruteForcePreventionModel
 import uk.gov.dvla.vehicles.presentation.common.model.VehicleAndKeeperDetailsModel
-import uk.gov.dvla.vehicles.presentation.common.model.VehicleDetailsModel
-import uk.gov.dvla.vehicles.presentation.common.model.VehicleDetailsModel.VehicleLookupDetailsCacheKey
 import views.changekeeper.VehicleLookup.VehicleSoldTo_Private
 import webserviceclients.fakes.FakeAddressLookupService.{BuildingNameOrNumberValid, Line2Valid, Line3Valid, PostTownValid}
 import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService
@@ -126,20 +123,6 @@ object CookieFactoryForUISpecs {
                                (implicit webDriver: WebDriver) = {
     val key = VehicleLookupResponseCodeCacheKey
     val value = responseCode
-    addCookie(key, value)
-    this
-  }
-
-  def vehicleDetails(registrationNumber: String = RegistrationNumberValid,
-                     vehicleMake: String = VehicleMakeValid,
-                     vehicleModel: String = ModelValid,
-                     disposeFlag: Boolean = false)(implicit webDriver: WebDriver) = {
-    val key = VehicleLookupDetailsCacheKey
-    val value = VehicleDetailsModel(
-      registrationNumber = registrationNumber,
-      vehicleMake,
-      vehicleModel,
-      disposeFlag)
     addCookie(key, value)
     this
   }
