@@ -1,7 +1,14 @@
 package utils.helpers
 
-import uk.gov.dvla.vehicles.presentation.common.ConfigProperties.{getOptionalProperty, getProperty, getStringListProperty}
-import uk.gov.dvla.vehicles.presentation.common.services.SEND.{EmailConfiguration, From}
+import uk.gov.dvla.vehicles.presentation.common
+import common.ConfigProperties.getOptionalProperty
+import common.ConfigProperties.getProperty
+import common.ConfigProperties.getStringListProperty
+import common.ConfigProperties.booleanProp
+import common.ConfigProperties.stringProp
+import common.ConfigProperties.intProp
+import common.ConfigProperties.longProp
+import common.services.SEND.{EmailConfiguration, From}
 
 class ConfigImpl extends Config {
 

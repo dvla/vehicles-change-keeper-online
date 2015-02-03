@@ -1,7 +1,7 @@
 package composition
 
 import uk.gov.dvla.vehicles.presentation.common.services.SEND.{From, EmailConfiguration}
-import uk.gov.dvla.vehicles.presentation.common.ConfigProperties.getOptionalProperty
+import uk.gov.dvla.vehicles.presentation.common.ConfigProperties.{getOptionalProperty, booleanProp}
 
 import utils.helpers.Config
 

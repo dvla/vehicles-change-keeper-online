@@ -4,7 +4,7 @@ import com.google.inject.name.Names
 import com.tzavellas.sse.guice.ScalaModule
 import play.api.{Logger, LoggerLike}
 import uk.gov.dvla.vehicles.presentation.common
-import common.ConfigProperties.getOptionalProperty
+import common.ConfigProperties.{getOptionalProperty, booleanProp}
 import common.clientsidesession.AesEncryption
 import common.clientsidesession.ClearTextClientSideSessionFactory
 import common.clientsidesession.ClientSideSessionFactory
