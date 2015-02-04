@@ -32,7 +32,8 @@ class TestConfig extends Config {
 
   // Web headers
   def applicationCode: String = ""
-  def serviceTypeCode: String = ""
+  def vssServiceTypeCode: String = ""
+  def dmsServiceTypeCode: String = ""
   def orgBusinessUnit: String = ""
   def channelCode: String = ""
   def contactId: Long = 9

@@ -263,7 +263,7 @@ class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSi
    VssWebHeaderDto(transactionId = trackingId,
    originDateTime = new DateTime,
    applicationCode = config.applicationCode,
-   serviceTypeCode = config.serviceTypeCode,
+   serviceTypeCode = config.vssServiceTypeCode,
    buildEndUser())
  }
 

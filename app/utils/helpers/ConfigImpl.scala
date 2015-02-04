@@ -34,7 +34,8 @@ class ConfigImpl extends Config {
 
   // Web headers
   val applicationCode: String = getProperty[String]("webHeader.applicationCode")
-  val serviceTypeCode: String = getProperty[String]("webHeader.serviceTypeCode")
+  val vssServiceTypeCode: String = getProperty[String]("webHeader.vssServiceTypeCode")
+  val dmsServiceTypeCode: String = getProperty[String]("webHeader.dmsServiceTypeCode")
   val orgBusinessUnit: String = getProperty[String]("webHeader.orgBusinessUnit")
   val channelCode: String = getProperty[String]("webHeader.channelCode")
   val contactId: Long = getProperty[Long]("webHeader.contactId")
