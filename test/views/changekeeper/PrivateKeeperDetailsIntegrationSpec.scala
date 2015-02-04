@@ -64,14 +64,14 @@ final class PrivateKeeperDetailsIntegrationSpec extends UiSpec with TestHarness 
       csrf.getAttribute("value").size > 0 should equal(true)
     }
 
-    "display optional for driving license number of new keeper input" taggedAs UiTag in new ProgressBarFalse {
+    "display optional for driving licence number of new keeper input" taggedAs UiTag in new ProgressBarFalse {
       go to BeforeYouStartPage
       cacheSetup()
       go to PrivateKeeperDetailsPage
 
       val pageChars = htmlRegex.replaceAllIn(page.source, "")
       val pageCharsNoWhitespace = whitespaceRegex.replaceAllIn(pageChars, "")
-      val optionalLabelValue = "Drivinglicensenumberofnewkeeper(optional)"
+      val optionalLabelValue = "Drivinglicencenumberofnewkeeper(optional)"
 
       pageCharsNoWhitespace.contains(optionalLabelValue) should equal(true)
     }
@@ -97,7 +97,7 @@ final class PrivateKeeperDetailsIntegrationSpec extends UiSpec with TestHarness 
       val pageCharsNoWhitespace = whitespaceRegex.replaceAllIn(pageChars, "")
       val optionalLabelValue = "Emailaddress(optional)"
 
-      pageCharsNoWhitespace.contains(optionalLabelValue) should equal(true)
+      pageCharsNoWhitespace.contains(optionalLabelValue) should equal(false)
     }
   }
 
@@ -106,14 +106,14 @@ final class PrivateKeeperDetailsIntegrationSpec extends UiSpec with TestHarness 
       go to BeforeYouStartPage
       cacheSetup()
       navigate()
-      page.title should equal("Select the address of the buyer")
+      page.title should equal("Select new keeper address")
     }
 
     "go to the appropriate next page when mandatory private keeper details are entered" taggedAs UiTag in new WebBrowser {
       go to BeforeYouStartPage
       cacheSetup()
       navigate(email = "")
-      page.title should equal("Select the address of the buyer")
+      page.title should equal("Select new keeper address")
     }
 
     "display one validation error message when no title is entered" taggedAs UiTag in new WebBrowser {

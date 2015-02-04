@@ -6,44 +6,43 @@ import models.NewKeeperDetailsViewModel.NewKeeperDetailsCacheKey
 import pages.changekeeper.BusinessKeeperDetailsPage.{FleetNumberValid, BusinessNameValid}
 import pages.changekeeper.HelpPage
 import play.api.libs.json.{Json, Writes}
-import uk.gov.dvla.vehicles.presentation.common
-import common.clientsidesession.{ClearTextClientSideSession, ClientSideSessionFactory, CookieFlags}
-import models.SeenCookieMessageCacheKey
-import models.HelpCacheKey
-import models.VehicleLookupFormModel
-import models.PrivateKeeperDetailsFormModel
 import models.BusinessKeeperDetailsFormModel
+import models.CompleteAndConfirmFormModel
+import models.CompleteAndConfirmResponseModel
+import models.CompleteAndConfirmResponseModel.ChangeKeeperCompletionResponseCacheKey
+import models.HelpCacheKey
 import models.NewKeeperChooseYourAddressFormModel
 import models.NewKeeperDetailsViewModel
 import models.NewKeeperEnterAddressManuallyFormModel
-import models.CompleteAndConfirmFormModel
-import models.CompleteAndConfirmResponseModel
-import uk.gov.dvla.vehicles.presentation.common.model.BruteForcePreventionModel.BruteForcePreventionViewModelCacheKey
+import models.NewKeeperEnterAddressManuallyFormModel.NewKeeperEnterAddressManuallyCacheKey
+import models.PrivateKeeperDetailsFormModel
+import models.PrivateKeeperDetailsFormModel.PrivateKeeperDetailsCacheKey
+import models.SeenCookieMessageCacheKey
+import models.VehicleLookupFormModel
+import models.VehicleLookupFormModel.{VehicleLookupResponseCodeCacheKey, VehicleLookupFormModelCacheKey}
+import org.joda.time.{DateTime, LocalDate}
+import pages.changekeeper.CompleteAndConfirmPage.MileageValid
+import pages.changekeeper.CompleteAndConfirmPage.DayDateOfSaleValid
+import pages.changekeeper.CompleteAndConfirmPage.MonthDateOfSaleValid
+import pages.changekeeper.CompleteAndConfirmPage.YearDateOfSaleValid
+import pages.changekeeper.PrivateKeeperDetailsPage.{FirstNameValid, LastNameValid, EmailValid, DriverNumberValid}
+import pages.changekeeper.PrivateKeeperDetailsPage.{DayDateOfBirthValid, MonthDateOfBirthValid, YearDateOfBirthValid, PostcodeValid}
+import play.api.mvc.Cookie
+import uk.gov.dvla.vehicles.presentation.common
+import common.clientsidesession.{ClearTextClientSideSession, ClientSideSessionFactory, CookieFlags}
+import common.mappings.TitleType
+import common.model.{BruteForcePreventionModel, AddressModel, VehicleAndKeeperDetailsModel}
+import common.model.BruteForcePreventionModel.BruteForcePreventionViewModelCacheKey
+import common.model.VehicleAndKeeperDetailsModel.VehicleAndKeeperLookupDetailsCacheKey
+import common.views.models.{AddressLinesViewModel, AddressAndPostcodeViewModel}
+import views.changekeeper.VehicleLookup.VehicleSoldTo_Private
 import webserviceclients.fakes.FakeAddressLookupService.{BuildingNameOrNumberValid, Line2Valid, Line3Valid, PostTownValid}
 import webserviceclients.fakes.FakeAddressLookupWebServiceImpl.UprnValid
 import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.RegistrationNumberValid
 import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.ReferenceNumberValid
 import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.VehicleMakeValid
 import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.VehicleModelValid
-import models.VehicleLookupFormModel.{VehicleLookupResponseCodeCacheKey, VehicleLookupFormModelCacheKey}
-import views.changekeeper.VehicleLookup.VehicleSoldTo_Private
-import uk.gov.dvla.vehicles.presentation.common.model.VehicleAndKeeperDetailsModel.VehicleAndKeeperLookupDetailsCacheKey
-import uk.gov.dvla.vehicles.presentation.common.model.{BruteForcePreventionModel, AddressModel, VehicleAndKeeperDetailsModel}
-import org.joda.time.{DateTime, LocalDate}
-import pages.changekeeper.PrivateKeeperDetailsPage.{FirstNameValid, LastNameValid, EmailValid, DriverNumberValid}
-import pages.changekeeper.PrivateKeeperDetailsPage.{DayDateOfBirthValid, MonthDateOfBirthValid, YearDateOfBirthValid, PostcodeValid}
-import models.PrivateKeeperDetailsFormModel.PrivateKeeperDetailsCacheKey
 import webserviceclients.fakes.brute_force_protection.FakeBruteForcePreventionWebServiceImpl.MaxAttempts
-import models.NewKeeperEnterAddressManuallyFormModel.NewKeeperEnterAddressManuallyCacheKey
-import uk.gov.dvla.vehicles.presentation.common.views.models.{AddressLinesViewModel, AddressAndPostcodeViewModel}
-import pages.changekeeper.CompleteAndConfirmPage.MileageValid
-import pages.changekeeper.CompleteAndConfirmPage.DayDateOfSaleValid
-import pages.changekeeper.CompleteAndConfirmPage.MonthDateOfSaleValid
-import pages.changekeeper.CompleteAndConfirmPage.YearDateOfSaleValid
-import scala.Some
-import play.api.mvc.Cookie
-import uk.gov.dvla.vehicles.presentation.common.mappings.TitleType
-import models.CompleteAndConfirmResponseModel.ChangeKeeperCompletionResponseCacheKey
 import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.{TransactionIdValid, TransactionTimestampValid}
 
 object CookieFactoryForUnitSpecs extends TestComposition {

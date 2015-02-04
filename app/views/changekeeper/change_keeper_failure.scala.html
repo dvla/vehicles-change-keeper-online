@@ -13,8 +13,8 @@
 ) {
 
     <div class="two-col clearfix">
-        <div class="first-col">
 
+        <div class="first-col">
             <div class="print-only">
                 <h2>@Messages("change_keeper_failure.complete.header")</h2>
                 <p>@Messages("change_keeper_failure.complete.p1")</p>
@@ -41,18 +41,20 @@
             </div>
         </div>
 
-
         <div class="form-steps">
             <div class="step">
-                <button id="printDisposalSuccess" type="button" name="action" value="printDisposalSuccess" class="button js-only print-button">@Messages("change_keeper_failure.buttonnavprint")</button>
+                <button id="printDisposalSuccess" type="button" name="action" value="printDisposalSuccess" class="button js-only print-button">
+                    @Messages("change_keeper_failure.buttonnavprint")
+                </button>
             </div>
             <div class="step">
-            @form(action = controllers.routes.ChangeKeeperFailure.finish()) {
-                @csrfTokenHiddenField()
-                <button id="@FinishId" type="submit" name="action" class="button button-new-disposal button-secondary">@Messages("change_keeper_failure.finish")</button>
-            }
+                @form(action = controllers.routes.ChangeKeeperFailure.finish()) {
+                    @csrfTokenHiddenField()
+                    <button id="@FinishId" type="submit" name="action" class="button button-new-disposal button-secondary">
+                        @Messages("change_keeper_failure.finish")
+                    </button>
+                }
             </div>
-
         </div>
     </div>
 }

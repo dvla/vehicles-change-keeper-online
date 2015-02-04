@@ -1,5 +1,6 @@
 @tag
 Feature: Minimum Happy Path Acceptance Tests For VehicleAcquireOnline
+
   Background:
     Given the user is on the vehicle look up page
 

@@ -1,5 +1,5 @@
 @tag
-Feature:
+Feature:to view version information of micro services and webapp
 
   Background:
     Given the user is on the version page

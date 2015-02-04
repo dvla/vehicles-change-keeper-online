@@ -4,7 +4,7 @@ import com.google.inject.name.Names
 import com.tzavellas.sse.guice.ScalaModule
 import play.api.{Logger, LoggerLike}
 import uk.gov.dvla.vehicles.presentation.common
-import common.ConfigProperties.getProperty
+import common.ConfigProperties.{getOptionalProperty, booleanProp}
 import common.clientsidesession.AesEncryption
 import common.clientsidesession.ClearTextClientSideSessionFactory
 import common.clientsidesession.ClientSideSessionFactory
@@ -29,6 +29,7 @@ import common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupSer
 import common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupWebService
 import common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupWebServiceImpl
 import common.webserviceclients.acquire.{AcquireServiceImpl, AcquireService, AcquireWebServiceImpl, AcquireWebService}
+import utils.helpers.{ConfigImpl, Config}
 
 /**
  * Provides real implementations of traits
@@ -42,6 +43,9 @@ import common.webserviceclients.acquire.{AcquireServiceImpl, AcquireService, Acq
  */
 class DevModule extends ScalaModule {
   def configure() {
+
+    bind[Config].to[ConfigImpl]
+
     bind[AddressLookupService].to[AddressLookupServiceImpl].asEagerSingleton()
     bind[AddressLookupWebService].to[WebServiceImpl].asEagerSingleton()
 
@@ -64,7 +68,7 @@ class DevModule extends ScalaModule {
   }
 
   protected def bindSessionFactory(): Unit = {
-    if (getProperty("encryptCookies", default = true)) {
+    if (getOptionalProperty[Boolean]("encryptCookies").getOrElse(true)) {
       bind[CookieEncryption].toInstance(new AesEncryption with CookieEncryption)
       bind[CookieNameHashGenerator].toInstance(new Sha1HashGenerator with CookieNameHashGenerator)
       bind[ClientSideSessionFactory].to[EncryptedClientSideSessionFactory].asEagerSingleton()

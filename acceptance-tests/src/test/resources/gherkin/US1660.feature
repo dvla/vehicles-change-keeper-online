@@ -1,5 +1,6 @@
 @tag
-  Feature:
+  Feature:Private keeper postcode validation
+
     Scenario: Poscode Invalid
       Given that the user is on the Private Keeper details page
       When the user enters an invalid postcode

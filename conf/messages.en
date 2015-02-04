@@ -45,9 +45,9 @@ error.titleInvalid = Please select a title from the drop down list.
 error.validFirstName = Must contain between 1 and 25 characters from the following a-z, A-Z, 0-9 and .,- “’ and space
 error.validLastName = Must contain between 1 and 25 characters from the following a-z, A-Z, 0-9 and .,- “’ and space
 error.date.inTheFuture = Date cannot be in the future
-error.date.invalid = Please enter a valid date in the format DD MM YYYY for example 20 3 1976 or 1 03 1976
+error.date.invalid = Please enter a valid date in the format DD MM YYYY for example 02 01 2015
 error.dateOfBirth.inTheFuture = Date cannot be in the future
-error.dateOfBirth.invalid= Please enter a valid date in the format DD MM YYYY for example 20 3 1976 or 1 03 1976
+error.dateOfBirth.invalid = Please enter a valid date in the format DD MM YYYY for example 01 03 1976
 error.dateOfBirth.110yearsInThePast = Date of birth cannot be more than 110 years in the past
 error.fleetNumber = The fleet number can only be a 6 digit number, please try again.
 error.address.characterInvalid = Must only contain valid characters A-Z, 0-9, etc
@@ -125,7 +125,7 @@ change_keeper_vehiclelookup.warning.p2 = Retain or transfer personal registratio
 change_keeper_vehiclelookup.img.h2 = Help finding your V5C document reference number?
 change_keeper_vehiclelookup.img.alt = V5C document reference number
 change_keeper_vehiclelookup.refnumlabel = Latest V5C document reference number
-change_keeper_vehiclelookup.refnumlabel.hint = This is an 11 digit number, (see image for details)
+change_keeper_vehiclelookup.refnumlabel.hint = This is an 11 digit number (see image for details)
 change_keeper_vehiclelookup.vrninputlabel = Vehicle registration number
 change_keeper_vehiclelookup.vrninputlabel.hint = You can find this at the top of the front page of the V5C
 change_keeper_vehiclelookup.backbutton = Back
@@ -136,6 +136,7 @@ change_keeper_vehiclelookup.tradernamelabel = Trader name
 change_keeper_vehiclelookup.traderaddresslabel = Address
 change_keeper_vehiclelookup.traderpostcodelabel = Postcode
 change_keeper_vehiclelookup.traderemaillabel = Email
+change_keeper_vehiclelookup.vehiclesoldto.hint = Do not use this service if you are selling the vehicle to the motor trade.
 change_keeper_vehiclelookup.vehiclesoldto.label = Is the vehicle being sold to a private individual or a business?
 change_keeper_vehiclelookup.vehiclesoldto.private = Private individual
 change_keeper_vehiclelookup.vehiclesoldto.business = Business
@@ -146,18 +147,18 @@ vehicleRegistrationNumber = Vehicle registration number
 documentReferenceNumber = Document reference number
 
 #page 3 - private keeper details
-change_keeper_privatekeeperdetails.title = Enter the details of the person buying this vehicle
-change_keeper_privatekeeperdetails.p1 = We will use these details to create a new vehicle registration certificate (V5C). This person will become the new keeper of the vehicle
+change_keeper_privatekeeperdetails.title = Enter new keeper details
+change_keeper_privatekeeperdetails.p1 = We will use these details to create a new vehicle registration certificate (V5C).
 change_keeper_privatekeeperdetails.nextbutton = Next
 change_keeper_privatekeeperdetails.backbutton = Back
-change_keeper_privatekeeperdetails.p3 = If the details above do not match the vehicle to be sold, please contact the DVLA
+change_keeper_privatekeeperdetails.p3 = If the details above do not match the vehicle to be sold, please contact the DVLA, Swansea, SA99 1DZ
 change_keeper_privatekeeperdetails.firstnamelabel = First name(s)
 change_keeper_privatekeeperdetails.lastnamelabel = Last name
-change_keeper_privatekeeperdetails.dateofbirth.hint = for example, 20 3 1976
+change_keeper_privatekeeperdetails.dateofbirth.hint = For example, 01 03 1976
 change_keeper_privatekeeper_dateofbirth = Date of birth of new keeper
-change_keeper_privatekeeperdetails.drivernumberlabel = Driving license number of new keeper
+change_keeper_privatekeeperdetails.drivernumberlabel = Driving licence number of new keeper
 change_keeper_privatekeeperdetails.drivernumber.hint = For example, MORGA657054SM9IJ
-change_keeper_privatekeeperdetails.emaillabel = Email address
+change_keeper_privatekeeperdetails.emaillabel = Email address of new keeper
 change_keeper_privatekeeperdetails.submitbutton = Next
 change_keeper_privatekeeperdetails.backbutton = Back
 change_keeper_privatekeeperdetails.vehicledetails = Vehicle details
@@ -166,9 +167,9 @@ change_keeper_privatekeeperdetails.vehiclemake = Make
 change_keeper_privatekeeperdetails.vehiclemodel = Model
 
 #page 3 - business keeper details
-change_keeper_businesskeeperdetails.title = Enter the details of the business buying the vehicle
-change_keeper_businesskeeperdetails.p1 = We will use these details to create a new vehicle registration certificate (V5C). This business will become the new keeper of the vehicle
-change_keeper_businesskeeperdetails.p2 = If the details above do not match the vehicle to be sold, please contact the DVLA.
+change_keeper_businesskeeperdetails.title = Enter new business keeper details
+change_keeper_businesskeeperdetails.p1 = We will use these details to create a new vehicle registration certificate (V5C).
+change_keeper_businesskeeperdetails.p2 = If the details above do not match the vehicle to be sold, please contact the DVLA, Swansea, SA99 1DZ
 change_keeper_businesskeeperdetails.p3 = Does the business have a DVLA fleet number?
 change_keeper_businesskeeperdetails.p4 = If it does, please provide it for us to register it into their fleet
 change_keeper_businesskeeperdetails.vehicledetails = Vehicle details
@@ -177,12 +178,12 @@ change_keeper_businesskeeperdetails.vehiclemake = Make
 change_keeper_businesskeeperdetails.vehiclemodel = Model
 change_keeper_businesskeeperdetails.fleetnumber = Fleet number
 change_keeper_businesskeeperdetails.businessname = Business name
-change_keeper_businesskeeperdetails.businessname.hint = If the business buying this vehicle has a DVLA fleet number, please provide it to register this vehicle into their fleet e.g. 012345 or 54321-
-change_keeper_businesskeeperdetails.email = Contact email address
+change_keeper_businesskeeperdetails.businessname.hint = If the business buying this vehicle has a DVLA fleet number, please provide it.
+change_keeper_businesskeeperdetails.email = Email address of new keeper
 change_keeper_businesskeeperdetails.email.hint = An email address for contact if a problem occurs
 change_keeper_businesskeeperdetails.backbutton = Back
 change_keeper_businesskeeperdetails.nextbutton = Next
-change_keeper_businesskeeperdetails.consent = I have the consent of the party named above to notify DVLA that they are the new keeper of this vehicle.
+change_keeper_businesskeeperdetails.consent = I have the consent of the party named to notify DVLA.
 change_keeper_businesskeeperdetails.consentError = You must have the consent of the new keeper to notify DVLA of the purchase of this vehicle
 change_keeper_businesskeeperdetails.postcodelabel = Postcode
 change_keeper_businesskeeperdetails.postcode.hint = e.g. AB1 2BA or AB12BA
@@ -193,8 +194,8 @@ fleetNumber = Fleet number
 change_keeper_email_not_entered = Not entered
 
 #page 4 - new keeper choose your address
-change_keeper_newKeeperChooseYourAddress_addresses_found_title = Select the address of the buyer
-change_keeper_newKeeperChooseYourAddress_no_address_found_title = No address found
+change_keeper_newKeeperChooseYourAddress_addresses_found_title = Select new keeper address
+change_keeper_newKeeperChooseYourAddress_no_address_found_title = Select new keeper address
 change_keeper_newKeeperChooseYourAddress_newBusinessFleetNumber_label = Business fleet number
 change_keeper_newKeeperChooseYourAddress.fleetNumberNotEntered = Not entered
 change_keeper_newKeeperChooseYourAddress_newPrivateKeeperName_label = Name
@@ -209,7 +210,7 @@ change_keeper_newKeeperChooseYourAddress_addressSelect = Choose the new keeper's
 change_keeper_newKeeperChooseYourAddress_addressSelect_label = Choose the new keeper's address
 change_keeper_newKeeperChooseYourAddress.backbutton = Back
 change_keeper_newKeeperChooseYourAddress.submitbutton = Next
-change_keeper_newKeeperChooseYourAddress.manualAddressEntry = My address is not in the list
+change_keeper_newKeeperChooseYourAddress.manualAddressEntry = Address is not in the list
 change_keeper_newKeeperChooseYourAddress.manualAddressEntry.enterManuallyButton = Enter address
 change_keeper_newKeeperChooseYourAddress_noaddressesfound.h2.1 = No address found for that postcode.
 change_keeper_newKeeperChooseYourAddress_noaddressesfound.h2.2 = Please either ''Enter address'' or click ''Back'' to try again.
@@ -217,7 +218,7 @@ change_keeper_newKeeperChooseYourAddress.vehicledetails = Vehicle details
 change_keeper_newKeeperChooseYourAddress.vehiclereg = Registration
 change_keeper_newKeeperChooseYourAddress.vehiclemake = Make
 change_keeper_newKeeperChooseYourAddress.vehiclemodel = Model
-change_keeper_newKeeperChooseYourAddress.p4 = If the details above do not match the vehicle to be sold, please contact the DVLA.
+change_keeper_newKeeperChooseYourAddress.p4 = If the details above do not match the vehicle to be sold, please contact the DVLA, Swansea, SA99 1DZ
 change_keeper_newKeeperChooseYourAddress.address.required = Please select a valid address
 
 #page 4 [optional] - new keeper manual address entry
@@ -229,14 +230,14 @@ change_keeper_newKeeperEnterAddressManually.vehicleReg = Registration
 change_keeper_newKeeperEnterAddressManually.vehicleMake = Make
 change_keeper_newKeeperEnterAddressManually.vehicleModel = Model
 change_keeper_newKeeperEnterAddressManually.p1 = As we do not have an address for this postcode, please enter one below
-change_keeper_newKeeperEnterAddressManually.p4 = If the details above do not match the vehicle to be sold, please contact the DVLA.
+change_keeper_newKeeperEnterAddressManually.p4 = If the details above do not match the vehicle to be sold, please contact the DVLA, Swansea, SA99 1DZ
 
 #page 5 - complete and confirm
 change_keeper_completeAndConfirm.title = Complete and confirm
 change_keeper_completeandconfirm.taxOrSorn = Tax or SORN
 change_keeper_completeandconfirm.sornEntered = SORN from today
 change_keeper_completeandconfirm.sornNotEntered = This vehicle is taxed, or will be taxed
-change_keeper_completeandconfirm.newkeeperDetails = Buyer''s Details
+change_keeper_completeandconfirm.newkeeperDetails = New Keeper Details
 change_keeper_completeandconfirm.displayName = Name
 change_keeper_completeandconfirm.address = Address
 change_keeper_completeandconfirm.email = Email
@@ -254,16 +255,17 @@ change_keeper_completeAndConfirm.submitbutton = Confirm sale
 change_keeper_completeAndConfirm.backbutton = Back
 change_keeper_privatekeeperdetailscomplete.mileage.validation  = You must enter a valid mileage between 0 and 999999
 change_keeper_completeAndConfirm.dateofsale.label = Date of sale
-change_keeper_completeandconfirm.dateofsale.hint = For example, 20 3 1976
+change_keeper_completeandconfirm.dateofsale.hint = For example, 02 01 2015
 dateofsale = Date of sale
 mileage = Mileage
 consent = Consent
-change_keeper_keeperdetailscomplete.consent = I have the consent of the party named above to notify DVLA that they are the new keeper of this vehicle.
+change_keeper_keeperdetailscomplete.consent = I have the consent of the party named to notify DVLA.
 change_keeper_keeperdetailscomplete.consentError = You must have the consent of the new keeper to notify DVLA of the purchase of this vehicle
 
 #page 6 - acquire success
 change_keeper_success.complete.header = Thank You
 change_keeper_success.complete.p1 = The application is being processed
+change_keeper_success.complete.p2 = Please ensure that you pass the V5C/2 (Green Slip) to the new keeper of the vehicle. Please destroy V5C.
 change_keeper_success.transaction_details.header = Transaction details
 change_keeper_success.transaction_details.transaction_id = Transaction ID
 change_keeper_success.transaction_details.transaction_date = Transaction date
@@ -288,12 +290,16 @@ change_keeper_success.vehicle_details.name = Name
 change_keeper_success.vehicle_details.address = Address
 change_keeper_success.vehicle_details.postcode = Postcode
 change_keeper_success.vehicle_details.email = Contact email address
-change_keeper_success.further_information.alert = Please print this page and give it to the buyer with the V5C/2 slip from the vehicle registration certificate (V5C)
+change_keeper_success.further_information.alert = Please destroy V5C. You may wish to take a print of this summary page for your records
 change_keeper_success.vehicle_details.p1 = Details of the vehicle being sold
-change_keeper_success.new_keeper_details.p1 = Details of the buyer who will become the new keeper on the new registration certificate
-change_keeper_success.further_information.header = What happens next?
-change_keeper_success.further_information.p1 = Within 5 working days we will send a new vehicle registration certificate (V5C) to the buyer who is the new keeper
-change_keeper_success.further_information.p2 = If they do not receive a new V5C in one week they must contact DVLA Customer Enquiries on 0300 790 6802
+change_keeper_success.new_keeper_details.p1 = Details of the new keeper who will become the new keeper
+change_keeper_success.further_information.header = What happens next for you?
+change_keeper_success.further_information.header.2 = What happens next for the new keeper?
+change_keeper_success.further_information.p1 = Within 5 working days we will send a new vehicle registration certificate (V5C) to the new keeper.
+change_keeper_success.further_information.p2 = If they do not receive a new V5C in 2 weeks they must contact DVLA Customer Enquiries on 0300 790 6802.
+change_keeper_success.further_information.p3 = We will send you (the previous keeper) an acknowledgement letter within 4 weeks. If you do not receive a letter in this time then please contact DVLA Customer Enquiries on 0300 790 6802 as you could still be liable for this vehicle.
+change_keeper_success.further_information.p4 = DVLA will automatically issue a refund for any full remaining months of vehicle tax and cancel any direct debits (DD). The refund will be send to the address on the V5C.
+change_keeper_success.further_information.p5 = You may wish to take a print of this summary for your records.
 change_keeper_success.buttonnavprint = Print
 change_keeper_success.finish = Finish
 
@@ -366,23 +372,23 @@ acquire_privatekeeperdetails.titlelabel = Title
 acquire_privatekeeperdetails.firstnamelabel = First name(s)
 acquire_privatekeeperdetails.lastnamelabel =Last name
 acquire_privatekeeperdetails.emaillabel = Email address
-acquire_privatekeeperdetails.p1 = Enter the details of the person buying this vehicle.
+acquire_privatekeeperdetails.p1 = Enter new keeper details
 acquire_privatekeeperdetails.p2 = These details will be used to create a new registration certificate (V5C).
-acquire_privatekeeperdetails.p3 = If the details above do not match the vehicle to be sold, please contact the DVLA.
+acquire_privatekeeperdetails.p3 = If the details above do not match the vehicle to be sold, please contact the DVLA, Swansea, SA99 1DZ
 privatekeeper_title = Title
 privatekeeper_email = Email
 privatekeeper_firstname = First name
 privatekeeper_lastname = Last name
-use_todays_date.label = Use today's date
+use_todays_date.label = Use today''s date
 privatekeeper_postcode = Postcode
 dateOfBirthInput.label = Date of Birth
-dateOfBirthInput.hint = for example, 20 3 1976
+dateOfBirthInput.hint = For example, 01 03 1976
 privatekeeper_drivernumber = Driver number
-acquire_privatekeeperdetails.drivernumberlabel = Driving license number of new keeper
+acquire_privatekeeperdetails.drivernumberlabel = Driving licence number of new keeper
 acquire_privatekeeperdetails.drivernumber.hint = For example, MORGA657054SM9IJ
 acquire_privatekeeperdetails.postcodelabel = Postcode
 acquire_privatekeeperdetails.postcode.hint = e.g. AB1 2BA or AB12BA
-acquire_privatekeeperdetails.dateofbirth.hint = for example, 20 3 1976
+acquire_privatekeeperdetails.dateofbirth.hint = For example, 01 03 1976
 privatekeeper_dateofbirth = Date of birth of new keeper
 
 #vehicle tax or sorn
@@ -491,3 +497,61 @@ common_feedback.message = Please don't include any Personal of financial informa
 common_feedback.label = What went wrong, if anything? What went well? How could we improve this service?
 common_feedback.placeholder = (Limit is 1200 characters)
 common_feedback.submit_button = Submit feedback
+common_feedback.thankyou = Thank you for your feedback
+common_feedback.subject = Private sale of a vehicle - Feedback
+
+# Cookie policy
+footer.cookies = Cookies
+cookie-policy-title = Cookies
+cookie-policy-p1 = Small files (known as ‘cookies’) are put onto your computer to collect information about how you browse the site.
+cookie-policy-p2 = Cookies are used to:
+cookie-policy-p3 = measure how you use the website so it can be updated and improved based on your needs
+cookie-policy-p4 = remember the notifications you’ve seen so that you’re not shown them again
+cookie-policy-p5 = GOV.UK cookies aren’t used to identify you personally.
+cookie-policy-p6 = You’ll normally see a message on the site before a cookie is stored on your computer.
+cookie-policy-p7 = Find out more about
+cookie-policy-p8 = how to manage cookies
+cookie-policy-p9 = How cookies are used
+cookie-policy.table.name = Cookie name
+cookie-policy.table.purpose = cookie purpose
+cookie-policy.table.expires = expires on
+cookie-policy-p10 = The following cookies are used:
+
+
+cookie-policy.name.google_analytics = Measuring website usage (Google Analytics)
+cookie-policy.name.google_analytics.p1 = Google Analytics software collects information about how you use the site. This is done to help make sure the site is meeting the needs of its users and to help make improvements.
+cookie-policy.name.google_analytics.p2 = Google Analytics stores information about: <ul><li>the pages you visit - how long you spend on each page</li><li>how you got to the site</li><li>what you click on while you’re visiting the site</li></ul>
+cookie-policy.name.google_analytics.p3 = We don’t collect or store your personal information (eg your name or address) so this information can’t be used to identify who you are.
+cookie-policy.name.google_analytics.p4 = Google isn’t allowed to use or share our analytics data. You can <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" data-sso="false">opt out of Google Analytics cookies</a>
+cookie-policy.cookies.google_analytics.utma = Determines the number of unique visitors to the site
+cookie-policy.cookies.google_analytics.utmb = This works with _utmc to calculate the average length of time you spend on our site
+cookie-policy.cookies.google_analytics.utmc = This works with _utmb to calculate when you close your browser
+cookie-policy.cookies.google_analytics.utmz = This provides information about how you reached the site (eg from another website or a search engine)
+cookie-policy.cookies.google_analytics.ga_nextpage_params = This stores data to be sent to Google on the next page you request
+cookie-policy.cookies.google_analytics.GDS_successEvents = These help us identify how you use GOV.UK so we can make the site better
+
+cookie-policy.name.sessions = Session
+cookie-policy.name.sessions.p1 =  A cookie is set to record your session activity.
+cookie-policy.name.sessions.p2 =
+cookie-policy.name.sessions.p3 =
+cookie-policy.name.sessions.p4 =
+cookie-policy.cookies.sessions.mdtp = Stores session data
+
+cookie-policy.name.introductory_message = Our introductory message
+cookie-policy.name.introductory_message.p1 =  You may see a pop-up welcome message when you first visit. A cookie is stored so that your computer knows you’ve seen it and knows not to show it again.
+cookie-policy.name.introductory_message.p2 =
+cookie-policy.name.introductory_message.p3 =
+cookie-policy.name.introductory_message.p4 =
+cookie-policy.cookies.introductory_message.seen_cookie_message = Saves a message to let us know that you have seen our cookie message
+
+
+
+cookie-policy.expires.1month = 1 month
+cookie-policy.expires.4months= 4 months
+cookie-policy.expires.6months = 6 months
+cookie-policy.expires.1year = 1 year
+cookie-policy.expires.2years = 2 years
+cookie-policy.expires.30min = 30 minutes
+cookie-policy.expires.inactivity = After 15 minutes of inactivity or when you close your browser
+cookie-policy.expires.close = When you close your browser
+

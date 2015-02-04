@@ -8,7 +8,7 @@ import pages.changekeeper.{PrivateKeeperDetailsPage, VehicleLookupPage}
 import uk.gov.dvla.vehicles.presentation.common.helpers
 import helpers.webbrowser.{WebBrowserDSL, WebBrowserDriver}
 
-class DobDrivingLicenseEmailFieldsTest(webBrowserDriver: WebBrowserDriver) extends ScalaDsl with EN with WebBrowserDSL with Matchers {
+class PrivateKeeperOptionalFieldsSteps(webBrowserDriver: WebBrowserDriver) extends ScalaDsl with EN with WebBrowserDSL with Matchers {
 
   implicit val webDriver = webBrowserDriver.asInstanceOf[WebDriver]
 

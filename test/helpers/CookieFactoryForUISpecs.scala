@@ -6,27 +6,47 @@ import models.BusinessKeeperDetailsFormModel.BusinessKeeperDetailsCacheKey
 import models.CompleteAndConfirmResponseModel.ChangeKeeperCompletionResponseCacheKey
 import models.NewKeeperDetailsViewModel.NewKeeperDetailsCacheKey
 import models.PrivateKeeperDetailsFormModel.PrivateKeeperDetailsCacheKey
-import models.{BusinessKeeperDetailsFormModel, CompleteAndConfirmFormModel, CompleteAndConfirmResponseModel, NewKeeperDetailsViewModel, PrivateKeeperDetailsFormModel, VehicleLookupFormModel}
+import models.BusinessKeeperDetailsFormModel
+import models.CompleteAndConfirmFormModel
+import models.CompleteAndConfirmResponseModel
+import models.NewKeeperDetailsViewModel
+import models.PrivateKeeperDetailsFormModel
+import models.VehicleLookupFormModel
 import models.VehicleLookupFormModel.{VehicleLookupFormModelCacheKey, VehicleLookupResponseCodeCacheKey}
 import org.joda.time.{DateTime, LocalDate}
 import org.openqa.selenium.{Cookie, WebDriver}
 import pages.changekeeper.BusinessKeeperDetailsPage.{BusinessNameValid, FleetNumberValid}
-import pages.changekeeper.CompleteAndConfirmPage.{ConsentTrue, DayDateOfSaleValid, MileageValid, MonthDateOfSaleValid, YearDateOfSaleValid}
-import pages.changekeeper.PrivateKeeperDetailsPage.{DayDateOfBirthValid, DriverNumberValid, EmailValid, FirstNameValid, LastNameValid, ModelValid, MonthDateOfBirthValid, PostcodeValid, YearDateOfBirthValid}
+import pages.changekeeper.CompleteAndConfirmPage.ConsentTrue
+import pages.changekeeper.CompleteAndConfirmPage.DayDateOfSaleValid
+import pages.changekeeper.CompleteAndConfirmPage.MileageValid
+import pages.changekeeper.CompleteAndConfirmPage.MonthDateOfSaleValid
+import pages.changekeeper.CompleteAndConfirmPage.YearDateOfSaleValid
+import pages.changekeeper.PrivateKeeperDetailsPage.DayDateOfBirthValid
+import pages.changekeeper.PrivateKeeperDetailsPage.DriverNumberValid
+import pages.changekeeper.PrivateKeeperDetailsPage.EmailValid
+import pages.changekeeper.PrivateKeeperDetailsPage.FirstNameValid
+import pages.changekeeper.PrivateKeeperDetailsPage.LastNameValid
+import pages.changekeeper.PrivateKeeperDetailsPage.MonthDateOfBirthValid
+import pages.changekeeper.PrivateKeeperDetailsPage.PostcodeValid
+import pages.changekeeper.PrivateKeeperDetailsPage.YearDateOfBirthValid
 import play.api.Play
 import play.api.Play.current
 import play.api.libs.json.{Json, Writes}
-import uk.gov.dvla.vehicles.presentation.common
 import uk.gov.dvla.vehicles.presentation.common.controllers.AlternateLanguages.{CyId, EnId}
 import uk.gov.dvla.vehicles.presentation.common.mappings.TitleType
 import uk.gov.dvla.vehicles.presentation.common.model.BruteForcePreventionModel.BruteForcePreventionViewModelCacheKey
 import uk.gov.dvla.vehicles.presentation.common.model.VehicleAndKeeperDetailsModel.VehicleAndKeeperLookupDetailsCacheKey
-import uk.gov.dvla.vehicles.presentation.common.model.{AddressModel, BruteForcePreventionModel, VehicleAndKeeperDetailsModel, VehicleDetailsModel}
-import uk.gov.dvla.vehicles.presentation.common.model.VehicleDetailsModel.VehicleLookupDetailsCacheKey
+import uk.gov.dvla.vehicles.presentation.common.model.AddressModel
+import uk.gov.dvla.vehicles.presentation.common.model.BruteForcePreventionModel
+import uk.gov.dvla.vehicles.presentation.common.model.VehicleAndKeeperDetailsModel
 import views.changekeeper.VehicleLookup.VehicleSoldTo_Private
 import webserviceclients.fakes.FakeAddressLookupService.{BuildingNameOrNumberValid, Line2Valid, Line3Valid, PostTownValid}
 import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService
-import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.{RegistrationNumberValid, TransactionIdValid, TransactionTimestampValid, VehicleMakeValid, VehicleModelValid}
+import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.RegistrationNumberValid
+import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.TransactionIdValid
+import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.TransactionTimestampValid
+import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.VehicleMakeValid
+import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.VehicleModelValid
 import webserviceclients.fakes.brute_force_protection.FakeBruteForcePreventionWebServiceImpl.MaxAttempts
 
 object CookieFactoryForUISpecs {
@@ -103,20 +123,6 @@ object CookieFactoryForUISpecs {
                                (implicit webDriver: WebDriver) = {
     val key = VehicleLookupResponseCodeCacheKey
     val value = responseCode
-    addCookie(key, value)
-    this
-  }
-
-  def vehicleDetails(registrationNumber: String = RegistrationNumberValid,
-                     vehicleMake: String = VehicleMakeValid,
-                     vehicleModel: String = ModelValid,
-                     disposeFlag: Boolean = false)(implicit webDriver: WebDriver) = {
-    val key = VehicleLookupDetailsCacheKey
-    val value = VehicleDetailsModel(
-      registrationNumber = registrationNumber,
-      vehicleMake,
-      vehicleModel,
-      disposeFlag)
     addCookie(key, value)
     this
   }

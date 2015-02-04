@@ -2,19 +2,20 @@ package gov.uk.dvla.vehicles.keeper.stepdefs
 
 import cucumber.api.java.en.{Then, When, Given}
 import cucumber.api.scala.{EN, ScalaDsl}
+import pages.changekeeper
 import uk.gov.dvla.vehicles.presentation.common.helpers
 import helpers.webbrowser.{WebBrowserDriver, WebBrowserDSL}
 import org.openqa.selenium.WebDriver
 import org.scalatest.Matchers
 import pages.changekeeper._
 
-class EnterAddressManuallyPageTest(webBrowserDriver: WebBrowserDriver) extends ScalaDsl with EN with WebBrowserDSL with Matchers {
+class KeeperToKeeperAddressFieldsSteps(webBrowserDriver: WebBrowserDriver) extends ScalaDsl with EN with WebBrowserDSL with Matchers {
 
   implicit val webDriver = webBrowserDriver.asInstanceOf[WebDriver]
 
   def goToEnterKeeperAddressManuallyPage() {
     go to VehicleLookupPage
-    VehicleLookupPage.vehicleRegistrationNumber enter "B1"
+    VehicleLookupPage.vehicleRegistrationNumber enter "BF51BNL"
     VehicleLookupPage.documentReferenceNumber enter "11111111111"
     click on VehicleLookupPage.vehicleSoldToPrivateIndividual
     click on VehicleLookupPage.next
@@ -24,6 +25,7 @@ class EnterAddressManuallyPageTest(webBrowserDriver: WebBrowserDriver) extends S
     PrivateKeeperDetailsPage.lastNameTextBox enter "nny"
     PrivateKeeperDetailsPage.postcodeTextBox enter "qq99qw"
     click on PrivateKeeperDetailsPage.next
+    page.title shouldEqual NewKeeperChooseYourAddressPage.title
   }
 
   @Given("^that the user is on the Enter Address page$")
@@ -133,7 +135,8 @@ class EnterAddressManuallyPageTest(webBrowserDriver: WebBrowserDriver) extends S
 
   @Then("^the user is taken to the previous Address not found page$")
   def the_user_is_taken_to_the_previous_Address_not_found_page(): Unit = {
-    page.title shouldEqual "No address found"
+    page.title shouldEqual NewKeeperChooseYourAddressPage.title
+    page.text.contains("No address found for that postcode") shouldBe true
   }
 
 }

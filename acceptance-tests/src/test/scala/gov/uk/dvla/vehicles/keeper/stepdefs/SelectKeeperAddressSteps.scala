@@ -1,7 +1,5 @@
 package gov.uk.dvla.vehicles.keeper.stepdefs
 
-import java.util.concurrent.TimeUnit
-
 import cucumber.api.scala.{EN, ScalaDsl}
 import cucumber.api.java.en.{Then, When, Given}
 import org.openqa.selenium.WebDriver
@@ -9,15 +7,14 @@ import org.scalatest.Matchers
 import pages.changekeeper._
 import uk.gov.dvla.vehicles.presentation.common.helpers
 import helpers.webbrowser.{WebBrowserDSL, WebBrowserDriver}
-import helpers.webbrowser.WebDriverFactory
 
-class SelectKeeperAddressTest(webBrowserDriver: WebBrowserDriver) extends ScalaDsl with EN with WebBrowserDSL with Matchers {
+class SelectKeeperAddressSteps(webBrowserDriver: WebBrowserDriver) extends ScalaDsl with EN with WebBrowserDSL with Matchers {
 
   implicit val webDriver = webBrowserDriver.asInstanceOf[WebDriver]
 
   def goToSelectKeeperAddressPage() {
     go to VehicleLookupPage
-    VehicleLookupPage.vehicleRegistrationNumber enter "B1"
+    VehicleLookupPage.vehicleRegistrationNumber enter "BF51BVB"
     VehicleLookupPage.documentReferenceNumber enter "11111111111"
     click on VehicleLookupPage.vehicleSoldToPrivateIndividual
     click on VehicleLookupPage.next

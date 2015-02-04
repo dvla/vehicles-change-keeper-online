@@ -33,12 +33,13 @@
     </div>
 
     <div class="second-col">
+        <h1>@Messages("change_keeper_newKeeperEnterAddressManually.title")</h1>
         <div class="enter-address-manually uppercase-input sr-only-labels">
             @form(action = controllers.routes.NewKeeperEnterAddressManually.submit()) {
             @csrfTokenHiddenField()
             <p>@Messages("change_keeper_newKeeperEnterAddressManually.p1")</p>
 
-            @addressAndPostcode(viewModel.form(AddressAndPostcodeId), args = Map('_postTownMaxLength -> 20))
+            @addressAndPostcode(viewModel.form(AddressAndPostcodeId))
 
             <legend>@Messages("address.postcode.label")</legend>
             <div class="read-only-input">@newKeeperPostcode</div>

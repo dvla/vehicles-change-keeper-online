@@ -16,7 +16,7 @@ final case class BusinessKeeperDetailsFormModel(fleetNumber: Option[String],
 
 object BusinessKeeperDetailsFormModel {
   implicit val JsonFormat = Json.format[BusinessKeeperDetailsFormModel]
-  final val BusinessKeeperDetailsCacheKey = "businessKeeperDetails"
+  final val BusinessKeeperDetailsCacheKey = s"${CacheKeyPrefix}businessKeeperDetails"
   implicit val Key = CacheKey[BusinessKeeperDetailsFormModel](BusinessKeeperDetailsCacheKey)
 
   object Form {

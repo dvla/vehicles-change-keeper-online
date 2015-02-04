@@ -1,0 +1,2 @@
+vehicleRegistrationNumber,documentReferenceNumber,vehicleSoldTo,expected_registrationNumberFormatted,expected_make,expected_model,fleetNumber,businessName,businessEmail,businessPostcode,expected_buyerName,expected_buyerAddressLine1,expected_buyerAddressLine2,expected_buyerAddressPostcode,consent,mileage,dateDay,dateMonth,dateYear,expected_transactionId,expected_transactionDate
+A1,11111111111,Business,A 1,Ford,Focus,54321-,Test business,business@gmail.com,qq99qq,TEST BUSINESS,Not real street,Not real town,QQ9 9QQ,true,20000,01,01,2015,A1-11111111111,01/01/2015

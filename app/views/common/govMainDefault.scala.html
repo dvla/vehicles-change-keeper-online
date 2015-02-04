@@ -70,6 +70,7 @@
                 <div class="footer-meta">
                     <div class="footer-meta-inner">
                         <ul>
+                            <li><a href="@routes.CookiePolicyController.present()" target="_blank">@Messages("footer.cookies")</a></li>
                             <li>@{Messages("footer.builtbyintro")}&nbsp;<a href="https://www.gov.uk/government/organisations/driver-and-vehicle-licensing-agency" target="_blank">@{Messages("footer.builtby")}</a></li>
                         </ul>
                         <div class="open-government-licence">
@@ -106,14 +107,14 @@
 
         <script type="text/javascript">document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');</script>
 
-        @if(config.googleAnalyticsTrackingId != "NOT FOUND") {
+        @if(config.googleAnalyticsTrackingId.isDefined) {
             <script>
                 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
                 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
                 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
                 })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-                ga('create', '@{config.googleAnalyticsTrackingId}', 'auto');
+                ga('create', '@{config.googleAnalyticsTrackingId.get}', 'auto');
                 ga('set', 'anonymizeIp', true);
                 ga('send', 'pageview');
             </script>

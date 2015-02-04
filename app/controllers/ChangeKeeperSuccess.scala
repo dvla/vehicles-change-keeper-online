@@ -1,15 +1,18 @@
 package controllers
 
 import com.google.inject.Inject
-import models._
+import models.AllCacheKeys
+import models.ChangeKeeperCompletionViewModel
+import models.CompleteAndConfirmFormModel
+import models.CompleteAndConfirmResponseModel
+import models.NewKeeperDetailsViewModel
 import play.api.Logger
 import play.api.mvc.{Action, Controller}
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.ClientSideSessionFactory
 import common.clientsidesession.CookieImplicits.{RichCookies, RichResult}
-import uk.gov.dvla.vehicles.presentation.common.model.{VehicleAndKeeperDetailsModel, TraderDetailsModel, VehicleDetailsModel}
+import common.model.VehicleAndKeeperDetailsModel
 import utils.helpers.Config
-import scala.Some
 
 class ChangeKeeperSuccess @Inject()()(implicit clientSideSessionFactory: ClientSideSessionFactory,
                                        config: Config) extends Controller {

@@ -24,6 +24,7 @@
     <script src="@routes.Assets.at("lib/vehicles-presentation-common/javascripts/autofill-todays-date.js")" type="text/javascript"></script>
 
     <div class="two-col clearfix acquire-complete-confirm">
+
         <div class="first-col">
             <dl class="playback">
                 <dt><h2>@Messages("change_keeper_completeandconfirm.newkeeperDetails")</h2></dt>
@@ -58,10 +59,20 @@
         </div>
 
         <div class="second-col">
+
+            <h1>@Messages("change_keeper_completeAndConfirm.title")</h1>
+
             @form(action = CompleteAndConfirm.submit) {
                 @csrfTokenHiddenField()
 
-                <p>@Messages("change_keeper_completeAndConfirm.p1")</p>
+                @valtechDeclareCheck(
+                    data.form(ConsentId),
+                    args = Map(
+                        '_showConstraints -> false,
+                        'autofocus -> true,
+                        '_label -> Messages("change_keeper_keeperdetailscomplete.consent")
+                    )
+                )
 
                 @valtechInputText(data.form(MileageId),
                     hintText = Some(Messages("change_keeper_completeAndConfirm.mileage.hint")),
@@ -69,7 +80,6 @@
                         '_showConstraints -> false,
                         'typeTel -> true,
                         'maxLength -> Mileage.MaxLength, // Must be set independently of the pattern as the pattern is only checked when the user submits.
-                        'autofocus -> true,
                         'optionalFieldKey -> true
                         //'title -> Messages("change_keeper_keeperdetailscomplete.mileage.validation")
                     ) ++
@@ -89,14 +99,6 @@
                         hintText = Some(Messages("change_keeper_completeandconfirm.dateofsale.hint"))
                     )
                 </div>
-
-                @valtechDeclareCheck(
-                    data.form(ConsentId),
-                    args = Map(
-                        '_showConstraints -> false,
-                        '_label -> Messages("change_keeper_keeperdetailscomplete.consent")
-                    )
-                )
 
                 <div class="form-steps">
                     <button id="@SubmitId"

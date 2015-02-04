@@ -1,5 +1,5 @@
 @tag
-  Feature:
+  Feature: Business keeper page filed validation
 
     Scenario:Fleet number - label
       Given that the user has selected Business on the vehicle lookup page
@@ -31,7 +31,7 @@
       When  the user select the submit control
       Then  there is a fleet number error message displayed "Fleet number - The fleet number can only be a 6 digit number, please try again"
 
-    Scenario:
+    Scenario: - Business name field characters length
       Given that the user has selected Business on the vehicle lookup page
       When  the user selects the field labelled Business name
       Then  the user can enter a business name of up to 30 characters
@@ -64,19 +64,31 @@
       When  the user select the submit control
       Then  the system will display an error for invalid email address "Contact email address - Enter a valid email address up to 254 characters"
 
-    Scenario:
+    Scenario: - invalid postcode error message
       Given that the user is on the Enter business keeper details page
-      When the user tries to search on an invalid postcode
-      Then an error message  displays "Postcode - Must be between five and eight characters and in a valid format, e.g. AB1 2BA or AB12BA"
-      And  the user does not progress to the next stage of the service
+      When  the user tries to search on an invalid postcode
+      Then  an error message  displays "Postcode - Must be between five and eight characters and in a valid format, e.g. AB1 2BA or AB12BA"
+      And   the user does not progress to the next stage of the service
 
-    Scenario:
+    Scenario: - blank postcode
       Given that the user is on the Enter business keeper details page
-      When the user tries to search on a blank postcode
-      Then an error message  displays "Postcode - Must be between five and eight characters and in a valid format, e.g. AB1 2BA or AB12BA"
-      And the user does not progress to the next stage of the service
+      When  the user tries to search on a blank postcode
+      Then  an error message  displays "Postcode - Must be between five and eight characters and in a valid format, e.g. AB1 2BA or AB12BA"
+      And   the user does not progress to the next stage of the service
 
-    Scenario:
+    Scenario: - valid postcode
       Given that the user is on the Enter business keeper details page
-      When the user tries to search on a valid postcode
-      Then the user is presented with a list of matching addresses
+      When  the user tries to search on a valid postcode
+      Then  the user is presented with a list of matching addresses
+
+    Scenario: - special characters in business name
+      Given that the user is on the Enter business keeper details page
+      When  the user enters special characters in businessname with valid data in rest of the fields
+      Then  the user will sucessfully navigate to next page
+
+    Scenario: - special characters in business name
+      Given that the user is on the Enter business keeper details page
+      When  the user enters special charcters at the start of the business name
+      Then  the user will receive an error message "Business name - Must be between 2 and 30 characters and only contain valid characters (a-z, A-Z, 0-9, &, -,(), /, ‘ and , or .). The following characters cannot be used at the start of business name (&,-,(), /, ‘ and , or .)"
+      And   will remain in the same page instead of progress to next page
+

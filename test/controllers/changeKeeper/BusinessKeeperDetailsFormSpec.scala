@@ -1,5 +1,6 @@
 package controllers.changeKeeper
 
+import composition.WithApplication
 import controllers.BusinessKeeperDetails
 import helpers.UnitSpec
 import models.BusinessKeeperDetailsFormModel.Form.{FleetNumberId, BusinessNameId, EmailId, PostcodeId}
@@ -9,14 +10,14 @@ import uk.gov.dvla.vehicles.presentation.common.mappings.BusinessKeeperName
 class BusinessKeeperDetailsFormSpec extends UnitSpec {
 
   "form" should {
-    "accept if form is completed with all fields correct" in {
+    "accept if form is completed with all fields correct" in new WithApplication {
       val model = formWithValidDefaults().get
       model.fleetNumber should equal(Some(FleetNumberValid))
       model.businessName should equal(BusinessNameValid.toUpperCase)
       model.email should equal(Some(EmailValid))
     }
 
-    "accept if form is completed with mandatory fields only" in {
+    "accept if form is completed with mandatory fields only" in new WithApplication {
       val model = formWithValidDefaults(
         fleetNumber = "",
         email = "").get
@@ -25,7 +26,7 @@ class BusinessKeeperDetailsFormSpec extends UnitSpec {
       model.email should equal(None)
     }
 
-    "reject if form has no fields completed" in {
+    "reject if form has no fields completed" in new WithApplication {
       formWithValidDefaults(fleetNumber = "", businessName = "", email = "").
         errors.flatMap(_.messages) should contain theSameElementsAs
         List("error.minLength", "error.required", "error.validBusinessKeeperName")
@@ -33,7 +34,7 @@ class BusinessKeeperDetailsFormSpec extends UnitSpec {
   }
 
   "businessName" should {
-    "reject if business name is blank" in {
+    "reject if business name is blank" in new WithApplication {
       // IMPORTANT: The messages being returned by the form validation are overridden by the Controller
       val errors = formWithValidDefaults(businessName = "").errors
       errors should have length 3
@@ -45,44 +46,44 @@ class BusinessKeeperDetailsFormSpec extends UnitSpec {
       errors(2).message should equal("error.validBusinessKeeperName")
     }
 
-    "reject if business keeper name is less than minimum length" in {
+    "reject if business keeper name is less than minimum length" in new WithApplication {
       formWithValidDefaults(businessName = "A").errors.flatMap(_.messages) should contain theSameElementsAs
         List("error.minLength")
     }
 
-    "reject if business keeper name is more than the maximum length" in {
+    "reject if business keeper name is more than the maximum length" in new WithApplication {
       formWithValidDefaults(businessName = "A" * BusinessKeeperName.MaxLength + 1)
         .errors.flatMap(_.messages) should contain theSameElementsAs List("error.maxLength")
     }
   }
 
   "postcode" should {
-    "reject if postcode is empty" in {
+    "reject if postcode is empty" in new WithApplication {
       formWithValidDefaults(postcode = "M15A").errors.flatMap(_.messages) should contain theSameElementsAs
         List("error.minLength", "error.restricted.validPostcode")
     }
 
-    "reject if postcode is less than the minimum length" in {
+    "reject if postcode is less than the minimum length" in new WithApplication {
       formWithValidDefaults(postcode = "M15A").errors.flatMap(_.messages) should contain theSameElementsAs
         List("error.minLength", "error.restricted.validPostcode")
     }
 
-    "reject if postcode is more than the maximum length" in {
+    "reject if postcode is more than the maximum length" in new WithApplication {
       formWithValidDefaults(postcode = "SA99 1DDD").errors.flatMap(_.messages) should contain theSameElementsAs
         List("error.maxLength", "error.restricted.validPostcode")
     }
 
-    "reject if postcode contains special characters" in {
+    "reject if postcode contains special characters" in new WithApplication {
       formWithValidDefaults(postcode = "SA99 1D$").errors.flatMap(_.messages) should contain theSameElementsAs
         List("error.restricted.validPostcode")
     }
 
-    "reject if postcode contains an incorrect format" in {
+    "reject if postcode contains an incorrect format" in new WithApplication {
       formWithValidDefaults(postcode = "SAR99").errors.flatMap(_.messages) should contain theSameElementsAs
         List("error.restricted.validPostcode")
     }
 
-    "accept when a valid postcode is entered" in {
+    "accept when a valid postcode is entered" in new WithApplication {
       val model = formWithValidDefaults(postcode = PostcodeValid).get
       model.postcode should equal(PostcodeValid)
     }

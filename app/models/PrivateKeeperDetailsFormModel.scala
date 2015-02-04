@@ -29,7 +29,7 @@ case class PrivateKeeperDetailsFormModel(title: TitleType,
 object PrivateKeeperDetailsFormModel {
   implicit val JsonFormatTitleType = Json.format[TitleType]
   implicit val JsonFormat = Json.format[PrivateKeeperDetailsFormModel]
-  final val PrivateKeeperDetailsCacheKey = "privateKeeperDetails"
+  final val PrivateKeeperDetailsCacheKey = s"${CacheKeyPrefix}privateKeeperDetails"
   implicit val Key = CacheKey[PrivateKeeperDetailsFormModel](PrivateKeeperDetailsCacheKey)
   private val NameRegEx = """^[a-zA-Z0-9\s\-\"\,\.\']{1,}$""".r
 

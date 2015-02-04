@@ -11,13 +11,13 @@ import uk.gov.dvla.vehicles.presentation.common.clientsidesession.ClientSideSess
 import MicroServiceError.MicroServiceErrorRefererCacheKey
 import org.mockito.Mockito.when
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{LOCATION, OK, REFERER, contentAsString, defaultAwaitTimeout, status}
+import play.api.test.Helpers.{LOCATION, SERVICE_UNAVAILABLE, REFERER, contentAsString, defaultAwaitTimeout, status}
 import utils.helpers.Config
 
 final class MicroServiceErrorUnitSpec extends UnitSpec  {
   "present" should {
     "display the page" in new WithApplication {
-      status(present) should equal(OK)
+      status(present) should equal(SERVICE_UNAVAILABLE)
     }
 
     "not display progress bar" in new WithApplication {
@@ -33,6 +33,7 @@ final class MicroServiceErrorUnitSpec extends UnitSpec  {
       implicit val clientSideSessionFactory = injector.getInstance(classOf[ClientSideSessionFactory])
       implicit val config: Config = mock[Config]
       when(config.isPrototypeBannerVisible).thenReturn(false) // Stub this config value.
+      when(config.googleAnalyticsTrackingId).thenReturn(None) // Stub this config value.
       val microServiceErrorPrototypeNotVisible = new MicroServiceError()
 
       val result = microServiceErrorPrototypeNotVisible.present(request)
@@ -82,6 +83,6 @@ final class MicroServiceErrorUnitSpec extends UnitSpec  {
     }
   }
 
-  private val microServiceError = injector.getInstance(classOf[MicroServiceError])
+  private lazy val microServiceError = injector.getInstance(classOf[MicroServiceError])
   private lazy val present = microServiceError.present(FakeRequest())
 }

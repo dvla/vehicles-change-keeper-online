@@ -1,5 +1,6 @@
 package controllers.changeKeeper
 
+import composition.TestConfig
 import controllers.changeKeeper.Common.PrototypeHtml
 import controllers.{PrivateKeeperDetails, CompleteAndConfirm}
 import helpers.UnitSpec
@@ -39,7 +40,7 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
     "not display prototype message when config set to false" in new WithApplication {
       val request = FakeRequest()
       implicit val clientSideSessionFactory = injector.getInstance(classOf[ClientSideSessionFactory])
-      implicit val config: Config = mock[Config]
+      implicit val config: Config = mock[Config] //TestConfig
       implicit val dateService = injector.getInstance(classOf[DateService])
       when(config.isPrototypeBannerVisible).thenReturn(false)
 

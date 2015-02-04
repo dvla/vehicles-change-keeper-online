@@ -2,30 +2,35 @@ package controllers
 
 import com.google.inject.Inject
 import email.EmailMessageBuilder
-import models.CompleteAndConfirmFormModel._
-import models._
+import models.CompleteAndConfirmFormModel
+import models.CompleteAndConfirmFormModel.AllowGoingToCompleteAndConfirmPageCacheKey
 import models.CompleteAndConfirmFormModel.Form.{MileageId, ConsentId}
+import models.CompleteAndConfirmResponseModel
+import models.CompleteAndConfirmViewModel
+import models.NewKeeperDetailsViewModel
+import models.NewKeeperEnterAddressManuallyFormModel
+import models.VehicleLookupFormModel
+import models.VehicleNewKeeperCompletionCacheKeys
 import org.joda.time.DateTime
 import org.joda.time.format.ISODateTimeFormat
 import play.api.data.{FormError, Form}
-import play.api.mvc.{Action, AnyContent, Controller, Request}
 import play.api.Logger
-import uk.gov.dvla.vehicles.presentation.common.webserviceclients.common.{VssWebEndUserDto, VssWebHeaderDto}
-import uk.gov.dvla.vehicles.presentation.common.webserviceclients.acquire.{AcquireService,
-        AcquireResponseDto, AcquireRequestDto, TitleTypeDto, KeeperDetailsDto}
+import play.api.mvc.{Action, AnyContent, Controller, Request}
+import play.api.mvc.Call
+import play.api.mvc.Result
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import uk.gov.dvla.vehicles.presentation.common
+import common.webserviceclients.common.{VssWebEndUserDto, VssWebHeaderDto}
+import common.webserviceclients.acquire.{AcquireService, AcquireResponseDto, AcquireRequestDto, TitleTypeDto, KeeperDetailsDto}
 import common.clientsidesession.ClientSideSessionFactory
 import common.clientsidesession.CookieImplicits.{RichCookies, RichForm, RichResult}
-import uk.gov.dvla.vehicles.presentation.common.model.VehicleAndKeeperDetailsModel
-import uk.gov.dvla.vehicles.presentation.common.services.{SEND, DateService}
+import common.model.VehicleAndKeeperDetailsModel
+import common.services.{SEND, DateService}
 import common.views.helpers.FormExtensions.formBinding
+import common.mappings.TitleType
 import utils.helpers.Config
-import uk.gov.dvla.vehicles.presentation.common.mappings.TitleType
-import play.api.mvc.Call
 import views.html.changekeeper.complete_and_confirm
-import play.api.mvc.Result
 
 class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSideSessionFactory: ClientSideSessionFactory,
                                                                dateService: DateService,
@@ -204,7 +209,7 @@ class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSi
       newKeeperDetailsViewModel.businessName,
       newKeeperDetailsViewModel.firstName,
       newKeeperDetailsViewModel.lastName,
-      newKeeperDetailsViewModel.dateOfBirth map (dob => dob.toString()),
+      dateOfBirth,
       getAddressLines(keeperAddress, 4),
       getPostTownFromAddress(keeperAddress).getOrElse(""),
       getPostCodeFromAddress(keeperAddress).getOrElse(""),
@@ -258,7 +263,7 @@ class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSi
    VssWebHeaderDto(transactionId = trackingId,
    originDateTime = new DateTime,
    applicationCode = config.applicationCode,
-   serviceTypeCode = config.serviceTypeCode,
+   serviceTypeCode = config.vssServiceTypeCode,
    buildEndUser())
  }
 

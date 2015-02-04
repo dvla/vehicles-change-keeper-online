@@ -40,8 +40,8 @@ object EmailMessageBuilder {
         |If you do not receive your V5C within this time or this information is incorrect then please contact DVLA on
         |<a href="callto:03007906802">0300 790 6802</a>
         |<br />
-        |For more information on the private sale of a vehicle go to <a href="https://www.gov.uk/dvla/xxxxxxxxx">
-        |https://www.gov.uk/dvla/xxxxxxxxx</a>
+        |For more information on driving and transport go to <a href="https://www.gov.uk/browse/driving">
+        |https://www.gov.uk/browse/driving</a>
         |</p>
         |
         |<p>Thank You</p>
@@ -61,7 +61,7 @@ object EmailMessageBuilder {
         |
         |If you do not receive your V5C within this time or this information is incorrect then please contact DVLA on 0300 790 6802
         |
-        |For more information on the private sale of a vehicle go to https://www.gov.uk/dvla/xxxxxxxxx
+        |For more information on driving and transport go to https://www.gov.uk/browse/driving
         |
         |Thank You
       """.stripMargin

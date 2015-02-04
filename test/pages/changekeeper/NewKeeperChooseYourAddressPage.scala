@@ -12,7 +12,7 @@ import org.openqa.selenium.WebDriver
 object NewKeeperChooseYourAddressPage extends Page with WebBrowserDSL {
   final val address = buildAppUrl("new-keeper-choose-your-address")
   override def url: String = WebDriverFactory.testUrl + address.substring(1)
-  final override val title = "Select the address of the buyer"
+  final override val title = "Select new keeper address"
 
   def chooseAddress(implicit driver: WebDriver): SingleSel = singleSel(id(AddressSelectId))
 
