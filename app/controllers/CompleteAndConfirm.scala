@@ -1,16 +1,10 @@
 package controllers
 
 import com.google.inject.Inject
-import email.EmailMessageBuilder
-import models.CompleteAndConfirmFormModel
+import email.{EmailSellerMessageBuilder, EmailMessageBuilder}
+import models._
 import models.CompleteAndConfirmFormModel.AllowGoingToCompleteAndConfirmPageCacheKey
 import models.CompleteAndConfirmFormModel.Form.{MileageId, ConsentId}
-import models.CompleteAndConfirmResponseModel
-import models.CompleteAndConfirmViewModel
-import models.NewKeeperDetailsViewModel
-import models.NewKeeperEnterAddressManuallyFormModel
-import models.VehicleLookupFormModel
-import models.VehicleNewKeeperCompletionCacheKeys
 import org.joda.time.DateTime
 import org.joda.time.format.ISODateTimeFormat
 import play.api.data.{FormError, Form}
@@ -80,12 +74,14 @@ class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSi
           val newKeeperDetailsOpt = request.cookies.getModel[NewKeeperDetailsViewModel]
           val vehicleLookupOpt = request.cookies.getModel[VehicleLookupFormModel]
           val vehicleDetailsOpt = request.cookies.getModel[VehicleAndKeeperDetailsModel]
-          val validFormResult = (newKeeperDetailsOpt, vehicleLookupOpt, vehicleDetailsOpt) match {
-            case (Some(newKeeperDetails), Some(vehicleLookup), Some(vehicleDetails)) =>
+          val sellerEmailModelOpt = request.cookies.getModel[SellerEmailModel]
+          val validFormResult = (newKeeperDetailsOpt, vehicleLookupOpt, vehicleDetailsOpt, sellerEmailModelOpt) match {
+            case (Some(newKeeperDetails), Some(vehicleLookup), Some(vehicleDetails), Some(sellerEmailModel)) =>
               acquireAction(validForm,
                 newKeeperDetails,
                 vehicleLookup,
                 vehicleDetails,
+                sellerEmailModel,
                request.cookies.trackingId)
             case _ => Future.successful {
               Logger.warn("Could not find expected data in cache on dispose submit - now redirecting to VehicleLookup...")
@@ -135,6 +131,7 @@ class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSi
                             newKeeperDetailsView: NewKeeperDetailsViewModel,
                             vehicleLookup: VehicleLookupFormModel,
                             vehicleDetails: VehicleAndKeeperDetailsModel,
+                            sellerEmailModel: SellerEmailModel,
                             trackingId: String)
                            (implicit request: Request[AnyContent]): Future[Result] = {
 
@@ -145,7 +142,7 @@ class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSi
 
     webService.invoke(disposeRequest, trackingId).map {
       case (httpResponseCode, response) =>
-        Some(Redirect(nextPage(httpResponseCode, response)(vehicleDetails, newKeeperDetailsView)))
+        Some(Redirect(nextPage(httpResponseCode, response)(vehicleDetails, newKeeperDetailsView, sellerEmailModel)))
           .map(_.withCookie(CompleteAndConfirmResponseModel(response.get.transactionId, transactionTimestamp)))
           .map(_.withCookie(completeAndConfirmForm))
           .get
@@ -157,10 +154,12 @@ class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSi
   }
 
   def nextPage(httpResponseCode: Int, response: Option[AcquireResponseDto])
-              (vehicleDetails: VehicleAndKeeperDetailsModel, keeperDetails: NewKeeperDetailsViewModel) =
+              (vehicleDetails: VehicleAndKeeperDetailsModel,
+               keeperDetails: NewKeeperDetailsViewModel,
+                sellerEmailModel: SellerEmailModel) =
     response match {
       case Some(r) if r.responseCode.isDefined => handleResponseCode(r.responseCode.get)
-      case _ => handleHttpStatusCode(httpResponseCode)(vehicleDetails, keeperDetails)
+      case _ => handleHttpStatusCode(httpResponseCode)(vehicleDetails, keeperDetails, sellerEmailModel)
     }
 
   def buildMicroServiceRequest(vehicleLookup: VehicleLookupFormModel,
@@ -229,10 +228,13 @@ class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSi
     }
 
   def handleHttpStatusCode(statusCode: Int)
-                          (vehicleDetails: VehicleAndKeeperDetailsModel, keeperDetails: NewKeeperDetailsViewModel): Call =
+                          (vehicleDetails: VehicleAndKeeperDetailsModel,
+                           keeperDetails: NewKeeperDetailsViewModel,
+                            sellerEmailModel: SellerEmailModel): Call =
     statusCode match {
       case OK =>
         //send the email
+        createAndSendSellerEmail(vehicleDetails, sellerEmailModel.email)
         createAndSendEmail(vehicleDetails, keeperDetails)
         //redirect
         routes.ChangeKeeperSuccess.present()
@@ -321,6 +323,21 @@ class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSi
         // This sends the email.
         SEND email template withSubject vehicleDetails.registrationNumber to emailAddr send
 
-      case None => Logger.error(s"tried to send an email with no keeper details")
+      case None => Logger.info(s"tried to send an email with no keeper details")
+    }
+
+  def createAndSendSellerEmail(vehicleDetails: VehicleAndKeeperDetailsModel, sellerEmail: Option[String]) =
+    sellerEmail match {
+      case Some(emailAddr) =>
+        import scala.language.postfixOps
+
+        import SEND._ // Keep this local so that we don't pollute rest of the class with unnecessary imports.
+
+        implicit val emailConfiguration = config.emailConfiguration
+        val template = EmailSellerMessageBuilder.buildWith(vehicleDetails)
+
+        // This sends the email.
+        SEND email template withSubject vehicleDetails.registrationNumber to emailAddr send
+      case None => Logger.info(s"tried to send a receipt to seller but no email was found")
     }
 }
