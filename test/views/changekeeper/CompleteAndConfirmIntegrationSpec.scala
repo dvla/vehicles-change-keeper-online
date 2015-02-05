@@ -303,20 +303,6 @@ import play.api.test.FakeApplication
 //    }
 //  }
 
-  "use todays date" should {
-    "input todays date into date of sale for a new keeper" taggedAs UiTag in new WebBrowserWithJs {
-      go to BeforeYouStartPage
-      cacheSetup()
-      go to CompleteAndConfirmPage
-
-      click on useTodaysDate
-
-      dayDateOfSaleTextBox.value should equal (DateOfAcquisitionDayValid)
-      monthDateOfSaleTextBox.value should equal (DateOfAcquisitionMonthValid)
-      yearDateOfSaleTextBox.value should equal (DateOfAcquisitionYearValid)
-    }
-  }
-
   "back" should {
     "display NewKeeperChooseYourAddress when back link is clicked for a new keeper who has selected an address" taggedAs UiTag in new WebBrowser {
       go to BeforeYouStartPage
