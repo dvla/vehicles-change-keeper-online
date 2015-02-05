@@ -147,7 +147,7 @@ vehicleSoldTo = Vehicle sold to
 vehicleRegistrationNumber = Vehicle registration number
 documentReferenceNumber = Document reference number
 vehicleSellerEmail = Seller email
-change_keeper_vehiclelookup.selleremail = Seller's email address
+change_keeper_vehiclelookup.selleremail = Seller''s email address
 change_keeper_selleremail.hint = We will send you confirmation of this sale.
 
 #page 3 - private keeper details
