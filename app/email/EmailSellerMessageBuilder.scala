@@ -9,16 +9,16 @@ import uk.gov.dvla.vehicles.presentation.common.services.SEND
  * with new html and text templates respectively.
  *
  */
-object EmailMessageBuilder {
-  import SEND.Contents
+object EmailSellerMessageBuilder {
+  import uk.gov.dvla.vehicles.presentation.common.services.SEND.Contents
 
-  def buildWith(vehicleDetails: VehicleAndKeeperDetailsModel, keeperDetails: NewKeeperDetailsViewModel): Contents =
+  def buildWith(vehicleDetails: VehicleAndKeeperDetailsModel): Contents =
     Contents (
-      buildHtml(vehicleDetails, keeperDetails),
-      buildText(vehicleDetails, keeperDetails)
+      buildHtml(vehicleDetails),
+      buildText(vehicleDetails)
     )
 
-  private def buildHtml(vehicleDetails: VehicleAndKeeperDetailsModel, keeperDetails: NewKeeperDetailsViewModel): String =
+  private def buildHtml(vehicleDetails: VehicleAndKeeperDetailsModel): String =
     s"""
         |<html>
         |<head>
@@ -32,11 +32,12 @@ object EmailMessageBuilder {
         |<body>
         |<p><b>THIS IS AN AUTOMATED EMAIL - PLEASE DO NOT REPLY.</b></p>
         |<p>Dear Sir / Madam</p>
-        |<p>We have been notified that you are now the registered keeper of this vehicle.
+        |
+        |<p>Thank you for telling us you are no longer the registered keeper of this vehicle.
         |<br />
-        |You should receive your registration certificate (V5C) within 2 weeks.
+        |You should receive a postal acknowledgement letter within 4 weeks.
         |<br />
-        |If you do not receive your V5C within this time or this information is incorrect then please contact DVLA on
+        |If you do not receive it within this time or this information is incorrect then please contact DVLA on
         |<a href="callto:03007906802">0300 790 6802</a>
         |<br />
         |For more information on driving and transport go to <a href="https://www.gov.uk/browse/driving">
@@ -48,17 +49,18 @@ object EmailMessageBuilder {
         |</html>
       """.stripMargin
 
-  private def buildText(vehicleDetails: VehicleAndKeeperDetailsModel, keeperDetails: NewKeeperDetailsViewModel): String =
+  private def buildText(vehicleDetails: VehicleAndKeeperDetailsModel): String =
     s"""
         |THIS IS AN AUTOMATED EMAIL - PLEASE DO NOT REPLY.
         |
         |
         |Dear Sir / Madam
-        |We have been notified that you are now the registered keeper of this vehicle.
         |
-        |You should receive your registration certificate (V5C) within 2 weeks.
+        |Thank you for telling us you are no longer the registered keeper of this vehicle.
         |
-        |If you do not receive your V5C within this time or this information is incorrect then please contact DVLA on 0300 790 6802
+        |You should receive a postal acknowledgement letter within 4 weeks.
+        |
+        |If you do not receive it within this time or this information is incorrect then please contact DVLA on  0300 790 6802
         |
         |For more information on driving and transport go to https://www.gov.uk/browse/driving
         |

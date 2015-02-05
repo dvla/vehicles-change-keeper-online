@@ -6,13 +6,14 @@ config: utils.helpers.Config)
 @import views.changekeeper.VehicleLookup.{BackId, SubmitId, VehicleSoldTo_Private, VehicleSoldTo_Business}
 @import views.changekeeper.BeforeYouStart.NextId
 @import views.html.helper.form
-@import models.VehicleLookupFormModel.Form.{DocumentReferenceNumberId, VehicleRegistrationNumberId, VehicleSoldToId}
+@import models.VehicleLookupFormModel.Form.{DocumentReferenceNumberId, VehicleRegistrationNumberId,VehicleSoldToId, VehicleSellerEmail}
 @import uk.gov.dvla.vehicles.presentation.common
 @import common.mappings.{DocumentReferenceNumber, VehicleRegistrationNumber}
 @import common.views.html.widgets.base.csrfTokenHiddenField
 @import common.views.helpers.BaseTemplate.fieldConstructor
 @import common.views.html.widgets.base.valtechInputText
 @import common.views.html.widgets.listRadioGroup
+@import common.mappings.Email.EmailMaxLength
 
 @main(
 progress = Some(Messages("change_keeper_progress_2")),
@@ -29,7 +30,7 @@ currentForm = Some(viewModel.form)
         </div>
     </div>
 
-    <div class="second-col uppercase-input">
+    <div class="second-col">
 
         <div class="form-steps">
             <div class="step uppercase-input">
@@ -45,7 +46,8 @@ currentForm = Some(viewModel.form)
                            'autofocus -> true
                 )
                 )
-
+            </div>
+            <div class="step uppercase-input">
                 @valtechInputText(viewModel.form(DocumentReferenceNumberId),
                 hintText = Some(Messages("change_keeper_vehiclelookup.refnumlabel.hint")),
                 args = Map('_label -> Messages("change_keeper_vehiclelookup.refnumlabel"),
@@ -55,6 +57,15 @@ currentForm = Some(viewModel.form)
                            //'title -> Messages("error.validDocumentReferenceNumber")
                            'title -> Messages("")) ++ // [SKW] for accessibility Tony removed have 'title text as the screen reader reads it twice, the knock-on effect is that our custom validation messages aren't displayed so the user has no idea what is wrong.
                 (if(config.isHtml5ValidationEnabled) Map('pattern -> DocumentReferenceNumber.Pattern) else Nil)
+                )
+            </div>
+
+                @valtechInputText(viewModel.form(VehicleSellerEmail),
+                    hintText = Some(Messages("change_keeper_selleremail.hint")),
+                    args = Map('_label -> Messages("change_keeper_vehiclelookup.selleremail"),
+                        '_showConstraints -> false,
+                        'maxLength -> EmailMaxLength
+                    )
                 )
 
                 <h3>@Messages("change_keeper_vehiclelookup.vehiclesoldto.label")</h3>
@@ -85,7 +96,6 @@ currentForm = Some(viewModel.form)
 
                 }
 
-            </div>
         </div>
 
     </div>

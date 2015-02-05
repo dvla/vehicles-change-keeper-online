@@ -57,6 +57,7 @@ error.validDriverNumber = The Driver Number that you have entered does not appea
 error.fleetNumber = The fleet number can only be a 6 digit number, please try again.
 error.titlePlusFirstName.tooLong = The combined length of your Title e.g. Mr/Mrs/Miss etc and First name(s) cannot exceed 26 characters. Please amend your entry and re-submit.
 error.validDocumentReferenceNumber = Document reference number must be an 11-digit number
+error.validSellerEmail = Enter a valid email address up to 254 characters.
 
 datePlaceholder.day=Day
 datePlaceholder.month=Month
@@ -145,6 +146,9 @@ change_keeper_vehiclelookup.img.alt = V5C document reference number
 vehicleSoldTo = Vehicle sold to
 vehicleRegistrationNumber = Vehicle registration number
 documentReferenceNumber = Document reference number
+vehicleSellerEmail = Seller email
+change_keeper_vehiclelookup.selleremail = Seller's email address
+change_keeper_selleremail.hint = We will send you confirmation of this sale.
 
 #page 3 - private keeper details
 change_keeper_privatekeeperdetails.title = Enter new keeper details

@@ -1,16 +1,13 @@
 package controllers
 
 import com.google.inject.Inject
-import models.VehicleLookupViewModel
-import models.VehicleLookupFormModel
+import models._
 import models.VehicleLookupFormModel.VehicleLookupResponseCodeCacheKey
-import models.VehicleLookupFormModel.Form.{DocumentReferenceNumberId, VehicleRegistrationNumberId, VehicleSoldToId}
-import models.{BusinessKeeperDetailsCacheKeys, PrivateKeeperDetailsCacheKeys}
+import models.VehicleLookupFormModel.Form.{DocumentReferenceNumberId, VehicleRegistrationNumberId,
+        VehicleSoldToId, VehicleSellerEmail}
 import org.joda.time.DateTime
 import play.api.data.{Form => PlayForm, FormError}
 import play.api.mvc.{Action, Call, Request}
-import uk.gov.dvla.vehicles.presentation.common.webserviceclients.common.DmsWebEndUserDto
-import uk.gov.dvla.vehicles.presentation.common.webserviceclients.common.DmsWebHeaderDto
 import uk.gov.dvla.vehicles.presentation.common.webserviceclients.common.DmsWebHeaderDto
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -83,6 +80,9 @@ class VehicleLookup @Inject()(val bruteForceService: BruteForcePreventionService
       ).replaceError(
         VehicleSoldToId,FormError(
           key = VehicleSoldToId, message = "error.validBougtByType", args = Seq.empty)
+      ).replaceError(
+        VehicleSellerEmail,FormError(
+      key = VehicleSellerEmail, message = "error.validSellerEmail", args = Seq.empty)
       ).distinctErrors
   }
 
@@ -100,15 +100,18 @@ class VehicleLookup @Inject()(val bruteForceService: BruteForcePreventionService
           VehicleNotFound(responseCode)
         case None =>
           response.vehicleAndKeeperDetailsDto match {
-            case Some(dto) => VehicleFound(vehicleFoundResult(dto, form.vehicleSoldTo))
+            case Some(dto) => VehicleFound(vehicleFoundResult(dto, form.vehicleSoldTo, form.sellerEmail))
             case None => throw new RuntimeException("No vehicleDetailsDto found")
           }
       }
     }
   }
 
-  private def vehicleFoundResult(vehicleAndKeeperDetailsDto: VehicleAndKeeperDetailsDto, soldTo: String)(implicit request: Request[_]) = {
+  private def vehicleFoundResult(vehicleAndKeeperDetailsDto: VehicleAndKeeperDetailsDto,
+                                 soldTo: String,
+                                 sellerEmail: Option[String])(implicit request: Request[_]) = {
     val model = VehicleAndKeeperDetailsModel.from(vehicleAndKeeperDetailsDto)
+    val emailCapture = SellerEmailModel(sellerEmail)
     val (call, discardedCookies) =
       if (soldTo == VehicleSoldTo_Private)
         (routes.PrivateKeeperDetails.present(), BusinessKeeperDetailsCacheKeys)
@@ -117,7 +120,9 @@ class VehicleLookup @Inject()(val bruteForceService: BruteForcePreventionService
 
     Redirect(call).
       discardingCookies(discardedCookies).
-      withCookie(model)
+      withCookie(model).
+      withCookie(emailCapture)
+
   }
 
   private def buildHeader(trackingId: String): DmsWebHeaderDto = {

@@ -4,7 +4,8 @@ import controllers.VehicleLookup
 import helpers.UnitSpec
 import helpers.InvalidVRMFormat.allInvalidVrmFormats
 import helpers.ValidVRMFormat.allValidVrmFormats
-import models.VehicleLookupFormModel.Form.{DocumentReferenceNumberId, VehicleRegistrationNumberId, VehicleSoldToId}
+import models.VehicleLookupFormModel.Form.{DocumentReferenceNumberId, VehicleRegistrationNumberId,
+        VehicleSoldToId, VehicleSellerEmail}
 import org.mockito.Matchers.{any, anyString}
 import org.mockito.Mockito.when
 import play.api.http.Status.OK
@@ -38,6 +39,13 @@ final class VehicleLookupFormSpec extends UnitSpec {
       formWithValidDefaults().get.referenceNumber should equal(ReferenceNumberValid)
       formWithValidDefaults().get.registrationNumber should equal(RegistrationNumberValid)
     }
+
+    "accept when all fields contain valid responses and user entered an email" in new WithApplication {
+      val email = Some("anemail@test.com")
+      formWithValidDefaults().get.referenceNumber should equal(ReferenceNumberValid)
+      formWithValidDefaults().get.registrationNumber should equal(RegistrationNumberValid)
+      formWithValidDefaults(sellerEmail = email).get.sellerEmail should equal (email)
+    }
   }
 
   "referenceNumber" should {
@@ -66,6 +74,11 @@ final class VehicleLookupFormSpec extends UnitSpec {
     "reject if less than min length" in new WithApplication {
       formWithValidDefaults(referenceNumber = "1234567891").errors.flatMap(_.messages) should contain theSameElementsAs
         List("error.minLength")
+    }
+
+    "reject if wrong email is present" in new WithApplication {
+      formWithValidDefaults(sellerEmail = Some("invalid email")).errors.flatMap(_.messages) should contain theSameElementsAs
+        List("error.email")
     }
 
     "reject if greater than max length" in new WithApplication {
@@ -157,13 +170,15 @@ final class VehicleLookupFormSpec extends UnitSpec {
   private def formWithValidDefaults(referenceNumber: String = ReferenceNumberValid,
                                     registrationNumber: String = RegistrationNumberValid,
                                     vehicleSoldTo: String = VehicleSoldTo_Private,
+                                    sellerEmail: Option[String] = None,
                                     consent: String = ConsentValid
                                     ) = {
     vehicleLookupResponseGenerator(vehicleDetailsResponseSuccess).form.bind(
       Map(
         DocumentReferenceNumberId -> referenceNumber,
         VehicleRegistrationNumberId -> registrationNumber,
-        VehicleSoldToId -> vehicleSoldTo
+        VehicleSoldToId -> vehicleSoldTo,
+        VehicleSellerEmail -> sellerEmail.getOrElse("")
       )
     )
   }
