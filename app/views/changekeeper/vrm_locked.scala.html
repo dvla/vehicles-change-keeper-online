@@ -20,12 +20,6 @@ config: utils.helpers.Config)
     
     <div class="form-steps">
         <div class="step">
-            @form(action = controllers.routes.VrmLocked.buyAnotherVehicle()) {
-                @csrfTokenHiddenField()
-                <button id="@BuyAnotherVehicleId" type="submit" class="button">@Messages("vrm_locked.buyanother.button")</button>
-            }
-        </div>
-        <div class="step">
             @form(action = controllers.routes.VrmLocked.exit()) {
                 @csrfTokenHiddenField()
 

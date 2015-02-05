@@ -63,7 +63,7 @@ final class VehicleLookupFailureIntegrationSpec extends UiSpec with TestHarness 
         vehicleLookupResponseCode(responseCode = "300L - vehicle_and_keeper_lookup_vrm_not_found")
 
       go to VehicleLookupFailurePage
-      page.source should include("For each vehicle registration number, only 3 attempts can be made to retrieve the vehicle details.")
+      page.source should include("For each vehicle registration number, only a limited number of attempts can be made to retrieve the vehicle details.")
     }
 
     "display messages that show that the number of brute force attempts does not impact which messages are displayed when 2 attempts have been made" taggedAs UiTag in new WebBrowser {
@@ -75,7 +75,7 @@ final class VehicleLookupFailureIntegrationSpec extends UiSpec with TestHarness 
         vehicleLookupResponseCode(responseCode = "400P - vehicle_and_keeper_lookup_vrm_not_found")
 
       go to VehicleLookupFailurePage
-      page.source should include("For each vehicle registration number, only 3 attempts can be made to retrieve the vehicle details.")
+      page.source should include("For each vehicle registration number, only a limited number of attempts can be made to retrieve the vehicle details.")
     }
 
     "display appropriate messages for document reference mismatch" taggedAs UiTag in new WebBrowser {
@@ -87,7 +87,7 @@ final class VehicleLookupFailureIntegrationSpec extends UiSpec with TestHarness 
         vehicleLookupResponseCode(responseCode = "600K - vehicle_and_keeper_lookup_document_reference_mismatch")
 
       go to VehicleLookupFailurePage
-      page.source should include("For each vehicle registration number, only 3 attempts can be made to retrieve the vehicle details.")
+      page.source should include("For each vehicle registration number, only a limited number of attempts can be made to retrieve the vehicle details.")
     }
   }
 
