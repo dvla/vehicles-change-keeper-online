@@ -11,5 +11,4 @@ import org.junit.runner.RunWith
   tags = Array("@tag")
 )
 class KeeperToKeeperTestRunner {
-
 }

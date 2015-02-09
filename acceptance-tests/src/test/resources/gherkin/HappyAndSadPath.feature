@@ -1,5 +1,5 @@
 @tag
-Feature: Minimum Happy Path Acceptance Tests For VehicleAcquireOnline
+Feature: Minimum Happy and Sad Path Acceptance Tests for Keeper to Keeper
 
   Background:
     Given the user is on the vehicle look up page
@@ -28,7 +28,7 @@ Feature: Minimum Happy Path Acceptance Tests For VehicleAcquireOnline
     Then the user will be on unsuccesful postcode Private keeper complete and confirm page and click on confirm sale button
     And  the user will be taken to Unsuccesful postcode private keeper details page succesful summary page
 
-  Scenario:Private Keeper Happy Path with unsuccessful postcode failure screen
+  Scenario:Private Keeper Sad Path with unsuccessful postcode failure screen
     When the keeper sold the vehicle to the private keeper after entering valid registration and doc ref number and click on submit button
     When the trader entered through unsuccessful postcode lookup private keeper failure data
     Then the user will be on unsuccesful postcode Private keeper complete and confirm page and click on confirm sale button with failure data

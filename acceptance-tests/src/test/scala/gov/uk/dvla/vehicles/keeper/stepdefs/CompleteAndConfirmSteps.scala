@@ -95,8 +95,8 @@ class CompleteAndConfirmSteps(webBrowserDriver: WebBrowserDriver) extends ScalaD
     CompleteAndConfirmPage.yearDateOfSaleTextBox enter "2025"
   }
 
-  @When("^the user is has selected the submit control$")
-  def the_user_is_has_selected_the_submit_control(): Unit = {
+  @When("^the user click on confirm sale button$")
+  def the_user_click_on_confirm_sale_button()  {
     click on CompleteAndConfirmPage.next
   }
 
@@ -111,7 +111,7 @@ class CompleteAndConfirmSteps(webBrowserDriver: WebBrowserDriver) extends ScalaD
   }
 
   @When("^the consent field is not checked$")
-  def the_consent_field_is_not_checked() {
+  def the_consent_field_is_not_checked(): Unit = {
   }
 
   @Then("^the user is not progressed to the next page$")

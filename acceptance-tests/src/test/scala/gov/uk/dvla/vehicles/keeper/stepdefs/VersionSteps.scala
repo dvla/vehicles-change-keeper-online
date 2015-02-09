@@ -14,8 +14,8 @@ import uk.gov.dvla.vehicles.presentation.common.helpers
 import helpers.webbrowser.{WebBrowserDSL, WebBrowserDriver, WebDriverFactory}
 
 class VersionSteps(webBrowserDriver: WebBrowserDriver) extends ScalaDsl with EN with WebBrowserDSL with Matchers {
-  private var versionString: String = null
 
+  private var versionString: String = null
   implicit val webDriver = webBrowserDriver.asInstanceOf[WebDriver]
 
   @Given("^the user is on the version page$")

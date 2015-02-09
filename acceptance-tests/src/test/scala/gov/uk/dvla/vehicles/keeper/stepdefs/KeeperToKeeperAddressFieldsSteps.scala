@@ -2,7 +2,6 @@ package gov.uk.dvla.vehicles.keeper.stepdefs
 
 import cucumber.api.java.en.{Then, When, Given}
 import cucumber.api.scala.{EN, ScalaDsl}
-import pages.changekeeper
 import uk.gov.dvla.vehicles.presentation.common.helpers
 import helpers.webbrowser.{WebBrowserDriver, WebBrowserDSL}
 import org.openqa.selenium.WebDriver
@@ -138,5 +137,4 @@ class KeeperToKeeperAddressFieldsSteps(webBrowserDriver: WebBrowserDriver) exten
     page.title shouldEqual NewKeeperChooseYourAddressPage.title
     page.text.contains("No address found for that postcode") shouldBe true
   }
-
 }

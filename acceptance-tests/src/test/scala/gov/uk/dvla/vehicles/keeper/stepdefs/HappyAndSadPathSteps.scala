@@ -7,7 +7,7 @@ import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.{WebBrowserDS
 import org.scalatest.Matchers
 import pages.changekeeper._
 
-class KeeperToKeeperHappySadPathSteps(webBrowserDriver: WebBrowserDriver) extends ScalaDsl with EN with WebBrowserDSL with Matchers {
+class HappyAndSadPathSteps(webBrowserDriver: WebBrowserDriver) extends ScalaDsl with EN with WebBrowserDSL with Matchers {
 
   implicit val webDriver = webBrowserDriver.asInstanceOf[WebDriver]
 
