@@ -9,7 +9,7 @@ Feature:
 
   Scenario: NewKeeper choose your address - choose to enter address manually
     When the user navigates forwards from NewKeeper choose your address page to the enter address manually page
-    Then the user is taken to the page entitled "Enter an address"
+    Then the user is taken to the page entitled "Enter address"
 
   Scenario: NewKeeper choose your address - Back
     When the user navigates backwards from the NewKeeper choose your address page

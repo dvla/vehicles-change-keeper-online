@@ -69,7 +69,7 @@ class PrivateKeeperDetailsPageSteps(webBrowserDriver: WebBrowserDriver) extends 
   }
 
   @Then("^the user is taken to the page entitled \"(.*?)\"$")
-  def the_user_is_taken_to_the_page_entitled(actualTitleOfThePage:String)  {
+  def the_user_is_taken_to_the_page_entitled(actualTitleOfThePage: String)  {
     page.source should include (actualTitleOfThePage)
   }
 
