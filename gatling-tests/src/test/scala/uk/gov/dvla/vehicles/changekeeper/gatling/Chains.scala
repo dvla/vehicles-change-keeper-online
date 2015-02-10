@@ -15,7 +15,7 @@ class Chains(data: RecordSeqFeederBuilder[String]) {
   private final val NewKeeperChooseYourAddressPageTitle = "Select new keeper address"
   private final val CompleteAndConfirmPageTitle = "Complete and confirm"
   private final val VehicleDetailsPlaybackHeading = "Vehicle details"
-  private final val BuyersDetailsPlaybackHeading = s"New Keeper Details" // TODO change the capitalisation in the app (D -> d)
+  private final val BuyersDetailsPlaybackHeading = s"New keeper details"
   private final val SummaryPageTitle = "Summary"
   private final val TransactionDetailsPlaybackHeading = "Transaction details"
 

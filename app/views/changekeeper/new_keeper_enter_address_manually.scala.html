@@ -37,7 +37,6 @@
         <div class="enter-address-manually uppercase-input sr-only-labels">
             @form(action = controllers.routes.NewKeeperEnterAddressManually.submit()) {
             @csrfTokenHiddenField()
-            <p>@Messages("change_keeper_newKeeperEnterAddressManually.p1")</p>
 
             @addressAndPostcode(viewModel.form(AddressAndPostcodeId))
 
