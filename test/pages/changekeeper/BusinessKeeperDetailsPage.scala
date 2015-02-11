@@ -10,7 +10,7 @@ import org.openqa.selenium.WebDriver
 object BusinessKeeperDetailsPage extends Page with WebBrowserDSL {
   final val address = buildAppUrl("business-keeper-details")
   override def url: String = WebDriverFactory.testUrl + address.substring(1)
-  final override val title: String = "Enter new business keeper details"
+  final override val title: String = "Enter new keeper details"
 
   final val FleetNumberValid = "123456"
   final val BusinessNameValid = "Brand New Motors"

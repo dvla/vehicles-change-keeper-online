@@ -171,7 +171,7 @@ change_keeper_privatekeeperdetails.vehiclemake = Make
 change_keeper_privatekeeperdetails.vehiclemodel = Model
 
 #page 3 - business keeper details
-change_keeper_businesskeeperdetails.title = Enter new business keeper details
+change_keeper_businesskeeperdetails.title = Enter new keeper details
 change_keeper_businesskeeperdetails.p1 = We will use these details to create a new vehicle registration certificate (V5C).
 change_keeper_businesskeeperdetails.p2 = If the details above do not match the vehicle to be sold, please contact the DVLA, Swansea, SA99 1DZ
 change_keeper_businesskeeperdetails.p3 = Does the business have a DVLA fleet number?

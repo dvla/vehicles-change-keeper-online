@@ -13,7 +13,7 @@ Feature:
 
   Scenario: NewKeeper choose your address - Back
     When the user navigates backwards from the NewKeeper choose your address page
-    Then the user is taken to the page entitled "Enter new business keeper details"
+    Then the user is taken to the page entitled "Enter new keeper details"
 
   Scenario: No address selected
     When the user has not selected an address on the Select new keeper address page and click on Next button
