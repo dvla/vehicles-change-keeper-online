@@ -9,7 +9,7 @@ final case class NewKeeperChooseYourAddressFormModel(uprnSelected: String)
 
 object NewKeeperChooseYourAddressFormModel {
   implicit val JsonFormat = Json.format[NewKeeperChooseYourAddressFormModel]
-  final val NewKeeperChooseYourAddressCacheKey = s"${CacheKeyPrefix}newKeeperChooseYourAddress"
+  final val NewKeeperChooseYourAddressCacheKey = s"${CookiePrefix}newKeeperChooseYourAddress"
   implicit val Key = CacheKey[NewKeeperChooseYourAddressFormModel](value = NewKeeperChooseYourAddressCacheKey)
 
   object Form {

@@ -3,10 +3,13 @@ package controllers.changeKeeper
 import controllers.changeKeeper.Common.PrototypeHtml
 import controllers.ChangeKeeperSuccess
 import helpers.{CookieFactoryForUnitSpecs, UnitSpec}
-import models.{BusinessKeeperDetailsFormModel, PrivateKeeperDetailsFormModel, NewKeeperDetailsViewModel}
+import uk.gov.dvla.vehicles.presentation.common
+import models.CookiePrefix
+import models.{PrivateKeeperDetailsFormModel, NewKeeperDetailsViewModel}
 import models.{VehicleLookupFormModel, CompleteAndConfirmFormModel}
 import models.CompleteAndConfirmResponseModel.ChangeKeeperCompletionResponseCacheKey
-import BusinessKeeperDetailsFormModel.BusinessKeeperDetailsCacheKey
+import common.model.BusinessKeeperDetailsFormModel
+import BusinessKeeperDetailsFormModel.businessKeeperDetailsCacheKey
 import CompleteAndConfirmFormModel.CompleteAndConfirmCacheKey
 import NewKeeperDetailsViewModel.NewKeeperDetailsCacheKey
 import PrivateKeeperDetailsFormModel.PrivateKeeperDetailsCacheKey
@@ -131,7 +134,7 @@ class ChangeKeeperSuccessUnitSpec extends UnitSpec {
         verifyCookieHasBeenDiscarded(VehicleLookupFormModelCacheKey, cookies)
         verifyCookieHasBeenDiscarded(NewKeeperDetailsCacheKey, cookies)
         verifyCookieHasBeenDiscarded(PrivateKeeperDetailsCacheKey, cookies)
-        verifyCookieHasBeenDiscarded(BusinessKeeperDetailsCacheKey, cookies)
+        verifyCookieHasBeenDiscarded(businessKeeperDetailsCacheKey, cookies)
         verifyCookieHasBeenDiscarded(CompleteAndConfirmCacheKey, cookies)
         verifyCookieHasBeenDiscarded(ChangeKeeperCompletionResponseCacheKey, cookies)
       }

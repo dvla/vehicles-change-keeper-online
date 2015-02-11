@@ -2,7 +2,6 @@ package controllers
 
 import javax.inject.Inject
 import models.NewKeeperChooseYourAddressFormModel.Form.AddressSelectId
-import models.BusinessKeeperDetailsFormModel
 import models.NewKeeperChooseYourAddressFormModel
 import models.NewKeeperDetailsViewModel
 import models.NewKeeperDetailsViewModel.{createNewKeeper, getTitle}
@@ -16,6 +15,7 @@ import scala.concurrent.Future
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.CookieImplicits.{RichCookies, RichForm, RichResult}
 import common.clientsidesession.ClientSideSessionFactory
+import common.model.BusinessKeeperDetailsFormModel
 import common.model.{VehicleAndKeeperDetailsModel, AddressModel}
 import common.views.helpers.FormExtensions.formBinding
 import common.webserviceclients.addresslookup.AddressLookupService
@@ -23,8 +23,8 @@ import utils.helpers.Config
 import views.html.changekeeper.new_keeper_choose_your_address
 import models.CompleteAndConfirmFormModel.AllowGoingToCompleteAndConfirmPageCacheKey
 import models.NewKeeperChooseYourAddressViewModel
-import scala.Some
 import play.api.mvc.Result
+import models.CookiePrefix
 
 class NewKeeperChooseYourAddress @Inject()(addressLookupService: AddressLookupService)
                                           (implicit clientSideSessionFactory: ClientSideSessionFactory,

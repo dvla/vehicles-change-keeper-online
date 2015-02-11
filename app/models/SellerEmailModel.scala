@@ -9,6 +9,6 @@ final case class SellerEmailModel(email: Option[String])
 
 object SellerEmailModel {
   implicit val JsonFormat = Json.format[SellerEmailModel]
-  final val SellerEmailModelCacheKey = s"${CacheKeyPrefix}sellerEmailModel"
+  final val SellerEmailModelCacheKey = s"${CookiePrefix}sellerEmailModel"
   implicit val Key = CacheKey[SellerEmailModel](SellerEmailModelCacheKey)
 }

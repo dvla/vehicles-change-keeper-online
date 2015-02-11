@@ -4,7 +4,8 @@ import composition.WithApplication
 import controllers.changeKeeper.Common.PrototypeHtml
 import controllers.BusinessKeeperDetails
 import helpers.{CookieFactoryForUnitSpecs, UnitSpec}
-import models.BusinessKeeperDetailsFormModel.Form.{FleetNumberId, BusinessNameId, EmailId, PostcodeId}
+import uk.gov.dvla.vehicles.presentation.common
+import common.model.BusinessKeeperDetailsFormModel.Form.{FleetNumberId, BusinessNameId, EmailId, PostcodeId}
 import org.mockito.Mockito.when
 import pages.changekeeper.BusinessKeeperDetailsPage.{EmailValid, BusinessNameValid, PostcodeValid}
 import pages.changekeeper.VehicleLookupPage

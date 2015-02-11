@@ -9,10 +9,12 @@ import pages.changekeeper.VehicleLookupPage
 import uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction
 import play.api.test.FakeApplication
 import pages.changekeeper.VehicleLookupPage.happyPath
-import models.BusinessKeeperDetailsFormModel.BusinessKeeperDetailsCacheKey
+import models.CookiePrefix
 import models.PrivateKeeperDetailsFormModel.PrivateKeeperDetailsCacheKey
 import helpers.CookieFactoryForUISpecs
 import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.ProgressBar.progressStep
+import uk.gov.dvla.vehicles.presentation.common
+import common.model.BusinessKeeperDetailsFormModel.businessKeeperDetailsCacheKey
 
 class VehicleLookupIntegrationSpec extends UiSpec with TestHarness {
 
@@ -60,7 +62,7 @@ class VehicleLookupIntegrationSpec extends UiSpec with TestHarness {
       go to VehicleLookupPage
       CookieFactoryForUISpecs.businessKeeperDetails()
       happyPath()
-      webDriver.manage().getCookieNamed(BusinessKeeperDetailsCacheKey) should equal(null)
+      webDriver.manage().getCookieNamed(businessKeeperDetailsCacheKey) should equal(null)
     }
 
     "clear privateKeeperDetails when business keeper data is entered" taggedAs UiTag in new WebBrowser {

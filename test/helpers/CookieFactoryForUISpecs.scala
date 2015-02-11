@@ -2,11 +2,10 @@ package helpers
 
 import CookieFactoryForUnitSpecs.VehicleLookupFailureResponseCode
 
-import models.BusinessKeeperDetailsFormModel.BusinessKeeperDetailsCacheKey
+import models.CookiePrefix
 import models.CompleteAndConfirmResponseModel.ChangeKeeperCompletionResponseCacheKey
 import models.NewKeeperDetailsViewModel.NewKeeperDetailsCacheKey
 import models.PrivateKeeperDetailsFormModel.PrivateKeeperDetailsCacheKey
-import models.BusinessKeeperDetailsFormModel
 import models.CompleteAndConfirmFormModel
 import models.CompleteAndConfirmResponseModel
 import models.NewKeeperDetailsViewModel
@@ -39,6 +38,9 @@ import uk.gov.dvla.vehicles.presentation.common.model.VehicleAndKeeperDetailsMod
 import uk.gov.dvla.vehicles.presentation.common.model.AddressModel
 import uk.gov.dvla.vehicles.presentation.common.model.BruteForcePreventionModel
 import uk.gov.dvla.vehicles.presentation.common.model.VehicleAndKeeperDetailsModel
+import uk.gov.dvla.vehicles.presentation.common
+import common.model.BusinessKeeperDetailsFormModel.businessKeeperDetailsCacheKey
+import common.model.BusinessKeeperDetailsFormModel
 import views.changekeeper.VehicleLookup.VehicleSoldTo_Private
 import webserviceclients.fakes.FakeAddressLookupService.{BuildingNameOrNumberValid, Line2Valid, Line3Valid, PostTownValid}
 import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService
@@ -159,7 +161,7 @@ object CookieFactoryForUISpecs {
                             businessName: String = BusinessNameValid,
                             email: Option[String] = Some(EmailValid),
                             postcode: String = PostcodeValid)(implicit webDriver: WebDriver) = {
-    val key = BusinessKeeperDetailsCacheKey
+    val key = businessKeeperDetailsCacheKey
     val value = BusinessKeeperDetailsFormModel(
       fleetNumber = fleetNumber,
       businessName = businessName,

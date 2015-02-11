@@ -1,15 +1,14 @@
 package helpers
 
 import composition.TestComposition
-import models.BusinessKeeperDetailsFormModel.BusinessKeeperDetailsCacheKey
 import models.NewKeeperDetailsViewModel.NewKeeperDetailsCacheKey
 import pages.changekeeper.BusinessKeeperDetailsPage.{FleetNumberValid, BusinessNameValid}
 import pages.changekeeper.HelpPage
 import play.api.libs.json.{Json, Writes}
-import models.BusinessKeeperDetailsFormModel
 import models.CompleteAndConfirmFormModel
 import models.CompleteAndConfirmResponseModel
 import models.CompleteAndConfirmResponseModel.ChangeKeeperCompletionResponseCacheKey
+import models.CookiePrefix
 import models.HelpCacheKey
 import models.NewKeeperChooseYourAddressFormModel
 import models.NewKeeperDetailsViewModel
@@ -33,6 +32,8 @@ import common.clientsidesession.{ClearTextClientSideSession, ClientSideSessionFa
 import common.mappings.TitleType
 import common.model.{BruteForcePreventionModel, AddressModel, VehicleAndKeeperDetailsModel}
 import common.model.BruteForcePreventionModel.BruteForcePreventionViewModelCacheKey
+import common.model.BusinessKeeperDetailsFormModel.businessKeeperDetailsCacheKey
+import common.model.BusinessKeeperDetailsFormModel
 import common.model.VehicleAndKeeperDetailsModel.VehicleAndKeeperLookupDetailsCacheKey
 import common.views.models.{AddressLinesViewModel, AddressAndPostcodeViewModel}
 import views.changekeeper.VehicleLookup.VehicleSoldTo_Private
@@ -153,7 +154,7 @@ object CookieFactoryForUnitSpecs extends TestComposition {
                                  businessName: String = BusinessNameValid,
                                  email: Option[String] = Some(EmailValid),
                                  postcode: String = PostcodeValid) : Cookie = {
-    val key = BusinessKeeperDetailsCacheKey
+    val key = businessKeeperDetailsCacheKey
     val value = BusinessKeeperDetailsFormModel(
       fleetNumber = fleetNumber,
       businessName = businessName,

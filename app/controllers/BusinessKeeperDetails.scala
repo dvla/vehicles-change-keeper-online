@@ -1,66 +1,24 @@
 package controllers
 
 import com.google.inject.Inject
-import models.{BusinessKeeperDetailsViewModel, BusinessKeeperDetailsFormModel}
-import models.NewKeeperChooseYourAddressFormModel.NewKeeperChooseYourAddressCacheKey
-import play.api.data.{FormError, Form}
-import play.api.mvc.{Action, Controller}
-import play.api.Logger
+import play.api.mvc.{Request, Result}
 import utils.helpers.Config
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.ClientSideSessionFactory
-import common.clientsidesession.CookieImplicits.{RichCookies, RichForm, RichResult}
-import common.model.VehicleAndKeeperDetailsModel
-import common.views.helpers.FormExtensions.formBinding
+import uk.gov.dvla.vehicles.presentation.common.model.BusinessKeeperDetailsViewModel
+import uk.gov.dvla.vehicles.presentation.common.controllers.BusinessKeeperDetailsBase
+import models.CookiePrefix
 
-class BusinessKeeperDetails @Inject()()(implicit clientSideSessionFactory: ClientSideSessionFactory,
-                                        config: Config) extends Controller {
+class BusinessKeeperDetails @Inject()()(implicit protected override val clientSideSessionFactory: ClientSideSessionFactory,
+                                        val config: Config) extends BusinessKeeperDetailsBase {
+  protected override def presentResult(model: BusinessKeeperDetailsViewModel)(implicit request: Request[_]): Result =
+    Ok(views.html.changekeeper.business_keeper_details(model))
 
-  private[controllers] val form = Form(
-    BusinessKeeperDetailsFormModel.Form.Mapping
-  )
+  protected def invalidFormResult(model:BusinessKeeperDetailsViewModel)(implicit request: Request[_]): Result =
+    BadRequest(views.html.changekeeper.business_keeper_details(model))
 
-  private final val CookieErrorMessage = "Did not find VehicleDetailsModel cookie. Now redirecting to SetUpTradeDetails."
-
-  def present = Action { implicit request =>
-    request.cookies.getModel[VehicleAndKeeperDetailsModel] match {
-      case Some(vehicleDetails) =>
-        Ok(views.html.changekeeper.business_keeper_details(
-          BusinessKeeperDetailsViewModel(form.fill(), vehicleDetails)
-        ))
-      case _ => redirectToVehicleLookup(CookieErrorMessage)
-    }
-  }
-
-  def submit = Action { implicit request =>
-    form.bindFromRequest.fold(
-      invalidForm => request.cookies.getModel[VehicleAndKeeperDetailsModel] match {
-          case Some(vehicleDetails) =>
-            BadRequest(views.html.changekeeper.business_keeper_details(
-              BusinessKeeperDetailsViewModel(formWithReplacedErrors(invalidForm), vehicleDetails)
-            ))
-          case None => redirectToVehicleLookup(CookieErrorMessage)
-        },
-      validForm => Redirect(routes.NewKeeperChooseYourAddress.present()).withCookie(validForm)
-        .discardingCookie(NewKeeperChooseYourAddressCacheKey)
-    )
-  }
-
-  private def formWithReplacedErrors(form: Form[BusinessKeeperDetailsFormModel]) = {
-    form.replaceError(
-      BusinessKeeperDetailsFormModel.Form.BusinessNameId,
-      FormError(key = BusinessKeeperDetailsFormModel.Form.BusinessNameId,message = "error.validBusinessKeeperName")
-    ).replaceError(
-        BusinessKeeperDetailsFormModel.Form.EmailId,
-        FormError(key = BusinessKeeperDetailsFormModel.Form.EmailId,message = "error.email")
-      ).replaceError(
-        BusinessKeeperDetailsFormModel.Form.PostcodeId,
-        FormError(key = BusinessKeeperDetailsFormModel.Form.PostcodeId,message = "error.restricted.validPostcode")
-      ).distinctErrors
-  }
-
-  private def redirectToVehicleLookup(message:String) = {
-    Logger.warn(message)
+  protected def missingVehicleDetails(implicit request: Request[_]): Result =
     Redirect(routes.VehicleLookup.present())
-  }
+
+  protected def success(implicit request: Request[_]): Result = Redirect(routes.NewKeeperChooseYourAddress.present())
 }

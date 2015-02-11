@@ -11,6 +11,6 @@ final case class ChangeKeeperCompletionViewModel(vehicleAndKeeperDetails: Vehicl
 
 object ChangeKeeperCompletionViewModel {
   implicit val JsonFormat = Json.format[CompleteAndConfirmResponseModel]
-  final val AcquireCompletionCacheKey = s"${CacheKeyPrefix}acquireCompletion"
+  final val AcquireCompletionCacheKey = s"${CookiePrefix}acquireCompletion"
   implicit val Key = CacheKey[CompleteAndConfirmResponseModel](AcquireCompletionCacheKey)
 }

@@ -2,7 +2,8 @@ package pages.changekeeper
 
 import uk.gov.dvla.vehicles.presentation.common.helpers
 import helpers.webbrowser.{Element, Page, TextField, TelField, WebBrowserDSL, WebDriverFactory}
-import models.BusinessKeeperDetailsFormModel.Form.{BusinessNameId, EmailId, FleetNumberId, PostcodeId}
+import uk.gov.dvla.vehicles.presentation.common
+import common.model.BusinessKeeperDetailsFormModel.Form.{BusinessNameId, EmailId, FleetNumberId, PostcodeId}
 import views.changekeeper.BusinessKeeperDetails.{BackId, NextId}
 import org.openqa.selenium.WebDriver
 
