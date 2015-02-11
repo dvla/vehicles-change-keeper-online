@@ -10,6 +10,7 @@ import common.clientsidesession.CookieImplicits.RichCookies
 import common.model.AddressModel
 import common.model.BusinessKeeperDetailsFormModel
 import common.mappings.{TitlePickerString, TitleType}
+import models.K2KCacheKeyPrefix.CookiePrefix
 
 final case class NewKeeperDetailsViewModel(title: Option[TitleType],
                                            firstName: Option[String],

@@ -5,6 +5,7 @@ import play.api.libs.json.Json
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.CacheKey
 import common.mappings.Email.email
+import models.K2KCacheKeyPrefix.CookiePrefix
 import common.mappings.{VehicleRegistrationNumber, DocumentReferenceNumber}
 
 final case class VehicleLookupFormModel(referenceNumber: String,

@@ -7,7 +7,7 @@ import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.ClientSideSessionFactory
 import uk.gov.dvla.vehicles.presentation.common.model.BusinessKeeperDetailsViewModel
 import uk.gov.dvla.vehicles.presentation.common.controllers.BusinessKeeperDetailsBase
-import models.CookiePrefix
+import models.K2KCacheKeyPrefix.CookiePrefix
 
 class BusinessKeeperDetails @Inject()()(implicit protected override val clientSideSessionFactory: ClientSideSessionFactory,
                                         val config: Config) extends BusinessKeeperDetailsBase {

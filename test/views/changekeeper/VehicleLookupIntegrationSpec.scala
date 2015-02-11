@@ -9,7 +9,7 @@ import pages.changekeeper.VehicleLookupPage
 import uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction
 import play.api.test.FakeApplication
 import pages.changekeeper.VehicleLookupPage.happyPath
-import models.CookiePrefix
+import models.K2KCacheKeyPrefix.CookiePrefix
 import models.PrivateKeeperDetailsFormModel.PrivateKeeperDetailsCacheKey
 import helpers.CookieFactoryForUISpecs
 import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.ProgressBar.progressStep

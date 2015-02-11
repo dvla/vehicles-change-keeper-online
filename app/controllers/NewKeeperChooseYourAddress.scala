@@ -9,7 +9,7 @@ import models.NewKeeperEnterAddressManuallyFormModel.NewKeeperEnterAddressManual
 import models.PrivateKeeperDetailsFormModel
 import play.api.data.{Form, FormError}
 import play.api.Logger
-import play.api.mvc.{AnyContent, Action, Controller, Request, Result}
+import play.api.mvc.{AnyContent, Action, Controller, Request}
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import uk.gov.dvla.vehicles.presentation.common
@@ -24,7 +24,7 @@ import views.html.changekeeper.new_keeper_choose_your_address
 import models.CompleteAndConfirmFormModel.AllowGoingToCompleteAndConfirmPageCacheKey
 import models.NewKeeperChooseYourAddressViewModel
 import play.api.mvc.Result
-import models.CookiePrefix
+import models.K2KCacheKeyPrefix.CookiePrefix
 
 class NewKeeperChooseYourAddress @Inject()(addressLookupService: AddressLookupService)
                                           (implicit clientSideSessionFactory: ClientSideSessionFactory,

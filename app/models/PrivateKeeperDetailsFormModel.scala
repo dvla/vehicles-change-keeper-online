@@ -16,9 +16,10 @@ import common.mappings.Postcode.postcode
 import common.views.helpers.FormExtensions.nonEmptyTextWithTransform
 import uk.gov.dvla.vehicles.presentation.common.mappings.{TitleType, TitlePickerString}
 import uk.gov.dvla.vehicles.presentation.common.services.DateService
+import models.K2KCacheKeyPrefix.CookiePrefix
 
 case class PrivateKeeperDetailsFormModel(title: TitleType,
-                                         firstName: String, 
+                                         firstName: String,
                                          lastName: String,
                                          dateOfBirth: Option[LocalDate],
                                          email: Option[String],

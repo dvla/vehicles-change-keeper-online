@@ -2,7 +2,7 @@ package controllers
 
 import com.google.inject.Inject
 import controllers.routes.BeforeYouStart
-import models.CookiePrefix
+import models.K2KCacheKeyPrefix.CookiePrefix
 import play.api.mvc.{Action, Controller}
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.ClientSideSessionFactory

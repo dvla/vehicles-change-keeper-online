@@ -8,7 +8,7 @@ import play.api.libs.json.{Json, Writes}
 import models.CompleteAndConfirmFormModel
 import models.CompleteAndConfirmResponseModel
 import models.CompleteAndConfirmResponseModel.ChangeKeeperCompletionResponseCacheKey
-import models.CookiePrefix
+import models.K2KCacheKeyPrefix.CookiePrefix
 import models.HelpCacheKey
 import models.NewKeeperChooseYourAddressFormModel
 import models.NewKeeperDetailsViewModel

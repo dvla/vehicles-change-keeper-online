@@ -8,6 +8,7 @@ import uk.gov.dvla.vehicles.presentation.common.clientsidesession.CacheKey
 import uk.gov.dvla.vehicles.presentation.common.mappings.Date.{dateMapping, notInTheFuture}
 import uk.gov.dvla.vehicles.presentation.common.mappings.Mileage.mileage
 import uk.gov.dvla.vehicles.presentation.common.services.DateService
+import models.K2KCacheKeyPrefix.CookiePrefix
 
 case class CompleteAndConfirmFormModel(mileage: Option[Int],
                                        dateOfSale: LocalDate,

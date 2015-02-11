@@ -2,7 +2,7 @@ package helpers
 
 import CookieFactoryForUnitSpecs.VehicleLookupFailureResponseCode
 
-import models.CookiePrefix
+import models.K2KCacheKeyPrefix.CookiePrefix
 import models.CompleteAndConfirmResponseModel.ChangeKeeperCompletionResponseCacheKey
 import models.NewKeeperDetailsViewModel.NewKeeperDetailsCacheKey
 import models.PrivateKeeperDetailsFormModel.PrivateKeeperDetailsCacheKey

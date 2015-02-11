@@ -5,7 +5,7 @@ import models.NewKeeperDetailsViewModel.createNewKeeper
 import models.{NewKeeperEnterAddressManuallyFormModel, PrivateKeeperDetailsFormModel}
 import play.api.Logger
 import play.api.data.{Form, FormError}
-import play.api.mvc.{Action, AnyContent, Controller, Request, Result}
+import play.api.mvc.{Action, AnyContent, Controller, Request}
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.ClientSideSessionFactory
 import common.clientsidesession.CookieImplicits.{RichCookies, RichResult, RichForm}
@@ -15,7 +15,7 @@ import common.views.helpers.FormExtensions.formBinding
 import utils.helpers.Config
 import views.html.changekeeper.new_keeper_enter_address_manually
 import models.CompleteAndConfirmFormModel._
-import models.CookiePrefix
+import models.K2KCacheKeyPrefix.CookiePrefix
 import models.NewKeeperChooseYourAddressFormModel.NewKeeperChooseYourAddressCacheKey
 import models.NewKeeperEnterAddressManuallyViewModel
 import play.api.mvc.Result

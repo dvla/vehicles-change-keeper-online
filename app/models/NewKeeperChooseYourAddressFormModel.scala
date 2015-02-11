@@ -4,6 +4,7 @@ import mappings.DropDown
 import play.api.data.Forms.mapping
 import play.api.libs.json.Json
 import uk.gov.dvla.vehicles.presentation.common.clientsidesession.CacheKey
+import models.K2KCacheKeyPrefix.CookiePrefix
 
 final case class NewKeeperChooseYourAddressFormModel(uprnSelected: String)
 

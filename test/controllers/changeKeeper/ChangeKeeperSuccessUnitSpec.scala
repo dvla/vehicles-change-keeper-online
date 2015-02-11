@@ -4,7 +4,7 @@ import controllers.changeKeeper.Common.PrototypeHtml
 import controllers.ChangeKeeperSuccess
 import helpers.{CookieFactoryForUnitSpecs, UnitSpec}
 import uk.gov.dvla.vehicles.presentation.common
-import models.CookiePrefix
+import models.K2KCacheKeyPrefix.CookiePrefix
 import models.{PrivateKeeperDetailsFormModel, NewKeeperDetailsViewModel}
 import models.{VehicleLookupFormModel, CompleteAndConfirmFormModel}
 import models.CompleteAndConfirmResponseModel.ChangeKeeperCompletionResponseCacheKey

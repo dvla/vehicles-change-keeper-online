@@ -3,6 +3,7 @@ package models
 import play.api.libs.json.Json
 import uk.gov.dvla.vehicles.presentation.common.clientsidesession.CacheKey
 import uk.gov.dvla.vehicles.presentation.common.model.VehicleAndKeeperDetailsModel
+import models.K2KCacheKeyPrefix.CookiePrefix
 
 final case class ChangeKeeperCompletionViewModel(vehicleAndKeeperDetails: VehicleAndKeeperDetailsModel,
                                                  newKeeperDetails: NewKeeperDetailsViewModel,
