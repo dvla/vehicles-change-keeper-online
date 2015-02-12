@@ -5,7 +5,7 @@ import uk.gov.dvla.vehicles.presentation.common.testhelpers.UiTag
 import helpers.UiSpec
 import org.openqa.selenium.{By, WebElement}
 import pages.common.ErrorPanel
-import pages.changekeeper.VehicleLookupPage
+import pages.changekeeper.{BeforeYouStartPage, VehicleLookupPage}
 import uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction
 import play.api.test.FakeApplication
 import pages.changekeeper.VehicleLookupPage.happyPath
@@ -116,11 +116,11 @@ class VehicleLookupIntegrationSpec extends UiSpec with TestHarness {
   }
 
   "back" should {
-//    "display previous page when back link is clicked" taggedAs UiTag in new WebBrowser {
-//      go to VehicleLookupPage
-//      click on back
-//      page.title should equal(BeforeYouStartPage.title)
-//    }
+    "display previous page when back link is clicked" taggedAs UiTag in new WebBrowser {
+      go to VehicleLookupPage
+      click on VehicleLookupPage.back
+      page.title should equal(BeforeYouStartPage.title)
+    }
   }
 
   private val fakeAppWithHtml5ValidationEnabledConfig = FakeApplication(
