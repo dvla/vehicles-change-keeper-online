@@ -58,7 +58,10 @@ object FakeVehicleAndKeeperLookupWebService {
       keeperAddressLine3 = Some("a"),
       keeperAddressLine4 = Some("a"),
       keeperPostTown = Some("a"),
-      keeperPostcode = Some("a")
+      keeperPostcode = Some("a"),
+      keeperEndDate = None,
+      disposeFlag = None,
+      suppressedV5Flag = None
     )
 
   val vehicleDetailsResponseSuccess: (Int, Option[VehicleAndKeeperDetailsResponse]) = {

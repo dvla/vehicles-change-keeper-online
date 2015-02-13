@@ -118,7 +118,10 @@ object CookieFactoryForUnitSpecs extends TestComposition {
       title = title,
       firstName = firstName,
       lastName = lastName,
-      address = address
+      address = address,
+      keeperEndDate = None,
+      disposeFlag = None,
+      suppressedV5Flag = None
     )
     createCookie(key, value)
   }

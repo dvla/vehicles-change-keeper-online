@@ -112,11 +112,14 @@ class VehicleLookup @Inject()(val bruteForceService: BruteForcePreventionService
                                  sellerEmail: Option[String])(implicit request: Request[_]) = {
     val model = VehicleAndKeeperDetailsModel.from(vehicleAndKeeperDetailsDto)
     val emailCapture = SellerEmailModel(sellerEmail)
+    val suppressed = model.suppressedV5Flag.getOrElse(false)
+
     val (call, discardedCookies) =
-      if (soldTo == VehicleSoldTo_Private)
-        (routes.PrivateKeeperDetails.present(), BusinessKeeperDetailsCacheKeys)
-      else
-        (routes.BusinessKeeperDetails.present(), PrivateKeeperDetailsCacheKeys)
+      (soldTo, suppressed) match {
+        case (_, true) => (routes.SuppressedV5C.present(), BusinessKeeperDetailsCacheKeys)
+        case (VehicleSoldTo_Private, false) => (routes.PrivateKeeperDetails.present(), BusinessKeeperDetailsCacheKeys)
+        case (_, false) => (routes.BusinessKeeperDetails.present(), PrivateKeeperDetailsCacheKeys)
+      }
 
     Redirect(call).
       discardingCookies(discardedCookies).
