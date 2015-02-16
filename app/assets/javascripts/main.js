@@ -16,7 +16,7 @@ require(["jquery", "jquery-migrate", "header-footer-only", "form-checked-selecti
     }
 
 
-    var hideEmailOnOther= function(radioOtherId, emailId) {
+    var hideEmailOnOther = function(radioOtherId, emailId) {
 
         if (!radioOtherId.length || !emailId.length) {
             return;
@@ -26,10 +26,10 @@ require(["jquery", "jquery-migrate", "header-footer-only", "form-checked-selecti
 
         var checkStateOfRadio = function(radioOtherId, emailId) {
             if(!$(radioOtherId).attr('checked')) {
-                $(emailId).parent().hide(animDuration);
+                $(emailId).parent().hide(animDuration).removeClass('item-visible');
                 $(emailId).val('');
             } else {
-                $(emailId).parent().show(animDuration);
+                $(emailId).parent().show(animDuration).addClass('item-visible');
             }
         };
 
@@ -41,12 +41,9 @@ require(["jquery", "jquery-migrate", "header-footer-only", "form-checked-selecti
 
     };
 
-
-
     $(function() {
 
         hideEmailOnOther('#privatekeeper_title_titleOption_4', '.form-item #privatekeeper_title_titleText');
-
 
         //html5 autofocus fallback for browsers that do not support it natively
         //if form element autofocus is not active, autofocus

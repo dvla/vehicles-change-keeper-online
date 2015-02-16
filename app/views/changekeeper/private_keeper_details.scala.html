@@ -95,8 +95,9 @@
             )
         </div>
 
-        @valtechInputText(privateKeeperDetailsForm(EmailId), args =
-        Map('_label -> Messages("change_keeper_privatekeeperdetails.emaillabel"),
+        @valtechInputText(privateKeeperDetailsForm(EmailId), 
+        hintText = Some(Messages("change_keeper_businesskeeperdetails.email.hint.alt")),
+        args = Map('_label -> Messages("change_keeper_privatekeeperdetails.emaillabel"),
         '_showConstraints -> false,
         'maxLength -> EmailMaxLength
         )
