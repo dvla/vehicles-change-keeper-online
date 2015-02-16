@@ -15,8 +15,7 @@ import scala.concurrent.Future
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.CookieImplicits.{RichCookies, RichForm, RichResult}
 import common.clientsidesession.ClientSideSessionFactory
-import common.model.BusinessKeeperDetailsFormModel
-import common.model.{VehicleAndKeeperDetailsModel, AddressModel}
+import common.model.{AddressModel, VmAddressModel, BusinessKeeperDetailsFormModel, VehicleAndKeeperDetailsModel}
 import common.views.helpers.FormExtensions.formBinding
 import common.webserviceclients.addresslookup.AddressLookupService
 import utils.helpers.Config
@@ -260,7 +259,7 @@ class NewKeeperChooseYourAddress @Inject()(addressLookupService: AddressLookupSe
         val lookedUpAddress = lookedUpAddresses(indexSelected) match {
           case (index, address) => address
         }
-        val addressModel = AddressModel.from(lookedUpAddress)
+        val addressModel = VmAddressModel.from(lookedUpAddress)
         createNewKeeper(addressModel) match {
           case Some(newKeeperDetails) => nextPage(model, newKeeperDetails, addressModel)
           case _ => error("No new keeper details found in cache, redirecting to vehicle lookup")
