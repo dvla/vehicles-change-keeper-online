@@ -1,5 +1,6 @@
 package models
 
+import mappings.ThreeAlphasConstraint.threeAlphasConstraint
 import play.api.data.Forms.mapping
 import play.api.libs.json.Json
 import uk.gov.dvla.vehicles.presentation.common.clientsidesession.CacheKey
@@ -18,7 +19,8 @@ object NewKeeperEnterAddressManuallyFormModel {
     final val AddressAndPostcodeId = "addressAndPostcode"
     final val PostTownMaxLength = 20
     final val Mapping = mapping(
-      AddressAndPostcodeId -> AddressAndPostcodeViewModel.Form.mappingWithCustomPostTownMaxLength(postTownMaxLength = PostTownMaxLength)
+      AddressAndPostcodeId -> AddressAndPostcodeViewModel.Form.mappingWithCustomPostTownMaxLength(postTownMaxLength = 
+        PostTownMaxLength).verifying(threeAlphasConstraint)
     )(NewKeeperEnterAddressManuallyFormModel.apply)(NewKeeperEnterAddressManuallyFormModel.unapply)
   }
 }
