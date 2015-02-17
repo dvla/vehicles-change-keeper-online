@@ -1,20 +1,20 @@
 package views.changekeeper
 
 import composition.TestHarness
-import uk.gov.dvla.vehicles.presentation.common.testhelpers.UiTag
+import helpers.CookieFactoryForUISpecs
 import helpers.UiSpec
+import models.K2KCacheKeyPrefix.CookiePrefix
 import org.openqa.selenium.{By, WebElement}
 import pages.common.ErrorPanel
 import pages.changekeeper.{BeforeYouStartPage, VehicleLookupPage}
-import uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction
-import play.api.test.FakeApplication
 import pages.changekeeper.VehicleLookupPage.happyPath
-import models.K2KCacheKeyPrefix.CookiePrefix
-import models.PrivateKeeperDetailsFormModel.PrivateKeeperDetailsCacheKey
-import helpers.CookieFactoryForUISpecs
-import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.ProgressBar.progressStep
+import play.api.test.FakeApplication
 import uk.gov.dvla.vehicles.presentation.common
+import common.filters.CsrfPreventionAction
+import common.helpers.webbrowser.ProgressBar.progressStep
+import common.model.PrivateKeeperDetailsFormModel.privateKeeperDetailsCacheKey
 import common.model.BusinessKeeperDetailsFormModel.businessKeeperDetailsCacheKey
+import common.testhelpers.UiTag
 
 class VehicleLookupIntegrationSpec extends UiSpec with TestHarness {
 
@@ -69,7 +69,7 @@ class VehicleLookupIntegrationSpec extends UiSpec with TestHarness {
       go to VehicleLookupPage
       CookieFactoryForUISpecs.privateKeeperDetails()
       happyPath(isVehicleSoldToPrivateIndividual = false)
-      webDriver.manage().getCookieNamed(PrivateKeeperDetailsCacheKey) should equal(null)
+      webDriver.manage().getCookieNamed(privateKeeperDetailsCacheKey) should equal(null)
     }
 
     "display one validation error message when no referenceNumber is entered" taggedAs UiTag in new WebBrowser {

@@ -1,32 +1,32 @@
 package controllers.changeKeeper
 
 import composition.WithApplication
-import controllers.NewKeeperEnterAddressManually
 import controllers.changeKeeper.Common.PrototypeHtml
-import uk.gov.dvla.vehicles.presentation.common.testhelpers.JsonUtils
-import JsonUtils.deserializeJsonToModel
-import uk.gov.dvla.vehicles.presentation.common.testhelpers.CookieHelper.fetchCookiesFromHeaders
-import views.changekeeper.NewKeeperEnterAddressManually.PostcodeId
+import controllers.NewKeeperEnterAddressManually
 import helpers.{CookieFactoryForUnitSpecs, UnitSpec}
+import models.K2KCacheKeyPrefix.CookiePrefix
+import models.NewKeeperEnterAddressManuallyFormModel.Form.AddressAndPostcodeId
 import org.mockito.Mockito.when
+import pages.changekeeper.VehicleLookupPage
 import play.api.mvc.Result
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{BAD_REQUEST, LOCATION, OK, contentAsString, defaultAwaitTimeout}
-import models.NewKeeperEnterAddressManuallyFormModel.Form.AddressAndPostcodeId
+import scala.concurrent.Future
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.ClientSideSessionFactory
+import common.testhelpers.JsonUtils.deserializeJsonToModel
+import common.testhelpers.CookieHelper.fetchCookiesFromHeaders
 import common.views.helpers.FormExtensions
 import common.views.models.AddressLinesViewModel.Form.{AddressLinesId, BuildingNameOrNumberId, Line2Id, Line3Id, PostTownId}
+import common.model.NewKeeperDetailsViewModel
+import common.model.NewKeeperDetailsViewModel.newKeeperDetailsCacheKey
 import utils.helpers.Config
-import models.NewKeeperDetailsViewModel
-import models.NewKeeperDetailsViewModel.NewKeeperDetailsCacheKey
+import views.changekeeper.NewKeeperEnterAddressManually.PostcodeId
 import webserviceclients.fakes.FakeAddressLookupService.BuildingNameOrNumberValid
 import webserviceclients.fakes.FakeAddressLookupService.Line2Valid
 import webserviceclients.fakes.FakeAddressLookupService.Line3Valid
 import webserviceclients.fakes.FakeAddressLookupService.PostTownValid
 import webserviceclients.fakes.FakeAddressLookupService.PostcodeValid
-import scala.concurrent.Future
-import pages.changekeeper.VehicleLookupPage
 
 final class NewKeeperEnterAddressManuallyUnitSpec extends UnitSpec {
   "present" should {
@@ -242,7 +242,7 @@ final class NewKeeperEnterAddressManuallyUnitSpec extends UnitSpec {
       val result = newKeeperEnterAddressManually.submit(request)
       whenReady(result) { r =>
         val cookies = fetchCookiesFromHeaders(r)
-        cookies.map(_.name) should contain(NewKeeperDetailsCacheKey)
+        cookies.map(_.name) should contain(newKeeperDetailsCacheKey)
       }
     }
 
@@ -279,7 +279,7 @@ final class NewKeeperEnterAddressManuallyUnitSpec extends UnitSpec {
 
     whenReady(result) { r =>
       val cookies = fetchCookiesFromHeaders(r)
-      cookies.find(_.name == NewKeeperDetailsCacheKey) match {
+      cookies.find(_.name == newKeeperDetailsCacheKey) match {
         case Some(cookie) =>
           val json = cookie.value
           val model = deserializeJsonToModel[NewKeeperDetailsViewModel](json)
@@ -289,7 +289,7 @@ final class NewKeeperEnterAddressManuallyUnitSpec extends UnitSpec {
             postTown,
             postCode)
           expectedData should equal(model.address.address)
-        case None => fail(s"$NewKeeperDetailsCacheKey cookie not found")
+        case None => fail(s"$newKeeperDetailsCacheKey cookie not found")
       }
     }
   }

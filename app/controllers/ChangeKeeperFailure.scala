@@ -2,17 +2,17 @@ package controllers
 
 import com.google.inject.Inject
 import models.AllCacheKeys
-import models.NewKeeperDetailsViewModel
 import models.ChangeKeeperCompletionViewModel
 import models.CompleteAndConfirmFormModel
 import models.CompleteAndConfirmResponseModel
+import models.K2KCacheKeyPrefix.CookiePrefix
 import models.VehicleNewKeeperCompletionCacheKeys
 import play.api.Logger
 import play.api.mvc.{Action, Controller}
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.ClientSideSessionFactory
 import common.clientsidesession.CookieImplicits.{RichCookies, RichResult}
-import common.model.{VehicleAndKeeperDetailsModel, TraderDetailsModel}
+import common.model.{NewKeeperDetailsViewModel, TraderDetailsModel, VehicleAndKeeperDetailsModel}
 import utils.helpers.Config
 
 class ChangeKeeperFailure @Inject()()(implicit clientSideSessionFactory: ClientSideSessionFactory,

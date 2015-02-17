@@ -1,16 +1,18 @@
 package views.changekeeper
 
 import composition.TestHarness
-import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.ProgressBar.progressStep
-import uk.gov.dvla.vehicles.presentation.common.testhelpers.UiTag
-import helpers.UiSpec
-import pages.changekeeper.{VehicleLookupPage, BeforeYouStartPage}
-import pages.changekeeper.BeforeYouStartPage.startNow
-import pages.common.Feedback.EmailFeedbackLink
 import helpers.CookieFactoryForUISpecs
+import helpers.UiSpec
+import models.K2KCacheKeyPrefix.CookiePrefix
 import models.VehicleLookupFormModel.VehicleLookupFormModelCacheKey
-import uk.gov.dvla.vehicles.presentation.common.model.VehicleAndKeeperDetailsModel.VehicleAndKeeperLookupDetailsCacheKey
-import models.PrivateKeeperDetailsFormModel.PrivateKeeperDetailsCacheKey
+import pages.changekeeper.BeforeYouStartPage.startNow
+import pages.changekeeper.{VehicleLookupPage, BeforeYouStartPage}
+import pages.common.Feedback.EmailFeedbackLink
+import uk.gov.dvla.vehicles.presentation.common
+import common.helpers.webbrowser.ProgressBar.progressStep
+import common.model.VehicleAndKeeperDetailsModel.VehicleAndKeeperLookupDetailsCacheKey
+import common.model.PrivateKeeperDetailsFormModel.privateKeeperDetailsCacheKey
+import common.testhelpers.UiTag
 
 class BeforeYouStartIntegrationSpec extends UiSpec with TestHarness {
   final val ProgressStepNumber = 1
@@ -46,7 +48,7 @@ class BeforeYouStartIntegrationSpec extends UiSpec with TestHarness {
 
       webDriver.manage().getCookieNamed(VehicleLookupFormModelCacheKey) should equal(null)
       webDriver.manage().getCookieNamed(VehicleAndKeeperLookupDetailsCacheKey) should equal(null)
-      webDriver.manage().getCookieNamed(PrivateKeeperDetailsCacheKey) should equal(null)
+      webDriver.manage().getCookieNamed(privateKeeperDetailsCacheKey) should equal(null)
     }
   }
 

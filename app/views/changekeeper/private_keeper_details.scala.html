@@ -1,5 +1,5 @@
 @(data: uk.gov.dvla.vehicles.presentation.common.model.VehicleAndKeeperDetailsModel,
-        privateKeeperDetailsForm: Form[models.PrivateKeeperDetailsFormModel]
+        privateKeeperDetailsForm: Form[uk.gov.dvla.vehicles.presentation.common.model.PrivateKeeperDetailsFormModel]
 )(implicit lang: Lang,
     token: uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction.CsrfPreventionToken,
     config: utils.helpers.Config)
@@ -18,8 +18,8 @@
 @import common.views.html.widgets.base.valtechInputText
 @import common.views.html.widgets.titlePicker
 @import common.mappings.Postcode
-@import models.PrivateKeeperDetailsFormModel.Form.{TitleId, DateOfBirthId, EmailId, FirstNameId, FirstNameAndTitleMaxLength, PostcodeId}
-@import models.PrivateKeeperDetailsFormModel.Form.{LastNameId, LastNameMaxLength, DriverNumberId, DriverNumberMaxLength}
+@import common.model.PrivateKeeperDetailsFormModel.Form.{TitleId, DateOfBirthId, EmailId, FirstNameId, FirstNameAndTitleMaxLength, PostcodeId}
+@import common.model.PrivateKeeperDetailsFormModel.Form.{LastNameId, LastNameMaxLength, DriverNumberId, DriverNumberMaxLength}
 
 @main(
     progress = Some(Messages("change_keeper_progress_3")),

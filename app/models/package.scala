@@ -1,14 +1,15 @@
-import models.VehicleLookupFormModel._
-import models.PrivateKeeperDetailsFormModel.PrivateKeeperDetailsCacheKey
-import models.NewKeeperEnterAddressManuallyFormModel.NewKeeperEnterAddressManuallyCacheKey
-import models.NewKeeperChooseYourAddressFormModel.NewKeeperChooseYourAddressCacheKey
-import uk.gov.dvla.vehicles.presentation.common.model.BruteForcePreventionModel._
-import uk.gov.dvla.vehicles.presentation.common.model.BusinessKeeperDetailsFormModel.businessKeeperDetailsCacheKey
-import uk.gov.dvla.vehicles.presentation.common.model.VehicleAndKeeperDetailsModel.VehicleAndKeeperLookupDetailsCacheKey
-import models.NewKeeperDetailsViewModel.NewKeeperDetailsCacheKey
-import models.K2KCacheKeyPrefix.CookiePrefix
 import models.CompleteAndConfirmFormModel.CompleteAndConfirmCacheKey
 import models.CompleteAndConfirmResponseModel.ChangeKeeperCompletionResponseCacheKey
+import models.K2KCacheKeyPrefix.CookiePrefix
+import models.NewKeeperChooseYourAddressFormModel.NewKeeperChooseYourAddressCacheKey
+import models.NewKeeperEnterAddressManuallyFormModel.NewKeeperEnterAddressManuallyCacheKey
+import models.VehicleLookupFormModel.{VehicleLookupFormModelCacheKey, VehicleLookupResponseCodeCacheKey}
+import uk.gov.dvla.vehicles.presentation.common
+import common.model.BruteForcePreventionModel.BruteForcePreventionViewModelCacheKey
+import common.model.BusinessKeeperDetailsFormModel.businessKeeperDetailsCacheKey
+import common.model.NewKeeperDetailsViewModel.newKeeperDetailsCacheKey
+import common.model.PrivateKeeperDetailsFormModel.privateKeeperDetailsCacheKey
+import common.model.VehicleAndKeeperDetailsModel.VehicleAndKeeperLookupDetailsCacheKey
 
 package object models {
   final val HelpCacheKey = s"${CookiePrefix}help"
@@ -25,15 +26,15 @@ package object models {
   )
 
   final val PrivateKeeperDetailsCacheKeys = Set(
-    PrivateKeeperDetailsCacheKey,
-    NewKeeperDetailsCacheKey,
+    privateKeeperDetailsCacheKey,
+    newKeeperDetailsCacheKey,
     NewKeeperChooseYourAddressCacheKey,
     NewKeeperEnterAddressManuallyCacheKey
   )
 
   final val BusinessKeeperDetailsCacheKeys = Set(
     businessKeeperDetailsCacheKey,
-    NewKeeperDetailsCacheKey,
+    newKeeperDetailsCacheKey,
     NewKeeperChooseYourAddressCacheKey,
     NewKeeperEnterAddressManuallyCacheKey
   )
@@ -46,7 +47,7 @@ package object models {
       .++(Set(HelpCacheKey))
 
   final val CompletionCacheKeys = Set(
-    NewKeeperDetailsCacheKey,
+    newKeeperDetailsCacheKey,
     CompleteAndConfirmCacheKey,
     VehicleLookupResponseCodeCacheKey,
     ChangeKeeperCompletionResponseCacheKey

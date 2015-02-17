@@ -2,9 +2,16 @@ package controllers
 
 import com.google.inject.Inject
 import email.{EmailSellerMessageBuilder, EmailMessageBuilder}
-import models._
+import models.CompleteAndConfirmFormModel
 import models.CompleteAndConfirmFormModel.AllowGoingToCompleteAndConfirmPageCacheKey
+import models.CompleteAndConfirmResponseModel
+import models.CompleteAndConfirmViewModel
 import models.CompleteAndConfirmFormModel.Form.{MileageId, ConsentId}
+import models.K2KCacheKeyPrefix.CookiePrefix
+import models.NewKeeperEnterAddressManuallyFormModel
+import models.SellerEmailModel
+import models.VehicleLookupFormModel
+import models.VehicleNewKeeperCompletionCacheKeys
 import org.joda.time.DateTime
 import org.joda.time.format.ISODateTimeFormat
 import play.api.data.{FormError, Form}
@@ -15,14 +22,14 @@ import play.api.mvc.Result
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import uk.gov.dvla.vehicles.presentation.common
-import common.webserviceclients.common.{VssWebEndUserDto, VssWebHeaderDto}
-import common.webserviceclients.acquire.{AcquireService, AcquireResponseDto, AcquireRequestDto, TitleTypeDto, KeeperDetailsDto}
 import common.clientsidesession.ClientSideSessionFactory
 import common.clientsidesession.CookieImplicits.{RichCookies, RichForm, RichResult}
-import common.model.VehicleAndKeeperDetailsModel
+import common.mappings.TitleType
+import common.model.{NewKeeperDetailsViewModel, VehicleAndKeeperDetailsModel}
 import common.services.{SEND, DateService}
 import common.views.helpers.FormExtensions.formBinding
-import common.mappings.TitleType
+import common.webserviceclients.common.{VssWebEndUserDto, VssWebHeaderDto}
+import common.webserviceclients.acquire.{AcquireService, AcquireResponseDto, AcquireRequestDto, TitleTypeDto, KeeperDetailsDto}
 import utils.helpers.Config
 import views.html.changekeeper.complete_and_confirm
 

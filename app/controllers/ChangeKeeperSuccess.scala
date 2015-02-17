@@ -5,12 +5,13 @@ import models.AllCacheKeys
 import models.ChangeKeeperCompletionViewModel
 import models.CompleteAndConfirmFormModel
 import models.CompleteAndConfirmResponseModel
-import models.NewKeeperDetailsViewModel
+import models.K2KCacheKeyPrefix.CookiePrefix
 import play.api.Logger
 import play.api.mvc.{Action, Controller}
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.ClientSideSessionFactory
 import common.clientsidesession.CookieImplicits.{RichCookies, RichResult}
+import common.model.NewKeeperDetailsViewModel
 import common.model.VehicleAndKeeperDetailsModel
 import utils.helpers.Config
 

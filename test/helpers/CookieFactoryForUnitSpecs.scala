@@ -1,7 +1,6 @@
 package helpers
 
 import composition.TestComposition
-import models.NewKeeperDetailsViewModel.NewKeeperDetailsCacheKey
 import pages.changekeeper.BusinessKeeperDetailsPage.{FleetNumberValid, BusinessNameValid}
 import pages.changekeeper.HelpPage
 import play.api.libs.json.{Json, Writes}
@@ -11,11 +10,8 @@ import models.CompleteAndConfirmResponseModel.ChangeKeeperCompletionResponseCach
 import models.K2KCacheKeyPrefix.CookiePrefix
 import models.HelpCacheKey
 import models.NewKeeperChooseYourAddressFormModel
-import models.NewKeeperDetailsViewModel
 import models.NewKeeperEnterAddressManuallyFormModel
 import models.NewKeeperEnterAddressManuallyFormModel.NewKeeperEnterAddressManuallyCacheKey
-import models.PrivateKeeperDetailsFormModel
-import models.PrivateKeeperDetailsFormModel.PrivateKeeperDetailsCacheKey
 import models.SeenCookieMessageCacheKey
 import models.VehicleLookupFormModel
 import models.VehicleLookupFormModel.{VehicleLookupResponseCodeCacheKey, VehicleLookupFormModelCacheKey}
@@ -30,10 +26,14 @@ import play.api.mvc.Cookie
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.{ClearTextClientSideSession, ClientSideSessionFactory, CookieFlags}
 import common.mappings.TitleType
-import common.model.{BruteForcePreventionModel, AddressModel, VehicleAndKeeperDetailsModel}
+import common.model.{AddressModel, BruteForcePreventionModel, VehicleAndKeeperDetailsModel}
 import common.model.BruteForcePreventionModel.BruteForcePreventionViewModelCacheKey
-import common.model.BusinessKeeperDetailsFormModel.businessKeeperDetailsCacheKey
 import common.model.BusinessKeeperDetailsFormModel
+import common.model.BusinessKeeperDetailsFormModel.businessKeeperDetailsCacheKey
+import common.model.NewKeeperDetailsViewModel
+import common.model.PrivateKeeperDetailsFormModel
+import common.model.PrivateKeeperDetailsFormModel.privateKeeperDetailsCacheKey
+import common.model.NewKeeperDetailsViewModel.newKeeperDetailsCacheKey
 import common.model.VehicleAndKeeperDetailsModel.VehicleAndKeeperLookupDetailsCacheKey
 import common.views.models.{AddressLinesViewModel, AddressAndPostcodeViewModel}
 import views.changekeeper.VehicleLookup.VehicleSoldTo_Private
@@ -140,7 +140,7 @@ object CookieFactoryForUnitSpecs extends TestComposition {
                                 driverNumber: Option[String] = Some(DriverNumberValid),
                                 postcode: String = PostcodeValid
                                 ): Cookie = {
-    val key = PrivateKeeperDetailsCacheKey
+    val key = privateKeeperDetailsCacheKey
     val value = PrivateKeeperDetailsFormModel(
       title = title,
       firstName = firstName,
@@ -194,7 +194,7 @@ object CookieFactoryForUnitSpecs extends TestComposition {
                             line3: String = Line3Valid,
                             postTown: String = PostTownValid,
                             postcode: String = PostcodeValid): Cookie = {
-    val key = NewKeeperDetailsCacheKey
+    val key = newKeeperDetailsCacheKey
     val value = NewKeeperDetailsViewModel(
       title = title,
       firstName = firstName,

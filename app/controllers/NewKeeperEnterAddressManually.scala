@@ -1,23 +1,25 @@
 package controllers
 
 import com.google.inject.Inject
-import models.NewKeeperDetailsViewModel.createNewKeeper
-import models.{NewKeeperEnterAddressManuallyFormModel, PrivateKeeperDetailsFormModel}
+import models.CompleteAndConfirmFormModel.AllowGoingToCompleteAndConfirmPageCacheKey
+import models.K2KCacheKeyPrefix.CookiePrefix
+import models.NewKeeperChooseYourAddressFormModel.NewKeeperChooseYourAddressCacheKey
+import models.NewKeeperEnterAddressManuallyFormModel
+import models.NewKeeperEnterAddressManuallyViewModel
 import play.api.Logger
 import play.api.data.{Form, FormError}
-import play.api.mvc.{Action, AnyContent, Controller, Request}
+import play.api.mvc.{Action, AnyContent, Controller, Request, Result}
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.ClientSideSessionFactory
 import common.clientsidesession.CookieImplicits.{RichCookies, RichResult, RichForm}
-import common.model.{VmAddressModel, BusinessKeeperDetailsFormModel, VehicleAndKeeperDetailsModel}
+import common.model.BusinessKeeperDetailsFormModel
+import common.model.NewKeeperDetailsViewModel.createNewKeeper
+import common.model.PrivateKeeperDetailsFormModel
+import common.model.VehicleAndKeeperDetailsModel
+import common.model.VmAddressModel
 import common.views.helpers.FormExtensions.formBinding
 import utils.helpers.Config
 import views.html.changekeeper.new_keeper_enter_address_manually
-import models.CompleteAndConfirmFormModel._
-import models.K2KCacheKeyPrefix.CookiePrefix
-import models.NewKeeperChooseYourAddressFormModel.NewKeeperChooseYourAddressCacheKey
-import models.NewKeeperEnterAddressManuallyViewModel
-import play.api.mvc.Result
 
 class NewKeeperEnterAddressManually @Inject()()
                                           (implicit clientSideSessionFactory: ClientSideSessionFactory,

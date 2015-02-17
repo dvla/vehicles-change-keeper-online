@@ -1,29 +1,31 @@
 package controllers
 
 import javax.inject.Inject
+import models.CompleteAndConfirmFormModel.AllowGoingToCompleteAndConfirmPageCacheKey
+import models.K2KCacheKeyPrefix.CookiePrefix
+import models.NewKeeperChooseYourAddressViewModel
 import models.NewKeeperChooseYourAddressFormModel.Form.AddressSelectId
 import models.NewKeeperChooseYourAddressFormModel
-import models.NewKeeperDetailsViewModel
-import models.NewKeeperDetailsViewModel.{createNewKeeper, getTitle}
 import models.NewKeeperEnterAddressManuallyFormModel.NewKeeperEnterAddressManuallyCacheKey
-import models.PrivateKeeperDetailsFormModel
 import play.api.data.{Form, FormError}
 import play.api.Logger
-import play.api.mvc.{AnyContent, Action, Controller, Request}
+import play.api.mvc.{AnyContent, Action, Controller, Request, Result}
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.CookieImplicits.{RichCookies, RichForm, RichResult}
 import common.clientsidesession.ClientSideSessionFactory
-import common.model.{AddressModel, VmAddressModel, BusinessKeeperDetailsFormModel, VehicleAndKeeperDetailsModel}
+import common.model.AddressModel
+import common.model.BusinessKeeperDetailsFormModel
+import common.model.NewKeeperDetailsViewModel
+import common.model.NewKeeperDetailsViewModel.{createNewKeeper, getTitle}
+import common.model.PrivateKeeperDetailsFormModel
+import common.model.VehicleAndKeeperDetailsModel
+import common.model.VmAddressModel
 import common.views.helpers.FormExtensions.formBinding
 import common.webserviceclients.addresslookup.AddressLookupService
 import utils.helpers.Config
 import views.html.changekeeper.new_keeper_choose_your_address
-import models.CompleteAndConfirmFormModel.AllowGoingToCompleteAndConfirmPageCacheKey
-import models.NewKeeperChooseYourAddressViewModel
-import play.api.mvc.Result
-import models.K2KCacheKeyPrefix.CookiePrefix
 
 class NewKeeperChooseYourAddress @Inject()(addressLookupService: AddressLookupService)
                                           (implicit clientSideSessionFactory: ClientSideSessionFactory,

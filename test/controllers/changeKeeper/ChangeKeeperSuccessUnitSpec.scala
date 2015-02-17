@@ -3,29 +3,26 @@ package controllers.changeKeeper
 import controllers.changeKeeper.Common.PrototypeHtml
 import controllers.ChangeKeeperSuccess
 import helpers.{CookieFactoryForUnitSpecs, UnitSpec}
-import uk.gov.dvla.vehicles.presentation.common
 import models.K2KCacheKeyPrefix.CookiePrefix
-import models.{PrivateKeeperDetailsFormModel, NewKeeperDetailsViewModel}
-import models.{VehicleLookupFormModel, CompleteAndConfirmFormModel}
+import models.CompleteAndConfirmFormModel.CompleteAndConfirmCacheKey
 import models.CompleteAndConfirmResponseModel.ChangeKeeperCompletionResponseCacheKey
-import common.model.BusinessKeeperDetailsFormModel
-import BusinessKeeperDetailsFormModel.businessKeeperDetailsCacheKey
-import CompleteAndConfirmFormModel.CompleteAndConfirmCacheKey
-import NewKeeperDetailsViewModel.NewKeeperDetailsCacheKey
-import PrivateKeeperDetailsFormModel.PrivateKeeperDetailsCacheKey
-import VehicleLookupFormModel.VehicleLookupFormModelCacheKey
+import models.VehicleLookupFormModel.VehicleLookupFormModelCacheKey
 import org.joda.time.format.DateTimeFormat
 import org.mockito.Mockito.when
 import pages.changekeeper.BeforeYouStartPage
-import pages.changekeeper.CompleteAndConfirmPage.{DayDateOfSaleValid, MonthDateOfSaleValid, YearDateOfSaleValid}
-import pages.changekeeper.PrivateKeeperDetailsPage.{FirstNameValid, LastNameValid, EmailValid}
 import pages.changekeeper.BusinessKeeperDetailsPage.FleetNumberValid
 import pages.changekeeper.BusinessKeeperDetailsPage.BusinessNameValid
+import pages.changekeeper.CompleteAndConfirmPage.{DayDateOfSaleValid, MonthDateOfSaleValid, YearDateOfSaleValid}
+import pages.changekeeper.PrivateKeeperDetailsPage.{FirstNameValid, LastNameValid, EmailValid}
 import play.api.test.Helpers.{LOCATION, OK, contentAsString, defaultAwaitTimeout}
 import play.api.test.{FakeRequest, WithApplication}
-import uk.gov.dvla.vehicles.presentation.common.clientsidesession.ClientSideSessionFactory
-import uk.gov.dvla.vehicles.presentation.common.model.VehicleAndKeeperDetailsModel.VehicleAndKeeperLookupDetailsCacheKey
-import uk.gov.dvla.vehicles.presentation.common.testhelpers.CookieHelper.{fetchCookiesFromHeaders, verifyCookieHasBeenDiscarded}
+import uk.gov.dvla.vehicles.presentation.common
+import common.clientsidesession.ClientSideSessionFactory
+import common.model.BusinessKeeperDetailsFormModel.businessKeeperDetailsCacheKey
+import common.model.NewKeeperDetailsViewModel.newKeeperDetailsCacheKey
+import common.model.PrivateKeeperDetailsFormModel.privateKeeperDetailsCacheKey
+import common.model.VehicleAndKeeperDetailsModel.VehicleAndKeeperLookupDetailsCacheKey
+import common.testhelpers.CookieHelper.{fetchCookiesFromHeaders, verifyCookieHasBeenDiscarded}
 import utils.helpers.Config
 import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.{TransactionTimestampValid, TransactionIdValid, RegistrationNumberValid}
 import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.{VehicleMakeValid, VehicleModelValid}
@@ -132,8 +129,8 @@ class ChangeKeeperSuccessUnitSpec extends UnitSpec {
 
         verifyCookieHasBeenDiscarded(VehicleAndKeeperLookupDetailsCacheKey, cookies)
         verifyCookieHasBeenDiscarded(VehicleLookupFormModelCacheKey, cookies)
-        verifyCookieHasBeenDiscarded(NewKeeperDetailsCacheKey, cookies)
-        verifyCookieHasBeenDiscarded(PrivateKeeperDetailsCacheKey, cookies)
+        verifyCookieHasBeenDiscarded(newKeeperDetailsCacheKey, cookies)
+        verifyCookieHasBeenDiscarded(privateKeeperDetailsCacheKey, cookies)
         verifyCookieHasBeenDiscarded(businessKeeperDetailsCacheKey, cookies)
         verifyCookieHasBeenDiscarded(CompleteAndConfirmCacheKey, cookies)
         verifyCookieHasBeenDiscarded(ChangeKeeperCompletionResponseCacheKey, cookies)

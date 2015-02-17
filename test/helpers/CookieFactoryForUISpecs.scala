@@ -4,12 +4,8 @@ import CookieFactoryForUnitSpecs.VehicleLookupFailureResponseCode
 
 import models.K2KCacheKeyPrefix.CookiePrefix
 import models.CompleteAndConfirmResponseModel.ChangeKeeperCompletionResponseCacheKey
-import models.NewKeeperDetailsViewModel.NewKeeperDetailsCacheKey
-import models.PrivateKeeperDetailsFormModel.PrivateKeeperDetailsCacheKey
 import models.CompleteAndConfirmFormModel
 import models.CompleteAndConfirmResponseModel
-import models.NewKeeperDetailsViewModel
-import models.PrivateKeeperDetailsFormModel
 import models.VehicleLookupFormModel
 import models.VehicleLookupFormModel.{VehicleLookupFormModelCacheKey, VehicleLookupResponseCodeCacheKey}
 import org.joda.time.{DateTime, LocalDate}
@@ -31,16 +27,20 @@ import pages.changekeeper.PrivateKeeperDetailsPage.YearDateOfBirthValid
 import play.api.Play
 import play.api.Play.current
 import play.api.libs.json.{Json, Writes}
-import uk.gov.dvla.vehicles.presentation.common.controllers.AlternateLanguages.{CyId, EnId}
-import uk.gov.dvla.vehicles.presentation.common.mappings.TitleType
-import uk.gov.dvla.vehicles.presentation.common.model.BruteForcePreventionModel.BruteForcePreventionViewModelCacheKey
-import uk.gov.dvla.vehicles.presentation.common.model.VehicleAndKeeperDetailsModel.VehicleAndKeeperLookupDetailsCacheKey
-import uk.gov.dvla.vehicles.presentation.common.model.AddressModel
-import uk.gov.dvla.vehicles.presentation.common.model.BruteForcePreventionModel
-import uk.gov.dvla.vehicles.presentation.common.model.VehicleAndKeeperDetailsModel
 import uk.gov.dvla.vehicles.presentation.common
-import common.model.BusinessKeeperDetailsFormModel.businessKeeperDetailsCacheKey
+import common.controllers.AlternateLanguages.{CyId, EnId}
+import common.mappings.TitleType
+import common.model.AddressModel
+import common.model.BruteForcePreventionModel
+import common.model.BruteForcePreventionModel.BruteForcePreventionViewModelCacheKey
 import common.model.BusinessKeeperDetailsFormModel
+import common.model.BusinessKeeperDetailsFormModel.businessKeeperDetailsCacheKey
+import common.model.NewKeeperDetailsViewModel
+import common.model.NewKeeperDetailsViewModel.newKeeperDetailsCacheKey
+import common.model.PrivateKeeperDetailsFormModel
+import common.model.PrivateKeeperDetailsFormModel.privateKeeperDetailsCacheKey
+import common.model.VehicleAndKeeperDetailsModel
+import common.model.VehicleAndKeeperDetailsModel.VehicleAndKeeperLookupDetailsCacheKey
 import views.changekeeper.VehicleLookup.VehicleSoldTo_Private
 import webserviceclients.fakes.FakeAddressLookupService.{BuildingNameOrNumberValid, Line2Valid, Line3Valid, PostTownValid}
 import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService
@@ -146,7 +146,7 @@ object CookieFactoryForUISpecs {
                            driverNumber: Option[String] = Some(DriverNumberValid),
                            postcode: String = PostcodeValid
                             )(implicit webDriver: WebDriver) = {
-    val key = PrivateKeeperDetailsCacheKey
+    val key = privateKeeperDetailsCacheKey
     val value = PrivateKeeperDetailsFormModel(
       title = title,
       firstName = firstName,
@@ -190,7 +190,7 @@ object CookieFactoryForUISpecs {
                             line3: String = Line3Valid,
                             postTown: String = PostTownValid,
                             postcode: String = PostcodeValid)(implicit webDriver: WebDriver) = {
-    val key = NewKeeperDetailsCacheKey
+    val key = newKeeperDetailsCacheKey
     val value = NewKeeperDetailsViewModel(
       title = title,
       firstName = firstName,

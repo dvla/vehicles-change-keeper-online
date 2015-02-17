@@ -1,34 +1,35 @@
 package controllers.changeKeeper
 
+import Common.PrototypeHtml
 import composition.WithApplication
 import controllers.NewKeeperChooseYourAddress
 import helpers.CookieFactoryForUnitSpecs
 import helpers.UnitSpec
-import uk.gov.dvla.vehicles.presentation.common.testhelpers.CookieHelper.{fetchCookiesFromHeaders, verifyCookieHasBeenDiscarded, verifyCookieHasNotBeenDiscarded}
+import models.K2KCacheKeyPrefix.CookiePrefix
 import models.NewKeeperChooseYourAddressFormModel.Form.AddressSelectId
 import models.NewKeeperChooseYourAddressFormModel.NewKeeperChooseYourAddressCacheKey
-import models.NewKeeperDetailsViewModel.NewKeeperDetailsCacheKey
-import org.mockito.ArgumentCaptor
-import org.mockito.Matchers._
-import org.mockito.Mockito.{when, verify}
+import models.NewKeeperEnterAddressManuallyFormModel.NewKeeperEnterAddressManuallyCacheKey
 import org.mockito.invocation.InvocationOnMock
+import org.mockito.Matchers._
+import org.mockito.Mockito.when
 import org.mockito.stubbing.Answer
-import uk.gov.dvla.vehicles.presentation.common.webserviceclients.healthstats.HealthStats
-import scala.concurrent.Future
 import pages.changekeeper.{CompleteAndConfirmPage, VehicleLookupPage}
+import pages.changekeeper.PrivateKeeperDetailsPage.{FirstNameValid, LastNameValid}
+import pages.changekeeper.BusinessKeeperDetailsPage.BusinessNameValid
 import pages.common.UprnNotFoundPage
 import play.api.mvc.Cookies
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{BAD_REQUEST, LOCATION, OK, SET_COOKIE, contentAsString, defaultAwaitTimeout}
-import uk.gov.dvla.vehicles.presentation.common.clientsidesession.ClientSideSessionFactory
-import uk.gov.dvla.vehicles.presentation.common.model.TraderDetailsModel.TraderDetailsCacheKey
-import uk.gov.dvla.vehicles.presentation.common.webserviceclients.addresslookup.ordnanceservey.AddressLookupServiceImpl
+import scala.concurrent.Future
+import uk.gov.dvla.vehicles.presentation.common
+import common.clientsidesession.ClientSideSessionFactory
+import common.model.NewKeeperDetailsViewModel.newKeeperDetailsCacheKey
+import common.model.TraderDetailsModel.TraderDetailsCacheKey
+import common.testhelpers.CookieHelper.{fetchCookiesFromHeaders, verifyCookieHasBeenDiscarded, verifyCookieHasNotBeenDiscarded}
+import common.webserviceclients.addresslookup.ordnanceservey.AddressLookupServiceImpl
+import common.webserviceclients.healthstats.HealthStats
 import utils.helpers.Config
 import webserviceclients.fakes.FakeAddressLookupWebServiceImpl
-import pages.changekeeper.PrivateKeeperDetailsPage.{FirstNameValid, LastNameValid}
-import pages.changekeeper.BusinessKeeperDetailsPage.BusinessNameValid
-import Common.PrototypeHtml
-import models.NewKeeperEnterAddressManuallyFormModel.NewKeeperEnterAddressManuallyCacheKey
 import webserviceclients.fakes.FakeAddressLookupWebServiceImpl.UprnValid
 import webserviceclients.fakes.FakeAddressLookupWebServiceImpl.responseValidForPostcodeToAddress
 import webserviceclients.fakes.FakeAddressLookupWebServiceImpl.responseValidForPostcodeToAddressNotFound
@@ -326,11 +327,11 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
         cookies.map(_.name) should contain allOf(
           NewKeeperEnterAddressManuallyCacheKey,
           NewKeeperChooseYourAddressCacheKey,
-          NewKeeperDetailsCacheKey
+          newKeeperDetailsCacheKey
           )
         verifyCookieHasBeenDiscarded(NewKeeperEnterAddressManuallyCacheKey, cookies)
         verifyCookieHasNotBeenDiscarded(NewKeeperChooseYourAddressCacheKey, cookies)
-        verifyCookieHasNotBeenDiscarded(NewKeeperDetailsCacheKey, cookies)
+        verifyCookieHasNotBeenDiscarded(newKeeperDetailsCacheKey, cookies)
       }
     }
 
@@ -344,11 +345,11 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
         cookies.map(_.name) should contain allOf(
           NewKeeperEnterAddressManuallyCacheKey,
           NewKeeperChooseYourAddressCacheKey,
-          NewKeeperDetailsCacheKey
+          newKeeperDetailsCacheKey
           )
         verifyCookieHasBeenDiscarded(NewKeeperEnterAddressManuallyCacheKey, cookies)
         verifyCookieHasNotBeenDiscarded(NewKeeperChooseYourAddressCacheKey, cookies)
-        verifyCookieHasNotBeenDiscarded(NewKeeperDetailsCacheKey, cookies)
+        verifyCookieHasNotBeenDiscarded(newKeeperDetailsCacheKey, cookies)
       }
     }
 
@@ -473,11 +474,11 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
         cookies.map(_.name) should contain allOf(
           NewKeeperEnterAddressManuallyCacheKey,
           NewKeeperChooseYourAddressCacheKey,
-          NewKeeperDetailsCacheKey
+          newKeeperDetailsCacheKey
           )
         verifyCookieHasBeenDiscarded(NewKeeperEnterAddressManuallyCacheKey, cookies)
         verifyCookieHasNotBeenDiscarded(NewKeeperChooseYourAddressCacheKey, cookies)
-        verifyCookieHasNotBeenDiscarded(NewKeeperDetailsCacheKey, cookies)
+        verifyCookieHasNotBeenDiscarded(newKeeperDetailsCacheKey, cookies)
       }
     }
 
@@ -491,11 +492,11 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
         cookies.map(_.name) should contain allOf(
           NewKeeperEnterAddressManuallyCacheKey,
           NewKeeperChooseYourAddressCacheKey,
-          NewKeeperDetailsCacheKey
+          newKeeperDetailsCacheKey
           )
         verifyCookieHasBeenDiscarded(NewKeeperEnterAddressManuallyCacheKey, cookies)
         verifyCookieHasNotBeenDiscarded(NewKeeperChooseYourAddressCacheKey, cookies)
-        verifyCookieHasNotBeenDiscarded(NewKeeperDetailsCacheKey, cookies)
+        verifyCookieHasNotBeenDiscarded(newKeeperDetailsCacheKey, cookies)
       }
     }
 

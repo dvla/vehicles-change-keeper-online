@@ -7,7 +7,7 @@ import helpers.CookieFactoryForUISpecs
 import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.ProgressBar.progressStep
 import uk.gov.dvla.vehicles.presentation.common.testhelpers.UiTag
 import helpers.UiSpec
-import models.{VehicleNewKeeperCompletionCacheKeys, NewKeeperDetailsViewModel, CompleteAndConfirmFormModel}
+import models.{VehicleNewKeeperCompletionCacheKeys, CompleteAndConfirmFormModel}
 import org.openqa.selenium.{By, WebElement, WebDriver}
 import org.scalatest.mock.MockitoSugar
 import pages.common.ErrorPanel

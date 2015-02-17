@@ -1,13 +1,9 @@
 package controllers.changeKeeper
 
+import controllers.changeKeeper.Common.PrototypeHtml
 import controllers.PrivateKeeperDetails
+import helpers.CookieFactoryForUnitSpecs
 import helpers.UnitSpec
-import models.PrivateKeeperDetailsFormModel.Form.PostcodeId
-import models.PrivateKeeperDetailsFormModel.Form.EmailId
-import models.PrivateKeeperDetailsFormModel.Form.FirstNameId
-import models.PrivateKeeperDetailsFormModel.Form.LastNameId
-import models.PrivateKeeperDetailsFormModel.Form.TitleId
-import models.PrivateKeeperDetailsFormModel.Form.DriverNumberId
 import org.mockito.Mockito.when
 import pages.changekeeper.PrivateKeeperDetailsPage.DayDateOfBirthValid
 import pages.changekeeper.PrivateKeeperDetailsPage.MonthDateOfBirthValid
@@ -17,17 +13,22 @@ import pages.changekeeper.PrivateKeeperDetailsPage.FirstNameValid
 import pages.changekeeper.PrivateKeeperDetailsPage.LastNameValid
 import pages.changekeeper.PrivateKeeperDetailsPage.DriverNumberValid
 import pages.changekeeper.PrivateKeeperDetailsPage.PostcodeValid
+import pages.changekeeper.{VehicleLookupPage, NewKeeperChooseYourAddressPage}
 import play.api.i18n.Messages
 import play.api.test.Helpers._
 import play.api.test.{FakeRequest, WithApplication}
-import uk.gov.dvla.vehicles.presentation.common.clientsidesession.ClientSideSessionFactory
-import uk.gov.dvla.vehicles.presentation.common.mappings.{TitleType, TitlePickerString}
-import TitlePickerString.standardOptions
-import uk.gov.dvla.vehicles.presentation.common.services.DateService
+import uk.gov.dvla.vehicles.presentation.common
+import common.clientsidesession.ClientSideSessionFactory
+import common.mappings.{TitleType, TitlePickerString}
+import common.mappings.TitlePickerString.standardOptions
+import common.model.PrivateKeeperDetailsFormModel.Form.PostcodeId
+import common.model.PrivateKeeperDetailsFormModel.Form.EmailId
+import common.model.PrivateKeeperDetailsFormModel.Form.FirstNameId
+import common.model.PrivateKeeperDetailsFormModel.Form.LastNameId
+import common.model.PrivateKeeperDetailsFormModel.Form.TitleId
+import common.model.PrivateKeeperDetailsFormModel.Form.DriverNumberId
+import common.services.DateService
 import utils.helpers.Config
-import helpers.CookieFactoryForUnitSpecs
-import controllers.changeKeeper.Common.PrototypeHtml
-import pages.changekeeper.{VehicleLookupPage, NewKeeperChooseYourAddressPage}
 
 class PrivateKeeperDetailsUnitSpec extends UnitSpec {
 
