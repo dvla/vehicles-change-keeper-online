@@ -38,8 +38,21 @@ import webserviceclients.fakes.brute_force_protection.FakeBruteForcePreventionWe
 import webserviceclients.fakes.brute_force_protection.FakeBruteForcePreventionWebServiceImpl.responseSecondAttempt
 import webserviceclients.fakes.brute_force_protection.FakeBruteForcePreventionWebServiceImpl.VrmThrows
 import helpers.CookieFactoryForUnitSpecs
+import org.mockito.ArgumentCaptor
+import org.mockito.Matchers._
+import org.mockito.Mockito.{when, verify}
+import org.mockito.invocation.InvocationOnMock
+import org.mockito.stubbing.Answer
+import uk.gov.dvla.vehicles.presentation.common.webserviceclients.healthstats.HealthStats
+import scala.concurrent.Future
+import pages.changekeeper.{CompleteAndConfirmPage, VehicleLookupPage}
 
 final class VehicleLookupUnitSpec extends UnitSpec {
+
+  val healthStatsMock = mock[HealthStats]
+  when(healthStatsMock.report(anyString)(any[Future[_]])).thenAnswer(new Answer[Future[_]] {
+    override def answer(invocation: InvocationOnMock): Future[_] = invocation.getArguments()(1).asInstanceOf[Future[_]]
+  })
 
   "present" should {
     "display the page" in new WithApplication {
@@ -191,6 +204,7 @@ final class VehicleLookupUnitSpec extends UnitSpec {
     new BruteForcePreventionServiceImpl(
       config = new TestBruteForcePreventionConfig,
       ws = bruteForcePreventionWebService,
+      healthStatsMock,
       dateService = new FakeDateServiceImpl
     )
   }
@@ -206,7 +220,7 @@ final class VehicleLookupUnitSpec extends UnitSpec {
       }
       new FakeResponse(status = status, fakeJson = responseAsJson) // Any call to a webservice will always return this successful response.
     })
-    val vehicleAndKeeperLookupServiceImpl = new VehicleAndKeeperLookupServiceImpl(ws)
+    val vehicleAndKeeperLookupServiceImpl = new VehicleAndKeeperLookupServiceImpl(ws, healthStatsMock)
     implicit val clientSideSessionFactory = injector.getInstance(classOf[ClientSideSessionFactory])
     implicit val config: Config = new TestConfig
 
@@ -223,7 +237,7 @@ final class VehicleLookupUnitSpec extends UnitSpec {
     when(vehicleAndKeeperLookupWebService.invoke(any[VehicleAndKeeperDetailsRequest], any[String])).thenReturn(Future {
       throw new IllegalArgumentException
     })
-    val vehicleAndKeeperLookupServiceImpl = new VehicleAndKeeperLookupServiceImpl(vehicleAndKeeperLookupWebService)
+    val vehicleAndKeeperLookupServiceImpl = new VehicleAndKeeperLookupServiceImpl(vehicleAndKeeperLookupWebService, healthStatsMock)
     implicit val clientSideSessionFactory = injector.getInstance(classOf[ClientSideSessionFactory])
     implicit val config: Config = mock[Config]
 

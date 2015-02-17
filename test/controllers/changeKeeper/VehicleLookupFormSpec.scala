@@ -31,9 +31,21 @@ import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.ReferenceNum
 import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.RegistrationNumberValid
 import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.vehicleDetailsResponseSuccess
 import webserviceclients.fakes.{FakeDateServiceImpl, FakeResponse}
+import org.mockito.ArgumentCaptor
+import org.mockito.Matchers._
+import org.mockito.Mockito.{when, verify}
+import org.mockito.invocation.InvocationOnMock
+import org.mockito.stubbing.Answer
+import uk.gov.dvla.vehicles.presentation.common.webserviceclients.healthstats.HealthStats
+import scala.concurrent.Future
+import pages.changekeeper.{CompleteAndConfirmPage, VehicleLookupPage}
 
 final class VehicleLookupFormSpec extends UnitSpec {
 
+  val healthStatsMock = mock[HealthStats]
+  when(healthStatsMock.report(anyString)(any[Future[_]])).thenAnswer(new Answer[Future[_]] {
+    override def answer(invocation: InvocationOnMock): Future[_] = invocation.getArguments()(1).asInstanceOf[Future[_]]
+  })
   "form" should {
     "accept when all fields contain valid responses" in new WithApplication {
       formWithValidDefaults().get.referenceNumber should equal(ReferenceNumberValid)
@@ -143,6 +155,7 @@ final class VehicleLookupFormSpec extends UnitSpec {
     new BruteForcePreventionServiceImpl(
       config = new TestBruteForcePreventionConfig,
       ws = bruteForcePreventionWebService,
+      healthStatsMock,
       dateService = new FakeDateServiceImpl
     )
   }
@@ -158,7 +171,7 @@ final class VehicleLookupFormSpec extends UnitSpec {
       }
       new FakeResponse(status = fullResponse._1, fakeJson = responseAsJson)// Any call to a webservice will always return this successful response.
     })
-    val vehicleAndKeeperLookupServiceImpl = new VehicleAndKeeperLookupServiceImpl(vehicleAndKeeperLookupWebService)
+    val vehicleAndKeeperLookupServiceImpl = new VehicleAndKeeperLookupServiceImpl(vehicleAndKeeperLookupWebService, healthStatsMock)
     implicit val clientSideSessionFactory = injector.getInstance(classOf[ClientSideSessionFactory])
     implicit val config: Config = mock[Config]
     new VehicleLookup(

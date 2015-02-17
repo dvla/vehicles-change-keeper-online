@@ -8,7 +8,13 @@ import uk.gov.dvla.vehicles.presentation.common.testhelpers.CookieHelper.{fetchC
 import models.NewKeeperChooseYourAddressFormModel.Form.AddressSelectId
 import models.NewKeeperChooseYourAddressFormModel.NewKeeperChooseYourAddressCacheKey
 import models.NewKeeperDetailsViewModel.NewKeeperDetailsCacheKey
-import org.mockito.Mockito.when
+import org.mockito.ArgumentCaptor
+import org.mockito.Matchers._
+import org.mockito.Mockito.{when, verify}
+import org.mockito.invocation.InvocationOnMock
+import org.mockito.stubbing.Answer
+import uk.gov.dvla.vehicles.presentation.common.webserviceclients.healthstats.HealthStats
+import scala.concurrent.Future
 import pages.changekeeper.{CompleteAndConfirmPage, VehicleLookupPage}
 import pages.common.UprnNotFoundPage
 import play.api.mvc.Cookies
@@ -514,7 +520,12 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
     val responsePostcode = if (uprnFound) responseValidForPostcodeToAddress else responseValidForPostcodeToAddressNotFound
     val responseUprn = if (uprnFound) responseValidForUprnToAddress else responseValidForUprnToAddressNotFound
     val fakeWebService = new FakeAddressLookupWebServiceImpl(responsePostcode, responseUprn)
-    val addressLookupService = new AddressLookupServiceImpl(fakeWebService)
+    val healthStatsMock = mock[HealthStats]
+    when(healthStatsMock.report(anyString)(any[Future[_]])).thenAnswer(new Answer[Future[_]] {
+      override def answer(invocation: InvocationOnMock): Future[_] = invocation.getArguments()(1).asInstanceOf[Future[_]]
+    })
+
+    val addressLookupService = new AddressLookupServiceImpl(fakeWebService, healthStatsMock)
     implicit val clientSideSessionFactory = injector.getInstance(classOf[ClientSideSessionFactory])
     implicit val config: Config = mock[Config]
     when(config.isPrototypeBannerVisible).thenReturn(isPrototypeBannerVisible) // Stub this config value.
