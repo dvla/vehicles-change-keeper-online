@@ -148,7 +148,7 @@ vehicleRegistrationNumber = Vehicle registration number
 documentReferenceNumber = Document reference number
 vehicleSellerEmail = Seller email
 change_keeper_vehiclelookup.selleremail = Seller''s email address
-change_keeper_selleremail.hint = We will send you confirmation of this sale
+change_keeper_selleremail.hint = We will send you confirmation of this sale and it may help us to resolve problems later
 
 #page 3 - private keeper details
 change_keeper_privatekeeperdetails.title = Enter new keeper details
@@ -185,7 +185,7 @@ change_keeper_businesskeeperdetails.businessname = Business name
 change_keeper_businesskeeperdetails.businessname.hint = If the business buying this vehicle has a DVLA fleet number, please provide it.
 change_keeper_businesskeeperdetails.email = Email address of new keeper
 change_keeper_businesskeeperdetails.email.hint = An email address for contact if a problem occurs
-change_keeper_businesskeeperdetails.email.hint.alt = We will send the new keeper confirmation of the sale
+change_keeper_businesskeeperdetails.email.hint.alt = We will send the new keeper confirmation of the sale and it may help us to resolve problems later
 change_keeper_businesskeeperdetails.backbutton = Back
 change_keeper_businesskeeperdetails.nextbutton = Next
 change_keeper_businesskeeperdetails.consent = I have the consent of the party named to notify DVLA.
