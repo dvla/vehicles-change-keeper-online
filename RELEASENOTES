@@ -1,3 +1,22 @@
+======== 1.3 ========
+Time of release binaries creation:
+Wed Feb 18 12:24:59 UTC 2015
+
+User stories:
+69442e9 US2471: Improving CSS effiiency for k2k
+014f267 US2439: Add constraint to building number field
+b22917e US2343: Use suppression flag to check for applicability of the service.
+3b68b0a US2454: Inject the health check service to all the test controllers
+5253661 US2285: Refactored exemplar now there is a common controller for PrivateKeeperDetails
+be639d2 US2439: AddressModel change
+0d83ad3 US2378: Keeper to keeper cosmetic updates
+59a4c55 US2284: Common cache keys' prefix is now passed from the webapp
+31d98b1 US2366: add javascript to hide the other textfield if the radio button is not selected
+8aed3b1 US2199: Change messages in vtm-locked and vehicles-failure pages
+79a9d6c US2340: Add email and name to feedback page
+4eb34bc US2357: Capture seller's email address
+4edac75 US2363: Remove today's date from complete and confirm
+
 ======== 1.0 ========
 Time of release binaries creation:
 Thu Dec 18 10:57:52 UTC 2014
