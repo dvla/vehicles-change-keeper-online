@@ -270,7 +270,7 @@ change_keeper_keeperdetailscomplete.consentError = You must have the consent of 
 #page 6 - acquire success
 change_keeper_success.complete.header = Thank You
 change_keeper_success.complete.p1 = The application is being processed
-change_keeper_success.complete.p2 = Give the V5C (green slip) to the new keeper and destroy the V5C.
+change_keeper_success.complete.p2 = Give the V5C/2 (green slip) to the new keeper and destroy the V5C.
 change_keeper_success.transaction_details.header = Transaction details
 change_keeper_success.transaction_details.transaction_id = Transaction ID
 change_keeper_success.transaction_details.transaction_date = Transaction date
