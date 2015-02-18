@@ -5,7 +5,7 @@ import sbt.Keys._
 import sbt._
 
 object Common {
-  val versionString = "1.3"
+  val versionString = "1.4-SNAPSHOT"
   val scalaVersionString = "2.10.3"
   val organisationString = "dvla"
   val organisationNameString = "Driver & Vehicle Licensing Agency"
