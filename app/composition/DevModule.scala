@@ -29,6 +29,7 @@ import common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupSer
 import common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupWebService
 import common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupWebServiceImpl
 import common.webserviceclients.acquire.{AcquireServiceImpl, AcquireService, AcquireWebServiceImpl, AcquireWebService}
+import uk.gov.dvla.vehicles.presentation.common.webserviceclients.healthstats.HealthStats
 import utils.helpers.{ConfigImpl, Config}
 
 /**
@@ -65,6 +66,7 @@ class DevModule extends ScalaModule {
 
     bind[LoggerLike].annotatedWith(Names.named(AccessLoggerName)).toInstance(Logger("dvla.pages.common.AccessLogger"))
     bind[DateTimeZoneService].toInstance(new DateTimeZoneServiceImpl)
+    bind[HealthStats].asEagerSingleton()
   }
 
   protected def bindSessionFactory(): Unit = {
