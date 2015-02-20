@@ -74,7 +74,7 @@ GET         /healthcheck                                @uk.gov.dvla.vehicles.pr
 
 # Brute force vrm locked
 GET         /vrm-locked                                 @controllers.VrmLocked.present
-POST        /vrm-locked/buy-another                     @controllers.VrmLocked.buyAnotherVehicle
+POST        /vrm-locked/buy-another                     @controllers.VrmLocked.tryAgain
 POST        /vrm-locked/exit                            @controllers.VrmLocked.exit
 
 GET         /complete-and-confirm                       @controllers.CompleteAndConfirm.present
