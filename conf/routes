@@ -57,9 +57,6 @@ POST        /failure-change-keeper-finish               @controllers.ChangeKeepe
 GET         /feedback                                   @controllers.FeedbackController.present
 POST        /feedback                                   @controllers.FeedbackController.submit
 
-# REMOVE ME WHEN THE STORIES ARE AVAILABLE
-GET         /next                                       @controllers.TempController.present
-
 # Micro service error
 GET         /service-error                              @controllers.MicroServiceError.present
 GET         /service-error/try-again                    @controllers.MicroServiceError.back
