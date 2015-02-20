@@ -24,7 +24,7 @@ class VrmLocked @Inject()()(implicit protected override val clientSideSessionFac
   protected override def missingBruteForcePreventionCookie(implicit request: Request[_]): Result =
     Redirect(routes.VehicleLookup.present())
 
-  protected override def tryAgainResult(implicit request: Request[_]): Result =
+  protected override def tryAnotherResult(implicit request: Request[_]): Result =
     Redirect(routes.VehicleLookup.present())
       .discardingCookies(Set(VehicleLookupFormModelCacheKey))
 
