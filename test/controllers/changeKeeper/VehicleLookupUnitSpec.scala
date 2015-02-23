@@ -224,10 +224,12 @@ final class VehicleLookupUnitSpec extends UnitSpec {
     implicit val clientSideSessionFactory = injector.getInstance(classOf[ClientSideSessionFactory])
     implicit val config: Config = new TestConfig
 
-    new VehicleLookup(
+    new VehicleLookup()(
       bruteForceService = bruteForceService,
       vehicleLookupService = vehicleAndKeeperLookupServiceImpl,
-      dateService = dateService
+      dateService = dateService,
+      clientSideSessionFactory,
+      config
     )
   }
 
@@ -241,10 +243,12 @@ final class VehicleLookupUnitSpec extends UnitSpec {
     implicit val clientSideSessionFactory = injector.getInstance(classOf[ClientSideSessionFactory])
     implicit val config: Config = mock[Config]
 
-    new VehicleLookup(
+    new VehicleLookup()(
       bruteForceService = bruteForceServiceImpl(permitted = permitted),
       vehicleLookupService = vehicleAndKeeperLookupServiceImpl,
-      dateService = dateService
+      dateService = dateService,
+      clientSideSessionFactory,
+      config
     )
   }
 

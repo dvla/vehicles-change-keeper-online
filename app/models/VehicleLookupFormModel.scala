@@ -1,5 +1,6 @@
 package models
 
+import controllers.VehicleLookupFormModelBase
 import play.api.data.Forms._
 import play.api.libs.json.Json
 import uk.gov.dvla.vehicles.presentation.common
@@ -11,7 +12,7 @@ import common.mappings.{VehicleRegistrationNumber, DocumentReferenceNumber}
 final case class VehicleLookupFormModel(referenceNumber: String,
                                         registrationNumber: String,
                                         vehicleSoldTo: String,
-                                         sellerEmail: Option[String] = None)
+                                        sellerEmail: Option[String] = None) extends VehicleLookupFormModelBase
 
 object VehicleLookupFormModel {
   implicit val JsonFormat = Json.format[VehicleLookupFormModel]
