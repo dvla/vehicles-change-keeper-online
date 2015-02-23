@@ -1,14 +1,20 @@
 package controllers
 
 import com.google.inject.Inject
-import models._
+import models.BusinessKeeperDetailsCacheKeys
+import models.K2KCacheKeyPrefix.CookiePrefix
+import models.PrivateKeeperDetailsCacheKeys
+import models.SellerEmailModel
+import models.VehicleLookupFormModel
 import models.VehicleLookupFormModel.VehicleLookupResponseCodeCacheKey
-import models.VehicleLookupFormModel.Form.{DocumentReferenceNumberId, VehicleRegistrationNumberId,
-        VehicleSoldToId, VehicleSellerEmail}
+import models.VehicleLookupFormModel.Form.DocumentReferenceNumberId
+import models.VehicleLookupFormModel.Form.VehicleRegistrationNumberId
+import models.VehicleLookupFormModel.Form.VehicleSellerEmail
+import models.VehicleLookupFormModel.Form.VehicleSoldToId
+import models.VehicleLookupViewModel
 import org.joda.time.DateTime
 import play.api.data.{Form => PlayForm, FormError}
 import play.api.mvc.{Action, Call, Request}
-import uk.gov.dvla.vehicles.presentation.common.webserviceclients.common.DmsWebHeaderDto
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import uk.gov.dvla.vehicles.presentation.common
@@ -22,6 +28,7 @@ import common.controllers.VehicleLookupBase.VehicleFound
 import common.controllers.VehicleLookupBase.VehicleNotFound
 import common.services.DateService
 import common.webserviceclients.bruteforceprevention.BruteForcePreventionService
+import common.webserviceclients.common.DmsWebHeaderDto
 import common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperDetailsDto
 import common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperDetailsRequest
 import common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupService

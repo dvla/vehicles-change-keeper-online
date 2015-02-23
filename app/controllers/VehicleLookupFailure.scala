@@ -1,6 +1,7 @@
 package controllers
 
 import com.google.inject.Inject
+import models.K2KCacheKeyPrefix.CookiePrefix
 import models.VehicleLookupFormModel
 import models.VehicleLookupFormModel.VehicleLookupResponseCodeCacheKey
 import play.Logger

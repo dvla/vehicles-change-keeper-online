@@ -32,7 +32,7 @@ import common.controllers.AlternateLanguages.{CyId, EnId}
 import common.mappings.TitleType
 import common.model.AddressModel
 import common.model.BruteForcePreventionModel
-import common.model.BruteForcePreventionModel.BruteForcePreventionViewModelCacheKey
+import common.model.BruteForcePreventionModel.bruteForcePreventionViewModelCacheKey
 import common.model.BusinessKeeperDetailsFormModel
 import common.model.BusinessKeeperDetailsFormModel.businessKeeperDetailsCacheKey
 import common.model.NewKeeperDetailsViewModel
@@ -102,7 +102,7 @@ object CookieFactoryForUISpecs {
                                     maxAttempts: Int = MaxAttempts,
                                     dateTimeISOChronology: String = org.joda.time.DateTime.now().toString)
                                    (implicit webDriver: WebDriver) = {
-    val key = BruteForcePreventionViewModelCacheKey
+    val key = bruteForcePreventionViewModelCacheKey
     val value = BruteForcePreventionModel(
       permitted,
       attempts,

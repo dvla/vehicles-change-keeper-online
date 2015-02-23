@@ -1,6 +1,7 @@
 package controllers
 
 import com.google.inject.Inject
+import models.K2KCacheKeyPrefix.CookiePrefix
 import models.VehicleLookupFormModel.VehicleLookupFormModelCacheKey
 import models.{AllCacheKeys, VrmLockedViewModel}
 import org.joda.time.DateTime
