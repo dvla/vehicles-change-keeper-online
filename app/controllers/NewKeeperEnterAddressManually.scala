@@ -3,13 +3,13 @@ package controllers
 import com.google.inject.Inject
 import models.CompleteAndConfirmFormModel.AllowGoingToCompleteAndConfirmPageCacheKey
 import models.K2KCacheKeyPrefix.CookiePrefix
-import models.NewKeeperChooseYourAddressFormModel.NewKeeperChooseYourAddressCacheKey
 import models.NewKeeperEnterAddressManuallyFormModel
 import models.NewKeeperEnterAddressManuallyViewModel
 import play.api.Logger
 import play.api.data.{Form, FormError}
 import play.api.mvc.{Action, AnyContent, Controller, Request, Result}
 import uk.gov.dvla.vehicles.presentation.common
+import common.model.NewKeeperChooseYourAddressFormModel.newKeeperChooseYourAddressCacheKey
 import common.clientsidesession.ClientSideSessionFactory
 import common.clientsidesession.CookieImplicits.{RichCookies, RichResult, RichForm}
 import common.model.BusinessKeeperDetailsFormModel
@@ -113,7 +113,7 @@ class NewKeeperEnterAddressManually @Inject()()
     )) match {
       case Some(keeperDetails) =>
         Redirect(routes.CompleteAndConfirm.present()).
-          discardingCookie(NewKeeperChooseYourAddressCacheKey).
+          discardingCookie(newKeeperChooseYourAddressCacheKey).
           withCookie(validForm).
           withCookie(keeperDetails).
           withCookie(AllowGoingToCompleteAndConfirmPageCacheKey, "true")

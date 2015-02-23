@@ -9,7 +9,6 @@ import models.CompleteAndConfirmResponseModel
 import models.CompleteAndConfirmResponseModel.ChangeKeeperCompletionResponseCacheKey
 import models.K2KCacheKeyPrefix.CookiePrefix
 import models.HelpCacheKey
-import models.NewKeeperChooseYourAddressFormModel
 import models.NewKeeperEnterAddressManuallyFormModel
 import models.NewKeeperEnterAddressManuallyFormModel.NewKeeperEnterAddressManuallyCacheKey
 import models.SeenCookieMessageCacheKey
@@ -26,6 +25,7 @@ import play.api.mvc.Cookie
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.{ClearTextClientSideSession, ClientSideSessionFactory, CookieFlags}
 import common.mappings.TitleType
+import common.model.NewKeeperChooseYourAddressFormModel
 import common.model.{AddressModel, BruteForcePreventionModel, VehicleAndKeeperDetailsModel}
 import common.model.BruteForcePreventionModel.BruteForcePreventionViewModelCacheKey
 import common.model.BusinessKeeperDetailsFormModel
@@ -168,13 +168,13 @@ object CookieFactoryForUnitSpecs extends TestComposition {
   }
 
   def newKeeperChooseYourAddressUseUprn(uprnSelected: String = UprnValid.toString): Cookie = {
-    val key = NewKeeperChooseYourAddressFormModel.NewKeeperChooseYourAddressCacheKey
+    val key = NewKeeperChooseYourAddressFormModel.newKeeperChooseYourAddressCacheKey
     val value = NewKeeperChooseYourAddressFormModel(uprnSelected = uprnSelected)
     createCookie(key, value)
   }
 
   def newKeeperChooseYourAddress(uprnSelected: String = "0"): Cookie = {
-    val key = NewKeeperChooseYourAddressFormModel.NewKeeperChooseYourAddressCacheKey
+    val key = NewKeeperChooseYourAddressFormModel.newKeeperChooseYourAddressCacheKey
     val value = NewKeeperChooseYourAddressFormModel(uprnSelected = uprnSelected)
     createCookie(key, value)
   }
