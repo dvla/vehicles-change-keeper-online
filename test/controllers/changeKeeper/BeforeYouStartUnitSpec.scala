@@ -30,6 +30,7 @@ class BeforeYouStartUnitSpec extends UnitSpec {
       implicit val config: Config = mock[Config]
       when(config.isPrototypeBannerVisible).thenReturn(false) // Stub this config value.
       when(config.googleAnalyticsTrackingId).thenReturn(None) // Stub this config value.
+      when(config.assetsUrl).thenReturn(None) // Stub this config value.
       val beforeYouStartPrototypeNotVisible = new BeforeYouStart()
 
       val result = beforeYouStartPrototypeNotVisible.present(request)
@@ -41,6 +42,7 @@ class BeforeYouStartUnitSpec extends UnitSpec {
       implicit val clientSideSessionFactory = injector.getInstance(classOf[ClientSideSessionFactory])
       implicit val config: Config = mock[Config]
       when(config.googleAnalyticsTrackingId).thenReturn(Some("TEST-GA-ID")) // Stub this config value.
+      when(config.assetsUrl).thenReturn(Some("TEST-GA-ID")) // Stub this config value.
       val beforeYouStartPrototypeNotVisible = new BeforeYouStart()
 
       val result = beforeYouStartPrototypeNotVisible.present(request)
@@ -53,6 +55,7 @@ class BeforeYouStartUnitSpec extends UnitSpec {
       implicit val clientSideSessionFactory = injector.getInstance(classOf[ClientSideSessionFactory])
       implicit val config: Config = mock[Config]
       when(config.googleAnalyticsTrackingId).thenReturn(None) // Stub this config value.
+      when(config.assetsUrl).thenReturn(None) // Stub this config value.
       val beforeYouStartPrototypeNotVisible = new BeforeYouStart()
 
       val result = beforeYouStartPrototypeNotVisible.present(request)

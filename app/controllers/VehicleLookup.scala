@@ -2,120 +2,52 @@ package controllers
 
 import com.google.inject.Inject
 import models._
-import models.VehicleLookupFormModel.VehicleLookupResponseCodeCacheKey
+import models.VehicleLookupFormModel.{VehicleLookupResponseCodeCacheKey, Key, JsonFormat}
 import models.VehicleLookupFormModel.Form.{DocumentReferenceNumberId, VehicleRegistrationNumberId,
         VehicleSoldToId, VehicleSellerEmail}
-import org.joda.time.DateTime
 import play.api.data.{Form => PlayForm, FormError}
-import play.api.mvc.{Action, Call, Request}
-import uk.gov.dvla.vehicles.presentation.common.webserviceclients.common.DmsWebHeaderDto
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+import play.api.mvc.{Result, Request}
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.ClientSideSessionFactory
 import common.clientsidesession.CookieImplicits.{RichForm, RichResult}
 import common.model.VehicleAndKeeperDetailsModel
 import common.views.helpers.FormExtensions.formBinding
-import common.controllers.VehicleLookupBase
-import common.controllers.VehicleLookupBase.LookupResult
-import common.controllers.VehicleLookupBase.VehicleFound
-import common.controllers.VehicleLookupBase.VehicleNotFound
 import common.services.DateService
 import common.webserviceclients.bruteforceprevention.BruteForcePreventionService
 import common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperDetailsDto
-import common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperDetailsRequest
 import common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupService
 import utils.helpers.Config
 import views.changekeeper.VehicleLookup.VehicleSoldTo_Private
 
-class VehicleLookup @Inject()(val bruteForceService: BruteForcePreventionService,
+import scala.concurrent.Future
+
+class VehicleLookup @Inject()(implicit bruteForceService: BruteForcePreventionService,
                               vehicleLookupService: VehicleAndKeeperLookupService,
-                              dateService: DateService)
-                             (implicit val clientSideSessionFactory: ClientSideSessionFactory,
-                              config: Config) extends VehicleLookupBase {
-  // TODO : Redirect to the correct page
-  override val vrmLocked: Call = routes.VrmLocked.present()
-  override val microServiceError: Call = routes.MicroServiceError.present()
-  // TODO : Redirect to the correct page
-  override val vehicleLookupFailure: Call = routes.VehicleLookupFailure.present()
+                              dateService: DateService,
+                              clientSideSessionFactory: ClientSideSessionFactory,
+                              config: Config) extends VehicleLookupBase1[VehicleLookupFormModel] {
+  override val form = PlayForm(VehicleLookupFormModel.Form.Mapping)
   override val responseCodeCacheKey: String = VehicleLookupResponseCodeCacheKey
 
-  override type Form = VehicleLookupFormModel
+  override def vrmLocked: Result = Redirect(routes.VrmLocked.present())
 
-  private[controllers] val form = PlayForm(
-    VehicleLookupFormModel.Form.Mapping
+  override def microServiceError: Result = Redirect(routes.MicroServiceError.present())
+
+  override def vehicleLookupFailure: Result = Redirect(routes.VehicleLookupFailure.present())
+
+  override def presentResult(implicit request: Request[_]) = Ok(
+    views.html.changekeeper.vehicle_lookup(
+    VehicleLookupViewModel(form.fill()))
   )
 
-  def present = Action { implicit request =>
-    Ok(views.html.changekeeper.vehicle_lookup(
-      VehicleLookupViewModel(form.fill()))
-    )
-  }
-
-  def submit = Action.async { implicit request =>
-    form.bindFromRequest.fold(
-      invalidForm =>
-        Future {
-              BadRequest(views.html.changekeeper.vehicle_lookup(
-                VehicleLookupViewModel(formWithReplacedErrors(invalidForm)))
-              )
-        },
-      validForm => {
-        bruteForceAndLookup(
-          validForm.registrationNumber,
-          validForm.referenceNumber,
-          validForm
-        )
-      }
-    )
-  }
-
-  private def formWithReplacedErrors(form: PlayForm[VehicleLookupFormModel]) = {
-    form.replaceError(
-      VehicleRegistrationNumberId, FormError(
-        key = VehicleRegistrationNumberId, message = "error.restricted.validVrnOnly", args = Seq.empty)
-    ).replaceError(
-        DocumentReferenceNumberId,FormError(
-          key = DocumentReferenceNumberId, message = "error.validDocumentReferenceNumber", args = Seq.empty)
-      ).replaceError(
-        VehicleSoldToId,FormError(
-          key = VehicleSoldToId, message = "error.validBougtByType", args = Seq.empty)
-      ).replaceError(
-        VehicleSellerEmail,FormError(
-      key = VehicleSellerEmail, message = "error.validSellerEmail", args = Seq.empty)
-      ).distinctErrors
-  }
-
-  override protected def callLookupService(trackingId: String, form: Form)(implicit request: Request[_]): Future[LookupResult] = {
-    val vehicleAndKeeperDetailsRequest = VehicleAndKeeperDetailsRequest(
-      dmsHeader = buildHeader(trackingId),
-      referenceNumber = form.referenceNumber,
-      registrationNumber = form.registrationNumber,
-      transactionTimestamp = new DateTime
-    )
-
-    vehicleLookupService.invoke(vehicleAndKeeperDetailsRequest, trackingId) map { response =>
-      response.responseCode match {
-        case Some(responseCode) =>
-          VehicleNotFound(responseCode)
-        case None =>
-          response.vehicleAndKeeperDetailsDto match {
-            case Some(dto) => VehicleFound(vehicleFoundResult(dto, form.vehicleSoldTo, form.sellerEmail))
-            case None => throw new RuntimeException("No vehicleDetailsDto found")
-          }
-      }
-    }
-  }
-
-  private def vehicleFoundResult(vehicleAndKeeperDetailsDto: VehicleAndKeeperDetailsDto,
-                                 soldTo: String,
-                                 sellerEmail: Option[String])(implicit request: Request[_]) = {
+  override def vehicleFoundResult(vehicleAndKeeperDetailsDto: VehicleAndKeeperDetailsDto, formModel: VehicleLookupFormModel)
+                                (implicit request: Request[_]): Result = {
     val model = VehicleAndKeeperDetailsModel.from(vehicleAndKeeperDetailsDto)
-    val emailCapture = SellerEmailModel(sellerEmail)
+    val emailCapture = SellerEmailModel(formModel.sellerEmail)
     val suppressed = model.suppressedV5Flag.getOrElse(false)
 
     val (call, discardedCookies) =
-      (soldTo, suppressed) match {
+      (formModel.vehicleSoldTo, suppressed) match {
         case (_, true) => (routes.SuppressedV5C.present(), BusinessKeeperDetailsCacheKeys)
         case (VehicleSoldTo_Private, false) => (routes.PrivateKeeperDetails.present(), BusinessKeeperDetailsCacheKeys)
         case (_, false) => (routes.BusinessKeeperDetails.present(), PrivateKeeperDetailsCacheKeys)
@@ -125,20 +57,28 @@ class VehicleLookup @Inject()(val bruteForceService: BruteForcePreventionService
       discardingCookies(discardedCookies).
       withCookie(model).
       withCookie(emailCapture)
-
   }
 
-  private def buildHeader(trackingId: String): DmsWebHeaderDto = {
-    val alwaysLog = true
-    val englishLanguage = "EN"
-    DmsWebHeaderDto(conversationId = trackingId,
-      originDateTime = new DateTime,
-      applicationCode = config.applicationCode,
-      channelCode = config.channelCode,
-      contactId = config.contactId,
-      eventFlag = alwaysLog,
-      serviceTypeCode = config.dmsServiceTypeCode,
-      languageCode = englishLanguage,
-      endUser = None)
+  override def invalidFormResult(invalidForm: PlayForm[VehicleLookupFormModel])
+                                (implicit request: Request[_]): Future[Result] = Future.successful {
+    BadRequest(
+      views.html.changekeeper.vehicle_lookup(VehicleLookupViewModel(formWithReplacedErrors(invalidForm)))
+    )
+  }
+
+  private def formWithReplacedErrors(form: PlayForm[VehicleLookupFormModel]) = {
+    form.replaceError(
+      VehicleRegistrationNumberId,
+      FormError(key = VehicleRegistrationNumberId, message = "error.restricted.validVrnOnly", args = Seq.empty)
+    ).replaceError(
+        DocumentReferenceNumberId,
+        FormError(key = DocumentReferenceNumberId, message = "error.validDocumentReferenceNumber", args = Seq.empty)
+      ).replaceError(
+        VehicleSoldToId,
+        FormError(key = VehicleSoldToId, message = "error.validBougtByType", args = Seq.empty)
+      ).replaceError(
+        VehicleSellerEmail,
+        FormError(key = VehicleSellerEmail, message = "error.validSellerEmail", args = Seq.empty)
+      ).distinctErrors
   }
 }

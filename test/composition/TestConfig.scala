@@ -10,6 +10,8 @@ import utils.helpers.Config
  */
 class TestConfig extends Config {
 
+  override def assetsUrl: Option[String] = None
+
   // Prototype message in html
   def isPrototypeBannerVisible: Boolean = getOptionalProperty[Boolean]("prototype.disclaimer").getOrElse(true)
 

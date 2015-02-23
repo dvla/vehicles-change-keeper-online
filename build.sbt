@@ -14,7 +14,6 @@ import io.gatling.sbt.GatlingPlugin
 import GatlingPlugin.Gatling
 
 //import Sandbox.accept
-import net.litola.SassPlugin
 import Common._
 
 name := "vehicles-change-keeper-online"
@@ -35,15 +34,15 @@ credentials += sbtCredentials
 
 resolvers ++= projectResolvers
 
-lazy val root = (project in file(".")).enablePlugins(PlayScala, SassPlugin, SbtWeb)
+lazy val root = (project in file(".")).enablePlugins(PlayScala, SbtWeb)
 
 lazy val acceptanceTestsProject = Project("acceptance-tests", file("acceptance-tests"))
   .dependsOn(root % "test->test")
-  .disablePlugins(PlayScala, SassPlugin, SbtWeb)
+  .disablePlugins(PlayScala, SbtWeb)
   .settings(net.virtualvoid.sbt.graph.Plugin.graphSettings:_*)
 
 lazy val gatlingTestsProject = Project("gatling-tests", file("gatling-tests"))
-  .disablePlugins(PlayScala, SassPlugin, SbtWeb)
+  .disablePlugins(PlayScala, SbtWeb)
       .enablePlugins(GatlingPlugin)
 
 libraryDependencies ++= Seq(
@@ -104,10 +103,10 @@ ScalastylePlugin.Settings
 net.virtualvoid.sbt.graph.Plugin.graphSettings
 
 // ====================== Sandbox Settings ==========================
-lazy val osAddressLookupProject = osAddressLookup("0.11-SNAPSHOT").disablePlugins(PlayScala, SassPlugin, SbtWeb)
-lazy val vehicleAndKeeperLookupProject = vehicleAndKeeperLookup("0.7-SNAPSHOT").disablePlugins(PlayScala, SassPlugin, SbtWeb)
-lazy val vehiclesAcquireFulfilProject = vehiclesAcquireFulfil("0.8-SNAPSHOT").disablePlugins(PlayScala, SassPlugin, SbtWeb)
-lazy val legacyStubsProject = legacyStubs("1.0-SNAPSHOT").disablePlugins(PlayScala, SassPlugin, SbtWeb)
+lazy val osAddressLookupProject = osAddressLookup("0.11-SNAPSHOT").disablePlugins(PlayScala, SbtWeb)
+lazy val vehicleAndKeeperLookupProject = vehicleAndKeeperLookup("0.7-SNAPSHOT").disablePlugins(PlayScala, SbtWeb)
+lazy val vehiclesAcquireFulfilProject = vehiclesAcquireFulfil("0.8-SNAPSHOT").disablePlugins(PlayScala, SbtWeb)
+lazy val legacyStubsProject = legacyStubs("1.0-SNAPSHOT").disablePlugins(PlayScala, SbtWeb)
 
 SandboxSettings.portOffset := 20000
 
