@@ -12,6 +12,8 @@ import common.services.SEND.{EmailConfiguration, From}
 
 class ConfigImpl extends Config {
 
+  override def assetsUrl: Option[String] = getOptionalProperty[String]("assets.url")
+
   // Prototype message in html
   val isPrototypeBannerVisible: Boolean = getProperty[Boolean]("prototype.disclaimer")
 

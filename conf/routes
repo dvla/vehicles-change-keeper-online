@@ -9,7 +9,7 @@
 # Guice to provide the actual instance complete with its injected dependencies
 
 # Map static resources from the /public folder to the /assets URL path
-GET         /assets/*file                               controllers.Assets.at(path="/public", file)
+GET         /assets/*file                               controllers.Assets.versioned(path="/public", file:Asset)
 
 # Home page
 GET         /                                           @controllers.Application.index
@@ -57,9 +57,6 @@ POST        /failure-change-keeper-finish               @controllers.ChangeKeepe
 GET         /feedback                                   @controllers.FeedbackController.present
 POST        /feedback                                   @controllers.FeedbackController.submit
 
-# REMOVE ME WHEN THE STORIES ARE AVAILABLE
-GET         /next                                       @controllers.TempController.present
-
 # Micro service error
 GET         /service-error                              @controllers.MicroServiceError.present
 GET         /service-error/try-again                    @controllers.MicroServiceError.back
@@ -74,7 +71,7 @@ GET         /healthcheck                                @uk.gov.dvla.vehicles.pr
 
 # Brute force vrm locked
 GET         /vrm-locked                                 @controllers.VrmLocked.present
-POST        /vrm-locked/buy-another                     @controllers.VrmLocked.buyAnotherVehicle
+POST        /vrm-locked/buy-another                     @controllers.VrmLocked.tryAnother
 POST        /vrm-locked/exit                            @controllers.VrmLocked.exit
 
 GET         /complete-and-confirm                       @controllers.CompleteAndConfirm.present

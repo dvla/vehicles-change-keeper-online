@@ -26,15 +26,14 @@ currentForm = Some(viewModel.form)
     <div class="first-col">
         <div class="img-wrap img-wrap-desktop">
             <h2>@Messages("change_keeper_vehiclelookup.img.h2")</h2>
-            <img src="@routes.Assets.at("images/document-reference-number.png")" alt="@Messages("change_keeper_vehiclelookup.img.alt")" />
+            <img src="@controllers.StaticAssets.versioned(config.assetsUrl)("images/document-reference-number.png")" alt="@Messages("change_keeper_vehiclelookup.img.alt")" />
         </div>
     </div>
 
     <div class="second-col">
-
+        
         <div class="form-steps">
             <div class="step uppercase-input">
-
                 @form(action = controllers.routes.VehicleLookup.submit()) {
                 @csrfTokenHiddenField()
 
@@ -81,7 +80,7 @@ currentForm = Some(viewModel.form)
 
                 <div class="img-wrap img-wrap-mobile">
                     <h2>@Messages("change_keeper_vehiclelookup.img.h2")</h2>
-                    <img src="@routes.Assets.at("images/document-reference-number.png")" alt="@Messages("change_keeper_vehiclelookup.img.alt")" />
+                    <img src="@controllers.StaticAssets.versioned(config.assetsUrl)("images/document-reference-number.png")" alt="@Messages("change_keeper_vehiclelookup.img.alt")" />
                 </div>
 
                 <div class="form-steps">

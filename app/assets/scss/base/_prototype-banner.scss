@@ -1,8 +1,10 @@
-//coloured prototype banner
+// Coloured prototype banner
 
 #{$prototype-banner} {
+
     border-top: 10px solid phase-colour($phase);
-    span.phase-tag {
+
+    .phase-tag {
         background:phase-tag-colour($phase);
         color:$white;
         &.alpha {
@@ -12,4 +14,5 @@
             background: phase-tag-colour($phase);
         }
     }
-}
+
+} // end $prototype-banner

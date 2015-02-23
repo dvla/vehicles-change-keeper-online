@@ -14,7 +14,6 @@ import io.gatling.sbt.GatlingPlugin
 import GatlingPlugin.Gatling
 
 //import Sandbox.accept
-import net.litola.SassPlugin
 import Common._
 
 name := "vehicles-change-keeper-online"
@@ -35,22 +34,22 @@ credentials += sbtCredentials
 
 resolvers ++= projectResolvers
 
-lazy val root = (project in file(".")).enablePlugins(PlayScala, SassPlugin, SbtWeb)
+lazy val root = (project in file(".")).enablePlugins(PlayScala, SbtWeb)
 
 lazy val acceptanceTestsProject = Project("acceptance-tests", file("acceptance-tests"))
   .dependsOn(root % "test->test")
-  .disablePlugins(PlayScala, SassPlugin, SbtWeb)
+  .disablePlugins(PlayScala, SbtWeb)
   .settings(net.virtualvoid.sbt.graph.Plugin.graphSettings:_*)
 
 lazy val gatlingTestsProject = Project("gatling-tests", file("gatling-tests"))
-  .disablePlugins(PlayScala, SassPlugin, SbtWeb)
+  .disablePlugins(PlayScala, SbtWeb)
       .enablePlugins(GatlingPlugin)
 
 libraryDependencies ++= Seq(
   cache,
   filters,
-  "dvla" %% "vehicles-presentation-common" % "2.14-SNAPSHOT" withSources() withJavadoc() exclude("junit", "junit-dep"),
-  "dvla" %% "vehicles-presentation-common" % "2.14-SNAPSHOT" classifier "tests" withSources() withJavadoc() exclude("junit", "junit-dep"),
+  "dvla" %% "vehicles-presentation-common" % "2.15-SNAPSHOT" withSources() withJavadoc() exclude("junit", "junit-dep"),
+  "dvla" %% "vehicles-presentation-common" % "2.15-SNAPSHOT" classifier "tests" withSources() withJavadoc() exclude("junit", "junit-dep"),
   "com.google.guava" % "guava" % "15.0" withSources() withJavadoc(), // See: http://stackoverflow.com/questions/16614794/illegalstateexception-impossible-to-get-artifacts-when-data-has-not-been-loaded
   "org.seleniumhq.selenium" % "selenium-java" % "2.43.0" % "test" withSources() withJavadoc(),
   "com.github.detro" % "phantomjsdriver" % "1.2.0" % "test" withSources() withJavadoc(),
@@ -104,10 +103,10 @@ ScalastylePlugin.Settings
 net.virtualvoid.sbt.graph.Plugin.graphSettings
 
 // ====================== Sandbox Settings ==========================
-lazy val osAddressLookupProject = osAddressLookup("0.10-SNAPSHOT").disablePlugins(PlayScala, SassPlugin, SbtWeb)
-lazy val vehicleAndKeeperLookupProject = vehicleAndKeeperLookup("0.6-SNAPSHOT").disablePlugins(PlayScala, SassPlugin, SbtWeb)
-lazy val vehiclesAcquireFulfilProject = vehiclesAcquireFulfil("0.6-SNAPSHOT").disablePlugins(PlayScala, SassPlugin, SbtWeb)
-lazy val legacyStubsProject = legacyStubs("1.0-SNAPSHOT").disablePlugins(PlayScala, SassPlugin, SbtWeb)
+lazy val osAddressLookupProject = osAddressLookup("0.11-SNAPSHOT").disablePlugins(PlayScala, SbtWeb)
+lazy val vehicleAndKeeperLookupProject = vehicleAndKeeperLookup("0.7-SNAPSHOT").disablePlugins(PlayScala, SbtWeb)
+lazy val vehiclesAcquireFulfilProject = vehiclesAcquireFulfil("0.8-SNAPSHOT").disablePlugins(PlayScala, SbtWeb)
+lazy val legacyStubsProject = legacyStubs("1.0-SNAPSHOT").disablePlugins(PlayScala, SbtWeb)
 
 SandboxSettings.portOffset := 20000
 

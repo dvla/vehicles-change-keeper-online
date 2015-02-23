@@ -140,7 +140,7 @@ final class NewKeeperEnterAddressManuallyFormSpec extends UnitSpec {
     )
   }
 
-  val buildingNameOrNumberHypthens = "1-12"
+  val buildingNameOrNumberHypthens = "1-12ABC"
   val line2Hypthens = "address line - 2"
   val line3Hypthens = "address line - 3"
   val postTownHypthens = "address-line"
