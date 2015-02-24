@@ -23,6 +23,7 @@ import common.services.DateService
 import common.webserviceclients.bruteforceprevention.BruteForcePreventionService
 import common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperDetailsDto
 import common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupService
+import uk.gov.dvla.vehicles.presentation.common.controllers.VehicleLookupBase1
 import utils.helpers.Config
 import views.changekeeper.VehicleLookup.VehicleSoldTo_Private
 

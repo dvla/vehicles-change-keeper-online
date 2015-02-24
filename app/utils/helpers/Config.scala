@@ -1,11 +1,11 @@
 package utils.helpers
 
-import controllers.VehicleLookupConfig
 import uk.gov.dvla.vehicles.presentation.common.ConfigProperties.{getProperty, getOptionalProperty, getStringListProperty}
+import uk.gov.dvla.vehicles.presentation.common.controllers.VehicleLookupConfig
 import uk.gov.dvla.vehicles.presentation.common.services.SEND.{From, EmailConfiguration}
 
 trait Config extends VehicleLookupConfig {
-  
+
   def assetsUrl: Option[String]
 
   // Prototype message in html
