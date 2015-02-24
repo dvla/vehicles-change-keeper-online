@@ -1,4 +1,4 @@
-@(viewModel: models.NewKeeperChooseYourAddressViewModel,
+@(viewModel: uk.gov.dvla.vehicles.presentation.common.model.NewKeeperChooseYourAddressViewModel,
   newKeeperName: String,
   newKeeperPostcode: String,
   newKeeperEmail: Option[String],
@@ -16,7 +16,7 @@
 @import views.changekeeper.NewKeeperChooseYourAddress.{BackId, EnterAddressManuallyButtonId, SelectId}
 @import views.html.changekeeper.main
 @import views.html.helper.form
-@import models.NewKeeperChooseYourAddressFormModel.Form.AddressSelectId
+@import uk.gov.dvla.vehicles.presentation.common.model.NewKeeperChooseYourAddressFormModel.Form.AddressSelectId
 
 @main(
   progress = Some(Messages("change_keeper_progress_4")),

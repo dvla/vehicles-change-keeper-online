@@ -14,7 +14,7 @@ import play.api.test.WithApplication
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import uk.gov.dvla.vehicles.presentation.common
-import common.clientsidesession.ClientSideSessionFactory
+import uk.gov.dvla.vehicles.presentation.common.clientsidesession.{NoCookieFlags, ClearTextClientSideSession, ClientSideSessionFactory}
 import common.services.DateServiceImpl
 import common.testhelpers.RandomVrmGenerator
 import common.webserviceclients.bruteforceprevention.BruteForcePreventionServiceImpl
@@ -171,13 +171,17 @@ final class VehicleLookupFormSpec extends UnitSpec {
       }
       new FakeResponse(status = fullResponse._1, fakeJson = responseAsJson)// Any call to a webservice will always return this successful response.
     })
-    val vehicleAndKeeperLookupServiceImpl = new VehicleAndKeeperLookupServiceImpl(vehicleAndKeeperLookupWebService, healthStatsMock)
+    val vehicleAndKeeperLookupServiceImpl =
+      new VehicleAndKeeperLookupServiceImpl(vehicleAndKeeperLookupWebService, healthStatsMock)
     implicit val clientSideSessionFactory = injector.getInstance(classOf[ClientSideSessionFactory])
     implicit val config: Config = mock[Config]
-    new VehicleLookup(
+    new VehicleLookup()(
       bruteForceService = bruteForceServiceImpl,
-      vehicleLookupService = vehicleAndKeeperLookupServiceImpl, dateService
-      )
+      vehicleLookupService = vehicleAndKeeperLookupServiceImpl,
+      dateService,
+      clientSideSessionFactory,
+      config
+    )
   }
 
   private def formWithValidDefaults(referenceNumber: String = ReferenceNumberValid,

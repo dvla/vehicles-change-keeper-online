@@ -1,12 +1,12 @@
 import models.CompleteAndConfirmFormModel.CompleteAndConfirmCacheKey
 import models.CompleteAndConfirmResponseModel.ChangeKeeperCompletionResponseCacheKey
 import models.K2KCacheKeyPrefix.CookiePrefix
-import models.NewKeeperChooseYourAddressFormModel.NewKeeperChooseYourAddressCacheKey
 import models.NewKeeperEnterAddressManuallyFormModel.NewKeeperEnterAddressManuallyCacheKey
 import models.VehicleLookupFormModel.{VehicleLookupFormModelCacheKey, VehicleLookupResponseCodeCacheKey}
 import uk.gov.dvla.vehicles.presentation.common
 import common.model.BruteForcePreventionModel.bruteForcePreventionViewModelCacheKey
 import common.model.BusinessKeeperDetailsFormModel.businessKeeperDetailsCacheKey
+import common.model.NewKeeperChooseYourAddressFormModel.newKeeperChooseYourAddressCacheKey
 import common.model.NewKeeperDetailsViewModel.newKeeperDetailsCacheKey
 import common.model.PrivateKeeperDetailsFormModel.privateKeeperDetailsCacheKey
 import common.model.VehicleAndKeeperDetailsModel.VehicleAndKeeperLookupDetailsCacheKey
@@ -16,7 +16,7 @@ package object models {
   final val SeenCookieMessageCacheKey = "seen_cookie_message" // Same value across all exemplars
 
   final val ChangeKeeperCacheKeys = Set(
-    NewKeeperChooseYourAddressCacheKey,
+    newKeeperChooseYourAddressCacheKey,
     bruteForcePreventionViewModelCacheKey
   )
 
@@ -28,14 +28,14 @@ package object models {
   final val PrivateKeeperDetailsCacheKeys = Set(
     privateKeeperDetailsCacheKey,
     newKeeperDetailsCacheKey,
-    NewKeeperChooseYourAddressCacheKey,
+    newKeeperChooseYourAddressCacheKey,
     NewKeeperEnterAddressManuallyCacheKey
   )
 
   final val BusinessKeeperDetailsCacheKeys = Set(
     businessKeeperDetailsCacheKey,
     newKeeperDetailsCacheKey,
-    NewKeeperChooseYourAddressCacheKey,
+    newKeeperChooseYourAddressCacheKey,
     NewKeeperEnterAddressManuallyCacheKey
   )
 
