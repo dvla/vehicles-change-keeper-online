@@ -21,8 +21,11 @@ RPM_TARGETDIR="$WORKSPACE/target/" #grab the jenkins WORKSPACE working dir
 UPSTART_FILES_DIR="rpm-build/upstart/"
 
 # Get the version of the binary from sbt and strip color information so we are just left with a version
+cd $WORKSPACE
 VERSION=`sbt version | tail -1 | awk {'print $2'} | sed -E "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g"`
 echo VERSION = $VERSION
+cd -
+
 ZIP_FILENAME=vehicles-change-keeper-online-${VERSION}.zip
 
 echo "*********************************"
