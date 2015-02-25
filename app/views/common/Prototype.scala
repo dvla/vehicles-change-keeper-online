@@ -1,5 +1,6 @@
 package views.common
 
-object Prototype {
-  final val FeedbackId = "feedback"
+object ProtoType {
+  final val FeedbackId = "feedback-open"
 }
+
