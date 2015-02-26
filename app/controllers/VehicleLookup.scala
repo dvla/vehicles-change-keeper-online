@@ -23,7 +23,7 @@ import common.services.DateService
 import common.webserviceclients.bruteforceprevention.BruteForcePreventionService
 import common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperDetailsDto
 import common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupService
-import uk.gov.dvla.vehicles.presentation.common.controllers.VehicleLookupBase1
+import uk.gov.dvla.vehicles.presentation.common.controllers.VehicleLookupBase
 import utils.helpers.Config
 import views.changekeeper.VehicleLookup.VehicleSoldTo_Private
 
@@ -33,7 +33,7 @@ class VehicleLookup @Inject()(implicit bruteForceService: BruteForcePreventionSe
                               vehicleLookupService: VehicleAndKeeperLookupService,
                               dateService: DateService,
                               clientSideSessionFactory: ClientSideSessionFactory,
-                              config: Config) extends VehicleLookupBase1[VehicleLookupFormModel] {
+                              config: Config) extends VehicleLookupBase[VehicleLookupFormModel] {
   override val form = PlayForm(VehicleLookupFormModel.Form.Mapping)
   override val responseCodeCacheKey: String = VehicleLookupResponseCodeCacheKey
 
