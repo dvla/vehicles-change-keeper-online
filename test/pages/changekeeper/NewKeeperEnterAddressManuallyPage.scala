@@ -1,13 +1,14 @@
 package pages.changekeeper
 
-import uk.gov.dvla.vehicles.presentation.common.helpers
+import uk.gov.dvla.vehicles.presentation.common
+import common.helpers
 import helpers.webbrowser.{Element, Page, TextField, WebBrowserDSL, WebDriverFactory}
 import views.changekeeper.NewKeeperEnterAddressManually
 import NewKeeperEnterAddressManually.{BackId, NextId}
-import uk.gov.dvla.vehicles.presentation.common.views.models.AddressLinesViewModel
+import common.views.models.AddressLinesViewModel
 import org.openqa.selenium.WebDriver
 import AddressLinesViewModel.Form.{AddressLinesId, BuildingNameOrNumberId, Line2Id, Line3Id, PostTownId}
-import models.NewKeeperEnterAddressManuallyFormModel.Form.AddressAndPostcodeId
+import common.model.NewKeeperEnterAddressManuallyFormModel.Form.AddressAndPostcodeId
 import webserviceclients.fakes.FakeAddressLookupService.{BuildingNameOrNumberValid, Line2Valid, Line3Valid, PostTownValid}
 
 object NewKeeperEnterAddressManuallyPage extends Page with WebBrowserDSL {
