@@ -5,7 +5,6 @@ import controllers.changeKeeper.Common.PrototypeHtml
 import controllers.NewKeeperEnterAddressManually
 import helpers.{CookieFactoryForUnitSpecs, UnitSpec}
 import models.K2KCacheKeyPrefix.CookiePrefix
-import models.NewKeeperEnterAddressManuallyFormModel.Form.AddressAndPostcodeId
 import org.mockito.Mockito.when
 import pages.changekeeper.VehicleLookupPage
 import play.api.mvc.Result
@@ -20,6 +19,7 @@ import common.views.helpers.FormExtensions
 import common.views.models.AddressLinesViewModel.Form.{AddressLinesId, BuildingNameOrNumberId, Line2Id, Line3Id, PostTownId}
 import common.model.NewKeeperDetailsViewModel
 import common.model.NewKeeperDetailsViewModel.newKeeperDetailsCacheKey
+import common.model.NewKeeperEnterAddressManuallyFormModel.Form.AddressAndPostcodeId
 import utils.helpers.Config
 import views.changekeeper.NewKeeperEnterAddressManually.PostcodeId
 import webserviceclients.fakes.FakeAddressLookupService.BuildingNameOrNumberValid

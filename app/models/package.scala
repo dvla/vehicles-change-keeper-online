@@ -1,13 +1,13 @@
 import models.CompleteAndConfirmFormModel.CompleteAndConfirmCacheKey
 import models.CompleteAndConfirmResponseModel.ChangeKeeperCompletionResponseCacheKey
 import models.K2KCacheKeyPrefix.CookiePrefix
-import models.NewKeeperEnterAddressManuallyFormModel.NewKeeperEnterAddressManuallyCacheKey
 import models.VehicleLookupFormModel.{VehicleLookupFormModelCacheKey, VehicleLookupResponseCodeCacheKey}
 import uk.gov.dvla.vehicles.presentation.common
 import common.model.BruteForcePreventionModel.bruteForcePreventionViewModelCacheKey
 import common.model.BusinessKeeperDetailsFormModel.businessKeeperDetailsCacheKey
 import common.model.NewKeeperChooseYourAddressFormModel.newKeeperChooseYourAddressCacheKey
 import common.model.NewKeeperDetailsViewModel.newKeeperDetailsCacheKey
+import common.model.NewKeeperEnterAddressManuallyFormModel.newKeeperEnterAddressManuallyCacheKey
 import common.model.PrivateKeeperDetailsFormModel.privateKeeperDetailsCacheKey
 import common.model.VehicleAndKeeperDetailsModel.VehicleAndKeeperLookupDetailsCacheKey
 
@@ -29,14 +29,14 @@ package object models {
     privateKeeperDetailsCacheKey,
     newKeeperDetailsCacheKey,
     newKeeperChooseYourAddressCacheKey,
-    NewKeeperEnterAddressManuallyCacheKey
+    newKeeperEnterAddressManuallyCacheKey
   )
 
   final val BusinessKeeperDetailsCacheKeys = Set(
     businessKeeperDetailsCacheKey,
     newKeeperDetailsCacheKey,
     newKeeperChooseYourAddressCacheKey,
-    NewKeeperEnterAddressManuallyCacheKey
+    newKeeperEnterAddressManuallyCacheKey
   )
 
   final val VehicleNewKeeperCompletionCacheKeys =
