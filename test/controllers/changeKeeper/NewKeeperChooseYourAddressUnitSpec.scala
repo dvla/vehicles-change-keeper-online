@@ -6,7 +6,6 @@ import controllers.NewKeeperChooseYourAddress
 import helpers.CookieFactoryForUnitSpecs
 import helpers.UnitSpec
 import models.K2KCacheKeyPrefix.CookiePrefix
-import models.NewKeeperEnterAddressManuallyFormModel.NewKeeperEnterAddressManuallyCacheKey
 import org.mockito.invocation.InvocationOnMock
 import org.mockito.Matchers._
 import org.mockito.Mockito.when
@@ -18,6 +17,7 @@ import pages.common.UprnNotFoundPage
 import play.api.mvc.Cookies
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{BAD_REQUEST, LOCATION, OK, SET_COOKIE, contentAsString, defaultAwaitTimeout}
+import uk.gov.dvla.vehicles.presentation.common.services.DateServiceImpl
 import scala.concurrent.Future
 import uk.gov.dvla.vehicles.presentation.common
 import common.model.NewKeeperChooseYourAddressFormModel.Form.AddressSelectId
@@ -25,6 +25,7 @@ import common.model.NewKeeperChooseYourAddressFormModel.newKeeperChooseYourAddre
 import common.clientsidesession.ClientSideSessionFactory
 import common.model.NewKeeperDetailsViewModel.newKeeperDetailsCacheKey
 import common.model.TraderDetailsModel.TraderDetailsCacheKey
+import common.model.NewKeeperEnterAddressManuallyFormModel.newKeeperEnterAddressManuallyCacheKey
 import common.testhelpers.CookieHelper.{fetchCookiesFromHeaders, verifyCookieHasBeenDiscarded, verifyCookieHasNotBeenDiscarded}
 import common.webserviceclients.addresslookup.ordnanceservey.AddressLookupServiceImpl
 import common.webserviceclients.healthstats.HealthStats
@@ -325,11 +326,11 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
       whenReady(result) { r =>
         val cookies = fetchCookiesFromHeaders(r)
         cookies.map(_.name) should contain allOf(
-          NewKeeperEnterAddressManuallyCacheKey,
+          newKeeperEnterAddressManuallyCacheKey,
           newKeeperChooseYourAddressCacheKey,
           newKeeperDetailsCacheKey
           )
-        verifyCookieHasBeenDiscarded(NewKeeperEnterAddressManuallyCacheKey, cookies)
+        verifyCookieHasBeenDiscarded(newKeeperEnterAddressManuallyCacheKey, cookies)
         verifyCookieHasNotBeenDiscarded(newKeeperChooseYourAddressCacheKey, cookies)
         verifyCookieHasNotBeenDiscarded(newKeeperDetailsCacheKey, cookies)
       }
@@ -343,11 +344,11 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
       whenReady(result) { r =>
         val cookies = fetchCookiesFromHeaders(r)
         cookies.map(_.name) should contain allOf(
-          NewKeeperEnterAddressManuallyCacheKey,
+          newKeeperEnterAddressManuallyCacheKey,
           newKeeperChooseYourAddressCacheKey,
           newKeeperDetailsCacheKey
           )
-        verifyCookieHasBeenDiscarded(NewKeeperEnterAddressManuallyCacheKey, cookies)
+        verifyCookieHasBeenDiscarded(newKeeperEnterAddressManuallyCacheKey, cookies)
         verifyCookieHasNotBeenDiscarded(newKeeperChooseYourAddressCacheKey, cookies)
         verifyCookieHasNotBeenDiscarded(newKeeperDetailsCacheKey, cookies)
       }
@@ -360,7 +361,7 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
       whenReady(result) { r =>
         val cookies = r.header.headers.get(SET_COOKIE).toSeq.flatMap(Cookies.decode)
         cookies.map(_.name) should contain noneOf(
-          NewKeeperEnterAddressManuallyCacheKey,
+          newKeeperEnterAddressManuallyCacheKey,
           newKeeperChooseYourAddressCacheKey,
           TraderDetailsCacheKey
         )
@@ -472,11 +473,11 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
       whenReady(result) { r =>
         val cookies = fetchCookiesFromHeaders(r)
         cookies.map(_.name) should contain allOf(
-          NewKeeperEnterAddressManuallyCacheKey,
+          newKeeperEnterAddressManuallyCacheKey,
           newKeeperChooseYourAddressCacheKey,
           newKeeperDetailsCacheKey
           )
-        verifyCookieHasBeenDiscarded(NewKeeperEnterAddressManuallyCacheKey, cookies)
+        verifyCookieHasBeenDiscarded(newKeeperEnterAddressManuallyCacheKey, cookies)
         verifyCookieHasNotBeenDiscarded(newKeeperChooseYourAddressCacheKey, cookies)
         verifyCookieHasNotBeenDiscarded(newKeeperDetailsCacheKey, cookies)
       }
@@ -490,11 +491,11 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
       whenReady(result) { r =>
         val cookies = fetchCookiesFromHeaders(r)
         cookies.map(_.name) should contain allOf(
-          NewKeeperEnterAddressManuallyCacheKey,
+          newKeeperEnterAddressManuallyCacheKey,
           newKeeperChooseYourAddressCacheKey,
           newKeeperDetailsCacheKey
           )
-        verifyCookieHasBeenDiscarded(NewKeeperEnterAddressManuallyCacheKey, cookies)
+        verifyCookieHasBeenDiscarded(newKeeperEnterAddressManuallyCacheKey, cookies)
         verifyCookieHasNotBeenDiscarded(newKeeperChooseYourAddressCacheKey, cookies)
         verifyCookieHasNotBeenDiscarded(newKeeperDetailsCacheKey, cookies)
       }
@@ -507,7 +508,7 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
       whenReady(result) { r =>
         val cookies = r.header.headers.get(SET_COOKIE).toSeq.flatMap(Cookies.decode)
         cookies.map(_.name) should contain noneOf(
-          NewKeeperEnterAddressManuallyCacheKey,
+          newKeeperEnterAddressManuallyCacheKey,
           newKeeperChooseYourAddressCacheKey,
           TraderDetailsCacheKey
           )
@@ -526,7 +527,7 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
       override def answer(invocation: InvocationOnMock): Future[_] = invocation.getArguments()(1).asInstanceOf[Future[_]]
     })
 
-    val addressLookupService = new AddressLookupServiceImpl(fakeWebService, healthStatsMock)
+    val addressLookupService = new AddressLookupServiceImpl(fakeWebService, new DateServiceImpl, healthStatsMock)
     implicit val clientSideSessionFactory = injector.getInstance(classOf[ClientSideSessionFactory])
     implicit val config: Config = mock[Config]
     when(config.isPrototypeBannerVisible).thenReturn(isPrototypeBannerVisible) // Stub this config value.

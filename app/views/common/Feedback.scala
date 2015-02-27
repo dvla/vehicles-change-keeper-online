@@ -1,5 +1,5 @@
 package views.common
 
 object Feedback {
-  final val FeedbackId = "feedback"
+  final val FeedbackId = "feedback-open"
 }
