@@ -23,7 +23,7 @@ final class VehicleLookupFailure @Inject()()(implicit clientSideSessionFactory: 
   override def missingPresentCookieDataResult()(implicit request: Request[_]): Result =
     Redirect(routes.BeforeYouStart.present())
 
-  override def foundSubmitCookieDataResult()(implicit request: Request[_]): Result =
+  override def submitResult()(implicit request: Request[_]): Result =
     Redirect(routes.VehicleLookup.present())
 
   override def missingSubmitCookieDataResult()(implicit request: Request[_]): Result =
