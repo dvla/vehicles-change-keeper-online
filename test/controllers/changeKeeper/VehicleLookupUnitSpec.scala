@@ -2,12 +2,13 @@ package controllers.changeKeeper
 
 import composition.{TestConfig, WithApplication}
 import controllers.VehicleLookup
-import helpers.UnitSpec
+import helpers.{UnitSpec, CookieFactoryForUnitSpecs}
 import models.VehicleLookupFormModel.Form.{DocumentReferenceNumberId, VehicleRegistrationNumberId, VehicleSoldToId}
 import org.mockito.Matchers.any
 import org.mockito.Mockito.when
 import pages.changekeeper.VehicleLookupFailurePage
 import pages.changekeeper.VrmLockedPage
+import pages.changekeeper.VehicleLookupFailurePage
 import play.api.libs.json.{JsValue, Json}
 import play.api.libs.ws.WSResponse
 import play.api.test.FakeRequest
@@ -18,7 +19,7 @@ import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeep
 import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperDetailsResponse
 import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupServiceImpl
 import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupWebService
-import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.vehicleDetailsResponseDocRefNumberNotLatest
+import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService._
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import common.clientsidesession.ClientSideSessionFactory
@@ -28,16 +29,12 @@ import uk.gov.dvla.vehicles.presentation.common.webserviceclients.bruteforceprev
 import utils.helpers.Config
 import views.changekeeper.VehicleLookup.VehicleSoldTo_Private
 import webserviceclients.fakes.{FakeDateServiceImpl, FakeResponse}
-import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.ReferenceNumberValid
-import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.RegistrationNumberValid
-import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.vehicleDetailsResponseSuccess
 import webserviceclients.fakes.brute_force_protection.FakeBruteForcePreventionWebServiceImpl
 import webserviceclients.fakes.brute_force_protection.FakeBruteForcePreventionWebServiceImpl.VrmAttempt2
 import webserviceclients.fakes.brute_force_protection.FakeBruteForcePreventionWebServiceImpl.VrmLocked
 import webserviceclients.fakes.brute_force_protection.FakeBruteForcePreventionWebServiceImpl.responseFirstAttempt
 import webserviceclients.fakes.brute_force_protection.FakeBruteForcePreventionWebServiceImpl.responseSecondAttempt
 import webserviceclients.fakes.brute_force_protection.FakeBruteForcePreventionWebServiceImpl.VrmThrows
-import helpers.CookieFactoryForUnitSpecs
 import org.mockito.ArgumentCaptor
 import org.mockito.Matchers._
 import org.mockito.Mockito.{when, verify}
@@ -132,6 +129,13 @@ final class VehicleLookupUnitSpec extends UnitSpec {
 //      whenReady(result) { r =>
 //        r.header.headers.get(LOCATION) should equal(Some(MicroServiceErrorPage.address))
 //      }
+    }
+
+    "redirect to VehicleLookupFailure after a submit and unhandled exception returned by the fake microservice" in new WithApplication {
+      val request = buildCorrectlyPopulatedRequest()
+      val result = vehicleLookupResponseGenerator(vehicleDetailsResponseUnhandledException).submit(request)
+
+      result.futureValue.header.headers.get(LOCATION) should equal(Some(VehicleLookupFailurePage.address))
     }
 
     "redirect to vrm locked when valid submit and brute force prevention returns not permitted" in new WithApplication {

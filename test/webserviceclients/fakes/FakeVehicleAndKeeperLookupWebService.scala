@@ -6,6 +6,7 @@ import play.api.libs.json.Json
 import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperDetailsDto
 import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperDetailsRequest
 import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperDetailsResponse
+import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperDetailsResponse
 import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupWebService
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -43,6 +44,7 @@ object FakeVehicleAndKeeperLookupWebService {
   final val VrmNotFound = "vehicle_lookup_vrm_not_found"
   final val DocumentRecordMismatch = "vehicle_lookup_document_record_mismatch"
   final val TransactionTimestampValid = new DateTime()
+  final val UnhandledException = "unhandled_exception"
 
   // TODO : Use proper values here
   private def vehicleDetails(disposeFlag: Boolean = true) =
@@ -82,6 +84,10 @@ object FakeVehicleAndKeeperLookupWebService {
 
   val vehicleDetailsResponseNotFoundResponseCode: (Int, Option[VehicleAndKeeperDetailsResponse]) = {
     (OK, Some(VehicleAndKeeperDetailsResponse(responseCode = None, None)))
+  }
+
+  val vehicleDetailsResponseUnhandledException: (Int, Option[VehicleAndKeeperDetailsResponse]) = {
+    (OK, Some(VehicleAndKeeperDetailsResponse(responseCode = Some(DocumentRecordMismatch), None)))
   }
 
   val vehicleDetailsServerDown: (Int, Option[VehicleAndKeeperDetailsResponse]) = {
