@@ -53,25 +53,26 @@
             @form(action = controllers.routes.BusinessKeeperDetails.submit()) {
             @csrfTokenHiddenField()
 
-            @valtechInputText(viewModel.form(FleetNumberId),
-                hintText = Some(Messages("change_keeper_businesskeeperdetails.businessname.hint")), args =
-                Map('_label -> Messages("change_keeper_businesskeeperdetails.fleetnumber"),
-                    'maxLength -> FleetNumber.MaxLength,
-                    'typeFleetNumber -> true,
-                    '_showConstraints -> false,
-                    'autofocus -> true
-                ) ++
-                (if(config.isHtml5ValidationEnabled) Map('pattern -> FleetNumber.Pattern) else Nil)
-            )
 
             <div class="uppercase-input">
                 @valtechInputText(viewModel.form(BusinessNameId), args =
                     Map('_label -> Messages("change_keeper_businesskeeperdetails.businessname"),
                         'maxLength -> BusinessKeeperName.MaxLength,
-                        '_showConstraints -> false
+                        '_showConstraints -> false,
+                        'autofocus -> true
                     )
                 )
             </div>
+
+            @valtechInputText(viewModel.form(FleetNumberId),
+                hintText = Some(Messages("change_keeper_businesskeeperdetails.businessname.hint")), args =
+                        Map('_label -> Messages("change_keeper_businesskeeperdetails.fleetnumber"),
+                            'maxLength -> FleetNumber.MaxLength,
+                            'typeFleetNumber -> true,
+                            '_showConstraints -> false
+                        ) ++
+                                (if(config.isHtml5ValidationEnabled) Map('pattern -> FleetNumber.Pattern) else Nil)
+            )
 
             @valtechInputText(viewModel.form(EmailId),
                 hintText = Some(Messages("change_keeper_businesskeeperdetails.email.hint.alt")),
