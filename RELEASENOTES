@@ -1,6 +1,23 @@
 ======== 1.4 ========
 Time of release binaries creation:
+Wed Mar 04 13:55:03 UTC 2015
 
+User stories:
+0139f4c DE352 - bugfix
+56ee257 US2563: Redirect to the unsuccessful lookup page on an unhandled exception from the microservice.
+a063069 US2290 Made the changes to the exemplar to use the common VehicleLookupFailure controller
+80cf288 US2454 Enable debug in the healthstats
+f1a89f0 DE292 moving inline language to messages.en
+8a8316f US2287: Common new keeeper enter address manually.
+c886b0f US2408 - removing old feedback import
+fd216fa US1831: clean up unused scripts
+818b0af US2468 removing full stop from hint text
+59967c8 US2289 extract a new common VehiclesLookup controller
+cd27efd US2317 Made the changes to the exemplar to use the common VrmLocked controller
+63a6c37 US2277: Allow to serve assets from a different domain
+f62aeaf US2439: Add missing messages
+3e417eb US1519: Enable asset versioning
+c4b0512 US2468 - updating green slip thankyou message
 
 ======== 1.3 ========
 Time of release binaries creation:
