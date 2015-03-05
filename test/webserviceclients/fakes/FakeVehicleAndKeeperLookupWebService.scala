@@ -62,6 +62,7 @@ object FakeVehicleAndKeeperLookupWebService {
       keeperPostTown = Some("a"),
       keeperPostcode = Some("a"),
       keeperEndDate = None,
+      keeperChangeDate = None,
       disposeFlag = None,
       suppressedV5Flag = None
     )
