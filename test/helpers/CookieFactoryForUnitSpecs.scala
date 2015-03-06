@@ -120,6 +120,7 @@ object CookieFactoryForUnitSpecs extends TestComposition {
       lastName = lastName,
       address = address,
       keeperEndDate = None,
+      keeperChangeDate = None,
       disposeFlag = None,
       suppressedV5Flag = None
     )
