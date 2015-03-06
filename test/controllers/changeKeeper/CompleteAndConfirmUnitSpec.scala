@@ -151,6 +151,18 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
       }
     }
 
+    "return a bad request if date of sale is not entered" in new WithApplication {
+      val request = buildCorrectlyPopulatedRequest(dayDateOfSale = "", monthDateOfSale = "", yearDateOfSale = "")
+        .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
+        .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
+        .withCookies(CookieFactoryForUnitSpecs.allowGoingToCompleteAndConfirm())
+
+      val result = completeAndConfirm.submitWithDateCheck(request)
+      whenReady(result) { r =>
+        r.header.status should equal(BAD_REQUEST)
+      }
+    }
+
     "redirect to next page when mandatory fields are complete for new keeper" in new WithApplication {
       val request = buildCorrectlyPopulatedRequest()
         .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
