@@ -91,15 +91,10 @@ class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSi
           val sellerEmailModelOpt = request.cookies.getModel[SellerEmailModel]
           val validFormResult = (newKeeperDetailsOpt, vehicleLookupOpt, vehicleDetailsOpt, sellerEmailModelOpt) match {
             case (Some(newKeeperDetails), Some(vehicleLookup), Some(vehicleDetails), Some(sellerEmailModel)) =>
-
-              println(s">>>>>> CompleteAndConfirm keeperEndDate = ${vehicleDetails.keeperEndDate}")
-              println(s">>>>>> CompleteAndConfirm dateOfSale = ${validForm.dateOfSale}")
-
               vehicleDetails.keeperEndDate match {
                 case Some(keeperEndDate) =>
                   if (keeperEndDate.toLocalDate.isEqual(validForm.dateOfSale) || keeperEndDate.toLocalDate.isBefore(validForm.dateOfSale)) {
                     // The dateOfSale is valid
-                    println(s">>>>>> CompleteAndConfirm the dateOfSale is valid")
                     acquireAction(validForm,
                       newKeeperDetails,
                       vehicleLookup,
@@ -108,7 +103,7 @@ class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSi
                       request.cookies.trackingId)
                   }
                   else {
-                    println(s">>>>>> CompleteAndConfirm the dateOfSale is invalid")
+                    // The dateOfSale is invalid
                     Future.successful{
                       BadRequest(complete_and_confirm(
                         CompleteAndConfirmViewModel(form.fill(validForm),
@@ -135,7 +130,7 @@ class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSi
               Redirect(routes.VehicleLookup.present()).discardingCookie(AllowGoingToCompleteAndConfirmPageCacheKey)
             }
           }
-          validFormResult //.map(_.discardingCookie(AllowGoingToCompleteAndConfirmPageCacheKey))
+          validFormResult
         }
       )
     }(Future.successful(Redirect(routes.VehicleLookup.present()).discardingCookies(cookiesToBeDiscardedOnRedirectAway)))
@@ -229,7 +224,6 @@ class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSi
 
     val disposeRequest = buildMicroServiceRequest(vehicleLookup, completeAndConfirmForm,
       newKeeperDetailsView, transactionTimestamp, trackingId)
-
     webService.invoke(disposeRequest, trackingId).map {
       case (httpResponseCode, response) =>
         Some(Redirect(nextPage(httpResponseCode, response)(vehicleDetails, newKeeperDetailsView, sellerEmailModel)))

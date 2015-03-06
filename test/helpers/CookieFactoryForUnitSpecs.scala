@@ -10,6 +10,8 @@ import models.CompleteAndConfirmResponseModel.ChangeKeeperCompletionResponseCach
 import models.K2KCacheKeyPrefix.CookiePrefix
 import models.HelpCacheKey
 import models.SeenCookieMessageCacheKey
+import models.SellerEmailModel
+import models.SellerEmailModel.SellerEmailModelCacheKey
 import models.VehicleLookupFormModel
 import models.VehicleLookupFormModel.{VehicleLookupResponseCodeCacheKey, VehicleLookupFormModelCacheKey}
 import org.joda.time.{DateTime, LocalDate}
@@ -109,7 +111,9 @@ object CookieFactoryForUnitSpecs extends TestComposition {
                                    title: Option[String] = None,
                                    firstName: Option[String] = None,
                                    lastName: Option[String] = None,
-                                   address: Option[AddressModel] = None): Cookie = {
+                                   address: Option[AddressModel] = None,
+                                   keeperEndDate: Option[DateTime] = None,
+                                   keeperChangeDate: Option[DateTime] = None): Cookie = {
     val key = VehicleAndKeeperLookupDetailsCacheKey
     val value = VehicleAndKeeperDetailsModel(
       registrationNumber = registrationNumber,
@@ -119,8 +123,8 @@ object CookieFactoryForUnitSpecs extends TestComposition {
       firstName = firstName,
       lastName = lastName,
       address = address,
-      keeperEndDate = None,
-      keeperChangeDate = None,
+      keeperEndDate = keeperEndDate,
+      keeperChangeDate = keeperChangeDate,
       disposeFlag = None,
       suppressedV5Flag = None
     )
@@ -267,6 +271,12 @@ object CookieFactoryForUnitSpecs extends TestComposition {
                                            timestamp: DateTime = TransactionTimestampValid): Cookie = {
     val key = ChangeKeeperCompletionResponseCacheKey
     val value = CompleteAndConfirmResponseModel(id, timestamp)
+    createCookie(key, value)
+  }
+
+  def sellerEmailModel(email: Option[String] = Some(KeeperEmail)): Cookie = {
+    val key = SellerEmailModelCacheKey
+    val value = SellerEmailModel(email)
     createCookie(key, value)
   }
 }
