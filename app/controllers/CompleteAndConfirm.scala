@@ -6,7 +6,7 @@ import models.CompleteAndConfirmFormModel
 import models.CompleteAndConfirmFormModel.AllowGoingToCompleteAndConfirmPageCacheKey
 import models.CompleteAndConfirmResponseModel
 import models.CompleteAndConfirmViewModel
-import models.CompleteAndConfirmFormModel.Form.{MileageId, ConsentId}
+import models.CompleteAndConfirmFormModel.Form.{ConsentId, MileageId}
 import models.K2KCacheKeyPrefix.CookiePrefix
 import models.SellerEmailModel
 import models.VehicleLookupFormModel
@@ -15,9 +15,7 @@ import org.joda.time.DateTime
 import org.joda.time.format.ISODateTimeFormat
 import play.api.data.{FormError, Form}
 import play.api.Logger
-import play.api.mvc.{Action, AnyContent, Controller, Request}
-import play.api.mvc.Call
-import play.api.mvc.Result
+import play.api.mvc.{Action, AnyContent, Call, Controller, Request, Result}
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import uk.gov.dvla.vehicles.presentation.common
@@ -29,14 +27,14 @@ import common.model.NewKeeperEnterAddressManuallyFormModel
 import common.services.{SEND, DateService}
 import common.views.helpers.FormExtensions.formBinding
 import common.webserviceclients.common.{VssWebEndUserDto, VssWebHeaderDto}
-import common.webserviceclients.acquire.{AcquireService, AcquireResponseDto, AcquireRequestDto, TitleTypeDto, KeeperDetailsDto}
+import common.webserviceclients.acquire.{AcquireRequestDto, AcquireResponseDto, AcquireService, KeeperDetailsDto, TitleTypeDto}
 import utils.helpers.Config
 import views.html.changekeeper.complete_and_confirm
 
 class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSideSessionFactory: ClientSideSessionFactory,
                                                                dateService: DateService,
                                                                config: Config) extends Controller {
-  private val cookiesToBeDiscardeOnRedirectAway =
+  private val cookiesToBeDiscardedOnRedirectAway =
     VehicleNewKeeperCompletionCacheKeys ++ Set(AllowGoingToCompleteAndConfirmPageCacheKey)
 
   private val EMAIL_SUBJECT = "Test email for the Keeper to Keeper service"
@@ -54,14 +52,19 @@ class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSi
       val vehicleDetailsOpt = request.cookies.getModel[VehicleAndKeeperDetailsModel]
       (newKeeperDetailsOpt, vehicleDetailsOpt) match {
         case (Some(newKeeperDetails), Some(vehicleAndKeeperDetails)) =>
-          Ok(complete_and_confirm(CompleteAndConfirmViewModel(form.fill(), vehicleAndKeeperDetails, newKeeperDetails), dateService))
+          Ok(complete_and_confirm(CompleteAndConfirmViewModel(form.fill(),
+            vehicleAndKeeperDetails,
+            newKeeperDetails,
+            isSaleDateBeforeDisposalDate = false),
+            dateService)
+          )
         case _ =>
           redirectToVehicleLookup(NoCookiesFoundMessage).discardingCookie(AllowGoingToCompleteAndConfirmPageCacheKey)
       }
-    }(Redirect(routes.VehicleLookup.present()).discardingCookies(cookiesToBeDiscardeOnRedirectAway))
+    }(Redirect(routes.VehicleLookup.present()).discardingCookies(cookiesToBeDiscardedOnRedirectAway))
   }
 
-  def submit = Action.async { implicit request =>
+  def submitWithDateCheck = Action.async { implicit request =>
     canPerform {
       form.bindFromRequest.fold(
         invalidForm => Future.successful {
@@ -70,7 +73,88 @@ class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSi
           (newKeeperDetailsOpt, vehicleDetailsOpt) match {
             case (Some(newKeeperDetails), Some(vehicleDetails)) =>
               BadRequest(complete_and_confirm(
-                CompleteAndConfirmViewModel(formWithReplacedErrors(invalidForm), vehicleDetails, newKeeperDetails), dateService)
+                CompleteAndConfirmViewModel(formWithReplacedErrors(invalidForm),
+                  vehicleDetails,
+                  newKeeperDetails,
+                  isSaleDateBeforeDisposalDate = false),
+                dateService)
+              )
+            case _ =>
+              Logger.warn("Could not find expected data in cache on dispose submit - now redirecting...")
+              Redirect(routes.VehicleLookup.present()).discardingCookies()
+          }
+        },
+        validForm => {
+          val newKeeperDetailsOpt = request.cookies.getModel[NewKeeperDetailsViewModel]
+          val vehicleLookupOpt = request.cookies.getModel[VehicleLookupFormModel]
+          val vehicleDetailsOpt = request.cookies.getModel[VehicleAndKeeperDetailsModel]
+          val sellerEmailModelOpt = request.cookies.getModel[SellerEmailModel]
+          val validFormResult = (newKeeperDetailsOpt, vehicleLookupOpt, vehicleDetailsOpt, sellerEmailModelOpt) match {
+            case (Some(newKeeperDetails), Some(vehicleLookup), Some(vehicleDetails), Some(sellerEmailModel)) =>
+
+              println(s">>>>>> CompleteAndConfirm keeperEndDate = ${vehicleDetails.keeperEndDate}")
+              println(s">>>>>> CompleteAndConfirm dateOfSale = ${validForm.dateOfSale}")
+
+              vehicleDetails.keeperEndDate match {
+                case Some(keeperEndDate) =>
+                  if (keeperEndDate.toLocalDate.isEqual(validForm.dateOfSale) || keeperEndDate.toLocalDate.isBefore(validForm.dateOfSale)) {
+                    // The dateOfSale is valid
+                    println(s">>>>>> CompleteAndConfirm the dateOfSale is valid")
+                    acquireAction(validForm,
+                      newKeeperDetails,
+                      vehicleLookup,
+                      vehicleDetails,
+                      sellerEmailModel,
+                      request.cookies.trackingId)
+                  }
+                  else {
+                    println(s">>>>>> CompleteAndConfirm the dateOfSale is invalid")
+                    Future.successful{
+                      BadRequest(complete_and_confirm(
+                        CompleteAndConfirmViewModel(form.fill(validForm),
+                          vehicleDetails,
+                          newKeeperDetails,
+                          isSaleDateBeforeDisposalDate = true, // This will tell the page to display the date warning
+                          submitAction = controllers.routes.CompleteAndConfirm.submitNoDateCheck(), // Next time the submit will not perform any date check
+                          dateOfDisposal = Some(keeperEndDate.toString("dd/MM/yyyy")) // Pass the dateOfDisposal so we can tell the user in the warning
+                        ), dateService)
+                      )
+                    }
+                  }
+                case _ =>
+                  acquireAction(validForm,
+                    newKeeperDetails,
+                    vehicleLookup,
+                    vehicleDetails,
+                    sellerEmailModel,
+                    request.cookies.trackingId)
+              }
+
+            case _ => Future.successful {
+              Logger.warn("Could not find expected data in cache on dispose submit - now redirecting to VehicleLookup...")
+              Redirect(routes.VehicleLookup.present()).discardingCookie(AllowGoingToCompleteAndConfirmPageCacheKey)
+            }
+          }
+          validFormResult //.map(_.discardingCookie(AllowGoingToCompleteAndConfirmPageCacheKey))
+        }
+      )
+    }(Future.successful(Redirect(routes.VehicleLookup.present()).discardingCookies(cookiesToBeDiscardedOnRedirectAway)))
+  }
+
+  def submitNoDateCheck = Action.async { implicit request =>
+    canPerform {
+      form.bindFromRequest.fold(
+        invalidForm => Future.successful {
+          val newKeeperDetailsOpt = request.cookies.getModel[NewKeeperDetailsViewModel]
+          val vehicleDetailsOpt = request.cookies.getModel[VehicleAndKeeperDetailsModel]
+          (newKeeperDetailsOpt, vehicleDetailsOpt) match {
+            case (Some(newKeeperDetails), Some(vehicleDetails)) =>
+              BadRequest(complete_and_confirm(
+                CompleteAndConfirmViewModel(formWithReplacedErrors(invalidForm),
+                  vehicleDetails,
+                  newKeeperDetails,
+                  isSaleDateBeforeDisposalDate = false),
+                dateService)
               )
             case _ =>
               Logger.warn("Could not find expected data in cache on dispose submit - now redirecting...")
@@ -89,7 +173,7 @@ class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSi
                 vehicleLookup,
                 vehicleDetails,
                 sellerEmailModel,
-               request.cookies.trackingId)
+                request.cookies.trackingId)
             case _ => Future.successful {
               Logger.warn("Could not find expected data in cache on dispose submit - now redirecting to VehicleLookup...")
               Redirect(routes.VehicleLookup.present())
@@ -98,9 +182,8 @@ class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSi
           validFormResult.map(_.discardingCookie(AllowGoingToCompleteAndConfirmPageCacheKey))
         }
       )
-    }(Future.successful(Redirect(routes.VehicleLookup.present()).discardingCookies(cookiesToBeDiscardeOnRedirectAway)))
+    }(Future.successful(Redirect(routes.VehicleLookup.present()).discardingCookies(cookiesToBeDiscardedOnRedirectAway)))
   }
-
 
 //  private def canPerformSubmit[R](action: => Future[Result])(implicit request: Request[_]) =
 //    request.cookies.getString(AllowGoingToCompleteAndConfirmPageCacheKey).fold {
@@ -189,7 +272,7 @@ class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSi
       completeAndConfirmFormModel.mileage,
       checkboxValueToBoolean(completeAndConfirmFormModel.consent),
       dateTimeFormatter.print(timestamp),
-      false
+      requiresSorn = false
     )
   }
 
@@ -223,11 +306,10 @@ class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSi
       newKeeperDetailsViewModel.driverNumber)
   }
 
-
   def handleHttpStatusCode(statusCode: Int)
                           (vehicleDetails: VehicleAndKeeperDetailsModel,
                            keeperDetails: NewKeeperDetailsViewModel,
-                            sellerEmailModel: SellerEmailModel): Call =
+                           sellerEmailModel: SellerEmailModel): Call =
     statusCode match {
       case OK =>
         successReturn (vehicleDetails, keeperDetails, sellerEmailModel)
@@ -263,18 +345,18 @@ class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSi
     address.take(getLines)
   }
 
- private def buildWebHeader(trackingId: String): VssWebHeaderDto =
- {
-   VssWebHeaderDto(transactionId = trackingId,
-   originDateTime = new DateTime,
-   applicationCode = config.applicationCode,
-   serviceTypeCode = config.vssServiceTypeCode,
-   buildEndUser())
- }
+  private def buildWebHeader(trackingId: String): VssWebHeaderDto = {
+    VssWebHeaderDto(transactionId = trackingId,
+    originDateTime = new DateTime,
+    applicationCode = config.applicationCode,
+    serviceTypeCode = config.vssServiceTypeCode,
+    buildEndUser())
+  }
 
- private def buildEndUser(): VssWebEndUserDto = {
-   VssWebEndUserDto(endUserId = config.orgBusinessUnit, orgBusUnit = config.orgBusinessUnit)
- }
+  private def buildEndUser(): VssWebEndUserDto = {
+     VssWebEndUserDto(endUserId = config.orgBusinessUnit, orgBusUnit = config.orgBusinessUnit)
+  }
+
   /**
    * Checks the presence of <code>AllowGoingToCompleteAndConfirmPageCacheKey</code> to allow the completion of
    * the request, otherwise calls redirect function.
@@ -296,8 +378,8 @@ class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSi
    * @param action the action body
    * @param redirect the Result function to be called if the cookie is not present
    * @param request implicit request
-   * @tparam T for the purposes of the application this should be Either a Result of Future[Result]
-   * @return T by either calling the action of the redirect
+   * @tparam T for the purposes of the application this should be Either a Result or a Future[Result]
+   * @return T by either calling the action or the redirect
    */
   private def canPerform[T](action: => T)(redirect: => T)
                            (implicit request: Request[_])= {

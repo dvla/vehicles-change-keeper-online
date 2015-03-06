@@ -13,7 +13,7 @@
 @import common.views.html.widgets.base.{valtechInputText, valtechDeclareCheck}
 @import common.views.helpers.LabelHelper.optionalFieldKey
 @import models.CompleteAndConfirmFormModel.Form.{MileageId, ConsentId, DateOfSaleId, TodaysDateId}
-@import views.changekeeper.CompleteAndConfirm.{BackId, SubmitId}
+@import views.changekeeper.CompleteAndConfirm.{BackId, SubmitId, modify}
 
 @main(
     progress = Some(Messages("change_keeper_progress_5")),
@@ -22,6 +22,45 @@
 ) {
 
     <script src="@controllers.StaticAssets.versioned(config.assetsUrl)("lib/vehicles-presentation-common/javascripts/autofill-todays-date.js")" type="text/javascript"></script>
+
+    @if(data.isSaleDateBeforeDisposalDate) {
+
+        <div class="site-overlay"></div>
+
+        <!-- INTERNET EXPLORER HACKS -->
+
+        <!-- The below code allows old IE browsers to have transparent bg without image -->
+        <!--[if IE]>
+           <style type="text/css">
+               .site-overlay {
+                   background:transparent;
+                   -ms-filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#A5000000,endColorstr=#A5000000);
+                   filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#A5000000,endColorstr=#A5000000);
+                   zoom: 1;
+                }
+            </style>
+        <![endif]-->
+
+        <!-- The below code is CSS fixes for IE9 only -->
+        <!--[if IE 9]>
+           <style type="text/css">
+                .popup-modal {
+                    top: 0px !important;
+                }
+           </style>
+        <![endif]-->
+
+        <!-- The below code is CSS fixes for IE7 only -->
+        <!--[if IE 9]>
+           <style type="text/css">
+                .popup-modal {
+                    margin: 0 auto 0 50% !important;
+                    left: -225px !important;
+                }
+           </style>
+        <![endif]-->
+
+    }
 
     <div class="two-col clearfix acquire-complete-confirm">
 
@@ -62,19 +101,64 @@
 
             <h1>@Messages("change_keeper_completeAndConfirm.title")</h1>
 
-            @form(action = CompleteAndConfirm.submit) {
+            @form(action = data.submitAction) {
                 @csrfTokenHiddenField()
 
                 @valtechDeclareCheck(
                     data.form(ConsentId),
-                    args = Map(
-                        '_showConstraints -> false,
+                    args = modify(Map(
                         'autofocus -> true,
+                        '_showConstraints -> false,
                         '_label -> Messages("change_keeper_keeperdetailscomplete.consent")
-                    )
+                    ), data.isSaleDateBeforeDisposalDate)
                 )
 
-                <div id=@DateOfSaleId>
+                @if(data.isSaleDateBeforeDisposalDate) {
+                    <div class="popup-modal">
+                        <p>@Messages("change_keeper_completeandconfirm.dateofsale.warning", data.dateOfDisposal.getOrElse("NOT FOUND"))</p>
+                        <div id=@DateOfSaleId>
+                        @inputDayMonthYearTextbox(
+                            field = data.form(DateOfSaleId),
+                            args = Map(
+                                'autofocus -> true,
+                                '_label -> Messages("change_keeper_completeAndConfirm.dateofsale.label")
+                            ),
+                            dateService = dateService,
+                            showTodaysDateButton = false,
+                            showTodaysDateButtonId = Some(TodaysDateId),
+                            hintText = Some(Messages("change_keeper_completeandconfirm.dateofsale.hint"))
+                        )
+                        </div>
+
+                        <div class="form-steps">
+                            <button id="@SubmitId"
+                            type="submit"
+                            name="action"
+                            class="button">
+                            @Messages("change_keeper_completeAndConfirm.submitbutton")
+                            </button>
+                            <br/>
+                            <a class="back" id="@BackId" href="@controllers.routes.CompleteAndConfirm.back()">
+                            @Messages("change_keeper_completeAndConfirm.backbutton")
+                            </a>
+                        </div>
+                    </div>
+                }
+
+                <div id=@DateOfSaleId class="form-steps">
+                @if(data.isSaleDateBeforeDisposalDate) {
+                    @inputDayMonthYearTextbox(
+                        field = data.form(DateOfSaleId),
+                        args = Map(
+                            'tabindex -> -1,
+                            '_label -> Messages("change_keeper_completeAndConfirm.dateofsale.label")
+                        ),
+                        dateService = dateService,
+                        showTodaysDateButton = false,
+                        showTodaysDateButtonId = Some(TodaysDateId),
+                        hintText = Some(Messages("change_keeper_completeandconfirm.dateofsale.hint"))
+                    )
+                } else {
                     @inputDayMonthYearTextbox(
                         field = data.form(DateOfSaleId),
                         args = Map(
@@ -85,29 +169,32 @@
                         showTodaysDateButtonId = Some(TodaysDateId),
                         hintText = Some(Messages("change_keeper_completeandconfirm.dateofsale.hint"))
                     )
+                }
                 </div>
 
-                @valtechInputText(data.form(MileageId),
-                    args = Map('_label -> Messages("change_keeper_completeAndConfirm.mileage.label"),
+                @valtechInputText(
+                    data.form(MileageId),
+                    args = modify(Map('_label -> Messages("change_keeper_completeAndConfirm.mileage.label"),
                         '_showConstraints -> false,
                         'typeTel -> true,
                         'maxLength -> Mileage.MaxLength, // Must be set independently of the pattern as the pattern is only checked when the user submits.
                         'optionalFieldKey -> true
                         //'title -> Messages("change_keeper_keeperdetailscomplete.mileage.validation")
-                    ) ++
-                            (if(config.isHtml5ValidationEnabled) Map('pattern -> Mileage.Pattern) else Nil)
+                    ) ++ (if(config.isHtml5ValidationEnabled) Map('pattern -> Mileage.Pattern) else Nil), data.isSaleDateBeforeDisposalDate)
                 )
-
 
                 <div class="form-steps">
                     <button id="@SubmitId"
                         type="submit"
                         name="action"
+                        @if(data.isSaleDateBeforeDisposalDate) {tabindex="-1"}
                         class="button">
                         @Messages("change_keeper_completeAndConfirm.submitbutton")
                     </button>
                     <br/>
-                    <a class="back" id="@BackId" href="@controllers.routes.CompleteAndConfirm.back()">
+                    <a class="back" id="@BackId"
+                        @if(data.isSaleDateBeforeDisposalDate) {tabindex="-1"}
+                        href="@controllers.routes.CompleteAndConfirm.back()">
                         @Messages("change_keeper_completeAndConfirm.backbutton")
                     </a>
                 </div>

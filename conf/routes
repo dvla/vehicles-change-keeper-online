@@ -42,7 +42,8 @@ POST        /new-keeper-enter-address-manually          @controllers.NewKeeperEn
 #page 5 - Complete and Confirm
 GET         /complete-and-confirm                       @controllers.CompleteAndConfirm.present
 GET         /complete-and-confirm/back                  @controllers.CompleteAndConfirm.back
-POST        /complete-and-confirm                       @controllers.CompleteAndConfirm.submit
+POST        /complete-and-confirm                       @controllers.CompleteAndConfirm.submitWithDateCheck
+POST        /complete-and-confirm/no-date-check         @controllers.CompleteAndConfirm.submitNoDateCheck
 
 #page 6 - Change keeper success
 GET         /change-keeper-success                      @controllers.ChangeKeeperSuccess.present

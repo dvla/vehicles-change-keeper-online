@@ -17,13 +17,13 @@ import play.api.mvc.{Result, Request}
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.ClientSideSessionFactory
 import common.clientsidesession.CookieImplicits.{RichForm, RichResult}
-import uk.gov.dvla.vehicles.presentation.common.model.{BruteForcePreventionModel, VehicleAndKeeperDetailsModel}
-import common.views.helpers.FormExtensions.formBinding
+import common.controllers.VehicleLookupBase
+import common.model.{BruteForcePreventionModel, VehicleAndKeeperDetailsModel}
 import common.services.DateService
+import common.views.helpers.FormExtensions.formBinding
 import common.webserviceclients.bruteforceprevention.BruteForcePreventionService
 import common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperDetailsDto
 import common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupService
-import uk.gov.dvla.vehicles.presentation.common.controllers.VehicleLookupBase
 import utils.helpers.Config
 import views.changekeeper.VehicleLookup.VehicleSoldTo_Private
 
