@@ -11,7 +11,7 @@ import models.K2KCacheKeyPrefix.CookiePrefix
 import models.SellerEmailModel
 import models.VehicleLookupFormModel
 import models.VehicleNewKeeperCompletionCacheKeys
-import org.joda.time.DateTime
+import org.joda.time.{DateTime, LocalDate}
 import org.joda.time.format.ISODateTimeFormat
 import play.api.data.{FormError, Form}
 import play.api.Logger
@@ -64,7 +64,15 @@ class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSi
     }(Redirect(routes.VehicleLookup.present()).discardingCookies(cookiesToBeDiscardedOnRedirectAway))
   }
 
-  def submitWithDateCheck = Action.async { implicit request =>
+  // The dates are valid if they are the same or if the disposal date is before the acquisition date
+  def submitWithDateCheck = submitBase(
+    (keeperEndDate, dateOfSale) =>
+      keeperEndDate.toLocalDate.isEqual(dateOfSale) || keeperEndDate.toLocalDate.isBefore(dateOfSale)
+  )
+
+  def submitNoDateCheck = submitBase((keeperEndDate, dateOfSale) => true)
+
+  private def submitBase(validDates: (DateTime, LocalDate) => Boolean) = Action.async { implicit request =>
     canPerform {
       form.bindFromRequest.fold(
         invalidForm => Future.successful {
@@ -93,7 +101,7 @@ class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSi
             case (Some(newKeeperDetails), Some(vehicleLookup), Some(vehicleDetails), Some(sellerEmailModel)) =>
               vehicleDetails.keeperEndDate match {
                 case Some(keeperEndDate) =>
-                  if (keeperEndDate.toLocalDate.isEqual(validForm.dateOfSale) || keeperEndDate.toLocalDate.isBefore(validForm.dateOfSale)) {
+                  if (validDates(keeperEndDate, validForm.dateOfSale)) {
                     // The dateOfSale is valid
                     acquireAction(validForm,
                       newKeeperDetails,
@@ -126,55 +134,11 @@ class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSi
               }
 
             case _ => Future.successful {
-              Logger.warn("Could not find expected data in cache on dispose submit - now redirecting to VehicleLookup...")
+              Logger.warn("Did not find expected cookie data on complete and confirm submit - now redirecting to VehicleLookup...")
               Redirect(routes.VehicleLookup.present()).discardingCookie(AllowGoingToCompleteAndConfirmPageCacheKey)
             }
           }
           validFormResult
-        }
-      )
-    }(Future.successful(Redirect(routes.VehicleLookup.present()).discardingCookies(cookiesToBeDiscardedOnRedirectAway)))
-  }
-
-  def submitNoDateCheck = Action.async { implicit request =>
-    canPerform {
-      form.bindFromRequest.fold(
-        invalidForm => Future.successful {
-          val newKeeperDetailsOpt = request.cookies.getModel[NewKeeperDetailsViewModel]
-          val vehicleDetailsOpt = request.cookies.getModel[VehicleAndKeeperDetailsModel]
-          (newKeeperDetailsOpt, vehicleDetailsOpt) match {
-            case (Some(newKeeperDetails), Some(vehicleDetails)) =>
-              BadRequest(complete_and_confirm(
-                CompleteAndConfirmViewModel(formWithReplacedErrors(invalidForm),
-                  vehicleDetails,
-                  newKeeperDetails,
-                  isSaleDateBeforeDisposalDate = false),
-                dateService)
-              )
-            case _ =>
-              Logger.warn("Could not find expected data in cache on dispose submit - now redirecting...")
-              Redirect(routes.VehicleLookup.present()).discardingCookies()
-          }
-        },
-        validForm => {
-          val newKeeperDetailsOpt = request.cookies.getModel[NewKeeperDetailsViewModel]
-          val vehicleLookupOpt = request.cookies.getModel[VehicleLookupFormModel]
-          val vehicleDetailsOpt = request.cookies.getModel[VehicleAndKeeperDetailsModel]
-          val sellerEmailModelOpt = request.cookies.getModel[SellerEmailModel]
-          val validFormResult = (newKeeperDetailsOpt, vehicleLookupOpt, vehicleDetailsOpt, sellerEmailModelOpt) match {
-            case (Some(newKeeperDetails), Some(vehicleLookup), Some(vehicleDetails), Some(sellerEmailModel)) =>
-              acquireAction(validForm,
-                newKeeperDetails,
-                vehicleLookup,
-                vehicleDetails,
-                sellerEmailModel,
-                request.cookies.trackingId)
-            case _ => Future.successful {
-              Logger.warn("Could not find expected data in cache on dispose submit - now redirecting to VehicleLookup...")
-              Redirect(routes.VehicleLookup.present())
-            }
-          }
-          validFormResult.map(_.discardingCookie(AllowGoingToCompleteAndConfirmPageCacheKey))
         }
       )
     }(Future.successful(Redirect(routes.VehicleLookup.present()).discardingCookies(cookiesToBeDiscardedOnRedirectAway)))
