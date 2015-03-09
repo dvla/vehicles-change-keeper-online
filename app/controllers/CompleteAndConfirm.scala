@@ -92,71 +92,67 @@ class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSi
               Redirect(routes.VehicleLookup.present()).discardingCookies()
           }
         },
-        validForm => {
-          val newKeeperDetailsOpt = request.cookies.getModel[NewKeeperDetailsViewModel]
-          val vehicleLookupOpt = request.cookies.getModel[VehicleLookupFormModel]
-          val vehicleDetailsOpt = request.cookies.getModel[VehicleAndKeeperDetailsModel]
-          val sellerEmailModelOpt = request.cookies.getModel[SellerEmailModel]
-          val validFormResult = (newKeeperDetailsOpt, vehicleLookupOpt, vehicleDetailsOpt, sellerEmailModelOpt) match {
-            case (Some(newKeeperDetails), Some(vehicleLookup), Some(vehicleDetails), Some(sellerEmailModel)) =>
-              Logger.debug(s"CompleteAndConfirm - keeperEndDate = ${vehicleDetails.keeperEndDate}")
-              Logger.debug(s"CompleteAndConfirm - keeperChangeDate = ${vehicleDetails.keeperChangeDate}")
-              // Only do the date check if the keeper end date or the keeper change date is present. If they are both
-              // present or neither are present then skip the check
-              Seq(vehicleDetails.keeperChangeDate, vehicleDetails.keeperEndDate).flatten match {
-                case Seq(endDateOrChangeDate) if validDates(endDateOrChangeDate, validForm.dateOfSale) =>
-                  // Either the keeper end date or the keeper change date is populated so do the date check
-                  // The dateOfSale is valid
-                  acquireAction(
-                    validForm,
-                    newKeeperDetails,
-                    vehicleLookup,
-                    vehicleDetails,
-                    sellerEmailModel,
-                    request.cookies.trackingId
-                  )
-                case Seq(endDateOrChangeDate) => Future.successful{
-                  // The dateOfSale is invalid
-                  BadRequest(complete_and_confirm(
-                    CompleteAndConfirmViewModel(form.fill(validForm),
-                      vehicleDetails,
-                      newKeeperDetails,
-                      isSaleDateInvalid = true, // This will tell the page to display the date warning
-                      isDateToCompareDisposalDate = vehicleDetails.keeperEndDate.isDefined,
-                      submitAction = controllers.routes.CompleteAndConfirm.submitNoDateCheck(), // Next time the submit will not perform any date check
-                      dateToCompare = Some(endDateOrChangeDate.toString("dd/MM/yyyy")) // Pass the dateOfDisposal/change date so we can tell the user in the warning
-                    ), dateService)
-                  )
-                }
-                case _ =>
-                  // Either both dates are missing or they are both populated so just call the acquire service
-                  // and move to the next page
-                  acquireAction(
-                    validForm,
-                    newKeeperDetails,
-                    vehicleLookup,
-                    vehicleDetails,
-                    sellerEmailModel,
-                    request.cookies.trackingId
-                  )
-              }
-            case _ => Future.successful {
-              Logger.warn("Did not find expected cookie data on complete and confirm submit - now redirecting to VehicleLookup...")
-              Redirect(routes.VehicleLookup.present()).discardingCookie(AllowGoingToCompleteAndConfirmPageCacheKey)
-            }
-          }
-          validFormResult
-        }
+        validForm => processValidForm(validDates, validForm)
       )
     }(Future.successful(Redirect(routes.VehicleLookup.present()).discardingCookies(cookiesToBeDiscardedOnRedirectAway)))
   }
 
-//  private def canPerformSubmit[R](action: => Future[Result])(implicit request: Request[_]) =
-//    request.cookies.getString(AllowGoingToCompleteAndConfirmPageCacheKey).fold {
-//      Logger.warn(s"Could not find AllowGoingToCompleteAndConfirmPageCacheKey in the request. " +
-//        s"Redirect to VehicleLookup discarding cookies $cookiesToBeDiscardeOnRedirectAway")
-//      Future.successful(Redirect(routes.VehicleLookup.present()).discardingCookies(cookiesToBeDiscardeOnRedirectAway))
-//    }(c => action)
+  private def processValidForm(validDates: (DateTime, LocalDate) => Boolean, validForm: CompleteAndConfirmFormModel)
+                              (implicit request: Request[AnyContent]): Future[Result] = {
+    val newKeeperDetailsOpt = request.cookies.getModel[NewKeeperDetailsViewModel]
+    val vehicleLookupOpt = request.cookies.getModel[VehicleLookupFormModel]
+    val vehicleDetailsOpt = request.cookies.getModel[VehicleAndKeeperDetailsModel]
+    val sellerEmailModelOpt = request.cookies.getModel[SellerEmailModel]
+    val validFormResult = (newKeeperDetailsOpt, vehicleLookupOpt, vehicleDetailsOpt, sellerEmailModelOpt) match {
+      case (Some(newKeeperDetails), Some(vehicleLookup), Some(vehicleDetails), Some(sellerEmailModel)) =>
+        Logger.debug(s"CompleteAndConfirm - keeperEndDate = ${vehicleDetails.keeperEndDate}")
+        Logger.debug(s"CompleteAndConfirm - keeperChangeDate = ${vehicleDetails.keeperChangeDate}")
+        // Only do the date check if the keeper end date or the keeper change date is present. If they are both
+        // present or neither are present then skip the check
+        Seq(vehicleDetails.keeperChangeDate, vehicleDetails.keeperEndDate).flatten match {
+          case Seq(endDateOrChangeDate) if validDates(endDateOrChangeDate, validForm.dateOfSale) =>
+            // Either the keeper end date or the keeper change date is populated so do the date check
+            // The dateOfSale is valid
+            acquireAction(
+              validForm,
+              newKeeperDetails,
+              vehicleLookup,
+              vehicleDetails,
+              sellerEmailModel,
+              request.cookies.trackingId
+            )
+          case Seq(endDateOrChangeDate) => Future.successful{
+            // The dateOfSale is invalid
+            BadRequest(complete_and_confirm(
+              CompleteAndConfirmViewModel(form.fill(validForm),
+                vehicleDetails,
+                newKeeperDetails,
+                isSaleDateInvalid = true, // This will tell the page to display the date warning
+                isDateToCompareDisposalDate = vehicleDetails.keeperEndDate.isDefined,
+                submitAction = controllers.routes.CompleteAndConfirm.submitNoDateCheck(), // Next time the submit will not perform any date check
+                dateToCompare = Some(endDateOrChangeDate.toString("dd/MM/yyyy")) // Pass the dateOfDisposal/change date so we can tell the user in the warning
+              ), dateService)
+            )
+          }
+          case _ =>
+            // Either both dates are missing or they are both populated so just call the acquire service
+            // and move to the next page
+            acquireAction(
+              validForm,
+              newKeeperDetails,
+              vehicleLookup,
+              vehicleDetails,
+              sellerEmailModel,
+              request.cookies.trackingId
+            )
+        }
+      case _ => Future.successful {
+        Logger.warn("Did not find expected cookie data on complete and confirm submit - now redirecting to VehicleLookup...")
+        Redirect(routes.VehicleLookup.present()).discardingCookie(AllowGoingToCompleteAndConfirmPageCacheKey)
+      }
+    }
+    validFormResult
+  }
 
   private def redirectToVehicleLookup(message: String) = {
     Logger.warn(message)
@@ -292,19 +288,19 @@ class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSi
     routes.ChangeKeeperSuccess.present()
   }
 
-  def checkboxValueToBoolean (checkboxValue: String): Boolean = {
+  private def checkboxValueToBoolean (checkboxValue: String): Boolean = {
     checkboxValue == "true"
   }
 
-  def getPostCodeFromAddress (address: Seq[String]): Option[String] = {
+  private def getPostCodeFromAddress (address: Seq[String]): Option[String] = {
     Option(address.last.replace(" ",""))
   }
 
-  def getPostTownFromAddress (address: Seq[String]): Option[String] = {
+  private def getPostTownFromAddress (address: Seq[String]): Option[String] = {
     Option(address.takeRight(2).head)
   }
 
-  def getAddressLines(address: Seq[String], lines: Int): Seq[String] = {
+  private def getAddressLines(address: Seq[String], lines: Int): Seq[String] = {
     val excludeLines = 2
     val getLines = if (lines <= address.length - excludeLines) lines else address.length - excludeLines
     address.take(getLines)
@@ -360,7 +356,7 @@ class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSi
    * @param keeperDetails the keeper model from the cookie.
    * @return
    */
-  def createAndSendEmail(vehicleDetails: VehicleAndKeeperDetailsModel, keeperDetails: NewKeeperDetailsViewModel) =
+  private def createAndSendEmail(vehicleDetails: VehicleAndKeeperDetailsModel, keeperDetails: NewKeeperDetailsViewModel) =
     keeperDetails.email match {
       case Some(emailAddr) =>
         import scala.language.postfixOps
@@ -376,7 +372,7 @@ class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSi
       case None => Logger.info("Tried to send an email with no keeper details")
     }
 
-  def createAndSendSellerEmail(vehicleDetails: VehicleAndKeeperDetailsModel, sellerEmail: Option[String]) =
+  private def createAndSendSellerEmail(vehicleDetails: VehicleAndKeeperDetailsModel, sellerEmail: Option[String]) =
     sellerEmail match {
       case Some(emailAddr) =>
         import scala.language.postfixOps

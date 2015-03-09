@@ -6,7 +6,6 @@ import uk.gov.dvla.vehicles.presentation.common.clientsidesession.ClientSideSess
 import uk.gov.dvla.vehicles.presentation.common.model.CookieReport
 import utils.helpers.Config
 
-
 class CookiePolicyController @Inject()(implicit clientSideSessionFactory: ClientSideSessionFactory,
                                        config: Config) extends Controller {
 
@@ -30,5 +29,4 @@ class CookiePolicyController @Inject()(implicit clientSideSessionFactory: Client
   def present = Action { implicit request =>
     Ok(views.html.changekeeper.cookie_policy(cookies))
   }
-
 }
