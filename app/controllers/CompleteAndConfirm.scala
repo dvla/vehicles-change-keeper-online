@@ -4,9 +4,9 @@ import com.google.inject.Inject
 import email.{EmailSellerMessageBuilder, EmailMessageBuilder}
 import models.CompleteAndConfirmFormModel
 import models.CompleteAndConfirmFormModel.AllowGoingToCompleteAndConfirmPageCacheKey
+import models.CompleteAndConfirmFormModel.Form.{ConsentId, MileageId}
 import models.CompleteAndConfirmResponseModel
 import models.CompleteAndConfirmViewModel
-import models.CompleteAndConfirmFormModel.Form.{ConsentId, MileageId}
 import models.K2KCacheKeyPrefix.CookiePrefix
 import models.SellerEmailModel
 import models.VehicleLookupFormModel
@@ -64,13 +64,13 @@ class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSi
     }(Redirect(routes.VehicleLookup.present()).discardingCookies(cookiesToBeDiscardedOnRedirectAway))
   }
 
-  // The dates are valid if they are the same or if the disposal date is before the acquisition date
+  // The dates are valid if they are on the same date or if the disposal date/keeper change date is before the acquisition date
   def submitWithDateCheck = submitBase(
-    (keeperEndDate, dateOfSale) =>
-      keeperEndDate.toLocalDate.isEqual(dateOfSale) || keeperEndDate.toLocalDate.isBefore(dateOfSale)
+    (keeperEndDateOrChangeDate, dateOfSale) =>
+      keeperEndDateOrChangeDate.toLocalDate.isEqual(dateOfSale) || keeperEndDateOrChangeDate.toLocalDate.isBefore(dateOfSale)
   )
 
-  def submitNoDateCheck = submitBase((keeperEndDate, dateOfSale) => true)
+  def submitNoDateCheck = submitBase((keeperEndDateOrChangeDate, dateOfSale) => true)
 
   private def submitBase(validDates: (DateTime, LocalDate) => Boolean) = Action.async { implicit request =>
     canPerform {
@@ -99,40 +99,52 @@ class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSi
           val sellerEmailModelOpt = request.cookies.getModel[SellerEmailModel]
           val validFormResult = (newKeeperDetailsOpt, vehicleLookupOpt, vehicleDetailsOpt, sellerEmailModelOpt) match {
             case (Some(newKeeperDetails), Some(vehicleLookup), Some(vehicleDetails), Some(sellerEmailModel)) =>
-              vehicleDetails.keeperEndDate match {
-                case Some(keeperEndDate) =>
-                  if (validDates(keeperEndDate, validForm.dateOfSale)) {
-                    // The dateOfSale is valid
-                    acquireAction(validForm,
-                      newKeeperDetails,
-                      vehicleLookup,
-                      vehicleDetails,
-                      sellerEmailModel,
-                      request.cookies.trackingId)
-                  }
-                  else {
-                    // The dateOfSale is invalid
-                    Future.successful{
-                      BadRequest(complete_and_confirm(
-                        CompleteAndConfirmViewModel(form.fill(validForm),
-                          vehicleDetails,
-                          newKeeperDetails,
-                          isSaleDateBeforeDisposalDate = true, // This will tell the page to display the date warning
-                          submitAction = controllers.routes.CompleteAndConfirm.submitNoDateCheck(), // Next time the submit will not perform any date check
-                          dateOfDisposal = Some(keeperEndDate.toString("dd/MM/yyyy")) // Pass the dateOfDisposal so we can tell the user in the warning
-                        ), dateService)
-                      )
-                    }
-                  }
-                case _ =>
+              Logger.debug(s"CompleteAndConfirm - keeperEndDate = ${vehicleDetails.keeperEndDate}")
+              Logger.debug(s"CompleteAndConfirm - keeperChangeDate = ${vehicleDetails.keeperChangeDate}")
+              // Only do the date check if the keeper end date or the keeper change date is present. If they are both
+              // present or neither are present then skip the check
+              if ((vehicleDetails.keeperEndDate.isDefined || vehicleDetails.keeperChangeDate.isDefined) &&
+                !(vehicleDetails.keeperEndDate.isDefined && vehicleDetails.keeperChangeDate.isDefined)) {
+                // Either the keeper end date or the keeper change date is populated so do the date check
+                val endDateOrChangeDate = vehicleDetails.keeperEndDate match {
+                  case Some(keeperEndDate) => keeperEndDate
+                  case _ => vehicleDetails.keeperChangeDate.get
+                }
+
+                if (validDates(endDateOrChangeDate, validForm.dateOfSale)) {
+                  // The dateOfSale is valid
                   acquireAction(validForm,
                     newKeeperDetails,
                     vehicleLookup,
                     vehicleDetails,
                     sellerEmailModel,
                     request.cookies.trackingId)
+                }
+                else {
+                  // The dateOfSale is invalid
+                  Future.successful{
+                    BadRequest(complete_and_confirm(
+                      CompleteAndConfirmViewModel(form.fill(validForm),
+                        vehicleDetails,
+                        newKeeperDetails,
+                        isSaleDateBeforeDisposalDate = true, // This will tell the page to display the date warning
+                        submitAction = controllers.routes.CompleteAndConfirm.submitNoDateCheck(), // Next time the submit will not perform any date check
+                        dateOfDisposal = Some(endDateOrChangeDate.toString("dd/MM/yyyy")) // Pass the dateOfDisposal/change date so we can tell the user in the warning
+                      ), dateService)
+                    )
+                  }
+                }
               }
-
+              else {
+                // Either both dates are missing or they are both populated so just call the acquire service
+                // and move to the next page
+                acquireAction(validForm,
+                  newKeeperDetails,
+                  vehicleLookup,
+                  vehicleDetails,
+                  sellerEmailModel,
+                  request.cookies.trackingId)
+              }
             case _ => Future.successful {
               Logger.warn("Did not find expected cookie data on complete and confirm submit - now redirecting to VehicleLookup...")
               Redirect(routes.VehicleLookup.present()).discardingCookie(AllowGoingToCompleteAndConfirmPageCacheKey)

@@ -163,7 +163,7 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
       }
     }
 
-    "redirect to next page when mandatory fields are complete for new keeper" in new WithApplication {
+    "redirect to next page when mandatory fields are complete for new keeper and neither the date of disposal or the change date are present" in new WithApplication {
       val request = buildCorrectlyPopulatedRequest()
         .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
         .withCookies(CookieFactoryForUnitSpecs.vehicleLookupFormModel())
@@ -207,6 +207,27 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
       }
     }
 
+    "not call the micro service when the date of acquisition is before the keeper change date and return a bad request" in new WithApplication {
+      // The date of acquisition is 19-10-2012
+      val changeKeeperDate = DateTime.parse("20-10-2012", DateTimeFormat.forPattern("dd-MM-yyyy"))
+
+      val request = buildCorrectlyPopulatedRequest()
+        .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
+        .withCookies(CookieFactoryForUnitSpecs.vehicleLookupFormModel())
+        .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel(keeperChangeDate = Some(changeKeeperDate)))
+        .withCookies(CookieFactoryForUnitSpecs.sellerEmailModel())
+        .withCookies(CookieFactoryForUnitSpecs.allowGoingToCompleteAndConfirm())
+
+      val acquireServiceMock = mock[AcquireService]
+      val completeAndConfirm = completeAndConfirmController(acquireServiceMock)
+
+      val result = completeAndConfirm.submitWithDateCheck(request)
+      whenReady(result) { r =>
+        r.header.status should equal(BAD_REQUEST)
+        verify(acquireServiceMock, never()).invoke(any[AcquireRequestDto], anyString())
+      }
+    }
+
     "call the micro service when the date of acquisition is the same as the date of disposal and redirect to the next page" in new WithApplication {
       // The date of acquisition is 19-10-2012
       val disposalDate = DateTime.parse("19-10-2012", DateTimeFormat.forPattern("dd-MM-yyyy"))
@@ -233,6 +254,58 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
       }
     }
 
+    "call the micro service when the date of acquisition is the same as the keeper change date and redirect to the next page" in new WithApplication {
+      // The date of acquisition is 19-10-2012
+      val changeDate = DateTime.parse("19-10-2012", DateTimeFormat.forPattern("dd-MM-yyyy"))
+
+      val request = buildCorrectlyPopulatedRequest()
+        .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
+        .withCookies(CookieFactoryForUnitSpecs.vehicleLookupFormModel())
+        .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel(keeperChangeDate = Some(changeDate)))
+        .withCookies(CookieFactoryForUnitSpecs.sellerEmailModel())
+        .withCookies(CookieFactoryForUnitSpecs.allowGoingToCompleteAndConfirm())
+
+      val acquireServiceMock = mock[AcquireService]
+      val completeAndConfirm = completeAndConfirmController(acquireServiceMock)
+
+      when(acquireServiceMock.invoke(any[AcquireRequestDto], any[String])).
+        thenReturn(Future.successful {
+        (OK, Some(acquireResponseSuccess))
+      })
+
+      val result = completeAndConfirm.submitWithDateCheck(request)
+      whenReady(result) { r =>
+        r.header.headers.get(LOCATION) should equal(Some(ChangeKeeperSuccessPage.address))
+        verify(acquireServiceMock, times(1)).invoke(any[AcquireRequestDto], anyString())
+      }
+    }
+
+    "call the micro service when both the date of disposal and the change date are present and redirect to the next page" in new WithApplication {
+      // The date of acquisition is 19-10-2012
+      val disposalDate = DateTime.parse("09-03-2015", DateTimeFormat.forPattern("dd-MM-yyyy"))
+      val changeDate = DateTime.parse("09-03-2015", DateTimeFormat.forPattern("dd-MM-yyyy"))
+
+      val request = buildCorrectlyPopulatedRequest()
+        .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
+        .withCookies(CookieFactoryForUnitSpecs.vehicleLookupFormModel())
+        .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel(keeperEndDate = Some(disposalDate), keeperChangeDate = Some(changeDate)))
+        .withCookies(CookieFactoryForUnitSpecs.sellerEmailModel())
+        .withCookies(CookieFactoryForUnitSpecs.allowGoingToCompleteAndConfirm())
+
+      val acquireServiceMock = mock[AcquireService]
+      val completeAndConfirm = completeAndConfirmController(acquireServiceMock)
+
+      when(acquireServiceMock.invoke(any[AcquireRequestDto], any[String])).
+        thenReturn(Future.successful {
+        (OK, Some(acquireResponseSuccess))
+      })
+
+      val result = completeAndConfirm.submitWithDateCheck(request)
+      whenReady(result) { r =>
+        r.header.headers.get(LOCATION) should equal(Some(ChangeKeeperSuccessPage.address))
+        verify(acquireServiceMock, times(1)).invoke(any[AcquireRequestDto], anyString())
+      }
+    }
   }
 
   private def completeAndConfirmController(acquireService: AcquireService)
