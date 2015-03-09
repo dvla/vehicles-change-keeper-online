@@ -1,13 +1,11 @@
 package composition
 
-import uk.gov.dvla.vehicles.presentation.common.services.SEND.{From, EmailConfiguration}
+import uk.gov.dvla.vehicles.presentation.common.services.SEND.EmailConfiguration
 import uk.gov.dvla.vehicles.presentation.common.ConfigProperties.{getOptionalProperty, booleanProp}
+import uk.gov.dvla.vehicles.presentation.common.webserviceclients.emailservice.From
 
 import utils.helpers.Config
 
-/**
- * Created by gerasimosarvanitis on 07/01/2015.
- */
 class TestConfig extends Config {
 
   override def assetsUrl: Option[String] = None
@@ -40,6 +38,8 @@ class TestConfig extends Config {
   def channelCode: String = ""
   def contactId: Long = 9
 
+  def emailServiceMicroServiceUrlBase: String = NotFound
+  def emailServiceMsRequestTimeout: Int = 10000
 
   def emailConfiguration: EmailConfiguration = EmailConfiguration(
     "",

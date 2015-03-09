@@ -6,6 +6,7 @@ import uk.gov.dvla.vehicles.sandbox.ProjectDefinitions.legacyStubs
 import uk.gov.dvla.vehicles.sandbox.ProjectDefinitions.osAddressLookup
 import uk.gov.dvla.vehicles.sandbox.ProjectDefinitions.vehiclesAcquireFulfil
 import uk.gov.dvla.vehicles.sandbox.ProjectDefinitions.vehicleAndKeeperLookup
+import uk.gov.dvla.vehicles.sandbox.ProjectDefinitions.emailService
 import uk.gov.dvla.vehicles.sandbox.Runner._
 import uk.gov.dvla.vehicles.sandbox.Sandbox
 import uk.gov.dvla.vehicles.sandbox.SandboxSettings
@@ -106,6 +107,7 @@ net.virtualvoid.sbt.graph.Plugin.graphSettings
 lazy val osAddressLookupProject = osAddressLookup("0.12-SNAPSHOT").disablePlugins(PlayScala, SbtWeb)
 lazy val vehicleAndKeeperLookupProject = vehicleAndKeeperLookup("0.9-SNAPSHOT").disablePlugins(PlayScala, SbtWeb)
 lazy val vehiclesAcquireFulfilProject = vehiclesAcquireFulfil("0.9-SNAPSHOT").disablePlugins(PlayScala, SbtWeb)
+lazy val emailServiceProject = emailService("0.2-SNAPSHOT").disablePlugins(PlayScala, SbtWeb)
 lazy val legacyStubsProject = legacyStubs("1.0-SNAPSHOT").disablePlugins(PlayScala, SbtWeb)
 
 SandboxSettings.portOffset := 20000
@@ -120,6 +122,8 @@ SandboxSettings.vehicleAndKeeperLookupProject := vehicleAndKeeperLookupProject
 
 SandboxSettings.vehiclesAcquireFulfilProject := vehiclesAcquireFulfilProject
 
+SandboxSettings.emailServiceProject := emailServiceProject
+
 SandboxSettings.legacyStubsProject := legacyStubsProject
 
 SandboxSettings.runAllMicroservices := {
@@ -127,6 +131,7 @@ SandboxSettings.runAllMicroservices := {
   Tasks.runOsAddressLookup.value
   Tasks.runVehicleAndKeeperLookup.value
   Tasks.runVehiclesAcquireFulfil.value
+  Tasks.runEmailService.value
 }
 
 SandboxSettings.loadTests := (test in Gatling in gatlingTestsProject).value

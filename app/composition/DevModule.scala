@@ -31,6 +31,7 @@ import common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupWeb
 import common.webserviceclients.acquire.{AcquireServiceImpl, AcquireService, AcquireWebServiceImpl, AcquireWebService}
 import uk.gov.dvla.vehicles.presentation.common.webserviceclients.healthstats.HealthStats
 import utils.helpers.{ConfigImpl, Config}
+import webserviceclients.emailservice.{EmailServiceImpl, EmailService, EmailServiceWebServiceImpl, EmailServiceWebService}
 
 /**
  * Provides real implementations of traits
@@ -60,6 +61,11 @@ class DevModule extends ScalaModule {
 
     bind[AcquireWebService].to[AcquireWebServiceImpl].asEagerSingleton()
     bind[AcquireService].to[AcquireServiceImpl].asEagerSingleton()
+
+
+    bind[EmailServiceWebService].to[EmailServiceWebServiceImpl].asEagerSingleton()
+    bind[EmailService].to[EmailServiceImpl].asEagerSingleton()
+
 
     bind[BruteForcePreventionWebService].to[uk.gov.dvla.vehicles.presentation.common.webserviceclients.bruteforceprevention.WebServiceImpl].asEagerSingleton()
     bind[BruteForcePreventionService].to[BruteForcePreventionServiceImpl].asEagerSingleton()

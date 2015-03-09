@@ -8,7 +8,8 @@ import common.ConfigProperties.booleanProp
 import common.ConfigProperties.stringProp
 import common.ConfigProperties.intProp
 import common.ConfigProperties.longProp
-import common.services.SEND.{EmailConfiguration, From}
+import common.services.SEND.EmailConfiguration
+import uk.gov.dvla.vehicles.presentation.common.webserviceclients.emailservice.From
 
 class ConfigImpl extends Config {
 
@@ -42,6 +43,11 @@ class ConfigImpl extends Config {
   val channelCode: String = getProperty[String]("webHeader.channelCode")
   val contactId: Long = getProperty[Long]("webHeader.contactId")
 
+
+  override val emailServiceMicroServiceUrlBase: String =
+    getOptionalProperty[String]("emailServiceMicroServiceUrlBase").getOrElse(NotFound)
+  override val emailServiceMsRequestTimeout: Int =
+    getOptionalProperty[Int]("emailService.ms.requesttimeout").getOrElse(10000)
 
   val emailConfiguration: EmailConfiguration = EmailConfiguration(
     getProperty[String]("smtp.host"),

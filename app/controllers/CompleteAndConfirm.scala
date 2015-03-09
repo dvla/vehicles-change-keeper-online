@@ -16,6 +16,7 @@ import org.joda.time.format.ISODateTimeFormat
 import play.api.data.{FormError, Form}
 import play.api.Logger
 import play.api.mvc.{Action, AnyContent, Call, Controller, Request, Result}
+import webserviceclients.emailservice.EmailService
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import uk.gov.dvla.vehicles.presentation.common
@@ -31,7 +32,7 @@ import common.webserviceclients.acquire.{AcquireRequestDto, AcquireResponseDto, 
 import utils.helpers.Config
 import views.html.changekeeper.complete_and_confirm
 
-class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSideSessionFactory: ClientSideSessionFactory,
+class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: EmailService)(implicit clientSideSessionFactory: ClientSideSessionFactory,
                                                                dateService: DateService,
                                                                config: Config) extends Controller {
   private val cookiesToBeDiscardedOnRedirectAway =
@@ -202,7 +203,7 @@ class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSi
       newKeeperDetailsView, transactionTimestamp, trackingId)
     webService.invoke(disposeRequest, trackingId).map {
       case (httpResponseCode, response) =>
-        Some(Redirect(nextPage(httpResponseCode, response)(vehicleDetails, newKeeperDetailsView, sellerEmailModel)))
+        Some(Redirect(nextPage(httpResponseCode, response)(vehicleDetails, newKeeperDetailsView, sellerEmailModel, trackingId)))
           .map(_.withCookie(CompleteAndConfirmResponseModel(response.get.transactionId, transactionTimestamp)))
           .map(_.withCookie(completeAndConfirmForm))
           .get
@@ -216,10 +217,10 @@ class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSi
   def nextPage(httpResponseCode: Int, response: Option[AcquireResponseDto])
               (vehicleDetails: VehicleAndKeeperDetailsModel,
                keeperDetails: NewKeeperDetailsViewModel,
-                sellerEmailModel: SellerEmailModel) =
+                sellerEmailModel: SellerEmailModel, trackingId: String) =
     response match {
-      case Some(r) if r.responseCode.isDefined => successReturn (vehicleDetails, keeperDetails, sellerEmailModel) //handleResponseCode(r.responseCode.get)
-      case _ => handleHttpStatusCode(httpResponseCode)(vehicleDetails, keeperDetails, sellerEmailModel)
+      case Some(r) if r.responseCode.isDefined => successReturn (vehicleDetails, keeperDetails, sellerEmailModel, trackingId) //handleResponseCode(r.responseCode.get)
+      case _ => handleHttpStatusCode(httpResponseCode)(vehicleDetails, keeperDetails, sellerEmailModel, trackingId)
     }
 
   def buildMicroServiceRequest(vehicleLookup: VehicleLookupFormModel,
@@ -279,20 +280,20 @@ class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSi
   def handleHttpStatusCode(statusCode: Int)
                           (vehicleDetails: VehicleAndKeeperDetailsModel,
                            keeperDetails: NewKeeperDetailsViewModel,
-                           sellerEmailModel: SellerEmailModel): Call =
+                           sellerEmailModel: SellerEmailModel, trackingId: String): Call =
     statusCode match {
       case OK =>
-        successReturn (vehicleDetails, keeperDetails, sellerEmailModel)
+        successReturn (vehicleDetails, keeperDetails, sellerEmailModel, trackingId)
       case _ =>
         routes.MicroServiceError.present()
     }
 
   private def successReturn(vehicleDetails: VehicleAndKeeperDetailsModel,
                             keeperDetails: NewKeeperDetailsViewModel,
-                            sellerEmailModel: SellerEmailModel): Call = {
+                            sellerEmailModel: SellerEmailModel, trackingId: String): Call = {
     //send the email
-    createAndSendSellerEmail(vehicleDetails, sellerEmailModel.email)
-    createAndSendEmail(vehicleDetails, keeperDetails)
+    createAndSendSellerEmail(vehicleDetails, sellerEmailModel.email, trackingId)
+    createAndSendEmail(vehicleDetails, keeperDetails, trackingId)
     //redirect
     routes.ChangeKeeperSuccess.present()
   }
@@ -365,7 +366,9 @@ class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSi
    * @param keeperDetails the keeper model from the cookie.
    * @return
    */
-  def createAndSendEmail(vehicleDetails: VehicleAndKeeperDetailsModel, keeperDetails: NewKeeperDetailsViewModel) =
+  def createAndSendEmail(vehicleDetails: VehicleAndKeeperDetailsModel,
+                         keeperDetails: NewKeeperDetailsViewModel,
+                         trackingId: String) =
     keeperDetails.email match {
       case Some(emailAddr) =>
         import scala.language.postfixOps
@@ -373,15 +376,19 @@ class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSi
         import SEND._ // Keep this local so that we don't pollute rest of the class with unnecessary imports.
 
         implicit val emailConfiguration = config.emailConfiguration
+        implicit val implicitEmailService = implicitly[EmailService](emailService)
+
         val template = EmailMessageBuilder.buildWith(vehicleDetails, keeperDetails)
 
         // This sends the email.
-        SEND email template withSubject vehicleDetails.registrationNumber to emailAddr send
+        SEND email template withSubject vehicleDetails.registrationNumber to emailAddr send trackingId
 
       case None => Logger.info(s"tried to send an email with no keeper details")
     }
 
-  def createAndSendSellerEmail(vehicleDetails: VehicleAndKeeperDetailsModel, sellerEmail: Option[String]) =
+  def createAndSendSellerEmail(vehicleDetails: VehicleAndKeeperDetailsModel,
+                               sellerEmail: Option[String],
+                               trackingId: String) =
     sellerEmail match {
       case Some(emailAddr) =>
         import scala.language.postfixOps
@@ -389,10 +396,12 @@ class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSi
         import SEND._ // Keep this local so that we don't pollute rest of the class with unnecessary imports.
 
         implicit val emailConfiguration = config.emailConfiguration
+        implicit val implicitEmailService = implicitly[EmailService](emailService)
+
         val template = EmailSellerMessageBuilder.buildWith(vehicleDetails)
 
         // This sends the email.
-        SEND email template withSubject vehicleDetails.registrationNumber to emailAddr send
+        SEND email template withSubject vehicleDetails.registrationNumber to emailAddr send trackingId
       case None => Logger.info(s"tried to send a receipt to seller but no email was found")
     }
 }
