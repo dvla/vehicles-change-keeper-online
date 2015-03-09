@@ -30,5 +30,6 @@ trait Config extends VehicleLookupConfig {
 
   def emailServiceMicroServiceUrlBase: String
   def emailServiceMsRequestTimeout: Int
+
   def emailConfiguration: EmailConfiguration
 }
