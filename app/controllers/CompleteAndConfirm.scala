@@ -103,48 +103,42 @@ class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSi
               Logger.debug(s"CompleteAndConfirm - keeperChangeDate = ${vehicleDetails.keeperChangeDate}")
               // Only do the date check if the keeper end date or the keeper change date is present. If they are both
               // present or neither are present then skip the check
-              if ((vehicleDetails.keeperEndDate.isDefined || vehicleDetails.keeperChangeDate.isDefined) &&
-                !(vehicleDetails.keeperEndDate.isDefined && vehicleDetails.keeperChangeDate.isDefined)) {
-                // Either the keeper end date or the keeper change date is populated so do the date check
-                val endDateOrChangeDate = vehicleDetails.keeperEndDate match {
-                  case Some(keeperEndDate) => keeperEndDate
-                  case _ => vehicleDetails.keeperChangeDate.get
-                }
-
-                if (validDates(endDateOrChangeDate, validForm.dateOfSale)) {
+              Seq(vehicleDetails.keeperChangeDate, vehicleDetails.keeperEndDate).flatten match {
+                case Seq(endDateOrChangeDate) if validDates(endDateOrChangeDate, validForm.dateOfSale) =>
+                  // Either the keeper end date or the keeper change date is populated so do the date check
                   // The dateOfSale is valid
-                  acquireAction(validForm,
+                  acquireAction(
+                    validForm,
                     newKeeperDetails,
                     vehicleLookup,
                     vehicleDetails,
                     sellerEmailModel,
-                    request.cookies.trackingId)
-                }
-                else {
+                    request.cookies.trackingId
+                  )
+                case Seq(endDateOrChangeDate) => Future.successful{
                   // The dateOfSale is invalid
-                  Future.successful{
-                    BadRequest(complete_and_confirm(
-                      CompleteAndConfirmViewModel(form.fill(validForm),
-                        vehicleDetails,
-                        newKeeperDetails,
-                        isSaleDateInvalid = true, // This will tell the page to display the date warning
-                        isDateToCompareDisposalDate = vehicleDetails.keeperEndDate.isDefined,
-                        submitAction = controllers.routes.CompleteAndConfirm.submitNoDateCheck(), // Next time the submit will not perform any date check
-                        dateToCompare = Some(endDateOrChangeDate.toString("dd/MM/yyyy")) // Pass the dateOfDisposal/change date so we can tell the user in the warning
-                      ), dateService)
-                    )
-                  }
+                  BadRequest(complete_and_confirm(
+                    CompleteAndConfirmViewModel(form.fill(validForm),
+                      vehicleDetails,
+                      newKeeperDetails,
+                      isSaleDateInvalid = true, // This will tell the page to display the date warning
+                      isDateToCompareDisposalDate = vehicleDetails.keeperEndDate.isDefined,
+                      submitAction = controllers.routes.CompleteAndConfirm.submitNoDateCheck(), // Next time the submit will not perform any date check
+                      dateToCompare = Some(endDateOrChangeDate.toString("dd/MM/yyyy")) // Pass the dateOfDisposal/change date so we can tell the user in the warning
+                    ), dateService)
+                  )
                 }
-              }
-              else {
-                // Either both dates are missing or they are both populated so just call the acquire service
-                // and move to the next page
-                acquireAction(validForm,
-                  newKeeperDetails,
-                  vehicleLookup,
-                  vehicleDetails,
-                  sellerEmailModel,
-                  request.cookies.trackingId)
+                case _ =>
+                  // Either both dates are missing or they are both populated so just call the acquire service
+                  // and move to the next page
+                  acquireAction(
+                    validForm,
+                    newKeeperDetails,
+                    vehicleLookup,
+                    vehicleDetails,
+                    sellerEmailModel,
+                    request.cookies.trackingId
+                  )
               }
             case _ => Future.successful {
               Logger.warn("Did not find expected cookie data on complete and confirm submit - now redirecting to VehicleLookup...")
