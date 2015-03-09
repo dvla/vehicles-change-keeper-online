@@ -37,8 +37,6 @@ class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSi
   private val cookiesToBeDiscardedOnRedirectAway =
     VehicleNewKeeperCompletionCacheKeys ++ Set(AllowGoingToCompleteAndConfirmPageCacheKey)
 
-  private val EMAIL_SUBJECT = "Test email for the Keeper to Keeper service"
-
   private[controllers] val form = Form(
     CompleteAndConfirmFormModel.Form.detailMapping
   )
@@ -55,7 +53,8 @@ class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSi
           Ok(complete_and_confirm(CompleteAndConfirmViewModel(form.fill(),
             vehicleAndKeeperDetails,
             newKeeperDetails,
-            isSaleDateBeforeDisposalDate = false),
+            isSaleDateInvalid = false,
+            isDateToCompareDisposalDate = false),
             dateService)
           )
         case _ =>
@@ -84,7 +83,8 @@ class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSi
                 CompleteAndConfirmViewModel(formWithReplacedErrors(invalidForm),
                   vehicleDetails,
                   newKeeperDetails,
-                  isSaleDateBeforeDisposalDate = false),
+                  isSaleDateInvalid = false,
+                  isDateToCompareDisposalDate = false),
                 dateService)
               )
             case _ =>
@@ -127,9 +127,10 @@ class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSi
                       CompleteAndConfirmViewModel(form.fill(validForm),
                         vehicleDetails,
                         newKeeperDetails,
-                        isSaleDateBeforeDisposalDate = true, // This will tell the page to display the date warning
+                        isSaleDateInvalid = true, // This will tell the page to display the date warning
+                        isDateToCompareDisposalDate = vehicleDetails.keeperEndDate.isDefined,
                         submitAction = controllers.routes.CompleteAndConfirm.submitNoDateCheck(), // Next time the submit will not perform any date check
-                        dateOfDisposal = Some(endDateOrChangeDate.toString("dd/MM/yyyy")) // Pass the dateOfDisposal/change date so we can tell the user in the warning
+                        dateToCompare = Some(endDateOrChangeDate.toString("dd/MM/yyyy")) // Pass the dateOfDisposal/change date so we can tell the user in the warning
                       ), dateService)
                     )
                   }
@@ -378,7 +379,7 @@ class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSi
         // This sends the email.
         SEND email template withSubject vehicleDetails.registrationNumber to emailAddr send
 
-      case None => Logger.info(s"tried to send an email with no keeper details")
+      case None => Logger.info("Tried to send an email with no keeper details")
     }
 
   def createAndSendSellerEmail(vehicleDetails: VehicleAndKeeperDetailsModel, sellerEmail: Option[String]) =
@@ -393,6 +394,6 @@ class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSi
 
         // This sends the email.
         SEND email template withSubject vehicleDetails.registrationNumber to emailAddr send
-      case None => Logger.info(s"tried to send a receipt to seller but no email was found")
+      case None => Logger.info("Tried to send a receipt to seller but no email was found")
     }
 }

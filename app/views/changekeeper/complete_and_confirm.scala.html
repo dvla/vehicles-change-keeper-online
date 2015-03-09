@@ -23,7 +23,7 @@
 
     <script src="@controllers.StaticAssets.versioned(config.assetsUrl)("lib/vehicles-presentation-common/javascripts/autofill-todays-date.js")" type="text/javascript"></script>
 
-    @if(data.isSaleDateBeforeDisposalDate) {
+    @if(data.isSaleDateInvalid) {
 
         <div class="site-overlay"></div>
 
@@ -77,12 +77,16 @@
                         'autofocus -> true,
                         '_showConstraints -> false,
                         '_label -> Messages("change_keeper_keeperdetailscomplete.consent")
-                    ), data.isSaleDateBeforeDisposalDate)
+                    ), data.isSaleDateInvalid)
                 )
 
-                @if(data.isSaleDateBeforeDisposalDate) {
+                @if(data.isSaleDateInvalid) {
                     <div class="popup-modal">
-                        <p>@Messages("change_keeper_completeandconfirm.dateofsale.warning", data.dateOfDisposal.getOrElse("NOT FOUND"))</p>
+                        @if(data.isDateToCompareDisposalDate) {
+                            <p>@Messages("change_keeper_completeandconfirm.dateofsale.disposalDate.warning", data.dateToCompare.getOrElse("NOT FOUND"))</p>
+                        } else {
+                            <p>@Messages("change_keeper_completeandconfirm.dateofsale.keeperChangeDate.warning", data.dateToCompare.getOrElse("NOT FOUND"))</p>
+                        }
                         <div id=@DateOfSaleId>
                         @inputDayMonthYearTextbox(
                             field = data.form(DateOfSaleId),
@@ -113,7 +117,7 @@
                 }
 
                 <div id=@DateOfSaleId class="form-steps">
-                @if(data.isSaleDateBeforeDisposalDate) {
+                @if(data.isSaleDateInvalid) {
                     @inputDayMonthYearTextbox(
                         field = data.form(DateOfSaleId),
                         args = Map(
@@ -147,20 +151,20 @@
                         'maxLength -> Mileage.MaxLength, // Must be set independently of the pattern as the pattern is only checked when the user submits.
                         'optionalFieldKey -> true
                         //'title -> Messages("change_keeper_keeperdetailscomplete.mileage.validation")
-                    ) ++ (if(config.isHtml5ValidationEnabled) Map('pattern -> Mileage.Pattern) else Nil), data.isSaleDateBeforeDisposalDate)
+                    ) ++ (if(config.isHtml5ValidationEnabled) Map('pattern -> Mileage.Pattern) else Nil), data.isSaleDateInvalid)
                 )
 
                 <div class="form-steps">
                     <button id="@SubmitId"
                         type="submit"
                         name="action"
-                        @if(data.isSaleDateBeforeDisposalDate) {tabindex="-1"}
+                        @if(data.isSaleDateInvalid) {tabindex="-1"}
                         class="button">
                         @Messages("change_keeper_completeAndConfirm.submitbutton")
                     </button>
                     <br/>
                     <a class="back" id="@BackId"
-                        @if(data.isSaleDateBeforeDisposalDate) {tabindex="-1"}
+                        @if(data.isSaleDateInvalid) {tabindex="-1"}
                         href="@controllers.routes.CompleteAndConfirm.back()">
                         @Messages("change_keeper_completeAndConfirm.backbutton")
                     </a>
