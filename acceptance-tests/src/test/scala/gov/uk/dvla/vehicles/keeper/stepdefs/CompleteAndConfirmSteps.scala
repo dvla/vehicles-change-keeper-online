@@ -16,6 +16,7 @@ class CompleteAndConfirmSteps(webBrowserDriver: WebBrowserDriver) extends ScalaD
     go to VehicleLookupPage
     VehicleLookupPage.vehicleRegistrationNumber enter "BF51BOV"
     VehicleLookupPage.documentReferenceNumber enter "11111111111"
+    click on VehicleLookupPage.emailInvisible
     click on VehicleLookupPage.vehicleSoldToBusiness
     click on VehicleLookupPage.next
     page.title shouldEqual BusinessKeeperDetailsPage.title

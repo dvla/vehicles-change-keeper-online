@@ -17,6 +17,7 @@ class NewKeeperChooseYourAddressSteps(webBrowserDriver: WebBrowserDriver) extend
     go to VehicleLookupPage
     VehicleLookupPage.vehicleRegistrationNumber enter ValidVrn
     VehicleLookupPage.documentReferenceNumber enter ValidDocRefNum
+    click on VehicleLookupPage.emailInvisible
     click on VehicleLookupPage.vehicleSoldToBusiness
     click on VehicleLookupPage.next
     page.title shouldEqual BusinessKeeperDetailsPage.title

@@ -22,6 +22,7 @@ class PrivateKeeperDetailsPageSteps(webBrowserDriver: WebBrowserDriver) extends 
     go to VehicleLookupPage
     VehicleLookupPage.vehicleRegistrationNumber enter ValidVrn
     VehicleLookupPage.documentReferenceNumber enter ValidDocRefNum
+    click on VehicleLookupPage.emailInvisible
     click on VehicleLookupPage.vehicleSoldToPrivateIndividual
     click on VehicleLookupPage.next
     page.title shouldEqual PrivateKeeperDetailsPage.title

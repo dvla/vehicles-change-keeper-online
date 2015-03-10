@@ -45,6 +45,7 @@ object VehicleLookupPage extends Page with WebBrowserDSL {
     documentReferenceNumber enter referenceNumber
     VehicleLookupPage.vehicleRegistrationNumber enter registrationNumber
     click on emailInvisible
+    click on VehicleLookupPage.vehicleSoldToPrivateIndividual
     if (isVehicleSoldToPrivateIndividual) click on vehicleSoldToPrivateIndividual
     else click on vehicleSoldToBusiness
     click on next
