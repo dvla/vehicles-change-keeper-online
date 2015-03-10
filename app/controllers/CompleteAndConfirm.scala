@@ -56,7 +56,8 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
           Ok(complete_and_confirm(CompleteAndConfirmViewModel(form.fill(),
             vehicleAndKeeperDetails,
             newKeeperDetails,
-            isSaleDateBeforeDisposalDate = false),
+            isSaleDateInvalid = false,
+            isDateToCompareDisposalDate = false),
             dateService)
           )
         case _ =>
@@ -85,7 +86,8 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
                 CompleteAndConfirmViewModel(formWithReplacedErrors(invalidForm),
                   vehicleDetails,
                   newKeeperDetails,
-                  isSaleDateBeforeDisposalDate = false),
+                  isSaleDateInvalid = false,
+                  isDateToCompareDisposalDate = false),
                 dateService)
               )
             case _ =>
@@ -128,9 +130,10 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
                       CompleteAndConfirmViewModel(form.fill(validForm),
                         vehicleDetails,
                         newKeeperDetails,
-                        isSaleDateBeforeDisposalDate = true, // This will tell the page to display the date warning
+                        isSaleDateInvalid = true, // This will tell the page to display the date warning
+                        isDateToCompareDisposalDate = vehicleDetails.keeperEndDate.isDefined,
                         submitAction = controllers.routes.CompleteAndConfirm.submitNoDateCheck(), // Next time the submit will not perform any date check
-                        dateOfDisposal = Some(endDateOrChangeDate.toString("dd/MM/yyyy")) // Pass the dateOfDisposal/change date so we can tell the user in the warning
+                        dateToCompare = Some(endDateOrChangeDate.toString("dd/MM/yyyy")) // Pass the dateOfDisposal/change date so we can tell the user in the warning
                       ), dateService)
                     )
                   }
