@@ -6,13 +6,15 @@ import play.api.i18n.Messages
 import play.api.mvc._
 import uk.gov.dvla.vehicles.presentation.common
 import common.views.helpers.FormExtensions.formBinding
-import uk.gov.dvla.vehicles.presentation.common.clientsidesession.ClientSideSessionFactory
-import uk.gov.dvla.vehicles.presentation.common.controllers.FeedbackBase
-import uk.gov.dvla.vehicles.presentation.common.model.FeedbackForm
-import uk.gov.dvla.vehicles.presentation.common.model.FeedbackForm.Form.{emailMapping, nameMapping, feedback}
+import common.clientsidesession.CookieImplicits.RichCookies
+import common.clientsidesession.ClientSideSessionFactory
+import common.controllers.FeedbackBase
+import common.model.FeedbackForm
+import common.model.FeedbackForm.Form.{emailMapping, nameMapping, feedback}
 import utils.helpers.Config
+import webserviceclients.emailservice.EmailService
 
-class FeedbackController @Inject()()(implicit clientSideSessionFactory: ClientSideSessionFactory,
+class FeedbackController @Inject()(val emailService: EmailService)(implicit clientSideSessionFactory: ClientSideSessionFactory,
                                         config: Config) extends Controller with FeedbackBase {
 
   override val emailConfiguration = config.emailConfiguration
@@ -34,7 +36,8 @@ class FeedbackController @Inject()()(implicit clientSideSessionFactory: ClientSi
       invalidForm =>
         BadRequest(views.html.changekeeper.feedback(formWithReplacedErrors(invalidForm))),
         validForm => {
-          sendFeedback(validForm, Messages("common_feedback.subject"))
+          val trackingId = request.cookies.trackingId
+          sendFeedback(validForm, Messages("common_feedback.subject"), trackingId)
           Ok(views.html.changekeeper.feedbackSuccess())
         }
     )
