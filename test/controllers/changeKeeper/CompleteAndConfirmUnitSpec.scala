@@ -7,7 +7,7 @@ import helpers.CookieFactoryForUnitSpecs
 import models.CompleteAndConfirmFormModel.Form.{MileageId, DateOfSaleId, ConsentId}
 import org.joda.time.{DateTime, Instant}
 import org.joda.time.format.DateTimeFormat
-import org.mockito.Matchers.{anyString, any}
+import org.mockito.Matchers.{any, anyString}
 import org.mockito.Mockito.{never, times, verify, when}
 import pages.changekeeper.BusinessKeeperDetailsPage.{BusinessNameValid, EmailValid, FleetNumberValid}
 import pages.changekeeper.ChangeKeeperSuccessPage
@@ -20,8 +20,7 @@ import pages.changekeeper.PrivateKeeperDetailsPage.{FirstNameValid, LastNameVali
 import pages.changekeeper.VehicleLookupPage
 import play.api.test.Helpers.{LOCATION, BAD_REQUEST, OK, contentAsString, defaultAwaitTimeout}
 import play.api.test.{FakeRequest, WithApplication}
-import uk.gov.dvla.vehicles.presentation.common.webserviceclients.emailservice.From
-import webserviceclients.emailservice.{EmailServiceSendResponse, EmailServiceSendRequest, EmailService}
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.ClientSideSessionFactory
@@ -30,10 +29,10 @@ import common.services.DateService
 import common.services.SEND.EmailConfiguration
 import common.views.models.DayMonthYear
 import common.webserviceclients.acquire.{AcquireRequestDto, AcquireService}
+import common.webserviceclients.emailservice.From
 import utils.helpers.Config
+import webserviceclients.emailservice.{EmailService, EmailServiceSendRequest, EmailServiceSendResponse}
 import webserviceclients.fakes.FakeAcquireWebServiceImpl.acquireResponseSuccess
-
-import scala.concurrent.ExecutionContext.Implicits.global
 
 class CompleteAndConfirmUnitSpec extends UnitSpec {
   "present" should {
