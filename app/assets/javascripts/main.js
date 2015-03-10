@@ -106,6 +106,17 @@ require(["jquery", "jquery-migrate", "header-footer-only", "form-checked-selecti
             $('#feedback-form textarea').keyup(updateCountdown);
         });
 
+        // Radio button toggle visible widget
+        $('.optional-field').hide();
+
+        $('.expandable-optional .option-visible').on('click', function() {
+            $(this).closest('.expandable-optional').find('.optional-field').show(100);
+        });
+        $('.expandable-optional .option-invisible').on('click', function() {
+            $(this).closest('.expandable-optional').find('.optional-field').hide(100);
+        });
+
+        $('.expandable-optional .option-visible:checked').click();
     });
 
     function areCookiesEnabled(){

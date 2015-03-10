@@ -9,6 +9,7 @@ import common.controllers.VehicleLookupFormModelBase
 import common.mappings.DocumentReferenceNumber
 import common.mappings.Email.email
 import common.mappings.VehicleRegistrationNumber
+import common.mappings.OptionalToggle
 
 final case class VehicleLookupFormModel(referenceNumber: String,
                                         registrationNumber: String,
@@ -26,13 +27,14 @@ object VehicleLookupFormModel {
     final val VehicleRegistrationNumberId = "vehicleRegistrationNumber"
     final val VehicleSoldToId = "vehicleSoldTo"
     final val VehicleSellerEmail = "vehicleSellerEmail"
+    final val VehicleSellerEmailOption = "vehicleSellerEmailOption"
 
 
     final val Mapping = mapping(
       DocumentReferenceNumberId -> DocumentReferenceNumber.referenceNumber,
       VehicleRegistrationNumberId -> VehicleRegistrationNumber.registrationNumber,
       VehicleSoldToId -> nonEmptyText,
-      VehicleSellerEmail -> optional(email)
+      VehicleSellerEmailOption -> OptionalToggle.optional(email.withPrefix(VehicleSellerEmail))
     )(VehicleLookupFormModel.apply)(VehicleLookupFormModel.unapply)
   }
 }

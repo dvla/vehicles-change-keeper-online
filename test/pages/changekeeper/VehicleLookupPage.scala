@@ -8,6 +8,8 @@ import models.VehicleLookupFormModel.Form.DocumentReferenceNumberId
 import models.VehicleLookupFormModel.Form.VehicleSoldToId
 import views.changekeeper.VehicleLookup._
 import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService._
+import models.VehicleLookupFormModel.Form.VehicleSellerEmailOption
+import uk.gov.dvla.vehicles.presentation.common.mappings.OptionalToggle.{Visible, Invisible}
 
 object VehicleLookupPage extends Page with WebBrowserDSL {
   final val address = buildAppUrl("vehicle-lookup")
@@ -18,9 +20,17 @@ object VehicleLookupPage extends Page with WebBrowserDSL {
 
   def documentReferenceNumber(implicit driver: WebDriver): TelField = telField(id(DocumentReferenceNumberId))
 
-  def vehicleSoldToPrivateIndividual(implicit driver: WebDriver): RadioButton = radioButton(id(s"${VehicleSoldToId}_$VehicleSoldTo_Private"))
+  def vehicleSoldToPrivateIndividual(implicit driver: WebDriver): RadioButton =
+    radioButton(id(s"${VehicleSoldToId}_$VehicleSoldTo_Private"))
 
-  def vehicleSoldToBusiness(implicit driver: WebDriver): RadioButton = radioButton(id(s"${VehicleSoldToId}_$VehicleSoldTo_Business"))
+  def vehicleSoldToBusiness(implicit driver: WebDriver): RadioButton =
+    radioButton(id(s"${VehicleSoldToId}_$VehicleSoldTo_Business"))
+
+  def emailVisible(implicit driver: WebDriver): RadioButton =
+    radioButton(id(s"${VehicleSellerEmailOption}_$Visible"))
+
+  def emailInvisible(implicit driver: WebDriver): RadioButton =
+    radioButton(id(s"${VehicleSellerEmailOption}_$Invisible"))
 
   def back(implicit driver: WebDriver): Element = find(id(BackId)).get
 
@@ -31,9 +41,10 @@ object VehicleLookupPage extends Page with WebBrowserDSL {
                 isVehicleSoldToPrivateIndividual: Boolean = true)
                (implicit driver: WebDriver) = {
     go to VehicleLookupPage
+
     documentReferenceNumber enter referenceNumber
     VehicleLookupPage.vehicleRegistrationNumber enter registrationNumber
-
+    click on emailInvisible
     if (isVehicleSoldToPrivateIndividual) click on vehicleSoldToPrivateIndividual
     else click on vehicleSoldToBusiness
     click on next

@@ -29,8 +29,8 @@ class TestConfig extends Config {
   def ordnanceSurveyUseUprn: Boolean = false
 
   // opening and closing times
-  def opening: Int = 1
-  def closing: Int = 18
+  def opening: Int = 0
+  def closing: Int = 24
 
   // Web headers
   def applicationCode: String = ""
