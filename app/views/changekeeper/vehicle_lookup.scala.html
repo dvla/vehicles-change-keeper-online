@@ -6,13 +6,18 @@ config: utils.helpers.Config)
 @import views.changekeeper.VehicleLookup.{BackId, SubmitId, VehicleSoldTo_Private, VehicleSoldTo_Business}
 @import views.changekeeper.BeforeYouStart.NextId
 @import views.html.helper.form
-@import models.VehicleLookupFormModel.Form.{DocumentReferenceNumberId, VehicleRegistrationNumberId,VehicleSoldToId, VehicleSellerEmail}
+@import models.VehicleLookupFormModel.Form.DocumentReferenceNumberId
+@import models.VehicleLookupFormModel.Form.VehicleRegistrationNumberId
+@import models.VehicleLookupFormModel.Form.VehicleSoldToId
+@import models.VehicleLookupFormModel.Form.VehicleSellerEmail
+@import models.VehicleLookupFormModel.Form.VehicleSellerEmailOption
 @import uk.gov.dvla.vehicles.presentation.common
 @import common.mappings.{DocumentReferenceNumber, VehicleRegistrationNumber}
 @import common.views.html.widgets.base.csrfTokenHiddenField
 @import common.views.helpers.BaseTemplate.fieldConstructor
 @import common.views.html.widgets.base.valtechInputText
 @import common.views.html.widgets.listRadioGroup
+@import common.views.html.widgets.optionalToggle
 @import common.mappings.Email.EmailMaxLength
 
 @main(
@@ -47,24 +52,34 @@ currentForm = Some(viewModel.form)
                 )
             </div>
             <div class="step uppercase-input">
-                @valtechInputText(viewModel.form(DocumentReferenceNumberId),
-                hintText = Some(Messages("change_keeper_vehiclelookup.refnumlabel.hint")),
-                args = Map('_label -> Messages("change_keeper_vehiclelookup.refnumlabel"),
-                           '_showConstraints -> false,
-                           'typeTel -> true,
-                           'maxLength -> DocumentReferenceNumber.MaxLength, // Must be set independently of the pattern as the pattern is only checked when the user submits.
-                           //'title -> Messages("error.validDocumentReferenceNumber")
-                           'title -> Messages("")) ++ // [SKW] for accessibility Tony removed have 'title text as the screen reader reads it twice, the knock-on effect is that our custom validation messages aren't displayed so the user has no idea what is wrong.
-                (if(config.isHtml5ValidationEnabled) Map('pattern -> DocumentReferenceNumber.Pattern) else Nil)
-                )
+               @valtechInputText(
+                  viewModel.form(DocumentReferenceNumberId),
+                  hintText = Some(Messages("change_keeper_vehiclelookup.refnumlabel.hint")),
+                  args = Map(
+                    '_label -> Messages("change_keeper_vehiclelookup.refnumlabel"),
+                    '_showConstraints -> false,
+                    'typeTel -> true,
+                    'maxLength -> DocumentReferenceNumber.MaxLength, // Must be set independently of the pattern as the pattern is only checked when the user submits.
+                    //'title -> Messages("error.validDocumentReferenceNumber")
+                    'title -> Messages("")
+                  ) ++ // [SKW] for accessibility Tony removed have 'title text as the screen reader reads it twice, the knock-on effect is that our custom validation messages aren't displayed so the user has no idea what is wrong.
+                  (if(config.isHtml5ValidationEnabled) Map('pattern -> DocumentReferenceNumber.Pattern) else Nil)
+               )
             </div>
-
-                @valtechInputText(viewModel.form(VehicleSellerEmail),
-                    hintText = Some(Messages("change_keeper_selleremail.hint")),
+                @optionalToggle(
+                  viewModel.form(VehicleSellerEmailOption),
+                  Messages("change_keeper_vehiclelookup.traderemailoption"),
+                  Messages("change_keeper_vehiclelookup.traderemailoption.yes"),
+                  Messages("change_keeper_vehiclelookup.traderemailoption.no"),
+                  valtechInputText(
+                    viewModel.form(VehicleSellerEmail),
+                    hintText = None,
                     args = Map('_label -> Messages("change_keeper_vehiclelookup.selleremail"),
-                        '_showConstraints -> false,
-                        'maxLength -> EmailMaxLength
+                      '_showConstraints -> false,
+                      'maxLength -> EmailMaxLength,
+                      'NO_OPTIONAL_LABEL -> false
                     )
+                  )
                 )
 
                 <h3>@Messages("change_keeper_vehiclelookup.vehiclesoldto.label")</h3>

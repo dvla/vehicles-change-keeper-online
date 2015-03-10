@@ -4,13 +4,13 @@ import controllers.VehicleLookup
 import helpers.UnitSpec
 import helpers.InvalidVRMFormat.allInvalidVrmFormats
 import helpers.ValidVRMFormat.allValidVrmFormats
-import models.VehicleLookupFormModel.Form.{DocumentReferenceNumberId, VehicleRegistrationNumberId,
-        VehicleSoldToId, VehicleSellerEmail}
+import models.VehicleLookupFormModel.Form._
 import org.mockito.Matchers.{any, anyString}
 import org.mockito.Mockito.when
 import play.api.http.Status.OK
 import play.api.libs.json.{JsValue, Json}
 import play.api.test.WithApplication
+import uk.gov.dvla.vehicles.presentation.common.mappings.OptionalToggle
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import uk.gov.dvla.vehicles.presentation.common
@@ -140,7 +140,7 @@ final class VehicleLookupFormSpec extends UnitSpec {
     }
 
     "accept a selection of randomly generated vrms that all satisfy vrm regex" in new WithApplication {
-      for (i <- 1 to 100) {
+      for (i <- 1 to 20) {
         val randomVrm = RandomVrmGenerator.vrm
         formWithValidDefaults(registrationNumber = randomVrm).get.registrationNumber should equal(randomVrm)
       }
@@ -188,15 +188,15 @@ final class VehicleLookupFormSpec extends UnitSpec {
                                     registrationNumber: String = RegistrationNumberValid,
                                     vehicleSoldTo: String = VehicleSoldTo_Private,
                                     sellerEmail: Option[String] = None,
-                                    consent: String = ConsentValid
-                                    ) = {
+                                    consent: String = ConsentValid) = {
     vehicleLookupResponseGenerator(vehicleDetailsResponseSuccess).form.bind(
       Map(
         DocumentReferenceNumberId -> referenceNumber,
         VehicleRegistrationNumberId -> registrationNumber,
         VehicleSoldToId -> vehicleSoldTo,
         VehicleSellerEmail -> sellerEmail.getOrElse("")
-      )
+      ) ++ sellerEmail.fold(Map(VehicleSellerEmailOption -> OptionalToggle.Invisible))
+        (email => Map(VehicleSellerEmailOption -> OptionalToggle.Visible))
     )
   }
 }

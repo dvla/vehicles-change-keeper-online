@@ -137,6 +137,9 @@ change_keeper_vehiclelookup.exitbutton = Finish
 change_keeper_vehiclelookup.tradernamelabel = Trader name
 change_keeper_vehiclelookup.traderaddresslabel = Address
 change_keeper_vehiclelookup.traderpostcodelabel = Postcode
+change_keeper_vehiclelookup.traderemailoption = Do you want an email confirmation of the sale?
+change_keeper_vehiclelookup.traderemailoption.yes = Yes
+change_keeper_vehiclelookup.traderemailoption.no = No
 change_keeper_vehiclelookup.traderemaillabel = Email
 change_keeper_vehiclelookup.vehiclesoldto.hint = Do not use this service if you are selling the vehicle to the motor trade.
 change_keeper_vehiclelookup.vehiclesoldto.label = Is the vehicle being sold to a private individual or a business?
@@ -149,7 +152,6 @@ vehicleRegistrationNumber = Vehicle registration number
 documentReferenceNumber = Document reference number
 vehicleSellerEmail = Seller email
 change_keeper_vehiclelookup.selleremail = Seller''s email address
-change_keeper_selleremail.hint = We will send you confirmation of this sale and it may help us to resolve problems later
 
 #page 3 - private keeper details
 change_keeper_privatekeeperdetails.title = Enter new keeper details
@@ -582,4 +584,9 @@ cookie-policy.expires.2years = 2 years
 cookie-policy.expires.30min = 30 minutes
 cookie-policy.expires.inactivity = After 15 minutes of inactivity or when you close your browser
 cookie-policy.expires.close = When you close your browser
+
+#The option toggle
+mandatory-alternative.not-selected = This field is mandatory. Please select one of the options.
+option-toggle.visible = Yes
+option-toggle.invisible = No
 
