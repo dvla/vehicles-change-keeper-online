@@ -38,6 +38,7 @@ class PostCodeValidationTestSteps(webBrowserDriver: WebBrowserDriver) extends Sc
     PrivateKeeperDetailsPage.firstNameTextBox enter "nani"
     PrivateKeeperDetailsPage.lastNameTextBox enter "sree"
     PrivateKeeperDetailsPage.postcodeTextBox enter "qq99qq"
+    click on PrivateKeeperDetailsPage.emailInvisible
     click on PrivateKeeperDetailsPage.next
   }
 

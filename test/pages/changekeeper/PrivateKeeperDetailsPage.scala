@@ -1,9 +1,11 @@
 package pages.changekeeper
 
+import models.VehicleLookupFormModel.Form._
 import org.openqa.selenium.WebDriver
 import org.scalatest.Matchers
+import pages.changekeeper.VehicleLookupPage._
 import uk.gov.dvla.vehicles.presentation.common
-import common.helpers.webbrowser.{Element, Page, TelField, TextField, WebBrowserDSL, WebDriverFactory}
+import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser._
 import common.mappings.TitlePickerString.OtherTitleRadioValue
 import common.model.PrivateKeeperDetailsFormModel.Form.DateOfBirthId
 import common.model.PrivateKeeperDetailsFormModel.Form.DriverNumberId
@@ -12,6 +14,8 @@ import common.model.PrivateKeeperDetailsFormModel.Form.FirstNameId
 import common.model.PrivateKeeperDetailsFormModel.Form.LastNameId
 import common.model.PrivateKeeperDetailsFormModel.Form.PostcodeId
 import common.model.PrivateKeeperDetailsFormModel.Form.TitleId
+import uk.gov.dvla.vehicles.presentation.common.mappings.OptionalToggle._
+import uk.gov.dvla.vehicles.presentation.common.model.PrivateKeeperDetailsFormModel.Form.EmailOptionId
 import views.changekeeper.PrivateKeeperDetails.{BackId, SubmitId}
 
 object PrivateKeeperDetailsPage extends Page with WebBrowserDSL with Matchers {
@@ -46,6 +50,12 @@ object PrivateKeeperDetailsPage extends Page with WebBrowserDSL with Matchers {
   def mrs(implicit driver: WebDriver) = radioButton(id(s"${TitleId}_titleOption_${titleType("mrs")}"))
   def other(implicit driver: WebDriver) = radioButton(id(s"${TitleId}_titleOption_$OtherTitleRadioValue"))
   def otherText(implicit driver: WebDriver) = textField(id(s"${TitleId}_titleText"))
+
+  def emailVisible(implicit driver: WebDriver): RadioButton =
+    radioButton(id(s"${EmailOptionId}_$Visible"))
+
+  def emailInvisible(implicit driver: WebDriver): RadioButton =
+    radioButton(id(s"${EmailOptionId}_$Invisible"))
 
   def emailTextBox(implicit driver: WebDriver): TextField = textField(id(EmailId))
 
@@ -102,6 +112,7 @@ object PrivateKeeperDetailsPage extends Page with WebBrowserDSL with Matchers {
     dayDateOfBirthTextBox enter dayDateOfBirth
     monthDateOfBirthTextBox enter monthDateOfBirth
     yearDateOfBirthTextBox enter yearDateOfBirth
+    click on emailVisible
     emailTextBox enter email
     driverNumberTextBox enter driverNumber
     postcodeTextBox enter postcode

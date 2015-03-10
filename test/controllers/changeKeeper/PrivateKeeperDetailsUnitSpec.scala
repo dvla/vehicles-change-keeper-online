@@ -19,15 +19,17 @@ import play.api.test.Helpers._
 import play.api.test.{FakeRequest, WithApplication}
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.ClientSideSessionFactory
-import common.mappings.{TitleType, TitlePickerString}
+import uk.gov.dvla.vehicles.presentation.common.mappings.{OptionalToggle, TitleType, TitlePickerString}
 import common.mappings.TitlePickerString.standardOptions
 import common.model.PrivateKeeperDetailsFormModel.Form.PostcodeId
 import common.model.PrivateKeeperDetailsFormModel.Form.EmailId
+import common.model.PrivateKeeperDetailsFormModel.Form.EmailOptionId
 import common.model.PrivateKeeperDetailsFormModel.Form.FirstNameId
 import common.model.PrivateKeeperDetailsFormModel.Form.LastNameId
 import common.model.PrivateKeeperDetailsFormModel.Form.TitleId
 import common.model.PrivateKeeperDetailsFormModel.Form.DriverNumberId
 import common.services.DateService
+import uk.gov.dvla.vehicles.presentation.common.model.PrivateKeeperDetailsFormModel
 import utils.helpers.Config
 
 class PrivateKeeperDetailsUnitSpec extends UnitSpec {
@@ -100,7 +102,7 @@ class PrivateKeeperDetailsUnitSpec extends UnitSpec {
 
   "submit" should {
     "redirect to next page when mandatory fields are complete" in new WithApplication {
-      val request = buildCorrectlyPopulatedRequest(email = "")
+      val request = buildCorrectlyPopulatedRequest(email = "avalid@email.address")
         .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
       val result = privateKeeperDetails.submit(request)
       whenReady(result) { r =>
@@ -175,6 +177,7 @@ class PrivateKeeperDetailsUnitSpec extends UnitSpec {
       s"$TitleId.${TitlePickerString.TitleRadioKey}" -> title,
       FirstNameId -> firstName,
       LastNameId -> lastName,
+      EmailOptionId -> OptionalToggle.Visible,
       EmailId -> email,
       DriverNumberId -> driverNumber,
       PostcodeId -> postcode

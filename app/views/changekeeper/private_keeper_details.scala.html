@@ -18,7 +18,8 @@
 @import common.views.html.widgets.base.valtechInputText
 @import common.views.html.widgets.titlePicker
 @import common.mappings.Postcode
-@import common.model.PrivateKeeperDetailsFormModel.Form.{TitleId, DateOfBirthId, EmailId, FirstNameId, FirstNameAndTitleMaxLength, PostcodeId}
+@import common.views.html.widgets.optionalToggle
+@import common.model.PrivateKeeperDetailsFormModel.Form.{TitleId, DateOfBirthId, EmailId, EmailOptionId, FirstNameId, FirstNameAndTitleMaxLength, PostcodeId}
 @import common.model.PrivateKeeperDetailsFormModel.Form.{LastNameId, LastNameMaxLength, DriverNumberId, DriverNumberMaxLength}
 
 @main(
@@ -92,13 +93,20 @@
                 )
                 )
             </div>
-
-            @valtechInputText(privateKeeperDetailsForm(EmailId), 
-            hintText = Some(Messages("change_keeper_businesskeeperdetails.email.hint.alt")),
-            args = Map('_label -> Messages("change_keeper_privatekeeperdetails.emaillabel"),
-            '_showConstraints -> false,
-            'maxLength -> EmailMaxLength
-            )
+            @optionalToggle(
+                privateKeeperDetailsForm(EmailOptionId),
+                Messages("change_keeper_vehiclelookup.traderemailoption"),
+                Messages("change_keeper_vehiclelookup.traderemailoption.yes"),
+                Messages("change_keeper_vehiclelookup.traderemailoption.no"),
+                valtechInputText(
+                    privateKeeperDetailsForm(EmailId),
+                    hintText = Some(Messages("change_keeper_businesskeeperdetails.email.hint.alt")),
+                        args = Map('_label -> Messages("change_keeper_privatekeeperdetails.emaillabel"),
+                        '_showConstraints -> false,
+                        'maxLength -> EmailMaxLength,
+                        'NO_OPTIONAL_LABEL -> false
+                    )
+                )
             )
 
             <div class="uppercase-input">

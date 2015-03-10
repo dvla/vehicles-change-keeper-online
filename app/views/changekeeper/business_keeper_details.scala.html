@@ -9,11 +9,16 @@
 @import common.mappings.BusinessKeeperName
 @import common.mappings.Email.EmailMaxLength
 @import common.mappings.Postcode
-@import common.model.BusinessKeeperDetailsFormModel.Form.{FleetNumberId, BusinessNameId, EmailId, PostcodeId}
+@import common.model.BusinessKeeperDetailsFormModel.Form.FleetNumberId
+@import common.model.BusinessKeeperDetailsFormModel.Form.BusinessNameId
+@import common.model.BusinessKeeperDetailsFormModel.Form.EmailId
+@import common.model.BusinessKeeperDetailsFormModel.Form.PostcodeId
+@import common.model.BusinessKeeperDetailsFormModel.Form.EmailOptionId
 @import common.views.constraints.FleetNumber
 @import common.views.html.widgets.base.csrfTokenHiddenField
 @import common.views.helpers.BaseTemplate.fieldConstructor
 @import common.views.html.widgets.base.valtechInputText
+@import common.views.html.widgets.optionalToggle
 @import views.html.helper.form
 
 @main(
@@ -74,11 +79,19 @@
                                 (if(config.isHtml5ValidationEnabled) Map('pattern -> FleetNumber.Pattern) else Nil)
             )
 
-            @valtechInputText(viewModel.form(EmailId),
-                hintText = Some(Messages("change_keeper_businesskeeperdetails.email.hint.alt")),
-                args = Map('_label -> Messages("change_keeper_businesskeeperdetails.email"),
-                    '_showConstraints -> false,
-                    'maxLength -> EmailMaxLength
+            @optionalToggle(
+                viewModel.form(EmailOptionId),
+                Messages("change_keeper_vehiclelookup.traderemailoption"),
+                Messages("change_keeper_vehiclelookup.traderemailoption.yes"),
+                Messages("change_keeper_vehiclelookup.traderemailoption.no"),
+                valtechInputText(
+                    viewModel.form(EmailId),
+                    hintText = Some(Messages("change_keeper_businesskeeperdetails.email.hint.alt")),
+                    args = Map('_label -> Messages("change_keeper_businesskeeperdetails.email"),
+                        '_showConstraints -> false,
+                        'maxLength -> EmailMaxLength,
+                        'NO_OPTIONAL_LABEL -> false
+                    )
                 )
             )
 

@@ -3,21 +3,25 @@
 
    Scenario: - Date of birth - Valid
      Given the user enters a validate date of birth
+     When the user clicks on the private keeper no email radio button
      When the user press the submit control
      Then the user will not see any error message like "Please enter a valid date in the format DD MM YYYY "
 
    Scenario: - Date of birth - Invalid or incomplete
      Given the user enters a invalid date of birth  and no other errors persists
+     When the user clicks on the private keeper no email radio button
      When the user press the submit control
      Then there will be an error message displayed "Please enter a valid date in the format DD MM YYYY for example 01 03 1976"
 
    Scenario: - Date of birth - Future date
      Given the user enters the dateOfBirth in future
+     When the user clicks on the private keeper no email radio button
      When the user press the submit control
      Then there will be an error message displayed "Date of birth of new keeper - Date cannot be in the future"
 
    Scenario: - Date of birth - Past date
      Given the Date of birth is more than oneHundredTen years in the past
+     When the user clicks on the private keeper no email radio button
      When the user press the submit control
      Then there will be an errored message  "Date of birth of new keeper - Date of birth cannot be more than 110 years in the past"
 
