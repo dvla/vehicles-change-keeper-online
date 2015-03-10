@@ -152,7 +152,6 @@ vehicleRegistrationNumber = Vehicle registration number
 documentReferenceNumber = Document reference number
 vehicleSellerEmail = Seller email
 change_keeper_vehiclelookup.selleremail = Seller''s email address
-change_keeper_selleremail.hint = We will send you confirmation of this sale and it may help us to resolve problems later
 
 #page 3 - private keeper details
 change_keeper_privatekeeperdetails.title = Enter new keeper details

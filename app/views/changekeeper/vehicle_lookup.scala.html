@@ -73,7 +73,7 @@ currentForm = Some(viewModel.form)
                   Messages("change_keeper_vehiclelookup.traderemailoption.no"),
                   valtechInputText(
                     viewModel.form(VehicleSellerEmail),
-                    hintText = Some(Messages("change_keeper_selleremail.hint")),
+                    hintText = None,
                     args = Map('_label -> Messages("change_keeper_vehiclelookup.selleremail"),
                       '_showConstraints -> false,
                       'maxLength -> EmailMaxLength,
