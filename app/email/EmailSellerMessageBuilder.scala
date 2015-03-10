@@ -35,7 +35,10 @@ object EmailSellerMessageBuilder {
         |<br />
         |You should receive a postal acknowledgement letter within 4 weeks.
         |<br />
-        |If you do not receive it within this time or this information is incorrect then please contact DVLA on
+        |DVLA will also automatically issue a refund for any full remaining months for vehicle tax and cancel
+        |any direct debits (DD). The refund will be sent to the address on the V5C
+        |<br />
+        |If you do not receive either of these within this time or this information is incorrect then please contact DVLA on
         |<a href="callto:03007906802">0300 790 6802</a>
         |<br />
         |For more information on driving and transport go to <a href="https://www.gov.uk/browse/driving">
@@ -58,7 +61,10 @@ object EmailSellerMessageBuilder {
         |
         |You should receive a postal acknowledgement letter within 4 weeks.
         |
-        |If you do not receive it within this time or this information is incorrect then please contact DVLA on  0300 790 6802
+        |DVLA will also automatically issue a refund for any full remaining months for vehicle tax and cancel
+        |any direct debits (DD). The refund will be sent to the address on the V5C
+        |
+        |If you do not receive either of these within this time or this information is incorrect then please contact DVLA on  0300 790 6802
         |
         |For more information on driving and transport go to https://www.gov.uk/browse/driving
         |

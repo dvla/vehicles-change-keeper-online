@@ -34,10 +34,16 @@ object EmailMessageBuilder {
         |<p>Dear Sir / Madam</p>
         |<p>We have been notified that you are now the registered keeper of this vehicle.
         |<br />
+        |<p>
+        |Since 1st October 2014, the vehicle tax can no longer be transferred as part of the sale.
+        |This is because the seller will automatically receive a refund of any remaining tax.
+        |Buyers must now get the vehicle taxed before it can be used.
+        |</p>
+        |<p>
         |You should receive your registration certificate (V5C) within 2 weeks.
-        |<br />
         |If you do not receive your V5C within this time or this information is incorrect then please contact DVLA on
         |<a href="callto:03007906802">0300 790 6802</a>
+        |</p>
         |<br />
         |For more information on driving and transport go to <a href="https://www.gov.uk/browse/driving">
         |https://www.gov.uk/browse/driving</a>
@@ -57,6 +63,9 @@ object EmailMessageBuilder {
         |We have been notified that you are now the registered keeper of this vehicle.
         |
         |You should receive your registration certificate (V5C) within 2 weeks.
+        |
+        |You should receive your registration certificate (V5C) within 2 weeks. If you do not receive your V5C within
+        |this time or this information is incorrect then please contact DVLA on 0300 790 6802
         |
         |If you do not receive your V5C within this time or this information is incorrect then please contact DVLA on 0300 790 6802
         |
