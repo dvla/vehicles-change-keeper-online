@@ -36,7 +36,7 @@ object EmailSellerMessageBuilder {
         |<p>You should receive a postal acknowledgement letter within 4 weeks.</p>
         |
         |<p>DVLA will also automatically issue a refund for any full remaining months for vehicle tax and cancel
-        |any direct debits (DD). The refund will be sent to the address on the V5C
+        |any direct debits (DD). The refund will be sent to the address on the V5C.
         |</p>
         |
         |<p>
