@@ -5,6 +5,8 @@ import uk.gov.dvla.vehicles.presentation.common.services.SEND.EmailConfiguration
 
 trait Config extends VehicleLookupConfig {
 
+  final val NotFound = "NOT FOUND"
+
   def assetsUrl: Option[String]
 
   // Prototype message in html
@@ -25,6 +27,9 @@ trait Config extends VehicleLookupConfig {
   // Opening and closing times
   def opening: Int
   def closing: Int
+
+  def emailServiceMicroServiceUrlBase: String
+  def emailServiceMsRequestTimeout: Int
 
   def emailConfiguration: EmailConfiguration
 }
