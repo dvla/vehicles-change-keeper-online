@@ -1,7 +1,7 @@
 package composition
 
+import uk.gov.dvla.vehicles.presentation.common.ConfigProperties.{booleanProp, getOptionalProperty, intProp}
 import uk.gov.dvla.vehicles.presentation.common.services.SEND.EmailConfiguration
-import uk.gov.dvla.vehicles.presentation.common.ConfigProperties.{getOptionalProperty, booleanProp}
 import uk.gov.dvla.vehicles.presentation.common.webserviceclients.emailservice.From
 
 import utils.helpers.Config
@@ -26,9 +26,9 @@ class TestConfig extends Config {
 
   def ordnanceSurveyUseUprn: Boolean = false
 
-  // opening and closing times
-  def opening: Int = 0
-  def closing: Int = 24
+  // Opening and closing times
+  def opening: Int = getOptionalProperty[Int]("openingTime").getOrElse(0)
+  def closing: Int = getOptionalProperty[Int]("closingTime").getOrElse(24)
 
   // Web headers
   def applicationCode: String = ""
@@ -50,5 +50,4 @@ class TestConfig extends Config {
     From("", "Feedback"),
     None
   )
-
 }
