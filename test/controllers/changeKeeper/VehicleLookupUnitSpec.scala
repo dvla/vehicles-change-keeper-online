@@ -3,10 +3,11 @@ package controllers.changeKeeper
 import composition.{TestConfig, WithApplication}
 import controllers.VehicleLookup
 import helpers.{UnitSpec, CookieFactoryForUnitSpecs}
-import models.VehicleLookupFormModel.Form.{DocumentReferenceNumberId, VehicleRegistrationNumberId, VehicleSoldToId}
+import models.VehicleLookupFormModel.Form.DocumentReferenceNumberId
+import models.VehicleLookupFormModel.Form.VehicleRegistrationNumberId
+import models.VehicleLookupFormModel.Form.VehicleSoldToId
+import models.VehicleLookupFormModel.Form.VehicleSellerEmailOption
 import org.mockito.Matchers.any
-import org.mockito.Mockito.when
-import pages.changekeeper.VehicleLookupFailurePage
 import pages.changekeeper.VrmLockedPage
 import pages.changekeeper.VehicleLookupFailurePage
 import play.api.libs.json.{JsValue, Json}
@@ -14,16 +15,18 @@ import play.api.libs.ws.WSResponse
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{LOCATION, contentAsString, defaultAwaitTimeout}
 import uk.gov.dvla.vehicles.presentation.common
-import uk.gov.dvla.vehicles.presentation.common.ConfigProperties._
 import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperDetailsRequest
 import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperDetailsResponse
 import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupServiceImpl
 import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupWebService
-import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService._
+import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.ReferenceNumberValid
+import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.RegistrationNumberValid
+import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.vehicleDetailsResponseUnhandledException
+import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.vehicleDetailsResponseDocRefNumberNotLatest
+import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.vehicleDetailsResponseSuccess
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
 import common.clientsidesession.ClientSideSessionFactory
-import common.mappings.DocumentReferenceNumber
+import uk.gov.dvla.vehicles.presentation.common.mappings.{OptionalToggle, DocumentReferenceNumber}
 import common.services.DateServiceImpl
 import uk.gov.dvla.vehicles.presentation.common.webserviceclients.bruteforceprevention._
 import utils.helpers.Config
@@ -35,9 +38,8 @@ import webserviceclients.fakes.brute_force_protection.FakeBruteForcePreventionWe
 import webserviceclients.fakes.brute_force_protection.FakeBruteForcePreventionWebServiceImpl.responseFirstAttempt
 import webserviceclients.fakes.brute_force_protection.FakeBruteForcePreventionWebServiceImpl.responseSecondAttempt
 import webserviceclients.fakes.brute_force_protection.FakeBruteForcePreventionWebServiceImpl.VrmThrows
-import org.mockito.ArgumentCaptor
 import org.mockito.Matchers._
-import org.mockito.Mockito.{when, verify}
+import org.mockito.Mockito.when
 import org.mockito.invocation.InvocationOnMock
 import org.mockito.stubbing.Answer
 import uk.gov.dvla.vehicles.presentation.common.webserviceclients.healthstats.HealthStats
@@ -258,12 +260,13 @@ final class VehicleLookupUnitSpec extends UnitSpec {
 
   private def buildCorrectlyPopulatedRequest(referenceNumber: String = ReferenceNumberValid,
                                              registrationNumber: String = RegistrationNumberValid,
-                                             soldTo: String = VehicleSoldTo_Private
-                                              ) = {
+                                             soldTo: String = VehicleSoldTo_Private) = {
     FakeRequest().withFormUrlEncodedBody(
       DocumentReferenceNumberId -> referenceNumber,
       VehicleRegistrationNumberId -> registrationNumber,
-      VehicleSoldToId -> soldTo)
+      VehicleSellerEmailOption -> OptionalToggle.Invisible,
+      VehicleSoldToId -> soldTo
+    )
   }
 
   private lazy val present = {

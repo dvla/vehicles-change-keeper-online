@@ -19,6 +19,7 @@ class BruteForceKeeperToKeeperSteps(webBrowserDriver: WebBrowserDriver) extends 
     VehicleLookupPage.vehicleRegistrationNumber enter RandomVrmGenerator.vrm
     VehicleLookupPage.documentReferenceNumber enter  RandomVrmGenerator.docRef
     click on VehicleLookupPage.vehicleSoldToPrivateIndividual
+    click on VehicleLookupPage.emailInvisible
     click on VehicleLookupPage.next
     page.title shouldEqual VehicleLookupFailurePage.title
   }
@@ -26,6 +27,7 @@ class BruteForceKeeperToKeeperSteps(webBrowserDriver: WebBrowserDriver) extends 
   def bruteForceLockedPage() {
     VehicleLookupPage.vehicleRegistrationNumber enter vrmno
     VehicleLookupPage.documentReferenceNumber enter docRef
+    click on VehicleLookupPage.emailInvisible
     click on VehicleLookupPage.vehicleSoldToPrivateIndividual
     click on VehicleLookupPage.next
   }

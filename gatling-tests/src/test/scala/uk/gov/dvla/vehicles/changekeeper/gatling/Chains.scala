@@ -100,6 +100,7 @@ class Chains(data: RecordSeqFeederBuilder[String]) {
             .formParam("vehicleRegistrationNumber", "${vehicleRegistrationNumber}")
             .formParam("documentReferenceNumber", "${documentReferenceNumber}")
             .formParam("vehicleSoldTo", "${vehicleSoldTo}")
+            .formParam("vehicleSellerEmailOption", "invisible")
             .formParam("csrf_prevention_token", "${csrf_prevention_token}")
             .formParam("action", "")
             // Assertions
@@ -232,6 +233,7 @@ class Chains(data: RecordSeqFeederBuilder[String]) {
             .headers(headers_x_www_form_urlencoded)
             .formParam("vehicleRegistrationNumber", "${vehicleRegistrationNumber}")
             .formParam("documentReferenceNumber", "${documentReferenceNumber}")
+            .formParam("vehicleSellerEmailOption", "invisible")
             .formParam("vehicleSoldTo", "${vehicleSoldTo}")
             .formParam("csrf_prevention_token", "${csrf_prevention_token}")
             .formParam("action", "")

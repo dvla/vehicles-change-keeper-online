@@ -21,6 +21,7 @@ class HappyAndSadPathSteps(webBrowserDriver: WebBrowserDriver) extends ScalaDsl 
     page.title shouldEqual VehicleLookupPage.title
     VehicleLookupPage.vehicleRegistrationNumber enter "A1"
     VehicleLookupPage.documentReferenceNumber enter "11111111111"
+    click on VehicleLookupPage.emailInvisible
     click on VehicleLookupPage.vehicleSoldToPrivateIndividual
     click on VehicleLookupPage.next
   }
@@ -59,6 +60,7 @@ class HappyAndSadPathSteps(webBrowserDriver: WebBrowserDriver) extends ScalaDsl 
     page.title shouldEqual VehicleLookupPage.title
     VehicleLookupPage.vehicleRegistrationNumber enter "B1"
     VehicleLookupPage.documentReferenceNumber enter "11111111111"
+    click on VehicleLookupPage.emailInvisible
     click on VehicleLookupPage.vehicleSoldToBusiness
     click on VehicleLookupPage.next
   }

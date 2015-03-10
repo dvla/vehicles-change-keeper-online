@@ -16,6 +16,7 @@ class KeeperToKeeperAddressFieldsSteps(webBrowserDriver: WebBrowserDriver) exten
     go to VehicleLookupPage
     VehicleLookupPage.vehicleRegistrationNumber enter "BF51BNL"
     VehicleLookupPage.documentReferenceNumber enter "11111111111"
+    click on VehicleLookupPage.emailInvisible
     click on VehicleLookupPage.vehicleSoldToPrivateIndividual
     click on VehicleLookupPage.next
     page.title shouldEqual  PrivateKeeperDetailsPage.title
