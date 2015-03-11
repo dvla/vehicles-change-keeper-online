@@ -175,9 +175,6 @@ change_keeper_privatekeeperdetails.vehicledetails = Vehicle details
 change_keeper_privatekeeperdetails.vehiclereg = Registration
 change_keeper_privatekeeperdetails.vehiclemake = Make
 change_keeper_privatekeeperdetails.vehiclemodel = Model
-change_keeper_privatekeeperdetails.traderemailoption = Does the new keeper want an email confirmation of the sale?
-change_keeper_privatekeeperdetails.traderemailoption.yes = Yes
-change_keeper_privatekeeperdetails.traderemailoption.no = No
 privatekeeper_option_email = Email confirmation
 
 #page 3 - business keeper details
@@ -200,9 +197,6 @@ change_keeper_businesskeeperdetails.consent = I have the consent of the party na
 change_keeper_businesskeeperdetails.consentError = You must have the consent of the new keeper to notify DVLA of the purchase of this vehicle
 change_keeper_businesskeeperdetails.postcodelabel = Postcode
 change_keeper_businesskeeperdetails.postcode.hint = e.g. AB1 2BA or AB12BA
-change_keeper_businesskeeperdetails.traderemailoption = Does the new keeper want an email confirmation of the sale?
-change_keeper_businesskeeperdetails.traderemailoption.yes = Yes
-change_keeper_businesskeeperdetails.traderemailoption.no = No
 businesskeeper_postcode = Postcode
 businesskeeper_option_email = Email confirmation
 businesskeeper_email = Contact email address
@@ -315,15 +309,11 @@ change_keeper_success.vehicle_details.p1 = Details of the vehicle being sold
 change_keeper_success.new_keeper_details.p1 = Details of the new keeper
 change_keeper_success.further_information.header = What happens next for you?
 change_keeper_success.further_information.header.2 = What happens next for the new keeper?
-
-change_keeper_success.further_information.p1 = We will send you (the previous keeper) an acknowledgement letter within 4 weeks.
-change_keeper_success.further_information.p2 = If you do not receive a letter in this time then please contact DVLA Customer Enquiries on 0300 790 6802 as you could still be liable for this vehicle.
-change_keeper_success.further_information.p3 = DVLA will automatically issue a refund for any full remaining months of vehicle tax and cancel any direct debits (DD).
-change_keeper_success.further_information.p4 = The refund will be sent to the address on the V5C, and can take 4 to 6 weeks.
+change_keeper_success.further_information.p1 = Within 5 working days we will send a new vehicle registration certificate (V5C) to the new keeper.
+change_keeper_success.further_information.p2 = If they do not receive a new V5C in 2 weeks they must contact DVLA Customer Enquiries on 0300 790 6802.
+change_keeper_success.further_information.p3 = We will send you (the previous keeper) an acknowledgement letter within 4 weeks. If you do not receive a letter in this time then please contact DVLA Customer Enquiries on 0300 790 6802 as you could still be liable for this vehicle.
+change_keeper_success.further_information.p4 = DVLA will automatically issue a refund for any full remaining months of vehicle tax and cancel any direct debits (DD). The refund will be sent to the address on the V5C.
 change_keeper_success.further_information.p5 = You may wish to take a print of this summary for your records.
-change_keeper_success.further_information.p6 = Since 1st October 2014 vehicle tax can no longer be transferred as part of the sale, so the new keeper must tax the vehicle if they want to use it on the road.
-change_keeper_success.further_information.p7 = Within 5 working days we will send a new vehicle registration certificate (V5C) to the new keeper.
-change_keeper_success.further_information.p8 = If they do not receive a new V5C in 2 weeks they must contact DVLA Customer Enquiries on 0300 790 6802.
 change_keeper_success.buttonnavprint = Print
 change_keeper_success.finish = Finish
 
@@ -334,16 +324,19 @@ acquire_uprnnotfound.manualaddressbutton = Set-up trade details
 acquire_uprnnotfound.setuptradedetailsbutton = Manually enter address
 
 #vehicle lookup failure
-change_keeper_vehiclelookupfailure.title = Look-up was unsuccessful
+change_keeper_vehiclelookupfailure.title = Unable to find a vehicle record
 change_keeper_vehiclelookupfailure.p1 = The service is temporarily unavailable. Please try again later or send a completed V5C/3 to DVLA, Swansea, SA99 1BD
 change_keeper_vehiclelookupfailure.button = Try again
 change_keeper_vehiclelookupfailure.button2 = Exit
-vehicle_and_keeper_lookup_vrm_not_found.p1 = The V5C document reference number and/or the vehicle registration number entered is either not valid or does not come from the most recent V5C issued for this vehicle.
-vehicle_and_keeper_lookup_vrm_not_found.p2 = For each vehicle registration number, only a limited number of attempts can be made to retrieve the vehicle details.
-vehicle_and_keeper_lookup_document_reference_mismatch.p1 = The V5C document reference number and/or the vehicle registration number entered is either not valid or does not come from the most recent V5C issued for this vehicle.
-vehicle_and_keeper_lookup_document_reference_mismatch.p2 = For each vehicle registration number, only a limited number of attempts can be made to retrieve the vehicle details.
-unhandled_exception.p1 = The V5C document reference number and/or the vehicle registration number entered is either not valid or does not come from the most recent V5C issued for this vehicle.
-unhandled_exception.p2 = For each vehicle registration number, only a limited number of attempts can be made to retrieve the vehicle details.
+vehicle_and_keeper_lookup_vrm_not_found.p1 = Please select the ‘Try again’ button below and check that the V5C document reference number and vehicle registration number that you entered are correct.
+vehicle_and_keeper_lookup_vrm_not_found.p2 = If you are sure that these details have been entered correctly then please send your completed V5C to DVLA, Swansea, SA99 1BD
+vehicle_and_keeper_lookup_vrm_not_found.p3 = Only a limited number of attempts can be made to retrieve vehicle details for each vehicle registration number entered.
+vehicle_and_keeper_lookup_document_reference_mismatch.p1 = Please select the ‘Try again’ button below and check that the V5C document reference number and vehicle registration number that you entered are correct.
+vehicle_and_keeper_lookup_document_reference_mismatch.p2 = If you are sure that these details have been entered correctly then please send your completed V5C to DVLA, Swansea, SA99 1BD
+vehicle_and_keeper_lookup_document_reference_mismatch.p3 = Only a limited number of attempts can be made to retrieve vehicle details for each vehicle registration number entered.
+unhandled_exception.p1 = Please select the ‘Try again’ button below and check that the V5C document reference number and vehicle registration number that you entered are correct.
+unhandled_exception.p2 = If you are sure that these details have been entered correctly then please send your completed V5C to DVLA, Swansea, SA99 1BD
+unhandled_exception.p3 = Only a limited number of attempts can be made to retrieve vehicle details for each vehicle registration number entered.
 
 #page 3 [optional] - manual address entry
 acquire_enteraddressmanually.title = Enter address
