@@ -173,6 +173,9 @@ change_keeper_privatekeeperdetails.vehicledetails = Vehicle details
 change_keeper_privatekeeperdetails.vehiclereg = Registration
 change_keeper_privatekeeperdetails.vehiclemake = Make
 change_keeper_privatekeeperdetails.vehiclemodel = Model
+change_keeper_privatekeeperdetails.traderemailoption = Does the new keeper want to an email confirmation of the sale?
+change_keeper_privatekeeperdetails.traderemailoption.yes = Yes
+change_keeper_privatekeeperdetails.traderemailoption.no = No
 privatekeeper_option_email = Email confirmation
 
 #page 3 - business keeper details
@@ -195,6 +198,9 @@ change_keeper_businesskeeperdetails.consent = I have the consent of the party na
 change_keeper_businesskeeperdetails.consentError = You must have the consent of the new keeper to notify DVLA of the purchase of this vehicle
 change_keeper_businesskeeperdetails.postcodelabel = Postcode
 change_keeper_businesskeeperdetails.postcode.hint = e.g. AB1 2BA or AB12BA
+change_keeper_businesskeeperdetails.traderemailoption = Does the new keeper want to an email confirmation of the sale?
+change_keeper_businesskeeperdetails.traderemailoption.yes = Yes
+change_keeper_businesskeeperdetails.traderemailoption.no = No
 businesskeeper_postcode = Postcode
 businesskeeper_option_email = Email confirmation
 businesskeeper_email = Contact email address
