@@ -9,7 +9,7 @@ class Chains(data: RecordSeqFeederBuilder[String]) {
 
   private final val BeforeYouStartPageTitle = "Private sale of a vehicle"
   private final val VehicleLookupPageTitle = "Details of the vehicle being sold"
-  private final val VehicleLookupFailurePageTitle = "Look-up was unsuccessful"
+  private final val VehicleLookupFailurePageTitle = "Unable to find a vehicle record"
   private final val BusinessKeeperDetailsPageTitle = "Enter new keeper details"
   private final val PrivateKeeperDetailsPageTitle = "Enter new keeper details"
   private final val NewKeeperChooseYourAddressPageTitle = "Select new keeper address"
