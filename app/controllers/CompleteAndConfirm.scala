@@ -165,7 +165,8 @@ class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSi
                keeperDetails: NewKeeperDetailsViewModel,
                 sellerEmailModel: SellerEmailModel) =
     response match {
-      case Some(r) if r.responseCode.isDefined => handleResponseCode(r.responseCode.get)
+      case Some(r) if r.responseCode.isDefined =>
+        successReturn (vehicleDetails, keeperDetails, sellerEmailModel)
       case _ => handleHttpStatusCode(httpResponseCode)(vehicleDetails, keeperDetails, sellerEmailModel)
     }
 
@@ -223,31 +224,26 @@ class CompleteAndConfirm @Inject()(webService: AcquireService)(implicit clientSi
       newKeeperDetailsViewModel.driverNumber)
   }
 
-  def handleResponseCode(acquireResponseCode: String): Call =
-    acquireResponseCode match {
-      case "ms.vehiclesService.error.generalError" =>
-        Logger.warn("Acquire soap endpoint redirecting to acquire failure page")
-        routes.ChangeKeeperFailure.present()
-      case _ =>
-        Logger.warn(s"Acquire micro-service failed so now redirecting to micro service error page. " +
-          s"Code returned from ms was $acquireResponseCode")
-        routes.MicroServiceError.present()
-    }
-
   def handleHttpStatusCode(statusCode: Int)
                           (vehicleDetails: VehicleAndKeeperDetailsModel,
                            keeperDetails: NewKeeperDetailsViewModel,
                             sellerEmailModel: SellerEmailModel): Call =
     statusCode match {
       case OK =>
-        //send the email
-        createAndSendSellerEmail(vehicleDetails, sellerEmailModel.email)
-        createAndSendEmail(vehicleDetails, keeperDetails)
-        //redirect
-        routes.ChangeKeeperSuccess.present()
+        successReturn (vehicleDetails, keeperDetails, sellerEmailModel)
       case _ =>
         routes.MicroServiceError.present()
     }
+
+  private def successReturn(vehicleDetails: VehicleAndKeeperDetailsModel,
+                            keeperDetails: NewKeeperDetailsViewModel,
+                            sellerEmailModel: SellerEmailModel): Call = {
+    //send the email
+    createAndSendSellerEmail(vehicleDetails, sellerEmailModel.email)
+    createAndSendEmail(vehicleDetails, keeperDetails)
+    //redirect
+    routes.ChangeKeeperSuccess.present()
+  }
 
   def checkboxValueToBoolean (checkboxValue: String): Boolean = {
     checkboxValue == "true"
