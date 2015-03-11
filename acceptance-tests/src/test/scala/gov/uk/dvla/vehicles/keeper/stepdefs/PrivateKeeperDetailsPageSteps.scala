@@ -38,7 +38,7 @@ class PrivateKeeperDetailsPageSteps(webBrowserDriver: WebBrowserDriver) extends 
     click on PrivateKeeperDetailsPage.next
   }
 
-  @Then("^When the user clicks on the private keeper no email radio button$")
+  @Then("^the user clicks on the private keeper no email radio button$")
   def the_user_clicks_on_the_private_keeper_no_email_radio_button()  {
     click on PrivateKeeperDetailsPage.emailInvisible
   }

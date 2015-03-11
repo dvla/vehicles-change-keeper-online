@@ -13,5 +13,11 @@
         }
     }
 
-
+    .change-keeper-summary-playback {
+      padding: 1em;
+      .info-notice {
+        border: none;
+        padding: 0;
+      }
+    }
 } // end $htmlNamespace

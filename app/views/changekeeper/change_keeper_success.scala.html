@@ -21,37 +21,6 @@
             <p>@Messages("change_keeper_success.complete.p2")</p>
         </div>
 
-        <p>@Messages("change_keeper_success.vehicle_details.p1")</p>
-
-        <div class="info-notice">
-            <dl class="playback">
-                <dt>@Messages("change_keeper_success.vehicle_details.registration_number")</dt>
-                <dd class="uppercase-text">@viewModel.vehicleAndKeeperDetails.registrationNumber</dd>
-                <dt>@Messages("change_keeper_success.vehicle_details.make")</dt>
-                <dd class="uppercase-text">@viewModel.vehicleAndKeeperDetails.make</dd>
-                <dt>@Messages("change_keeper_success.vehicle_details.model")</dt>
-                <dd class="uppercase-text">@viewModel.vehicleAndKeeperDetails.model</dd>
-                <dt>@Messages("change_keeper_success.vehicle_details.mileage")</dt>
-                @if(viewModel.completeAndConfirmDetails.mileage == None) {
-                    <dd class="uppercase-text">@Messages("change_keeper_success.vehicle_details.mileage_not_entered")</dd>
-                } else {
-                    <dd class="uppercase-text">@{java.text.NumberFormat.getIntegerInstance().format(viewModel.completeAndConfirmDetails.mileage.get)}</dd>
-                }
-            </dl>
-        </div>
-
-        <p>@Messages("change_keeper_success.new_keeper_details.p1")</p>
-
-        <div class="info-notice">
-            <dl class="playback">
-                <dt>@Messages("change_keeper_success.vehicle_details.name")</dt>
-                <dd class="uppercase-text">@viewModel.newKeeperDetails.displayName</dd>
-                <dt>@Messages("change_keeper_success.vehicle_details.address")</dt>
-                <dd class="uppercase-text">@for(addr <- viewModel.newKeeperDetails.address.address) {@addr<br/>}</dd>
-                <dt>@Messages("change_keeper_success.vehicle_details.email")</dt>
-                <dd class="uppercase-text">@viewModel.newKeeperDetails.email.getOrElse(Messages("change_keeper_email_not_entered"))</dd>
-            </dl>
-        </div>
 
         <div class="related vehicle-sold-by mobile-only">
             <dl class="playback bg-plain">
@@ -62,14 +31,21 @@
 
         <h2>@Messages("change_keeper_success.further_information.header")</h2>
 
-        <p>@Messages("change_keeper_success.further_information.p3")</p>
-        <p>@Messages("change_keeper_success.further_information.p4")</p>
-        <p>@Messages("change_keeper_success.further_information.p5")</p>
+        <ul>
+            <li><p>@Messages("change_keeper_success.further_information.p1")</p></li>
+            <li><p>@Messages("change_keeper_success.further_information.p2")</p></li>
+            <li><p>@Messages("change_keeper_success.further_information.p3")</p></li>
+            <li><p>@Messages("change_keeper_success.further_information.p4")</p></li>
+            <li><p>@Messages("change_keeper_success.further_information.p5")</p></li>
+        </ul>
 
         <h2>@Messages("change_keeper_success.further_information.header.2")</h2>
 
-        <p>@Messages("change_keeper_success.further_information.p1")</p>
-        <p>@Messages("change_keeper_success.further_information.p2")</p>
+        <ul>
+            <li><p>@Messages("change_keeper_success.further_information.p6")</p></li>
+            <li><p>@Messages("change_keeper_success.further_information.p7")</p></li>
+            <li><p>@Messages("change_keeper_success.further_information.p8")</p></li>
+        </ul>
 
         <div class="form-steps">
             <div class="step">
@@ -98,6 +74,39 @@
             <dd>@viewModel.completeAndConfirmResponseModel.transactionTimestamp.toString("dd/MM/yyyy")</dd>
         </dl>
         <div class="related vehicle-sold-by desktop-only">
+        </div>
+        <div class="change-keeper-summary-playback">
+            <h2>@Messages("change_keeper_success.vehicle_details.p1")</h2>
+
+            <div class="info-notice">
+                <dl class="playback">
+                    <dt>@Messages("change_keeper_success.vehicle_details.registration_number")</dt>
+                    <dd class="uppercase-text">@viewModel.vehicleAndKeeperDetails.registrationNumber</dd>
+                    <dt>@Messages("change_keeper_success.vehicle_details.make")</dt>
+                    <dd class="uppercase-text">@viewModel.vehicleAndKeeperDetails.make</dd>
+                    <dt>@Messages("change_keeper_success.vehicle_details.model")</dt>
+                    <dd class="uppercase-text">@viewModel.vehicleAndKeeperDetails.model</dd>
+                    <dt>@Messages("change_keeper_success.vehicle_details.mileage")</dt>
+                    @if(viewModel.completeAndConfirmDetails.mileage == None) {
+                    <dd class="uppercase-text">@Messages("change_keeper_success.vehicle_details.mileage_not_entered")</dd>
+                    } else {
+                    <dd class="uppercase-text">@{java.text.NumberFormat.getIntegerInstance().format(viewModel.completeAndConfirmDetails.mileage.get)}</dd>
+                    }
+                </dl>
+            </div>
+
+            <h2>@Messages("change_keeper_success.new_keeper_details.p1")</h2>
+
+            <div class="info-notice">
+                <dl class="playback">
+                    <dt>@Messages("change_keeper_success.vehicle_details.name")</dt>
+                    <dd class="uppercase-text">@viewModel.newKeeperDetails.displayName</dd>
+                    <dt>@Messages("change_keeper_success.vehicle_details.address")</dt>
+                    <dd class="uppercase-text">@for(addr <- viewModel.newKeeperDetails.address.address) {@addr<br/>}</dd>
+                    <dt>@Messages("change_keeper_success.vehicle_details.email")</dt>
+                    <dd class="uppercase-text">@viewModel.newKeeperDetails.email.getOrElse(Messages("change_keeper_email_not_entered"))</dd>
+                </dl>
+            </div>
         </div>
     </div>
 
