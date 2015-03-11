@@ -93,7 +93,7 @@
 
     Scenario: - special characters in business name
       Given that the user is on the Enter business keeper details page
-      When  the user enters special charcters at the start of the business name
+      When  the user enters special characters at the start of the business name
       Then  the user will receive an error message "Business name - Must be between 2 and 30 characters and only contain valid characters (a-z, A-Z, 0-9, &, -,(), /, ‘ and , or .). The following characters cannot be used at the start of business name (&,-,(), /, ‘ and , or .)"
       And   will remain in the same page instead of progress to next page
 
