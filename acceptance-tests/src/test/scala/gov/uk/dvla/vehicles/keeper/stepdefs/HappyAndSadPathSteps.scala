@@ -33,6 +33,7 @@ class HappyAndSadPathSteps(webBrowserDriver: WebBrowserDriver) extends ScalaDsl 
     PrivateKeeperDetailsPage.firstNameTextBox enter "ramu"
     PrivateKeeperDetailsPage.lastNameTextBox enter "reddy"
     PrivateKeeperDetailsPage.postcodeTextBox enter "qq99qq"
+    click on PrivateKeeperDetailsPage.emailInvisible
     click on PrivateKeeperDetailsPage.next
     page.title shouldEqual NewKeeperChooseYourAddressPage.title
     click on NewKeeperChooseYourAddressPage.select
@@ -70,6 +71,7 @@ class HappyAndSadPathSteps(webBrowserDriver: WebBrowserDriver) extends ScalaDsl 
     page.title shouldEqual BusinessKeeperDetailsPage.title
     BusinessKeeperDetailsPage.businessNameField enter "trading"
     BusinessKeeperDetailsPage.postcodeField enter "qq99qq"
+    click on BusinessKeeperDetailsPage.emailInvisible
     click on BusinessKeeperDetailsPage.next
     page.title shouldEqual NewKeeperChooseYourAddressPage.title
     click on NewKeeperChooseYourAddressPage.select
@@ -99,6 +101,7 @@ class HappyAndSadPathSteps(webBrowserDriver: WebBrowserDriver) extends ScalaDsl 
     PrivateKeeperDetailsPage.firstNameTextBox enter "ramu"
     PrivateKeeperDetailsPage.lastNameTextBox enter "reddy"
     PrivateKeeperDetailsPage.postcodeTextBox enter "qq99hj"
+    click on PrivateKeeperDetailsPage.emailInvisible
     click on PrivateKeeperDetailsPage.next
     //page.title shouldEqual NewKeeperChooseYourAddressPage.title
     click on NewKeeperChooseYourAddressPage.manualAddress
@@ -118,6 +121,7 @@ class HappyAndSadPathSteps(webBrowserDriver: WebBrowserDriver) extends ScalaDsl 
     page.title shouldEqual BusinessKeeperDetailsPage.title
     BusinessKeeperDetailsPage.businessNameField enter "trading"
     BusinessKeeperDetailsPage.postcodeField enter "qq99kj"
+    click on BusinessKeeperDetailsPage.emailInvisible
     click on BusinessKeeperDetailsPage.next
     click on NewKeeperChooseYourAddressPage.manualAddress
     page.title shouldEqual NewKeeperEnterAddressManuallyPage.title
@@ -143,6 +147,7 @@ class HappyAndSadPathSteps(webBrowserDriver: WebBrowserDriver) extends ScalaDsl 
     PrivateKeeperDetailsPage.firstNameTextBox enter "ramu"
     PrivateKeeperDetailsPage.lastNameTextBox enter "reddy"
     PrivateKeeperDetailsPage.postcodeTextBox enter "qq99hj"
+    click on PrivateKeeperDetailsPage.emailInvisible
     click on PrivateKeeperDetailsPage.next
     page.title shouldEqual NewKeeperChooseYourAddressPage.title
     click on NewKeeperChooseYourAddressPage.manualAddress
@@ -174,6 +179,7 @@ class HappyAndSadPathSteps(webBrowserDriver: WebBrowserDriver) extends ScalaDsl 
     PrivateKeeperDetailsPage.firstNameTextBox enter "testcase1"
     PrivateKeeperDetailsPage.lastNameTextBox enter "reddy"
     PrivateKeeperDetailsPage.postcodeTextBox enter "qq99hj"
+    click on PrivateKeeperDetailsPage.emailInvisible
     click on PrivateKeeperDetailsPage.next
     page.title shouldEqual NewKeeperChooseYourAddressPage.title
     click on NewKeeperChooseYourAddressPage.manualAddress

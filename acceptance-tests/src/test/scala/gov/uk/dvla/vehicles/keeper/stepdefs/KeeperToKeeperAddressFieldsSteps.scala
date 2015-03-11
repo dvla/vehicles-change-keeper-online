@@ -24,6 +24,7 @@ class KeeperToKeeperAddressFieldsSteps(webBrowserDriver: WebBrowserDriver) exten
     PrivateKeeperDetailsPage.firstNameTextBox enter "tue"
     PrivateKeeperDetailsPage.lastNameTextBox enter "nny"
     PrivateKeeperDetailsPage.postcodeTextBox enter "qq99qw"
+    click on PrivateKeeperDetailsPage.emailInvisible
     click on PrivateKeeperDetailsPage.next
     page.title shouldEqual NewKeeperChooseYourAddressPage.title
   }

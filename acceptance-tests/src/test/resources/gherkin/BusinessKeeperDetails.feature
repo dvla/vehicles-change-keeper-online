@@ -18,16 +18,19 @@
 
     Scenario:- Fleet number - blank
       Given the fleet number is blank in business keeper details page
+      When  the user clicks on the no email radio button
       When  the user select the submit control
       Then  the user can proceed without an error being displayed for the fleet number
 
     Scenario:- fleet number - valid format
       Given the fleet number is not blank and has a valid format in business keeper deatils page
+      When  the user clicks on the no email radio button
       When  the user select the submit control
       Then  the user can proceed without an error being displayed for the fleet number
 
     Scenario: - fleet number - invalid format
       Given the fleet number has an invalid format in business keeper details page
+      When  the user clicks on the no email radio button
       When  the user select the submit control
       Then  there is a fleet number error message displayed "Fleet number - The fleet number can only be a 6 digit number, please try again"
 
@@ -38,11 +41,13 @@
 
     Scenario: - Business name - invalid characters
       Given the business name contains invalid characters
+      When  the user clicks on the no email radio button
       When  the user select the submit control
       Then  the user will receive an error message "Business name - Must be between 2 and 30 characters and only contain valid characters (a-z, A-Z, 0-9, &, -,(), /, ‘ and , or .). The following characters cannot be used at the start of business name (&,-,(), /, ‘ and , or .)"
 
     Scenario: - trimming
       Given the user has entered values into the business name
+      When  the user clicks on the no email radio button
       When  the user select the submit control
       Then  invalid white space will be stripped from the start and end of the business name but spaces are allowed within the business name
       And   validation will be done on the entered text once the white space has been removed

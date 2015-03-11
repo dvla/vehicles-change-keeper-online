@@ -98,6 +98,7 @@ class PrivateKeeperOptionalFieldsSteps(webBrowserDriver: WebBrowserDriver) exten
   @When("^the user has entered a driver number into the \"(.*?)\" control$")
   def the_user_has_entered_a_driver_number_into_the_control(g:String)  {
     PrivateKeeperDetailsPage.driverNumberTextBox enter "morga657052Sm96876"
+    click on PrivateKeeperDetailsPage.emailInvisible
     click on PrivateKeeperDetailsPage.next
   }
 
@@ -108,16 +109,19 @@ class PrivateKeeperOptionalFieldsSteps(webBrowserDriver: WebBrowserDriver) exten
 
   @When("^the user enters a valid email address$")
   def the_user_enters_a_valid_email_address()  {
+    click on PrivateKeeperDetailsPage.emailVisible
     PrivateKeeperDetailsPage.emailTextBox enter "a@gmail.com"
   }
 
   @Then("^the user will be able to submit the valid email address of up to \"(.*?)\" characters$")
   def the_user_will_be_able_to_submit_the_valid_email_address_of_up_to_characters(chars:String) {
+    click on PrivateKeeperDetailsPage.emailInvisible
     click on PrivateKeeperDetailsPage.next
   }
 
   @When("^the user has not entered an email address and select the submit control$")
   def the_user_has_not_entered_an_email_address_and_select_the_submit_control()  {
+    click on PrivateKeeperDetailsPage.emailInvisible
     click on PrivateKeeperDetailsPage.next
   }
 
@@ -128,6 +132,7 @@ class PrivateKeeperOptionalFieldsSteps(webBrowserDriver: WebBrowserDriver) exten
 
   @When("^the user has  entered an invalid email address and select the submit control$")
   def the_user_has_entered_an_invalid_email_address_and_select_the_submit_control()  {
+    click on PrivateKeeperDetailsPage.emailVisible
     PrivateKeeperDetailsPage.emailTextBox enter "acom"
     click on PrivateKeeperDetailsPage.next
   }

@@ -1,9 +1,10 @@
 package pages.changekeeper
 
-import uk.gov.dvla.vehicles.presentation.common.helpers
-import helpers.webbrowser.{Element, Page, TextField, TelField, WebBrowserDSL, WebDriverFactory}
+import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser._
 import uk.gov.dvla.vehicles.presentation.common
 import common.model.BusinessKeeperDetailsFormModel.Form.{BusinessNameId, EmailId, FleetNumberId, PostcodeId}
+import uk.gov.dvla.vehicles.presentation.common.mappings.OptionalToggle._
+import uk.gov.dvla.vehicles.presentation.common.model.BusinessKeeperDetailsFormModel.Form.EmailOptionId
 import views.changekeeper.BusinessKeeperDetails.{BackId, NextId}
 import org.openqa.selenium.WebDriver
 
@@ -21,6 +22,12 @@ object BusinessKeeperDetailsPage extends Page with WebBrowserDSL {
   def fleetNumberField(implicit driver: WebDriver): TelField = telField(id(FleetNumberId))
 
   def businessNameField(implicit driver: WebDriver): TextField = textField(id(BusinessNameId))
+
+  def emailVisible(implicit driver: WebDriver): RadioButton =
+    radioButton(id(s"${EmailOptionId}_$Visible"))
+
+  def emailInvisible(implicit driver: WebDriver): RadioButton =
+    radioButton(id(s"${EmailOptionId}_$Invisible"))
 
   def emailField(implicit driver: WebDriver): TextField = textField(id(EmailId))
 
@@ -40,6 +47,7 @@ object BusinessKeeperDetailsPage extends Page with WebBrowserDSL {
 
     fleetNumberField enter fleetNumber
     businessNameField enter businessName
+    click on emailVisible
     emailField enter email
     postcodeField enter postcode
 

@@ -23,6 +23,7 @@ class NewKeeperChooseYourAddressSteps(webBrowserDriver: WebBrowserDriver) extend
     page.title shouldEqual BusinessKeeperDetailsPage.title
     BusinessKeeperDetailsPage.businessNameField enter "retail"
     BusinessKeeperDetailsPage.postcodeField enter "qq99qq"
+    click on BusinessKeeperDetailsPage.emailInvisible
     click on BusinessKeeperDetailsPage.next
     page.title shouldEqual NewKeeperChooseYourAddressPage.title
   }

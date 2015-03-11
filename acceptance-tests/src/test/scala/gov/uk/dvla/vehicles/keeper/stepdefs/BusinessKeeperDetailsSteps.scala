@@ -25,10 +25,12 @@ class BusinessKeeperDetailsSteps(webBrowserDriver: WebBrowserDriver) extends Sca
   def that_the_user_has_selected_Business_on_the_vehicle_lookup_page() {
     gotoBusinessKeeperDetailsPage()
   }
+
   @When("^the user is on the new-business-keeper-details page$")
   def the_user_is_on_the_new_business_keeper_details_page() {
     page.title shouldEqual BusinessKeeperDetailsPage.title
   }
+
   @Then("^there is a label titled \"(.*?)\"$")
   def there_is_a_label_titled(fleetNo:String ) {
     page.text contains fleetNo
@@ -126,8 +128,14 @@ class BusinessKeeperDetailsSteps(webBrowserDriver: WebBrowserDriver) extends Sca
   def the_user_select_the_field_labelled_Email_address()  {
   }
 
+  @Then("^the user clicks on the no email radio button$")
+  def the_user_clicks_on_the_no_email_radio_button()  {
+    click on BusinessKeeperDetailsPage.emailInvisible
+  }
+
   @Then("^the user will be able to enter an email address of up to (\\d+) characters$")
   def the_user_will_be_able_to_enter_an_email_address_of_up_to_characters(charLength:Int)  {
+    click on BusinessKeeperDetailsPage.emailVisible
     BusinessKeeperDetailsPage.emailField enter "jfejfhhfjlshgljhgjlhljhljhjlhljhjlhljh@fdgfdgfhgfhghgfhgfhgfhfghgfhg"
   }
 
@@ -147,12 +155,14 @@ class BusinessKeeperDetailsSteps(webBrowserDriver: WebBrowserDriver) extends Sca
 
   @Given("^the user has entered an invalid email address$")
   def the_user_has_entered_an_invalid_email_address() {
-     BusinessKeeperDetailsPage.emailField enter "aa"
+    click on BusinessKeeperDetailsPage.emailVisible
+    BusinessKeeperDetailsPage.emailField enter "aa"
   }
 
   @When("^the user tries to search on an invalid postcode$")
   def the_user_tries_to_search_on_an_invalid_postcode() {
     BusinessKeeperDetailsPage.postcodeField enter "adsadsds"
+    click on BusinessKeeperDetailsPage.emailInvisible
     click on BusinessKeeperDetailsPage.next
   }
   @Then("^the user does not progress to the next stage of the service$")
@@ -162,6 +172,7 @@ class BusinessKeeperDetailsSteps(webBrowserDriver: WebBrowserDriver) extends Sca
 
   @When("^the user tries to search on a blank postcode$")
   def the_user_tries_to_search_on_a_blank_postcode()  {
+    click on BusinessKeeperDetailsPage.emailInvisible
     click on BusinessKeeperDetailsPage.next
   }
 
@@ -169,6 +180,7 @@ class BusinessKeeperDetailsSteps(webBrowserDriver: WebBrowserDriver) extends Sca
   def the_user_tries_to_search_on_a_valid_postcode() {
     BusinessKeeperDetailsPage.businessNameField enter "dvdvvv"
     BusinessKeeperDetailsPage.postcodeField enter "qq99qq"
+    click on BusinessKeeperDetailsPage.emailInvisible
     click on BusinessKeeperDetailsPage.next
   }
 
@@ -187,6 +199,7 @@ class BusinessKeeperDetailsSteps(webBrowserDriver: WebBrowserDriver) extends Sca
     page.title shouldEqual  BusinessKeeperDetailsPage.title
     BusinessKeeperDetailsPage.businessNameField enter "hgff(&/,)"
     BusinessKeeperDetailsPage.postcodeField enter "qq99qq"
+    click on BusinessKeeperDetailsPage.emailInvisible
     click on BusinessKeeperDetailsPage.next
   }
 
@@ -195,11 +208,12 @@ class BusinessKeeperDetailsSteps(webBrowserDriver: WebBrowserDriver) extends Sca
     page.title shouldEqual NewKeeperChooseYourAddressPage.title
   }
 
-  @When("^the user enters special charcters at the start of the business name$")
+  @When("^the user enters special characters at the start of the business name$")
   def the_user_enters_special_charcters_at_the_start_of_the_business_name()  {
     page.title shouldEqual  BusinessKeeperDetailsPage.title
     BusinessKeeperDetailsPage.businessNameField enter "(&/,)GFHF"
     BusinessKeeperDetailsPage.postcodeField enter "qq99qq"
+    click on BusinessKeeperDetailsPage.emailInvisible
     click on BusinessKeeperDetailsPage.next
   }
 

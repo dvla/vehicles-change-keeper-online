@@ -31,13 +31,20 @@ object EmailSellerMessageBuilder {
         |<p><b>THIS IS AN AUTOMATED EMAIL - PLEASE DO NOT REPLY.</b></p>
         |<p>Dear Sir / Madam</p>
         |
-        |<p>Thank you for telling us you are no longer the registered keeper of this vehicle.
-        |<br />
-        |You should receive a postal acknowledgement letter within 4 weeks.
-        |<br />
-        |If you do not receive it within this time or this information is incorrect then please contact DVLA on
+        |<p>Thank you for telling us you are no longer the registered keeper of this vehicle.</p>
+        |
+        |<p>You should receive a postal acknowledgement letter within 4 weeks.</p>
+        |
+        |<p>DVLA will also automatically issue a refund for any full remaining months for vehicle tax and cancel
+        |any direct debits (DD). The refund will be sent to the address on the V5C.
+        |</p>
+        |
+        |<p>
+        |If you do not receive either of these within this time or this information is incorrect then please contact DVLA on
         |<a href="callto:03007906802">0300 790 6802</a>
-        |<br />
+        |</p>
+        |
+        |<p>
         |For more information on driving and transport go to <a href="https://www.gov.uk/browse/driving">
         |https://www.gov.uk/browse/driving</a>
         |</p>
@@ -58,7 +65,10 @@ object EmailSellerMessageBuilder {
         |
         |You should receive a postal acknowledgement letter within 4 weeks.
         |
-        |If you do not receive it within this time or this information is incorrect then please contact DVLA on  0300 790 6802
+        |DVLA will also automatically issue a refund for any full remaining months for vehicle tax and cancel
+        |any direct debits (DD). The refund will be sent to the address on the V5C
+        |
+        |If you do not receive either of these within this time or this information is incorrect then please contact DVLA on  0300 790 6802
         |
         |For more information on driving and transport go to https://www.gov.uk/browse/driving
         |

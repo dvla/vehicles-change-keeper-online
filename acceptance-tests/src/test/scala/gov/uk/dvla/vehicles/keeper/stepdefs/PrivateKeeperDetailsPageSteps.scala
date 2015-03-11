@@ -34,7 +34,13 @@ class PrivateKeeperDetailsPageSteps(webBrowserDriver: WebBrowserDriver) extends 
     PrivateKeeperDetailsPage.firstNameTextBox enter FirstName
     PrivateKeeperDetailsPage.lastNameTextBox enter LastName
     PrivateKeeperDetailsPage.postcodeTextBox enter Postcode
+    click on PrivateKeeperDetailsPage.emailInvisible
     click on PrivateKeeperDetailsPage.next
+  }
+
+  @Then("^When the user clicks on the private keeper no email radio button$")
+  def the_user_clicks_on_the_private_keeper_no_email_radio_button()  {
+    click on PrivateKeeperDetailsPage.emailInvisible
   }
 
   @Given("^the user is on the Private keeper details page$")
@@ -45,6 +51,7 @@ class PrivateKeeperDetailsPageSteps(webBrowserDriver: WebBrowserDriver) extends 
   @When("^the user click on Submit button with out any title selection$")
   def the_user_click_on_Submit_button_with_out_any_title_selection()  {
     PrivateKeeperDetailsPage.assertNoTitleSelected()
+    click on PrivateKeeperDetailsPage.emailInvisible
     click on PrivateKeeperDetailsPage.next
   }
 
@@ -56,6 +63,7 @@ class PrivateKeeperDetailsPageSteps(webBrowserDriver: WebBrowserDriver) extends 
   @When("^the user selects Other title radio button and then click on Submit button$")
   def the_user_selects_Other_title_radio_button_and_then_click_on_Submit_button()  {
     click on PrivateKeeperDetailsPage.other
+    click on PrivateKeeperDetailsPage.emailInvisible
     click on PrivateKeeperDetailsPage.next
   }
 
@@ -86,24 +94,28 @@ class PrivateKeeperDetailsPageSteps(webBrowserDriver: WebBrowserDriver) extends 
 
   @When("^the user click on Submit button by not entering any text on FirstName textBox$")
   def the_user_click_on_Submit_button_by_not_entering_any_text_on_FirstName_textBox()  {
+    click on PrivateKeeperDetailsPage.emailInvisible
     click on PrivateKeeperDetailsPage.next
   }
 
   @When("^the user click on Submit button with invalid text on FirstName textBox$")
   def the_user_click_on_Submit_button_with_invalid_text_on_FirstName_textBox() {
     PrivateKeeperDetailsPage.firstNameTextBox enter "@@jkhgf"
+    click on PrivateKeeperDetailsPage.emailInvisible
     click on PrivateKeeperDetailsPage.next
   }
 
   @When("^the user click on Submit button with invalid text on LastName textBox$")
   def the_user_click_on_Submit_button_with_invalid_text_on_LastName_textBox()  {
     PrivateKeeperDetailsPage.lastNameTextBox enter "@£jhgf"
+    click on PrivateKeeperDetailsPage.emailInvisible
     click on PrivateKeeperDetailsPage.next
   }
 
   @When("^the user click on Submit button by not entering any text on LastName textBox$")
   def the_user_click_on_Submit_button_by_not_entering_any_text_on_LastName_textBox()  {
     PrivateKeeperDetailsPage.lastNameTextBox enter ""
+    click on PrivateKeeperDetailsPage.emailInvisible
     click on PrivateKeeperDetailsPage.next
   }
 
@@ -123,6 +135,7 @@ class PrivateKeeperDetailsPageSteps(webBrowserDriver: WebBrowserDriver) extends 
   def click_on_submit_button_without_any_validation_errors()  {
     PrivateKeeperDetailsPage.lastNameTextBox enter "ghjgj"
     PrivateKeeperDetailsPage.postcodeTextBox enter "qq99qq"
+    click on PrivateKeeperDetailsPage.emailInvisible
     click on PrivateKeeperDetailsPage.next
   }
 
@@ -131,6 +144,7 @@ class PrivateKeeperDetailsPageSteps(webBrowserDriver: WebBrowserDriver) extends 
     PrivateKeeperDetailsPage.firstNameTextBox enter "avsreedrtagdtesbgdrewasdjhkhh"
     val fieldLength:String =  "mr"+' '+PrivateKeeperDetailsPage.firstNameTextBox.value
     fieldLength.length shouldNot equal(27)
+    click on PrivateKeeperDetailsPage.emailInvisible
     click on PrivateKeeperDetailsPage.next
   }
 }

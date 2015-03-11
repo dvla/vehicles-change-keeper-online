@@ -5,7 +5,7 @@ import controllers.changeKeeper.Common.PrototypeHtml
 import controllers.BusinessKeeperDetails
 import helpers.{CookieFactoryForUnitSpecs, UnitSpec}
 import uk.gov.dvla.vehicles.presentation.common
-import common.model.BusinessKeeperDetailsFormModel.Form.{FleetNumberId, BusinessNameId, EmailId, PostcodeId}
+import common.model.BusinessKeeperDetailsFormModel.Form.{FleetNumberId, BusinessNameId, EmailId, EmailOptionId, PostcodeId}
 import org.mockito.Mockito.when
 import pages.changekeeper.BusinessKeeperDetailsPage.{EmailValid, BusinessNameValid, PostcodeValid}
 import pages.changekeeper.VehicleLookupPage
@@ -14,6 +14,7 @@ import pages.changekeeper.BusinessKeeperDetailsPage.FleetNumberValid
 import play.api.test.Helpers.{BAD_REQUEST, LOCATION, OK, contentAsString, defaultAwaitTimeout}
 import play.api.test.FakeRequest
 import uk.gov.dvla.vehicles.presentation.common.clientsidesession.ClientSideSessionFactory
+import uk.gov.dvla.vehicles.presentation.common.mappings.OptionalToggle
 import utils.helpers.Config
 
 class BusinessKeeperDetailsUnitSpec extends UnitSpec {
@@ -63,7 +64,7 @@ class BusinessKeeperDetailsUnitSpec extends UnitSpec {
 
   "submit" should {
     "redirect to next page when only mandatory fields are filled in" in new WithApplication {
-      val request = buildRequest(fleetNumber = "", email = "")
+      val request = buildRequest(fleetNumber = "")
         .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
       val result = businessKeeperDetails.submit(request)
       whenReady(result) { r =>
@@ -123,6 +124,7 @@ class BusinessKeeperDetailsUnitSpec extends UnitSpec {
     FakeRequest().withFormUrlEncodedBody(
       FleetNumberId -> fleetNumber,
       BusinessNameId -> businessName,
+      EmailOptionId -> OptionalToggle.Invisible,
       EmailId -> email,
       PostcodeId -> postcode
     )

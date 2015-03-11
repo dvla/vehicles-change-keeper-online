@@ -112,7 +112,7 @@ final class PrivateKeeperDetailsIntegrationSpec extends UiSpec with TestHarness 
     "go to the appropriate next page when mandatory private keeper details are entered" taggedAs UiTag in new WebBrowser {
       go to BeforeYouStartPage
       cacheSetup()
-      navigate(email = "")
+      navigate(email = "avalid@email.address")
       page.title should equal("Select new keeper address")
     }
 
