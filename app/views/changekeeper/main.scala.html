@@ -3,10 +3,12 @@ title: String,
 currentForm: Option[Form[_]] = None, showBanner: Boolean = true)(content: Html)(implicit lang: Lang,
 config: utils.helpers.Config)
 
+@import uk.gov.dvla.vehicles.presentation.common
+@import common.services.DateServiceImpl
+@import common.views.html.widgets.errorsSummary
+@import common.views.html.widgets.serviceClosingWarning
 @import views.html.common.{progressBar, protoType}
 @import views.html.common.govMainDefault
-@import uk.gov.dvla.vehicles.presentation.common
-@import common.views.html.widgets.errorsSummary
 
 @govMainDefault(title) {
 <div class="app vehicles-change-keeper-online">
@@ -14,6 +16,8 @@ config: utils.helpers.Config)
     @if(showBanner) {
         @protoType()
     }
+
+    @serviceClosingWarning(config.closing, config.closingWarnPeriodMins, new DateServiceImpl)
 
     <div class="section-content">
 
