@@ -15,19 +15,19 @@
 
   Scenario: Private Keeper First name - null entry
     When the user click on Submit button by not entering any text on FirstName textBox
-    Then the user will remain on the same page with an error message "Must contain between 1 and 25 characters from the following a-z, A-Z, 0-9 and .,- “’ and space"
+    Then the user will remain on the same page with an error message "Must contain between 1 and 25 characters from the following A-Z, hyphen, apostrophe, full stop and space"
 
   Scenario: Private Keeper First name - invalid entry
     When the user click on Submit button with invalid text on FirstName textBox
-    Then the user will remain on the same page with an error message "First name - Must contain between 1 and 25 characters from the following a-z, A-Z, 0-9 and .,- “’ and space"
+    Then the user will remain on the same page with an error message "First name - Must contain between 1 and 25 characters from the following A-Z, hyphen, apostrophe, full stop and space"
 
   Scenario: Private Keeper Last name - invalid entry
     When the user click on Submit button with invalid text on LastName textBox
-    Then the user will remain on the same page with an error message "Last name - Must contain between 1 and 25 characters from the following a-z, A-Z, 0-9 and .,- “’ and space"
+    Then the user will remain on the same page with an error message "Last name - Must contain between 1 and 25 characters from the following A-Z, hyphen, apostrophe, full stop and space"
 
   Scenario: Private Keeper Last name - null entry
     When the user click on Submit button by not entering any text on LastName textBox
-    Then the user will remain on the same page with an error message "Must contain between 1 and 25 characters from the following a-z, A-Z, 0-9 and .,- “’ and space"
+    Then the user will remain on the same page with an error message "Must contain between 1 and 25 characters from the following A-Z, hyphen, apostrophe, full stop and space"
 
   Scenario: Private Keeper Navigation to Address selection page with no validation errors
     When the user navigates forwards from PrivateKeeper details page and there are no validation errors

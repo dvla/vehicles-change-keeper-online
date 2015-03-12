@@ -6,20 +6,20 @@ import helpers.CookieFactoryForUnitSpecs
 import helpers.UnitSpec
 import org.mockito.Mockito.when
 import pages.changekeeper.PrivateKeeperDetailsPage.DayDateOfBirthValid
-import pages.changekeeper.PrivateKeeperDetailsPage.MonthDateOfBirthValid
-import pages.changekeeper.PrivateKeeperDetailsPage.YearDateOfBirthValid
+import pages.changekeeper.PrivateKeeperDetailsPage.DriverNumberValid
 import pages.changekeeper.PrivateKeeperDetailsPage.EmailValid
 import pages.changekeeper.PrivateKeeperDetailsPage.FirstNameValid
 import pages.changekeeper.PrivateKeeperDetailsPage.LastNameValid
-import pages.changekeeper.PrivateKeeperDetailsPage.DriverNumberValid
+import pages.changekeeper.PrivateKeeperDetailsPage.MonthDateOfBirthValid
 import pages.changekeeper.PrivateKeeperDetailsPage.PostcodeValid
+import pages.changekeeper.PrivateKeeperDetailsPage.YearDateOfBirthValid
 import pages.changekeeper.{VehicleLookupPage, NewKeeperChooseYourAddressPage}
 import play.api.i18n.Messages
 import play.api.test.Helpers._
 import play.api.test.{FakeRequest, WithApplication}
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.ClientSideSessionFactory
-import uk.gov.dvla.vehicles.presentation.common.mappings.{OptionalToggle, TitleType, TitlePickerString}
+import common.mappings.{OptionalToggle, TitleType, TitlePickerString}
 import common.mappings.TitlePickerString.standardOptions
 import common.model.PrivateKeeperDetailsFormModel.Form.PostcodeId
 import common.model.PrivateKeeperDetailsFormModel.Form.EmailId
@@ -142,7 +142,7 @@ class PrivateKeeperDetailsUnitSpec extends UnitSpec {
       val request = buildCorrectlyPopulatedRequest(firstName = "")
         .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
       val result = privateKeeperDetails.submit(request)
-      val errorMessage = "First name - Must contain between 1 and 25 characters from the following a-z, A-Z, 0-9 and .,- “’ and space"
+      val errorMessage = "First name - Must contain between 1 and 25 characters from the following A-Z, hyphen, apostrophe, full stop and space"
       val count = errorMessage.r.findAllIn(contentAsString(result)).length
       count should equal(1)
     }
@@ -151,7 +151,7 @@ class PrivateKeeperDetailsUnitSpec extends UnitSpec {
       val request = buildCorrectlyPopulatedRequest(lastName = "")
         .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
       val result = privateKeeperDetails.submit(request)
-      val errorMessage = "Last name - Must contain between 1 and 25 characters from the following a-z, A-Z, 0-9 and .,- “’ and space"
+      val errorMessage = "Last name - Must contain between 1 and 25 characters from the following A-Z, hyphen, apostrophe, full stop and space"
       val count = errorMessage.r.findAllIn(contentAsString(result)).length
       count should equal(1)
     }

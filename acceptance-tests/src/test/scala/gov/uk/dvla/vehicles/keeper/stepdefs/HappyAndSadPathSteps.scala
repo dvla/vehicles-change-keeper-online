@@ -176,7 +176,7 @@ class HappyAndSadPathSteps(webBrowserDriver: WebBrowserDriver) extends ScalaDsl 
   def the_trader_entered_through_unsuccessful_postcode_lookup_private_keeper_failure_data()  {
     page.title shouldEqual PrivateKeeperDetailsPage.title
     click on PrivateKeeperDetailsPage.mr
-    PrivateKeeperDetailsPage.firstNameTextBox enter "testcase1"
+    PrivateKeeperDetailsPage.firstNameTextBox enter "testcase"
     PrivateKeeperDetailsPage.lastNameTextBox enter "reddy"
     PrivateKeeperDetailsPage.postcodeTextBox enter "qq99hj"
     click on PrivateKeeperDetailsPage.emailInvisible
