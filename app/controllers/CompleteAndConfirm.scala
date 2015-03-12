@@ -232,7 +232,7 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
       vehicleLookup.registrationNumber,
       newKeeperDetails,
       None,
-      None,
+      fleetNumber = newKeeperDetailsViewModel.fleetNumber,
       dateTimeFormatter.print(completeAndConfirmFormModel.dateOfSale.toDateTimeAtStartOfDay),
       completeAndConfirmFormModel.mileage,
       checkboxValueToBoolean(completeAndConfirmFormModel.consent),
