@@ -35,12 +35,12 @@
     Scenario: Date of Sale - Incomplete
       When  the Date of sale is incomplete
       And   the user click on confirm sale button
-      Then  an error message displayed "Date of sale - Please enter a valid date in the format DD MM YYYY for example 10 01 2015"
+      Then  an error message displayed "Date of sale - Must be a valid date DD MM YYYY and not be in the future."
 
     Scenario: Date of Sale -invalid date
       When  the Date of sale is not a valid gregorian date
       And   the user click on confirm sale button
-      Then  an error message displayed "Date of sale - Please enter a valid date in the format DD MM YYYY for example 10 01 2015"
+      Then  an error message displayed "Date of sale - Must be a valid date DD MM YYYY and not be in the future."
 
     Scenario:complete and confirm-consent checkbox unchecked
       When the consent field is not checked
