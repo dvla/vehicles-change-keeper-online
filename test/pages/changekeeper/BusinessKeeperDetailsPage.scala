@@ -2,7 +2,11 @@ package pages.changekeeper
 
 import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser._
 import uk.gov.dvla.vehicles.presentation.common
-import common.model.BusinessKeeperDetailsFormModel.Form.{BusinessNameId, EmailId, FleetNumberId, PostcodeId}
+import common.model.BusinessKeeperDetailsFormModel.Form.BusinessNameId
+import common.model.BusinessKeeperDetailsFormModel.Form.EmailId
+import common.model.BusinessKeeperDetailsFormModel.Form.FleetNumberId
+import common.model.BusinessKeeperDetailsFormModel.Form.FleetNumberOptionId
+import common.model.BusinessKeeperDetailsFormModel.Form.PostcodeId
 import uk.gov.dvla.vehicles.presentation.common.mappings.OptionalToggle._
 import uk.gov.dvla.vehicles.presentation.common.model.BusinessKeeperDetailsFormModel.Form.EmailOptionId
 import views.changekeeper.BusinessKeeperDetails.{BackId, NextId}
@@ -18,6 +22,12 @@ object BusinessKeeperDetailsPage extends Page with WebBrowserDSL {
   final val EmailValid = "my@email.com"
   final val PostcodeValid = "QQ99QQ"
   final val PostcodeInvalid = "XX99XX"
+
+  def fleetNumberVisible(implicit driver: WebDriver): RadioButton =
+    radioButton(id(s"${FleetNumberOptionId}_$Visible"))
+
+  def fleetNumberInvisible(implicit driver: WebDriver): RadioButton =
+    radioButton(id(s"${FleetNumberOptionId}_$Invisible"))
 
   def fleetNumberField(implicit driver: WebDriver): TelField = telField(id(FleetNumberId))
 
@@ -37,7 +47,8 @@ object BusinessKeeperDetailsPage extends Page with WebBrowserDSL {
 
   def next(implicit driver: WebDriver): Element = find(id(NextId)).get
 
-  def errorTextInBusinessKeeperPage(text:String)(implicit driver: WebDriver):Boolean= find(tagName("body")).get.text.contains(text)
+  def errorTextInBusinessKeeperPage(text:String)(implicit driver: WebDriver): Boolean =
+    find(tagName("body")).get.text.contains(text)
 
   def navigate(fleetNumber: String = FleetNumberValid,
                businessName: String = BusinessNameValid,
@@ -45,6 +56,7 @@ object BusinessKeeperDetailsPage extends Page with WebBrowserDSL {
                postcode: String = PostcodeValid)(implicit driver: WebDriver) = {
     go to BusinessKeeperDetailsPage
 
+    click on fleetNumberVisible
     fleetNumberField enter fleetNumber
     businessNameField enter businessName
     click on emailVisible

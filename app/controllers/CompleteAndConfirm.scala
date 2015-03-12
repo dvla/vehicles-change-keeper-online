@@ -10,7 +10,7 @@ import models.CompleteAndConfirmViewModel
 import models.K2KCacheKeyPrefix.CookiePrefix
 import models.SellerEmailModel
 import models.VehicleLookupFormModel
-import models.VehicleNewKeeperCompletionCacheKeys
+import models.AllCacheKeys
 import org.joda.time.{DateTime, LocalDate}
 import org.joda.time.format.ISODateTimeFormat
 import play.api.data.{FormError, Form}
@@ -36,7 +36,7 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
                                                                dateService: DateService,
                                                                config: Config) extends Controller {
   private val cookiesToBeDiscardedOnRedirectAway =
-    VehicleNewKeeperCompletionCacheKeys ++ Set(AllowGoingToCompleteAndConfirmPageCacheKey)
+    AllCacheKeys ++ Set(AllowGoingToCompleteAndConfirmPageCacheKey)
 
   private[controllers] val form = Form(
     CompleteAndConfirmFormModel.Form.detailMapping
@@ -205,7 +205,7 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
         Logger.warn(s"Acquire micro-service call failed.", e)
         Redirect(routes.MicroServiceError.present())
     }
-  }
+  }.map(_.discardingCookie(AllowGoingToCompleteAndConfirmPageCacheKey))
 
   def nextPage(httpResponseCode: Int, response: Option[AcquireResponseDto])
               (vehicleDetails: VehicleAndKeeperDetailsModel,
@@ -232,7 +232,7 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
       vehicleLookup.registrationNumber,
       newKeeperDetails,
       None,
-      None,
+      fleetNumber = newKeeperDetailsViewModel.fleetNumber,
       dateTimeFormatter.print(completeAndConfirmFormModel.dateOfSale.toDateTimeAtStartOfDay),
       completeAndConfirmFormModel.mileage,
       checkboxValueToBoolean(completeAndConfirmFormModel.consent),

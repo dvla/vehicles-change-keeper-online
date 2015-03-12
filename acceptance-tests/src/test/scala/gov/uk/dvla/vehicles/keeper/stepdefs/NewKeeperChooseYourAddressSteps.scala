@@ -21,6 +21,7 @@ class NewKeeperChooseYourAddressSteps(webBrowserDriver: WebBrowserDriver) extend
     click on VehicleLookupPage.vehicleSoldToBusiness
     click on VehicleLookupPage.next
     page.title shouldEqual BusinessKeeperDetailsPage.title
+    click on BusinessKeeperDetailsPage.fleetNumberInvisible
     BusinessKeeperDetailsPage.businessNameField enter "retail"
     BusinessKeeperDetailsPage.postcodeField enter "qq99qq"
     click on BusinessKeeperDetailsPage.emailInvisible

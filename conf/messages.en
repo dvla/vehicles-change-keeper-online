@@ -46,10 +46,10 @@ error.dropDownInvalid = Please select a value from the drop down list.
 error.titleInvalid = Please select a title from the drop down list.
 error.validFirstName = Must contain between 1 and 25 characters from the following A-Z, hyphen, apostrophe, full stop and space
 error.validLastName = Must contain between 1 and 25 characters from the following A-Z, hyphen, apostrophe, full stop and space
-error.date.inTheFuture = Date cannot be in the future
-error.date.invalid = Please enter a valid date in the format DD MM YYYY for example 02 01 2015
-error.dateOfBirth.inTheFuture = Date cannot be in the future
-error.dateOfBirth.invalid = Please enter a valid date in the format DD MM YYYY for example 01 03 1976
+error.date.inTheFuture = Must be a valid date DD MM YYYY and not be in the future.
+error.date.invalid = Must be a valid date DD MM YYYY and not be in the future.
+error.dateOfBirth.inTheFuture = Must be a valid date DD MM YYYY and not be in the future.
+error.dateOfBirth.invalid = Must be a valid date DD MM YYYY and not be in the future.
 error.dateOfBirth.110yearsInThePast = Date of birth cannot be more than 110 years in the past
 error.fleetNumber = The fleet number can only be a 6 digit number, please try again.
 error.address.characterInvalid = Must only contain valid characters A-Z, 0-9, etc
@@ -148,7 +148,7 @@ change_keeper_vehiclelookup.vehiclesoldto.label = Is the vehicle being sold to a
 change_keeper_vehiclelookup.vehiclesoldto.private = Private individual
 change_keeper_vehiclelookup.vehiclesoldto.business = Business
 change_keeper_vehiclelookup.img.h2 = Help finding your V5C document reference number?
-change_keeper_vehiclelookup.img.alt = V5C document reference number
+change_keeper_vehiclelookup.img.alt = V5C document reference number/
 vehicleSoldTo = Vehicle sold to
 vehicleRegistrationNumber = Vehicle registration number
 documentReferenceNumber = Document reference number
@@ -161,7 +161,7 @@ change_keeper_privatekeeperdetails.title = Enter new keeper details
 change_keeper_privatekeeperdetails.p1 = We will use these details to create a new vehicle registration certificate (V5C).
 change_keeper_privatekeeperdetails.nextbutton = Next
 change_keeper_privatekeeperdetails.backbutton = Back
-change_keeper_privatekeeperdetails.p3 = If the details above do not match the vehicle to be sold, please contact the DVLA, Swansea, SA99 1DZ
+change_keeper_privatekeeperdetails.p3 = If the details above do not match the vehicle to be sold, please send the registration certificate V5C with a covering letter to the DVLA, Swansea, SA99 1DZ.
 change_keeper_privatekeeperdetails.firstnamelabel = First name(s)
 change_keeper_privatekeeperdetails.lastnamelabel = Last name
 change_keeper_privatekeeperdetails.dateofbirth.hint = For example, 01 03 1976
@@ -180,7 +180,7 @@ privatekeeper_option_email = Email confirmation
 #page 3 - business keeper details
 change_keeper_businesskeeperdetails.title = Enter new keeper details
 change_keeper_businesskeeperdetails.p1 = We will use these details to create a new vehicle registration certificate (V5C).
-change_keeper_businesskeeperdetails.p2 = If the details above do not match the vehicle to be sold, please contact the DVLA, Swansea, SA99 1DZ
+change_keeper_businesskeeperdetails.p2 = If the details above do not match the vehicle to be sold, please send the registration certificate V5C with a covering letter to the DVLA, Swansea, SA99 1DZ.
 change_keeper_businesskeeperdetails.p3 = Does the business have a DVLA fleet number?
 change_keeper_businesskeeperdetails.p4 = If it does, please provide it for us to register it into their fleet
 change_keeper_businesskeeperdetails.vehicledetails = Vehicle details
@@ -197,11 +197,18 @@ change_keeper_businesskeeperdetails.consent = I have the consent of the party na
 change_keeper_businesskeeperdetails.consentError = You must have the consent of the new keeper to notify DVLA of the purchase of this vehicle
 change_keeper_businesskeeperdetails.postcodelabel = Postcode
 change_keeper_businesskeeperdetails.postcode.hint = e.g. AB1 2BA or AB12BA
+change_keeper_businesskeeperdetails.traderemailoption = Does the new keeper want an email confirmation of the sale?
+change_keeper_businesskeeperdetails.traderemailoption.yes = Yes
+change_keeper_businesskeeperdetails.traderemailoption.no = No
+change_keeper_businesskeeperdetails.fleetnumberoption = Does the new keeper have a DVLA fleet number?
+change_keeper_businesskeeperdetails.fleetnumberoption.yes = Yes
+change_keeper_businesskeeperdetails.fleetnumberoption.no = No
 businesskeeper_postcode = Postcode
 businesskeeper_option_email = Email confirmation
 businesskeeper_email = Contact email address
 businessName = Business name
 fleetNumber = Fleet number
+fleetNumberOption = Fleet number
 change_keeper_email_not_entered = Not entered
 
 #page 4 - new keeper choose your address
@@ -229,7 +236,7 @@ change_keeper_newKeeperChooseYourAddress.vehicledetails = Vehicle details
 change_keeper_newKeeperChooseYourAddress.vehiclereg = Registration
 change_keeper_newKeeperChooseYourAddress.vehiclemake = Make
 change_keeper_newKeeperChooseYourAddress.vehiclemodel = Model
-change_keeper_newKeeperChooseYourAddress.p4 = If the details above do not match the vehicle to be sold, please contact the DVLA, Swansea, SA99 1DZ
+change_keeper_newKeeperChooseYourAddress.p4 = If the details above do not match the vehicle to be sold, please send the registration certificate V5C with a covering letter to the DVLA, Swansea, SA99 1DZ.
 change_keeper_newKeeperChooseYourAddress.address.required = Please select a valid address
 newKeeperChooseYourAddress_addressSelect = Choose the new keepers address
 
@@ -242,7 +249,7 @@ change_keeper_newKeeperEnterAddressManually.vehicleReg = Registration
 change_keeper_newKeeperEnterAddressManually.vehicleMake = Make
 change_keeper_newKeeperEnterAddressManually.vehicleModel = Model
 change_keeper_newKeeperEnterAddressManually.p1 = As we do not have an address for this postcode, please enter one below
-change_keeper_newKeeperEnterAddressManually.p4 = If the details above do not match the vehicle to be sold, please contact the DVLA, Swansea, SA99 1DZ
+change_keeper_newKeeperEnterAddressManually.p4 = If the details above do not match the vehicle to be sold, please send the registration certificate V5C with a covering letter to the DVLA, Swansea, SA99 1DZ.
 
 #page 5 - complete and confirm
 change_keeper_completeAndConfirm.title = Complete and confirm
@@ -270,6 +277,9 @@ change_keeper_completeAndConfirm.dateofsale.label = Date of sale
 change_keeper_completeandconfirm.dateofsale.hint = For example, 02 01 2015
 change_keeper_completeandconfirm.dateofsale.disposalDate.warning = The date of sale entered is before the previous keeper end date which was on {0}. If this is correct please confirm, if it is not correct please change the date and confirm.
 change_keeper_completeandconfirm.dateofsale.keeperChangeDate.warning = The date of sale entered is before the last keeper change date which was on {0}. If this is correct please confirm, if it is not correct please change the date and confirm.
+change_keeper_privatekeeperdetails.traderemailoption = Does the new keeper want an email confirmation of the sale?
+change_keeper_privatekeeperdetails.traderemailoption.yes = Yes
+change_keeper_privatekeeperdetails.traderemailoption.no = No
 dateofsale = Date of sale
 mileage = Mileage
 consent = Consent
@@ -309,11 +319,15 @@ change_keeper_success.vehicle_details.p1 = Details of the vehicle being sold
 change_keeper_success.new_keeper_details.p1 = Details of the new keeper
 change_keeper_success.further_information.header = What happens next for you?
 change_keeper_success.further_information.header.2 = What happens next for the new keeper?
-change_keeper_success.further_information.p1 = Within 5 working days we will send a new vehicle registration certificate (V5C) to the new keeper.
-change_keeper_success.further_information.p2 = If they do not receive a new V5C in 2 weeks they must contact DVLA Customer Enquiries on 0300 790 6802.
-change_keeper_success.further_information.p3 = We will send you (the previous keeper) an acknowledgement letter within 4 weeks. If you do not receive a letter in this time then please contact DVLA Customer Enquiries on 0300 790 6802 as you could still be liable for this vehicle.
-change_keeper_success.further_information.p4 = DVLA will automatically issue a refund for any full remaining months of vehicle tax and cancel any direct debits (DD). The refund will be sent to the address on the V5C.
+
+change_keeper_success.further_information.p1 = We will send you (the previous keeper) an acknowledgement letter within 4 weeks.
+change_keeper_success.further_information.p2 = If you do not receive a letter in this time then please contact DVLA Customer Enquiries on 0300 790 6802 as you could still be liable for this vehicle.
+change_keeper_success.further_information.p3 = DVLA will automatically issue a refund for any full remaining months of vehicle tax and cancel any direct debits (DD).
+change_keeper_success.further_information.p4 = The refund will be sent to the address on the V5C, and can take 4 to 6 weeks.
 change_keeper_success.further_information.p5 = You may wish to take a print of this summary for your records.
+change_keeper_success.further_information.p6 = Since 1st October 2014 vehicle tax can no longer be transferred as part of the sale, so the new keeper must tax the vehicle if they want to use it on the road.
+change_keeper_success.further_information.p7 = Within 5 working days we will send a new vehicle registration certificate (V5C) to the new keeper.
+change_keeper_success.further_information.p8 = If they do not receive a new V5C in 2 weeks they must contact DVLA Customer Enquiries on 0300 790 6802.
 change_keeper_success.buttonnavprint = Print
 change_keeper_success.finish = Finish
 
@@ -392,7 +406,7 @@ acquire_privatekeeperdetails.lastnamelabel =Last name
 acquire_privatekeeperdetails.emaillabel = Email address
 acquire_privatekeeperdetails.p1 = Enter new keeper details
 acquire_privatekeeperdetails.p2 = These details will be used to create a new registration certificate (V5C).
-acquire_privatekeeperdetails.p3 = If the details above do not match the vehicle to be sold, please contact the DVLA, Swansea, SA99 1DZ
+acquire_privatekeeperdetails.p3 = If the details above do not match the vehicle to be sold, please send the registration certificate V5C with a covering letter to the DVLA, Swansea, SA99 1DZ.
 privatekeeper_title = Title
 privatekeeper_email = Email
 privatekeeper_firstname = First name
@@ -493,8 +507,8 @@ titlePicker.textLabel = Other title
 titlePicker.textHint = (10 characters maximum)
 error.title.unknownOption = Please enter the title of the new keeper
 error.title.missing = Other - This is a required field
-error.title.tooLong = Other - The text must contain characters in A to Z format only.
-error.title.illegalCharacters = Other title field can ony contain characters from the following A-Z, hyphen, apostrophe, full stop and space.
+error.title.tooLong = Other title field can only contain characters from the following A-Z, hyphen, apostrophe, full stop and space.
+error.title.illegalCharacters = Other title field can only contain characters from the following A-Z, hyphen, apostrophe, full stop and space.
 
 # micro-service response codes
 ms.vehiclesService.response.unableToProcessApplication-title = Transaction Unsuccessful
@@ -535,7 +549,6 @@ feedback = Feedback Form
 feedback_return = ◄ Return to your application
 feedback_close = Please close this page to return to your application
 
-
 # Cookie policy
 footer.cookies = Cookies
 cookie-policy-title = Cookies
@@ -552,7 +565,6 @@ cookie-policy.table.name = Cookie name
 cookie-policy.table.purpose = cookie purpose
 cookie-policy.table.expires = expires on
 cookie-policy-p10 = The following cookies are used:
-
 
 cookie-policy.name.google_analytics = Measuring website usage (Google Analytics)
 cookie-policy.name.google_analytics.p1 = Google Analytics software collects information about how you use the site. This is done to help make sure the site is meeting the needs of its users and to help make improvements.
@@ -580,8 +592,6 @@ cookie-policy.name.introductory_message.p3 =
 cookie-policy.name.introductory_message.p4 =
 cookie-policy.cookies.introductory_message.seen_cookie_message = Saves a message to let us know that you have seen our cookie message
 
-
-
 cookie-policy.expires.1month = 1 month
 cookie-policy.expires.4months= 4 months
 cookie-policy.expires.6months = 6 months
@@ -595,4 +605,3 @@ cookie-policy.expires.close = When you close your browser
 mandatory-alternative.not-selected = This field is mandatory. Please select one of the options.
 option-toggle.visible = Yes
 option-toggle.invisible = No
-

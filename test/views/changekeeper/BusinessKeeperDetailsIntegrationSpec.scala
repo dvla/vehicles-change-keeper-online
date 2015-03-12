@@ -56,18 +56,6 @@ class BusinessKeeperDetailsIntegrationSpec extends UiSpec with TestHarness {
       csrf.getAttribute("value").size > 0 should equal(true)
     }
 
-    "display optional for fleet number input" taggedAs UiTag in new ProgressBarFalse {
-      go to BeforeYouStartPage
-      cacheSetup()
-      go to BusinessKeeperDetailsPage
-
-      val pageChars = htmlRegex.replaceAllIn(page.source, "")
-      val pageCharsNoWhitespace = whitespaceRegex.replaceAllIn(pageChars, "")
-      val optionalLabelValue = "Fleetnumber(optional)"
-
-      pageCharsNoWhitespace.contains(optionalLabelValue) should equal(true)
-    }
-
     "display optional for business email input" taggedAs UiTag in new ProgressBarFalse {
       go to BeforeYouStartPage
       cacheSetup()

@@ -11,13 +11,13 @@
      Given the user enters a invalid date of birth  and no other errors persists
      When the user clicks on the private keeper no email radio button
      When the user press the submit control
-     Then there will be an error message displayed "Please enter a valid date in the format DD MM YYYY for example 01 03 1976"
+     Then there will be an error message displayed "Must be a valid date DD MM YYYY and not be in the future."
 
    Scenario: - Date of birth - Future date
      Given the user enters the dateOfBirth in future
      When the user clicks on the private keeper no email radio button
      When the user press the submit control
-     Then there will be an error message displayed "Date of birth of new keeper - Date cannot be in the future"
+     Then there will be an error message displayed "Date of birth of new keeper - Must be a valid date DD MM YYYY and not be in the future."
 
    Scenario: - Date of birth - Past date
      Given the Date of birth is more than oneHundredTen years in the past

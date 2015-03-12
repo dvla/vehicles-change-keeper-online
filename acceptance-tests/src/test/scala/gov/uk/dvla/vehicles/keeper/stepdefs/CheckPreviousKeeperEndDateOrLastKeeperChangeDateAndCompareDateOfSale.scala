@@ -20,6 +20,7 @@ class CheckPreviousKeeperEndDateOrLastKeeperChangeDateAndCompareDateOfSale(webBr
     click on VehicleLookupPage.vehicleSoldToBusiness
     click on VehicleLookupPage.next
     page.title shouldEqual BusinessKeeperDetailsPage.title
+    click on BusinessKeeperDetailsPage.fleetNumberInvisible
     BusinessKeeperDetailsPage.businessNameField enter "retail"
     click on BusinessKeeperDetailsPage.emailInvisible
     BusinessKeeperDetailsPage.postcodeField enter "qq99qq"

@@ -69,6 +69,7 @@ class HappyAndSadPathSteps(webBrowserDriver: WebBrowserDriver) extends ScalaDsl 
   @When("^the user is on Business Keeper details page and entered through successful postcode lookup$")
   def the_user_is_on_Business_Keeper_details_page_and_entered_through_successful_postcode_lookup() {
     page.title shouldEqual BusinessKeeperDetailsPage.title
+    click on BusinessKeeperDetailsPage.fleetNumberInvisible
     BusinessKeeperDetailsPage.businessNameField enter "trading"
     BusinessKeeperDetailsPage.postcodeField enter "qq99qq"
     click on BusinessKeeperDetailsPage.emailInvisible
@@ -119,6 +120,7 @@ class HappyAndSadPathSteps(webBrowserDriver: WebBrowserDriver) extends ScalaDsl 
   @When("^the trader entered through unsuccessful postcode lookup business user$")
   def the_trader_entered_through_unsuccessful_postcode_lookup_business_user() {
     page.title shouldEqual BusinessKeeperDetailsPage.title
+    click on BusinessKeeperDetailsPage.fleetNumberInvisible
     BusinessKeeperDetailsPage.businessNameField enter "trading"
     BusinessKeeperDetailsPage.postcodeField enter "qq99kj"
     click on BusinessKeeperDetailsPage.emailInvisible
