@@ -161,7 +161,7 @@ change_keeper_privatekeeperdetails.title = Enter new keeper details
 change_keeper_privatekeeperdetails.p1 = We will use these details to create a new vehicle registration certificate (V5C).
 change_keeper_privatekeeperdetails.nextbutton = Next
 change_keeper_privatekeeperdetails.backbutton = Back
-change_keeper_privatekeeperdetails.p3 = If the details above do not match the vehicle to be sold, please contact the DVLA, Swansea, SA99 1DZ
+change_keeper_privatekeeperdetails.p3 = If the details above do not match, the vehicle to be sold. Send the registration certificate V5C with a covering letter to the DVLA, Swansea, SA99 1DZ.
 change_keeper_privatekeeperdetails.firstnamelabel = First name(s)
 change_keeper_privatekeeperdetails.lastnamelabel = Last name
 change_keeper_privatekeeperdetails.dateofbirth.hint = For example, 01 03 1976
@@ -180,7 +180,7 @@ privatekeeper_option_email = Email confirmation
 #page 3 - business keeper details
 change_keeper_businesskeeperdetails.title = Enter new keeper details
 change_keeper_businesskeeperdetails.p1 = We will use these details to create a new vehicle registration certificate (V5C).
-change_keeper_businesskeeperdetails.p2 = If the details above do not match the vehicle to be sold, please contact the DVLA, Swansea, SA99 1DZ
+change_keeper_businesskeeperdetails.p2 = If the details above do not match, the vehicle to be sold. Send the registration certificate V5C with a covering letter to the DVLA, Swansea, SA99 1DZ.
 change_keeper_businesskeeperdetails.p3 = Does the business have a DVLA fleet number?
 change_keeper_businesskeeperdetails.p4 = If it does, please provide it for us to register it into their fleet
 change_keeper_businesskeeperdetails.vehicledetails = Vehicle details
@@ -232,7 +232,7 @@ change_keeper_newKeeperChooseYourAddress.vehicledetails = Vehicle details
 change_keeper_newKeeperChooseYourAddress.vehiclereg = Registration
 change_keeper_newKeeperChooseYourAddress.vehiclemake = Make
 change_keeper_newKeeperChooseYourAddress.vehiclemodel = Model
-change_keeper_newKeeperChooseYourAddress.p4 = If the details above do not match the vehicle to be sold, please contact the DVLA, Swansea, SA99 1DZ
+change_keeper_newKeeperChooseYourAddress.p4 = If the details above do not match, the vehicle to be sold. Send the registration certificate V5C with a covering letter to the DVLA, Swansea, SA99 1DZ.
 change_keeper_newKeeperChooseYourAddress.address.required = Please select a valid address
 newKeeperChooseYourAddress_addressSelect = Choose the new keepers address
 
@@ -245,7 +245,7 @@ change_keeper_newKeeperEnterAddressManually.vehicleReg = Registration
 change_keeper_newKeeperEnterAddressManually.vehicleMake = Make
 change_keeper_newKeeperEnterAddressManually.vehicleModel = Model
 change_keeper_newKeeperEnterAddressManually.p1 = As we do not have an address for this postcode, please enter one below
-change_keeper_newKeeperEnterAddressManually.p4 = If the details above do not match the vehicle to be sold, please contact the DVLA, Swansea, SA99 1DZ
+change_keeper_newKeeperEnterAddressManually.p4 = If the details above do not match, the vehicle to be sold. Send the registration certificate V5C with a covering letter to the DVLA, Swansea, SA99 1DZ.
 
 #page 5 - complete and confirm
 change_keeper_completeAndConfirm.title = Complete and confirm
@@ -402,7 +402,7 @@ acquire_privatekeeperdetails.lastnamelabel =Last name
 acquire_privatekeeperdetails.emaillabel = Email address
 acquire_privatekeeperdetails.p1 = Enter new keeper details
 acquire_privatekeeperdetails.p2 = These details will be used to create a new registration certificate (V5C).
-acquire_privatekeeperdetails.p3 = If the details above do not match the vehicle to be sold, please contact the DVLA, Swansea, SA99 1DZ
+acquire_privatekeeperdetails.p3 = If the details above do not match, the vehicle to be sold. Send the registration certificate V5C with a covering letter to the DVLA, Swansea, SA99 1DZ.
 privatekeeper_title = Title
 privatekeeper_email = Email
 privatekeeper_firstname = First name
