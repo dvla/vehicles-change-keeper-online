@@ -10,6 +10,7 @@
 @import common.mappings.Email.EmailMaxLength
 @import common.mappings.Postcode
 @import common.model.BusinessKeeperDetailsFormModel.Form.FleetNumberId
+@import common.model.BusinessKeeperDetailsFormModel.Form.FleetNumberOptionId
 @import common.model.BusinessKeeperDetailsFormModel.Form.BusinessNameId
 @import common.model.BusinessKeeperDetailsFormModel.Form.EmailId
 @import common.model.BusinessKeeperDetailsFormModel.Form.PostcodeId
@@ -69,14 +70,22 @@
                 )
             </div>
 
-            @valtechInputText(viewModel.form(FleetNumberId),
-                hintText = Some(Messages("change_keeper_businesskeeperdetails.businessname.hint")), args =
-                        Map('_label -> Messages("change_keeper_businesskeeperdetails.fleetnumber"),
-                            'maxLength -> FleetNumber.MaxLength,
-                            'typeFleetNumber -> true,
-                            '_showConstraints -> false
-                        ) ++
-                                (if(config.isHtml5ValidationEnabled) Map('pattern -> FleetNumber.Pattern) else Nil)
+            @optionalToggle(
+                viewModel.form(FleetNumberOptionId),
+                Messages("change_keeper_businesskeeperdetails.fleetnumberoption"),
+                Messages("change_keeper_businesskeeperdetails.fleetnumberoption.yes"),
+                Messages("change_keeper_businesskeeperdetails.fleetnumberoption.no"),
+                valtechInputText(
+                    viewModel.form(FleetNumberId),
+                    hintText = Some(Messages("change_keeper_businesskeeperdetails.businessname.hint")),
+                    args = Map(
+                        '_label -> Messages("change_keeper_businesskeeperdetails.fleetnumber"),
+                        'maxLength -> FleetNumber.MaxLength,
+                        'typeFleetNumber -> true,
+                        '_showConstraints -> false,
+                        'NO_OPTIONAL_LABEL -> false
+                    ) ++ (if(config.isHtml5ValidationEnabled) Map('pattern -> FleetNumber.Pattern) else Nil)
+                )
             )
 
             @optionalToggle(

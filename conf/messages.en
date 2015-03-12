@@ -200,11 +200,15 @@ change_keeper_businesskeeperdetails.postcode.hint = e.g. AB1 2BA or AB12BA
 change_keeper_businesskeeperdetails.traderemailoption = Does the new keeper want an email confirmation of the sale?
 change_keeper_businesskeeperdetails.traderemailoption.yes = Yes
 change_keeper_businesskeeperdetails.traderemailoption.no = No
+change_keeper_businesskeeperdetails.fleetnumberoption = Does the new keeper have a DVLA fleet number?
+change_keeper_businesskeeperdetails.fleetnumberoption.yes = Yes
+change_keeper_businesskeeperdetails.fleetnumberoption.no = No
 businesskeeper_postcode = Postcode
 businesskeeper_option_email = Email confirmation
 businesskeeper_email = Contact email address
 businessName = Business name
 fleetNumber = Fleet number
+fleetNumberOption = Fleet number
 change_keeper_email_not_entered = Not entered
 
 #page 4 - new keeper choose your address
