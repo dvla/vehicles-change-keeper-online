@@ -65,6 +65,7 @@ class BusinessKeeperDetailsSteps(webBrowserDriver: WebBrowserDriver) extends Sca
   @Given("^the fleet number has an invalid format in business keeper details page$")
   def the_fleet_number_has_an_invalid_format_in_business_keeper_details_page()  {
     gotoBusinessKeeperDetailsPage()
+    click on BusinessKeeperDetailsPage.fleetNumberVisible
     BusinessKeeperDetailsPage.fleetNumberField enter "345"
   }
 
@@ -91,6 +92,7 @@ class BusinessKeeperDetailsSteps(webBrowserDriver: WebBrowserDriver) extends Sca
 
   @When("^the user has selected the submit control on the new-business-keeper-details screen$")
   def the_user_has_selected_the_submit_control_on_the_new_business_keeper_details_screen() {
+    click on BusinessKeeperDetailsPage.fleetNumberInvisible
     click on BusinessKeeperDetailsPage.next
   }
 
@@ -162,6 +164,7 @@ class BusinessKeeperDetailsSteps(webBrowserDriver: WebBrowserDriver) extends Sca
   @When("^the user tries to search on an invalid postcode$")
   def the_user_tries_to_search_on_an_invalid_postcode() {
     BusinessKeeperDetailsPage.postcodeField enter "adsadsds"
+    click on BusinessKeeperDetailsPage.fleetNumberInvisible
     click on BusinessKeeperDetailsPage.emailInvisible
     click on BusinessKeeperDetailsPage.next
   }
@@ -172,12 +175,14 @@ class BusinessKeeperDetailsSteps(webBrowserDriver: WebBrowserDriver) extends Sca
 
   @When("^the user tries to search on a blank postcode$")
   def the_user_tries_to_search_on_a_blank_postcode()  {
+    click on BusinessKeeperDetailsPage.fleetNumberInvisible
     click on BusinessKeeperDetailsPage.emailInvisible
     click on BusinessKeeperDetailsPage.next
   }
 
   @When("^the user tries to search on a valid postcode$")
   def the_user_tries_to_search_on_a_valid_postcode() {
+    click on BusinessKeeperDetailsPage.fleetNumberInvisible
     BusinessKeeperDetailsPage.businessNameField enter "dvdvvv"
     BusinessKeeperDetailsPage.postcodeField enter "qq99qq"
     click on BusinessKeeperDetailsPage.emailInvisible
@@ -196,6 +201,7 @@ class BusinessKeeperDetailsSteps(webBrowserDriver: WebBrowserDriver) extends Sca
 
   @When("^the user enters special characters in businessname with valid data in rest of the fields$")
   def the_user_enters_special_characters_in_businessname_with_valid_data_in_rest_of_the_fields()  {
+    click on BusinessKeeperDetailsPage.fleetNumberInvisible
     page.title shouldEqual  BusinessKeeperDetailsPage.title
     BusinessKeeperDetailsPage.businessNameField enter "hgff(&/,)"
     BusinessKeeperDetailsPage.postcodeField enter "qq99qq"
@@ -210,6 +216,7 @@ class BusinessKeeperDetailsSteps(webBrowserDriver: WebBrowserDriver) extends Sca
 
   @When("^the user enters special characters at the start of the business name$")
   def the_user_enters_special_charcters_at_the_start_of_the_business_name()  {
+    click on BusinessKeeperDetailsPage.fleetNumberInvisible
     page.title shouldEqual  BusinessKeeperDetailsPage.title
     BusinessKeeperDetailsPage.businessNameField enter "(&/,)GFHF"
     BusinessKeeperDetailsPage.postcodeField enter "qq99qq"

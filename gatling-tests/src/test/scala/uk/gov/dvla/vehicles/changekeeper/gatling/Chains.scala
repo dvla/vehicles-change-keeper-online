@@ -122,6 +122,7 @@ class Chains(data: RecordSeqFeederBuilder[String]) {
         http(chainTitle)
           .post(url)
           .headers(headers_x_www_form_urlencoded)
+          .formParam("fleetNumberOption", "invisible")
           .formParam("fleetNumber", "${fleetNumber}")
           .formParam("businessName", "${businessName}")
           .formParam("businesskeeper_option_email", "invisible")
