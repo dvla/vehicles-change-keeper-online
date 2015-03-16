@@ -332,10 +332,10 @@ change_keeper_success.buttonnavprint = Print
 change_keeper_success.finish = Finish
 
 #uprn not found
-acquire_uprnnotfound.title = Error confirming post code
-acquire_uprnnotfound.p1 = An error has occurred validating your postcode. Please re-enter or enter your details manually
-acquire_uprnnotfound.manualaddressbutton = Set-up trade details
-acquire_uprnnotfound.setuptradedetailsbutton = Manually enter address
+change_keeper_uprnnotfound.title = Error confirming post code
+change_keeper_uprnnotfound.p1 = An error has occurred validating your postcode. Please re-enter or enter your details manually
+change_keeper_uprnnotfound.manualaddressbutton = Set-up trade details
+change_keeper_uprnnotfound.setuptradedetailsbutton = Manually enter address
 
 #vehicle lookup failure
 change_keeper_vehiclelookupfailure.title = Unable to find a vehicle record

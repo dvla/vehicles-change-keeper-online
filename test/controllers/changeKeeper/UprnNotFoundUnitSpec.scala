@@ -22,6 +22,14 @@ final class UprnNotFoundUnitSpec extends UnitSpec {
       contentAsString(present) should not include "Step "
     }
 
+    "Use have i18n messages in the messages file" in new WithApplication {
+      val content = contentAsString(present)
+      content should not include "change_keeper_uprnnotfound.title"
+      content should not include "change_keeper_uprnnotfound.p1"
+      content should not include "change_keeper_uprnnotfound.manualaddressbutton"
+      content should not include "change_keeper_uprnnotfound.setuptradedetailsbutton"
+    }
+
     "display prototype message when config set to true" in new WithApplication {
       contentAsString(present) should include(PrototypeHtml)
     }
