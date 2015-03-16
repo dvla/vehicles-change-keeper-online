@@ -17,13 +17,13 @@
      Given the user enters the dateOfBirth in future
      When the user clicks on the private keeper no email radio button
      When the user press the submit control
-     Then there will be an error message displayed "Date of birth of new keeper - Must be a valid date DD MM YYYY and not be in the future."
+     Then there will be an error message displayed "Date of Birth - Must be a valid date DD MM YYYY and not be in the future."
 
    Scenario: - Date of birth - Past date
      Given the Date of birth is more than oneHundredTen years in the past
      When the user clicks on the private keeper no email radio button
      When the user press the submit control
-     Then there will be an errored message  "Date of birth of new keeper - Date of birth cannot be more than 110 years in the past"
+     Then there will be an errored message  "Date of Birth - Date of birth cannot be more than 110 years in the past"
 
    Scenario: - Driver Number capitalisation
      Given that the user is on the Private Keeper details page
