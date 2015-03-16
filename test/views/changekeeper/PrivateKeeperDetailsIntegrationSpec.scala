@@ -83,7 +83,7 @@ final class PrivateKeeperDetailsIntegrationSpec extends UiSpec with TestHarness 
 
       val pageChars = htmlRegex.replaceAllIn(page.source, "")
       val pageCharsNoWhitespace = whitespaceRegex.replaceAllIn(pageChars, "")
-      val optionalLabelValue = "Dateofbirthofnewkeeper(optional)"
+      val optionalLabelValue = "Dateofbirth(optional)"
 
       pageCharsNoWhitespace.contains(optionalLabelValue) should equal(true)
     }
