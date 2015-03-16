@@ -320,11 +320,11 @@ change_keeper_success.new_keeper_details.p1 = Details of the new keeper
 change_keeper_success.further_information.header = What happens next for you?
 change_keeper_success.further_information.header.2 = What happens next for the new keeper?
 
-change_keeper_success.further_information.p1 = We will send you (the previous keeper) an acknowledgement letter within 4 weeks.
-change_keeper_success.further_information.p2 = If you do not receive a letter in this time then please contact DVLA Customer Enquiries on 0300 790 6802 as you could still be liable for this vehicle.
-change_keeper_success.further_information.p3 = DVLA will automatically issue a refund for any full remaining months of vehicle tax and cancel any direct debits (DD).
-change_keeper_success.further_information.p4 = The refund will be sent to the address on the V5C, and can take 4 to 6 weeks.
-change_keeper_success.further_information.p5 = You may wish to take a print of this summary for your records.
+change_keeper_success.further_information.p1 = We will send you (the previous keeper) a disposal acknowledgement letter.
+change_keeper_success.further_information.p2 = We will automatically issue a refund for any full remaining months of vehicle tax and cancel any direct debit (DD).
+change_keeper_success.further_information.p3 = Both the disposal acknowledgement letter and refund will be sent to the address on the V5C.
+change_keeper_success.further_information.p4 = If you do not receive either within 4-6 weeks, please contact DVLA Customer Enquiries on 0300 790 6802 as you could still be liable for the vehicle.
+change_keeper_success.further_information.p5 = You may want to take a print of this summary for your records.
 change_keeper_success.further_information.p6 = Since 1st October 2014 vehicle tax can no longer be transferred as part of the sale, so the new keeper must tax the vehicle if they want to use it on the road.
 change_keeper_success.further_information.p7 = Within 5 working days we will send a new vehicle registration certificate (V5C) to the new keeper.
 change_keeper_success.further_information.p8 = If they do not receive a new V5C in 2 weeks they must contact DVLA Customer Enquiries on 0300 790 6802.
