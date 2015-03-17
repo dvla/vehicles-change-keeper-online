@@ -43,7 +43,7 @@ class BusinessKeeperDetailsSteps(webBrowserDriver: WebBrowserDriver) extends Sca
 
   @Then("^there will be help text displayed above the fleet number field \"(.*?)\"$")
   def there_will_be_help_text_displayed_above_the_fleet_number_field(helpText:String)  {
-     page.text contains helpText
+    page.text contains helpText
   }
 
   @Given("^the fleet number is blank in business keeper details page$")
@@ -170,7 +170,7 @@ class BusinessKeeperDetailsSteps(webBrowserDriver: WebBrowserDriver) extends Sca
   }
   @Then("^the user does not progress to the next stage of the service$")
   def the_user_does_not_progress_to_the_next_stage_of_the_service() {
-     page.title shouldEqual BusinessKeeperDetailsPage.title
+    page.title shouldEqual BusinessKeeperDetailsPage.title
   }
 
   @When("^the user tries to search on a blank postcode$")
@@ -229,5 +229,5 @@ class BusinessKeeperDetailsSteps(webBrowserDriver: WebBrowserDriver) extends Sca
     page.title shouldEqual BusinessKeeperDetailsPage.title
   }
 
-
 }
+

@@ -104,7 +104,7 @@ class HappyAndSadPathSteps(webBrowserDriver: WebBrowserDriver) extends ScalaDsl 
     PrivateKeeperDetailsPage.postcodeTextBox enter "qq99hj"
     click on PrivateKeeperDetailsPage.emailInvisible
     click on PrivateKeeperDetailsPage.next
-    //page.title shouldEqual NewKeeperChooseYourAddressPage.title
+    page.title shouldEqual NewKeeperChooseYourAddressPage.title
     click on NewKeeperChooseYourAddressPage.manualAddress
     page.title shouldEqual NewKeeperEnterAddressManuallyPage.title
     NewKeeperEnterAddressManuallyPage.addressBuildingNameOrNumber enter "2 high street"
