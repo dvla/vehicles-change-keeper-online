@@ -1,3 +1,35 @@
+======== 1.5 ========
+Time of release binaries creation:
+Tue Mar 17 15:23:54 UTC 2015
+
+DE398  Fleet No does not migrate into VSS
+DE404  Uprn_not_found page shows message tags instead of message text
+US2212 [Technical] add a timeout configuration to the Vehicle & Keeper Lookup service as for all other services
+US2379 [Technical] - Remove java script from widgets, add into a library
+US2382 Tweak error message for Date of Sale
+US2470 Check for 'Previous Keeper End' date and / or 'Last Keeper Change' Date and compare to Date of Sale entered
+US2572	Remove Trans ID playback box for unsucessful transactions & reword message
+US2573 Allow for all transactions recieved via the K2K online service to be accepted (Green success screen)
+US2574 Move 'Business Name' field to Top of Page and [All services] Move 'Mileage' capture fild to bottom of screen for all services
+US2575 Enhance Seller/Buyers email fields for java on/off script solutions.
+US2577 Move Title Radio Buttons to sit Horizontally instead of vertically
+US2578 Enhance 'Fleet Number' Capture using Java Script
+US2585 Add the words 'rest of the' to the Green Summary banner message
+US2594 Amend Summary Page for K2K
+US2595 Changes to new keeper 'seller' email content (Licensing Message)
+US2601 Redirect Error codes Appropriately
+US2629 Notify Customers that service is closing shortly
+US2643 Send emails via the micro service
+US2645 Amend Allowable characters in first name / last name / Other title fields for Private Individual
+US2651 Amend Unsuccessful lookup Screen with wording changes
+US2653 Change error message to include 'other'
+US2661 Allow for all transactions recieved via the Acquire online service to be accepted (Green success screen)
+US2673 Add licensing content to BUYERS email from both services
+US2677 Enhance info message if vehicle do not match
+US2684 On summary page disable back browser and send user to first page
+US2689 Tweak error message for Date of Birth
+US2694 Amend Summary Page 'What happens next' information
+
 ======== 1.4 ========
 Time of release binaries creation:
 Wed Mar 04 13:55:03 UTC 2015
