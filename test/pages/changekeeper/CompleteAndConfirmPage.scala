@@ -2,7 +2,8 @@ package pages.changekeeper
 
 import uk.gov.dvla.vehicles.presentation.common.helpers
 import helpers.webbrowser._
-import models.CompleteAndConfirmFormModel.Form.{ConsentId, DateOfSaleId, MileageId, TodaysDateId}
+import models.CompleteAndConfirmFormModel.Form.ConsentId
+import models.DateOfSaleFormModel.Form.{DateOfSaleId, MileageId, TodaysDateId}
 import org.openqa.selenium.WebDriver
 import views.changekeeper.CompleteAndConfirm.{BackId, SubmitId}
 

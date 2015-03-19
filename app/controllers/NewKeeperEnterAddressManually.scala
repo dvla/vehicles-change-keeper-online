@@ -38,7 +38,7 @@ class NewKeeperEnterAddressManually @Inject()()
       NewKeeperEnterAddressManuallyViewModel(formWithReplacedErrors(form), model), postcode))
 
   protected override def success(implicit request: Request[_]): Result =
-  Redirect(routes.CompleteAndConfirm.present()).
-            withCookie(AllowGoingToCompleteAndConfirmPageCacheKey, "true")
+    Redirect(routes.DateOfSale.present()).
+      withCookie(AllowGoingToCompleteAndConfirmPageCacheKey, "true")
 
 }

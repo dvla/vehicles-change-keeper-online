@@ -1,10 +1,7 @@
 package controllers
 
 import com.google.inject.Inject
-import models.AllCacheKeys
-import models.ChangeKeeperCompletionViewModel
-import models.CompleteAndConfirmFormModel
-import models.CompleteAndConfirmResponseModel
+import models._
 import models.K2KCacheKeyPrefix.CookiePrefix
 import play.api.Logger
 import play.api.mvc.{Action, Controller}
@@ -22,17 +19,18 @@ class ChangeKeeperSuccess @Inject()()(implicit clientSideSessionFactory: ClientS
     "however cannot display success page. Redirecting to BeforeYouStart"
 
   def present = Action { implicit request =>
-    (request.cookies.getModel[VehicleAndKeeperDetailsModel],
-      request.cookies.getModel[NewKeeperDetailsViewModel],
-      request.cookies.getModel[CompleteAndConfirmFormModel],
-      request.cookies.getModel[CompleteAndConfirmResponseModel]
-      ) match {
-      case (Some(vehicleAndKeeperDetailsModel), Some(newKeeperDetailsModel), Some(completeAndConfirmModel), Some(responseModel)) =>
-        Ok(views.html.changekeeper.change_keeper_success(ChangeKeeperCompletionViewModel(
-          vehicleAndKeeperDetailsModel, newKeeperDetailsModel, completeAndConfirmModel, responseModel
-        )))
-      case _ => redirectToStart(MissingCookiesSuccess)
-    }
+    val result = for {
+      vehicleAndKeeperDetailsModel <- request.cookies.getModel[VehicleAndKeeperDetailsModel]
+      newKeeperDetailsModel <- request.cookies.getModel[NewKeeperDetailsViewModel]
+      completeAndConfirmModel <- request.cookies.getModel[CompleteAndConfirmFormModel]
+      dateOfSaleFormModel <- request.cookies.getModel[DateOfSaleFormModel]
+      responseModel <- request.cookies.getModel[CompleteAndConfirmResponseModel]
+    } yield Ok(views.html.changekeeper.change_keeper_success(ChangeKeeperCompletionViewModel(
+      vehicleAndKeeperDetailsModel, newKeeperDetailsModel, dateOfSaleFormModel, completeAndConfirmModel, responseModel
+    )))
+
+    result getOrElse
+      redirectToStart(MissingCookiesSuccess)
   }
 
   def finish = Action { implicit request =>

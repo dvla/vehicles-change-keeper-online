@@ -1,0 +1,163 @@
+@(data: models.DateOfSaleViewModel,
+  dateService: uk.gov.dvla.vehicles.presentation.common.services.DateService)(implicit lang: Lang,
+  token: uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction.CsrfPreventionToken,
+  config: utils.helpers.Config)
+
+@import views.html.helper.form
+@import controllers.routes.CompleteAndConfirm
+@import uk.gov.dvla.vehicles.presentation.common
+@import common.mappings.Mileage
+@import common.views.html.widgets.dates.inputDayMonthYearTextbox
+@import common.views.html.widgets.base.csrfTokenHiddenField
+@import common.views.helpers.BaseTemplate.fieldConstructor
+@import common.views.html.widgets.base.{valtechInputText, valtechDeclareCheck}
+@import common.views.helpers.LabelHelper.optionalFieldKey
+@import models.DateOfSaleFormModel.Form.{MileageId, DateOfSaleId, TodaysDateId}
+@import views.changekeeper.CompleteAndConfirm.{BackId, SubmitId, modify}
+
+@main(
+    progress = Some(Messages("change_keeper_progress_5")),
+    title = Messages("change_keeper_completeAndConfirm.title"),
+    currentForm = Some(data.form)
+) {
+
+    @if(data.isSaleDateInvalid) {
+    <div class="site-overlay"></div>
+    }
+
+    <div class="two-col clearfix acquire-complete-confirm">
+
+        <div class="first-col">
+            <dl class="playback">
+                <dt><h2>@Messages("change_keeper_completeandconfirm.newkeeperDetails")</h2></dt>
+                <dt>@Messages("change_keeper_completeandconfirm.displayName")</dt>
+                <dd>@data.keeperDetails.displayName</dd>
+                <dt>@Messages("change_keeper_completeandconfirm.address")</dt>
+                <dd>@for(addr <- data.keeperDetails.address.address) {@addr<br/>}</dd>
+                <dt>@Messages("change_keeper_completeandconfirm.email")</dt>
+                @if(data.keeperDetails.email == None) {
+                    <dd>@Messages("change_keeper_completeandconfirm.emailNotEntered")</dd>
+                } else {
+                    <dd>@data.keeperDetails.email.get</dd>
+                }
+                @if(data.keeperDetails.isBusinessKeeper) {
+                    <dt>@Messages("change_keeper_completeandconfirm.fleetNumber")</dt>
+                    @if(data.keeperDetails.fleetNumber == None) {
+                        <dd>@Messages("change_keeper_completeandconfirm.fleetNumberNotEntered")</dd>
+                    } else {
+                        <dd>@data.keeperDetails.fleetNumber.get</dd>
+                    }
+                }
+            </dl>
+            <dl class="playback">
+                <dt><h2>@Messages("change_keeper_completeandconfirm.vehicleDetails")</h2></dt>
+                <dt>@Messages("change_keeper_completeandconfirm.vehicleReg")</dt>
+                <dd>@data.vehicleAndKeeperDetails.registrationNumber</dd>
+                <dt>@Messages("change_keeper_completeandconfirm.vehicleMake")</dt>
+                <dd>@data.vehicleAndKeeperDetails.make</dd>
+                <dt>@Messages("change_keeper_completeandconfirm.vehicleModel")</dt>
+                <dd>@data.vehicleAndKeeperDetails.model</dd>
+            </dl>
+        </div>
+
+        <div class="second-col">
+
+            <h1>@Messages("change_keeper_completeAndConfirm.title")</h1>
+
+            @form(action = data.submitAction) {
+                @csrfTokenHiddenField()
+
+                @if(data.isSaleDateInvalid) {
+                    <div class="popup-modal">
+                        @if(data.isDateToCompareDisposalDate) {
+                            <p>@Messages("change_keeper_completeandconfirm.dateofsale.disposalDate.warning", data.dateToCompare.getOrElse("NOT FOUND"))</p>
+                        } else {
+                            <p>@Messages("change_keeper_completeandconfirm.dateofsale.keeperChangeDate.warning", data.dateToCompare.getOrElse("NOT FOUND"))</p>
+                        }
+                        <div id=@DateOfSaleId>
+                        @inputDayMonthYearTextbox(
+                            field = data.form(DateOfSaleId),
+                            args = Map(
+                                'autofocus -> true,
+                                '_label -> Messages("change_keeper_completeAndConfirm.dateofsale.label")
+                            ),
+                            dateService = dateService,
+                            showTodaysDateButton = false,
+                            showTodaysDateButtonId = Some(TodaysDateId),
+                            hintText = Some(Messages("change_keeper_completeandconfirm.dateofsale.hint"))
+                        )
+                        </div>
+
+                        <div class="form-steps">
+                            <button id="@SubmitId"
+                            type="submit"
+                            name="action"
+                            class="button">
+                            @Messages("change_keeper_completeAndConfirm.submitbutton")
+                            </button>
+                            <br/>
+                            <a class="back" id="@BackId" href="@controllers.routes.CompleteAndConfirm.back()">
+                            @Messages("change_keeper_completeAndConfirm.backbutton")
+                            </a>
+                        </div>
+                    </div>
+                }
+
+                <div id=@DateOfSaleId class="form-steps">
+                @if(data.isSaleDateInvalid) {
+                    @inputDayMonthYearTextbox(
+                        field = data.form(DateOfSaleId),
+                        args = Map(
+                            'tabindex -> -1,
+                            '_label -> Messages("change_keeper_completeAndConfirm.dateofsale.label")
+                        ),
+                        dateService = dateService,
+                        showTodaysDateButton = false,
+                        showTodaysDateButtonId = Some(TodaysDateId),
+                        hintText = Some(Messages("change_keeper_completeandconfirm.dateofsale.hint"))
+                    )
+                } else {
+                    @inputDayMonthYearTextbox(
+                        field = data.form(DateOfSaleId),
+                        args = Map(
+                            '_label -> Messages("change_keeper_completeAndConfirm.dateofsale.label")
+                        ),
+                        dateService = dateService,
+                        showTodaysDateButton = false,
+                        showTodaysDateButtonId = Some(TodaysDateId),
+                        hintText = Some(Messages("change_keeper_completeandconfirm.dateofsale.hint"))
+                    )
+                }
+                </div>
+
+                @valtechInputText(
+                    data.form(MileageId),
+                    args = modify(Map('_label -> Messages("change_keeper_completeAndConfirm.mileage.label"),
+                        '_showConstraints -> false,
+                        'typeTel -> true,
+                        'maxLength -> Mileage.MaxLength, // Must be set independently of the pattern as the pattern is only checked when the user submits.
+                        'optionalFieldKey -> true
+                        //'title -> Messages("change_keeper_keeperdetailscomplete.mileage.validation")
+                    ) ++ (if(config.isHtml5ValidationEnabled) Map('pattern -> Mileage.Pattern) else Nil), data.isSaleDateInvalid)
+                )
+
+                <div class="form-steps">
+                    <button id="@SubmitId"
+                        type="submit"
+                        name="action"
+                        @if(data.isSaleDateInvalid) {tabindex="-1"}
+                        class="button">
+                        @Messages("change_keeper_completeAndConfirm.submitbutton")
+                    </button>
+                    <br/>
+                    <a class="back" id="@BackId"
+                        @if(data.isSaleDateInvalid) {tabindex="-1"}
+                        href="@controllers.routes.CompleteAndConfirm.back()">
+                        @Messages("change_keeper_completeAndConfirm.backbutton")
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+    <script src="@controllers.StaticAssets.versioned(config.assetsUrl)("javascripts/firefox-dont-cache-page.js")" type="text/javascript"></script>
+}

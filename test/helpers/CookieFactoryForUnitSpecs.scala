@@ -4,15 +4,10 @@ import composition.TestComposition
 import pages.changekeeper.BusinessKeeperDetailsPage.{FleetNumberValid, BusinessNameValid}
 import pages.changekeeper.HelpPage
 import play.api.libs.json.{Json, Writes}
-import models.CompleteAndConfirmFormModel
-import models.CompleteAndConfirmResponseModel
+import models._
 import models.CompleteAndConfirmResponseModel.ChangeKeeperCompletionResponseCacheKey
 import models.K2KCacheKeyPrefix.CookiePrefix
-import models.HelpCacheKey
-import models.SeenCookieMessageCacheKey
-import models.SellerEmailModel
 import models.SellerEmailModel.SellerEmailModelCacheKey
-import models.VehicleLookupFormModel
 import models.VehicleLookupFormModel.{VehicleLookupResponseCodeCacheKey, VehicleLookupFormModelCacheKey}
 import org.joda.time.{DateTime, LocalDate}
 import pages.changekeeper.CompleteAndConfirmPage.MileageValid
@@ -252,16 +247,20 @@ object CookieFactoryForUnitSpecs extends TestComposition {
   def allowGoingToCompleteAndConfirm(): Cookie =
     createCookie(CompleteAndConfirmFormModel.AllowGoingToCompleteAndConfirmPageCacheKey, "")
 
-  def completeAndConfirmModel(mileage: Option[Int] = Some(MileageValid.toInt),
-                              dateOfSale: LocalDate = new LocalDate(
-                                YearDateOfSaleValid.toInt,
-                                MonthDateOfSaleValid.toInt,
-                                DayDateOfSaleValid.toInt),
-                              consent: String = ConsentTrue): Cookie = {
+  def dateOfSaleModel(mileage: Option[Int] = Some(MileageValid.toInt),
+                      dateOfSale: LocalDate = new LocalDate(
+                        YearDateOfSaleValid.toInt,
+                        MonthDateOfSaleValid.toInt,
+                        DayDateOfSaleValid.toInt
+                      )): Cookie =
+    createCookie(DateOfSaleFormModel.DateOfSaleCacheKey, DateOfSaleFormModel(
+      mileage,
+      dateOfSale
+    ))
+
+  def completeAndConfirmModel(consent: String = ConsentTrue): Cookie = {
     val key = CompleteAndConfirmFormModel.CompleteAndConfirmCacheKey
     val value = CompleteAndConfirmFormModel(
-      mileage,
-      dateOfSale,
       consent
     )
     createCookie(key, value)

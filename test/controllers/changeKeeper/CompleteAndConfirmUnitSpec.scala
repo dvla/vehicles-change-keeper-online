@@ -4,7 +4,7 @@ import controllers.changeKeeper.Common.PrototypeHtml
 import controllers.{CompleteAndConfirm, PrivateKeeperDetails}
 import helpers.UnitSpec
 import helpers.CookieFactoryForUnitSpecs
-import models.CompleteAndConfirmFormModel.Form.{MileageId, DateOfSaleId, ConsentId}
+import models.CompleteAndConfirmFormModel.Form.ConsentId
 import org.joda.time.{DateTime, Instant}
 import org.joda.time.format.DateTimeFormat
 import org.mockito.Matchers.{any, anyString}
@@ -78,7 +78,26 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
     }
 
     "redirect to vehicle lookup when no new keeper details cookie is present" in new WithApplication {
-    val request = FakeRequest()
+      val request = FakeRequest()
+      val result = completeAndConfirm.present(request)
+      whenReady(result) { r =>
+        r.header.headers.get(LOCATION) should equal(Some(VehicleLookupPage.address))
+      }
+    }
+
+    "redirect to vehicle lookup when allowGoingToCompleteAndConfirmPage cookie is not set" in new WithApplication {
+      val request = FakeRequest()
+        .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
+      val result = completeAndConfirm.present(request)
+      whenReady(result) { r =>
+        r.header.headers.get(LOCATION) should equal(Some(VehicleLookupPage.address))
+      }
+    }
+
+    "redirect to date of sale page when no dateOfSale cookies is present" in new WithApplication {
+      val request = FakeRequest()
+        .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
+        .withCookies(CookieFactoryForUnitSpecs.allowGoingToCompleteAndConfirm())
       val result = completeAndConfirm.present(request)
       whenReady(result) { r =>
         r.header.headers.get(LOCATION) should equal(Some(VehicleLookupPage.address))
@@ -86,10 +105,11 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
     }
 
     "present the form when new keeper details cookie is present" in new WithApplication {
-    val request = FakeRequest()
+      val request = FakeRequest()
         .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
         .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
         .withCookies(CookieFactoryForUnitSpecs.allowGoingToCompleteAndConfirm())
+        .withCookies(CookieFactoryForUnitSpecs.dateOfSaleModel())
         .withCookies(CookieFactoryForUnitSpecs.completeAndConfirmModel())
       val result = completeAndConfirm.present(request)
       whenReady(result) { r =>
@@ -105,6 +125,7 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
         email = Some(EmailValid),
         isBusinessKeeper = true))
       .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
+      .withCookies(CookieFactoryForUnitSpecs.dateOfSaleModel())
       .withCookies(CookieFactoryForUnitSpecs.allowGoingToCompleteAndConfirm())
       val content = contentAsString(completeAndConfirm.present(request))
       content should include("<dt>Fleet number</dt>")
@@ -121,6 +142,24 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
         email = Some(EmailValid),
         isBusinessKeeper = false
       )).withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
+        .withCookies(CookieFactoryForUnitSpecs.dateOfSaleModel())
+        .withCookies(CookieFactoryForUnitSpecs.privateKeeperDetailsModel())
+        .withCookies(CookieFactoryForUnitSpecs.allowGoingToCompleteAndConfirm())
+      val content = contentAsString(completeAndConfirm.present(request))
+      content should include(s"$FirstNameValid")
+      content should include(s"$LastNameValid")
+      content should include(s"$EmailValid")
+    }
+
+    "play back date of sale as expected" in new WithApplication() {
+      val request = FakeRequest().
+        withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel(
+        firstName = Some(FirstNameValid),
+        lastName = Some(LastNameValid),
+        email = Some(EmailValid),
+        isBusinessKeeper = false
+      )).withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
+        .withCookies(CookieFactoryForUnitSpecs.dateOfSaleModel())
         .withCookies(CookieFactoryForUnitSpecs.privateKeeperDetailsModel())
         .withCookies(CookieFactoryForUnitSpecs.allowGoingToCompleteAndConfirm())
       val content = contentAsString(completeAndConfirm.present(request))
@@ -137,7 +176,7 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
         .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
         .withCookies(CookieFactoryForUnitSpecs.privateKeeperDetailsModel())
 
-      val result = completeAndConfirm.submitWithDateCheck(request)
+      val result = completeAndConfirm.submit(request)
       val replacementMileageErrorMessage = "You must enter a valid mileage between 0 and 999999"
       replacementMileageErrorMessage.r.findAllIn(contentAsString(result)).length should equal(2)
     }
@@ -148,7 +187,7 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
         .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
         .withCookies(CookieFactoryForUnitSpecs.allowGoingToCompleteAndConfirm())
 
-      val result = completeAndConfirm.submitWithDateCheck(request)
+      val result = completeAndConfirm.submit(request)
       whenReady(result) { r =>
         r.header.status should equal(BAD_REQUEST)
       }
@@ -160,7 +199,7 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
         .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
         .withCookies(CookieFactoryForUnitSpecs.allowGoingToCompleteAndConfirm())
 
-      val result = completeAndConfirm.submitWithDateCheck(request)
+      val result = completeAndConfirm.submit(request)
       whenReady(result) { r =>
         r.header.status should equal(BAD_REQUEST)
       }
@@ -176,7 +215,7 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
 
       val (acquireServiceMock, emailServiceMock, completeAndConfirm) = createMocks
 
-      val result = completeAndConfirm.submitWithDateCheck(request)
+      val result = completeAndConfirm.submit(request)
       whenReady(result) { r =>
         r.header.headers.get(LOCATION) should equal(Some(ChangeKeeperSuccessPage.address))
         verify(acquireServiceMock, times(1)).invoke(any[AcquireRequestDto], anyString())
@@ -197,7 +236,7 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
 
       val (acquireServiceMock, emailServiceMock, completeAndConfirm) = createMocks
 
-      val result = completeAndConfirm.submitWithDateCheck(request)
+      val result = completeAndConfirm.submit(request)
       whenReady(result) { r =>
         r.header.status should equal(BAD_REQUEST)
         verify(acquireServiceMock, never()).invoke(any[AcquireRequestDto], anyString())
@@ -218,7 +257,7 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
 
       val (acquireServiceMock, emailServiceMock, completeAndConfirm) = createMocks
 
-      val result = completeAndConfirm.submitWithDateCheck(request)
+      val result = completeAndConfirm.submit(request)
       whenReady(result) { r =>
         r.header.status should equal(BAD_REQUEST)
         verify(acquireServiceMock, never()).invoke(any[AcquireRequestDto], anyString())
@@ -239,7 +278,7 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
         .withCookies(CookieFactoryForUnitSpecs.allowGoingToCompleteAndConfirm())
 
       val (acquireServiceMock, emailServiceMock, completeAndConfirm) = createMocks
-      val result = completeAndConfirm.submitWithDateCheck(request)
+      val result = completeAndConfirm.submit(request)
       whenReady(result) { r =>
         r.header.headers.get(LOCATION) should equal(Some(ChangeKeeperSuccessPage.address))
         verify(acquireServiceMock, times(1)).invoke(any[AcquireRequestDto], anyString())
@@ -269,7 +308,7 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
         (OK, Some(acquireResponseSuccess))
       })
 
-      val result = completeAndConfirm.submitWithDateCheck(request)
+      val result = completeAndConfirm.submit(request)
       whenReady(result) { r =>
         r.header.headers.get(LOCATION) should equal(Some(ChangeKeeperSuccessPage.address))
         verify(acquireServiceMock, times(1)).invoke(any[AcquireRequestDto], anyString())
@@ -291,7 +330,7 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
 
       val (acquireServiceMock, emailServiceMock, completeAndConfirm) = createMocks
 
-      val result = completeAndConfirm.submitWithDateCheck(request)
+      val result = completeAndConfirm.submit(request)
       whenReady(result) { r =>
         r.header.headers.get(LOCATION) should equal(Some(ChangeKeeperSuccessPage.address))
         verify(acquireServiceMock, times(1)).invoke(any[AcquireRequestDto], anyString())
@@ -389,15 +428,10 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
                                              yearDateOfSale: String = YearDateOfSaleValid,
                                              consent: String = ConsentTrue) = {
     FakeRequest().withFormUrlEncodedBody(
-      MileageId -> mileage,
-      s"$DateOfSaleId.$DayId" -> dayDateOfSale,
-      s"$DateOfSaleId.$MonthId" -> monthDateOfSale,
-      s"$DateOfSaleId.$YearId" -> yearDateOfSale,
       ConsentId -> consent
-    )
-      .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
-      .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
-      .withCookies(CookieFactoryForUnitSpecs.allowGoingToCompleteAndConfirm())
+    ).withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
+     .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
+     .withCookies(CookieFactoryForUnitSpecs.allowGoingToCompleteAndConfirm())
   }
 
   private def completeAndConfirm = {

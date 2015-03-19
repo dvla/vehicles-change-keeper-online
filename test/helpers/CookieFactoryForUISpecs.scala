@@ -222,16 +222,9 @@ object CookieFactoryForUISpecs {
     this
   }
 
-  def completeAndConfirmDetails(mileage: Option[Int] = Some(MileageValid.toInt),
-                                dateOfSale: LocalDate = new LocalDate(
-                                  YearDateOfSaleValid.toInt,
-                                  MonthDateOfSaleValid.toInt,
-                                  DayDateOfSaleValid.toInt),
-                                consent: String = ConsentTrue)(implicit webDriver: WebDriver) = {
+  def completeAndConfirmDetails(consent: String = ConsentTrue)(implicit webDriver: WebDriver) = {
     val key = CompleteAndConfirmFormModel.CompleteAndConfirmCacheKey
     val value = CompleteAndConfirmFormModel(
-      mileage,
-      dateOfSale,
       consent
     )
     addCookie(key, value)
