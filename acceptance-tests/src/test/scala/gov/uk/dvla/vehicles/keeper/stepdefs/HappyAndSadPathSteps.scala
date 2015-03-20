@@ -46,7 +46,7 @@ class HappyAndSadPathSteps(webBrowserDriver: WebBrowserDriver) extends ScalaDsl 
     page.title shouldEqual CompleteAndConfirmPage.title
     CompleteAndConfirmPage.dayDateOfSaleTextBox enter "11"
     CompleteAndConfirmPage.monthDateOfSaleTextBox enter "11"
-    CompleteAndConfirmPage.yearDateOfSaleTextBox enter "2001"
+    CompleteAndConfirmPage.yearDateOfSaleTextBox enter "2011"
     click on CompleteAndConfirmPage.consent
     click on CompleteAndConfirmPage.next
   }
@@ -85,7 +85,7 @@ class HappyAndSadPathSteps(webBrowserDriver: WebBrowserDriver) extends ScalaDsl 
     page.title shouldEqual CompleteAndConfirmPage.title
     CompleteAndConfirmPage.dayDateOfSaleTextBox enter "11"
     CompleteAndConfirmPage.monthDateOfSaleTextBox enter "11"
-    CompleteAndConfirmPage.yearDateOfSaleTextBox enter "2001"
+    CompleteAndConfirmPage.yearDateOfSaleTextBox enter "2011"
     click on CompleteAndConfirmPage.consent
     click on CompleteAndConfirmPage.next
   }
@@ -137,7 +137,7 @@ class HappyAndSadPathSteps(webBrowserDriver: WebBrowserDriver) extends ScalaDsl 
     page.title shouldEqual CompleteAndConfirmPage.title
     CompleteAndConfirmPage.dayDateOfSaleTextBox enter "11"
     CompleteAndConfirmPage.monthDateOfSaleTextBox enter "11"
-    CompleteAndConfirmPage.yearDateOfSaleTextBox enter "2001"
+    CompleteAndConfirmPage.yearDateOfSaleTextBox enter "2011"
     click on CompleteAndConfirmPage.consent
     click on CompleteAndConfirmPage.next
   }
@@ -164,7 +164,7 @@ class HappyAndSadPathSteps(webBrowserDriver: WebBrowserDriver) extends ScalaDsl 
     page.title shouldEqual CompleteAndConfirmPage.title
     CompleteAndConfirmPage.dayDateOfSaleTextBox enter "11"
     CompleteAndConfirmPage.monthDateOfSaleTextBox enter "11"
-    CompleteAndConfirmPage.yearDateOfSaleTextBox enter "2001"
+    CompleteAndConfirmPage.yearDateOfSaleTextBox enter "2011"
     click on CompleteAndConfirmPage.consent
     click on CompleteAndConfirmPage.next
   }
@@ -196,7 +196,7 @@ class HappyAndSadPathSteps(webBrowserDriver: WebBrowserDriver) extends ScalaDsl 
     page.title shouldEqual CompleteAndConfirmPage.title
     CompleteAndConfirmPage.dayDateOfSaleTextBox enter "11"
     CompleteAndConfirmPage.monthDateOfSaleTextBox enter "11"
-    CompleteAndConfirmPage.yearDateOfSaleTextBox enter "2001"
+    CompleteAndConfirmPage.yearDateOfSaleTextBox enter "2011"
     click on CompleteAndConfirmPage.consent
     click on CompleteAndConfirmPage.next
   }

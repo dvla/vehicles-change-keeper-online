@@ -157,10 +157,10 @@ final class NewKeeperEnterAddressManuallyUnitSpec extends UnitSpec {
       ))
 
       validateAddressCookieValues(result,
-        buildingName = "MY HOUSE",
-        line2 = "MY STREET",
-        line3 = "MY AREA",
-        postTown = "MY TOWN"
+        buildingName = "MY HOUSE,",
+        line2 = "MY STREET.",
+        line3 = "MY AREA.",
+        postTown = "MY TOWN,"
       )
     }
 
@@ -173,10 +173,10 @@ final class NewKeeperEnterAddressManuallyUnitSpec extends UnitSpec {
       ))
 
       validateAddressCookieValues(result,
-        buildingName = "MY HOUSE",
-        line2 = "MY STREET",
-        line3 = "MY AREA",
-        postTown = "MY TOWN"
+        buildingName = "MY HOUSE,.,..,,",
+        line2 = "MY STREET...,,.,",
+        line3 = "MY AREA.,,..",
+        postTown = "MY TOWN,,,.,,,."
       )
     }
 
@@ -189,7 +189,7 @@ final class NewKeeperEnterAddressManuallyUnitSpec extends UnitSpec {
       ))
 
       validateAddressCookieValues(result,
-        buildingName = "MY HOUSE 1.1",
+        buildingName = "MY HOUSE 1.1,",
         line2 = "ST. SOMETHING STREET",
         line3 = "ST. JOHNS",
         postTown = "MY T.OWN"
