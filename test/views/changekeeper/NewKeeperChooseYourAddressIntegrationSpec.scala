@@ -3,7 +3,7 @@ package views.changekeeper
 import composition.TestHarness
 import helpers.CookieFactoryForUISpecs
 import uk.gov.dvla.vehicles.presentation.common.testhelpers.UiTag
-import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.ProgressBar
+import helpers.webbrowser.ProgressBar
 import helpers.UiSpec
 import org.openqa.selenium.{By, WebElement, WebDriver}
 import pages.common.ErrorPanel
@@ -248,14 +248,14 @@ class NewKeeperChooseYourAddressIntegrationSpec extends UiSpec with TestHarness 
       go to BeforeYouStartPage
       cacheSetupPrivateKeeper
       happyPath
-      page.title should equal("Complete and confirm")
+      page.title should equal("Date of sale")
     }
 
     "go to the next page when correct data is entered for a new business keeper" taggedAs UiTag in new WebBrowser {
       go to BeforeYouStartPage
       cacheSetupBusinessKeeper
       happyPath
-      page.title should equal("Complete and confirm")
+      page.title should equal("Date of sale")
     }
 
     "display validation error messages when addressSelected is not in the list for a new private keeper" taggedAs UiTag in new WebBrowser {

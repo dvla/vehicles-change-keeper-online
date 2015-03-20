@@ -1,12 +1,13 @@
 package controllers.changeKeeper
 
 import composition.WithApplication
-import controllers.{DateOfSale, CompleteAndConfirm}
+import controllers.DateOfSale
 import helpers.UnitSpec
 import models.DateOfSaleFormModel
 import models.DateOfSaleFormModel.Form.{DateOfSaleId, MileageId}
 import org.joda.time.LocalDate
-import pages.changekeeper.CompleteAndConfirmPage.{ConsentTrue, DayDateOfSaleValid, MileageValid, MonthDateOfSaleValid, YearDateOfSaleValid}
+import pages.changekeeper.CompleteAndConfirmPage.ConsentTrue
+import pages.changekeeper.DateOfSalePage.{DayDateOfSaleValid, MileageValid, MonthDateOfSaleValid, YearDateOfSaleValid}
 import play.api.data.Form
 import uk.gov.dvla.vehicles.presentation.common.mappings.DayMonthYear.{DayId, MonthId, YearId}
 
@@ -35,9 +36,9 @@ class DateOfSaleFormSpec extends UnitSpec {
     }
 
     "reject if form has no fields completed" in new WithApplication {
-      formWithValidDefaults(dayDateOfSale = "", monthDateOfSale = "", yearDateOfSale = "", consent = "").
+      formWithValidDefaults(dayDateOfSale = "", monthDateOfSale = "", yearDateOfSale = "").
         errors.flatMap(_.messages) should contain theSameElementsAs
-        List("error.date.invalid", "error.required")
+        List("error.date.invalid")
     }
   }
 
@@ -146,8 +147,7 @@ class DateOfSaleFormSpec extends UnitSpec {
   private def formWithValidDefaults(mileage: String = MileageValid,
                                     dayDateOfSale: String = DayDateOfSaleValid,
                                     monthDateOfSale: String = MonthDateOfSaleValid,
-                                    yearDateOfSale: String = YearDateOfSaleValid,
-                                    consent: String = ConsentTrue): Form[DateOfSaleFormModel] = {
+                                    yearDateOfSale: String = YearDateOfSaleValid): Form[DateOfSaleFormModel] = {
     injector.getInstance(classOf[DateOfSale])
       .form.bind(
         Map(

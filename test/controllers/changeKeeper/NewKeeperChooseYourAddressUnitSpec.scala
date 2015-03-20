@@ -10,7 +10,7 @@ import org.mockito.invocation.InvocationOnMock
 import org.mockito.Matchers._
 import org.mockito.Mockito.when
 import org.mockito.stubbing.Answer
-import pages.changekeeper.{CompleteAndConfirmPage, VehicleLookupPage}
+import pages.changekeeper.{DateOfSalePage, VehicleLookupPage}
 import pages.changekeeper.PrivateKeeperDetailsPage.{FirstNameValid, LastNameValid}
 import pages.changekeeper.BusinessKeeperDetailsPage.BusinessNameValid
 import pages.common.UprnNotFoundPage
@@ -229,7 +229,7 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
         withCookies(CookieFactoryForUnitSpecs.privateKeeperDetailsModel())
       val result = newKeeperChooseYourAddressWithUprnFound(ordnanceSurveyUseUprn = true).submit(request)
       whenReady(result) { r =>
-        r.header.headers.get(LOCATION) should equal(Some(CompleteAndConfirmPage.address))
+        r.header.headers.get(LOCATION) should equal(Some(DateOfSalePage.address))
       }
     }
 
@@ -239,7 +239,7 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
         withCookies(CookieFactoryForUnitSpecs.businessKeeperDetailsModel())
       val result = newKeeperChooseYourAddressWithUprnFound(ordnanceSurveyUseUprn = true).submit(request)
       whenReady(result) { r =>
-        r.header.headers.get(LOCATION) should equal(Some(CompleteAndConfirmPage.address))
+        r.header.headers.get(LOCATION) should equal(Some(DateOfSalePage.address))
       }
     }
 
@@ -376,7 +376,7 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
         withCookies(CookieFactoryForUnitSpecs.privateKeeperDetailsModel())
       val result = newKeeperChooseYourAddressWithUprnFound(ordnanceSurveyUseUprn = false).submit(request)
       whenReady(result) { r =>
-        r.header.headers.get(LOCATION) should equal(Some(CompleteAndConfirmPage.address))
+        r.header.headers.get(LOCATION) should equal(Some(DateOfSalePage.address))
       }
     }
 
@@ -386,7 +386,7 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
         withCookies(CookieFactoryForUnitSpecs.businessKeeperDetailsModel())
       val result = newKeeperChooseYourAddressWithUprnFound(ordnanceSurveyUseUprn = false).submit(request)
       whenReady(result) { r =>
-        r.header.headers.get(LOCATION) should equal(Some(CompleteAndConfirmPage.address))
+        r.header.headers.get(LOCATION) should equal(Some(DateOfSalePage.address))
       }
     }
 

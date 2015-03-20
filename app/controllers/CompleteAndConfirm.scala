@@ -46,12 +46,14 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
       val result = for {
         newKeeperDetails <- request.cookies.getModel[NewKeeperDetailsViewModel]
         vehicleAndKeeperDetails <- request.cookies.getModel[VehicleAndKeeperDetailsModel]
+        dateOfSaleModel <- request.cookies.getModel[DateOfSaleFormModel]
       } yield Ok(
         complete_and_confirm(
           CompleteAndConfirmViewModel(
             form.fill(),
             vehicleAndKeeperDetails,
-            newKeeperDetails
+            newKeeperDetails,
+            dateOfSaleModel
           ),
           dateService
         )
@@ -70,12 +72,14 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
           val result = for {
             newKeeperDetails <- request.cookies.getModel[NewKeeperDetailsViewModel]
             vehicleDetails <- request.cookies.getModel[VehicleAndKeeperDetailsModel]
+            dateOfSaleModel <- request.cookies.getModel[DateOfSaleFormModel]
           } yield {
             BadRequest(
               complete_and_confirm(
                 CompleteAndConfirmViewModel(formWithReplacedErrors(invalidForm),
                   vehicleDetails,
-                  newKeeperDetails
+                  newKeeperDetails,
+                  dateOfSaleModel
                 ),
                 dateService
               )
@@ -87,7 +91,7 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
             Redirect(routes.VehicleLookup.present()).discardingCookies()
           }
         },
-        validForm => processValidForm(validForm)
+        validForm => processValidForm(validForm).map(_.discardingCookies(cookiesToBeDiscardedOnRedirectAway))
       )
     }(Future.successful(Redirect(routes.VehicleLookup.present()).discardingCookies(cookiesToBeDiscardedOnRedirectAway)))
   }
@@ -129,11 +133,14 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
   }
 
   def back = Action { implicit request =>
-    request.cookies.getModel[NewKeeperEnterAddressManuallyFormModel] match {
-      case Some(manualAddress) =>
-        Redirect(routes.NewKeeperEnterAddressManually.present())
-      case None => Redirect(routes.NewKeeperChooseYourAddress.present())
-    }
+    request.cookies.getModel[DateOfSaleFormModel].fold {
+      request.cookies.getModel[NewKeeperEnterAddressManuallyFormModel] match {
+        case Some(manualAddress) =>
+          Redirect(routes.NewKeeperEnterAddressManually.present())
+        case None => Redirect(routes.NewKeeperChooseYourAddress.present())
+      }
+    } (dateOfSale => Redirect(routes.DateOfSale.present()))
+
   }
 
   private def formWithReplacedErrors(form: Form[CompleteAndConfirmFormModel]) =

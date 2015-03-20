@@ -86,15 +86,16 @@ error.invalid = Invalid value
 ##
 
 # progress messages
-change_keeper_progress_1 = Step 1 of 9
-change_keeper_progress_2 = Step 2 of 9
-change_keeper_progress_3 = Step 3 of 9
-change_keeper_progress_4 = Step 4 of 9
-change_keeper_progress_5 = Step 5 of 9
-change_keeper_progress_6 = Step 6 of 9
-change_keeper_progress_7 = Step 7 of 9
-change_keeper_progress_8 = Step 8 of 9
-change_keeper_progress_9 = Step 9 of 9
+change_keeper_progress_1 = Step 1 of 10
+change_keeper_progress_2 = Step 2 of 10
+change_keeper_progress_3 = Step 3 of 10
+change_keeper_progress_4 = Step 4 of 10
+change_keeper_progress_5 = Step 5 of 10
+change_keeper_progress_6 = Step 6 of 10
+change_keeper_progress_7 = Step 7 of 10
+change_keeper_progress_8 = Step 8 of 10
+change_keeper_progress_9 = Step 9 of 10
+change_keeper_progress_10 = Step 10 of 10
 
 # 404 onHandlerNotFound
 onHandlerNotFound.title=This page cannot be found
@@ -605,3 +606,5 @@ cookie-policy.expires.close = When you close your browser
 mandatory-alternative.not-selected = This field is mandatory. Please select one of the options.
 option-toggle.visible = Yes
 option-toggle.invisible = No
+
+change_keeper_date_of_sale.title = Date of sale

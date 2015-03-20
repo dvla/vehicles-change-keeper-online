@@ -17,7 +17,7 @@
 @import views.changekeeper.CompleteAndConfirm.{BackId, SubmitId, modify}
 
 @main(
-    progress = Some(Messages("change_keeper_progress_5")),
+    progress = Some(Messages("change_keeper_progress_6")),
     title = Messages("change_keeper_completeAndConfirm.title"),
     currentForm = Some(data.form)
 ) {
@@ -54,6 +54,8 @@
                 <dd>@data.vehicleAndKeeperDetails.make</dd>
                 <dt>@Messages("change_keeper_completeandconfirm.vehicleModel")</dt>
                 <dd>@data.vehicleAndKeeperDetails.model</dd>
+                <dd>@data.dateOfSaleModel.mileage</dd>
+                <dd>@data.dateOfSaleModel.dateOfSale</dd>
             </dl>
         </div>
 

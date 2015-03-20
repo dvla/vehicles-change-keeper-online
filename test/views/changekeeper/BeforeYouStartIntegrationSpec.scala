@@ -2,6 +2,7 @@ package views.changekeeper
 
 import composition.TestHarness
 import helpers.CookieFactoryForUISpecs
+import helpers.webbrowser.ProgressBar.progressStep
 import helpers.UiSpec
 import models.K2KCacheKeyPrefix.CookiePrefix
 import models.VehicleLookupFormModel.VehicleLookupFormModelCacheKey
@@ -9,7 +10,6 @@ import pages.changekeeper.BeforeYouStartPage.startNow
 import pages.changekeeper.{VehicleLookupPage, BeforeYouStartPage}
 import pages.common.Feedback.EmailFeedbackLink
 import uk.gov.dvla.vehicles.presentation.common
-import common.helpers.webbrowser.ProgressBar.progressStep
 import common.model.VehicleAndKeeperDetailsModel.VehicleAndKeeperLookupDetailsCacheKey
 import common.model.PrivateKeeperDetailsFormModel.privateKeeperDetailsCacheKey
 import common.testhelpers.UiTag

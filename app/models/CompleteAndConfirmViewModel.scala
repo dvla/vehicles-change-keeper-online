@@ -8,4 +8,5 @@ import uk.gov.dvla.vehicles.presentation.common.model.VehicleAndKeeperDetailsMod
 
 case class CompleteAndConfirmViewModel(form: Form[CompleteAndConfirmFormModel],
                                        vehicleAndKeeperDetails: VehicleAndKeeperDetailsModel,
-                                       keeperDetails: NewKeeperDetailsViewModel)
+                                       keeperDetails: NewKeeperDetailsViewModel,
+                                       dateOfSaleModel: DateOfSaleFormModel)

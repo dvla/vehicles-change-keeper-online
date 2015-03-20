@@ -4,6 +4,7 @@ import controllers.changeKeeper.Common.PrototypeHtml
 import controllers.{CompleteAndConfirm, PrivateKeeperDetails}
 import helpers.UnitSpec
 import helpers.CookieFactoryForUnitSpecs
+import models.CompleteAndConfirmFormModel
 import models.CompleteAndConfirmFormModel.Form.ConsentId
 import org.joda.time.{DateTime, Instant}
 import org.joda.time.format.DateTimeFormat
@@ -12,19 +13,21 @@ import org.mockito.Mockito.{never, times, verify, when}
 import pages.changekeeper.BusinessKeeperDetailsPage.{BusinessNameValid, EmailValid, FleetNumberValid}
 import pages.changekeeper.ChangeKeeperSuccessPage
 import pages.changekeeper.CompleteAndConfirmPage.ConsentTrue
-import pages.changekeeper.CompleteAndConfirmPage.DayDateOfSaleValid
-import pages.changekeeper.CompleteAndConfirmPage.MileageValid
-import pages.changekeeper.CompleteAndConfirmPage.MonthDateOfSaleValid
-import pages.changekeeper.CompleteAndConfirmPage.YearDateOfSaleValid
+import pages.changekeeper.DateOfSalePage.DayDateOfSaleValid
+import pages.changekeeper.DateOfSalePage.MileageValid
+import pages.changekeeper.DateOfSalePage.MonthDateOfSaleValid
+import models.CompleteAndConfirmFormModel._
+import pages.changekeeper.DateOfSalePage.YearDateOfSaleValid
 import pages.changekeeper.PrivateKeeperDetailsPage.{FirstNameValid, LastNameValid}
 import pages.changekeeper.VehicleLookupPage
 import play.api.test.Helpers.{LOCATION, BAD_REQUEST, OK, contentAsString, defaultAwaitTimeout}
 import play.api.test.{FakeRequest, WithApplication}
+import uk.gov.dvla.vehicles.presentation.common.testhelpers.CookieHelper
+import uk.gov.dvla.vehicles.presentation.common.testhelpers.CookieHelper._
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.ClientSideSessionFactory
-import common.mappings.DayMonthYear.{DayId, MonthId, YearId}
 import common.services.DateService
 import common.services.SEND.EmailConfiguration
 import common.views.models.DayMonthYear
@@ -63,11 +66,12 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
         .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
         .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
         .withCookies(CookieFactoryForUnitSpecs.allowGoingToCompleteAndConfirm())
+        .withCookies(CookieFactoryForUnitSpecs.dateOfSaleModel())
         .withCookies(CookieFactoryForUnitSpecs.completeAndConfirmModel())
       val content = contentAsString(completeAndConfirm.present(request))
-      content should include( s"""value="$MileageValid"""")
+      content should include( MileageValid)
       content should include( """value="true"""") // Checkbox value
-      content should include( s"""value="$YearDateOfSaleValid"""")
+      content should include( YearDateOfSaleValid)
     }
 
     "display empty fields when new keeper complete cookie does not exist" in new WithApplication {
@@ -170,47 +174,27 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
   }
 
   "submit" should {
-    "replace numeric mileage error message for with standard error message" in new WithApplication {
-      val request = buildCorrectlyPopulatedRequest(mileage = "$$")
-        .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
-        .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
-        .withCookies(CookieFactoryForUnitSpecs.privateKeeperDetailsModel())
-
-      val result = completeAndConfirm.submit(request)
-      val replacementMileageErrorMessage = "You must enter a valid mileage between 0 and 999999"
-      replacementMileageErrorMessage.r.findAllIn(contentAsString(result)).length should equal(2)
-    }
-
     "return a bad request if consent is not ticked" in new WithApplication {
       val request = buildCorrectlyPopulatedRequest(consent = "")
         .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
         .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
+        .withCookies(CookieFactoryForUnitSpecs.dateOfSaleModel())
         .withCookies(CookieFactoryForUnitSpecs.allowGoingToCompleteAndConfirm())
 
       val result = completeAndConfirm.submit(request)
       whenReady(result) { r =>
         r.header.status should equal(BAD_REQUEST)
+        fetchCookiesFromHeaders(r).map(_.name) should not contain(AllowGoingToCompleteAndConfirmPageCacheKey)
       }
     }
 
-    "return a bad request if date of sale is not entered" in new WithApplication {
-      val request = buildCorrectlyPopulatedRequest(dayDateOfSale = "", monthDateOfSale = "", yearDateOfSale = "")
-        .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
-        .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
-        .withCookies(CookieFactoryForUnitSpecs.allowGoingToCompleteAndConfirm())
-
-      val result = completeAndConfirm.submit(request)
-      whenReady(result) { r =>
-        r.header.status should equal(BAD_REQUEST)
-      }
-    }
-
-    "redirect to next page when mandatory fields are complete for new keeper and neither the date of disposal or the change date are present" in new WithApplication {
+    "Call the microservice and redirect to the next page if consent has been ticked" in new WithApplication {
       val request = buildCorrectlyPopulatedRequest()
         .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
         .withCookies(CookieFactoryForUnitSpecs.vehicleLookupFormModel())
         .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
         .withCookies(CookieFactoryForUnitSpecs.sellerEmailModel())
+        .withCookies(CookieFactoryForUnitSpecs.dateOfSaleModel())
         .withCookies(CookieFactoryForUnitSpecs.allowGoingToCompleteAndConfirm())
 
       val (acquireServiceMock, emailServiceMock, completeAndConfirm) = createMocks
@@ -218,121 +202,7 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
       val result = completeAndConfirm.submit(request)
       whenReady(result) { r =>
         r.header.headers.get(LOCATION) should equal(Some(ChangeKeeperSuccessPage.address))
-        verify(acquireServiceMock, times(1)).invoke(any[AcquireRequestDto], anyString())
-        verify(emailServiceMock, times(1)).invoke(any[EmailServiceSendRequest], anyString())
-      }
-    }
-
-    "not call the micro service when the date of acquisition is before the date of disposal and return a bad request" in new WithApplication {
-      // The date of acquisition is 19-10-2012
-      val disposalDate = DateTime.parse("20-10-2012", DateTimeFormat.forPattern("dd-MM-yyyy"))
-
-      val request = buildCorrectlyPopulatedRequest()
-        .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
-        .withCookies(CookieFactoryForUnitSpecs.vehicleLookupFormModel())
-        .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel(keeperEndDate = Some(disposalDate)))
-        .withCookies(CookieFactoryForUnitSpecs.sellerEmailModel())
-        .withCookies(CookieFactoryForUnitSpecs.allowGoingToCompleteAndConfirm())
-
-      val (acquireServiceMock, emailServiceMock, completeAndConfirm) = createMocks
-
-      val result = completeAndConfirm.submit(request)
-      whenReady(result) { r =>
-        r.header.status should equal(BAD_REQUEST)
-        verify(acquireServiceMock, never()).invoke(any[AcquireRequestDto], anyString())
-        verify(emailServiceMock, never()).invoke(any[EmailServiceSendRequest], anyString())
-      }
-    }
-
-    "not call the micro service when the date of acquisition is before the keeper change date and return a bad request" in new WithApplication {
-      // The date of acquisition is 19-10-2012
-      val changeKeeperDate = DateTime.parse("20-10-2012", DateTimeFormat.forPattern("dd-MM-yyyy"))
-
-      val request = buildCorrectlyPopulatedRequest()
-        .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
-        .withCookies(CookieFactoryForUnitSpecs.vehicleLookupFormModel())
-        .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel(keeperChangeDate = Some(changeKeeperDate)))
-        .withCookies(CookieFactoryForUnitSpecs.sellerEmailModel())
-        .withCookies(CookieFactoryForUnitSpecs.allowGoingToCompleteAndConfirm())
-
-      val (acquireServiceMock, emailServiceMock, completeAndConfirm) = createMocks
-
-      val result = completeAndConfirm.submit(request)
-      whenReady(result) { r =>
-        r.header.status should equal(BAD_REQUEST)
-        verify(acquireServiceMock, never()).invoke(any[AcquireRequestDto], anyString())
-        verify(emailServiceMock, never()).invoke(any[EmailServiceSendRequest], anyString())
-      }
-
-    }
-
-    "call the micro service when the date of acquisition is the same as the date of disposal and redirect to the next page" in new WithApplication {
-      // The date of acquisition is 19-10-2012
-      val disposalDate = DateTime.parse("19-10-2012", DateTimeFormat.forPattern("dd-MM-yyyy"))
-
-      val request = buildCorrectlyPopulatedRequest()
-        .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
-        .withCookies(CookieFactoryForUnitSpecs.vehicleLookupFormModel())
-        .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel(keeperEndDate = Some(disposalDate)))
-        .withCookies(CookieFactoryForUnitSpecs.sellerEmailModel())
-        .withCookies(CookieFactoryForUnitSpecs.allowGoingToCompleteAndConfirm())
-
-      val (acquireServiceMock, emailServiceMock, completeAndConfirm) = createMocks
-      val result = completeAndConfirm.submit(request)
-      whenReady(result) { r =>
-        r.header.headers.get(LOCATION) should equal(Some(ChangeKeeperSuccessPage.address))
-        verify(acquireServiceMock, times(1)).invoke(any[AcquireRequestDto], anyString())
-        verify(emailServiceMock, times(1)).invoke(any[EmailServiceSendRequest], anyString())
-      }
-    }
-
-    "call the micro service when the date of acquisition is the same as the keeper change date and redirect to the next page" in new WithApplication {
-      // The date of acquisition is 19-10-2012
-      val changeDate = DateTime.parse("19-10-2012", DateTimeFormat.forPattern("dd-MM-yyyy"))
-
-      val request = buildCorrectlyPopulatedRequest()
-        .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
-        .withCookies(CookieFactoryForUnitSpecs.vehicleLookupFormModel())
-        .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel(keeperChangeDate = Some(changeDate)))
-        .withCookies(CookieFactoryForUnitSpecs.sellerEmailModel())
-        .withCookies(CookieFactoryForUnitSpecs.allowGoingToCompleteAndConfirm())
-
-      val acquireServiceMock = mock[AcquireService]
-      val emailServiceMock = mock[EmailService]
-      when(emailServiceMock.invoke(any[EmailServiceSendRequest](), anyString())).
-        thenReturn(Future(EmailServiceSendResponse()))
-      val completeAndConfirm = completeAndConfirmController(acquireServiceMock, emailServiceMock)
-
-      when(acquireServiceMock.invoke(any[AcquireRequestDto], any[String])).
-        thenReturn(Future.successful {
-        (OK, Some(acquireResponseSuccess))
-      })
-
-      val result = completeAndConfirm.submit(request)
-      whenReady(result) { r =>
-        r.header.headers.get(LOCATION) should equal(Some(ChangeKeeperSuccessPage.address))
-        verify(acquireServiceMock, times(1)).invoke(any[AcquireRequestDto], anyString())
-        verify(emailServiceMock, times(1)).invoke(any[EmailServiceSendRequest], anyString())
-      }
-    }
-
-    "call the micro service when both the date of disposal and the change date are present and redirect to the next page" in new WithApplication {
-      // The date of acquisition is 19-10-2012
-      val disposalDate = DateTime.parse("09-03-2015", DateTimeFormat.forPattern("dd-MM-yyyy"))
-      val changeDate = DateTime.parse("09-03-2015", DateTimeFormat.forPattern("dd-MM-yyyy"))
-
-      val request = buildCorrectlyPopulatedRequest()
-        .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
-        .withCookies(CookieFactoryForUnitSpecs.vehicleLookupFormModel())
-        .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel(keeperEndDate = Some(disposalDate), keeperChangeDate = Some(changeDate)))
-        .withCookies(CookieFactoryForUnitSpecs.sellerEmailModel())
-        .withCookies(CookieFactoryForUnitSpecs.allowGoingToCompleteAndConfirm())
-
-      val (acquireServiceMock, emailServiceMock, completeAndConfirm) = createMocks
-
-      val result = completeAndConfirm.submit(request)
-      whenReady(result) { r =>
-        r.header.headers.get(LOCATION) should equal(Some(ChangeKeeperSuccessPage.address))
+        CookieHelper.verifyCookieHasBeenDiscarded(AllowGoingToCompleteAndConfirmPageCacheKey, fetchCookiesFromHeaders(r))
         verify(acquireServiceMock, times(1)).invoke(any[AcquireRequestDto], anyString())
         verify(emailServiceMock, times(1)).invoke(any[EmailServiceSendRequest], anyString())
       }
@@ -422,11 +292,7 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
 //    new CompleteAndConfirm(acquireService)
 //  }
 
-  private def buildCorrectlyPopulatedRequest(mileage: String = MileageValid,
-                                             dayDateOfSale: String = DayDateOfSaleValid,
-                                             monthDateOfSale: String = MonthDateOfSaleValid,
-                                             yearDateOfSale: String = YearDateOfSaleValid,
-                                             consent: String = ConsentTrue) = {
+  private def buildCorrectlyPopulatedRequest(consent: String = ConsentTrue) = {
     FakeRequest().withFormUrlEncodedBody(
       ConsentId -> consent
     ).withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
@@ -442,6 +308,7 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
     val request = FakeRequest()
       .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
       .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
+      .withCookies(CookieFactoryForUnitSpecs.dateOfSaleModel())
       .withCookies(CookieFactoryForUnitSpecs.allowGoingToCompleteAndConfirm())
     completeAndConfirm.present(request)
   }

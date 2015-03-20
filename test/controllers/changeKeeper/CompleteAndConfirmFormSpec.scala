@@ -20,16 +20,10 @@ class CompleteAndConfirmFormSpec extends UnitSpec {
     "reject if form has no fields completed" in new WithApplication {
       formWithValidDefaults(consent = "").
         errors.flatMap(_.messages) should contain theSameElementsAs
-        List("error.date.invalid", "error.required")
+        List("error.required")
     }
   }
 
-  private def formWithValidDefaults(consent: String = ConsentTrue): Form[CompleteAndConfirmFormModel] = {
-    injector.getInstance(classOf[CompleteAndConfirm])
-      .form.bind(
-        Map(
-          ConsentId -> consent
-        )
-      )
-  }
+  private def formWithValidDefaults(consent: String = ConsentTrue): Form[CompleteAndConfirmFormModel] =
+    injector.getInstance(classOf[CompleteAndConfirm]).form.bind(Map(ConsentId -> consent))
 }

@@ -4,18 +4,16 @@ import CookieFactoryForUnitSpecs.VehicleLookupFailureResponseCode
 
 import models.K2KCacheKeyPrefix.CookiePrefix
 import models.CompleteAndConfirmResponseModel.ChangeKeeperCompletionResponseCacheKey
-import models.CompleteAndConfirmFormModel
-import models.CompleteAndConfirmResponseModel
-import models.VehicleLookupFormModel
+import models.{DateOfSaleFormModel, CompleteAndConfirmFormModel, CompleteAndConfirmResponseModel, VehicleLookupFormModel}
 import models.VehicleLookupFormModel.{VehicleLookupFormModelCacheKey, VehicleLookupResponseCodeCacheKey}
 import org.joda.time.{DateTime, LocalDate}
 import org.openqa.selenium.{Cookie, WebDriver}
 import pages.changekeeper.BusinessKeeperDetailsPage.{BusinessNameValid, FleetNumberValid}
 import pages.changekeeper.CompleteAndConfirmPage.ConsentTrue
-import pages.changekeeper.CompleteAndConfirmPage.DayDateOfSaleValid
-import pages.changekeeper.CompleteAndConfirmPage.MileageValid
-import pages.changekeeper.CompleteAndConfirmPage.MonthDateOfSaleValid
-import pages.changekeeper.CompleteAndConfirmPage.YearDateOfSaleValid
+import pages.changekeeper.DateOfSalePage.DayDateOfSaleValid
+import pages.changekeeper.DateOfSalePage.MileageValid
+import pages.changekeeper.DateOfSalePage.MonthDateOfSaleValid
+import pages.changekeeper.DateOfSalePage.YearDateOfSaleValid
 import pages.changekeeper.PrivateKeeperDetailsPage.DayDateOfBirthValid
 import pages.changekeeper.PrivateKeeperDetailsPage.DriverNumberValid
 import pages.changekeeper.PrivateKeeperDetailsPage.EmailValid
@@ -219,6 +217,16 @@ object CookieFactoryForUISpecs {
     val key = ChangeKeeperCompletionResponseCacheKey
     val value = CompleteAndConfirmResponseModel(id, timestamp)
     addCookie(key, value)
+    this
+  }
+
+  def dateOfSaleDetails(mileage: Option[Int] = Some(MileageValid.toInt),
+                        dateOfSale: LocalDate = new LocalDate(
+                          YearDateOfSaleValid.toInt,
+                          MonthDateOfSaleValid.toInt,
+                          DayDateOfSaleValid.toInt
+                        ))(implicit webDriver: WebDriver) = {
+    addCookie(DateOfSaleFormModel.DateOfSaleCacheKey, DateOfSaleFormModel(mileage, dateOfSale))
     this
   }
 

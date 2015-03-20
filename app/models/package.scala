@@ -1,5 +1,6 @@
 import models.CompleteAndConfirmFormModel.CompleteAndConfirmCacheKey
 import models.CompleteAndConfirmResponseModel.ChangeKeeperCompletionResponseCacheKey
+import models.DateOfSaleFormModel.DateOfSaleCacheKey
 import models.K2KCacheKeyPrefix.CookiePrefix
 import models.VehicleLookupFormModel.{VehicleLookupFormModelCacheKey, VehicleLookupResponseCodeCacheKey}
 import uk.gov.dvla.vehicles.presentation.common
@@ -48,6 +49,7 @@ package object models {
 
   final val CompletionCacheKeys = Set(
     newKeeperDetailsCacheKey,
+    DateOfSaleCacheKey,
     CompleteAndConfirmCacheKey,
     VehicleLookupResponseCodeCacheKey,
     ChangeKeeperCompletionResponseCacheKey

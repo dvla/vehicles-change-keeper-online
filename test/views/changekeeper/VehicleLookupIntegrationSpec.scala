@@ -3,6 +3,7 @@ package views.changekeeper
 import composition.TestHarness
 import helpers.CookieFactoryForUISpecs
 import helpers.UiSpec
+import helpers.webbrowser.ProgressBar.progressStep
 import models.K2KCacheKeyPrefix.CookiePrefix
 import org.openqa.selenium.{By, WebElement}
 import pages.common.ErrorPanel
@@ -11,7 +12,6 @@ import pages.changekeeper.VehicleLookupPage.happyPath
 import play.api.test.FakeApplication
 import uk.gov.dvla.vehicles.presentation.common
 import common.filters.CsrfPreventionAction
-import common.helpers.webbrowser.ProgressBar.progressStep
 import common.model.PrivateKeeperDetailsFormModel.privateKeeperDetailsCacheKey
 import common.model.BusinessKeeperDetailsFormModel.businessKeeperDetailsCacheKey
 import common.testhelpers.UiTag

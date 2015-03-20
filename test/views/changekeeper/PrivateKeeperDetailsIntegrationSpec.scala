@@ -1,7 +1,7 @@
 package views.changekeeper
 
 import composition.TestHarness
-import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.ProgressBar.progressStep
+import helpers.webbrowser.ProgressBar.progressStep
 import helpers.UiSpec
 import helpers.CookieFactoryForUISpecs
 import uk.gov.dvla.vehicles.presentation.common.testhelpers.UiTag

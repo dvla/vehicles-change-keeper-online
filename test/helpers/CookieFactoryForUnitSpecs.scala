@@ -10,10 +10,10 @@ import models.K2KCacheKeyPrefix.CookiePrefix
 import models.SellerEmailModel.SellerEmailModelCacheKey
 import models.VehicleLookupFormModel.{VehicleLookupResponseCodeCacheKey, VehicleLookupFormModelCacheKey}
 import org.joda.time.{DateTime, LocalDate}
-import pages.changekeeper.CompleteAndConfirmPage.MileageValid
-import pages.changekeeper.CompleteAndConfirmPage.DayDateOfSaleValid
-import pages.changekeeper.CompleteAndConfirmPage.MonthDateOfSaleValid
-import pages.changekeeper.CompleteAndConfirmPage.YearDateOfSaleValid
+import pages.changekeeper.DateOfSalePage.MileageValid
+import pages.changekeeper.DateOfSalePage.DayDateOfSaleValid
+import pages.changekeeper.DateOfSalePage.MonthDateOfSaleValid
+import pages.changekeeper.DateOfSalePage.YearDateOfSaleValid
 import pages.changekeeper.PrivateKeeperDetailsPage.{FirstNameValid, LastNameValid, EmailValid, DriverNumberValid}
 import pages.changekeeper.PrivateKeeperDetailsPage.{DayDateOfBirthValid, MonthDateOfBirthValid, YearDateOfBirthValid, PostcodeValid}
 import play.api.mvc.Cookie

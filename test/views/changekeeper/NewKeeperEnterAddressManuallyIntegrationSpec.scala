@@ -2,7 +2,7 @@ package views.changekeeper
 
 import composition.TestHarness
 import helpers.UiSpec
-import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.ProgressBar.progressStep
+import helpers.webbrowser.ProgressBar.progressStep
 import uk.gov.dvla.vehicles.presentation.common.testhelpers.UiTag
 import org.openqa.selenium.{By, WebDriver, WebElement}
 import pages.common.ErrorPanel
@@ -61,14 +61,14 @@ class NewKeeperEnterAddressManuallyIntegrationSpec extends UiSpec with TestHarne
       go to BeforeYouStartPage
       cacheSetup()
       happyPath()
-      page.title should equal("Complete and confirm")
+      page.title should equal("Date of sale")
     }
 
     "accept when only mandatory fields only are input" taggedAs UiTag in new WebBrowser {
       go to BeforeYouStartPage
       cacheSetup()
       happyPathMandatoryFieldsOnly()
-      page.title should equal("Complete and confirm")
+      page.title should equal("Date of sale")
     }
 
     "display validation error messages when no details are entered" taggedAs UiTag in new WebBrowser {

@@ -4,7 +4,8 @@ import com.google.inject.Injector
 import com.tzavellas.sse.guice.ScalaModule
 import composition.{TestHarness, GlobalLike, TestComposition}
 import helpers.CookieFactoryForUISpecs
-import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.ProgressBar.progressStep
+import helpers.webbrowser.ProgressBar
+import ProgressBar.progressStep
 import uk.gov.dvla.vehicles.presentation.common.testhelpers.UiTag
 import helpers.UiSpec
 import models.{VehicleNewKeeperCompletionCacheKeys, CompleteAndConfirmFormModel}
@@ -18,13 +19,13 @@ import uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction
 import webserviceclients.fakes.FakeAddressLookupService.addressWithUprn
 import pages.changekeeper.CompleteAndConfirmPage.navigate
 import pages.changekeeper.CompleteAndConfirmPage.back
-import pages.changekeeper.CompleteAndConfirmPage.mileageTextBox
-import pages.changekeeper.CompleteAndConfirmPage.dayDateOfSaleTextBox
-import pages.changekeeper.CompleteAndConfirmPage.monthDateOfSaleTextBox
-import pages.changekeeper.CompleteAndConfirmPage.yearDateOfSaleTextBox
+import pages.changekeeper.DateOfSalePage.mileageTextBox
+import pages.changekeeper.DateOfSalePage.dayDateOfSaleTextBox
+import pages.changekeeper.DateOfSalePage.monthDateOfSaleTextBox
+import pages.changekeeper.DateOfSalePage.yearDateOfSaleTextBox
 import pages.changekeeper.CompleteAndConfirmPage.next
 import pages.changekeeper.CompleteAndConfirmPage.consent
-import pages.changekeeper.CompleteAndConfirmPage.useTodaysDate
+import pages.changekeeper.DateOfSalePage.useTodaysDate
 import webserviceclients.fakes.FakeDateServiceImpl.DateOfAcquisitionDayValid
 import webserviceclients.fakes.FakeDateServiceImpl.DateOfAcquisitionMonthValid
 import webserviceclients.fakes.FakeDateServiceImpl.DateOfAcquisitionYearValid
@@ -39,7 +40,7 @@ import play.api.test.FakeApplication
 import uk.gov.dvla.vehicles.presentation.common.mappings.TitleType
 
 final class CompleteAndConfirmIntegrationSpec extends UiSpec with TestHarness {
-  final val ProgressStepNumber = 5
+  final val ProgressStepNumber = 6
 
   "go to page" should {
     "display the page for a new keeper" taggedAs UiTag in new WebBrowser {
@@ -54,21 +55,21 @@ final class CompleteAndConfirmIntegrationSpec extends UiSpec with TestHarness {
       cacheSetup()
       go to CompleteAndConfirmPage
 
-      page.source.contains(EmailFeedbackLink) should equal(true)
+      page.source should include(EmailFeedbackLink)
     }
 
     "display the progress of the page when progressBar is set to true" taggedAs UiTag in new ProgressBarTrue {
       go to BeforeYouStartPage
       cacheSetup()
       go to CompleteAndConfirmPage
-      page.source.contains(progressStep(ProgressStepNumber)) should equal(true)
+      page.source should include(progressStep(ProgressStepNumber))
     }
 
     "not display the progress of the page when progressBar is set to false" taggedAs UiTag in new ProgressBarFalse {
       go to BeforeYouStartPage
       cacheSetup()
       go to CompleteAndConfirmPage
-      page.source.contains(progressStep(ProgressStepNumber)) should equal(false)
+      page.source should not include(progressStep(ProgressStepNumber))
     }
 
     "Redirect when no new keeper details are cached" taggedAs UiTag in new WebBrowser {
@@ -93,18 +94,6 @@ final class CompleteAndConfirmIntegrationSpec extends UiSpec with TestHarness {
       go to CompleteAndConfirmPage
       page.title should equal(VehicleLookupPage.title)
       assertCookiesDoesnExist(cookiesDeletedOnRedirect)
-    }
-
-    "display optional for vehicle mileage input" taggedAs UiTag in new ProgressBarFalse {
-      go to BeforeYouStartPage
-      cacheSetup()
-      go to CompleteAndConfirmPage
-
-      val pageChars = htmlRegex.replaceAllIn(page.source, "")
-      val pageCharsNoWhitespace = whitespaceRegex.replaceAllIn(pageChars, "")
-      val optionalLabelValue = "Vehiclemileage(optional)"
-
-      pageCharsNoWhitespace.contains(optionalLabelValue) should equal(true)
     }
   }
 
@@ -217,68 +206,6 @@ import play.api.test.FakeApplication
       countingWebService.calls should have size 1
     }*/
 
-    "display one validation error message when a mileage is entered greater than max length for a new keeper" taggedAs UiTag in new WebBrowser {
-      go to BeforeYouStartPage
-      cacheSetup()
-      navigate(mileage = "1000000")
-      ErrorPanel.numberOfErrors should equal(1)
-    }
-
-    "display one validation error message when a mileage is entered less than min length for a new keeper" taggedAs UiTag in new WebBrowser {
-      go to BeforeYouStartPage
-      cacheSetup()
-      navigate(mileage = "-1")
-      ErrorPanel.numberOfErrors should equal(1)
-    }
-
-    "display one validation error message when a mileage containing letters is entered for a new keeper" taggedAs UiTag in new WebBrowser {
-      go to BeforeYouStartPage
-      cacheSetup()
-      navigate(mileage = "a")
-      ErrorPanel.numberOfErrors should equal(1)
-    }
-
-    "display one validation error message when day date of sale is empty for a new keeper" taggedAs UiTag in new WebBrowser {
-      go to BeforeYouStartPage
-      cacheSetup()
-      navigate(dayDateOfSale = "")
-      ErrorPanel.numberOfErrors should equal(1)
-    }
-
-    "display one validation error message when month date of sale is empty for a new keeper" taggedAs UiTag in new WebBrowser {
-      go to BeforeYouStartPage
-      cacheSetup()
-      navigate(monthDateOfSale = "")
-      ErrorPanel.numberOfErrors should equal(1)
-    }
-
-    "display one validation error message when year date of sale is empty for a new keeper" taggedAs UiTag in new WebBrowser {
-      go to BeforeYouStartPage
-      cacheSetup()
-      navigate(yearDateOfSale = "")
-      ErrorPanel.numberOfErrors should equal(1)
-    }
-
-    "display one validation error message when day date of sale contains letters for a new keeper" taggedAs UiTag in new WebBrowser {
-      go to BeforeYouStartPage
-      cacheSetup()
-      navigate(dayDateOfSale = "a")
-      ErrorPanel.numberOfErrors should equal(1)
-    }
-
-    "display one validation error message when month date of sale contains letters for a new keeper" taggedAs UiTag in new WebBrowser {
-      go to BeforeYouStartPage
-      cacheSetup()
-      navigate(monthDateOfSale = "a")
-      ErrorPanel.numberOfErrors should equal(1)
-    }
-
-    "display one validation error message when year date of sale contains letters for a new keeper" taggedAs UiTag in new WebBrowser {
-      go to BeforeYouStartPage
-      cacheSetup()
-      navigate(yearDateOfSale = "a")
-      ErrorPanel.numberOfErrors should equal(1)
-    }
   }
 
 //    "redirect to vehicles lookup page if there is no allowGoingToCompleteAndConfirmPageCacheKey cookie e set" taggedAs UiTag in new WebBrowser {
@@ -310,11 +237,12 @@ import play.api.test.FakeApplication
         .privateKeeperDetails()
         .vehicleAndKeeperDetails()
         .newKeeperDetailsModel()
+        .dateOfSaleDetails()
         .allowGoingToCompleteAndConfirmPageCookie()
 
       go to CompleteAndConfirmPage
       click on back
-      page.title should equal(NewKeeperChooseYourAddressPage.title)
+      page.title should equal(DateOfSalePage.title)
     }
   }
 
@@ -322,6 +250,7 @@ import play.api.test.FakeApplication
     CookieFactoryForUISpecs
       .vehicleAndKeeperDetails()
       .newKeeperDetailsModel()
+      .dateOfSaleDetails()
       .allowGoingToCompleteAndConfirmPageCookie()
 
 //  class MockAppWebBrowser(webService: AcquireWebService) extends WebBrowser(
