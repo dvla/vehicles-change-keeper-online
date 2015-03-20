@@ -36,7 +36,7 @@ import common.model.NewKeeperEnterAddressManuallyFormModel.newKeeperEnterAddress
 import common.model.PrivateKeeperDetailsFormModel
 import common.model.PrivateKeeperDetailsFormModel.privateKeeperDetailsCacheKey
 import common.model.NewKeeperDetailsViewModel.newKeeperDetailsCacheKey
-import common.model.VehicleAndKeeperDetailsModel.VehicleAndKeeperLookupDetailsCacheKey
+import common.model.VehicleAndKeeperDetailsModel.vehicleAndKeeperLookupDetailsCacheKey
 import common.views.models.{AddressLinesViewModel, AddressAndPostcodeViewModel}
 import views.changekeeper.VehicleLookup.VehicleSoldTo_Private
 import webserviceclients.fakes.FakeAddressLookupService.{BuildingNameOrNumberValid, Line2Valid, Line3Valid, PostTownValid}
@@ -114,7 +114,7 @@ object CookieFactoryForUnitSpecs extends TestComposition {
                                    address: Option[AddressModel] = None,
                                    keeperEndDate: Option[DateTime] = None,
                                    keeperChangeDate: Option[DateTime] = None): Cookie = {
-    val key = VehicleAndKeeperLookupDetailsCacheKey
+    val key = vehicleAndKeeperLookupDetailsCacheKey
     val value = VehicleAndKeeperDetailsModel(
       registrationNumber = registrationNumber,
       make = vehicleMake,

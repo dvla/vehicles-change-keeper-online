@@ -10,7 +10,7 @@ import pages.changekeeper.{VehicleLookupPage, BeforeYouStartPage}
 import pages.common.Feedback.EmailFeedbackLink
 import uk.gov.dvla.vehicles.presentation.common
 import common.helpers.webbrowser.ProgressBar.progressStep
-import common.model.VehicleAndKeeperDetailsModel.VehicleAndKeeperLookupDetailsCacheKey
+import common.model.VehicleAndKeeperDetailsModel.vehicleAndKeeperLookupDetailsCacheKey
 import common.model.PrivateKeeperDetailsFormModel.privateKeeperDetailsCacheKey
 import common.testhelpers.UiTag
 
@@ -47,7 +47,7 @@ class BeforeYouStartIntegrationSpec extends UiSpec with TestHarness {
       go to BeforeYouStartPage
 
       webDriver.manage().getCookieNamed(VehicleLookupFormModelCacheKey) should equal(null)
-      webDriver.manage().getCookieNamed(VehicleAndKeeperLookupDetailsCacheKey) should equal(null)
+      webDriver.manage().getCookieNamed(vehicleAndKeeperLookupDetailsCacheKey) should equal(null)
       webDriver.manage().getCookieNamed(privateKeeperDetailsCacheKey) should equal(null)
     }
   }
