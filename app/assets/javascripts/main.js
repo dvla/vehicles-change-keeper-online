@@ -122,7 +122,9 @@ require(["jquery", "jquery-migrate", "header-footer-only", "form-checked-selecti
 
         hideEmailOnOther('#privatekeeper_title_titleOption_4', '.form-item #privatekeeper_title_titleText');
 
-        openFeedback('feedback-open', 'click');
+        if ($('#feedback-open').length) {
+            openFeedback('feedback-open', 'click');
+        }
 
         //html5 autofocus fallback for browsers that do not support it natively
         //if form element autofocus is not active, autofocus
