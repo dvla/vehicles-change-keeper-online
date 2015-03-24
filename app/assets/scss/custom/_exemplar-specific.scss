@@ -22,6 +22,12 @@
     }
 
     .acquire-complete-confirm {
+      div {
+         margin-bottom: 20px;
+      }
+      p {
+        margin-bottom: 5px;
+      }
       strong {
         text-transform: uppercase;
       }

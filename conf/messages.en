@@ -608,3 +608,4 @@ option-toggle.visible = Yes
 option-toggle.invisible = No
 
 change_keeper_date_of_sale.title = Date of sale
+change_keeper_date_of_sale.next = Next

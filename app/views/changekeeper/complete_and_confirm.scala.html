@@ -28,20 +28,27 @@
 
             <h1>@Messages("change_keeper_completeAndConfirm.title")</h1>
 
-            <p>
+            <div>
                 <h2>@Messages("change_keeper_completeandconfirm.newkeeperDetails")</h2>
+              <p>
                 @Messages("change_keeper_completeandconfirm.displayName")<br/>
                 <strong>@data.keeperDetails.displayName</strong><br/>
+              </p>
+              <p>
                 @Messages("change_keeper_completeandconfirm.address")<br/>
                 @for(addr <- data.keeperDetails.address.address) {<strong>@addr</strong><br/>}
-                @Messages("change_keeper_completeandconfirm.email")<br/>
+              </p>
 
+              <p>
+                @Messages("change_keeper_completeandconfirm.email")<br/>
                 @if(data.keeperDetails.email == None) {
                     <strong>@Messages("change_keeper_completeandconfirm.emailNotEntered")</strong><br/>
                 } else {
                     <strong> @data.keeperDetails.email.get</strong><br/>
                 }
+              </p>
 
+              <p>
                 @if(data.keeperDetails.isBusinessKeeper) {
                     @Messages("change_keeper_completeandconfirm.fleetNumber")<br/>
                     @if(data.keeperDetails.fleetNumber == None) {
@@ -50,19 +57,33 @@
                         <strong>@data.keeperDetails.fleetNumber.get</strong>
                     }
                 }
-            </p>
+              </p>
+            </div>
 
-            <p>
+            <div>
                 <h2>@Messages("change_keeper_completeandconfirm.vehicleDetails")</h2>
-                @Messages("change_keeper_completeandconfirm.vehicleReg")<br/>
-                <strong>@data.vehicleAndKeeperDetails.registrationNumber</strong><br/>
+                <p>
+                  @Messages("change_keeper_completeandconfirm.vehicleReg")<br/>
+                  <strong>@data.vehicleAndKeeperDetails.registrationNumber</strong>
+                </p>
+
+              <p>
                 @Messages("change_keeper_completeandconfirm.vehicleMake")<br/>
-                <strong>@data.vehicleAndKeeperDetails.make</strong><br/>
+                <strong>@data.vehicleAndKeeperDetails.make</strong>
+              </p>
+
+              <p>
                 @Messages("change_keeper_completeandconfirm.vehicleModel")<br/>
-                <strong>@data.vehicleAndKeeperDetails.model</strong><br/>
-                <strong>@data.dateOfSaleModel.mileage</strong><br/>
+                <strong>@data.vehicleAndKeeperDetails.model</strong>
+              </p>
+
+              <p>
+                <strong>@data.dateOfSaleModel.mileage</strong>
+                @Messages("change_keeper_date_of_sale.title")<br/>
                 <strong>@data.dateOfSaleModel.dateOfSale</strong>
-            </p>
+              </p>
+
+            </div>
 
             @form(action = controllers.routes.CompleteAndConfirm.submit()) {
                 @csrfTokenHiddenField()
