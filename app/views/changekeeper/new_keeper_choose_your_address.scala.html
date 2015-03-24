@@ -17,6 +17,7 @@
 @import views.html.changekeeper.main
 @import views.html.helper.form
 @import uk.gov.dvla.vehicles.presentation.common.model.NewKeeperChooseYourAddressFormModel.Form.AddressSelectId
+@import views.html.common.vehicle_detail_playback
 
 @main(
   progress = Some(Messages("change_keeper_progress_4")),
@@ -27,13 +28,7 @@
   <div class="two-col clearfix">
     <div class="first-col">
       <dl class="playback">
-        <dt><h2>@Messages("change_keeper_newKeeperChooseYourAddress.vehicledetails")</h2></dt>
-        <dt>@Messages("change_keeper_newKeeperChooseYourAddress.vehiclereg")</dt>
-        <dd>@viewModel.vehicleDetails.registrationNumber</dd>
-        <dt>@Messages("change_keeper_newKeeperChooseYourAddress.vehiclemake")</dt>
-        <dd>@viewModel.vehicleDetails.make</dd>
-        <dt>@Messages("change_keeper_newKeeperChooseYourAddress.vehiclemodel")</dt>
-        <dd>@viewModel.vehicleDetails.model</dd>
+          @vehicle_detail_playback(viewModel.vehicleDetails)
       </dl>
       <div class="alert-warning print-message">
         <p><strong>@Messages("change_keeper_newKeeperChooseYourAddress.p4")</strong></p>

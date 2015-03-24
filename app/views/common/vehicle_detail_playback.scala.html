@@ -1,0 +1,9 @@
+@(model: uk.gov.dvla.vehicles.presentation.common.model.VehicleAndKeeperDetailsModel)(implicit lang: Lang)
+
+<dt><h2>@Messages("change_keeper_playback.vehicledetails")</h2></dt>
+<dt>@Messages("change_keeper_playback.vehiclereg")</dt>
+<dd>@model.registrationNumber</dd>
+<dt>@Messages("change_keeper_playback.vehiclemake")</dt>
+<dd>@model.make</dd>
+<dt>@Messages("change_keeper_playback.vehiclemodel")</dt>
+<dd>@model.model</dd>

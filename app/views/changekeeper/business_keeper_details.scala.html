@@ -21,6 +21,7 @@
 @import common.views.html.widgets.base.valtechInputText
 @import common.views.html.widgets.optionalToggle
 @import views.html.helper.form
+@import views.html.common.vehicle_detail_playback
 
 @main(
   progress = Some(Messages("change_keeper_progress_3")),
@@ -34,13 +35,7 @@
         <h1 class="mobile-only">@Messages("changekeeper_businesskeeperdetails.title")</h1>
 
         <dl class="playback">
-            <dt><h2>@Messages("change_keeper_businesskeeperdetails.vehicledetails")</h2></dt>
-            <dt>@Messages("change_keeper_businesskeeperdetails.vehiclereg")</dt>
-            <dd>@viewModel.vehicleAndKeeperDetails.registrationNumber</dd>
-            <dt>@Messages("change_keeper_businesskeeperdetails.vehiclemake")</dt>
-            <dd>@viewModel.vehicleAndKeeperDetails.make</dd>
-            <dt>@Messages("change_keeper_businesskeeperdetails.vehiclemodel")</dt>
-            <dd>@viewModel.vehicleAndKeeperDetails.model</dd>
+            @vehicle_detail_playback(viewModel.vehicleAndKeeperDetails)
         </dl>
 
         <div class="alert-warning print-message">
