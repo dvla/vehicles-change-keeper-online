@@ -15,7 +15,6 @@
 @import models.DateOfSaleFormModel.Form.{MileageId, DateOfSaleId, TodaysDateId}
 @import models.CompleteAndConfirmFormModel.Form.ConsentId
 @import views.changekeeper.CompleteAndConfirm.{BackId, SubmitId, modify}
-@import views.html.common.vehicle_detail_playback
 
 @main(
     progress = Some(Messages("change_keeper_progress_6")),
@@ -25,39 +24,45 @@
 
     <div class="two-col clearfix acquire-complete-confirm">
 
-        <div class="first-col">
-            <dl class="playback">
-                <dt><h2>@Messages("change_keeper_completeandconfirm.newkeeperDetails")</h2></dt>
-                <dt>@Messages("change_keeper_completeandconfirm.displayName")</dt>
-                <dd>@data.keeperDetails.displayName</dd>
-                <dt>@Messages("change_keeper_completeandconfirm.address")</dt>
-                <dd>@for(addr <- data.keeperDetails.address.address) {@addr<br/>}</dd>
-                <dt>@Messages("change_keeper_completeandconfirm.email")</dt>
-                @if(data.keeperDetails.email == None) {
-                    <dd>@Messages("change_keeper_completeandconfirm.emailNotEntered")</dd>
-                } else {
-                    <dd>@data.keeperDetails.email.get</dd>
-                }
-                @if(data.keeperDetails.isBusinessKeeper) {
-                    <dt>@Messages("change_keeper_completeandconfirm.fleetNumber")</dt>
-                    @if(data.keeperDetails.fleetNumber == None) {
-                        <dd>@Messages("change_keeper_completeandconfirm.fleetNumberNotEntered")</dd>
-                    } else {
-                        <dd>@data.keeperDetails.fleetNumber.get</dd>
-                    }
-                }
-            </dl>
-            <dl class="playback">
-                @vehicle_detail_playback(data.vehicleAndKeeperDetails)
-                <dd>@data.vehicleAndKeeperDetails.model</dd>
-                <dd>@data.dateOfSaleModel.mileage</dd>
-                <dd>@data.dateOfSaleModel.dateOfSale</dd>
-            </dl>
-        </div>
-
         <div class="second-col">
 
             <h1>@Messages("change_keeper_completeAndConfirm.title")</h1>
+
+            <p>
+                <h2>@Messages("change_keeper_completeandconfirm.newkeeperDetails")</h2>
+                @Messages("change_keeper_completeandconfirm.displayName")<br/>
+                <strong>@data.keeperDetails.displayName</strong><br/>
+                @Messages("change_keeper_completeandconfirm.address")<br/>
+                @for(addr <- data.keeperDetails.address.address) {<strong>@addr</strong><br/>}
+                @Messages("change_keeper_completeandconfirm.email")<br/>
+
+                @if(data.keeperDetails.email == None) {
+                    <strong>@Messages("change_keeper_completeandconfirm.emailNotEntered")</strong><br/>
+                } else {
+                    <strong> @data.keeperDetails.email.get</strong><br/>
+                }
+
+                @if(data.keeperDetails.isBusinessKeeper) {
+                    @Messages("change_keeper_completeandconfirm.fleetNumber")<br/>
+                    @if(data.keeperDetails.fleetNumber == None) {
+                        <strong>@Messages("change_keeper_completeandconfirm.fleetNumberNotEntered")</strong>
+                    } else {
+                        <strong>@data.keeperDetails.fleetNumber.get</strong>
+                    }
+                }
+            </p>
+
+            <p>
+                <h2>@Messages("change_keeper_completeandconfirm.vehicleDetails")</h2>
+                @Messages("change_keeper_completeandconfirm.vehicleReg")<br/>
+                <strong>@data.vehicleAndKeeperDetails.registrationNumber</strong><br/>
+                @Messages("change_keeper_completeandconfirm.vehicleMake")<br/>
+                <strong>@data.vehicleAndKeeperDetails.make</strong><br/>
+                @Messages("change_keeper_completeandconfirm.vehicleModel")<br/>
+                <strong>@data.vehicleAndKeeperDetails.model</strong><br/>
+                <strong>@data.dateOfSaleModel.mileage</strong><br/>
+                <strong>@data.dateOfSaleModel.dateOfSale</strong>
+            </p>
 
             @form(action = controllers.routes.CompleteAndConfirm.submit()) {
                 @csrfTokenHiddenField()
