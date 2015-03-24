@@ -31,7 +31,7 @@ object CompleteAndConfirmFormModel {
     final def detailMapping(implicit dateService: DateService) = mapping(
       MileageId -> mileage,
       DateOfSaleId -> dateMapping.verifying(notInTheFuture())
-        .verifying(notBefore(dateService.now.toDateTime.toLocalDate.minusYears(5))),
+        .verifying(notBefore(dateService.now.toDateTime.toLocalDate.minusYears(50))),
       ConsentId -> consent
     )(CompleteAndConfirmFormModel.apply)(CompleteAndConfirmFormModel.unapply)
   }
