@@ -132,7 +132,7 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
       .withCookies(CookieFactoryForUnitSpecs.dateOfSaleModel())
       .withCookies(CookieFactoryForUnitSpecs.allowGoingToCompleteAndConfirm())
       val content = contentAsString(completeAndConfirm.present(request))
-      content should include("<dt>Fleet number</dt>")
+      content should include("Fleet number")
       content should include(s"$BusinessNameValid")
       content should include(s"$FleetNumberValid")
       content should include(s"$EmailValid")
