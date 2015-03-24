@@ -73,6 +73,27 @@ require(["jquery", "jquery-migrate", "header-footer-only", "form-checked-selecti
 
     $(function() {
 
+        // Enabling loading class/js animation on submit's CTAs
+        $(':submit').on('click', function(e) {
+            var runTimes;
+
+            if ( $(this).hasClass("disabled") ) {
+                return false;
+            }
+
+            $(this).html('Loading').addClass('loading-action disabled');
+            runTimes = 0;
+            setInterval(function() {
+                if ( runTimes < 3 ){
+                    $(':submit').append('.');
+                    runTimes++;
+                } else {
+                    runTimes = 0;
+                    $(':submit').html('Loading');
+                }
+            }, 1000);
+        });
+
         // Auto-tab for date format forms
         $('.form-date input').one('focus', function() {
 
@@ -105,7 +126,9 @@ require(["jquery", "jquery-migrate", "header-footer-only", "form-checked-selecti
 
         hideEmailOnOther('#privatekeeper_title_titleOption_4', '.form-item #privatekeeper_title_titleText');
 
-        openFeedback('feedback-open', 'click');
+        if ($('#feedback-open').length) {
+            openFeedback('feedback-open', 'click');
+        }
 
         //html5 autofocus fallback for browsers that do not support it natively
         //if form element autofocus is not active, autofocus
@@ -132,12 +155,6 @@ require(["jquery", "jquery-migrate", "header-footer-only", "form-checked-selecti
             }, 750, 'swing', function () {
                 window.location.hash = target;
             });
-        });
-
-        $(":submit").click(function() {
-           if($(this).hasClass("disabled")) return false;
-           $(this).addClass("disabled");
-           return true;
         });
 
         function updateCountdown() {
