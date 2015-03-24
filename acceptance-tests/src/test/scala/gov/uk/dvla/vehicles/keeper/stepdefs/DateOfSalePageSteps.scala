@@ -112,15 +112,5 @@ class DateOfSalePageSteps(webBrowserDriver: WebBrowserDriver) extends ScalaDsl w
   @When("^the Date of sale is not a valid gregorian date$")
   def the_Date_of_sale_is_not_a_valid_gregorian_date() {
   }
-
-//  @Then("^the user did not go to the next page$")
-//  def the_user_did_not_go_to_the_next_page(): Unit = {
-//    page.title shouldEqual DateOfSalePage.title
-//  }
-
-//  @Then("^the user is progressed to the next stage of the service$")
-//  def the_user_is_progressed_to_the_next_stage_of_the_service() {
-//    page.title shouldEqual CompleteAndConfirmPage.title
-//  }
 }
 

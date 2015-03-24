@@ -31,7 +31,7 @@ class CheckPreviousKeeperEndDateOrLastKeeperChangeDateAndCompareDateOfSale(webBr
     page.title shouldBe DateOfSalePage.title
   }
 
-  @Given("""^the user is on the Date of Sale page with Vehicle Registration number as "(.*?)"$""")
+  @Given("^The user goes to the Date of sale page entering registration number: (.*?)$")
   def the_user_is_on_the_Date_of_Sale_page_with_Vehicle_Registration_number_as(registrationNumber:String)  {
     goToDateOfSalePage(registrationNumber)
   }
