@@ -15,6 +15,7 @@
 @import models.DateOfSaleFormModel.Form.{MileageId, DateOfSaleId, TodaysDateId}
 @import models.CompleteAndConfirmFormModel.Form.ConsentId
 @import views.changekeeper.CompleteAndConfirm.{BackId, SubmitId, modify}
+@import views.html.common.vehicle_detail_playback
 
 @main(
     progress = Some(Messages("change_keeper_progress_6")),
@@ -47,12 +48,7 @@
                 }
             </dl>
             <dl class="playback">
-                <dt><h2>@Messages("change_keeper_completeandconfirm.vehicleDetails")</h2></dt>
-                <dt>@Messages("change_keeper_completeandconfirm.vehicleReg")</dt>
-                <dd>@data.vehicleAndKeeperDetails.registrationNumber</dd>
-                <dt>@Messages("change_keeper_completeandconfirm.vehicleMake")</dt>
-                <dd>@data.vehicleAndKeeperDetails.make</dd>
-                <dt>@Messages("change_keeper_completeandconfirm.vehicleModel")</dt>
+                @vehicle_detail_playback(data.vehicleAndKeeperDetails)
                 <dd>@data.vehicleAndKeeperDetails.model</dd>
                 <dd>@data.dateOfSaleModel.mileage</dd>
                 <dd>@data.dateOfSaleModel.dateOfSale</dd>
