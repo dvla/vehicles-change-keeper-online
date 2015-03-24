@@ -20,4 +20,10 @@
         padding: 0;
       }
     }
+
+    .acquire-complete-confirm {
+      strong {
+        text-transform: uppercase;
+      }
+    }
 } // end $htmlNamespace
