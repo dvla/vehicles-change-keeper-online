@@ -271,7 +271,7 @@ change_keeper_completeandconfirm.emailNotEntered = Not entered
 change_keeper_completeandconfirm.fleetNumber = Fleet number
 change_keeper_completeandconfirm.fleetNumberNotEntered = Not entered
 change_keeper_completeandconfirm.vehicleDetails = Vehicle details
-change_keeper_completeandconfirm.vehicleReg = Registration
+change_keeper_completeandconfirm.vehicleReg = Registration number
 change_keeper_completeandconfirm.vehicleMake = Make
 change_keeper_completeandconfirm.vehicleModel = Model
 change_keeper_completeAndConfirm.p1 = Please complete final details and confirm that the named individual has consented to become the new keeper of this vehicle
@@ -475,6 +475,7 @@ change_keeper_failure.transaction_details.transaction_id = Transaction ID
 change_keeper_failure.transaction_details.transaction_date = Transaction date
 change_keeper_failure.buttonnavprint = Print
 change_keeper_failure.finish = Finish
+error.date.notOne = Year cannot be 0000
 
 #keeper still on record (no previous disposal has been done to the vehicle so the keeper is still on record)
 error_suppressedV5C.title = Vehicle is part of a suppressed fleet
