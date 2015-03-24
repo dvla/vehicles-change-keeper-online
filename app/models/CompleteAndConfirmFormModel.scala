@@ -10,9 +10,7 @@ import uk.gov.dvla.vehicles.presentation.common.mappings.Mileage.mileage
 import uk.gov.dvla.vehicles.presentation.common.services.DateService
 import models.K2KCacheKeyPrefix.CookiePrefix
 
-case class CompleteAndConfirmFormModel(mileage: Option[Int],
-                                       dateOfSale: LocalDate,
-                                       consent: String)
+case class CompleteAndConfirmFormModel(consent: String)
 
 object CompleteAndConfirmFormModel {
   implicit val JsonFormat = Json.format[CompleteAndConfirmFormModel]
@@ -22,16 +20,10 @@ object CompleteAndConfirmFormModel {
   implicit val Key = CacheKey[CompleteAndConfirmFormModel](CompleteAndConfirmCacheKey)
 
   object Form {
-    final val MileageId = "mileage"
-    final val DateOfSaleId = "dateofsale"
-    final val TodaysDateId = "todays_date"
     final val ConsentId = "consent"
 
 
     final def detailMapping(implicit dateService: DateService) = mapping(
-      MileageId -> mileage,
-      DateOfSaleId -> dateMapping.verifying(notInTheFuture())
-        .verifying(notBefore(dateService.now.toDateTime.toLocalDate.minusYears(50))),
       ConsentId -> consent
     )(CompleteAndConfirmFormModel.apply)(CompleteAndConfirmFormModel.unapply)
   }

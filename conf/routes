@@ -39,13 +39,18 @@ GET         /new-keeper-choose-your-address/back        @controllers.NewKeeperCh
 GET         /new-keeper-enter-address-manually          @controllers.NewKeeperEnterAddressManually.present
 POST        /new-keeper-enter-address-manually          @controllers.NewKeeperEnterAddressManually.submit
 
-#page 5 - Complete and Confirm
+#page 5-  Dat of sale
+GET         /date-of-sale                               @controllers.DateOfSale.present
+GET         /date-of-sale/back                          @controllers.DateOfSale.back
+POST        /date-of-sale                               @controllers.DateOfSale.submitWithDateCheck
+POST        /date-of-sale/no-date-check                 @controllers.DateOfSale.submitNoDateCheck
+
+#page 6 - Complete and Confirm
 GET         /complete-and-confirm                       @controllers.CompleteAndConfirm.present
 GET         /complete-and-confirm/back                  @controllers.CompleteAndConfirm.back
-POST        /complete-and-confirm                       @controllers.CompleteAndConfirm.submitWithDateCheck
-POST        /complete-and-confirm/no-date-check         @controllers.CompleteAndConfirm.submitNoDateCheck
+POST        /complete-and-confirm                       @controllers.CompleteAndConfirm.submit
 
-#page 6 - Change keeper success
+#page 7 - Change keeper success
 GET         /change-keeper-success                      @controllers.ChangeKeeperSuccess.present
 POST        /change-keeper-finish                       @controllers.ChangeKeeperSuccess.finish
 

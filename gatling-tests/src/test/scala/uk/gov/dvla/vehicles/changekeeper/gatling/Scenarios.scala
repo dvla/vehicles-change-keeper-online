@@ -25,6 +25,7 @@ object Scenarios {
           chain.vehicleLookupSubmitNewBusinessKeeper,
           chain.businessKeeperDetailsSubmit,
           chain.newKeeperChooseYourAddressSubmit,
+          chain.dateOfSaleSubmit,
           chain.completeAndConfirmSubmit
         )
       )
@@ -41,6 +42,7 @@ object Scenarios {
           chain.vehicleLookupSubmitNewBusinessKeeper,
           chain.businessKeeperDetailsSubmit,
           chain.newKeeperChooseYourAddressSubmit,
+          chain.dateOfSaleSubmit,
           chain.completeAndConfirmSubmit
         )
       )
@@ -57,6 +59,7 @@ object Scenarios {
           chain.vehicleLookupSubmitNewPrivateKeeper,
           chain.privateKeeperDetailsSubmit,
           chain.newKeeperChooseYourAddressSubmit,
+          chain.dateOfSaleSubmit,
           chain.completeAndConfirmSubmit
         )
       )
@@ -73,6 +76,7 @@ object Scenarios {
           chain.vehicleLookupSubmitNewPrivateKeeper,
           chain.privateKeeperDetailsSubmit,
           chain.newKeeperChooseYourAddressSubmit,
+          chain.dateOfSaleSubmit,
           chain.completeAndConfirmSubmit
         )
       )

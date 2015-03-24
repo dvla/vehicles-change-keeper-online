@@ -7,7 +7,7 @@ import org.openqa.selenium.{By, WebElement, WebDriver}
 import pages.changekeeper.{ChangeKeeperSuccessPage, BeforeYouStartPage}
 import uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction
 import pages.common.Feedback.EmailFeedbackLink
-import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.ProgressBar.progressStep
+import helpers.webbrowser.ProgressBar.progressStep
 import composition.TestHarness
 
 class ChangeKeeperSuccessIntegrationSpec extends UiSpec with TestHarness {
@@ -58,9 +58,10 @@ class ChangeKeeperSuccessIntegrationSpec extends UiSpec with TestHarness {
   }
 
   private def cacheSetup()(implicit webDriver: WebDriver) =
-    CookieFactoryForUISpecs.
-      vehicleAndKeeperDetails().
-      newKeeperDetailsModel().
-      completeAndConfirmDetails().
-      completeAndConfirmResponseModelModel()
+    CookieFactoryForUISpecs
+      .vehicleAndKeeperDetails()
+      .newKeeperDetailsModel()
+      .dateOfSaleDetails()
+      .completeAndConfirmDetails()
+      .completeAndConfirmResponseModelModel()
 }

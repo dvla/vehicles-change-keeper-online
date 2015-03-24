@@ -3,6 +3,7 @@ package controllers.changeKeeper
 import controllers.changeKeeper.Common.PrototypeHtml
 import controllers.ChangeKeeperSuccess
 import helpers.{CookieFactoryForUnitSpecs, UnitSpec}
+import models.DateOfSaleFormModel
 import models.K2KCacheKeyPrefix.CookiePrefix
 import models.CompleteAndConfirmFormModel.CompleteAndConfirmCacheKey
 import models.CompleteAndConfirmResponseModel.ChangeKeeperCompletionResponseCacheKey
@@ -12,7 +13,7 @@ import org.mockito.Mockito.when
 import pages.changekeeper.BeforeYouStartPage
 import pages.changekeeper.BusinessKeeperDetailsPage.FleetNumberValid
 import pages.changekeeper.BusinessKeeperDetailsPage.BusinessNameValid
-import pages.changekeeper.CompleteAndConfirmPage.{DayDateOfSaleValid, MonthDateOfSaleValid, YearDateOfSaleValid}
+import pages.changekeeper.DateOfSalePage.{DayDateOfSaleValid, MonthDateOfSaleValid, YearDateOfSaleValid}
 import pages.changekeeper.PrivateKeeperDetailsPage.{FirstNameValid, LastNameValid, EmailValid}
 import play.api.test.Helpers.{LOCATION, OK, contentAsString, defaultAwaitTimeout}
 import play.api.test.{FakeRequest, WithApplication}
@@ -64,6 +65,7 @@ class ChangeKeeperSuccessUnitSpec extends UnitSpec {
 
       val request = FakeRequest().
         withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
+        withCookies(CookieFactoryForUnitSpecs.dateOfSaleModel()).
         withCookies(CookieFactoryForUnitSpecs.completeAndConfirmModel()).
         withCookies(CookieFactoryForUnitSpecs.completeAndConfirmResponseModelModel()).
         withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel(
@@ -91,6 +93,7 @@ class ChangeKeeperSuccessUnitSpec extends UnitSpec {
 
       val request = FakeRequest().
         withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
+        withCookies(CookieFactoryForUnitSpecs.dateOfSaleModel()).
         withCookies(CookieFactoryForUnitSpecs.completeAndConfirmModel()).
         withCookies(CookieFactoryForUnitSpecs.completeAndConfirmResponseModelModel()).
         withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel(
@@ -119,6 +122,7 @@ class ChangeKeeperSuccessUnitSpec extends UnitSpec {
       val request = FakeRequest().
         withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
         withCookies(CookieFactoryForUnitSpecs.vehicleLookupFormModel()).
+        withCookies(CookieFactoryForUnitSpecs.dateOfSaleModel()).
         withCookies(CookieFactoryForUnitSpecs.completeAndConfirmModel()).
         withCookies(CookieFactoryForUnitSpecs.completeAndConfirmResponseModelModel()).
         withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
@@ -132,6 +136,7 @@ class ChangeKeeperSuccessUnitSpec extends UnitSpec {
         verifyCookieHasBeenDiscarded(newKeeperDetailsCacheKey, cookies)
         verifyCookieHasBeenDiscarded(privateKeeperDetailsCacheKey, cookies)
         verifyCookieHasBeenDiscarded(businessKeeperDetailsCacheKey, cookies)
+        verifyCookieHasBeenDiscarded(DateOfSaleFormModel.DateOfSaleCacheKey, cookies)
         verifyCookieHasBeenDiscarded(CompleteAndConfirmCacheKey, cookies)
         verifyCookieHasBeenDiscarded(ChangeKeeperCompletionResponseCacheKey, cookies)
       }
@@ -141,6 +146,7 @@ class ChangeKeeperSuccessUnitSpec extends UnitSpec {
       val request = FakeRequest().
         withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
         withCookies(CookieFactoryForUnitSpecs.vehicleLookupFormModel()).
+        withCookies(CookieFactoryForUnitSpecs.dateOfSaleModel()).
         withCookies(CookieFactoryForUnitSpecs.completeAndConfirmModel()).
         withCookies(CookieFactoryForUnitSpecs.completeAndConfirmResponseModelModel()).
         withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
@@ -160,6 +166,7 @@ class ChangeKeeperSuccessUnitSpec extends UnitSpec {
     val request = FakeRequest().
       withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
       withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel()).
+      withCookies(CookieFactoryForUnitSpecs.dateOfSaleModel()).
       withCookies(CookieFactoryForUnitSpecs.completeAndConfirmModel()).
       withCookies(CookieFactoryForUnitSpecs.completeAndConfirmResponseModelModel())
     changeKeeperSuccess.present(request)

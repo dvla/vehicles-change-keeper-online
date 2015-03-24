@@ -71,7 +71,7 @@ class KeeperToKeeperAddressFieldsSteps(webBrowserDriver: WebBrowserDriver) exten
 
   @Then("^the trader details are retained$")
   def the_trader_details_are_retained()  {
-    page.title shouldEqual CompleteAndConfirmPage.title
+    page.title shouldEqual DateOfSalePage.title
   }
 
   @Given("^the data in Line one of the address has less than (\\d+) characters$")
@@ -122,9 +122,9 @@ class KeeperToKeeperAddressFieldsSteps(webBrowserDriver: WebBrowserDriver) exten
     NewKeeperEnterAddressManuallyPage.addressPostTown enter "hghjg"
   }
 
-  @Then("^the user is taken to the Complete & Confirm page$")
-  def the_user_is_taken_to_the_Complete_Confirm_page() {
-     page.title shouldEqual CompleteAndConfirmPage.title
+  @Then("^the user is taken to the Date of Sale page$")
+  def the_user_is_taken_to_the_date_of_sale_page() {
+     page.title shouldEqual DateOfSalePage.title
   }
 
   @When("^the user has selected the Back control$")

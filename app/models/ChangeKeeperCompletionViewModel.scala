@@ -7,6 +7,7 @@ import uk.gov.dvla.vehicles.presentation.common.model.{NewKeeperDetailsViewModel
 
 final case class ChangeKeeperCompletionViewModel(vehicleAndKeeperDetails: VehicleAndKeeperDetailsModel,
                                                  newKeeperDetails: NewKeeperDetailsViewModel,
+                                                 dateOfSaleViewModel: DateOfSaleFormModel,
                                                  completeAndConfirmDetails: CompleteAndConfirmFormModel,
                                                  completeAndConfirmResponseModel: CompleteAndConfirmResponseModel)
 

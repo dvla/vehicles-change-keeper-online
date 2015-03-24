@@ -9,7 +9,4 @@ import uk.gov.dvla.vehicles.presentation.common.model.VehicleAndKeeperDetailsMod
 case class CompleteAndConfirmViewModel(form: Form[CompleteAndConfirmFormModel],
                                        vehicleAndKeeperDetails: VehicleAndKeeperDetailsModel,
                                        keeperDetails: NewKeeperDetailsViewModel,
-                                       isSaleDateInvalid: Boolean,
-                                       isDateToCompareDisposalDate: Boolean,
-                                       submitAction: Call = CompleteAndConfirm.submitWithDateCheck(),
-                                       dateToCompare: Option[String] = None)
+                                       dateOfSaleModel: DateOfSaleFormModel)

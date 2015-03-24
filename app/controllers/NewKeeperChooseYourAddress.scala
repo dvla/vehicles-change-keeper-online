@@ -59,7 +59,7 @@ class NewKeeperChooseYourAddress @Inject()(protected override val addressLookupS
   override protected def vehicleLookupRedirect(implicit request: Request[_]) = Redirect(routes.VehicleLookup.present())
   
   override protected def completeAndConfirmRedirect(implicit request: Request[_]) = 
-    Redirect(routes.CompleteAndConfirm.present())
+    Redirect(routes.DateOfSale.present())
   
   override protected def upnpNotFoundRedirect(implicit request: Request[_]) = Redirect(routes.UprnNotFound.present())
 

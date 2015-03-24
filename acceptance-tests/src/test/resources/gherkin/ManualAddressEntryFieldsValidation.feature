@@ -35,7 +35,7 @@
     Scenario:
       Given the user is on the manual address page
       When the user has selected the submit control
-      Then the user is taken to the Complete & Confirm page
+      Then the user is taken to the Date of Sale page
 
     Scenario:
       Given the user is on the manual address page

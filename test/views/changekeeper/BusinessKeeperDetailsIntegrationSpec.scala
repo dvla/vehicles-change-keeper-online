@@ -2,7 +2,7 @@ package views.changekeeper
 
 import composition.TestHarness
 import helpers.CookieFactoryForUISpecs
-import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.ProgressBar
+import helpers.webbrowser.ProgressBar
 import ProgressBar.progressStep
 import uk.gov.dvla.vehicles.presentation.common.testhelpers.UiTag
 import helpers.UiSpec

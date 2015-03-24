@@ -25,7 +25,7 @@
         <div class="related vehicle-sold-by mobile-only">
             <dl class="playback bg-plain">
                 <dt>@Messages("change_keeper_success.date_of_sale.label")</dt>
-                <dd>@viewModel.completeAndConfirmDetails.dateOfSale.toString("dd/MM/yyyy")</dd>
+                <dd>@viewModel.dateOfSaleViewModel.dateOfSale.toString("dd/MM/yyyy")</dd>
             </dl>
         </div>
 
@@ -87,10 +87,10 @@
                     <dt>@Messages("change_keeper_success.vehicle_details.model")</dt>
                     <dd class="uppercase-text">@viewModel.vehicleAndKeeperDetails.model</dd>
                     <dt>@Messages("change_keeper_success.vehicle_details.mileage")</dt>
-                    @if(viewModel.completeAndConfirmDetails.mileage == None) {
+                    @if(viewModel.dateOfSaleViewModel.mileage == None) {
                     <dd class="uppercase-text">@Messages("change_keeper_success.vehicle_details.mileage_not_entered")</dd>
                     } else {
-                    <dd class="uppercase-text">@{java.text.NumberFormat.getIntegerInstance().format(viewModel.completeAndConfirmDetails.mileage.get)}</dd>
+                    <dd class="uppercase-text">@{java.text.NumberFormat.getIntegerInstance().format(viewModel.dateOfSaleViewModel.mileage.get)}</dd>
                     }
                 </dl>
             </div>
