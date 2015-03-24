@@ -87,7 +87,6 @@ class DateOfSale @Inject()(webService: AcquireService, emailService: EmailServic
         }
       } ,
       validForm => processValidForm(validDates, validForm)
-        .withCookie(AllowGoingToCompleteAndConfirmPageCacheKey, "true")
     )
   }
 
@@ -110,6 +109,7 @@ class DateOfSale @Inject()(webService: AcquireService, emailService: EmailServic
           // The dateOfSale is valid
           Redirect(routes.CompleteAndConfirm.present())
             .withCookie(validModel)
+            .withCookie(AllowGoingToCompleteAndConfirmPageCacheKey, "true")
         case Seq(endDateOrChangeDate) =>
           // The dateOfSale is invalid
           BadRequest(date_of_sale(
@@ -129,6 +129,7 @@ class DateOfSale @Inject()(webService: AcquireService, emailService: EmailServic
           // and move to the next page
           Redirect(routes.CompleteAndConfirm.present())
             .withCookie(validModel)
+            .withCookie(AllowGoingToCompleteAndConfirmPageCacheKey, "true")
       }
     }
 

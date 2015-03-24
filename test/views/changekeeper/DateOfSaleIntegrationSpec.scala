@@ -1,51 +1,18 @@
 package views.changekeeper
 
+import pages.changekeeper.VehicleLookupPage
 import composition.TestHarness
-import helpers.UiSpec
-import models.CompleteAndConfirmFormModel._
-import org.openqa.selenium.{By, WebElement}
-import pages.changekeeper.{VehicleLookupPage, CompleteAndConfirmPage}
-import pages.common.Feedback._
-import uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction
-import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.ProgressBar._
-import com.google.inject.Injector
-import com.tzavellas.sse.guice.ScalaModule
-import composition.{TestHarness, GlobalLike, TestComposition}
 import helpers.CookieFactoryForUISpecs
 import helpers.webbrowser.ProgressBar.progressStep
 import uk.gov.dvla.vehicles.presentation.common.testhelpers.UiTag
 import helpers.UiSpec
-import models.{VehicleNewKeeperCompletionCacheKeys, CompleteAndConfirmFormModel}
+import models.CompleteAndConfirmFormModel
 import org.openqa.selenium.{By, WebElement, WebDriver}
-import org.scalatest.mock.MockitoSugar
 import pages.common.ErrorPanel
 import pages.changekeeper._
-import play.api.i18n.Messages
-import play.api.libs.ws.WSResponse
 import uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction
-import webserviceclients.fakes.FakeAddressLookupService.addressWithUprn
 import pages.changekeeper.DateOfSalePage.navigate
-import pages.changekeeper.CompleteAndConfirmPage.back
-import pages.changekeeper.DateOfSalePage.mileageTextBox
-import pages.changekeeper.DateOfSalePage.dayDateOfSaleTextBox
-import pages.changekeeper.DateOfSalePage.monthDateOfSaleTextBox
-import pages.changekeeper.DateOfSalePage.yearDateOfSaleTextBox
-import pages.changekeeper.CompleteAndConfirmPage.next
-import pages.changekeeper.CompleteAndConfirmPage.consent
-import pages.changekeeper.DateOfSalePage.useTodaysDate
-import webserviceclients.fakes.FakeDateServiceImpl.DateOfAcquisitionDayValid
-import webserviceclients.fakes.FakeDateServiceImpl.DateOfAcquisitionMonthValid
-import webserviceclients.fakes.FakeDateServiceImpl.DateOfAcquisitionYearValid
 import pages.common.Feedback.EmailFeedbackLink
-import uk.gov.dvla.vehicles.presentation.common.mappings.TitleType
-import CompleteAndConfirmFormModel.AllowGoingToCompleteAndConfirmPageCacheKey
-import scala.concurrent.Future
-import play.api.test.FakeApplication
-import uk.gov.dvla.vehicles.presentation.common.testhelpers.HtmlTestHelper.{htmlRegex, whitespaceRegex}
-import scala.Some
-import play.api.test.FakeApplication
-import uk.gov.dvla.vehicles.presentation.common.mappings.TitleType
-
 
 class DateOfSaleIntegrationSpec extends UiSpec with TestHarness {
   private final val ProgressStepNumber = 5
