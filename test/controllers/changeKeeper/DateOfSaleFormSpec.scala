@@ -6,7 +6,6 @@ import helpers.UnitSpec
 import models.DateOfSaleFormModel
 import models.DateOfSaleFormModel.Form.{DateOfSaleId, MileageId}
 import org.joda.time.LocalDate
-import pages.changekeeper.CompleteAndConfirmPage.ConsentTrue
 import pages.changekeeper.DateOfSalePage.{DayDateOfSaleValid, MileageValid, MonthDateOfSaleValid, YearDateOfSaleValid}
 import play.api.data.Form
 import uk.gov.dvla.vehicles.presentation.common.mappings.DayMonthYear.{DayId, MonthId, YearId}
@@ -128,6 +127,16 @@ class DateOfSaleFormSpec extends UnitSpec {
 
     "not accept letters in year field" in new WithApplication {
       formWithValidDefaults(yearDateOfSale = "a").errors.flatMap(_.messages) should contain theSameElementsAs
+        List("error.date.invalid")
+    }
+
+    "not accept dates of sale that are earlier then 5 years in the past" in new WithApplication {
+      val oldDate = new LocalDate().minusYears(5).minusDays(1)
+      formWithValidDefaults(
+        yearDateOfSale = oldDate.yearOfCentury().toString,
+        monthDateOfSale = oldDate.monthOfYear().toString,
+        dayDateOfSale =  oldDate.dayOfMonth().toString
+      ).errors.flatMap(_.messages) should contain theSameElementsAs
         List("error.date.invalid")
     }
 

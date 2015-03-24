@@ -14,9 +14,6 @@ class BackBrowserButtonSteps(webBrowserDriver: WebBrowserDriver) extends ScalaDs
 
   def goToSuccessfulSummaryPage() = {
     happyPath.goToCompletAndConfirmPage()
-    CompleteAndConfirmPage.dayDateOfSaleTextBox enter "12"
-    CompleteAndConfirmPage.monthDateOfSaleTextBox enter "12"
-    CompleteAndConfirmPage.yearDateOfSaleTextBox enter "2010"
     click on CompleteAndConfirmPage.consent
     click on CompleteAndConfirmPage.next
     page.title shouldEqual ChangeKeeperSuccessPage.title

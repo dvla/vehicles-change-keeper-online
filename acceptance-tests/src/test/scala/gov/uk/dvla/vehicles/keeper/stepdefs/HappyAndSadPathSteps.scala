@@ -43,10 +43,12 @@ class HappyAndSadPathSteps(webBrowserDriver: WebBrowserDriver) extends ScalaDsl 
 
   @Then("^the user will be on complete and confirm page and click on confirm sale button$")
   def the_user_will_be_on_complete_and_confirm_page_and_click_on_confirm_sale_button() {
+    page.title shouldEqual DateOfSalePage.title
+    DateOfSalePage.dayDateOfSaleTextBox enter "11"
+    DateOfSalePage.monthDateOfSaleTextBox enter "11"
+    DateOfSalePage.yearDateOfSaleTextBox enter "2011"
+    click on DateOfSalePage.next
     page.title shouldEqual CompleteAndConfirmPage.title
-    CompleteAndConfirmPage.dayDateOfSaleTextBox enter "11"
-    CompleteAndConfirmPage.monthDateOfSaleTextBox enter "11"
-    CompleteAndConfirmPage.yearDateOfSaleTextBox enter "2001"
     click on CompleteAndConfirmPage.consent
     click on CompleteAndConfirmPage.next
   }
@@ -82,10 +84,12 @@ class HappyAndSadPathSteps(webBrowserDriver: WebBrowserDriver) extends ScalaDsl 
 
   @Then("^the user will be on Business keeper complete and confirm page and click on confirm sale button$")
   def the_user_will_be_on_Business_keeper_complete_and_confirm_page_and_click_on_confirm_sale_button() {
+    page.title shouldEqual DateOfSalePage.title
+    DateOfSalePage.dayDateOfSaleTextBox enter "11"
+    DateOfSalePage.monthDateOfSaleTextBox enter "11"
+    DateOfSalePage.yearDateOfSaleTextBox enter "2011"
+    click on DateOfSalePage.next
     page.title shouldEqual CompleteAndConfirmPage.title
-    CompleteAndConfirmPage.dayDateOfSaleTextBox enter "11"
-    CompleteAndConfirmPage.monthDateOfSaleTextBox enter "11"
-    CompleteAndConfirmPage.yearDateOfSaleTextBox enter "2001"
     click on CompleteAndConfirmPage.consent
     click on CompleteAndConfirmPage.next
   }
@@ -134,10 +138,12 @@ class HappyAndSadPathSteps(webBrowserDriver: WebBrowserDriver) extends ScalaDsl 
 
   @Then("^the user will be on unsuccesful postcode Business keeper complete and confirm page and click on confirm sale button$")
   def the_user_will_be_on_unsuccesful_postcode_Business_keeper_complete_and_confirm_page_and_click_on_confirm_sale_button() {
+    page.title shouldEqual DateOfSalePage.title
+    DateOfSalePage.dayDateOfSaleTextBox enter "11"
+    DateOfSalePage.monthDateOfSaleTextBox enter "11"
+    DateOfSalePage.yearDateOfSaleTextBox enter "2011"
+    click on DateOfSalePage.next
     page.title shouldEqual CompleteAndConfirmPage.title
-    CompleteAndConfirmPage.dayDateOfSaleTextBox enter "11"
-    CompleteAndConfirmPage.monthDateOfSaleTextBox enter "11"
-    CompleteAndConfirmPage.yearDateOfSaleTextBox enter "2001"
     click on CompleteAndConfirmPage.consent
     click on CompleteAndConfirmPage.next
   }
@@ -161,10 +167,12 @@ class HappyAndSadPathSteps(webBrowserDriver: WebBrowserDriver) extends ScalaDsl 
 
   @Then("^the user will be on unsuccesful postcode Private keeper complete and confirm page and click on confirm sale button$")
   def the_user_will_be_on_unsuccesful_postcode_Private_keeper_complete_and_confirm_page_and_click_on_confirm_sale_button()  {
+    page.title shouldEqual DateOfSalePage.title
+    DateOfSalePage.dayDateOfSaleTextBox enter "11"
+    DateOfSalePage.monthDateOfSaleTextBox enter "11"
+    DateOfSalePage.yearDateOfSaleTextBox enter "2011"
+    click on DateOfSalePage.next
     page.title shouldEqual CompleteAndConfirmPage.title
-    CompleteAndConfirmPage.dayDateOfSaleTextBox enter "11"
-    CompleteAndConfirmPage.monthDateOfSaleTextBox enter "11"
-    CompleteAndConfirmPage.yearDateOfSaleTextBox enter "2001"
     click on CompleteAndConfirmPage.consent
     click on CompleteAndConfirmPage.next
   }
@@ -193,10 +201,12 @@ class HappyAndSadPathSteps(webBrowserDriver: WebBrowserDriver) extends ScalaDsl 
 
   @Then("^the user will be on unsuccesful postcode Private keeper complete and confirm page and click on confirm sale button with failure data$")
   def the_user_will_be_on_unsuccesful_postcode_Private_keeper_complete_and_confirm_page_and_click_on_confirm_sale_button_with_failure_data()  {
+    page.title shouldEqual DateOfSalePage.title
+    DateOfSalePage.dayDateOfSaleTextBox enter "11"
+    DateOfSalePage.monthDateOfSaleTextBox enter "11"
+    DateOfSalePage.yearDateOfSaleTextBox enter "2011"
+    click on DateOfSalePage.next
     page.title shouldEqual CompleteAndConfirmPage.title
-    CompleteAndConfirmPage.dayDateOfSaleTextBox enter "11"
-    CompleteAndConfirmPage.monthDateOfSaleTextBox enter "11"
-    CompleteAndConfirmPage.yearDateOfSaleTextBox enter "2001"
     click on CompleteAndConfirmPage.consent
     click on CompleteAndConfirmPage.next
   }

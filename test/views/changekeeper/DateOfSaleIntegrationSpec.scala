@@ -12,7 +12,7 @@ import com.google.inject.Injector
 import com.tzavellas.sse.guice.ScalaModule
 import composition.{TestHarness, GlobalLike, TestComposition}
 import helpers.CookieFactoryForUISpecs
-import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.ProgressBar.progressStep
+import helpers.webbrowser.ProgressBar.progressStep
 import uk.gov.dvla.vehicles.presentation.common.testhelpers.UiTag
 import helpers.UiSpec
 import models.{VehicleNewKeeperCompletionCacheKeys, CompleteAndConfirmFormModel}
@@ -63,21 +63,21 @@ class DateOfSaleIntegrationSpec extends UiSpec with TestHarness {
       cacheSetup()
       go to DateOfSalePage
 
-      page.source.contains(EmailFeedbackLink) should equal(true)
+      page.source should include(EmailFeedbackLink)
     }
 
     "display the progress of the page when progressBar is set to true" taggedAs UiTag in new ProgressBarTrue {
       go to BeforeYouStartPage
       cacheSetup()
       go to DateOfSalePage
-      page.source.contains(progressStep(ProgressStepNumber)) should equal(true)
+      page.source should include(progressStep(ProgressStepNumber))
     }
 
     "not display the progress of the page when progressBar is set to false" taggedAs UiTag in new ProgressBarFalse {
       go to BeforeYouStartPage
       cacheSetup()
       go to DateOfSalePage
-      page.source.contains(progressStep(ProgressStepNumber)) should equal(false)
+      page.source should not include(progressStep(ProgressStepNumber))
     }
 
     "Redirect when no new keeper details are cached" taggedAs UiTag in new WebBrowser {
@@ -96,13 +96,9 @@ class DateOfSaleIntegrationSpec extends UiSpec with TestHarness {
     "display optional for vehicle mileage input" taggedAs UiTag in new ProgressBarFalse {
       go to BeforeYouStartPage
       cacheSetup()
-      go to CompleteAndConfirmPage
+      go to DateOfSalePage
 
-      val pageChars = htmlRegex.replaceAllIn(page.source, "")
-      val pageCharsNoWhitespace = whitespaceRegex.replaceAllIn(pageChars, "")
-      val optionalLabelValue = "Vehiclemileage(optional)"
-
-      pageCharsNoWhitespace should include(optionalLabelValue)
+      page.source should include("Vehicle mileage")
     }
   }
 
@@ -173,5 +169,5 @@ class DateOfSaleIntegrationSpec extends UiSpec with TestHarness {
   }
 
   private def cacheSetup()(implicit webDriver: WebDriver) =
-    CookieFactoryForUISpecs.vehicleAndKeeperDetails()
+    CookieFactoryForUISpecs.vehicleAndKeeperDetails().newKeeperDetailsModel()
 }

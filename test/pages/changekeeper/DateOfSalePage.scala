@@ -2,10 +2,11 @@ package pages.changekeeper
 
 import models.DateOfSaleFormModel.Form._
 import org.openqa.selenium.WebDriver
+import org.scalatest.ShouldMatchers
 import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser._
 import views.changekeeper.CompleteAndConfirm._
 
-object DateOfSalePage extends Page with WebBrowserDSL {
+object DateOfSalePage extends Page with WebBrowserDSL with ShouldMatchers {
   final val address = buildAppUrl("date-of-sale")
   override def url: String = WebDriverFactory.testUrl + address.substring(1)
   final override val title: String = "Date of sale"
@@ -33,7 +34,16 @@ object DateOfSalePage extends Page with WebBrowserDSL {
                dayDateOfSale: String = DayDateOfSaleValid,
                monthDateOfSale: String = MonthDateOfSaleValid,
                yearDateOfSale: String = YearDateOfSaleValid)(implicit driver: WebDriver) = {
-    go to CompleteAndConfirmPage
+    go to DateOfSalePage
+
+    page.source should(
+      include(BackId) and
+      include(SubmitId) and
+      include(MileageId) and
+      include(s"$DateOfSaleId" + "_day") and
+      include(s"$DateOfSaleId" + "_month") and
+      include(s"$DateOfSaleId" + "_year")
+    )
 
     mileageTextBox enter mileage
     dayDateOfSaleTextBox enter dayDateOfSale

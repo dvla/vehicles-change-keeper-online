@@ -14,13 +14,11 @@ class SummaryPageSteps (webBrowserDriver: WebBrowserDriver) extends ScalaDsl wit
   @Given("^the user is on the successful summary page$")
   def the_user_is_on_the_successful_summary_page() {
      happyPath.goToCompletAndConfirmPage()
-     CompleteAndConfirmPage.dayDateOfSaleTextBox enter "12"
-     CompleteAndConfirmPage.monthDateOfSaleTextBox enter "12"
-     CompleteAndConfirmPage.yearDateOfSaleTextBox enter "2010"
      click on CompleteAndConfirmPage.consent
      click on CompleteAndConfirmPage.next
      page.title shouldEqual ChangeKeeperSuccessPage.title
   }
+
   @Given("^the user can see the Transaction Id Finish and Print button$")
   def the_user_can_see_the_Transaction_Id_Finish_and_Print_button()  {
      page.source should include("BF51BOV-11111111111")

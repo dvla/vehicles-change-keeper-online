@@ -24,7 +24,6 @@ import common.model.NewKeeperChooseYourAddressFormModel.Form.AddressSelectId
 import common.model.NewKeeperChooseYourAddressFormModel.newKeeperChooseYourAddressCacheKey
 import common.clientsidesession.ClientSideSessionFactory
 import common.model.NewKeeperDetailsViewModel.newKeeperDetailsCacheKey
-import common.model.TraderDetailsModel.TraderDetailsCacheKey
 import common.model.NewKeeperEnterAddressManuallyFormModel.newKeeperEnterAddressManuallyCacheKey
 import common.testhelpers.CookieHelper.{fetchCookiesFromHeaders, verifyCookieHasBeenDiscarded, verifyCookieHasNotBeenDiscarded}
 import common.webserviceclients.addresslookup.ordnanceservey.AddressLookupServiceImpl
@@ -362,8 +361,7 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
         val cookies = r.header.headers.get(SET_COOKIE).toSeq.flatMap(Cookies.decode)
         cookies.map(_.name) should contain noneOf(
           newKeeperEnterAddressManuallyCacheKey,
-          newKeeperChooseYourAddressCacheKey,
-          TraderDetailsCacheKey
+          newKeeperChooseYourAddressCacheKey
         )
       }
     }
@@ -509,8 +507,7 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
         val cookies = r.header.headers.get(SET_COOKIE).toSeq.flatMap(Cookies.decode)
         cookies.map(_.name) should contain noneOf(
           newKeeperEnterAddressManuallyCacheKey,
-          newKeeperChooseYourAddressCacheKey,
-          TraderDetailsCacheKey
+          newKeeperChooseYourAddressCacheKey
           )
       }
     }

@@ -13,6 +13,7 @@ class Chains(data: RecordSeqFeederBuilder[String]) {
   private final val BusinessKeeperDetailsPageTitle = "Enter new keeper details"
   private final val PrivateKeeperDetailsPageTitle = "Enter new keeper details"
   private final val NewKeeperChooseYourAddressPageTitle = "Select new keeper address"
+  private final val DateOfSalePageTitle = "Date of sale"
   private final val CompleteAndConfirmPageTitle = "Complete and confirm"
   private final val VehicleDetailsPlaybackHeading = "Vehicle details"
   private final val BuyersDetailsPlaybackHeading = s"New keeper details"
@@ -186,6 +187,36 @@ class Chains(data: RecordSeqFeederBuilder[String]) {
           .formParam("action", "")
           // Assertions
           .check(regex( """<input type="hidden" name="csrf_prevention_token" value="(.*)"/>""").saveAs("csrf_prevention_token"))
+          .check(regex(DateOfSalePageTitle).exists)
+          .check(regex(BuyersDetailsPlaybackHeading).exists)
+          .check(regex("${expected_buyerName}").exists)
+          .check(regex("${expected_buyerAddressLine1}").exists)
+          .check(regex("${expected_buyerAddressLine2}").exists)
+          .check(regex("${expected_buyerAddressPostcode}").exists)
+          .check(regex(VehicleDetailsPlaybackHeading).exists)
+          .check(regex("${expected_registrationNumberFormatted}").exists)
+          .check(regex("${expected_make}").exists)
+          .check(regex("${expected_model}").exists)
+      )
+    )
+  }
+
+  def dateOfSaleSubmit = {
+    val url = "/date-of-sale"
+    val chainTitle = s"POST $url"
+    exitBlockOnFail(
+      exec(
+        http(chainTitle)
+          .post(url)
+          .headers(headers_x_www_form_urlencoded)
+          .formParam("mileage", "${mileage}")
+          .formParam("dateofsale.day", "${dateDay}")
+          .formParam("dateofsale.month", "${dateMonth}")
+          .formParam("dateofsale.year", "${dateYear}")
+          .formParam("csrf_prevention_token", "${csrf_prevention_token}")
+          .formParam("action", "")
+          // Assertions
+          .check(regex( """<input type="hidden" name="csrf_prevention_token" value="(.*)"/>""").saveAs("csrf_prevention_token"))
           .check(regex(CompleteAndConfirmPageTitle).exists)
           .check(regex(BuyersDetailsPlaybackHeading).exists)
           .check(regex("${expected_buyerName}").exists)
@@ -208,19 +239,16 @@ class Chains(data: RecordSeqFeederBuilder[String]) {
         http(chainTitle)
           .post(url)
           .headers(headers_x_www_form_urlencoded)
-          .formParam("mileage", "${mileage}")
-          .formParam("dateofsale.day", "${dateDay}")
-          .formParam("dateofsale.month", "${dateMonth}")
-          .formParam("dateofsale.year", "${dateYear}")
           .formParam("consent", "${consent}")
           .formParam("csrf_prevention_token", "${csrf_prevention_token}")
           .formParam("action", "")
           // Assertions
-          .check(regex( """<input type="hidden" name="csrf_prevention_token" value="(.*)"/>""").saveAs("csrf_prevention_token"))
+          .check(regex("""<input type="hidden" name="csrf_prevention_token" value="(.*)"/>""").saveAs("csrf_prevention_token"))
           .check(regex(SummaryPageTitle).exists)
           .check(regex(TransactionDetailsPlaybackHeading).exists)
           .check(regex("${expected_transactionId}").exists)
           .check(regex("${expected_transactionDate}").exists)
+          .notSilent
       )
     )
   }

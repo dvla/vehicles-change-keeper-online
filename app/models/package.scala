@@ -10,7 +10,7 @@ import common.model.NewKeeperChooseYourAddressFormModel.newKeeperChooseYourAddre
 import common.model.NewKeeperDetailsViewModel.newKeeperDetailsCacheKey
 import common.model.NewKeeperEnterAddressManuallyFormModel.newKeeperEnterAddressManuallyCacheKey
 import common.model.PrivateKeeperDetailsFormModel.privateKeeperDetailsCacheKey
-import common.model.VehicleAndKeeperDetailsModel.VehicleAndKeeperLookupDetailsCacheKey
+import common.model.VehicleAndKeeperDetailsModel.vehicleAndKeeperLookupDetailsCacheKey
 
 package object models {
   final val HelpCacheKey = s"${CookiePrefix}help"
@@ -23,7 +23,7 @@ package object models {
 
   final val VehicleDetailsCacheKeys = Set(
     VehicleLookupFormModelCacheKey,
-    VehicleAndKeeperLookupDetailsCacheKey
+    vehicleAndKeeperLookupDetailsCacheKey
   )
 
   final val PrivateKeeperDetailsCacheKeys = Set(

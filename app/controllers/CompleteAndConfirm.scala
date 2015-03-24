@@ -91,9 +91,11 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
             Redirect(routes.VehicleLookup.present()).discardingCookies()
           }
         },
-        validForm => processValidForm(validForm).map(_.discardingCookies(cookiesToBeDiscardedOnRedirectAway))
+        validForm => processValidForm(validForm)
       )
-    }(Future.successful(Redirect(routes.VehicleLookup.present()).discardingCookies(cookiesToBeDiscardedOnRedirectAway)))
+    }(Future.successful(
+      Redirect(routes.VehicleLookup.present()).discardingCookies(cookiesToBeDiscardedOnRedirectAway)
+    ))
   }
 
   private def processValidForm(validForm: CompleteAndConfirmFormModel)
@@ -165,11 +167,11 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
       newKeeperDetailsView, dateOfSaleFormModel, transactionTimestamp, trackingId)
     webService.invoke(disposeRequest, trackingId).map {
       case (httpResponseCode, response) =>
-        Some(Redirect(nextPage(httpResponseCode, response)(vehicleDetails,
-          newKeeperDetailsView, sellerEmailModel, trackingId)))
-          .map(_.withCookie(CompleteAndConfirmResponseModel(response.get.transactionId, transactionTimestamp)))
-          .map(_.withCookie(completeAndConfirmForm))
-          .get
+        val result = Redirect(
+          nextPage(httpResponseCode, response)(vehicleDetails, newKeeperDetailsView, sellerEmailModel, trackingId)
+        ).withCookie(CompleteAndConfirmResponseModel(response.get.transactionId, transactionTimestamp))
+         .withCookie(completeAndConfirmForm)
+        result
     }.recover {
       case e: Throwable =>
         Logger.warn(s"Acquire micro-service call failed.", e)

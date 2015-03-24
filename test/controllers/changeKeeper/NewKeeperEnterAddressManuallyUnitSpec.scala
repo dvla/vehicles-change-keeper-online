@@ -156,12 +156,11 @@ final class NewKeeperEnterAddressManuallyUnitSpec extends UnitSpec {
         postTown = "my town,"
       ))
 
-      validateAddressCookieValues(
-        result,
-        buildingName = "MY HOUSE",
-        line2 = "MY STREET",
-        line3 = "MY AREA",
-        postTown = "MY TOWN"
+      validateAddressCookieValues(result,
+        buildingName = "MY HOUSE,",
+        line2 = "MY STREET.",
+        line3 = "MY AREA.",
+        postTown = "MY TOWN,"
       )
     }
 
@@ -173,12 +172,11 @@ final class NewKeeperEnterAddressManuallyUnitSpec extends UnitSpec {
         postTown = "my town,,,.,,,."
       ))
 
-      validateAddressCookieValues(
-        result,
-        buildingName = "MY HOUSE",
-        line2 = "MY STREET",
-        line3 = "MY AREA",
-        postTown = "MY TOWN"
+      validateAddressCookieValues(result,
+        buildingName = "MY HOUSE,.,..,,",
+        line2 = "MY STREET...,,.,",
+        line3 = "MY AREA.,,..",
+        postTown = "MY TOWN,,,.,,,."
       )
     }
 
@@ -190,9 +188,8 @@ final class NewKeeperEnterAddressManuallyUnitSpec extends UnitSpec {
         postTown = "my t.own"
       ))
 
-      validateAddressCookieValues(
-        result,
-        buildingName = "MY HOUSE 1.1",
+      validateAddressCookieValues(result,
+        buildingName = "MY HOUSE 1.1,",
         line2 = "ST. SOMETHING STREET",
         line3 = "ST. JOHNS",
         postTown = "MY T.OWN"
@@ -286,7 +283,11 @@ final class NewKeeperEnterAddressManuallyUnitSpec extends UnitSpec {
         case Some(cookie) =>
           val json = cookie.value
           val model = deserializeJsonToModel[NewKeeperDetailsViewModel](json)
-          val expectedData = Seq(buildingName, line2, line3, postTown,postCode)
+          val expectedData = Seq(buildingName,
+            line2,
+            line3,
+            postTown,
+            postCode)
           expectedData should equal(model.address.address)
         case None => fail(s"$newKeeperDetailsCacheKey cookie not found")
       }

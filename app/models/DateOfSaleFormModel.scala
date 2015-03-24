@@ -4,7 +4,7 @@ import org.joda.time.LocalDate
 import play.api.data.Forms.mapping
 import play.api.libs.json.Json
 import uk.gov.dvla.vehicles.presentation.common.clientsidesession.CacheKey
-import uk.gov.dvla.vehicles.presentation.common.mappings.Date.{dateMapping, notInTheFuture}
+import uk.gov.dvla.vehicles.presentation.common.mappings.Date.{dateMapping, notInTheFuture, notBefore}
 import uk.gov.dvla.vehicles.presentation.common.mappings.Mileage.mileage
 import uk.gov.dvla.vehicles.presentation.common.services.DateService
 import models.K2KCacheKeyPrefix.CookiePrefix
@@ -24,6 +24,7 @@ object DateOfSaleFormModel {
     final def detailMapping(implicit dateService: DateService) = mapping(
       MileageId -> mileage,
       DateOfSaleId -> dateMapping.verifying(notInTheFuture())
+        .verifying(notBefore(dateService.now.toDateTime.toLocalDate.minusYears(5)))
     )(DateOfSaleFormModel.apply)(DateOfSaleFormModel.unapply)
   }
 }
