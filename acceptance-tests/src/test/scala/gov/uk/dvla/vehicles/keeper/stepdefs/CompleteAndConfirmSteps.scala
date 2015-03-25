@@ -76,5 +76,14 @@ class CompleteAndConfirmSteps(webBrowserDriver: WebBrowserDriver) extends ScalaD
   def an_error_message_displayed(err:String): Unit =  {
     page.source.contains("Transaction Unsuccessful")
   }
-}
 
+  @When("^The user clicks back on Complete and Confirm page$")
+  def the_user_clicks_back_on_Complete_and_Confirm_page(): Unit = {
+    click on CompleteAndConfirmPage.back
+  }
+
+  @When("^The user clicks back on Date of sale page$")
+  def the_user_clicks_back_on_Date_of_sale_page(): Unit = {
+    click on DateOfSalePage.back
+  }
+}

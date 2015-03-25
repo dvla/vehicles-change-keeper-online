@@ -15,3 +15,9 @@
       When the consent field is checked
       And   the user click on confirm sale button
       Then the user is progressed to the next stage of the service
+
+    Scenario: Go back to the address lookup page
+      When The user clicks back on Complete and Confirm page
+      Then the user is taken to the page entitled "Date of sale"
+      And  The user clicks back on Date of sale page
+      Then the user is taken to the page entitled "Select new keeper address"
