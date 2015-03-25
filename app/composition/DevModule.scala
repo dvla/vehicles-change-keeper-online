@@ -15,6 +15,7 @@ import common.clientsidesession.CookieNameHashGenerator
 import common.clientsidesession.EncryptedClientSideSessionFactory
 import common.clientsidesession.Sha1HashGenerator
 import common.filters.AccessLoggingFilter.AccessLoggerName
+import common.filters.{AccessLoggingConfig, DefaultAccessLoggingConfig}
 import common.services.DateService
 import common.services.DateServiceImpl
 import common.webserviceclients.addresslookup.{AddressLookupService, AddressLookupWebService}
@@ -71,6 +72,7 @@ class DevModule extends ScalaModule {
     bind[BruteForcePreventionService].to[BruteForcePreventionServiceImpl].asEagerSingleton()
 
     bind[LoggerLike].annotatedWith(Names.named(AccessLoggerName)).toInstance(Logger("dvla.pages.common.AccessLogger"))
+    bind[AccessLoggingConfig].toInstance(new DefaultAccessLoggingConfig())
     bind[DateTimeZoneService].toInstance(new DateTimeZoneServiceImpl)
     bind[HealthStats].asEagerSingleton()
   }
