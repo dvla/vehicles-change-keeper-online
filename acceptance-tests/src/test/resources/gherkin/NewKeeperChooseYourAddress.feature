@@ -5,7 +5,7 @@ Feature:
 
   Scenario: NewKeeper choose your address - Next
     When the user navigates forwards from NewKeeper choose your address page and there are no validation errors
-    Then the user is taken to the page entitled "Complete and confirm"
+    Then the user is taken to the page entitled "Date of sale"
 
   Scenario: NewKeeper choose your address - choose to enter address manually
     When the user navigates forwards from NewKeeper choose your address page to the enter address manually page

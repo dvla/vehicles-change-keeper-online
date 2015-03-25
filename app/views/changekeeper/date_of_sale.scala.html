@@ -57,7 +57,7 @@
 
         <div class="second-col">
 
-            <h1>@Messages("change_keeper_completeAndConfirm.title")</h1>
+            <h1>@Messages("change_keeper_date_of_sale.title")</h1>
 
             @form(action = data.submitAction) {
                 @csrfTokenHiddenField()
@@ -147,7 +147,7 @@
                     <br/>
                     <a class="back" id="@BackId"
                         @if(data.isSaleDateInvalid) {tabindex="-1"}
-                        href="@controllers.routes.CompleteAndConfirm.back()">
+                        href="@controllers.routes.DateOfSale.back()">
                         @Messages("change_keeper_completeAndConfirm.backbutton")
                     </a>
                 </div>
