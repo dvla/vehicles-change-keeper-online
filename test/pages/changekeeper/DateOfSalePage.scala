@@ -9,7 +9,7 @@ import views.changekeeper.CompleteAndConfirm._
 object DateOfSalePage extends Page with WebBrowserDSL with ShouldMatchers {
   final val address = buildAppUrl("date-of-sale")
   override def url: String = WebDriverFactory.testUrl + address.substring(1)
-  final override val title: String = "Date of sale"
+  final override val title: String = "Sale details"
 
   final val MileageValid = "1000"
   final val DayDateOfSaleValid = "19"

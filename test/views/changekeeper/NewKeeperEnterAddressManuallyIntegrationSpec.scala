@@ -61,14 +61,14 @@ class NewKeeperEnterAddressManuallyIntegrationSpec extends UiSpec with TestHarne
       go to BeforeYouStartPage
       cacheSetup()
       happyPath()
-      page.title should equal("Date of sale")
+      page.title should equal("Sale details")
     }
 
     "accept when only mandatory fields only are input" taggedAs UiTag in new WebBrowser {
       go to BeforeYouStartPage
       cacheSetup()
       happyPathMandatoryFieldsOnly()
-      page.title should equal("Date of sale")
+      page.title should equal("Sale details")
     }
 
     "display validation error messages when no details are entered" taggedAs UiTag in new WebBrowser {
