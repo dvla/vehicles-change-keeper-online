@@ -79,7 +79,13 @@
 
               <p>
                 @Messages("change_keeper_completeAndConfirm.mileage.label")<br/>
-                <strong>@data.dateOfSaleModel.mileage</strong>
+                <strong>
+                    @if(data.dateOfSaleModel.mileage.isDefined) {
+                      @data.dateOfSaleModel.mileage.toString
+                    } else {
+                      @Messages("change_keeper_completeandconfirm.emailNotEntered")
+                    }
+                </strong>
               </p>
 
               <p>
