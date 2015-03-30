@@ -279,6 +279,7 @@ change_keeper_completeAndConfirm.mileage.label = Vehicle mileage
 change_keeper_completeAndConfirm.mileage.hint = This should be rounded to the nearest mile
 change_keeper_completeAndConfirm.submitbutton = Confirm sale
 change_keeper_completeAndConfirm.backbutton = Back
+change_keeper_completeAndConfirm.date_of_sale = Date of sale
 change_keeper_privatekeeperdetailscomplete.mileage.validation  = You must enter a valid mileage between 0 and 999999
 change_keeper_completeAndConfirm.dateofsale.label = Date of sale
 change_keeper_completeandconfirm.dateofsale.hint = For example, 02 01 2015

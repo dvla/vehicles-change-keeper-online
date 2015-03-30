@@ -78,8 +78,18 @@
               </p>
 
               <p>
-                <strong>@data.dateOfSaleModel.mileage</strong>
-                @Messages("change_keeper_date_of_sale.title")<br/>
+                @Messages("change_keeper_completeAndConfirm.mileage.label")<br/>
+                <strong>
+                    @if(data.dateOfSaleModel.mileage.isDefined) {
+                      @data.dateOfSaleModel.mileage.toString
+                    } else {
+                      @Messages("change_keeper_completeandconfirm.emailNotEntered")
+                    }
+                </strong>
+              </p>
+
+              <p>
+                @Messages("change_keeper_completeAndConfirm.date_of_sale")<br/>
                 <strong>@data.dateOfSaleModel.dateOfSale.toString("dd/MM/yyyy")</strong>
               </p>
 
