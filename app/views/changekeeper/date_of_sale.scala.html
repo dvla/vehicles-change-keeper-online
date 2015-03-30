@@ -65,9 +65,15 @@
                 @if(data.isSaleDateInvalid) {
                     <div class="popup-modal">
                         @if(data.isDateToCompareDisposalDate) {
-                            <p>@Messages("change_keeper_completeandconfirm.dateofsale.disposalDate.warning", data.dateToCompare.getOrElse("NOT FOUND"))</p>
+                            <p>
+                                @Messages("change_keeper_completeandconfirm.dateofsale.disposalDate.warning",
+                                data.dateToCompare.getOrElse("NOT FOUND"))
+                            </p>
                         } else {
-                            <p>@Messages("change_keeper_completeandconfirm.dateofsale.keeperChangeDate.warning", data.dateToCompare.getOrElse("NOT FOUND"))</p>
+                            <p>
+                                @Messages("change_keeper_completeandconfirm.dateofsale.keeperChangeDate.warning",
+                                data.dateToCompare.getOrElse("NOT FOUND"))
+                            </p>
                         }
                         <div id=@DateOfSaleId>
                         @inputDayMonthYearTextbox(
@@ -115,6 +121,7 @@
                     @inputDayMonthYearTextbox(
                         field = data.form(DateOfSaleId),
                         args = Map(
+                            'autofocus -> true,
                             '_label -> Messages("change_keeper_completeAndConfirm.dateofsale.label")
                         ),
                         dateService = dateService,
@@ -154,5 +161,6 @@
             }
         </div>
     </div>
-    <script src="@controllers.StaticAssets.versioned(config.assetsUrl)("javascripts/firefox-dont-cache-page.js")" type="text/javascript"></script>
+    <script src="@controllers.StaticAssets.versioned(config.assetsUrl)("javascripts/firefox-dont-cache-page.js")"
+            type="text/javascript"></script>
 }

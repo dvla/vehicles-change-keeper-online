@@ -49,14 +49,21 @@
 
         <div class="form-steps">
             <div class="step">
-                <button id="printDisposalSuccess" type="button" name="action" value="printDisposalSuccess" class="button js-only print-button">
+                <button id="printDisposalSuccess"
+                        type="button"
+                        name="action"
+                        value="printDisposalSuccess"
+                        class="button js-only print-button">
                     @Messages("change_keeper_success.buttonnavprint")
                 </button>
             </div>
             <div class="step">
                 @form(action = controllers.routes.ChangeKeeperSuccess.finish()) {
                     @csrfTokenHiddenField()
-                    <button id="@FinishId" type="submit" name="action" class="button button-new-disposal button-secondary">
+                    <button id="@FinishId"
+                            type="submit"
+                            name="action"
+                            class="button button-new-disposal button-secondary">
                         @Messages("change_keeper_success.finish")
                     </button>
                 }
