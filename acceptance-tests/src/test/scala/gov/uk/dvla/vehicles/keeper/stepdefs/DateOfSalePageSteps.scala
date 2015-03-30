@@ -113,4 +113,3 @@ class DateOfSalePageSteps(webBrowserDriver: WebBrowserDriver) extends ScalaDsl w
   def the_Date_of_sale_is_not_a_valid_gregorian_date() {
   }
 }
-

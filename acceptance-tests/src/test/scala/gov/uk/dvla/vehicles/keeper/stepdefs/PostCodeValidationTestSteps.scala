@@ -14,8 +14,8 @@ class PostCodeValidationTestSteps(webBrowserDriver: WebBrowserDriver) extends Sc
 
   @When("^the user enters an invalid postcode$")
   def the_user_enters_an_invalid_postcode()  {
-      PrivateKeeperDetailsPage.postcodeTextBox enter "rewrewrew"
-      click on PrivateKeeperDetailsPage.next
+    PrivateKeeperDetailsPage.postcodeTextBox enter "rewrewrew"
+    click on PrivateKeeperDetailsPage.next
   }
 
   @Then("^the user will see an error message \"(.*?)\"$")
@@ -24,7 +24,7 @@ class PostCodeValidationTestSteps(webBrowserDriver: WebBrowserDriver) extends Sc
   }
 
   @Then("^an error message  displays \"(.*?)\"$")
-  def  an_error_message_displays(g:String) {
+  def an_error_message_displays(g:String) {
   }
 
   @When("^the user enters an null in  postcode textbox$")

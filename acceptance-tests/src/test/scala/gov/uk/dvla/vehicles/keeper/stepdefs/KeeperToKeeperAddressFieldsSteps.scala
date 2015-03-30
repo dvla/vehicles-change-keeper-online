@@ -137,6 +137,6 @@ class KeeperToKeeperAddressFieldsSteps(webBrowserDriver: WebBrowserDriver) exten
   @Then("^the user is taken to the previous Address not found page$")
   def the_user_is_taken_to_the_previous_Address_not_found_page(): Unit = {
     page.title shouldEqual NewKeeperChooseYourAddressPage.title
-    page.text.contains("No address found for that postcode") shouldBe true
+    page.text should include("No address found for that postcode")
   }
 }
