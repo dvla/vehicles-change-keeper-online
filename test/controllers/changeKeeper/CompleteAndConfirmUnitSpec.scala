@@ -252,8 +252,7 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
 //    when(config.acquire).thenReturn(new AcquireConfig)
     when(config.assetsUrl).thenReturn(None)
 
-    val emailConfiguration = EmailConfiguration(host = "localhost", port = 80,
-      username = "username", password = "password",
+    val emailConfiguration = EmailConfiguration(
       from = From(email = "", name = ""), feedbackEmail = From(email = "", name = ""),
       whiteList = None)
     when(config.emailConfiguration). thenReturn(emailConfiguration)

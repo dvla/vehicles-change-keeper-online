@@ -43,10 +43,6 @@ class TestConfig extends Config {
   def emailServiceMsRequestTimeout: Int = 10000
 
   def emailConfiguration: EmailConfiguration = EmailConfiguration(
-    "",
-    25,
-    "",
-    "",
     From("", "DO-NOT-REPLY"),
     From("", "Feedback"),
     None
