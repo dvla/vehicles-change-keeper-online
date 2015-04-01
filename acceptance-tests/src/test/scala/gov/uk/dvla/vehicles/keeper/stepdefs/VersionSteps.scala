@@ -25,7 +25,7 @@ class VersionSteps(webBrowserDriver: WebBrowserDriver) extends ScalaDsl with EN 
     }).useTLS().build()
 
     val httpClient = HttpClientBuilder.create.setSslcontext(sslContext).build()
-    val post = new HttpGet(WebDriverFactory.testUrl +  Version.Suffix)
+    val post = new HttpGet(WebDriverFactory.testUrl +  "version")
     val httpResponse = httpClient.execute(post)
     versionString = fromInputStream(httpResponse.getEntity.getContent).mkString
     httpResponse.close()
