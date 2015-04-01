@@ -1,3 +1,21 @@
+======== 1.6 ========
+Time of release binaries creation:
+Wed Apr 01 14:50:50 UTC 2015
+
+f77c515 US2193: remove unused values from email config
+4d0742e US2636 Turned on brute force in the sandbox and got gatling and ATs working with it
+a9f9049 US2762 - change email template for new owner
+f8ca275 DE413 - change messages
+e974603 DE410 - date goes 50 years into the past
+a248a8c DE363 - change error message
+52f9fd8 DE412
+1c35fda US2682 - combining click on submit events
+88cd5ca US2458 - The new page for complete and confirm flow
+567d1f7 US2683 - adding autotab script
+10a269f US2635 - Removed cookies that are only used in testing.
+aa3bc44 US2716 - styling layout closing soon warning
+bdb0398 US2639 - adding title to header
+
 ======== 1.5 ========
 Time of release binaries creation:
 Tue Mar 17 15:23:54 UTC 2015
