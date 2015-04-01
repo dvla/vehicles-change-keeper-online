@@ -14,7 +14,7 @@ class ChangeKeeperSimulation extends Simulation {
   private val oneUser = atOnceUsers(1)
 
   setUp(
-    verifyAssetsAreAccessible.inject(oneUser),
+    //verifyAssetsAreAccessible.inject(oneUser),
     sellToBusinessKeeper.inject(oneUser),
     sellToBusinessKeeperAllOptionalDataFilledIn.inject(oneUser),
     sellToPrivateKeeper.inject(oneUser),
