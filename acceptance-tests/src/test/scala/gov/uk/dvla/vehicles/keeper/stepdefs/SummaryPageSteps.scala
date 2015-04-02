@@ -13,7 +13,7 @@ class SummaryPageSteps (webBrowserDriver: WebBrowserDriver) extends ScalaDsl wit
 
   @Given("^the user is on the successful summary page$")
   def the_user_is_on_the_successful_summary_page() {
-     happyPath.goToCompletAndConfirmPage()
+     happyPath.goToCompletAndConfirmPage("BF51BOV")
      click on CompleteAndConfirmPage.consent
      click on CompleteAndConfirmPage.next
      page.title shouldEqual ChangeKeeperSuccessPage.title

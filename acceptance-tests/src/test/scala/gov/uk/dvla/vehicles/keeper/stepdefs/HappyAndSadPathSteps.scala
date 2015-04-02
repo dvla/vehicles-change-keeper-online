@@ -2,6 +2,7 @@ package gov.uk.dvla.vehicles.keeper.stepdefs
 
 import cucumber.api.scala.{EN, ScalaDsl}
 import cucumber.api.java.en.{Given,Then, When}
+import helpers.RandomVrmGenerator
 import org.openqa.selenium.WebDriver
 import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.{WebBrowserDSL, WebBrowserDriver}
 import org.scalatest.Matchers
@@ -19,7 +20,7 @@ class HappyAndSadPathSteps(webBrowserDriver: WebBrowserDriver) extends ScalaDsl 
   @When("^the keeper sold the vehicle to the private keeper after entering valid registration and doc ref number and click on submit button$")
   def the_keeper_sold_the_vehicle_to_the_private_keeper_after_entering_valid_registration_and_doc_ref_number_and_click_on_submit_button() {
     page.title shouldEqual VehicleLookupPage.title
-    VehicleLookupPage.vehicleRegistrationNumber enter "A1"
+    VehicleLookupPage.vehicleRegistrationNumber enter RandomVrmGenerator.uniqueVrm
     VehicleLookupPage.documentReferenceNumber enter "11111111111"
     click on VehicleLookupPage.emailInvisible
     click on VehicleLookupPage.vehicleSoldToPrivateIndividual
@@ -61,7 +62,7 @@ class HappyAndSadPathSteps(webBrowserDriver: WebBrowserDriver) extends ScalaDsl 
   @When("^the keeper sold the vehicle to the Business keeper after entering valid registration and doc ref number and click on submit button$")
   def the_keeper_sold_the_vehicle_to_the_Business_keeper_after_entering_valid_registration_and_doc_ref_number_and_click_on_submit_button() {
     page.title shouldEqual VehicleLookupPage.title
-    VehicleLookupPage.vehicleRegistrationNumber enter "B1"
+    VehicleLookupPage.vehicleRegistrationNumber enter RandomVrmGenerator.uniqueVrm
     VehicleLookupPage.documentReferenceNumber enter "11111111111"
     click on VehicleLookupPage.emailInvisible
     click on VehicleLookupPage.vehicleSoldToBusiness
