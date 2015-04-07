@@ -4,32 +4,28 @@ import controllers.changeKeeper.Common.PrototypeHtml
 import controllers.{CompleteAndConfirm, PrivateKeeperDetails}
 import helpers.UnitSpec
 import helpers.CookieFactoryForUnitSpecs
-import models.CompleteAndConfirmFormModel
+import models.CompleteAndConfirmFormModel.AllowGoingToCompleteAndConfirmPageCacheKey
 import models.CompleteAndConfirmFormModel.Form.ConsentId
-import org.joda.time.{DateTime, Instant}
-import org.joda.time.format.DateTimeFormat
+import org.joda.time.Instant
 import org.mockito.Matchers.{any, anyString}
 import org.mockito.Mockito.{never, times, verify, when}
 import pages.changekeeper.BusinessKeeperDetailsPage.{BusinessNameValid, EmailValid, FleetNumberValid}
 import pages.changekeeper.ChangeKeeperSuccessPage
 import pages.changekeeper.CompleteAndConfirmPage.ConsentTrue
-import pages.changekeeper.DateOfSalePage.DayDateOfSaleValid
 import pages.changekeeper.DateOfSalePage.MileageValid
-import pages.changekeeper.DateOfSalePage.MonthDateOfSaleValid
-import models.CompleteAndConfirmFormModel._
 import pages.changekeeper.DateOfSalePage.YearDateOfSaleValid
 import pages.changekeeper.PrivateKeeperDetailsPage.{FirstNameValid, LastNameValid}
 import pages.changekeeper.VehicleLookupPage
-import play.api.test.Helpers.{LOCATION, BAD_REQUEST, OK, contentAsString, defaultAwaitTimeout}
+import play.api.test.Helpers.{BAD_REQUEST, contentAsString, defaultAwaitTimeout, LOCATION, OK}
 import play.api.test.{FakeRequest, WithApplication}
-import uk.gov.dvla.vehicles.presentation.common.testhelpers.CookieHelper
-import uk.gov.dvla.vehicles.presentation.common.testhelpers.CookieHelper._
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.ClientSideSessionFactory
 import common.services.DateService
 import common.services.SEND.EmailConfiguration
+import common.testhelpers.CookieHelper
+import common.testhelpers.CookieHelper.fetchCookiesFromHeaders
 import common.views.models.DayMonthYear
 import common.webserviceclients.acquire.{AcquireRequestDto, AcquireService}
 import common.webserviceclients.emailservice.From
@@ -184,11 +180,11 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
       val result = completeAndConfirm.submit(request)
       whenReady(result) { r =>
         r.header.status should equal(BAD_REQUEST)
-        fetchCookiesFromHeaders(r).map(_.name) should not contain(AllowGoingToCompleteAndConfirmPageCacheKey)
+        fetchCookiesFromHeaders(r).map(_.name) should not contain AllowGoingToCompleteAndConfirmPageCacheKey
       }
     }
 
-    "Call the microservice and redirect to the next page if consent has been ticked" in new WithApplication {
+    "call the micro services and redirect to the next page if consent has been ticked" in new WithApplication {
       val request = buildCorrectlyPopulatedRequest()
         .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
         .withCookies(CookieFactoryForUnitSpecs.vehicleLookupFormModel())
@@ -197,7 +193,7 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
         .withCookies(CookieFactoryForUnitSpecs.dateOfSaleModel())
         .withCookies(CookieFactoryForUnitSpecs.allowGoingToCompleteAndConfirm())
 
-      val (acquireServiceMock, emailServiceMock, completeAndConfirm) = createMocks
+      val (acquireServiceMock, emailServiceMock, completeAndConfirm) = createControllerAndMocks
 
       val result = completeAndConfirm.submit(request)
       whenReady(result) { r =>
@@ -205,6 +201,25 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
         CookieHelper.verifyCookieHasBeenDiscarded(AllowGoingToCompleteAndConfirmPageCacheKey, fetchCookiesFromHeaders(r))
         verify(acquireServiceMock, times(1)).invoke(any[AcquireRequestDto], anyString())
         verify(emailServiceMock, times(1)).invoke(any[EmailServiceSendRequest], anyString())
+      }
+    }
+
+    "return a bad request and not call the micro services if consent is not ticked" in new WithApplication {
+      val request = buildCorrectlyPopulatedRequest(consent = "")
+        .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
+        .withCookies(CookieFactoryForUnitSpecs.vehicleLookupFormModel())
+        .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
+        .withCookies(CookieFactoryForUnitSpecs.sellerEmailModel())
+        .withCookies(CookieFactoryForUnitSpecs.dateOfSaleModel())
+        .withCookies(CookieFactoryForUnitSpecs.allowGoingToCompleteAndConfirm())
+
+      val (acquireServiceMock, emailServiceMock, completeAndConfirm) = createControllerAndMocks
+
+      val result = completeAndConfirm.submit(request)
+      whenReady(result) { r =>
+        r.header.status should equal(BAD_REQUEST)
+        verify(acquireServiceMock, never()).invoke(any[AcquireRequestDto], anyString())
+        verify(emailServiceMock, never()).invoke(any[EmailServiceSendRequest], anyString())
       }
     }
   }
@@ -216,19 +231,6 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
     new CompleteAndConfirm(acquireService, emailService)
   }
 
-  /*
-  private def acquireWebService(acquireServiceStatus: Int = OK,
-                                acquireServiceResponse: Option[AcquireResponseDto] = Some(acquireResponseSuccess)): AcquireService = {
-    val acquireWebService = mock[AcquireWebService]
-    when(acquireWebService.callAcquireService(any[AcquireRequestDto], any[String])).
-      thenReturn(Future.successful {
-      val fakeJson = acquireServiceResponse map (Json.toJson(_))
-      new FakeResponse(status = acquireServiceStatus, fakeJson = fakeJson) // Any call to a webservice will always return this successful response.
-    })
-
-    acquireWebService
-  }
-*/
   private def dateServiceStubbed(day: Int = 1,
                                  month: Int = 1,
                                  year: Int = 2014) = {
@@ -249,7 +251,6 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
     val config = mock[Config]
     when(config.isPrototypeBannerVisible).thenReturn(true)
     when(config.googleAnalyticsTrackingId).thenReturn(Some("trackingId"))
-//    when(config.acquire).thenReturn(new AcquireConfig)
     when(config.assetsUrl).thenReturn(None)
 
     val emailConfiguration = EmailConfiguration(
@@ -259,9 +260,7 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
     config
   }
 
-
-  def createMocks: (AcquireService, EmailService, CompleteAndConfirm) = {
-
+  def createControllerAndMocks: (AcquireService, EmailService, CompleteAndConfirm) = {
     val acquireServiceMock: AcquireService = mock[AcquireService]
     when(acquireServiceMock.invoke(any[AcquireRequestDto], any[String])).
       thenReturn(Future.successful {
@@ -275,21 +274,7 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
     val completeAndConfirm = completeAndConfirmController(acquireServiceMock, emailServiceMock)
 
     (acquireServiceMock, emailServiceMock, completeAndConfirm)
-
   }
-
-//  private def acquireController(acquireWebService: AcquireWebService): CompleteAndConfirm = {
-//    val acquireService = new AcquireServiceImpl(config.acquire, acquireWebService)
-//    acquireController(acquireWebService, acquireService)
-//  }
-
-//  private def acquireController(acquireWebService: AcquireWebService, acquireService: AcquireService)
-//                               (implicit config: Config = config, dateService: DateService = dateServiceStubbed()):
-//  CompleteAndConfirm = {
-//    implicit val clientSideSessionFactory = injector.getInstance(classOf[ClientSideSessionFactory])
-//
-//    new CompleteAndConfirm(acquireService)
-//  }
 
   private def buildCorrectlyPopulatedRequest(consent: String = ConsentTrue) = {
     FakeRequest().withFormUrlEncodedBody(
