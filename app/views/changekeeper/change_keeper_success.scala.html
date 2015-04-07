@@ -112,6 +112,8 @@
                     <dd class="uppercase-text">@for(addr <- viewModel.newKeeperDetails.address.address) {@addr<br/>}</dd>
                     <dt>@Messages("change_keeper_success.vehicle_details.email")</dt>
                     <dd class="uppercase-text">@viewModel.newKeeperDetails.email.getOrElse(Messages("change_keeper_email_not_entered"))</dd>
+                    <dt class="hidden">@Messages("change_keeper_success.date_of_sale.label")</dt>
+                    <dd class="hidden">@viewModel.dateOfSaleViewModel.dateOfSale.toString("dd/MM/yyyy")</dd>
                 </dl>
             </div>
         </div>
