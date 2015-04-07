@@ -324,8 +324,8 @@ change_keeper_success.vehicle_details.address = Address
 change_keeper_success.vehicle_details.postcode = Postcode
 change_keeper_success.vehicle_details.email = Contact email address
 change_keeper_success.further_information.alert = Please destroy V5C. You may wish to take a print of this summary page for your records
-change_keeper_success.vehicle_details.p1 = Details of the vehicle being sold
-change_keeper_success.new_keeper_details.p1 = Details of the new keeper
+change_keeper_success.vehicle_details.p1 = Vehicle details
+change_keeper_success.new_keeper_details.p1 = New keeper details
 change_keeper_success.further_information.header = What happens next for you?
 change_keeper_success.further_information.header.2 = What happens next for the new keeper?
 
