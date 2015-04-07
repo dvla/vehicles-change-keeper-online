@@ -1,17 +1,22 @@
 package controllers
 
 import com.google.inject.Inject
-import email.{EmailSellerMessageBuilder, EmailMessageBuilder}
-import models._
+import email.{EmailMessageBuilder, EmailSellerMessageBuilder}
+import models.AllCacheKeys
+import models.CompleteAndConfirmFormModel
 import models.CompleteAndConfirmFormModel.AllowGoingToCompleteAndConfirmPageCacheKey
 import models.CompleteAndConfirmFormModel.Form.ConsentId
+import models.CompleteAndConfirmResponseModel
+import models.CompleteAndConfirmViewModel
+import models.DateOfSaleFormModel
 import models.K2KCacheKeyPrefix.CookiePrefix
+import models.SellerEmailModel
+import models.VehicleLookupFormModel
 import org.joda.time.DateTime
 import org.joda.time.format.ISODateTimeFormat
 import play.api.data.{FormError, Form}
 import play.api.Logger
 import play.api.mvc.{Action, AnyContent, Call, Controller, Request, Result}
-import webserviceclients.emailservice.EmailService
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import uk.gov.dvla.vehicles.presentation.common
@@ -26,6 +31,7 @@ import common.webserviceclients.common.{VssWebEndUserDto, VssWebHeaderDto}
 import common.webserviceclients.acquire.{AcquireRequestDto, AcquireResponseDto, AcquireService, KeeperDetailsDto, TitleTypeDto}
 import utils.helpers.Config
 import views.html.changekeeper.complete_and_confirm
+import webserviceclients.emailservice.EmailService
 
 class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: EmailService)
                                   (implicit clientSideSessionFactory: ClientSideSessionFactory,
