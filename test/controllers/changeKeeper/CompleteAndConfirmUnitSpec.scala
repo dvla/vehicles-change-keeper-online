@@ -17,7 +17,8 @@ import pages.changekeeper.DateOfSalePage.YearDateOfSaleValid
 import pages.changekeeper.PrivateKeeperDetailsPage.{FirstNameValid, LastNameValid}
 import pages.changekeeper.VehicleLookupPage
 import play.api.test.Helpers.{BAD_REQUEST, contentAsString, defaultAwaitTimeout, LOCATION, OK}
-import play.api.test.{FakeRequest, WithApplication}
+import play.api.test.{FakeRequest}
+import composition.WithApplication
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import uk.gov.dvla.vehicles.presentation.common

@@ -16,7 +16,8 @@ import pages.changekeeper.BusinessKeeperDetailsPage.BusinessNameValid
 import pages.changekeeper.DateOfSalePage.{DayDateOfSaleValid, MonthDateOfSaleValid, YearDateOfSaleValid}
 import pages.changekeeper.PrivateKeeperDetailsPage.{FirstNameValid, LastNameValid, EmailValid}
 import play.api.test.Helpers.{LOCATION, OK, contentAsString, defaultAwaitTimeout}
-import play.api.test.{FakeRequest, WithApplication}
+import play.api.test.{FakeRequest}
+import composition.WithApplication
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.ClientSideSessionFactory
 import common.model.BusinessKeeperDetailsFormModel.businessKeeperDetailsCacheKey
