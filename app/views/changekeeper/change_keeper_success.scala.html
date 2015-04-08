@@ -73,6 +73,11 @@
     </div>
 
     <div class="first-col">
+
+        <dl class="playback bg-plain print-only">
+                <dt>@Messages("change_keeper_success.date_of_sale.label")</dt>
+                <dd>@viewModel.dateOfSaleViewModel.dateOfSale.toString("dd/MM/yyyy")</dd>
+        </dl>
         <dl class="playback transaction-details desktop-only">
             <h2>@Messages("change_keeper_success.transaction_details.header")</h2>
             <dt>@Messages("change_keeper_success.transaction_details.transaction_id")</dt>
