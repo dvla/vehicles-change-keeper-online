@@ -9,5 +9,6 @@ export SBT_OPTS="-Dspecs2.color=false -Dsbt.log.format=true -Dsbt.log.noformat=t
 
 sbt clean test accept dist publish
 
+
 rm -rf target/*.rpm
 ./rpm-build/jenkins_job_make_rpm
