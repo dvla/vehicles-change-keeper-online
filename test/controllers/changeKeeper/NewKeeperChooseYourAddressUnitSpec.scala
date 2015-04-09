@@ -7,25 +7,27 @@ import helpers.CookieFactoryForUnitSpecs
 import helpers.UnitSpec
 import models.K2KCacheKeyPrefix.CookiePrefix
 import org.mockito.invocation.InvocationOnMock
-import org.mockito.Matchers._
-import org.mockito.Mockito.when
+import org.mockito.Matchers.{any, anyString}
+import org.mockito.Mockito.{never, times, verify, when}
 import org.mockito.stubbing.Answer
 import pages.changekeeper.{DateOfSalePage, VehicleLookupPage}
-import pages.changekeeper.PrivateKeeperDetailsPage.{FirstNameValid, LastNameValid}
 import pages.changekeeper.BusinessKeeperDetailsPage.BusinessNameValid
+import pages.changekeeper.PrivateKeeperDetailsPage.{FirstNameValid, LastNameValid}
 import pages.common.UprnNotFoundPage
+import play.api.i18n.Lang
 import play.api.mvc.Cookies
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{BAD_REQUEST, LOCATION, OK, SET_COOKIE, contentAsString, defaultAwaitTimeout}
-import uk.gov.dvla.vehicles.presentation.common.services.DateServiceImpl
 import scala.concurrent.Future
 import uk.gov.dvla.vehicles.presentation.common
+import common.clientsidesession.ClientSideSessionFactory
 import common.model.NewKeeperChooseYourAddressFormModel.Form.AddressSelectId
 import common.model.NewKeeperChooseYourAddressFormModel.newKeeperChooseYourAddressCacheKey
-import common.clientsidesession.ClientSideSessionFactory
 import common.model.NewKeeperDetailsViewModel.newKeeperDetailsCacheKey
 import common.model.NewKeeperEnterAddressManuallyFormModel.newKeeperEnterAddressManuallyCacheKey
+import common.services.DateServiceImpl
 import common.testhelpers.CookieHelper.{fetchCookiesFromHeaders, verifyCookieHasBeenDiscarded, verifyCookieHasNotBeenDiscarded}
+import common.webserviceclients.addresslookup.AddressLookupWebService
 import common.webserviceclients.addresslookup.ordnanceservey.AddressLookupServiceImpl
 import common.webserviceclients.healthstats.HealthStats
 import utils.helpers.Config
@@ -36,7 +38,7 @@ import webserviceclients.fakes.FakeAddressLookupWebServiceImpl.responseValidForP
 import webserviceclients.fakes.FakeAddressLookupWebServiceImpl.responseValidForUprnToAddress
 import webserviceclients.fakes.FakeAddressLookupWebServiceImpl.responseValidForUprnToAddressNotFound
 
-final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
+class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
   "present (use UPRN enabled)" should {
     "display the page if private new keeper details cached" in new WithApplication {
       whenReady(presentWithPrivateNewKeeper(ordnanceSurveyUseUprn = true), timeout) { r =>
@@ -127,9 +129,21 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
       val result = newKeeperChooseYourAddressWithFakeWebService(isPrototypeBannerVisible = false, ordnanceSurveyUseUprn = true).present(request)
       contentAsString(result) should not include PrototypeHtml
     }
+
+    "fetch the addresses for the new keeper's postcode from the address lookup micro service" in new WithApplication {
+      val request = FakeRequest().
+        withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
+        withCookies(CookieFactoryForUnitSpecs.privateKeeperDetailsModel())
+      val (controller, addressServiceMock) = newKeeperChooseYourAddressControllerAndMocks(ordnanceSurveyUseUprn = true)
+      val result = controller.present(request)
+      whenReady(result) { r =>
+        verify(addressServiceMock, times(1)).callPostcodeWebService(anyString(), anyString(), any[Option[Boolean]])(any[Lang])
+      }
+    }
+
   }
 
-  "present (use UPRN disabled)" should {
+  "present (with UPRN disabled)" should {
     "display the page if private new keeper details cached" in new WithApplication {
       whenReady(presentWithPrivateNewKeeper(ordnanceSurveyUseUprn = false), timeout) { r =>
         r.header.status should equal(OK)
@@ -219,9 +233,20 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
       val result = newKeeperChooseYourAddressWithFakeWebService(isPrototypeBannerVisible = false, ordnanceSurveyUseUprn = false).present(request)
       contentAsString(result) should not include PrototypeHtml
     }
+
+    "fetch the addresses for the new keeper's postcode from the address lookup micro service" in new WithApplication {
+      val request = FakeRequest().
+        withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
+        withCookies(CookieFactoryForUnitSpecs.privateKeeperDetailsModel())
+      val (controller, addressServiceMock) = newKeeperChooseYourAddressControllerAndMocks(ordnanceSurveyUseUprn = false)
+      val result = controller.present(request)
+      whenReady(result) { r =>
+        verify(addressServiceMock, times(1)).callPostcodeWebService(anyString(), anyString(), any[Option[Boolean]])(any[Lang])
+      }
+    }
   }
 
-  "submit (use UPRN enabled)" should {
+  "submit (with UPRN enabled)" should {
     "redirect to complete and confirm page after a valid submit for private keeper" in new WithApplication {
       val request = buildCorrectlyPopulatedRequest().
         withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
@@ -297,7 +322,7 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
       }
     }
 
-    "redirect to UprnNotFound page when submit with but uprn not found by the webservice using new private keeper" in new WithApplication {
+    "redirect to UprnNotFound page when submit with but UPRN not found by the webservice using new private keeper" in new WithApplication {
       val request = buildCorrectlyPopulatedRequest().
         withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
         withCookies(CookieFactoryForUnitSpecs.privateKeeperDetailsModel())
@@ -307,7 +332,7 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
       }
     }
 
-    "redirect to UprnNotFound page when submit with but uprn not found by the webservice using new business keeper" in new WithApplication {
+    "redirect to UprnNotFound page when submit with but UPRN not found by the webservice using new business keeper" in new WithApplication {
       val request = buildCorrectlyPopulatedRequest().
         withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
         withCookies(CookieFactoryForUnitSpecs.businessKeeperDetailsModel())
@@ -317,7 +342,7 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
       }
     }
 
-    "write cookies and remove enter address manually cookie when uprn found for private keeper" in new WithApplication {
+    "write cookies and remove enter address manually cookie when UPRN found for private keeper" in new WithApplication {
       val request = buildCorrectlyPopulatedRequest().
         withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
         withCookies(CookieFactoryForUnitSpecs.privateKeeperDetailsModel())
@@ -335,7 +360,7 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
       }
     }
 
-    "write cookies and remove enter address manually cookie when uprn found for business keeper" in new WithApplication {
+    "write cookies and remove enter address manually cookie when UPRN found for business keeper" in new WithApplication {
       val request = buildCorrectlyPopulatedRequest().
         withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
         withCookies(CookieFactoryForUnitSpecs.businessKeeperDetailsModel())
@@ -353,7 +378,7 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
       }
     }
 
-    "does not write cookies when uprn not found" in new WithApplication {
+    "does not write cookies when UPRN not found" in new WithApplication {
       val request = buildCorrectlyPopulatedRequest().
         withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
       val result = newKeeperChooseYourAddressWithUprnNotFound(ordnanceSurveyUseUprn = true).submit(request)
@@ -365,9 +390,32 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
         )
       }
     }
+
+    "not call the micro service to lookup the address by UPRN when an invalid submission is made" in new WithApplication {
+      val request = buildCorrectlyPopulatedRequest(newKeeperUprn = "").
+        withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
+        withCookies(CookieFactoryForUnitSpecs.businessKeeperDetailsModel())
+      val (controller, addressServiceMock) = newKeeperChooseYourAddressControllerAndMocks(uprnFound = true, ordnanceSurveyUseUprn = true)
+      val result = controller.submit(request)
+      whenReady(result, timeout) { r =>
+        r.header.status should equal(BAD_REQUEST)
+        verify(addressServiceMock, never()).callUprnWebService(anyString(), anyString())(any[Lang])
+      }
+    }
+
+    "call the micro service to lookup the address by UPRN when a valid submission is made" in new WithApplication {
+      val request = buildCorrectlyPopulatedRequest().
+        withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
+        withCookies(CookieFactoryForUnitSpecs.businessKeeperDetailsModel())
+      val (controller, addressServiceMock) = newKeeperChooseYourAddressControllerAndMocks(uprnFound = true, ordnanceSurveyUseUprn = true)
+      val result = controller.submit(request)
+      whenReady(result) { r =>
+        verify(addressServiceMock, times(1)).callUprnWebService(anyString(), anyString())(any[Lang])
+      }
+    }
   }
 
-  "submit (use UPRN disabled)" should {
+  "submit (with UPRN disabled)" should {
     "redirect to vehicle tax or sorn page after a valid submit for private keeper" in new WithApplication {
       val request = buildCorrectlyPopulatedRequest(newKeeperUprn = "0").
         withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
@@ -443,7 +491,7 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
       }
     }
 
-    "redirect to UprnNotFound page when submit with but uprn not found by the webservice using new private keeper" in new WithApplication {
+    "redirect to UprnNotFound page when submit with but UPRN not found by the webservice using new private keeper" in new WithApplication {
       val request = buildCorrectlyPopulatedRequest().
         withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
         withCookies(CookieFactoryForUnitSpecs.privateKeeperDetailsModel())
@@ -453,7 +501,7 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
       }
     }
 
-    "redirect to UprnNotFound page when submit with but uprn not found by the webservice using new business keeper" in new WithApplication {
+    "redirect to UprnNotFound page when submit with but UPRN not found by the webservice using new business keeper" in new WithApplication {
       val request = buildCorrectlyPopulatedRequest().
         withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
         withCookies(CookieFactoryForUnitSpecs.businessKeeperDetailsModel())
@@ -463,7 +511,7 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
       }
     }
 
-    "write cookies and remove enter address manually cookie when uprn found for private keeper" in new WithApplication {
+    "write cookies and remove enter address manually cookie when UPRN found for private keeper" in new WithApplication {
       val request = buildCorrectlyPopulatedRequest("0").
         withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
         withCookies(CookieFactoryForUnitSpecs.privateKeeperDetailsModel())
@@ -481,7 +529,7 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
       }
     }
 
-    "write cookies and remove enter address manually cookie when uprn found for business keeper" in new WithApplication {
+    "write cookies and remove enter address manually cookie when UPRN found for business keeper" in new WithApplication {
       val request = buildCorrectlyPopulatedRequest("0").
         withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
         withCookies(CookieFactoryForUnitSpecs.businessKeeperDetailsModel())
@@ -499,7 +547,7 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
       }
     }
 
-    "does not write cookies when uprn not found" in new WithApplication {
+    "does not write cookies when UPRN not found" in new WithApplication {
       val request = buildCorrectlyPopulatedRequest().
         withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
       val result = newKeeperChooseYourAddressWithUprnNotFound(ordnanceSurveyUseUprn = false).submit(request)
@@ -509,6 +557,31 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
           newKeeperEnterAddressManuallyCacheKey,
           newKeeperChooseYourAddressCacheKey
           )
+      }
+    }
+
+    "still call the micro service to fetch back addresses even though an invalid submission is made" in new WithApplication {
+      val request = buildCorrectlyPopulatedRequest(newKeeperUprn = "").
+        withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
+        withCookies(CookieFactoryForUnitSpecs.businessKeeperDetailsModel())
+
+      val (controller, addressServiceMock) = newKeeperChooseYourAddressControllerAndMocks(uprnFound = true, ordnanceSurveyUseUprn = false)
+      val result = controller.submit(request)
+      whenReady(result, timeout) { r =>
+        r.header.status should equal(BAD_REQUEST)
+        verify(addressServiceMock, times(1)).callPostcodeWebService(anyString(), anyString(), any[Option[Boolean]])(any[Lang])
+      }
+    }
+
+    "call the micro service to lookup the address by postcode when a valid submission is made" in new WithApplication {
+      val request = buildCorrectlyPopulatedRequest().
+        withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
+        withCookies(CookieFactoryForUnitSpecs.businessKeeperDetailsModel())
+
+      val (controller, addressServiceMock) = newKeeperChooseYourAddressControllerAndMocks(uprnFound = true, ordnanceSurveyUseUprn = false)
+      val result = controller.submit(request)
+      whenReady(result) { r =>
+        verify(addressServiceMock, times(1)).callPostcodeWebService(anyString(), anyString(), any[Option[Boolean]])(any[Lang])
       }
     }
   }
@@ -532,6 +605,35 @@ final class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
     when(config.googleAnalyticsTrackingId).thenReturn(None) // Stub this config value.
     when(config.assetsUrl).thenReturn(None) // Stub this config value.
     new NewKeeperChooseYourAddress(addressLookupService)
+  }
+
+  private def newKeeperChooseYourAddressControllerAndMocks(uprnFound: Boolean = true,
+                                                           isPrototypeBannerVisible: Boolean = true,
+                                                           ordnanceSurveyUseUprn: Boolean): (NewKeeperChooseYourAddress, AddressLookupWebService) = {
+    val responsePostcode = if (uprnFound) responseValidForPostcodeToAddress else responseValidForPostcodeToAddressNotFound
+    val responseUprn = if (uprnFound) responseValidForUprnToAddress else responseValidForUprnToAddressNotFound
+
+    val addressLookupWebServiceMock = mock[AddressLookupWebService]
+    when(addressLookupWebServiceMock.callPostcodeWebService(anyString(), anyString(), any[Option[Boolean]])(any[Lang])).
+      thenReturn(responsePostcode)
+    when(addressLookupWebServiceMock.callUprnWebService(anyString(), anyString())(any[Lang])).
+      thenReturn(responseUprn)
+
+    val healthStatsMock = mock[HealthStats]
+    when(healthStatsMock.report(anyString)(any[Future[_]])).thenAnswer(new Answer[Future[_]] {
+      override def answer(invocation: InvocationOnMock): Future[_] = invocation.getArguments()(1).asInstanceOf[Future[_]]
+    })
+
+    val addressLookupService = new AddressLookupServiceImpl(addressLookupWebServiceMock, new DateServiceImpl, healthStatsMock)
+
+    implicit val clientSideSessionFactory = injector.getInstance(classOf[ClientSideSessionFactory])
+    implicit val config: Config = mock[Config]
+    when(config.isPrototypeBannerVisible).thenReturn(isPrototypeBannerVisible) // Stub this config value.
+    when(config.ordnanceSurveyUseUprn).thenReturn(ordnanceSurveyUseUprn) // Stub this config value.
+    when(config.googleAnalyticsTrackingId).thenReturn(None) // Stub this config value.
+    when(config.assetsUrl).thenReturn(None) // Stub this config value.
+
+    (new NewKeeperChooseYourAddress(addressLookupService), addressLookupWebServiceMock)
   }
 
   private def buildCorrectlyPopulatedRequest(newKeeperUprn: String = UprnValid.toString) = {
