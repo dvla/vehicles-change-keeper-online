@@ -7,8 +7,8 @@ export SBT_OPTS="-Dspecs2.color=false -Dsbt.log.format=true -Dsbt.log.noformat=t
  -Xms1024M -Xmx3096M -XX:+CMSClassUnloadingEnabled -XX:+UseConcMarkSweepGC -XX:+UseParNewGC \
  -XX:PermSize=1024M -XX:MaxPermSize=2048M -Dtest.port=9005 -DtimeoutInMillisSoap=30000 -Dspray.can.server.request-timeout=30s $SBT_OPTS"
 
-# sbt clean test accept dist publish
-sbt clean compile dist publish
+sbt clean test accept dist publish
+
 
 rm -rf target/*.rpm
 ./rpm-build/jenkins_job_make_rpm
