@@ -85,13 +85,15 @@ testOptions in Test += Tests.Argument(TestFrameworks.ScalaTest, "-l", "helpers.t
 
 javaOptions in Test += System.getProperty("waitSeconds")
 
-concurrentRestrictions in Global := Seq(Tags.limit(Tags.CPU, 4), Tags.limit(Tags.Network, 10), Tags.limit(Tags.Test, 4))
+concurrentRestrictions in Global := Seq(Tags.limit(Tags.CPU, 100), Tags.limit(Tags.Network, 10), Tags.limit(Tags.Test, 100))
 
 sbt.Keys.fork in Test := false
 
 jacoco.settings
 
 parallelExecution in jacoco.Config := false
+
+parallelExecution in Test in acceptanceTestsProject := true
 
 // Using node to do the javascript optimisation cuts the time down dramatically
 JsEngineKeys.engineType := JsEngineKeys.EngineType.Node

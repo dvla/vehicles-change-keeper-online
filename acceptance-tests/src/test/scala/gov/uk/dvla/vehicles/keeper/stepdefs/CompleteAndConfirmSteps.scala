@@ -1,5 +1,6 @@
 package gov.uk.dvla.vehicles.keeper.stepdefs
 
+import _root_.helpers.RandomVrmGenerator
 import cucumber.api.scala.{EN, ScalaDsl}
 import cucumber.api.java.en.{Then, When, Given}
 import org.openqa.selenium.WebDriver
@@ -12,9 +13,9 @@ class CompleteAndConfirmSteps(webBrowserDriver: WebBrowserDriver) extends ScalaD
 
   implicit val webDriver = webBrowserDriver.asInstanceOf[WebDriver]
 
-  def goToDateOfSalePage() {
+  def goToDateOfSalePage(vrm: String = RandomVrmGenerator.uniqueVrm) {
     go to VehicleLookupPage
-    VehicleLookupPage.vehicleRegistrationNumber enter "BF51BOV"
+    VehicleLookupPage.vehicleRegistrationNumber enter vrm
     VehicleLookupPage.documentReferenceNumber enter "11111111111"
     click on VehicleLookupPage.emailInvisible
     click on VehicleLookupPage.vehicleSoldToBusiness
@@ -31,8 +32,8 @@ class CompleteAndConfirmSteps(webBrowserDriver: WebBrowserDriver) extends ScalaD
     page.title shouldBe DateOfSalePage.title
   }
 
-  def goToCompletAndConfirmPage() {
-    goToDateOfSalePage()
+  def goToCompletAndConfirmPage(vrm: String = RandomVrmGenerator.uniqueVrm) {
+    goToDateOfSalePage(vrm)
     DateOfSalePage.dayDateOfSaleTextBox enter "12"
     DateOfSalePage.monthDateOfSaleTextBox enter "12"
     DateOfSalePage.yearDateOfSaleTextBox enter "2010"
