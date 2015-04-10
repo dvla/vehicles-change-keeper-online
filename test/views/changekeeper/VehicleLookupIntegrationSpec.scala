@@ -15,6 +15,7 @@ import common.filters.CsrfPreventionAction
 import common.model.PrivateKeeperDetailsFormModel.privateKeeperDetailsCacheKey
 import common.model.BusinessKeeperDetailsFormModel.businessKeeperDetailsCacheKey
 import common.testhelpers.UiTag
+import uk.gov.dvla.vehicles.presentation.common.testhelpers.LightFakeApplication
 
 class VehicleLookupIntegrationSpec extends UiSpec with TestHarness {
 
@@ -123,11 +124,7 @@ class VehicleLookupIntegrationSpec extends UiSpec with TestHarness {
     }
   }
 
-  private val fakeAppWithHtml5ValidationEnabledConfig = FakeApplication(
-    withGlobal = Some(global),
-    additionalConfiguration = Map("html5Validation.enabled" -> true))
+  private val fakeAppWithHtml5ValidationEnabledConfig = LightFakeApplication(global, Map("html5Validation.enabled" -> true))
 
-  private val fakeAppWithHtml5ValidationDisabledConfig = FakeApplication(
-    withGlobal = Some(global),
-    additionalConfiguration = Map("html5Validation.enabled" -> false))
+  private val fakeAppWithHtml5ValidationDisabledConfig = LightFakeApplication(global, Map("html5Validation.enabled" -> false))
 }

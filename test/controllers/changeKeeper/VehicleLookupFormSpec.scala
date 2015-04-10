@@ -9,7 +9,7 @@ import org.mockito.Matchers.{any, anyString}
 import org.mockito.Mockito.when
 import play.api.http.Status.OK
 import play.api.libs.json.{JsValue, Json}
-import play.api.test.WithApplication
+import composition.WithApplication
 import uk.gov.dvla.vehicles.presentation.common.mappings.OptionalToggle
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
