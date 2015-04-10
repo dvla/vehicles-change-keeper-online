@@ -1,12 +1,10 @@
-package controllers.changeKeeper
+package controllers
 
 import composition.WithApplication
-import controllers.CompleteAndConfirm
 import helpers.UnitSpec
 import models.CompleteAndConfirmFormModel
 import models.CompleteAndConfirmFormModel.Form.ConsentId
 import play.api.data.Form
-import uk.gov.dvla.vehicles.presentation.common.mappings.DayMonthYear.{DayId, MonthId, YearId}
 import pages.changekeeper.CompleteAndConfirmPage.ConsentTrue
 
 class CompleteAndConfirmFormSpec extends UnitSpec {

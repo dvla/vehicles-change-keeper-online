@@ -1,8 +1,7 @@
-package controllers.changeKeeper
+package controllers
 
+import Common.PrototypeHtml
 import composition.WithApplication
-import controllers.BeforeYouStart
-import controllers.changeKeeper.Common.PrototypeHtml
 import helpers.UnitSpec
 import org.mockito.Mockito.when
 import pages.changekeeper.VehicleLookupPage

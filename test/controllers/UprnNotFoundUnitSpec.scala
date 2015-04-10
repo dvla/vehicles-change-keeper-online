@@ -1,17 +1,15 @@
-package controllers.changeKeeper
+package controllers
 
-import composition.TestConfig
-import controllers.UprnNotFound
+import Common.PrototypeHtml
+import composition.WithApplication
 import helpers.UnitSpec
 import org.mockito.Mockito.when
+import play.api.test.FakeRequest
 import play.api.test.Helpers.{OK, contentAsString, defaultAwaitTimeout}
-import play.api.test.{FakeRequest}
-import composition.WithApplication
 import uk.gov.dvla.vehicles.presentation.common.clientsidesession.ClientSideSessionFactory
 import utils.helpers.Config
-import Common.PrototypeHtml
 
-final class UprnNotFoundUnitSpec extends UnitSpec {
+class UprnNotFoundUnitSpec extends UnitSpec {
   "present" should {
     "display the page" in new WithApplication {
       whenReady(present) { r =>

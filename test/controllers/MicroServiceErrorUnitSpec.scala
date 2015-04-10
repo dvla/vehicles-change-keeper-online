@@ -1,20 +1,15 @@
-package controllers.changeKeeper
+package controllers
 
-import composition.WithApplication
-import controllers.MicroServiceError
 import Common.PrototypeHtml
-import uk.gov.dvla.vehicles.presentation.common.testhelpers.CookieHelper
+import composition.WithApplication
 import helpers.UnitSpec
-import CookieHelper.{fetchCookiesFromHeaders, verifyCookieHasBeenDiscarded}
-import helpers.CookieFactoryForUnitSpecs
-import uk.gov.dvla.vehicles.presentation.common.clientsidesession.ClientSideSessionFactory
-import MicroServiceError.MicroServiceErrorRefererCacheKey
 import org.mockito.Mockito.when
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{LOCATION, SERVICE_UNAVAILABLE, REFERER, contentAsString, defaultAwaitTimeout, status}
+import play.api.test.Helpers.{contentAsString, defaultAwaitTimeout, SERVICE_UNAVAILABLE, status}
+import uk.gov.dvla.vehicles.presentation.common.clientsidesession.ClientSideSessionFactory
 import utils.helpers.Config
 
-final class MicroServiceErrorUnitSpec extends UnitSpec  {
+class MicroServiceErrorUnitSpec extends UnitSpec  {
   "present" should {
     "display the page" in new WithApplication {
       status(present) should equal(SERVICE_UNAVAILABLE)

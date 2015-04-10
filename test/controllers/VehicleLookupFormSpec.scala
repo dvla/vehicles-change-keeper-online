@@ -1,25 +1,31 @@
-package controllers.changeKeeper
+package controllers
 
-import controllers.VehicleLookup
+import composition.WithApplication
 import helpers.UnitSpec
 import helpers.InvalidVRMFormat.allInvalidVrmFormats
 import helpers.ValidVRMFormat.allValidVrmFormats
-import models.VehicleLookupFormModel.Form._
+import models.VehicleLookupFormModel.Form.DocumentReferenceNumberId
+import models.VehicleLookupFormModel.Form.VehicleRegistrationNumberId
+import models.VehicleLookupFormModel.Form.VehicleSellerEmail
+import models.VehicleLookupFormModel.Form.VehicleSellerEmailOption
+import models.VehicleLookupFormModel.Form.VehicleSoldToId
+import org.mockito.invocation.InvocationOnMock
 import org.mockito.Matchers.{any, anyString}
 import org.mockito.Mockito.when
+import org.mockito.stubbing.Answer
 import play.api.http.Status.OK
 import play.api.libs.json.{JsValue, Json}
-import composition.WithApplication
-import uk.gov.dvla.vehicles.presentation.common.mappings.OptionalToggle
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import uk.gov.dvla.vehicles.presentation.common
-import uk.gov.dvla.vehicles.presentation.common.clientsidesession.{NoCookieFlags, ClearTextClientSideSession, ClientSideSessionFactory}
+import common.clientsidesession.ClientSideSessionFactory
+import common.mappings.OptionalToggle
 import common.services.DateServiceImpl
 import common.testhelpers.RandomVrmGenerator
 import common.webserviceclients.bruteforceprevention.BruteForcePreventionServiceImpl
 import common.webserviceclients.bruteforceprevention.BruteForcePreventionWebService
 import common.webserviceclients.bruteforceprevention.BruteForcePreventionService
+import common.webserviceclients.healthstats.HealthStats
 import common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperDetailsRequest
 import common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperDetailsResponse
 import common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupServiceImpl
@@ -31,16 +37,8 @@ import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.ReferenceNum
 import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.RegistrationNumberValid
 import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.vehicleDetailsResponseSuccess
 import webserviceclients.fakes.{FakeDateServiceImpl, FakeResponse}
-import org.mockito.ArgumentCaptor
-import org.mockito.Matchers._
-import org.mockito.Mockito.{when, verify}
-import org.mockito.invocation.InvocationOnMock
-import org.mockito.stubbing.Answer
-import uk.gov.dvla.vehicles.presentation.common.webserviceclients.healthstats.HealthStats
-import scala.concurrent.Future
-import pages.changekeeper.{CompleteAndConfirmPage, VehicleLookupPage}
 
-final class VehicleLookupFormSpec extends UnitSpec {
+class VehicleLookupFormSpec extends UnitSpec {
 
   val healthStatsMock = mock[HealthStats]
   when(healthStatsMock.report(anyString)(any[Future[_]])).thenAnswer(new Answer[Future[_]] {

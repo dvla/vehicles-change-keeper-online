@@ -1,9 +1,9 @@
-package controllers.changeKeeper
+package controllers
 
-import controllers.changeKeeper.Common.PrototypeHtml
-import controllers.{CompleteAndConfirm, PrivateKeeperDetails}
-import helpers.UnitSpec
+import Common.PrototypeHtml
+import composition.WithApplication
 import helpers.CookieFactoryForUnitSpecs
+import helpers.UnitSpec
 import models.CompleteAndConfirmFormModel.AllowGoingToCompleteAndConfirmPageCacheKey
 import models.CompleteAndConfirmFormModel.Form.ConsentId
 import org.joda.time.Instant
@@ -17,8 +17,7 @@ import pages.changekeeper.DateOfSalePage.YearDateOfSaleValid
 import pages.changekeeper.PrivateKeeperDetailsPage.{FirstNameValid, LastNameValid}
 import pages.changekeeper.VehicleLookupPage
 import play.api.test.Helpers.{BAD_REQUEST, contentAsString, defaultAwaitTimeout, LOCATION, OK}
-import play.api.test.{FakeRequest}
-import composition.WithApplication
+import play.api.test.FakeRequest
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import uk.gov.dvla.vehicles.presentation.common

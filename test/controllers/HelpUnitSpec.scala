@@ -1,22 +1,19 @@
-package controllers.changeKeeper
+package controllers
 
+import Common.PrototypeHtml
 import composition.WithApplication
-import controllers.Help
-import controllers.changeKeeper.Common.PrototypeHtml
-import utils.helpers.Config
-import uk.gov.dvla.vehicles.presentation.common.testhelpers.CookieHelper
-import CookieHelper.{fetchCookiesFromHeaders, verifyCookieHasBeenDiscarded}
 import helpers.CookieFactoryForUnitSpecs
 import helpers.UnitSpec
 import models.HelpCacheKey
 import org.mockito.Mockito.when
 import pages.changekeeper.{VehicleLookupPage, BeforeYouStartPage}
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{LOCATION, OK, REFERER, contentAsString, defaultAwaitTimeout, status}
+import play.api.test.Helpers.{contentAsString, defaultAwaitTimeout, LOCATION, OK, REFERER,  status}
+import uk.gov.dvla.vehicles.presentation.common.testhelpers.CookieHelper.{fetchCookiesFromHeaders, verifyCookieHasBeenDiscarded}
 import uk.gov.dvla.vehicles.presentation.common.clientsidesession.ClientSideSessionFactory
 import utils.helpers.Config
 
-final class HelpUnitSpec extends UnitSpec {
+class HelpUnitSpec extends UnitSpec {
   "present" should {
     "display the help page" in new WithApplication {
       status(present) should equal(OK)

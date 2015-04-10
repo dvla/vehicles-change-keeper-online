@@ -1,7 +1,6 @@
-package controllers.changeKeeper
+package controllers
 
 import composition.WithApplication
-import controllers.DateOfSale
 import helpers.UnitSpec
 import models.DateOfSaleFormModel
 import models.DateOfSaleFormModel.Form.{DateOfSaleId, MileageId}

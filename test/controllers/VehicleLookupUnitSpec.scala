@@ -1,7 +1,6 @@
-package controllers.changeKeeper
+package controllers
 
 import composition.{TestConfig, WithApplication}
-import controllers.VehicleLookup
 import helpers.{UnitSpec, CookieFactoryForUnitSpecs}
 import models.VehicleLookupFormModel.Form.DocumentReferenceNumberId
 import models.VehicleLookupFormModel.Form.VehicleRegistrationNumberId

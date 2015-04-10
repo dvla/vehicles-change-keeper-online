@@ -1,8 +1,7 @@
-package controllers.changeKeeper
+package controllers
 
+import Common.PrototypeHtml
 import composition.WithApplication
-import controllers.changeKeeper.Common.PrototypeHtml
-import controllers.NewKeeperEnterAddressManually
 import helpers.{CookieFactoryForUnitSpecs, UnitSpec}
 import models.K2KCacheKeyPrefix.CookiePrefix
 import org.mockito.Mockito.when
@@ -13,13 +12,13 @@ import play.api.test.Helpers.{BAD_REQUEST, LOCATION, OK, contentAsString, defaul
 import scala.concurrent.Future
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.ClientSideSessionFactory
+import common.model.NewKeeperDetailsViewModel
+import common.model.NewKeeperDetailsViewModel.newKeeperDetailsCacheKey
+import common.model.NewKeeperEnterAddressManuallyFormModel.Form.AddressAndPostcodeId
 import common.testhelpers.JsonUtils.deserializeJsonToModel
 import common.testhelpers.CookieHelper.fetchCookiesFromHeaders
 import common.views.helpers.FormExtensions
 import common.views.models.AddressLinesViewModel.Form.{AddressLinesId, BuildingNameOrNumberId, Line2Id, Line3Id, PostTownId}
-import common.model.NewKeeperDetailsViewModel
-import common.model.NewKeeperDetailsViewModel.newKeeperDetailsCacheKey
-import common.model.NewKeeperEnterAddressManuallyFormModel.Form.AddressAndPostcodeId
 import utils.helpers.Config
 import views.changekeeper.NewKeeperEnterAddressManually.PostcodeId
 import webserviceclients.fakes.FakeAddressLookupService.BuildingNameOrNumberValid
@@ -28,7 +27,7 @@ import webserviceclients.fakes.FakeAddressLookupService.Line3Valid
 import webserviceclients.fakes.FakeAddressLookupService.PostTownValid
 import webserviceclients.fakes.FakeAddressLookupService.PostcodeValid
 
-final class NewKeeperEnterAddressManuallyUnitSpec extends UnitSpec {
+class NewKeeperEnterAddressManuallyUnitSpec extends UnitSpec {
   "present" should {
     "display the page when new business keeper has been chosen" in new WithApplication {
       whenReady(presentWithBusinessNewKeeper) { r =>

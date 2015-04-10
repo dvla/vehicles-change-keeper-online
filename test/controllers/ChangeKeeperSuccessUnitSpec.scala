@@ -1,12 +1,12 @@
-package controllers.changeKeeper
+package controllers
 
-import controllers.changeKeeper.Common.PrototypeHtml
-import controllers.ChangeKeeperSuccess
+import Common.PrototypeHtml
+import composition.WithApplication
 import helpers.{CookieFactoryForUnitSpecs, UnitSpec}
 import models.DateOfSaleFormModel
-import models.K2KCacheKeyPrefix.CookiePrefix
 import models.CompleteAndConfirmFormModel.CompleteAndConfirmCacheKey
 import models.CompleteAndConfirmResponseModel.ChangeKeeperCompletionResponseCacheKey
+import models.K2KCacheKeyPrefix.CookiePrefix
 import models.VehicleLookupFormModel.VehicleLookupFormModelCacheKey
 import org.joda.time.format.DateTimeFormat
 import org.mockito.Mockito.when
@@ -16,8 +16,7 @@ import pages.changekeeper.BusinessKeeperDetailsPage.BusinessNameValid
 import pages.changekeeper.DateOfSalePage.{DayDateOfSaleValid, MonthDateOfSaleValid, YearDateOfSaleValid}
 import pages.changekeeper.PrivateKeeperDetailsPage.{FirstNameValid, LastNameValid, EmailValid}
 import play.api.test.Helpers.{LOCATION, OK, contentAsString, defaultAwaitTimeout}
-import play.api.test.{FakeRequest}
-import composition.WithApplication
+import play.api.test.FakeRequest
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.ClientSideSessionFactory
 import common.model.BusinessKeeperDetailsFormModel.businessKeeperDetailsCacheKey

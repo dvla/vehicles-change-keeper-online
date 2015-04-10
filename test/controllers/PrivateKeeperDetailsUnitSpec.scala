@@ -1,7 +1,7 @@
-package controllers.changeKeeper
+package controllers
 
-import controllers.changeKeeper.Common.PrototypeHtml
-import controllers.PrivateKeeperDetails
+import Common.PrototypeHtml
+import composition.WithApplication
 import helpers.CookieFactoryForUnitSpecs
 import helpers.UnitSpec
 import org.mockito.Mockito.when
@@ -13,24 +13,22 @@ import pages.changekeeper.PrivateKeeperDetailsPage.LastNameValid
 import pages.changekeeper.PrivateKeeperDetailsPage.MonthDateOfBirthValid
 import pages.changekeeper.PrivateKeeperDetailsPage.PostcodeValid
 import pages.changekeeper.PrivateKeeperDetailsPage.YearDateOfBirthValid
-import pages.changekeeper.{VehicleLookupPage, NewKeeperChooseYourAddressPage}
+import pages.changekeeper.{NewKeeperChooseYourAddressPage, VehicleLookupPage}
 import play.api.i18n.Messages
-import play.api.test.Helpers._
-import play.api.test.{FakeRequest}
-import composition.WithApplication
+import play.api.test.Helpers.{BAD_REQUEST, contentAsString, defaultAwaitTimeout, LOCATION, OK}
+import play.api.test.FakeRequest
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.ClientSideSessionFactory
 import common.mappings.{OptionalToggle, TitleType, TitlePickerString}
 import common.mappings.TitlePickerString.standardOptions
-import common.model.PrivateKeeperDetailsFormModel.Form.PostcodeId
+import common.model.PrivateKeeperDetailsFormModel.Form.DriverNumberId
 import common.model.PrivateKeeperDetailsFormModel.Form.EmailId
 import common.model.PrivateKeeperDetailsFormModel.Form.EmailOptionId
 import common.model.PrivateKeeperDetailsFormModel.Form.FirstNameId
 import common.model.PrivateKeeperDetailsFormModel.Form.LastNameId
+import common.model.PrivateKeeperDetailsFormModel.Form.PostcodeId
 import common.model.PrivateKeeperDetailsFormModel.Form.TitleId
-import common.model.PrivateKeeperDetailsFormModel.Form.DriverNumberId
 import common.services.DateService
-import uk.gov.dvla.vehicles.presentation.common.model.PrivateKeeperDetailsFormModel
 import utils.helpers.Config
 
 class PrivateKeeperDetailsUnitSpec extends UnitSpec {

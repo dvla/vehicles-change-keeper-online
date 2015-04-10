@@ -1,8 +1,7 @@
-package controllers.changeKeeper
+package controllers
 
 import Common.PrototypeHtml
 import composition.WithApplication
-import controllers.NewKeeperChooseYourAddress
 import helpers.CookieFactoryForUnitSpecs
 import helpers.UnitSpec
 import models.K2KCacheKeyPrefix.CookiePrefix

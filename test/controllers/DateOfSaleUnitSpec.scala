@@ -1,23 +1,21 @@
-package controllers.changeKeeper
+package controllers
 
-import controllers.DateOfSale
-import helpers.{UnitSpec, CookieFactoryForUnitSpecs}
-import models.DateOfSaleFormModel
-import models.CompleteAndConfirmFormModel.AllowGoingToCompleteAndConfirmPageCacheKey
-import models.DateOfSaleFormModel.DateOfSaleCacheKey
-import org.joda.time.{LocalDate, DateTime}
-import org.joda.time.format.DateTimeFormat
-import models.DateOfSaleFormModel.Form._
-import pages.changekeeper.{NewKeeperChooseYourAddressPage, NewKeeperEnterAddressManuallyPage, CompleteAndConfirmPage, ChangeKeeperSuccessPage}
-import pages.changekeeper.DateOfSalePage.{MileageValid, DayDateOfSaleValid, MonthDateOfSaleValid, YearDateOfSaleValid}
-import uk.gov.dvla.vehicles.presentation.common.clientsidesession.{NoCookieFlags, ClearTextClientSideSessionFactory}
-import uk.gov.dvla.vehicles.presentation.common.mappings.Date.{DayId, MonthId, YearId}
-import play.api.test.Helpers._
-import play.api.test.FakeRequest
 import composition.WithApplication
-import uk.gov.dvla.vehicles.presentation.common.testhelpers.CookieHelper
+import helpers.{UnitSpec, CookieFactoryForUnitSpecs}
+import models.CompleteAndConfirmFormModel.AllowGoingToCompleteAndConfirmPageCacheKey
+import models.DateOfSaleFormModel
+import models.DateOfSaleFormModel.DateOfSaleCacheKey
+import models.DateOfSaleFormModel.Form.{DateOfSaleId, MileageId}
+import org.joda.time.{DateTime, LocalDate}
+import org.joda.time.format.DateTimeFormat
+import pages.changekeeper.DateOfSalePage.{MileageValid, DayDateOfSaleValid, MonthDateOfSaleValid, YearDateOfSaleValid}
+import pages.changekeeper.{CompleteAndConfirmPage, NewKeeperChooseYourAddressPage, NewKeeperEnterAddressManuallyPage}
+import play.api.test.FakeRequest
+import play.api.test.Helpers.{BAD_REQUEST, contentAsString, defaultAwaitTimeout, LOCATION}
+import uk.gov.dvla.vehicles.presentation.common.clientsidesession.{ClearTextClientSideSessionFactory, NoCookieFlags}
 import uk.gov.dvla.vehicles.presentation.common.clientsidesession.CookieImplicits.RichCookies
-
+import uk.gov.dvla.vehicles.presentation.common.mappings.Date.{DayId, MonthId, YearId}
+import uk.gov.dvla.vehicles.presentation.common.testhelpers.CookieHelper
 
 class DateOfSaleUnitSpec extends UnitSpec {
   implicit private final val sessionFactory = new ClearTextClientSideSessionFactory()(new NoCookieFlags)
@@ -57,12 +55,11 @@ class DateOfSaleUnitSpec extends UnitSpec {
       whenReady(result) { r =>
         r.header.headers.get(LOCATION) should equal(Some(CompleteAndConfirmPage.address))
 
-        CookieHelper.fetchCookiesFromHeaders(r).getModel[DateOfSaleFormModel] shouldEqual (
+        CookieHelper.fetchCookiesFromHeaders(r).getModel[DateOfSaleFormModel] shouldEqual
           Some(DateOfSaleFormModel(
             Some(MileageValid.toInt),
             new LocalDate(YearDateOfSaleValid.toInt, MonthDateOfSaleValid.toInt, DayDateOfSaleValid.toInt)
           ))
-          )
 
         CookieHelper.fetchCookiesFromHeaders(r).find(_.name == AllowGoingToCompleteAndConfirmPageCacheKey) orElse
           fail(s"Did not add cookie for th: $DateOfSaleCacheKey ")
@@ -83,8 +80,8 @@ class DateOfSaleUnitSpec extends UnitSpec {
       whenReady(result) { r =>
         r.header.status should equal(BAD_REQUEST)
         val resultCookies = CookieHelper.fetchCookiesFromHeaders(r)
-        resultCookies.getModel[DateOfSaleFormModel] shouldEqual (None)
-        resultCookies.find(_.name == AllowGoingToCompleteAndConfirmPageCacheKey) shouldEqual (None)
+        resultCookies.getModel[DateOfSaleFormModel] shouldEqual None
+        resultCookies.find(_.name == AllowGoingToCompleteAndConfirmPageCacheKey) shouldEqual None
       }
     }
 
@@ -102,8 +99,8 @@ class DateOfSaleUnitSpec extends UnitSpec {
       whenReady(result) { r =>
         r.header.status should equal(BAD_REQUEST)
         val resultCookies = CookieHelper.fetchCookiesFromHeaders(r)
-        resultCookies.getModel[DateOfSaleFormModel] shouldEqual (None)
-        resultCookies.find(_.name == AllowGoingToCompleteAndConfirmPageCacheKey) shouldEqual (None)
+        resultCookies.getModel[DateOfSaleFormModel] shouldEqual None
+        resultCookies.find(_.name == AllowGoingToCompleteAndConfirmPageCacheKey) shouldEqual None
       }
     }
 
@@ -121,12 +118,11 @@ class DateOfSaleUnitSpec extends UnitSpec {
       whenReady(result) { r =>
         r.header.headers.get(LOCATION) should equal(Some(CompleteAndConfirmPage.address))
         val resultCookies = CookieHelper.fetchCookiesFromHeaders(r)
-        resultCookies.getModel[DateOfSaleFormModel] shouldEqual (
+        resultCookies.getModel[DateOfSaleFormModel] shouldEqual
           Some(DateOfSaleFormModel(
             Some(MileageValid.toInt),
             new LocalDate(YearDateOfSaleValid.toInt, MonthDateOfSaleValid.toInt, DayDateOfSaleValid.toInt)
           ))
-          )
 
         resultCookies.find(_.name == AllowGoingToCompleteAndConfirmPageCacheKey) orElse
           fail(s"Did not add cookie for th: $DateOfSaleCacheKey ")
@@ -148,12 +144,11 @@ class DateOfSaleUnitSpec extends UnitSpec {
         r.header.headers.get(LOCATION) should equal(Some(CompleteAndConfirmPage.address))
 
         val resultCookies = CookieHelper.fetchCookiesFromHeaders(r)
-        resultCookies.getModel[DateOfSaleFormModel] shouldEqual (
+        resultCookies.getModel[DateOfSaleFormModel] shouldEqual
           Some(DateOfSaleFormModel(
             Some(MileageValid.toInt),
             new LocalDate(YearDateOfSaleValid.toInt, MonthDateOfSaleValid.toInt, DayDateOfSaleValid.toInt)
           ))
-          )
 
         resultCookies.find(_.name == AllowGoingToCompleteAndConfirmPageCacheKey) orElse
           fail(s"Did not add cookie for th: $DateOfSaleCacheKey ")
@@ -176,11 +171,10 @@ class DateOfSaleUnitSpec extends UnitSpec {
       whenReady(result) { r =>
         r.header.headers.get(LOCATION) should equal(Some(CompleteAndConfirmPage.address))
 
-        CookieHelper.fetchCookiesFromHeaders(r).getModel[DateOfSaleFormModel] shouldEqual (
+        CookieHelper.fetchCookiesFromHeaders(r).getModel[DateOfSaleFormModel] shouldEqual
           Some(DateOfSaleFormModel(
             Some(MileageValid.toInt),
             new LocalDate(YearDateOfSaleValid.toInt, MonthDateOfSaleValid.toInt, DayDateOfSaleValid.toInt)
-          )
           ))
 
         CookieHelper.fetchCookiesFromHeaders(r).find(_.name == AllowGoingToCompleteAndConfirmPageCacheKey) orElse
