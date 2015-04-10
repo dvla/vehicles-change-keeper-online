@@ -10,6 +10,7 @@ import org.mockito.invocation.InvocationOnMock
 import org.mockito.Matchers.{any, anyString}
 import org.mockito.Mockito.{never, times, when, verify}
 import org.mockito.stubbing.Answer
+import pages.changekeeper.MicroServiceErrorPage
 import pages.changekeeper.PrivateKeeperDetailsPage
 import pages.changekeeper.VrmLockedPage
 import pages.changekeeper.VehicleLookupFailurePage
@@ -123,14 +124,12 @@ class VehicleLookupUnitSpec extends UnitSpec {
       count should equal(2)
     }
 
-    "redirect to MicroserviceError when microservice throws" ignore new WithApplication {
-//      ToDo uncomment when microservice error is implemented into application
-//      val request = buildCorrectlyPopulatedRequest()
-//      val result = vehicleLookupError.submit(request)
-//
-//      whenReady(result) { r =>
-//        r.header.headers.get(LOCATION) should equal(Some(MicroServiceErrorPage.address))
-//      }
+    "redirect to MicroserviceError when microservice throws" in new WithApplication {
+      val request = buildCorrectlyPopulatedRequest()
+      val result = vehicleLookupError.submit(request)
+      whenReady(result) { r =>
+        r.header.headers.get(LOCATION) should equal(Some(MicroServiceErrorPage.address))
+      }
     }
 
     "redirect to VehicleLookupFailure after a submit and unhandled exception returned by the fake microservice" in new WithApplication {
