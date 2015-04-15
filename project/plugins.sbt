@@ -44,6 +44,3 @@ addSbtPlugin("io.spray" % "sbt-revolver" % "0.7.2")
 
 addSbtPlugin("io.gatling" % "gatling-sbt" % "2.1.0")
 
-resolvers += Classpaths.sbtPluginReleases
-
-addSbtPlugin("org.scoverage" % "sbt-scoverage" % "1.0.4")
