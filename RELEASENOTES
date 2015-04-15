@@ -1,3 +1,12 @@
+======== 1.7 ========
+Time of release binaries creation:
+Wed Apr 15 15:03:20 UTC 2015
+
+3560f82 US2781: add date of sale
+1b44569 US2793
+a9a95cb US2797
+3ec4607 US2789 Extended unit tests to verify the number of calls to web services for the CompleteAndConfirm page
+
 ======== 1.6 ========
 Time of release binaries creation:
 Wed Apr 01 14:50:50 UTC 2015
