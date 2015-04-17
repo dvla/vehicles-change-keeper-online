@@ -1,5 +1,27 @@
 require.config({
     paths: {
+        'jquery' : '../lib/jquery/jquery',
+        'jquery-migrate': '../lib/jquery-migrate/jquery-migrate',
+        'header-footer-only': '../lib/vehicles-presentation-common/javascripts/header-footer-only',
+        'global-helpers': '../lib/vehicles-presentation-common/javascripts/global-helpers',
+        'page-init': '../lib/vehicles-presentation-common/javascripts/page-init',
+        'change-keeper-page-init': 'change-keeper-page-init'
+    },
+    // Make jquery-migrate depend on the loading of jquery
+    "shim": {
+        'jquery-migrate': ['jquery']
+    }
+});
+
+require(["change-keeper-page-init"], function(changeKeeperPageInit) {
+    $(function() {
+        changeKeeperPageInit.init();
+    });
+});
+
+/*
+require.config({
+    paths: {
         'jquery': 'lib/jquery/jquery-1.9.1.min',
         'jquery-migrate': 'lib/jquery/jquery-migrate-1.2.1.min',
         'header-footer-only': 'header-footer-only',
@@ -10,12 +32,13 @@ require.config({
 
 require(["jquery", "jquery-migrate", "header-footer-only", "form-checked-selection"],function($) {
 
+    // ALREAY IN COMMON
     var IE10 = (navigator.userAgent.match(/(MSIE 10.0)/g) ? true : false);
     if (IE10) {
         $('html').addClass('ie10');
     }
 
-
+    // MOVED TO K2K INIT
     var hideEmailOnOther = function(radioOtherId, emailId) {
 
         if (!radioOtherId.length || !emailId.length) {
@@ -41,7 +64,8 @@ require(["jquery", "jquery-migrate", "header-footer-only", "form-checked-selecti
 
     };
 
-    /** Opens the feedback page into a new window. */
+    // ALREADY IN COMMON
+    // Opens the feedback page into a new window.
     function openFeedback(inputId, event) {
         var element = document.getElementById(inputId);
         if (element) {
@@ -73,7 +97,8 @@ require(["jquery", "jquery-migrate", "header-footer-only", "form-checked-selecti
 
     $(function() {
 
-        // Images hints toogles
+        // MOVED TO K2K INIT
+        // Images hints toggles
 
         $('.hint-image-wrap > .panel-indent-wrapper').hide();
 
@@ -81,7 +106,7 @@ require(["jquery", "jquery-migrate", "header-footer-only", "form-checked-selecti
             $(this).siblings().toggle();
         });
 
-
+        // THIS IS ALREADY IN COMMON
         // Enabling loading class/js animation on submit's CTAs
         $('button[type="submit"]').on('click', function(e) {
             var runTimes;
@@ -103,6 +128,7 @@ require(["jquery", "jquery-migrate", "header-footer-only", "form-checked-selecti
             }, 1000);
         });
 
+        // ALREADY IN COMMON
         // Auto-tab for date format forms
         $('.form-date input').one('focus', function() {
 
@@ -133,27 +159,34 @@ require(["jquery", "jquery-migrate", "header-footer-only", "form-checked-selecti
             });
         });
 
+        // MOVED TO K2K INIT
         hideEmailOnOther('#privatekeeper_title_titleOption_4', '.form-item #privatekeeper_title_titleText');
 
+        // ALREADY IN COMMON
         if ($('#feedback-open').length) {
             openFeedback('feedback-open', 'click');
         }
 
+        // ALREADY IN COMMON
         //html5 autofocus fallback for browsers that do not support it natively
         //if form element autofocus is not active, autofocus
         $('[autofocus]:not(:focus)').eq(0).focus();
 
+        // THIS IS IN COMMON
         // Disabled clicking on disabled buttons
         $('.button-not-implemented').click(function() {
             return false;
         });
 
+        // THIS IS IN COMMON
         // Print button
         $('.print-button').click(function() {
             window.print();
             return false;
         });
 
+
+        // THIS IS IN COMMON
         // smooth scroll
         $('a[href^="#"]').bind('click.smoothscroll', function (e) {
             e.preventDefault();
@@ -166,6 +199,7 @@ require(["jquery", "jquery-migrate", "header-footer-only", "form-checked-selecti
             });
         });
 
+        // THIS IS IN COMMON
         function updateCountdown() {
             var remaining = 500 - $('#feedback-form textarea').val().length;
             $('.character-countdown').text(remaining + ' characters remaining.');
@@ -194,6 +228,7 @@ require(["jquery", "jquery-migrate", "header-footer-only", "form-checked-selecti
             $('#feedback-form textarea').keyup(updateCountdown);
         });
 
+        // THIS IS IN COMMON
         // Radio button toggle visible widget
         $('.optional-field').hide();
 
@@ -207,6 +242,7 @@ require(["jquery", "jquery-migrate", "header-footer-only", "form-checked-selecti
         $('.expandable-optional .option-visible:checked').click();
     });
 
+    // THIS IS IN COMMON GLOBAL HELPERS
     function areCookiesEnabled(){
         var cookieEnabled = (navigator.cookieEnabled) ? true : false;
 
@@ -218,8 +254,10 @@ require(["jquery", "jquery-migrate", "header-footer-only", "form-checked-selecti
         return (cookieEnabled);
     }
 
+    // THIS IS IN COMMON GLOBAL HELPERS
     function opt(v){
         if (typeof v == 'undefined') return [];
         else return[v];
     }
 });
+*/
