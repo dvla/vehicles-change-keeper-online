@@ -32,13 +32,13 @@ require.config({
 
 require(["jquery", "jquery-migrate", "header-footer-only", "form-checked-selection"],function($) {
 
-    // ALREAY IN COMMON
+    // ALREADY IN COMMON
     var IE10 = (navigator.userAgent.match(/(MSIE 10.0)/g) ? true : false);
     if (IE10) {
         $('html').addClass('ie10');
     }
 
-    // MOVED TO K2K INIT
+    // MOVED TO K2K INIT - THEN SUBSEQUENTLY INTO COMMON AS IT IS ALSO IN ACQUIRE
     var hideEmailOnOther = function(radioOtherId, emailId) {
 
         if (!radioOtherId.length || !emailId.length) {
@@ -97,7 +97,7 @@ require(["jquery", "jquery-migrate", "header-footer-only", "form-checked-selecti
 
     $(function() {
 
-        // MOVED TO K2K INIT
+        // MOVED TO K2K INIT - THEN SUBSEQUENTLY INTO COMMON AS IT IS ALSO IN ACQUIRE
         // Images hints toggles
 
         $('.hint-image-wrap > .panel-indent-wrapper').hide();
