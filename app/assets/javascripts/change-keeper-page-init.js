@@ -7,7 +7,6 @@ define(['jquery', 'jquery-migrate', "page-init"], function($, jqueryMigrate, pag
             pageInit.initAll();
             // Run the common code that is not common to all but this one needs
             pageInit.hideEmailOnOther('#privatekeeper_title_titleOption_4', '.form-item #privatekeeper_title_titleText');
-            pageInit.imageHintToggles()
         }
     }
 });
