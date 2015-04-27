@@ -318,7 +318,7 @@ change_keeper_success.vehicle_details.sornEntered = Yes, SORN from today ({0}).
 change_keeper_success.vehicle_details.sornEntered.p1 = DVLA will not send you an acknowledgement letter. The SORN will be valid until the vehicle is taxed, sold, permanently exported or scrapped. Please ensure that the vehicle is taxed before it is driven on public roads.
 change_keeper_success.vehicle_details.sornNotEntered = The vehicle is taxed, or will be taxed.
 change_keeper_success.vehicle_details.sornNotEntered.p1 = The vehicle will be used on public roads.
-change_keeper_success.vehicle_details.mileage = Mileage
+change_keeper_success.vehicle_details.mileage = Vehicle mileage
 change_keeper_success.vehicle_details.mileage_not_entered = Not entered
 change_keeper_success.vehicle_details.name = Name
 change_keeper_success.vehicle_details.address = Address
@@ -543,8 +543,9 @@ serviceClosed.exit_button = Exit
 
 # feedback
 common_feedback.title = Give Feedback
-common_feedback.message = Please don't include any Personal of financial information - for example your National Insurance number.
+common_feedback.message = Please don''t include any personal or financial information - for example your National Insurance number.
 common_feedback.label = What went wrong, if anything? What went well? How could we improve this service?
+common_feedback.charactersRemaining = characters remaining
 common_feedback.placeholder = (Limit is 1200 characters)
 common_feedback.submit_button = Submit feedback
 common_feedback.thankyou = Thank you for your feedback
