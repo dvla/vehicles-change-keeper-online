@@ -1,4 +1,9 @@
 
+global-please-wait-header = Os gwelwch yn dda aros
+global-please-wait-p1 = Hyn o bryd rydym yn derbyn nifer fawr o geisiadau sydd wedi arwain at ein perfformiad gwasanaeth yn arafach nag arfer.
+global-please-wait-p2 = Bydd y dudalen hon yn diweddaru yn awtomatig, peidiwch cau eich porwr.
+global-please-wait-close = Cau''r neges hon
+
 # Cookie policy
 footer.cookies = Cwcis
 cookie-policy-title = Cwcis
