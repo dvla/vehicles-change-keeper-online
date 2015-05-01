@@ -74,6 +74,8 @@ error.titlePlusFirstName.tooLong = The combined length of your Title e.g. Mr/Mrs
 error.validDocumentReferenceNumber = Document reference number must be an 11-digit number
 error.validSellerEmail = Enter a valid email address up to 254 characters.
 error.threeAlphas = Must have at least 3 letters
+error.email.confirm.required = Please confirm the email address
+error.email.not.match = The email addresses did not match
 
 datePlaceholder.day=Day
 datePlaceholder.month=Month
@@ -626,3 +628,5 @@ option-toggle.invisible = No
 
 change_keeper_date_of_sale.title = Sale details
 change_keeper_date_of_sale.next = Next
+
+email.verify.label = Confirm email address
