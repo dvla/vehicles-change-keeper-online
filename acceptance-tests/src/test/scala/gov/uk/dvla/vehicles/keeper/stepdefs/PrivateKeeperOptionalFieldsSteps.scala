@@ -5,6 +5,7 @@ import cucumber.api.java.en.{Then, When, Given}
 import org.openqa.selenium.WebDriver
 import org.scalatest.Matchers
 import pages.changekeeper.{PrivateKeeperDetailsPage, VehicleLookupPage}
+import pages.common.ErrorPanel
 import uk.gov.dvla.vehicles.presentation.common.helpers
 import helpers.webbrowser.{WebBrowserDSL, WebBrowserDriver}
 
@@ -134,11 +135,12 @@ class PrivateKeeperOptionalFieldsSteps(webBrowserDriver: WebBrowserDriver) exten
   def the_user_has_entered_an_invalid_email_address_and_select_the_submit_control()  {
     click on PrivateKeeperDetailsPage.emailVisible
     PrivateKeeperDetailsPage.emailTextBox enter "acom"
+    PrivateKeeperDetailsPage.emailConfirmTextBox enter "acom"
     click on PrivateKeeperDetailsPage.next
   }
 
   @Then("^the system will display an error for invaild email address \"(.*?)\"$")
-  def the_system_will_display_an_error_for_invaild_email_address(errMsg:String)  {
-    PrivateKeeperDetailsPage.errorTextForTitle(errMsg) shouldBe true
+  def the_system_will_display_an_error_for_invaild_email_address(errMsg: String)  {
+    ErrorPanel.text should include(errMsg)
   }
 }

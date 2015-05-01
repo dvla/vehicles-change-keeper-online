@@ -71,7 +71,7 @@ class BusinessKeeperDetailsSteps(webBrowserDriver: WebBrowserDriver) extends Sca
 
   @Then("^there is a fleet number error message displayed \"(.*?)\"$")
   def there_is_a_fleet_number_error_message_displayed(fleetNoErrMsg:String)  {
-    BusinessKeeperDetailsPage.errorTextInBusinessKeeperPage(fleetNoErrMsg) shouldBe true
+    find(tagName("body")).get.text should include(fleetNoErrMsg)
   }
 
   @When("^the user selects the field labelled Business name$")
@@ -97,8 +97,8 @@ class BusinessKeeperDetailsSteps(webBrowserDriver: WebBrowserDriver) extends Sca
   }
 
   @Then("^the user will receive an error message \"(.*?)\"$")
-  def the_user_will_receive_an_error_message(BusinessNameErrMsg:String)  {
-    BusinessKeeperDetailsPage.errorTextInBusinessKeeperPage(BusinessNameErrMsg) shouldBe true
+  def the_user_will_receive_an_error_message(businessNameErrMsg: String)  {
+    find(tagName("body")).get.text should include(businessNameErrMsg)
   }
 
   @Given("^the user has entered values into the business name$")
@@ -139,6 +139,7 @@ class BusinessKeeperDetailsSteps(webBrowserDriver: WebBrowserDriver) extends Sca
   def the_user_will_be_able_to_enter_an_email_address_of_up_to_characters(charLength:Int)  {
     click on BusinessKeeperDetailsPage.emailVisible
     BusinessKeeperDetailsPage.emailField enter "jfejfhhfjlshgljhgjlhljhljhjlhljhjlhljh@fdgfdgfhgfhghgfhgfhgfhfghgfhg"
+    BusinessKeeperDetailsPage.emailConfirmField enter "jfejfhhfjlshgljhgjlhljhljhjlhljhjlhljh@fdgfdgfhgfhghgfhgfhgfhfghgfhg"
   }
 
   @Given("^the user has not entered an email address$")
@@ -147,18 +148,19 @@ class BusinessKeeperDetailsSteps(webBrowserDriver: WebBrowserDriver) extends Sca
 
   @Then("^the system will not display an error for missing or invalid email address$")
   def the_system_will_not_display_an_error_for_missing_or_invalid_email_address()  {
-    BusinessKeeperDetailsPage.errorTextInBusinessKeeperPage("noerrror") shouldBe false
+    find(tagName("body")).get.text should not include "noerrror"
   }
 
   @Then("^the system will display an error for invalid email address \"(.*?)\"$")
-  def the_system_will_display_an_error_for_invalid_email_address(emailErrMsg:String) {
-    BusinessKeeperDetailsPage.errorTextInBusinessKeeperPage(emailErrMsg) shouldBe true
+  def the_system_will_display_an_error_for_invalid_email_address(emailErrMsg: String) {
+    find(tagName("body")).get.text should include(emailErrMsg)
   }
 
   @Given("^the user has entered an invalid email address$")
   def the_user_has_entered_an_invalid_email_address() {
     click on BusinessKeeperDetailsPage.emailVisible
     BusinessKeeperDetailsPage.emailField enter "aa"
+    BusinessKeeperDetailsPage.emailConfirmField enter "aa"
   }
 
   @When("^the user tries to search on an invalid postcode$")
@@ -196,7 +198,7 @@ class BusinessKeeperDetailsSteps(webBrowserDriver: WebBrowserDriver) extends Sca
 
   @Then("^an error message is displays \"(.*?)\"$")
   def an_error_message_is_displayed(postcodErrMsg:String)  {
-    BusinessKeeperDetailsPage.errorTextInBusinessKeeperPage(postcodErrMsg) shouldBe true
+    find(tagName("body")).get.text should include(postcodErrMsg)
   }
 
   @When("^the user enters special characters in businessname with valid data in rest of the fields$")

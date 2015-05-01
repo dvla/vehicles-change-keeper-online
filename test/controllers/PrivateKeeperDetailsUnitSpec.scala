@@ -20,6 +20,7 @@ import play.api.test.FakeRequest
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.ClientSideSessionFactory
 import common.mappings.{OptionalToggle, TitleType, TitlePickerString}
+import common.mappings.Email.{EmailId => EmailEnterId, EmailVerifyId}
 import common.mappings.TitlePickerString.standardOptions
 import common.model.PrivateKeeperDetailsFormModel.Form.DriverNumberId
 import common.model.PrivateKeeperDetailsFormModel.Form.EmailId
@@ -170,14 +171,14 @@ class PrivateKeeperDetailsUnitSpec extends UnitSpec {
                                              lastName: String = LastNameValid,
                                              email: String = EmailValid,
                                              driverNumber: String = DriverNumberValid,
-                                             postcode: String = PostcodeValid
-                                             ) = {
+                                             postcode: String = PostcodeValid) = {
     FakeRequest().withFormUrlEncodedBody(
       s"$TitleId.${TitlePickerString.TitleRadioKey}" -> title,
       FirstNameId -> firstName,
       LastNameId -> lastName,
       EmailOptionId -> OptionalToggle.Visible,
-      EmailId -> email,
+      s"$EmailId.$EmailEnterId" -> email,
+      s"$EmailId.$EmailVerifyId" -> email,
       DriverNumberId -> driverNumber,
       PostcodeId -> postcode
     )

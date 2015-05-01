@@ -7,6 +7,7 @@ import common.model.BusinessKeeperDetailsFormModel.Form.EmailId
 import common.model.BusinessKeeperDetailsFormModel.Form.FleetNumberId
 import common.model.BusinessKeeperDetailsFormModel.Form.FleetNumberOptionId
 import common.model.BusinessKeeperDetailsFormModel.Form.PostcodeId
+import common.mappings.Email.{EmailId => EmailEnterId, EmailVerifyId}
 import uk.gov.dvla.vehicles.presentation.common.mappings.OptionalToggle._
 import uk.gov.dvla.vehicles.presentation.common.model.BusinessKeeperDetailsFormModel.Form.EmailOptionId
 import views.changekeeper.BusinessKeeperDetails.{BackId, NextId}
@@ -39,16 +40,15 @@ object BusinessKeeperDetailsPage extends Page with WebBrowserDSL {
   def emailInvisible(implicit driver: WebDriver): RadioButton =
     radioButton(id(s"${EmailOptionId}_$Invisible"))
 
-  def emailField(implicit driver: WebDriver): TextField = textField(id(EmailId))
+  def emailField(implicit driver: WebDriver): TextField = textField(id(s"${EmailId}_$EmailEnterId"))
+
+  def emailConfirmField(implicit driver: WebDriver): TextField = textField(id(s"${EmailId}_$EmailVerifyId"))
 
   def postcodeField(implicit driver: WebDriver): TextField = textField(id(PostcodeId))
 
   def back(implicit driver: WebDriver): Element = find(id(BackId)).get
 
   def next(implicit driver: WebDriver): Element = find(id(NextId)).get
-
-  def errorTextInBusinessKeeperPage(text:String)(implicit driver: WebDriver): Boolean =
-    find(tagName("body")).get.text.contains(text)
 
   def navigate(fleetNumber: String = FleetNumberValid,
                businessName: String = BusinessNameValid,
@@ -61,6 +61,7 @@ object BusinessKeeperDetailsPage extends Page with WebBrowserDSL {
     businessNameField enter businessName
     click on emailVisible
     emailField enter email
+    emailConfirmField enter email
     postcodeField enter postcode
 
     click on next

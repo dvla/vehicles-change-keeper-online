@@ -15,6 +15,7 @@ config: utils.helpers.Config)
 @import common.mappings.{DocumentReferenceNumber, VehicleRegistrationNumber}
 @import common.views.html.widgets.base.csrfTokenHiddenField
 @import common.views.helpers.BaseTemplate.fieldConstructor
+@import common.views.html.widgets.email
 @import common.views.html.widgets.base.valtechInputText
 @import common.views.html.widgets.listRadioGroup
 @import common.views.html.widgets.optionalToggle
@@ -83,14 +84,11 @@ currentForm = Some(viewModel.form)
                   Messages("change_keeper_vehiclelookup.traderemailoption"),
                   Messages("change_keeper_vehiclelookup.traderemailoption.yes"),
                   Messages("change_keeper_vehiclelookup.traderemailoption.no"),
-                  valtechInputText(
+                  email(
                     viewModel.form(VehicleSellerEmail),
+                    Messages("change_keeper_vehiclelookup.selleremail"),
                     hintText = None,
-                    args = Map('_label -> Messages("change_keeper_vehiclelookup.selleremail"),
-                      '_showConstraints -> false,
-                      'maxLength -> EmailMaxLength,
-                      'NO_OPTIONAL_LABEL -> false
-                    )
+                    args = Map('maxLength -> EmailMaxLength)
                   )
                 )
 

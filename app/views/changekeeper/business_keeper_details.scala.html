@@ -18,6 +18,7 @@
 @import common.views.constraints.FleetNumber
 @import common.views.html.widgets.base.csrfTokenHiddenField
 @import common.views.helpers.BaseTemplate.fieldConstructor
+@import common.views.html.widgets.email
 @import common.views.html.widgets.base.valtechInputText
 @import common.views.html.widgets.optionalToggle
 @import views.html.helper.form
@@ -88,14 +89,11 @@
                 Messages("change_keeper_businesskeeperdetails.traderemailoption"),
                 Messages("change_keeper_businesskeeperdetails.traderemailoption.yes"),
                 Messages("change_keeper_businesskeeperdetails.traderemailoption.no"),
-                valtechInputText(
+                email(
                     viewModel.form(EmailId),
+                    Messages("change_keeper_businesskeeperdetails.email"),
                     hintText = None,
-                    args = Map('_label -> Messages("change_keeper_businesskeeperdetails.email"),
-                        '_showConstraints -> false,
-                        'maxLength -> EmailMaxLength,
-                        'NO_OPTIONAL_LABEL -> false
-                    )
+                    args = Map('maxLength -> EmailMaxLength)
                 )
             )
 

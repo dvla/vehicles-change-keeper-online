@@ -14,8 +14,9 @@ import common.model.PrivateKeeperDetailsFormModel.Form.FirstNameId
 import common.model.PrivateKeeperDetailsFormModel.Form.LastNameId
 import common.model.PrivateKeeperDetailsFormModel.Form.PostcodeId
 import common.model.PrivateKeeperDetailsFormModel.Form.TitleId
-import uk.gov.dvla.vehicles.presentation.common.mappings.OptionalToggle._
-import uk.gov.dvla.vehicles.presentation.common.model.PrivateKeeperDetailsFormModel.Form.EmailOptionId
+import common.mappings.OptionalToggle._
+import common.mappings.Email.{EmailId => EmailEnterId, EmailVerifyId}
+import common.model.PrivateKeeperDetailsFormModel.Form.EmailOptionId
 import views.changekeeper.PrivateKeeperDetails.{BackId, SubmitId}
 
 object PrivateKeeperDetailsPage extends Page with WebBrowserDSL with Matchers {
@@ -57,7 +58,9 @@ object PrivateKeeperDetailsPage extends Page with WebBrowserDSL with Matchers {
   def emailInvisible(implicit driver: WebDriver): RadioButton =
     radioButton(id(s"${EmailOptionId}_$Invisible"))
 
-  def emailTextBox(implicit driver: WebDriver): TextField = textField(id(EmailId))
+  def emailTextBox(implicit driver: WebDriver): TextField = textField(id(s"${EmailId}_$EmailEnterId"))
+
+  def emailConfirmTextBox(implicit driver: WebDriver): TextField = textField(id(s"${EmailId}_$EmailVerifyId"))
 
   def driverNumberTextBox(implicit driver: WebDriver): TextField = textField(id(DriverNumberId))
 
@@ -114,6 +117,7 @@ object PrivateKeeperDetailsPage extends Page with WebBrowserDSL with Matchers {
     yearDateOfBirthTextBox enter yearDateOfBirth
     click on emailVisible
     emailTextBox enter email
+    emailConfirmTextBox enter email
     driverNumberTextBox enter driverNumber
     postcodeTextBox enter postcode
 

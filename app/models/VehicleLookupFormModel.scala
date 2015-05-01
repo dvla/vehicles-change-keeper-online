@@ -1,13 +1,13 @@
 package models
 
 import models.K2KCacheKeyPrefix.CookiePrefix
-import play.api.data.Forms.{mapping, nonEmptyText, optional}
+import play.api.data.Forms.{mapping, nonEmptyText}
 import play.api.libs.json.Json
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.CacheKey
 import common.controllers.VehicleLookupFormModelBase
 import common.mappings.DocumentReferenceNumber
-import common.mappings.Email.email
+import common.mappings.Email.emailConfirm
 import common.mappings.VehicleRegistrationNumber
 import common.mappings.OptionalToggle
 
@@ -34,7 +34,7 @@ object VehicleLookupFormModel {
       DocumentReferenceNumberId -> DocumentReferenceNumber.referenceNumber,
       VehicleRegistrationNumberId -> VehicleRegistrationNumber.registrationNumber,
       VehicleSoldToId -> nonEmptyText,
-      VehicleSellerEmailOption -> OptionalToggle.optional(email.withPrefix(VehicleSellerEmail))
+      VehicleSellerEmailOption -> OptionalToggle.optional(emailConfirm.withPrefix(VehicleSellerEmail))
     )(VehicleLookupFormModel.apply)(VehicleLookupFormModel.unapply)
   }
 }

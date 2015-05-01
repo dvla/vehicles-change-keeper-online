@@ -20,6 +20,7 @@ import scala.concurrent.Future
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.ClientSideSessionFactory
 import common.mappings.OptionalToggle
+import common.mappings.Email.{EmailId, EmailVerifyId}
 import common.services.DateServiceImpl
 import common.testhelpers.RandomVrmGenerator
 import common.webserviceclients.bruteforceprevention.BruteForcePreventionServiceImpl
@@ -71,7 +72,7 @@ class VehicleLookupFormSpec extends UnitSpec {
     "reject if blank" in new WithApplication {
       val vehicleLookupFormError = formWithValidDefaults(referenceNumber = "").errors
       val expectedKey = DocumentReferenceNumberId
-      
+
       vehicleLookupFormError should have length 3
       vehicleLookupFormError(0).key should equal(expectedKey)
       vehicleLookupFormError(0).message should equal("error.minLength")
@@ -192,7 +193,8 @@ class VehicleLookupFormSpec extends UnitSpec {
         DocumentReferenceNumberId -> referenceNumber,
         VehicleRegistrationNumberId -> registrationNumber,
         VehicleSoldToId -> vehicleSoldTo,
-        VehicleSellerEmail -> sellerEmail.getOrElse("")
+        s"$VehicleSellerEmail.$EmailId" -> sellerEmail.getOrElse(""),
+        s"$VehicleSellerEmail.$EmailVerifyId" -> sellerEmail.getOrElse("")
       ) ++ sellerEmail.fold(Map(VehicleSellerEmailOption -> OptionalToggle.Invisible))
         (email => Map(VehicleSellerEmailOption -> OptionalToggle.Visible))
     )

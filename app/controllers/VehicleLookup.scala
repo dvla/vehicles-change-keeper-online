@@ -90,9 +90,6 @@ class VehicleLookup @Inject()(implicit bruteForceService: BruteForcePreventionSe
       ).replaceError(
         VehicleSoldToId,
         FormError(key = VehicleSoldToId, message = "error.validBougtByType", args = Seq.empty)
-      ).replaceError(
-        VehicleSellerEmail,
-        FormError(key = VehicleSellerEmail, message = "error.validSellerEmail", args = Seq.empty)
       ).distinctErrors
   }
 }
