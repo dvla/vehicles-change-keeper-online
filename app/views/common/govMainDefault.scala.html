@@ -36,7 +36,7 @@
         <link rel="apple-touch-icon-precomposed" href="@controllers.StaticAssets.versioned(config.assetsUrl)("lib/vehicles-presentation-common/images/apple-touch-icon-152x152.png")" sizes="152X152">
     </head>
 
-    <body>
+    <body data-closing-time="@config.closing">
         @serviceClosingWarning(config.opening, config.closing, config.closingWarnPeriodMins)
         <a href="#main" class="visuallyhidden">Skip to main content</a>
 
