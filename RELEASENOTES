@@ -1,3 +1,16 @@
+======== 1.8 ========
+Time of release binaries creation:
+Tue Apr 15 17:18:35 UTC 2015
+
+3511c14 US3045 add confirmation of the email fields
+cf257bf US2798: use common please wait widget
+f411de5 US2860 use a single require.js configuration file
+24f0e2b US2989 changed the 'Mileage' label to 'Vehicle mileage' on the summary page
+c39be8b DE360: Prevent entry of non alphanumeric characters in VRN.
+5fed5c5 US3020 changes to internationalise the feedback count down text.
+fa6f46f US2802: service closing warning
+3faf275 US2889 worked through the javascript to identify what is in common and what is specific to the exemplar
+
 ======== 1.7 ========
 Time of release binaries creation:
 Wed Apr 15 15:03:20 UTC 2015
