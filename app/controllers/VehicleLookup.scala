@@ -24,6 +24,7 @@ import common.views.helpers.FormExtensions.formBinding
 import common.webserviceclients.bruteforceprevention.BruteForcePreventionService
 import common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperDetailsDto
 import common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupService
+import common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupErrorMessage
 import utils.helpers.Config
 import views.changekeeper.VehicleLookup.VehicleSoldTo_Private
 
@@ -45,7 +46,7 @@ class VehicleLookup @Inject()(implicit bruteForceService: BruteForcePreventionSe
                                 (implicit request: Request[_]): Result =
     Redirect(routes.MicroServiceError.present())
 
-  override def vehicleLookupFailure(responseCode: String, formModel: VehicleLookupFormModel)
+  override def vehicleLookupFailure(responseCode: VehicleAndKeeperLookupErrorMessage, formModel: VehicleLookupFormModel)
                                    (implicit request: Request[_]): Result =
     Redirect(routes.VehicleLookupFailure.present())
 

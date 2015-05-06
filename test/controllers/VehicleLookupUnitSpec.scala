@@ -29,7 +29,7 @@ import common.webserviceclients.bruteforceprevention.BruteForcePreventionService
 import common.webserviceclients.bruteforceprevention.BruteForcePreventionWebService
 import common.webserviceclients.healthstats.HealthStats
 import common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperDetailsRequest
-import common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperDetailsResponse
+import common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupResponseV2
 import common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupServiceImpl
 import common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupWebService
 import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.ReferenceNumberValid
@@ -244,7 +244,7 @@ class VehicleLookupUnitSpec extends UnitSpec {
     (bruteForcePreventionService, bruteForcePreventionWebServiceMock)
   }
 
-  private def vehicleLookupControllerAndMocks(fullResponse: (Int, Option[VehicleAndKeeperDetailsResponse]) = vehicleDetailsResponseSuccess,
+  private def vehicleLookupControllerAndMocks(fullResponse: (Int, Option[VehicleAndKeeperLookupResponseV2]) = vehicleDetailsResponseSuccess,
                                               bruteForceService: BruteForcePreventionService = bruteForceServiceImpl(permitted = true)
                                                ): (VehicleLookup, VehicleAndKeeperLookupWebService) = {
     val (status, vehicleDetailsResponse) = fullResponse
@@ -272,7 +272,7 @@ class VehicleLookupUnitSpec extends UnitSpec {
     (vehicleLookupController, wsMock)
   }
 
-  private def vehicleLookupResponseGenerator(fullResponse: (Int, Option[VehicleAndKeeperDetailsResponse]) = vehicleDetailsResponseSuccess,
+  private def vehicleLookupResponseGenerator(fullResponse: (Int, Option[VehicleAndKeeperLookupResponseV2]) = vehicleDetailsResponseSuccess,
                                              bruteForceService: BruteForcePreventionService = bruteForceServiceImpl(permitted = true)) = {
     val (status, vehicleDetailsResponse) = fullResponse
     val ws: VehicleAndKeeperLookupWebService = mock[VehicleAndKeeperLookupWebService]
