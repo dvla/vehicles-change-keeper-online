@@ -28,7 +28,7 @@ import common.webserviceclients.bruteforceprevention.BruteForcePreventionWebServ
 import common.webserviceclients.bruteforceprevention.BruteForcePreventionService
 import common.webserviceclients.healthstats.HealthStats
 import common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperDetailsRequest
-import common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupResponseV2
+import common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupResponse
 import common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupServiceImpl
 import common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupWebService
 import utils.helpers.Config
@@ -60,12 +60,12 @@ class VehicleLookupFormSpec extends UnitSpec {
   }
 
   "referenceNumber" should {
-    allInvalidVrmFormats.map(vrm => "reject invalid vehicle registration mark : " + vrm in new WithApplication {
+    allInvalidVrmFormats.foreach(vrm => "reject invalid vehicle registration mark : " + vrm in new WithApplication {
       formWithValidDefaults(registrationNumber = vrm).errors.flatMap(_.messages) should contain theSameElementsAs
         List("error.restricted.validVrnOnly")
     })
 
-    allValidVrmFormats.map(vrm => "accept valid vehicle registration mark : " + vrm in new WithApplication {
+    allValidVrmFormats.foreach(vrm => "accept valid vehicle registration mark : " + vrm in new WithApplication {
       formWithValidDefaults(registrationNumber = vrm).get.registrationNumber should equal(vrm)
     })
 
@@ -74,8 +74,8 @@ class VehicleLookupFormSpec extends UnitSpec {
       val expectedKey = DocumentReferenceNumberId
 
       vehicleLookupFormError should have length 3
-      vehicleLookupFormError(0).key should equal(expectedKey)
-      vehicleLookupFormError(0).message should equal("error.minLength")
+      vehicleLookupFormError.head.key should equal(expectedKey)
+      vehicleLookupFormError.head.message should equal("error.minLength")
       vehicleLookupFormError(1).key should equal(expectedKey)
       vehicleLookupFormError(1).message should equal("error.required")
       vehicleLookupFormError(2).key should equal(expectedKey)
@@ -161,7 +161,7 @@ class VehicleLookupFormSpec extends UnitSpec {
 
   val dateService = new DateServiceImpl
 
-  private def vehicleLookupResponseGenerator(fullResponse:(Int, Option[VehicleAndKeeperLookupResponseV2])) = {
+  private def vehicleLookupResponseGenerator(fullResponse:(Int, Option[VehicleAndKeeperLookupResponse])) = {
     val vehicleAndKeeperLookupWebService: VehicleAndKeeperLookupWebService = mock[VehicleAndKeeperLookupWebService]
     when(vehicleAndKeeperLookupWebService.invoke(any[VehicleAndKeeperDetailsRequest], any[String])).thenReturn(Future {
       val responseAsJson : Option[JsValue] = fullResponse._2 match {
