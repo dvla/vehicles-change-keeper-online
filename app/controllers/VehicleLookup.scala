@@ -8,7 +8,6 @@ import models.SellerEmailModel
 import models.VehicleLookupFormModel
 import models.VehicleLookupFormModel.Form.DocumentReferenceNumberId
 import models.VehicleLookupFormModel.Form.VehicleRegistrationNumberId
-import models.VehicleLookupFormModel.Form.VehicleSellerEmail
 import models.VehicleLookupFormModel.Form.VehicleSoldToId
 import models.VehicleLookupViewModel
 import models.VehicleLookupFormModel.{VehicleLookupResponseCodeCacheKey, Key, JsonFormat}
@@ -22,7 +21,7 @@ import common.model.{BruteForcePreventionModel, VehicleAndKeeperDetailsModel}
 import common.services.DateService
 import common.views.helpers.FormExtensions.formBinding
 import common.webserviceclients.bruteforceprevention.BruteForcePreventionService
-import common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperDetailsDto
+import common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupDetailsDto
 import common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupService
 import common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupErrorMessage
 import utils.helpers.Config
@@ -55,7 +54,7 @@ class VehicleLookup @Inject()(implicit bruteForceService: BruteForcePreventionSe
     VehicleLookupViewModel(form.fill()))
   )
 
-  override def vehicleFoundResult(vehicleAndKeeperDetailsDto: VehicleAndKeeperDetailsDto, formModel: VehicleLookupFormModel)
+  override def vehicleFoundResult(vehicleAndKeeperDetailsDto: VehicleAndKeeperLookupDetailsDto, formModel: VehicleLookupFormModel)
                                 (implicit request: Request[_]): Result = {
     val model = VehicleAndKeeperDetailsModel.from(vehicleAndKeeperDetailsDto)
     val emailCapture = SellerEmailModel(formModel.sellerEmail)

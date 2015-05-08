@@ -3,19 +3,18 @@ package webserviceclients.fakes
 import org.joda.time.DateTime
 import play.api.http.Status.{OK, SERVICE_UNAVAILABLE}
 import play.api.libs.json.Json
-import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperDetailsDto
-import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperDetailsRequest
-import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupErrorMessage
-import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupResponse
-import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupWebService
-
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
+import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupDetailsDto
+import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupErrorMessage
+import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupRequest
+import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupResponse
+import uk.gov.dvla.vehicles.presentation.common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupWebService
 
 final class FakeVehicleAndKeeperLookupWebService extends VehicleAndKeeperLookupWebService {
   import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService._
 
-  override def invoke(request: VehicleAndKeeperDetailsRequest, trackingId: String) = Future {
+  override def invoke(request: VehicleAndKeeperLookupRequest, trackingId: String) = Future {
     val (responseStatus, response) = {
       request.referenceNumber match {
         case "99999999991" => vehicleDetailsResponseVRMNotFound
@@ -48,7 +47,7 @@ object FakeVehicleAndKeeperLookupWebService {
 
   // TODO : Use proper values here
   private def vehicleDetails(disposeFlag: Boolean = true) =
-    VehicleAndKeeperDetailsDto(
+    VehicleAndKeeperLookupDetailsDto(
       registrationNumber = RegistrationNumberValid,
       vehicleMake = Some(VehicleMakeValid),
       vehicleModel = Some(VehicleModelValid),
