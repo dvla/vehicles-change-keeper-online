@@ -2,18 +2,45 @@ package gov.uk.dvla.vehicles.keeper.stepdefs
 
 import cucumber.api.java.en.{Then, When, Given}
 import cucumber.api.scala.{EN, ScalaDsl}
+import helpers.RandomVrmGenerator
 import org.openqa.selenium.WebDriver
 import org.scalatest.Matchers
-import pages.changekeeper.{VehicleLookupPage, ChangeKeeperSuccessPage, CompleteAndConfirmPage}
-import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.{WebBrowserDSL, WebBrowserDriver}
+import pages.changekeeper._
+import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.{PhantomJsDefaultDriver, WebBrowserDSL, WebBrowserDriver}
 
-class BackBrowserButtonSteps(webBrowserDriver: WebBrowserDriver) extends ScalaDsl with EN with WebBrowserDSL with Matchers {
+class BackBrowserButtonSteps(implicit webDriver: PhantomJsDefaultDriver)
+  extends ScalaDsl with EN with WebBrowserDSL with Matchers {
 
-  implicit val webDriver = webBrowserDriver.asInstanceOf[WebDriver]
-  lazy val happyPath = new CompleteAndConfirmSteps(webBrowserDriver)
+  def goToDateOfSalePage(vrm: String = RandomVrmGenerator.uniqueVrm) {
+    go to VehicleLookupPage
+    VehicleLookupPage.vehicleRegistrationNumber enter vrm
+    VehicleLookupPage.documentReferenceNumber enter "11111111111"
+    click on VehicleLookupPage.emailInvisible
+    click on VehicleLookupPage.vehicleSoldToBusiness
+    click on VehicleLookupPage.next
+    page.title shouldEqual BusinessKeeperDetailsPage.title
+    click on BusinessKeeperDetailsPage.fleetNumberInvisible
+    BusinessKeeperDetailsPage.businessNameField enter "retail"
+    BusinessKeeperDetailsPage.postcodeField enter "qq99qq"
+    click on BusinessKeeperDetailsPage.emailInvisible
+    click on BusinessKeeperDetailsPage.next
+    click on NewKeeperChooseYourAddressPage.select
+    NewKeeperChooseYourAddressPage.chooseAddress.value="0"
+    click on NewKeeperChooseYourAddressPage.next
+    page.title shouldBe DateOfSalePage.title
+  }
+
+  def goToCompletAndConfirmPage(vrm: String = RandomVrmGenerator.uniqueVrm) {
+    goToDateOfSalePage(vrm)
+    DateOfSalePage.dayDateOfSaleTextBox enter "12"
+    DateOfSalePage.monthDateOfSaleTextBox enter "12"
+    DateOfSalePage.yearDateOfSaleTextBox enter "2010"
+    click on DateOfSalePage.next
+    page.title shouldBe CompleteAndConfirmPage.title
+  }
 
   def goToSuccessfulSummaryPage() = {
-    happyPath.goToCompletAndConfirmPage()
+    goToCompletAndConfirmPage()
     click on CompleteAndConfirmPage.consent
     click on CompleteAndConfirmPage.next
     page.title shouldEqual ChangeKeeperSuccessPage.title
