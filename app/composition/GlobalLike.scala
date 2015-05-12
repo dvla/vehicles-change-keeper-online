@@ -1,16 +1,17 @@
 package composition
 
 import java.io.File
-import java.util.UUID
+import java.util.{TimeZone, UUID}
 import com.typesafe.config.ConfigFactory
+import org.joda.time.DateTimeZone
 import play.api.Play.current
 import play.api.i18n.Lang
 import play.api.mvc.Results.NotFound
 import play.api.mvc.{RequestHeader, Result}
 import play.api.{Application, Configuration, GlobalSettings, Logger, Mode, Play}
-import utils.helpers.Config
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
+import utils.helpers.Config
 
 /**
  * Application configuration is in a hierarchy of files:
@@ -47,6 +48,9 @@ trait GlobalLike extends WithFilters with GlobalSettings with Composition {
 
   override def onStart(app: Application) {
     Logger.info("vehicles-change-keeper Started") // used for operations, do not remove
+    val localTimeZone = "Europe/London"
+    TimeZone.setDefault(TimeZone.getTimeZone(localTimeZone))
+    DateTimeZone.setDefault(DateTimeZone.forID(localTimeZone))
   }
 
   override def onStop(app: Application) {
