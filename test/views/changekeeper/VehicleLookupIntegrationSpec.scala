@@ -59,14 +59,14 @@ class VehicleLookupIntegrationSpec extends UiSpec with TestHarness {
       page.title should equal("Enter new keeper details")
     }
 
-    "clear businessKeeperDetails when private keeper data is entered" taggedAs UiTag in new WebBrowser {
+    "clear businessKeeperDetails when private keeper data is entered" taggedAs UiTag in new PhantomJsByDefault {
       go to VehicleLookupPage
       CookieFactoryForUISpecs.businessKeeperDetails()
       happyPath()
       webDriver.manage().getCookieNamed(businessKeeperDetailsCacheKey) should equal(null)
     }
 
-    "clear privateKeeperDetails when business keeper data is entered" taggedAs UiTag in new WebBrowser {
+    "clear privateKeeperDetails when business keeper data is entered" taggedAs UiTag in new PhantomJsByDefault {
       go to VehicleLookupPage
       CookieFactoryForUISpecs.privateKeeperDetails()
       happyPath(isVehicleSoldToPrivateIndividual = false)

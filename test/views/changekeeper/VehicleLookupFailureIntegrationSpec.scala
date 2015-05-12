@@ -47,7 +47,7 @@ final class VehicleLookupFailureIntegrationSpec extends UiSpec with TestHarness 
       page.title should equal(BeforeYouStartPage.title)
     }
 
-    "remove redundant cookies when displayed" taggedAs UiTag in new WebBrowser {
+    "remove redundant cookies when displayed" taggedAs UiTag in new PhantomJsByDefault {
       go to BeforeYouStartPage
       cacheSetup()
       go to VehicleLookupFailurePage

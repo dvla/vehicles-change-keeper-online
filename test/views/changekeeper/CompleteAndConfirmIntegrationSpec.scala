@@ -86,7 +86,7 @@ final class CompleteAndConfirmIntegrationSpec extends UiSpec with TestHarness {
       csrf.getAttribute("value").size > 0 should equal(true)
     }
 
-    "redirect to vehicles lookup page if there is no cookie preventGoingToCompleteAndConfirmPage set" taggedAs UiTag in new WebBrowser {
+    "redirect to vehicles lookup page if there is no cookie preventGoingToCompleteAndConfirmPage set" taggedAs UiTag in new PhantomJsByDefault {
       go to BeforeYouStartPage
       CookieFactoryForUISpecs
         .vehicleAndKeeperDetails()

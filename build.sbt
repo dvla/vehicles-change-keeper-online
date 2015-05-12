@@ -52,7 +52,7 @@ libraryDependencies ++= Seq(
   "dvla" %% "vehicles-presentation-common" % "2.22-SNAPSHOT" withSources() withJavadoc() exclude("junit", "junit-dep"),
   "dvla" %% "vehicles-presentation-common" % "2.22-SNAPSHOT" classifier "tests" withSources() withJavadoc() exclude("junit", "junit-dep"),
   "com.google.guava" % "guava" % "15.0" withSources() withJavadoc(), // See: http://stackoverflow.com/questions/16614794/illegalstateexception-impossible-to-get-artifacts-when-data-has-not-been-loaded
-  "org.seleniumhq.selenium" % "selenium-java" % "2.45.0" % "test",
+  "org.seleniumhq.selenium" % "selenium-java" % "2.43.0" % "test",
   "com.github.detro" % "phantomjsdriver" % "1.2.0" % "test" withSources() withJavadoc(),
   "org.mockito" % "mockito-all" % "1.9.5" % "test" withSources() withJavadoc(),
   "org.slf4j" % "log4j-over-slf4j" % "1.7.7" % "test" withSources() withJavadoc(),
