@@ -38,7 +38,7 @@ class BeforeYouStartIntegrationSpec extends UiSpec with TestHarness {
       page.source.contains(progressStep(ProgressStepNumber)) should equal(false)
     }
 
-    "clear all cookies stored in cache" taggedAs UiTag in new WebBrowser {
+    "clear all cookies stored in cache" taggedAs UiTag in new PhantomJsByDefault {
       go to BeforeYouStartPage
       CookieFactoryForUISpecs.vehicleLookupFormModel()
       CookieFactoryForUISpecs.vehicleAndKeeperDetails()
