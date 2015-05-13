@@ -1,3 +1,13 @@
+======== 1.9 ========
+Time of release binaries creation:
+
+User stories:
+DE481   All Services - Postcode facility
+DE442   Disp - Invalid characters in date field
+US2802  [Continued] [Continued] [All] [UI] Make service shutdown warning dynamic
+DE415   K2K, Acq and Disposal - bullet point out of alignement in IE
+US3153  Upgrade play framework to version 2.3.9
+
 ======== 1.8 ========
 Time of release binaries creation:
 Tue Apr 15 17:18:35 UTC 2015
