@@ -1,7 +1,7 @@
 package composition
 
 import java.io.File
-import java.util.{UUID}
+import java.util.UUID
 import com.typesafe.config.ConfigFactory
 import play.api.Play.current
 import play.api.i18n.Lang

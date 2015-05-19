@@ -1,5 +1,13 @@
+======== 1.9.1 ========
+Time of release binaries creation:
+Tue May 19 14:44:29 UTC 2015
+
+Defects:
+DE503 All Services - VSS record updating -1 day from date entered
+
 ======== 1.9 ========
 Time of release binaries creation:
+Wed May 13 14:22:30 UTC 2015
 
 User stories:
 DE481   All Services - Postcode facility
