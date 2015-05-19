@@ -11,11 +11,12 @@ import models.VehicleLookupFormModel.Form.VehicleRegistrationNumberId
 import models.VehicleLookupFormModel.Form.VehicleSoldToId
 import models.VehicleLookupViewModel
 import models.VehicleLookupFormModel.{VehicleLookupResponseCodeCacheKey, Key, JsonFormat}
+import play.api.Logger
 import play.api.data.{Form => PlayForm, FormError}
 import play.api.mvc.{Result, Request}
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.ClientSideSessionFactory
-import common.clientsidesession.CookieImplicits.{RichForm, RichResult}
+import common.clientsidesession.CookieImplicits.{RichForm, RichResult, RichCookies}
 import common.controllers.VehicleLookupBase
 import common.model.{BruteForcePreventionModel, VehicleAndKeeperDetailsModel}
 import common.services.DateService
@@ -24,6 +25,7 @@ import common.webserviceclients.bruteforceprevention.BruteForcePreventionService
 import common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupDetailsDto
 import common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupService
 import common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupErrorMessage
+import uk.gov.dvla.vehicles.presentation.common.LogFormats._
 import utils.helpers.Config
 import views.changekeeper.VehicleLookup.VehicleSoldTo_Private
 
@@ -38,33 +40,48 @@ class VehicleLookup @Inject()(implicit bruteForceService: BruteForcePreventionSe
   override val responseCodeCacheKey: String = VehicleLookupResponseCodeCacheKey
 
   override def vrmLocked(bruteForcePreventionModel: BruteForcePreventionModel, formModel: VehicleLookupFormModel)
-                        (implicit request: Request[_]): Result =
+                        (implicit request: Request[_]): Result = {
+    Logger.debug(logMessage(s"Redirecting to ${routes.VrmLocked.present()}", request.cookies.trackingId()))
     Redirect(routes.VrmLocked.present())
+  }
 
   override def microServiceError(t: Throwable, formModel: VehicleLookupFormModel)
-                                (implicit request: Request[_]): Result =
+                                (implicit request: Request[_]): Result = {
+    Logger.debug(logMessage(s"Redirecting to ${routes.MicroServiceError.present()}", request.cookies.trackingId()))
     Redirect(routes.MicroServiceError.present())
+  }
 
   override def vehicleLookupFailure(responseCode: VehicleAndKeeperLookupErrorMessage, formModel: VehicleLookupFormModel)
-                                   (implicit request: Request[_]): Result =
+                                   (implicit request: Request[_]): Result = {
+    Logger.debug(logMessage(s"Redirecting to ${routes.VehicleLookupFailure.present()}", request.cookies.trackingId()))
     Redirect(routes.VehicleLookupFailure.present())
+  }
 
   override def presentResult(implicit request: Request[_]) = Ok(
     views.html.changekeeper.vehicle_lookup(
-    VehicleLookupViewModel(form.fill()))
+      VehicleLookupViewModel(form.fill()))
   )
 
   override def vehicleFoundResult(vehicleAndKeeperDetailsDto: VehicleAndKeeperLookupDetailsDto, formModel: VehicleLookupFormModel)
-                                (implicit request: Request[_]): Result = {
+                                 (implicit request: Request[_]): Result = {
     val model = VehicleAndKeeperDetailsModel.from(vehicleAndKeeperDetailsDto)
     val emailCapture = SellerEmailModel(formModel.sellerEmail)
     val suppressed = model.suppressedV5Flag.getOrElse(false)
 
     val (call, discardedCookies) =
       (formModel.vehicleSoldTo, suppressed) match {
-        case (_, true) => (routes.SuppressedV5C.present(), BusinessKeeperDetailsCacheKeys)
-        case (VehicleSoldTo_Private, false) => (routes.PrivateKeeperDetails.present(), BusinessKeeperDetailsCacheKeys)
-        case (_, false) => (routes.BusinessKeeperDetails.present(), PrivateKeeperDetailsCacheKeys)
+        case (_, true) => {
+          Logger.debug(logMessage(s"Redirecting to ${routes.SuppressedV5C.present()}", request.cookies.trackingId()))
+          (routes.SuppressedV5C.present(), BusinessKeeperDetailsCacheKeys)
+        }
+        case (VehicleSoldTo_Private, false) => {
+          Logger.debug(logMessage(s"Redirecting to ${routes.PrivateKeeperDetails.present()}", request.cookies.trackingId()))
+          (routes.PrivateKeeperDetails.present(), BusinessKeeperDetailsCacheKeys)
+        }
+        case (_, false) => {
+          Logger.debug(logMessage(s"Redirecting to ${routes.BusinessKeeperDetails.present()}", request.cookies.trackingId()))
+          (routes.BusinessKeeperDetails.present(), PrivateKeeperDetailsCacheKeys)
+        }
       }
 
     Redirect(call).

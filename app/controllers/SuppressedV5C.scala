@@ -9,6 +9,7 @@ import common.clientsidesession.ClientSideSessionFactory
 import common.clientsidesession.CookieImplicits.RichResult
 import common.model.VehicleAndKeeperDetailsModel
 import common.clientsidesession.CookieImplicits.RichCookies
+import uk.gov.dvla.vehicles.presentation.common.LogFormats._
 import utils.helpers.Config
 
 class SuppressedV5C @Inject()()(implicit clientSideSessionFactory: ClientSideSessionFactory,
@@ -19,6 +20,7 @@ class SuppressedV5C @Inject()()(implicit clientSideSessionFactory: ClientSideSes
   }
 
   def finish = Action { implicit request =>
+    Logger.debug(logMessage(s"Redirecting to ${routes.BeforeYouStart.present()}", request.cookies.trackingId()))
     Redirect(routes.BeforeYouStart.present()).
       discardingCookies(AllCacheKeys)
   }
