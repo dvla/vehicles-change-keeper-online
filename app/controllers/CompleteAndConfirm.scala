@@ -344,16 +344,8 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
         anonymize(disposeRequest.referenceNumber),
         anonymize(disposeRequest.registrationNumber),
         disposeRequest.requiresSorn.toString,
-        anonymize(disposeRequest.traderDetails.get.traderOrganisationName)) ++
-        disposeRequest.traderDetails.get.traderAddressLines.map(addr => anonymize(addr)) ++
-        Seq(
-          anonymize(disposeRequest.traderDetails.get.traderEmailAddress),
-          anonymize(disposeRequest.traderDetails.get.traderPostCode),
-          anonymize(disposeRequest.traderDetails.get.traderPostTown),
-          disposeRequest.transactionTimestamp
-        )
-    )
-    )
+        disposeRequest.transactionTimestamp
+    )))
   }
 
   private def logResponse(disposeResponse: AcquireResponseDto)(implicit request: Request[_]) = {
