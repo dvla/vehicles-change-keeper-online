@@ -2,19 +2,18 @@ package controllers
 
 import com.google.inject.Inject
 import models.K2KCacheKeyPrefix.CookiePrefix
+import play.api.Logger
 import play.api.data.Form
 import play.api.mvc.{Request, Result}
 import models.CompleteAndConfirmFormModel.AllowGoingToCompleteAndConfirmPageCacheKey
 import uk.gov.dvla.vehicles.presentation.common
-import common.clientsidesession.ClientSideSessionFactory
 import common.clientsidesession.CookieImplicits.{RichForm, RichCookies, RichResult}
-import common.model.NewKeeperEnterAddressManuallyFormModel
 import common.clientsidesession.ClientSideSessionFactory
 import common.controllers.NewKeeperEnterAddressManuallyBase
 import common.model.NewKeeperEnterAddressManuallyFormModel
 import common.model.NewKeeperEnterAddressManuallyViewModel
 import common.model.VehicleAndKeeperDetailsModel
-import common.model.NewKeeperChooseYourAddressFormModel.newKeeperChooseYourAddressCacheKey
+import uk.gov.dvla.vehicles.presentation.common.LogFormats.logMessage
 
 import utils.helpers.Config
 import views.html.changekeeper.new_keeper_enter_address_manually
@@ -28,8 +27,10 @@ class NewKeeperEnterAddressManually @Inject()()
                                       (implicit request: Request[_]): Result =
     Ok(new_keeper_enter_address_manually(NewKeeperEnterAddressManuallyViewModel(form.fill(), model), postcode))
 
-  protected override def missingVehicleDetails(implicit request: Request[_]): Result =
+  protected override def missingVehicleDetails(implicit request: Request[_]): Result = {
+    Logger.debug(logMessage(s"Redirecting to ${routes.VehicleLookup.present()}", request.cookies.trackingId()))
     Redirect(routes.VehicleLookup.present())
+  }
 
   protected override def invalidFormResult(model: VehicleAndKeeperDetailsModel, postcode: String,
                                            form: Form[NewKeeperEnterAddressManuallyFormModel])
@@ -37,8 +38,10 @@ class NewKeeperEnterAddressManually @Inject()()
     BadRequest(new_keeper_enter_address_manually(
       NewKeeperEnterAddressManuallyViewModel(formWithReplacedErrors(form), model), postcode))
 
-  protected override def success(implicit request: Request[_]): Result =
+  protected override def success(implicit request: Request[_]): Result = {
+    Logger.debug(logMessage(s"Redirecting to ${routes.DateOfSale.present()}", request.cookies.trackingId()))
     Redirect(routes.DateOfSale.present()).
       withCookie(AllowGoingToCompleteAndConfirmPageCacheKey, "true")
+  }
 
 }
