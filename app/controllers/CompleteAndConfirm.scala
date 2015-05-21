@@ -12,7 +12,7 @@ import models.DateOfSaleFormModel
 import models.K2KCacheKeyPrefix.CookiePrefix
 import models.SellerEmailModel
 import models.VehicleLookupFormModel
-import org.joda.time.DateTime
+import org.joda.time.{DateTimeZone, DateTime}
 import org.joda.time.format.ISODateTimeFormat
 import play.api.data.{FormError, Form}
 import play.api.Logger
@@ -234,7 +234,7 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
       newKeeperDetails,
       None,
       fleetNumber = newKeeperDetailsViewModel.fleetNumber,
-      dateTimeFormatter.print(dateOfSaleFormModel.dateOfSale.toDateTimeAtStartOfDay),
+      dateTimeFormatter.print(dateOfSaleFormModel.dateOfSale.toDateTimeAtStartOfDay(DateTimeZone.forID("UTC"))),
       dateOfSaleFormModel.mileage,
       checkboxValueToBoolean(completeAndConfirmFormModel.consent),
       dateTimeFormatter.print(timestamp),
