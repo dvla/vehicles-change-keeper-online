@@ -73,7 +73,7 @@ error.fleetNumber = The fleet number can only be a 6 digit number, please try ag
 error.titlePlusFirstName.tooLong = The combined length of your Title e.g. Mr/Mrs/Miss/Other and First name(s) cannot exceed 26 characters. Please amend your entry and re-submit.
 error.validDocumentReferenceNumber = Document reference number must be an 11-digit number
 error.validSellerEmail = Enter a valid email address up to 254 characters.
-error.threeAlphas = Must have at least 3 letters
+error.threeAlphas = Must have at least 3 alpha characters
 error.email.confirm.required = Please confirm the email address
 error.email.not.match = The email addresses did not match
 
