@@ -6,7 +6,7 @@ object CompleteAndConfirm {
 
   def modify(htmlArgs: Map[Symbol, Any], modify: Boolean): Map[Symbol, Any] =
     if (modify)
-      htmlArgs - Symbol("autofocus") + (Symbol("tabindex") -> -1)
+      htmlArgs + (Symbol("tabindex") -> -1)
     else
       htmlArgs
 }
