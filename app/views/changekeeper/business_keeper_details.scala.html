@@ -55,13 +55,11 @@
             @form(action = controllers.routes.BusinessKeeperDetails.submit()) {
             @csrfTokenHiddenField()
 
-
             <div class="uppercase-input">
                 @valtechInputText(viewModel.form(BusinessNameId), args =
                     Map('_label -> Messages("change_keeper_businesskeeperdetails.businessname"),
                         'maxLength -> BusinessKeeperName.MaxLength,
-                        '_showConstraints -> false,
-                        'autofocus -> true
+                        '_showConstraints -> false
                     )
                 )
             </div>

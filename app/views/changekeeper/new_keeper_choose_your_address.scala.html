@@ -76,32 +76,29 @@
       } else {
         @valtechSelect(viewModel.form(AddressSelectId),
           options = dropDownOptions.toSeq,
-          args = Map(
-            '_label -> Messages("change_keeper_newKeeperChooseYourAddress_addressSelect_label"),
-            'autofocus -> true
-          )
+          args = Map('_label -> Messages("change_keeper_newKeeperChooseYourAddress_addressSelect_label"))
         )
       }
 
       @if(dropDownOptions.nonEmpty) {
         <a id="@EnterAddressManuallyButtonId" href="@controllers.routes.NewKeeperEnterAddressManually.present()">
-        @Messages("change_keeper_newKeeperChooseYourAddress.manualAddressEntry")
+          @Messages("change_keeper_newKeeperChooseYourAddress.manualAddressEntry")
         </a>
       }
       <div class="form-steps">
         @if(dropDownOptions.isEmpty) {
           <a id="@EnterAddressManuallyButtonId" href="@controllers.routes.NewKeeperEnterAddressManually.present()" class="button">
-          @Messages("change_keeper_newKeeperChooseYourAddress.manualAddressEntry.enterManuallyButton")
+            @Messages("change_keeper_newKeeperChooseYourAddress.manualAddressEntry.enterManuallyButton")
           </a>
         }
         @if(dropDownOptions.nonEmpty) {
           <button id="@SelectId" type="submit" name="action" class="button">
-          @Messages("change_keeper_newKeeperChooseYourAddress.submitbutton")
+            @Messages("change_keeper_newKeeperChooseYourAddress.submitbutton")
           </button>
         }
         <br/>
         <a class="back" id="@BackId" href="@controllers.routes.NewKeeperChooseYourAddress.back()">
-        @Messages("change_keeper_newKeeperChooseYourAddress.backbutton")
+          @Messages("change_keeper_newKeeperChooseYourAddress.backbutton")
         </a>
       </div>
     }

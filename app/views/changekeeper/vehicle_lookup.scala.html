@@ -43,8 +43,7 @@ currentForm = Some(viewModel.form)
                 args = Map('_label -> Messages("change_keeper_vehiclelookup.vrninputlabel"),
                            'maxLength -> VehicleRegistrationNumber.MaxLength,
                            '_showConstraints -> false,
-                            'alphaNumericOnly -> true,
-                            'autofocus -> true
+                            'alphaNumericOnly -> true
                     )
                 )
 
@@ -97,12 +96,12 @@ currentForm = Some(viewModel.form)
                 <h3>@Messages("change_keeper_vehiclelookup.vehiclesoldto.label")</h3>
 
                 @listRadioGroup(field = viewModel.form(VehicleSoldToId),
-                args = Map('items -> Seq(
-                    VehicleSoldTo_Private -> Messages("change_keeper_vehiclelookup.vehiclesoldto.private"),
-                    VehicleSoldTo_Business -> Messages("change_keeper_vehiclelookup.vehiclesoldto.business")
-                ),
-                '_label -> Messages("change_keeper_vehiclelookup.vehiclesoldto.hint")
-                )
+                    args = Map('items -> Seq(
+                        VehicleSoldTo_Private -> Messages("change_keeper_vehiclelookup.vehiclesoldto.private"),
+                        VehicleSoldTo_Business -> Messages("change_keeper_vehiclelookup.vehiclesoldto.business")
+                    ),
+                    '_label -> Messages("change_keeper_vehiclelookup.vehiclesoldto.hint")
+                    )
                 )
 
                 <div class="form-steps">
