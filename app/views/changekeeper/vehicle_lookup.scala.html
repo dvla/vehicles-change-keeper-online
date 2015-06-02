@@ -30,7 +30,9 @@ currentForm = Some(viewModel.form)
 <div class="two-col clearfix vehicle-lookup">
 
     <div class="second-col">
-        
+
+        <h1>@Messages("change_keeper_vehiclelookup.title")</h1>
+
         <div class="form-steps">
             <div class="step uppercase-input">
                 @form(action = controllers.routes.VehicleLookup.submit()) {
