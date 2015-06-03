@@ -4,8 +4,6 @@
 
 @import controllers.routes.VehicleLookup
 @import views.changekeeper.BeforeYouStart.NextId
-@import uk.gov.dvla.vehicles.presentation.common
-@import common.views.html.widgets.base.csrfTokenHiddenField
 
 @main(
     progress = Some(Messages("change_keeper_progress_1")),
@@ -14,7 +12,7 @@
 
     <h1>@Messages("change_keeper_beforeyoustart.title")</h1>
 
-    <p>@Messages("change_keeper_beforeyoustart.p1")</p>
+    <h2>@Messages("change_keeper_beforeyoustart.p1")</h2>
 
     <ol>
         <li>@Messages("change_keeper_beforeyoustart.listitem1") </li>
@@ -29,10 +27,7 @@
         <li>@Messages("change_keeper_beforeyoustart.listitem4")</li>
     </ol>
 
-    <div class="form-steps">
-        @csrfTokenHiddenField()
-        @* Note the reverse routing syntax for the hyperlink *@
-        <a class="button" role="button" id="@NextId" href="@VehicleLookup.present()">@Messages("change_keeper_beforeyoustart.button")</a>
-    </div>
-
+    <a class="button" role="button" id="@NextId" href="@VehicleLookup.present()">
+        @Messages("change_keeper_beforeyoustart.button")
+    </a>
 }
