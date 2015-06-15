@@ -1,13 +1,13 @@
 package gov.uk.dvla.vehicles.keeper.stepdefs
 
-import cucumber.api.java.en.{When, Given,Then}
+import cucumber.api.java.en.{When, Given}
 import cucumber.api.scala.{EN, ScalaDsl}
 import org.openqa.selenium.WebDriver
 import org.scalatest.Matchers
 import pages.changekeeper.{NewKeeperChooseYourAddressPage, BusinessKeeperDetailsPage, VehicleLookupPage,NewKeeperEnterAddressManuallyPage}
-import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.{WebBrowserDriver, WebBrowserDSL}
+import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.{WithClue, WebBrowserDriver, WebBrowserDSL}
 
-class NewKeeperChooseYourAddressSteps(webBrowserDriver: WebBrowserDriver) extends ScalaDsl with EN with WebBrowserDSL with Matchers {
+class NewKeeperChooseYourAddressSteps(webBrowserDriver: WebBrowserDriver) extends ScalaDsl with EN with WebBrowserDSL with Matchers with WithClue {
 
   implicit val webDriver = webBrowserDriver.asInstanceOf[WebDriver]
   private final val ValidVrn = "B1"
@@ -20,19 +20,19 @@ class NewKeeperChooseYourAddressSteps(webBrowserDriver: WebBrowserDriver) extend
     click on VehicleLookupPage.emailInvisible
     click on VehicleLookupPage.vehicleSoldToBusiness
     click on VehicleLookupPage.next
-    page.title shouldEqual BusinessKeeperDetailsPage.title
+    page.title shouldEqual BusinessKeeperDetailsPage.title withClue trackingId
     click on BusinessKeeperDetailsPage.fleetNumberInvisible
     BusinessKeeperDetailsPage.businessNameField enter "retail"
     BusinessKeeperDetailsPage.postcodeField enter "qq99qq"
     click on BusinessKeeperDetailsPage.emailInvisible
     click on BusinessKeeperDetailsPage.next
-    page.title shouldEqual NewKeeperChooseYourAddressPage.title
+    page.title shouldEqual NewKeeperChooseYourAddressPage.title withClue trackingId
   }
 
   def goToEnterAddressManuallyPage() = {
     goToNewKeeperChooseYourAddressPage()
     click on NewKeeperChooseYourAddressPage.manualAddress
-    page.title should equal(NewKeeperEnterAddressManuallyPage.title)
+    page.title should equal(NewKeeperEnterAddressManuallyPage.title) withClue trackingId
   }
 
   @Given("^the user is on the NewKeeper choose your address page$")
@@ -59,7 +59,7 @@ class NewKeeperChooseYourAddressSteps(webBrowserDriver: WebBrowserDriver) extend
 
   @When("^the user has not selected an address on the Select new keeper address page and click on Next button$")
   def the_user_has_not_selected_an_address_on_the_Select_new_keeper_address_page_and_click_on_Next_button()  {
-    page.title shouldEqual NewKeeperChooseYourAddressPage.title
+    page.title shouldEqual NewKeeperChooseYourAddressPage.title withClue trackingId
     click on NewKeeperChooseYourAddressPage.next
   }
 }

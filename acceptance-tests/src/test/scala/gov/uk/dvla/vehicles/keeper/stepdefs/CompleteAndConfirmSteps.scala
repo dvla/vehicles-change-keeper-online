@@ -7,9 +7,9 @@ import org.openqa.selenium.WebDriver
 import org.scalatest.Matchers
 import pages.changekeeper._
 import uk.gov.dvla.vehicles.presentation.common.helpers
-import helpers.webbrowser.{WebBrowserDSL, WebBrowserDriver}
+import helpers.webbrowser.{WithClue, WebBrowserDSL, WebBrowserDriver}
 
-class CompleteAndConfirmSteps(webBrowserDriver: WebBrowserDriver) extends ScalaDsl with EN with WebBrowserDSL with Matchers {
+class CompleteAndConfirmSteps(webBrowserDriver: WebBrowserDriver) extends ScalaDsl with EN with WebBrowserDSL with Matchers with WithClue {
 
   implicit val webDriver = webBrowserDriver.asInstanceOf[WebDriver]
 
@@ -20,7 +20,7 @@ class CompleteAndConfirmSteps(webBrowserDriver: WebBrowserDriver) extends ScalaD
     click on VehicleLookupPage.emailInvisible
     click on VehicleLookupPage.vehicleSoldToBusiness
     click on VehicleLookupPage.next
-    page.title shouldEqual BusinessKeeperDetailsPage.title
+    page.title shouldEqual BusinessKeeperDetailsPage.title withClue trackingId
     click on BusinessKeeperDetailsPage.fleetNumberInvisible
     BusinessKeeperDetailsPage.businessNameField enter "retail"
     BusinessKeeperDetailsPage.postcodeField enter "qq99qq"
@@ -29,7 +29,7 @@ class CompleteAndConfirmSteps(webBrowserDriver: WebBrowserDriver) extends ScalaD
     click on NewKeeperChooseYourAddressPage.select
     NewKeeperChooseYourAddressPage.chooseAddress.value="0"
     click on NewKeeperChooseYourAddressPage.next
-    page.title shouldBe DateOfSalePage.title
+    page.title shouldBe DateOfSalePage.title withClue trackingId
   }
 
   def goToCompletAndConfirmPage(vrm: String = RandomVrmGenerator.uniqueVrm) {
@@ -38,7 +38,7 @@ class CompleteAndConfirmSteps(webBrowserDriver: WebBrowserDriver) extends ScalaD
     DateOfSalePage.monthDateOfSaleTextBox enter "12"
     DateOfSalePage.yearDateOfSaleTextBox enter "2010"
     click on DateOfSalePage.next
-    page.title shouldBe CompleteAndConfirmPage.title
+    page.title shouldBe CompleteAndConfirmPage.title withClue trackingId
   }
 
   @Given("^that the user is on the complete and confirm page$")
@@ -53,7 +53,7 @@ class CompleteAndConfirmSteps(webBrowserDriver: WebBrowserDriver) extends ScalaD
 
   @Then("^the user is not progressed to the next page$")
   def the_user_is_not_progressed_to_the_next_page(): Unit = {
-    page.title shouldEqual CompleteAndConfirmPage.title
+    page.title shouldEqual CompleteAndConfirmPage.title withClue trackingId
   }
 
   @When("^the consent field is not checked$")
@@ -71,7 +71,7 @@ class CompleteAndConfirmSteps(webBrowserDriver: WebBrowserDriver) extends ScalaD
 
   @Then("^the user is progressed to the next stage of the service$")
   def the_user_is_progressed_to_the_next_stage_of_the_service() {
-    page.title shouldEqual ChangeKeeperSuccessPage.title
+    page.title shouldEqual ChangeKeeperSuccessPage.title withClue trackingId
   }
   @Then("^an error message displayed \"(.*?)\"$")
   def an_error_message_displayed(err:String): Unit =  {

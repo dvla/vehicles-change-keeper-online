@@ -3,12 +3,12 @@ package gov.uk.dvla.vehicles.keeper.stepdefs
 import cucumber.api.java.en.{Then, When, Given}
 import cucumber.api.scala.{EN, ScalaDsl}
 import uk.gov.dvla.vehicles.presentation.common.helpers
-import helpers.webbrowser.{WebBrowserDriver, WebBrowserDSL}
+import helpers.webbrowser.{WithClue, WebBrowserDriver, WebBrowserDSL}
 import org.openqa.selenium.WebDriver
 import org.scalatest.Matchers
 import pages.changekeeper._
 
-class PrivateKeeperDetailsPageSteps(webBrowserDriver: WebBrowserDriver) extends ScalaDsl with EN with WebBrowserDSL with Matchers {
+class PrivateKeeperDetailsPageSteps(webBrowserDriver: WebBrowserDriver) extends ScalaDsl with EN with WebBrowserDSL with Matchers with WithClue {
 
   implicit val webDriver = webBrowserDriver.asInstanceOf[WebDriver]
 
@@ -25,7 +25,7 @@ class PrivateKeeperDetailsPageSteps(webBrowserDriver: WebBrowserDriver) extends 
     click on VehicleLookupPage.emailInvisible
     click on VehicleLookupPage.vehicleSoldToPrivateIndividual
     click on VehicleLookupPage.next
-    page.title shouldEqual PrivateKeeperDetailsPage.title
+    page.title shouldEqual PrivateKeeperDetailsPage.title withClue trackingId
   }
 
   def goToSelectNewKeeperAddressPageAfterFillingInNewPrivateKeeper() = {
@@ -89,7 +89,7 @@ class PrivateKeeperDetailsPageSteps(webBrowserDriver: WebBrowserDriver) extends 
 
   @Then("^the user Navigates back from the Private Keeper details page to Vehicle Lookup Page$")
   def the_user_Navigates_back_from_the_Private_Keeper_details_page_to_Vehicle_Lookup_Page()  {
-    page.title shouldEqual VehicleLookupPage.title
+    page.title shouldEqual VehicleLookupPage.title withClue trackingId
   }
 
   @When("^the user click on Submit button by not entering any text on FirstName textBox$")
@@ -128,7 +128,7 @@ class PrivateKeeperDetailsPageSteps(webBrowserDriver: WebBrowserDriver) extends 
   def the_total_number_of_characters_is_equal_or_less_than_including_title_space_and_FirstName(d:String)  {
     PrivateKeeperDetailsPage.firstNameTextBox enter "avsreedrtagdtesbgdrewasd"
     val fieldLength:String =  "mr"+' '+PrivateKeeperDetailsPage.firstNameTextBox.value
-    fieldLength.length shouldEqual 27
+    fieldLength.length shouldEqual 27 withClue trackingId
   }
 
   @When("^click on submit button without any validation errors$")
@@ -143,7 +143,7 @@ class PrivateKeeperDetailsPageSteps(webBrowserDriver: WebBrowserDriver) extends 
   def the_total_number_of_characters_is_more_than_including_title_space_and_FirstName(n:String)  {
     PrivateKeeperDetailsPage.firstNameTextBox enter "avsreedrtagdtesbgdrewasdjhkhh"
     val fieldLength:String =  "mr"+' '+PrivateKeeperDetailsPage.firstNameTextBox.value
-    fieldLength.length shouldNot equal(27)
+    fieldLength.length shouldNot equal(27) withClue trackingId
     click on PrivateKeeperDetailsPage.emailInvisible
     click on PrivateKeeperDetailsPage.next
   }

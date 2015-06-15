@@ -3,12 +3,12 @@ package gov.uk.dvla.vehicles.keeper.stepdefs
 import cucumber.api.java.en.{Then, When, Given}
 import cucumber.api.scala.{EN, ScalaDsl}
 import uk.gov.dvla.vehicles.presentation.common.helpers
-import helpers.webbrowser.{WebBrowserDriver, WebBrowserDSL}
+import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.{WithClue, WebBrowserDriver, WebBrowserDSL}
 import org.openqa.selenium.WebDriver
 import org.scalatest.Matchers
 import pages.changekeeper._
 
-class KeeperToKeeperAddressFieldsSteps(webBrowserDriver: WebBrowserDriver) extends ScalaDsl with EN with WebBrowserDSL with Matchers {
+class KeeperToKeeperAddressFieldsSteps(webBrowserDriver: WebBrowserDriver) extends ScalaDsl with EN with WebBrowserDSL with Matchers with WithClue {
 
   implicit val webDriver = webBrowserDriver.asInstanceOf[WebDriver]
 
@@ -19,14 +19,14 @@ class KeeperToKeeperAddressFieldsSteps(webBrowserDriver: WebBrowserDriver) exten
     click on VehicleLookupPage.emailInvisible
     click on VehicleLookupPage.vehicleSoldToPrivateIndividual
     click on VehicleLookupPage.next
-    page.title shouldEqual  PrivateKeeperDetailsPage.title
+    page.title shouldEqual  PrivateKeeperDetailsPage.title withClue trackingId
     click on PrivateKeeperDetailsPage.mr
     PrivateKeeperDetailsPage.firstNameTextBox enter "tue"
     PrivateKeeperDetailsPage.lastNameTextBox enter "nny"
     PrivateKeeperDetailsPage.postcodeTextBox enter "qq99qw"
     click on PrivateKeeperDetailsPage.emailInvisible
     click on PrivateKeeperDetailsPage.next
-    page.title shouldEqual NewKeeperChooseYourAddressPage.title
+    page.title shouldEqual NewKeeperChooseYourAddressPage.title withClue trackingId
   }
 
   @Given("^that the user is on the Enter Address page$")
@@ -71,7 +71,7 @@ class KeeperToKeeperAddressFieldsSteps(webBrowserDriver: WebBrowserDriver) exten
 
   @Then("^the trader details are retained$")
   def the_trader_details_are_retained()  {
-    page.title shouldEqual DateOfSalePage.title
+    page.title shouldEqual DateOfSalePage.title withClue trackingId
   }
 
   @Given("^the data in Line one of the address has less than (\\d+) characters$")
@@ -111,7 +111,7 @@ class KeeperToKeeperAddressFieldsSteps(webBrowserDriver: WebBrowserDriver) exten
   }
 
   @Then("^the postcode field is prepopulated and is non editable$")
-  def the_postcode_field_is_prepopulated_and_is_non_editable(): Unit =  {
+  def the_postcode_field_is_prepopulated_and_is_non_editable() {
   }
 
   @Given("^the user is on the manual address page$")
@@ -124,7 +124,7 @@ class KeeperToKeeperAddressFieldsSteps(webBrowserDriver: WebBrowserDriver) exten
 
   @Then("^the user is taken to the Date of Sale page$")
   def the_user_is_taken_to_the_date_of_sale_page() {
-     page.title shouldEqual DateOfSalePage.title
+     page.title shouldEqual DateOfSalePage.title withClue trackingId
   }
 
   @When("^the user has selected the Back control$")
@@ -135,8 +135,8 @@ class KeeperToKeeperAddressFieldsSteps(webBrowserDriver: WebBrowserDriver) exten
   }
 
   @Then("^the user is taken to the previous Address not found page$")
-  def the_user_is_taken_to_the_previous_Address_not_found_page(): Unit = {
-    page.title shouldEqual NewKeeperChooseYourAddressPage.title
+  def the_user_is_taken_to_the_previous_Address_not_found_page() {
+    page.title shouldEqual NewKeeperChooseYourAddressPage.title withClue trackingId
     page.text should include("No address found for that postcode")
   }
 }

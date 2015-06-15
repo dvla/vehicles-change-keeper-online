@@ -6,9 +6,9 @@ import org.openqa.selenium.WebDriver
 import org.scalatest.Matchers
 import pages.changekeeper.{VehicleLookupPage, PrivateKeeperDetailsPage, NewKeeperChooseYourAddressPage}
 import uk.gov.dvla.vehicles.presentation.common.helpers
-import helpers.webbrowser.{WebBrowserDSL, WebBrowserDriver}
+import helpers.webbrowser.{WithClue, WebBrowserDSL, WebBrowserDriver}
 
-class PostCodeValidationTestSteps(webBrowserDriver: WebBrowserDriver) extends ScalaDsl with EN with WebBrowserDSL with Matchers {
+class PostCodeValidationTestSteps(webBrowserDriver: WebBrowserDriver) extends ScalaDsl with EN with WebBrowserDSL with Matchers with WithClue {
 
   implicit val webDriver = webBrowserDriver.asInstanceOf[WebDriver]
 
@@ -44,7 +44,7 @@ class PostCodeValidationTestSteps(webBrowserDriver: WebBrowserDriver) extends Sc
 
   @Then("^the user will presented with a list of addresses$")
   def the_user_will_presented_with_a_list_of_addresses()  {
-    page.title shouldEqual NewKeeperChooseYourAddressPage.title
+    page.title shouldEqual NewKeeperChooseYourAddressPage.title withClue trackingId
   }
 
   @When("^the user selects the next button and no errors persist$")
@@ -54,7 +54,7 @@ class PostCodeValidationTestSteps(webBrowserDriver: WebBrowserDriver) extends Sc
 
   @Then("^the user is taken to either postcode lookup success or postcode lookup failure screen$")
   def the_user_is_taken_to_either_postcode_lookup_success_or_postcode_lookup_failure_screen() {
-    page.title shouldEqual NewKeeperChooseYourAddressPage.title
+    page.title shouldEqual NewKeeperChooseYourAddressPage.title withClue trackingId
   }
 
   @When("^the user selects the 'Back' button and no errors persist$")
@@ -64,6 +64,6 @@ class PostCodeValidationTestSteps(webBrowserDriver: WebBrowserDriver) extends Sc
 
   @Then("^the user is taken to the previous page$")
   def the_user_is_taken_to_the_previous_page()  {
-     page.title shouldEqual VehicleLookupPage.title
+     page.title shouldEqual VehicleLookupPage.title withClue trackingId
   }
 }

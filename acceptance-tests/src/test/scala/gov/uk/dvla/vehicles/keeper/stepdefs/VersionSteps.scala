@@ -9,7 +9,6 @@ import org.apache.http.impl.client.HttpClientBuilder
 import org.openqa.selenium.WebDriver
 import org.scalatest.Matchers
 import scala.io.Source.fromInputStream
-import uk.gov.dvla.vehicles.presentation.common.controllers.Version
 import uk.gov.dvla.vehicles.presentation.common.helpers
 import helpers.webbrowser.{WebBrowserDSL, WebBrowserDriver, WebDriverFactory}
 

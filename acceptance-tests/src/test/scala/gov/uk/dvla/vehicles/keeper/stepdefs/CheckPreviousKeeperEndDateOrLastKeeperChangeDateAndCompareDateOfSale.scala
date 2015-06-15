@@ -5,21 +5,21 @@ import cucumber.api.scala.{EN, ScalaDsl}
 import org.openqa.selenium.WebDriver
 import org.scalatest.Matchers
 import pages.changekeeper._
-import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.{WebBrowserDSL, WebBrowserDriver}
+import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.{WithClue, WebBrowserDSL, WebBrowserDriver}
 
-class CheckPreviousKeeperEndDateOrLastKeeperChangeDateAndCompareDateOfSale(webBrowserDriver: WebBrowserDriver) extends ScalaDsl with EN with WebBrowserDSL with Matchers {
+class CheckPreviousKeeperEndDateOrLastKeeperChangeDateAndCompareDateOfSale(webBrowserDriver: WebBrowserDriver) extends ScalaDsl with EN with WebBrowserDSL with Matchers with WithClue {
 
   implicit val webDriver = webBrowserDriver.asInstanceOf[WebDriver]
 
   def goToDateOfSalePage(registrationNumber:String) = {
     go to VehicleLookupPage
-    page.title shouldEqual VehicleLookupPage.title
+    page.title shouldEqual VehicleLookupPage.title withClue trackingId
     VehicleLookupPage.vehicleRegistrationNumber enter registrationNumber
     VehicleLookupPage.documentReferenceNumber enter "88888888881"
     click on VehicleLookupPage.emailInvisible
     click on VehicleLookupPage.vehicleSoldToBusiness
     click on VehicleLookupPage.next
-    page.title shouldEqual BusinessKeeperDetailsPage.title
+    page.title shouldEqual BusinessKeeperDetailsPage.title withClue trackingId
     click on BusinessKeeperDetailsPage.fleetNumberInvisible
     BusinessKeeperDetailsPage.businessNameField enter "retail"
     click on BusinessKeeperDetailsPage.emailInvisible
@@ -28,7 +28,7 @@ class CheckPreviousKeeperEndDateOrLastKeeperChangeDateAndCompareDateOfSale(webBr
     click on NewKeeperChooseYourAddressPage.select
     NewKeeperChooseYourAddressPage.chooseAddress.value="0"
     click on NewKeeperChooseYourAddressPage.next
-    page.title shouldBe DateOfSalePage.title
+    page.title shouldBe DateOfSalePage.title withClue trackingId
   }
 
   @Given("^The user goes to the Date of sale page entering registration number: (.*?)$")
@@ -54,8 +54,8 @@ class CheckPreviousKeeperEndDateOrLastKeeperChangeDateAndCompareDateOfSale(webBr
 
   @Then("^the user will remain on the Date of Sale page and a warning will be displayed$")
   def the_user_will_remain_on_the_date_of_sale_page_and_a_warning_will_be_displayed()  {
-    page.title should equal(DateOfSalePage.title)
-    page.source should include("<div class=\"popup-modal\">")
+    page.title should equal(DateOfSalePage.title) withClue trackingId
+    page.source should include("<div class=\"popup-modal\">") withClue trackingId
   }
 
   @Then("^the user confirms the date$")
@@ -65,12 +65,12 @@ class CheckPreviousKeeperEndDateOrLastKeeperChangeDateAndCompareDateOfSale(webBr
 
   @Then("^the user will be taken to the \"(.*?)\" page$")
   def the_user_will_be_taken_to_the_complete_and_confirm_page(a:String)  {
-    page.title shouldEqual CompleteAndConfirmPage.title
+    page.title shouldEqual CompleteAndConfirmPage.title withClue trackingId
   }
 
   @Then("^the user will not see a warning message$")
   def the_user_will_not_see_a_warning_message()  {
-    page.source should not include "<div class=\"popup-modal\">"
+    page.source should not include "<div class=\"popup-modal\">" withClue trackingId
   }
 
   @When("^no date is returned by the back end system and  user enters a date of sale$")
