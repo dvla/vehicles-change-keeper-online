@@ -53,7 +53,7 @@ error.validTitle = Must be a valid title
 error.title=An unrecoverable error has occurred
 error.button=Start again
 error.validBusinessName = Must be between 2 and 58 characters and only contain valid characters (a-z, A-Z, 0-9, &, -,(), /, ‘ and , or .). The following characters cannot be used at the start of trader name name  (&,-,(), /, ‘ and , or .)
-error.validBusinessKeeperName = Must be between 2 and 30 characters and only contain valid characters (a-z, A-Z, 0-9, &, -,(), /, ‘ and , or .). The following characters cannot be used at the start of business name  (&,-,(), /, ‘ and , or .)
+error.validBusinessKeeperName = Must be between 2 and 30 characters, contain at least one alpha character and only contain valid characters (a-z, A-Z, 0-9, &, -,(), /, ‘ and , or .). The following characters cannot be used at the start of business name  (&,-,(), /, ‘ and , or .)
 error.email = Enter a valid email address up to 254 characters
 error.dropDownInvalid = Please select a value from the drop down list.
 error.titleInvalid = Please select a title from the drop down list.
@@ -551,7 +551,7 @@ serviceClosed.exit_button = Exit
 
 # feedback
 common_feedback.title = Give Feedback
-common_feedback.message = Please don''t include any personal or financial information - for example your National Insurance number.
+common_feedback.message = Please don''t include any personal or financial information.
 common_feedback.label = What went wrong, if anything? What went well? How could we improve this service?
 common_feedback.charactersRemaining = characters remaining
 common_feedback.placeholder = (Limit is 1200 characters)
