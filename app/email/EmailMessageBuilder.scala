@@ -16,7 +16,7 @@ object EmailMessageBuilder {
 
   def buildWith(vehicleDetails: VehicleAndKeeperDetailsModel, transactionId: String,
                 transactionTimestamp: DateTime): Contents = {
-     val transactionTimestampStr = new SimpleDateFormat("dd/MM/yyyy HH:mm").format(transactionTimestamp)
+     val transactionTimestampStr = new SimpleDateFormat("dd/MM/yyyy HH:mm").format(transactionTimestamp.toDate)
 
      Contents(
         buildHtml(vehicleDetails, transactionId, transactionTimestampStr),
