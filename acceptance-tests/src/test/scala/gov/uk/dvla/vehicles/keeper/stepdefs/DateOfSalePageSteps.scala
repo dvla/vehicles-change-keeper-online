@@ -5,10 +5,9 @@ import cucumber.api.java.en.{Then, When, Given}
 import org.openqa.selenium.WebDriver
 import org.scalatest.Matchers
 import pages.changekeeper._
-import uk.gov.dvla.vehicles.presentation.common.helpers
-import helpers.webbrowser.{WebBrowserDSL, WebBrowserDriver}
+import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.{WithClue, WebBrowserDSL, WebBrowserDriver}
 
-class DateOfSalePageSteps(webBrowserDriver: WebBrowserDriver) extends ScalaDsl with EN with WebBrowserDSL with Matchers {
+class DateOfSalePageSteps(webBrowserDriver: WebBrowserDriver) extends ScalaDsl with EN with WebBrowserDSL with Matchers with WithClue {
 
   implicit val webDriver = webBrowserDriver.asInstanceOf[WebDriver]
 
@@ -19,7 +18,7 @@ class DateOfSalePageSteps(webBrowserDriver: WebBrowserDriver) extends ScalaDsl w
     click on VehicleLookupPage.emailInvisible
     click on VehicleLookupPage.vehicleSoldToBusiness
     click on VehicleLookupPage.next
-    page.title shouldEqual BusinessKeeperDetailsPage.title
+    page.title shouldEqual BusinessKeeperDetailsPage.title withClue trackingId
     click on BusinessKeeperDetailsPage.fleetNumberInvisible
     BusinessKeeperDetailsPage.businessNameField enter "retail"
     BusinessKeeperDetailsPage.postcodeField enter "qq99qq"
@@ -28,7 +27,7 @@ class DateOfSalePageSteps(webBrowserDriver: WebBrowserDriver) extends ScalaDsl w
     click on NewKeeperChooseYourAddressPage.select
     NewKeeperChooseYourAddressPage.chooseAddress.value="0"
     click on NewKeeperChooseYourAddressPage.next
-    page.title shouldBe DateOfSalePage.title
+    page.title shouldBe DateOfSalePage.title withClue trackingId
   }
 
   @Given("^that the user is on the date of sale page$")
@@ -38,7 +37,7 @@ class DateOfSalePageSteps(webBrowserDriver: WebBrowserDriver) extends ScalaDsl w
 
   @Given("^there is a  label titled \"(.*?)\"$")
   def there_is_a_label_titled(lableText: String) {
-    page.text.contains(lableText) shouldBe true
+    page.text.contains(lableText) shouldBe true withClue trackingId
   }
 
   @Then("^there is a control for entry of the vehicle mileage using the format N\\((\\d+)\\)$")
@@ -47,19 +46,19 @@ class DateOfSalePageSteps(webBrowserDriver: WebBrowserDriver) extends ScalaDsl w
   }
 
   @When("^there is a labelled Date of Sale and hint text$")
-  def there_is_a_labelled_Date_of_Sale_and_hint_text(): Unit = {
-    webDriver.getPageSource.contains("Date of sale") shouldBe true
+  def there_is_a_labelled_Date_of_Sale_and_hint_text() {
+    webDriver.getPageSource.contains("Date of sale") shouldBe true withClue trackingId
   }
 
   @When("^the Date of sale section will contain the Month label Month entry control Year label Year entry control$")
   def the_Date_of_sale_section_will_contain_the_Month_label_Month_entry_control_Year_label_Year_entry_control(): Unit = {
-    webDriver.getPageSource.contains("Day") shouldBe true
-    webDriver.getPageSource.contains("Month") shouldBe true
-    webDriver.getPageSource.contains("Year") shouldBe true
+    webDriver.getPageSource.contains("Day") shouldBe true withClue trackingId
+    webDriver.getPageSource.contains("Month") shouldBe true withClue trackingId
+    webDriver.getPageSource.contains("Year") shouldBe true withClue trackingId
   }
 
   @When("^the user selects the data entry control labelled Day$")
-  def the_user_selects_the_data_entry_control_labelled_Day(): Unit = {
+  def the_user_selects_the_data_entry_control_labelled_Day() {
     click on DateOfSalePage.dayDateOfSaleTextBox
   }
 
@@ -73,7 +72,7 @@ class DateOfSalePageSteps(webBrowserDriver: WebBrowserDriver) extends ScalaDsl w
   }
 
   @When("^the user selects the data entry control labelled Month$")
-  def the_user_selects_the_data_entry_control_labelled_Month(): Unit = {
+  def the_user_selects_the_data_entry_control_labelled_Month() {
     DateOfSalePage.monthDateOfSaleTextBox enter "12"
   }
 
@@ -82,17 +81,17 @@ class DateOfSalePageSteps(webBrowserDriver: WebBrowserDriver) extends ScalaDsl w
   }
 
   @When("^the user selects the data entry control labelled Year$")
-  def the_user_selects_the_data_entry_control_labelled_Year(): Unit = {
+  def the_user_selects_the_data_entry_control_labelled_Year() {
     click on DateOfSalePage.yearDateOfSaleTextBox
   }
 
   @Then("^the user can enter the (\\d+) digit year$")
-  def the_user_can_enter_the_digit_year(four: Int): Unit = {
+  def the_user_can_enter_the_digit_year(four: Int) {
     DateOfSalePage.yearDateOfSaleTextBox enter "2010"
   }
 
   @When("^the Date of sale is in the future$")
-  def the_Date_of_sale_is_in_the_future(): Unit = {
+  def the_Date_of_sale_is_in_the_future() {
     DateOfSalePage.dayDateOfSaleTextBox enter "12"
     DateOfSalePage.monthDateOfSaleTextBox enter "12"
     DateOfSalePage.yearDateOfSaleTextBox enter "2025"
@@ -104,7 +103,7 @@ class DateOfSalePageSteps(webBrowserDriver: WebBrowserDriver) extends ScalaDsl w
   }
 
   @When("^the Date of sale is incomplete$")
-  def the_Date_of_sale_is_incomplete(): Unit = {
+  def the_Date_of_sale_is_incomplete() {
     DateOfSalePage.monthDateOfSaleTextBox enter "12"
     DateOfSalePage.yearDateOfSaleTextBox enter "2025"
   }

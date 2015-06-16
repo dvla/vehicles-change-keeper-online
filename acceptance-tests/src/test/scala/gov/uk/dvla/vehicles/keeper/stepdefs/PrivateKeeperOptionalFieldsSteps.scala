@@ -7,9 +7,9 @@ import org.scalatest.Matchers
 import pages.changekeeper.{PrivateKeeperDetailsPage, VehicleLookupPage}
 import pages.common.ErrorPanel
 import uk.gov.dvla.vehicles.presentation.common.helpers
-import helpers.webbrowser.{WebBrowserDSL, WebBrowserDriver}
+import helpers.webbrowser.{WithClue, WebBrowserDSL, WebBrowserDriver}
 
-class PrivateKeeperOptionalFieldsSteps(webBrowserDriver: WebBrowserDriver) extends ScalaDsl with EN with WebBrowserDSL with Matchers {
+class PrivateKeeperOptionalFieldsSteps(webBrowserDriver: WebBrowserDriver) extends ScalaDsl with EN with WebBrowserDSL with Matchers with WithClue {
 
   implicit val webDriver = webBrowserDriver.asInstanceOf[WebDriver]
 
@@ -20,7 +20,7 @@ class PrivateKeeperOptionalFieldsSteps(webBrowserDriver: WebBrowserDriver) exten
     click on VehicleLookupPage.emailInvisible
     click on VehicleLookupPage.vehicleSoldToPrivateIndividual
     click on VehicleLookupPage.next
-    page.title shouldEqual PrivateKeeperDetailsPage.title
+    page.title shouldEqual PrivateKeeperDetailsPage.title withClue trackingId
   }
 
   @Given("^the user enters a validate date of birth$")

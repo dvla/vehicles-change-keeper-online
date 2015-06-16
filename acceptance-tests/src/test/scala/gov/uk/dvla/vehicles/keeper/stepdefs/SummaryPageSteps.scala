@@ -4,9 +4,9 @@ import cucumber.api.java.en.{Then, When, Given}
 import cucumber.api.scala.{EN, ScalaDsl}
 import org.scalatest.Matchers
 import pages.changekeeper.{BeforeYouStartPage, CompleteAndConfirmPage, ChangeKeeperSuccessPage}
-import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.{WebBrowserDSL, WebBrowserDriver}
+import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.{WithClue, WebBrowserDSL, WebBrowserDriver}
 
-class SummaryPageSteps (webBrowserDriver: WebBrowserDriver) extends ScalaDsl with EN with WebBrowserDSL with Matchers {
+class SummaryPageSteps (webBrowserDriver: WebBrowserDriver) extends ScalaDsl with EN with WebBrowserDSL with Matchers with WithClue {
 
   implicit val webDriver = webBrowserDriver.asInstanceOf[WebBrowserDriver]
   lazy val happyPath = new CompleteAndConfirmSteps(webBrowserDriver)
@@ -16,7 +16,7 @@ class SummaryPageSteps (webBrowserDriver: WebBrowserDriver) extends ScalaDsl wit
      happyPath.goToCompletAndConfirmPage("BF51BOV")
      click on CompleteAndConfirmPage.consent
      click on CompleteAndConfirmPage.next
-     page.title shouldEqual ChangeKeeperSuccessPage.title
+     page.title shouldEqual ChangeKeeperSuccessPage.title withClue trackingId
   }
 
   @Given("^the user can see the Transaction Id Finish and Print button$")
@@ -45,6 +45,6 @@ class SummaryPageSteps (webBrowserDriver: WebBrowserDriver) extends ScalaDsl wit
 
   @Then("^the user can navigates to BeforeStartPage$")
   def the_user_can_navigates_to_BeforeStartPage()  {
-    page.title shouldEqual BeforeYouStartPage.title
+    page.title shouldEqual BeforeYouStartPage.title withClue trackingId
   }
 }
