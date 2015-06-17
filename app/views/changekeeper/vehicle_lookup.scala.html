@@ -63,7 +63,7 @@ currentForm = Some(viewModel.form)
                   (if(config.isHtml5ValidationEnabled) Map('pattern -> DocumentReferenceNumber.Pattern) else Nil)
                )
                 <div class="hint-image-wrap img-wrap img-wrap-desktop">
-                    <p>@Messages("change_keeper_vehiclelookup.img.hint")</p>
+                    <p data-tracking="v5c_image">@Messages("change_keeper_vehiclelookup.img.hint")</p>
                     <div class="panel-indent-wrapper">
                         <div class="panel-indent">
                             <img src="@controllers.StaticAssets.versioned(config.assetsUrl)("images/document-reference-number.png")" alt="@Messages("change_keeper_vehiclelookup.img.alt")" />

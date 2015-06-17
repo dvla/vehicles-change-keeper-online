@@ -27,6 +27,17 @@ define(['jquery', 'jquery-migrate', "page-init"], function($, jqueryMigrate, pag
         });
     };
 
+    var addGaEventToV5Chint = function() {
+        //Tracking event for click on V5C image tooltip
+        if ($('.hint-image-wrap p').length) {
+            var v5cHint = $('.hint-image-wrap p');
+            v5cHint.on('click', function() {
+                var currentEvent = $('.hint-image-wrap p').attr('data-tracking');
+                _gaq.push(['_trackEvent', 'ct_link',  currentEvent, 'click',  1]);
+            });
+        }
+    };
+
     var trackPrivateBusiness = function() {
         if ($("#vehicleSoldTo_Private").is(':checked')) {
             _gaq.push(['_trackEvent', "track_path", "individual"]);
@@ -89,6 +100,7 @@ define(['jquery', 'jquery-migrate', "page-init"], function($, jqueryMigrate, pag
             pageInit.hideEmailOnOther('#privatekeeper_title_titleOption_4', '.form-item #privatekeeper_title_titleText');
 
             enableSendingGaEventsOnSubmit();
+            addGaEventToV5Chint();
         }
     }
 });
