@@ -53,7 +53,7 @@ object EmailSellerMessageBuilder {
        |    </style>
        |
        |    <table cellpadding="0" cellspacing="0" border="0" style="width: 100% !important; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-family: Helvetica, Arial, sans, sans-serif; background: #fff; margin: 0; padding: 0;" bgcolor="#fff">
-       |        <tr>
+       |        <!--<tr>
        |            <td id="GovUkContainer" style="border-collapse: collapse; color: #fff; background: #000; padding: 0 30px;" bgcolor="#000">
        |                <table style="border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
        |                    <tr>
@@ -65,7 +65,7 @@ object EmailSellerMessageBuilder {
        |                    </tr>
        |                </table>
        |            </td>
-       |        </tr>
+       |        </tr>-->
        |
        |        <tr>
        |            <td valign="top" style="border-collapse: collapse; padding: 0 30px;">
@@ -101,7 +101,7 @@ object EmailSellerMessageBuilder {
        |                            Vehicles Service Manager
        |                            </p>
        |
-       |                            <img src="DVLA logo" width="320" alt="DVLA logo" style="outline: none; text-decoration: none; -ms-interpolation-mode: bicubic;" />
+       |                            <!--<img src="DVLA logo" width="320" alt="DVLA logo" style="outline: none; text-decoration: none; -ms-interpolation-mode: bicubic;" />-->
        |
        |                        </td>
        |                    </tr>
