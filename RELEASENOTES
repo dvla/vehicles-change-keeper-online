@@ -1,3 +1,14 @@
+======== 1.12 ========
+Time of release binaries creation:
+
+User stories:
+US3240	Remove copy from User Feedback page
+US3364	Outstanding GA Events
+
+Defects:
+DE545	New keeper (Business route) alpha character(s) required
+DE564	Failed email message blocks email queue
+
 ======== 1.9.1 ========
 Time of release binaries creation:
 Tue May 19 14:44:29 UTC 2015

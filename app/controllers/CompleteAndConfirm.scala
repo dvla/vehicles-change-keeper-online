@@ -192,7 +192,8 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
     webService.invoke(disposeRequest, trackingId).map {
       case (httpResponseCode, response) =>
         val result = Redirect(
-          nextPage(httpResponseCode, response)(vehicleDetails, newKeeperDetailsView, sellerEmailModel, trackingId)
+          nextPage(httpResponseCode, response)(vehicleDetails, newKeeperDetailsView, sellerEmailModel,
+            response.map(_.transactionId).getOrElse(""), transactionTimestamp, trackingId)
         ).withCookie(CompleteAndConfirmResponseModel(response.get.transactionId, transactionTimestamp))
          .withCookie(completeAndConfirmForm)
 
@@ -207,13 +208,18 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
   def nextPage(httpResponseCode: Int, response: Option[AcquireResponseDto])
               (vehicleDetails: VehicleAndKeeperDetailsModel,
                keeperDetails: NewKeeperDetailsViewModel,
-               sellerEmailModel: SellerEmailModel, trackingId: String)
+               sellerEmailModel: SellerEmailModel,
+               transactionId: String,
+               transactionTimestamp: DateTime,
+               trackingId: String)
               (implicit request: Request[_]) = {
     response.foreach(r => logResponse(r))
 
     response match {
-      case Some(r) if r.responseCode.isDefined => successReturn(vehicleDetails, keeperDetails, sellerEmailModel, trackingId)
-      case _ => handleHttpStatusCode(httpResponseCode)(vehicleDetails, keeperDetails, sellerEmailModel, trackingId)
+      case Some(r) if r.responseCode.isDefined => successReturn(vehicleDetails, keeperDetails, sellerEmailModel,
+        transactionId, transactionTimestamp, trackingId)
+      case _ => handleHttpStatusCode(httpResponseCode)(vehicleDetails, keeperDetails, sellerEmailModel,
+        transactionId, transactionTimestamp, trackingId)
     }
   }
 
@@ -275,11 +281,15 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
   def handleHttpStatusCode(statusCode: Int)
                           (vehicleDetails: VehicleAndKeeperDetailsModel,
                            keeperDetails: NewKeeperDetailsViewModel,
-                           sellerEmailModel: SellerEmailModel, trackingId: String)
+                           sellerEmailModel: SellerEmailModel,
+                           transactionId: String,
+                           transactionTimestamp: DateTime,
+                           trackingId: String)
                           (implicit request: Request[_]): Call =
     statusCode match {
       case OK =>
-        successReturn (vehicleDetails, keeperDetails, sellerEmailModel, trackingId)
+        successReturn (vehicleDetails, keeperDetails, sellerEmailModel,  transactionId,
+          transactionTimestamp, trackingId)
       case _ =>
         Logger.error(logMessage(s"Received http status code ${statusCode} from microservice call.  " +
           s"Redirecting to ${routes.MicroServiceError.present()}",
@@ -289,11 +299,17 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
 
   private def successReturn(vehicleDetails: VehicleAndKeeperDetailsModel,
                             keeperDetails: NewKeeperDetailsViewModel,
-                            sellerEmailModel: SellerEmailModel, trackingId: String)
+                            sellerEmailModel: SellerEmailModel,
+                            transactionId: String,
+                            transactionTimestamp: DateTime,
+                            trackingId: String
+                            )
                            (implicit request: Request[_]): Call = {
     //send the email
-    createAndSendSellerEmail(vehicleDetails, sellerEmailModel.email, trackingId)
-    createAndSendEmail(vehicleDetails, keeperDetails, trackingId)
+    createAndSendSellerEmail(vehicleDetails, sellerEmailModel.email, transactionId,
+      transactionTimestamp, trackingId)
+    createAndSendEmail(vehicleDetails, keeperDetails, transactionId,
+      transactionTimestamp, trackingId)
     //redirect
     Logger.debug(logMessage(s"Redirecting to ${routes.ChangeKeeperSuccess.present()}", request.cookies.trackingId()))
     routes.ChangeKeeperSuccess.present()
@@ -397,6 +413,8 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
    */
   def createAndSendEmail(vehicleDetails: VehicleAndKeeperDetailsModel,
                          keeperDetails: NewKeeperDetailsViewModel,
+                         transactionId: String,
+                         transactionTimestamp: DateTime,
                          trackingId: String)
                         (implicit request: Request[_]) =
     keeperDetails.email match {
@@ -408,10 +426,10 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
         implicit val emailConfiguration = config.emailConfiguration
         implicit val implicitEmailService = implicitly[EmailService](emailService)
 
-        val template = EmailMessageBuilder.buildWith(vehicleDetails, keeperDetails)
+        val template = EmailMessageBuilder.buildWith(vehicleDetails, transactionId, transactionTimestamp)
 
         // This sends the email.
-        SEND email template withSubject vehicleDetails.registrationNumber to emailAddr send trackingId
+        SEND email template withSubject s"${vehicleDetails.registrationNumber} Confirmation of new vehicle keeper" to emailAddr send trackingId
 
       case None => Logger.info(logMessage(s"tried to send an email with no keeper details",
         request.cookies.trackingId()))
@@ -419,6 +437,8 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
 
   def createAndSendSellerEmail(vehicleDetails: VehicleAndKeeperDetailsModel,
                                sellerEmail: Option[String],
+                               transactionId: String,
+                               transactionTimestamp: DateTime,
                                trackingId: String)
                               (implicit request: Request[_])=
     sellerEmail match {
@@ -430,10 +450,10 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
         implicit val emailConfiguration = config.emailConfiguration
         implicit val implicitEmailService = implicitly[EmailService](emailService)
 
-        val template = EmailSellerMessageBuilder.buildWith(vehicleDetails)
+        val template = EmailSellerMessageBuilder.buildWith(vehicleDetails, transactionId, transactionTimestamp)
 
         // This sends the email.
-        SEND email template withSubject vehicleDetails.registrationNumber to emailAddr send trackingId
+        SEND email template withSubject s"${vehicleDetails.registrationNumber} confirmation of vehicle keeper change" to emailAddr send trackingId
       case None => Logger.info(logMessage(s"tried to send a receipt to seller but no email was found",
         request.cookies.trackingId()))
     }
