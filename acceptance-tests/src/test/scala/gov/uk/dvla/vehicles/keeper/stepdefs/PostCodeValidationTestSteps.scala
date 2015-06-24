@@ -20,7 +20,7 @@ class PostCodeValidationTestSteps(webBrowserDriver: WebBrowserDriver) extends Sc
 
   @Then("^the user will see an error message \"(.*?)\"$")
   def the_user_will_see_an_error_message(errMsg:String)  {
-    PrivateKeeperDetailsPage.errorTextForTitle(errMsg) shouldBe true
+    PrivateKeeperDetailsPage.errorTextForTitle(errMsg) shouldBe true withClue trackingId
   }
 
   @Then("^an error message  displays \"(.*?)\"$")

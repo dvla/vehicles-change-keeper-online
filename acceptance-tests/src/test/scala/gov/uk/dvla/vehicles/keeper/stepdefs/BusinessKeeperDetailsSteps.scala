@@ -71,7 +71,7 @@ class BusinessKeeperDetailsSteps(webBrowserDriver: WebBrowserDriver) extends Sca
 
   @Then("^there is a fleet number error message displayed \"(.*?)\"$")
   def there_is_a_fleet_number_error_message_displayed(fleetNoErrMsg:String)  {
-    find(tagName("body")).get.text should include(fleetNoErrMsg)
+    find(tagName("body")).get.text should include(fleetNoErrMsg) withClue trackingId
   }
 
   @When("^the user selects the field labelled Business name$")
@@ -98,7 +98,7 @@ class BusinessKeeperDetailsSteps(webBrowserDriver: WebBrowserDriver) extends Sca
 
   @Then("^the user will receive an error message \"(.*?)\"$")
   def the_user_will_receive_an_error_message(businessNameErrMsg: String)  {
-    find(tagName("body")).get.text should include(businessNameErrMsg)
+    find(tagName("body")).get.text should include(businessNameErrMsg) withClue trackingId
   }
 
   @Given("^the user has entered values into the business name$")
@@ -148,12 +148,12 @@ class BusinessKeeperDetailsSteps(webBrowserDriver: WebBrowserDriver) extends Sca
 
   @Then("^the system will not display an error for missing or invalid email address$")
   def the_system_will_not_display_an_error_for_missing_or_invalid_email_address()  {
-    find(tagName("body")).get.text should not include "noerrror"
+    find(tagName("body")).get.text should not include "noerrror" withClue trackingId
   }
 
   @Then("^the system will display an error for invalid email address \"(.*?)\"$")
   def the_system_will_display_an_error_for_invalid_email_address(emailErrMsg: String) {
-    find(tagName("body")).get.text should include(emailErrMsg)
+    find(tagName("body")).get.text should include(emailErrMsg) withClue trackingId
   }
 
   @Given("^the user has entered an invalid email address$")
@@ -198,7 +198,7 @@ class BusinessKeeperDetailsSteps(webBrowserDriver: WebBrowserDriver) extends Sca
 
   @Then("^an error message is displays \"(.*?)\"$")
   def an_error_message_is_displayed(postcodErrMsg:String)  {
-    find(tagName("body")).get.text should include(postcodErrMsg)
+    find(tagName("body")).get.text should include(postcodErrMsg) withClue trackingId
   }
 
   @When("^the user enters special characters in businessname with valid data in rest of the fields$")

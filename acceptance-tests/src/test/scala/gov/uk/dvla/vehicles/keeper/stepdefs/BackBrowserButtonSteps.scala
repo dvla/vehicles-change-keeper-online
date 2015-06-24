@@ -29,7 +29,7 @@ class BackBrowserButtonSteps(webBrowserDriver: WebBrowserDriver)
     click on NewKeeperChooseYourAddressPage.select
     NewKeeperChooseYourAddressPage.chooseAddress.value="0"
     click on NewKeeperChooseYourAddressPage.next
-    page.title shouldBe DateOfSalePage.title withClue trackingId
+    page.title shouldEqual  DateOfSalePage.title withClue trackingId
   }
 
   def goToCompletAndConfirmPage(vrm: String = RandomVrmGenerator.uniqueVrm) {
@@ -38,7 +38,7 @@ class BackBrowserButtonSteps(webBrowserDriver: WebBrowserDriver)
     DateOfSalePage.monthDateOfSaleTextBox enter "12"
     DateOfSalePage.yearDateOfSaleTextBox enter "2010"
     click on DateOfSalePage.next
-    page.title shouldBe CompleteAndConfirmPage.title withClue trackingId
+    page.title shouldEqual CompleteAndConfirmPage.title withClue trackingId
   }
 
   def goToSuccessfulSummaryPage() = {

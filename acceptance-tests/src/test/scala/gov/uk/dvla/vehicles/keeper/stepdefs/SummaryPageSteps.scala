@@ -21,21 +21,21 @@ class SummaryPageSteps (webBrowserDriver: WebBrowserDriver) extends ScalaDsl wit
 
   @Given("^the user can see the Transaction Id Finish and Print button$")
   def the_user_can_see_the_Transaction_Id_Finish_and_Print_button()  {
-     page.source should include("BF51BOV-11111111111")
-     page.source should include("Finish")
-     page.source should include("Print")
+     page.source should include("BF51BOV-11111111111") withClue trackingId
+     page.source should include("Finish") withClue trackingId
+     page.source should include("Print") withClue trackingId
   }
 
   @Given("^the user can see the Thank you message and vehicle details$")
   def the_user_can_see_the_Thank_you_message_and_vehicle_details()  {
-    page.source should include("The application is being processed")
-    page.source should include("Thank You")
+    page.source should include("The application is being processed") withClue trackingId
+    page.source should include("Thank You") withClue trackingId
   }
 
   @Given("^the keeper can see the keeper details$")
   def the_keeper_can_see_the_keeper_details()  {
-    page.source should include("RETAIL")
-    page.source should include("QQ9 9QQ")
+    page.source should include("RETAIL") withClue trackingId
+    page.source should include("QQ9 9QQ") withClue trackingId
   }
 
   @When("^the user click on Finish button$")

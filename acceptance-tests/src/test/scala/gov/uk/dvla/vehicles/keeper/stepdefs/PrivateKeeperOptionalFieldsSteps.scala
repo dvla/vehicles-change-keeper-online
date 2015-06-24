@@ -33,7 +33,7 @@ class PrivateKeeperOptionalFieldsSteps(webBrowserDriver: WebBrowserDriver) exten
 
   @Then("^the user will not see any error message like \"(.*?)\"$")
   def the_user_will_not_see_any_error_message_like(noErrMsg:String) {
-    PrivateKeeperDetailsPage.errorTextForTitle(noErrMsg) shouldBe false
+    PrivateKeeperDetailsPage.errorTextForTitle(noErrMsg) shouldBe false withClue trackingId
   }
 
   @Given("^the user enters a invalid date of birth  and no other errors persists$")
@@ -51,7 +51,7 @@ class PrivateKeeperOptionalFieldsSteps(webBrowserDriver: WebBrowserDriver) exten
 
   @Then("^there will be an error message displayed \"(.*?)\"$")
   def there_will_be_an_error_message_displayed(errMsg:String)  {
-    PrivateKeeperDetailsPage.errorTextForTitle(errMsg) shouldBe true
+    PrivateKeeperDetailsPage.errorTextForTitle(errMsg) shouldBe true withClue trackingId
   }
 
   @Given("^the user enters the dateOfBirth in future$")
@@ -72,13 +72,13 @@ class PrivateKeeperOptionalFieldsSteps(webBrowserDriver: WebBrowserDriver) exten
 
   @Then("^there will be an error message  \"(.*?)\"$")
   def there_will_be_an_error_message(dobFutureError:String) {
-    PrivateKeeperDetailsPage.errorTextForTitle(dobFutureError) shouldBe true
+    PrivateKeeperDetailsPage.errorTextForTitle(dobFutureError) shouldBe true withClue trackingId
   }
 
 
   @Then("^there will be an errored message  \"(.*?)\"$")
   def there_will_be_an_errored_message(dobPastError:String)  {
-    PrivateKeeperDetailsPage.errorTextForTitle(dobPastError) shouldBe true
+    PrivateKeeperDetailsPage.errorTextForTitle(dobPastError) shouldBe true withClue trackingId
   }
 
   @Given("^that the user is on the Private Keeper details page$")
@@ -93,7 +93,7 @@ class PrivateKeeperOptionalFieldsSteps(webBrowserDriver: WebBrowserDriver) exten
 
   @Then("^the character is capitalised$")
   def the_character_is_capitalised()  {
-    PrivateKeeperDetailsPage.driverNumberTextBox.value.toUpperCase shouldEqual "MORGA657052SM9JK"
+    PrivateKeeperDetailsPage.driverNumberTextBox.value.toUpperCase shouldEqual "MORGA657052SM9JK" withClue trackingId
   }
 
   @When("^the user has entered a driver number into the \"(.*?)\" control$")
@@ -105,7 +105,7 @@ class PrivateKeeperOptionalFieldsSteps(webBrowserDriver: WebBrowserDriver) exten
 
   @Then("^there will be an error message displayed as \"(.*?)\"$")
   def there_will_be_an_error_message_displayed_as(driverErrorMsg:String)  {
-    PrivateKeeperDetailsPage.errorTextForTitle(driverErrorMsg) shouldBe true
+    PrivateKeeperDetailsPage.errorTextForTitle(driverErrorMsg) shouldBe true withClue trackingId
   }
 
   @When("^the user enters a valid email address$")
@@ -128,7 +128,7 @@ class PrivateKeeperOptionalFieldsSteps(webBrowserDriver: WebBrowserDriver) exten
 
   @Then("^the system will not display an error message \"(.*?)\"$")
   def the_system_will_not_display_an_error_message(noErrorMsg:String) {
-    PrivateKeeperDetailsPage.errorTextForTitle(noErrorMsg) shouldBe false
+    PrivateKeeperDetailsPage.errorTextForTitle(noErrorMsg) shouldBe false withClue trackingId
   }
 
   @When("^the user has  entered an invalid email address and select the submit control$")
@@ -141,6 +141,6 @@ class PrivateKeeperOptionalFieldsSteps(webBrowserDriver: WebBrowserDriver) exten
 
   @Then("^the system will display an error for invaild email address \"(.*?)\"$")
   def the_system_will_display_an_error_for_invaild_email_address(errMsg: String)  {
-    ErrorPanel.text should include(errMsg)
+    ErrorPanel.text should include(errMsg) withClue trackingId
   }
 }

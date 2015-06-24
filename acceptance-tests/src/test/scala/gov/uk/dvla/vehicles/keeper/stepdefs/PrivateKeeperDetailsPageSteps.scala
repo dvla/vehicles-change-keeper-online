@@ -57,7 +57,7 @@ class PrivateKeeperDetailsPageSteps(webBrowserDriver: WebBrowserDriver) extends 
 
   @Then("^the user will remain on the same page with an error message \"(.*?)\"$")
   def the_user_will_remain_on_the_same_page_with_an_error_message(validationErrorMessage:String)  {
-    page.source should include (validationErrorMessage)
+    page.source should include (validationErrorMessage) withClue trackingId
   }
 
   @When("^the user selects Other title radio button and then click on Submit button$")
@@ -79,7 +79,7 @@ class PrivateKeeperDetailsPageSteps(webBrowserDriver: WebBrowserDriver) extends 
 
   @Then("^the user is taken to the page entitled \"(.*?)\"$")
   def the_user_is_taken_to_the_page_entitled(actualTitleOfThePage: String)  {
-    page.source should include (actualTitleOfThePage)
+    page.source should include (actualTitleOfThePage) withClue trackingId
   }
 
   @When("^the user click on Back link Text$")

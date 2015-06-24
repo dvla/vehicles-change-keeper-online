@@ -41,15 +41,15 @@ class KeeperToKeeperAddressFieldsSteps(webBrowserDriver: WebBrowserDriver) exten
   @Then("^the user will have the field labels \"(.*?)\" Line two of address with no label Line three of address with no label Town or City with field label \"(.*?)\" Postcode  with field label \"(.*?)\"$")
   def the_user_will_have_the_field_labels_Line_two_of_address_with_no_label_Line_three_of_address_with_no_label_Town_or_City_with_field_label_Postcode_with_field_label(a1:String,  a2:String, a3:String)  {
     click on NewKeeperChooseYourAddressPage.manualAddress
-    page.text.contains(a1.trim) shouldBe true
-    page.text.contains(a2.trim) shouldBe true
-    page.text.contains(a3.trim) shouldBe true
+    page.text.contains(a1.trim) shouldBe true withClue trackingId
+    page.text.contains(a2.trim) shouldBe true withClue trackingId
+    page.text.contains(a3.trim) shouldBe true withClue trackingId
   }
 
   @Then("^there will be hint text stating \"(.*?)\" below the field Building name/number and street$")
   def there_will_be_hint_text_stating_below_the_field_Building_name_number_and_street(a1:String) {
     click on NewKeeperChooseYourAddressPage.manualAddress
-    page.text.contains(a1) shouldBe true
+    page.text.contains(a1) shouldBe true withClue trackingId
   }
 
   @When("^the user has selected the submit control$")
@@ -84,7 +84,7 @@ class KeeperToKeeperAddressFieldsSteps(webBrowserDriver: WebBrowserDriver) exten
 
   @Then("^an error message is displayed \"(.*?)\"$")
   def an_error_message_is_displayed(errMsgForAddress:String) {
-    NewKeeperEnterAddressManuallyPage.errorTextForFields(errMsgForAddress) shouldBe true
+    NewKeeperEnterAddressManuallyPage.errorTextForFields(errMsgForAddress) shouldBe true withClue trackingId
   }
 
   @Given("^the town or city is null OR the town or city has less than (\\d+) characters$")
@@ -96,7 +96,7 @@ class KeeperToKeeperAddressFieldsSteps(webBrowserDriver: WebBrowserDriver) exten
 
   @Then("^there is a error message displayed \"(.*?)\"$")
   def there_is_a_error_message_displayed(errMsgForTown:String)  {
-    NewKeeperEnterAddressManuallyPage.errorTextForFields(errMsgForTown) shouldBe true
+    NewKeeperEnterAddressManuallyPage.errorTextForFields(errMsgForTown) shouldBe true withClue trackingId
   }
 
   @Given("^the user has entered a postcode on either the private or business keeper page$")
@@ -137,6 +137,6 @@ class KeeperToKeeperAddressFieldsSteps(webBrowserDriver: WebBrowserDriver) exten
   @Then("^the user is taken to the previous Address not found page$")
   def the_user_is_taken_to_the_previous_Address_not_found_page() {
     page.title shouldEqual NewKeeperChooseYourAddressPage.title withClue trackingId
-    page.text should include("No address found for that postcode")
+    page.text should include("No address found for that postcode") withClue trackingId
   }
 }
