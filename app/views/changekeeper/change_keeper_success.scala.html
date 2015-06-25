@@ -1,4 +1,4 @@
-@(viewModel: models.ChangeKeeperCompletionViewModel)(implicit lang: Lang,
+@(viewModel: models.ChangeKeeperCompletionViewModel, surveyUrl: Option[String])(implicit lang: Lang,
     token: uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction.CsrfPreventionToken,
     config: utils.helpers.Config)
 
@@ -20,7 +20,6 @@
             <p>@Messages("change_keeper_success.complete.p1")</p>
             <p>@Messages("change_keeper_success.complete.p2")</p>
         </div>
-
 
         <div class="related vehicle-sold-by mobile-only">
             <dl class="playback bg-plain">
@@ -57,16 +56,30 @@
                     @Messages("change_keeper_success.buttonnavprint")
                 </button>
             </div>
+
             <div class="step">
-                @form(action = controllers.routes.ChangeKeeperSuccess.finish()) {
-                    @csrfTokenHiddenField()
-                    <button id="@FinishId"
-                            type="submit"
-                            name="action"
-                            class="button button-new-disposal button-secondary">
-                        @Messages("change_keeper_success.finish")
-                    </button>
+            @form(action = controllers.routes.ChangeKeeperSuccess.finish()) {
+                @csrfTokenHiddenField()
+                @surveyUrl match {
+                    case Some(url) => {
+                        <button id="@FinishId"
+                                type="submit"
+                                onclick="window.open('@url', '_blank');"
+                                name="action"
+                                class="button button-new-disposal button-secondary">
+                            @Messages("change_keeper_success.finish")
+                        </button>
+                    }
+                    case None => {
+                        <button id="@FinishId"
+                                type="submit"
+                                name="action"
+                                class="button button-new-disposal button-secondary">
+                            @Messages("change_keeper_success.finish")
+                        </button>
+                    }
                 }
+            }
             </div>
         </div>
 

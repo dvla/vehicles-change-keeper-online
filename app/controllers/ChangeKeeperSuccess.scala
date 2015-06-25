@@ -14,7 +14,8 @@ import uk.gov.dvla.vehicles.presentation.common.LogFormats.logMessage
 import utils.helpers.Config
 
 class ChangeKeeperSuccess @Inject()()(implicit clientSideSessionFactory: ClientSideSessionFactory,
-                                       config: Config) extends Controller {
+                                       config: Config,
+                                       surveyUrl: SurveyUrl) extends Controller {
 
   private final val MissingCookiesSuccess = "Missing cookies in cache. Change of keeper was successful, " +
     "however cannot display success page. Redirecting to BeforeYouStart"
@@ -26,9 +27,16 @@ class ChangeKeeperSuccess @Inject()()(implicit clientSideSessionFactory: ClientS
       completeAndConfirmModel <- request.cookies.getModel[CompleteAndConfirmFormModel]
       dateOfSaleFormModel <- request.cookies.getModel[DateOfSaleFormModel]
       responseModel <- request.cookies.getModel[CompleteAndConfirmResponseModel]
-    } yield Ok(views.html.changekeeper.change_keeper_success(ChangeKeeperCompletionViewModel(
-      vehicleAndKeeperDetailsModel, newKeeperDetailsModel, dateOfSaleFormModel, completeAndConfirmModel, responseModel
-    )))
+    } yield
+      Ok(views.html.changekeeper.change_keeper_success(
+        ChangeKeeperCompletionViewModel(
+          vehicleAndKeeperDetailsModel,
+          newKeeperDetailsModel,
+          dateOfSaleFormModel,
+          completeAndConfirmModel,
+          responseModel),
+        surveyUrl())
+      )
 
     result getOrElse
       redirectToStart(MissingCookiesSuccess)
@@ -44,4 +52,9 @@ class ChangeKeeperSuccess @Inject()()(implicit clientSideSessionFactory: ClientS
     Logger.warn(logMessage(message, request.cookies.trackingId()))
     Redirect(routes.BeforeYouStart.present())
   }
+}
+
+class SurveyUrl @Inject()(implicit config: Config) {
+
+  def apply(): Option[String] = config.surveyUrl
 }

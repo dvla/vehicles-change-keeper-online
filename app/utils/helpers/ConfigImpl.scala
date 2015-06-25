@@ -53,4 +53,7 @@ class ConfigImpl extends Config {
     From(getProperty[String]("email.feedbackAddress"), "Feedback"),
     getStringListProperty("email.whitelist")
   )
+
+  // Survey URL
+  override val surveyUrl: Option[String] = getOptionalProperty[String]("survey.url")
 }

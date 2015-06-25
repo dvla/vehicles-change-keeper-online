@@ -1,5 +1,6 @@
 package controllers
 
+import com.tzavellas.sse.guice.ScalaModule
 import Common.PrototypeHtml
 import composition.WithApplication
 import helpers.{CookieFactoryForUnitSpecs, UnitSpec}
@@ -25,10 +26,14 @@ import common.model.PrivateKeeperDetailsFormModel.privateKeeperDetailsCacheKey
 import common.model.VehicleAndKeeperDetailsModel.vehicleAndKeeperLookupDetailsCacheKey
 import common.testhelpers.CookieHelper.{fetchCookiesFromHeaders, verifyCookieHasBeenDiscarded}
 import utils.helpers.Config
-import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.{TransactionTimestampValid, TransactionIdValid, RegistrationNumberValid}
+import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.TransactionTimestampValid
+import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.TransactionIdValid
+import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.RegistrationNumberValid
 import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.{VehicleMakeValid, VehicleModelValid}
 
 class ChangeKeeperSuccessUnitSpec extends UnitSpec {
+
+  val testUrl = "http://test/survery/url"
 
   "present" should {
     "display the page with new keeper cached" in new WithApplication {
@@ -45,6 +50,7 @@ class ChangeKeeperSuccessUnitSpec extends UnitSpec {
       val request = FakeRequest()
       implicit val clientSideSessionFactory = injector.getInstance(classOf[ClientSideSessionFactory])
       implicit val config: Config = mock[Config]
+      implicit val surveyUrl = injector.getInstance(classOf[SurveyUrl])
       when(config.isPrototypeBannerVisible).thenReturn(false)
 
       val acquireSuccessPrototypeNotVisible = new ChangeKeeperSuccess()
@@ -69,10 +75,10 @@ class ChangeKeeperSuccessUnitSpec extends UnitSpec {
         withCookies(CookieFactoryForUnitSpecs.completeAndConfirmModel()).
         withCookies(CookieFactoryForUnitSpecs.completeAndConfirmResponseModelModel()).
         withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel(
-          firstName = Some(FirstNameValid),
-          lastName = Some(LastNameValid),
-          email = Some(EmailValid)
-        ))
+        firstName = Some(FirstNameValid),
+        lastName = Some(LastNameValid),
+        email = Some(EmailValid)
+      ))
 
       val content = contentAsString(changeKeeperSuccess.present(request))
       content should include(RegistrationNumberValid)
@@ -97,10 +103,10 @@ class ChangeKeeperSuccessUnitSpec extends UnitSpec {
         withCookies(CookieFactoryForUnitSpecs.completeAndConfirmModel()).
         withCookies(CookieFactoryForUnitSpecs.completeAndConfirmResponseModelModel()).
         withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel(
-          businessName = Some(BusinessNameValid),
-          fleetNumber = Some(FleetNumberValid),
-          email = Some(EmailValid)
-        ))
+        businessName = Some(BusinessNameValid),
+        fleetNumber = Some(FleetNumberValid),
+        email = Some(EmailValid)
+      ))
 
       val content = contentAsString(changeKeeperSuccess.present(request))
       content should include(RegistrationNumberValid)
@@ -115,7 +121,33 @@ class ChangeKeeperSuccessUnitSpec extends UnitSpec {
       content should include(fmt.print(TransactionTimestampValid))
       content should include(TransactionIdValid)
     }
-}
+
+    "contain code in the page source to open the survey in a new tab when a survey url is configured" in new WithApplication {
+      val request = FakeRequest().
+        withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
+        withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel()).
+        withCookies(CookieFactoryForUnitSpecs.dateOfSaleModel()).
+        withCookies(CookieFactoryForUnitSpecs.completeAndConfirmModel()).
+        withCookies(CookieFactoryForUnitSpecs.completeAndConfirmResponseModelModel())
+
+      val result = changeKeeperSuccessWithMockConfig(mockSurveyConfig()).present(request)
+      val expectedContent = s"window.open('$testUrl', '_blank')"
+      contentAsString(result) should include(expectedContent)
+    }
+
+    "not contain code in the page source to open the survey in a new tab when a survey url is configured" in new WithApplication {
+      val request = FakeRequest().
+        withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
+        withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel()).
+        withCookies(CookieFactoryForUnitSpecs.dateOfSaleModel()).
+        withCookies(CookieFactoryForUnitSpecs.completeAndConfirmModel()).
+        withCookies(CookieFactoryForUnitSpecs.completeAndConfirmResponseModelModel())
+
+      val result = changeKeeperSuccessWithMockConfig(mockSurveyConfig(surveyUrl = None)).present(request)
+      val expectedContent = s"window.open('$testUrl', '_blank')"
+      contentAsString(result) should not include expectedContent
+    }
+  }
 
   "finish" should {
     "discard the vehicle, new keeper and confirm cookies" in {
@@ -170,5 +202,18 @@ class ChangeKeeperSuccessUnitSpec extends UnitSpec {
       withCookies(CookieFactoryForUnitSpecs.completeAndConfirmModel()).
       withCookies(CookieFactoryForUnitSpecs.completeAndConfirmResponseModelModel())
     changeKeeperSuccess.present(request)
+  }
+
+  def changeKeeperSuccessWithMockConfig(config: Config): ChangeKeeperSuccess =
+    testInjector(new ScalaModule() {
+      override def configure(): Unit = bind[Config].toInstance(config)
+    }).getInstance(classOf[ChangeKeeperSuccess])
+
+  def mockSurveyConfig(surveyUrl: Option[String] = Some(testUrl)): Config = {
+    val config = mock[Config]
+    when(config.assetsUrl).thenReturn(None)
+    when(config.googleAnalyticsTrackingId).thenReturn(None)
+    when(config.surveyUrl).thenReturn(surveyUrl)
+    config
   }
 }
