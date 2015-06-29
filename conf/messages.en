@@ -342,6 +342,7 @@ change_keeper_success.further_information.p1 = We will send you (the previous ke
 change_keeper_success.further_information.p2 = We will automatically issue a refund for any full remaining months of vehicle tax and cancel any direct debit (DD).
 change_keeper_success.further_information.p3 = Both the disposal acknowledgement letter and refund will be sent to the address on the V5C.
 change_keeper_success.further_information.p4 = If you do not receive either within 4-6 weeks, please contact DVLA Customer Enquiries as you could still be liable for the vehicle.
+
 change_keeper_success.further_information.p5 = You may want to take a print of this summary for your records.
 change_keeper_success.further_information.p6 = Since 1st October 2014 vehicle tax can no longer be transferred as part of the sale, so the new keeper must tax the vehicle if they want to use it on the road.
 change_keeper_success.further_information.p7 = Within 5 working days we will send a new vehicle registration certificate (V5C) to the new keeper.
