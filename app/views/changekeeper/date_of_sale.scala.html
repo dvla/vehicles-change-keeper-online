@@ -32,7 +32,11 @@
         </div>
 
         <div class="second-col">
-
+            <a class="back" id="@BackId"
+                @if(data.isSaleDateInvalid) {tabindex="-1"}
+            href="@controllers.routes.DateOfSale.back()">
+            @Messages("change_keeper_completeAndConfirm.backbutton")
+            </a>
             <h1>@Messages("change_keeper_date_of_sale.title")</h1>
 
             @form(action = data.submitAction) {
@@ -125,12 +129,7 @@
                         class="button">
                         @Messages("change_keeper_date_of_sale.next")
                     </button>
-                    <br/>
-                    <a class="back" id="@BackId"
-                        @if(data.isSaleDateInvalid) {tabindex="-1"}
-                        href="@controllers.routes.DateOfSale.back()">
-                        @Messages("change_keeper_completeAndConfirm.backbutton")
-                    </a>
+
                 </div>
             }
         </div>

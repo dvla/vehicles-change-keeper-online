@@ -46,7 +46,9 @@
     </div>
 
     <div class="second-col">
-
+        <a class="back" id="@BackId" href="@controllers.routes.VehicleLookup.present()">
+        @Messages("change_keeper_businesskeeperdetails.backbutton")
+        </a>
         <h1>@Messages("change_keeper_businesskeeperdetails.title")</h1>
 
         <p>@Messages("change_keeper_businesskeeperdetails.p1")</p>
@@ -108,10 +110,7 @@
             <button id="@NextId" type="submit" name="action" class="button">
                 @Messages("change_keeper_businesskeeperdetails.nextbutton")
             </button>
-            <br/>
-            <a class="back" id="@BackId" href="@controllers.routes.VehicleLookup.present()">
-                @Messages("change_keeper_businesskeeperdetails.backbutton")
-            </a>
+
             }
         </div>
 

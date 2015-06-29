@@ -25,7 +25,10 @@
     <div class="two-col clearfix acquire-complete-confirm">
 
         <div class="second-col">
-
+            <a class="back" id="@BackId"
+            href="@controllers.routes.CompleteAndConfirm.back()">
+            @Messages("change_keeper_completeAndConfirm.backbutton")
+            </a>
             <h1>@Messages("change_keeper_completeAndConfirm.title")</h1>
 
             <div>
@@ -114,11 +117,6 @@
                         class="button">
                         @Messages("change_keeper_completeAndConfirm.submitbutton")
                     </button>
-                    <br/>
-                    <a class="back" id="@BackId"
-                        href="@controllers.routes.CompleteAndConfirm.back()">
-                        @Messages("change_keeper_completeAndConfirm.backbutton")
-                    </a>
                 </div>
             }
         </div>

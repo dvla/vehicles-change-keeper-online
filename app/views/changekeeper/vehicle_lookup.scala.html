@@ -30,7 +30,9 @@ currentForm = Some(viewModel.form)
 <div class="two-col clearfix vehicle-lookup">
 
     <div class="second-col">
-
+        <a class="back" id="@BackId" href="@controllers.routes.BeforeYouStart.present()">
+        @Messages("change_keeper_vehiclelookup.backbutton")
+        </a>
         <h1>@Messages("change_keeper_vehiclelookup.title")</h1>
 
         <div class="form-steps">
@@ -108,10 +110,6 @@ currentForm = Some(viewModel.form)
                     <button id="@SubmitId" type="submit" name="action" class="button">
                         @Messages("change_keeper_vehiclelookup.button")
                     </button>
-                    <br/>
-                    <a class="back" id="@BackId" href="@controllers.routes.BeforeYouStart.present()">
-                        @Messages("change_keeper_vehiclelookup.backbutton")
-                    </a>
                 </div>
 
                 }

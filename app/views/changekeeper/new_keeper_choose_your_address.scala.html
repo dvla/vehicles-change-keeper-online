@@ -36,7 +36,9 @@
     </div>
 
     <div class="second-col">
-
+      <a class="back" id="@BackId" href="@controllers.routes.NewKeeperChooseYourAddress.back()">
+      @Messages("change_keeper_newKeeperChooseYourAddress.backbutton")
+      </a>
     <h1>@Messages("change_keeper_newKeeperChooseYourAddress_no_address_found_title")</h1>
 
     @form(action = NewKeeperChooseYourAddress.submit()) {
@@ -96,10 +98,6 @@
             @Messages("change_keeper_newKeeperChooseYourAddress.submitbutton")
           </button>
         }
-        <br/>
-        <a class="back" id="@BackId" href="@controllers.routes.NewKeeperChooseYourAddress.back()">
-          @Messages("change_keeper_newKeeperChooseYourAddress.backbutton")
-        </a>
       </div>
     }
     </div>
