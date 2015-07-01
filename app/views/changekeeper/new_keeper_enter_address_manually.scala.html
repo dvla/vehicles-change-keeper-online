@@ -28,6 +28,9 @@
     </div>
 
     <div class="second-col">
+        <a class="back" id="@BackId" href="@controllers.routes.NewKeeperChooseYourAddress.present()">
+        @Messages("change_keeper_newKeeperEnterAddressManually.backbutton")
+        </a>
         <h1>@Messages("change_keeper_newKeeperEnterAddressManually.title")</h1>
         <div class="enter-address-manually uppercase-input sr-only-labels">
             @form(action = controllers.routes.NewKeeperEnterAddressManually.submit()) {
@@ -41,10 +44,6 @@
                 <button id="@NextId" type="submit" name="action" class="button">
                     @Messages("change_keeper_newKeeperEnterAddressManually.submitbutton")
                 </button>
-                <br/>
-                <a class="back" id="@BackId" href="@controllers.routes.NewKeeperChooseYourAddress.present()">
-                    @Messages("change_keeper_newKeeperEnterAddressManually.backbutton")
-                </a>
             </div>
             }
         </div>
