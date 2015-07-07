@@ -19,12 +19,12 @@ object EmailMessageBuilder {
      val transactionTimestampStr = new SimpleDateFormat("dd/MM/yyyy HH:mm").format(transactionTimestamp.toDate)
 
      Contents(
-        buildHtml(vehicleDetails, transactionId, transactionTimestampStr),
+        buildHtml(vehicleDetails, transactionId, imagesPath, transactionTimestampStr),
         buildText(vehicleDetails, transactionId, transactionTimestampStr)
      )
   }
 
-  private def buildHtml(vehicleDetails: VehicleAndKeeperDetailsModel,transactionId: String,
+  private def buildHtml(vehicleDetails: VehicleAndKeeperDetailsModel,transactionId: String, imagesPath: String,
                         transactionTimestamp: String): String =
     s"""
        |
@@ -55,19 +55,19 @@ object EmailMessageBuilder {
        |    </style>
        |
        |    <table cellpadding="0" cellspacing="0" border="0" style="width: 100% !important; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-family: Helvetica, Arial, sans, sans-serif; background: #fff; margin: 0; padding: 0;" bgcolor="#fff">
-       |        <!--<tr>
+       |        <tr>
        |            <td id="GovUkContainer" style="border-collapse: collapse; color: #fff; background: #000; padding: 0 30px;" bgcolor="#000">
        |                <table style="border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
        |                    <tr>
        |                        <td style="border-collapse: collapse; padding: 20px 0;">
        |                            <a target="_blank" href="https://www.gov.uk/" style="color: #ffffff; text-decoration: none;">
-       |                                <img src="Gov Image" width="320" height="106" alt="Crown image" style="outline: none; text-decoration: none; -ms-interpolation-mode: bicubic;" />
+       |                                <img src="${imagesPath}/gov-uk.jpg" width="320" height="106" alt="Crown image" style="outline: none; text-decoration: none; -ms-interpolation-mode: bicubic;" />
        |                            </a>
        |                        </td>
        |                    </tr>
        |                </table>
        |            </td>
-       |        </tr>-->
+       |        </tr>
        |
        |        <tr>
        |            <td valign="top" style="border-collapse: collapse; padding: 0 30px;">
@@ -100,7 +100,7 @@ object EmailMessageBuilder {
        |                            Vehicles Service Manager
        |                            </p>
        |
-       |                            <!--<img src="DVLA logo" width="320" alt="DVLA logo" style="outline: none; text-decoration: none; -ms-interpolation-mode: bicubic;" />-->
+       |                            <img src="${imagesPath}/dvla_logo.png" width="320" alt="DVLA logo" style="outline: none; text-decoration: none; -ms-interpolation-mode: bicubic;" />
        |
        |                        </td>
        |                    </tr>
