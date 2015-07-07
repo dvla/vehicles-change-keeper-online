@@ -24,15 +24,13 @@ config: utils.helpers.Config)
 @main(
 progress = Some(Messages("change_keeper_progress_2")),
 title = Messages("change_keeper_vehiclelookup.title"),
-currentForm = Some(viewModel.form)
+currentForm = Some(viewModel.form),
+backButton = Some(controllers.routes.BeforeYouStart.present())
 ) {
 
 <div class="two-col clearfix vehicle-lookup">
 
     <div class="second-col">
-        <a class="back" id="@BackId" href="@controllers.routes.BeforeYouStart.present()">
-        @Messages("change_keeper_vehiclelookup.backbutton")
-        </a>
         <h1>@Messages("change_keeper_vehiclelookup.title")</h1>
 
         <div class="form-steps">

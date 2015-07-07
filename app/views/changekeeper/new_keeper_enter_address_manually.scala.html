@@ -13,7 +13,8 @@
 @main(
     progress = Some(Messages("change_keeper_progress_4")),
     title = Messages("change_keeper_newKeeperEnterAddressManually.title"),
-    currentForm = Some(viewModel.form)
+    currentForm = Some(viewModel.form),
+    backButton = Some(controllers.routes.NewKeeperChooseYourAddress.present())
 ) {
 
 <div class="two-col clearfix">
@@ -28,9 +29,6 @@
     </div>
 
     <div class="second-col">
-        <a class="back" id="@BackId" href="@controllers.routes.NewKeeperChooseYourAddress.present()">
-        @Messages("change_keeper_newKeeperEnterAddressManually.backbutton")
-        </a>
         <h1>@Messages("change_keeper_newKeeperEnterAddressManually.title")</h1>
         <div class="enter-address-manually uppercase-input sr-only-labels">
             @form(action = controllers.routes.NewKeeperEnterAddressManually.submit()) {

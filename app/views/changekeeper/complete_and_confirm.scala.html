@@ -19,16 +19,13 @@
 @main(
     progress = Some(Messages("change_keeper_progress_6")),
     title = Messages("change_keeper_completeAndConfirm.title"),
-    currentForm = Some(data.form)
+    currentForm = Some(data.form),
+    backButton = Some(controllers.routes.CompleteAndConfirm.back())
 ) {
 
     <div class="two-col clearfix acquire-complete-confirm">
 
         <div class="second-col">
-            <a class="back" id="@BackId"
-            href="@controllers.routes.CompleteAndConfirm.back()">
-            @Messages("change_keeper_completeAndConfirm.backbutton")
-            </a>
             <h1>@Messages("change_keeper_completeAndConfirm.title")</h1>
 
             <div>

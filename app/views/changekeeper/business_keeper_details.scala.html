@@ -27,7 +27,8 @@
 @main(
   progress = Some(Messages("change_keeper_progress_3")),
   title = Messages("change_keeper_businesskeeperdetails.title"),
-  currentForm = Some(viewModel.form)
+  currentForm = Some(viewModel.form),
+  backButton = Some(controllers.routes.VehicleLookup.present())
 ) {
 <div class="two-col clearfix">
 
@@ -46,9 +47,6 @@
     </div>
 
     <div class="second-col">
-        <a class="back" id="@BackId" href="@controllers.routes.VehicleLookup.present()">
-        @Messages("change_keeper_businesskeeperdetails.backbutton")
-        </a>
         <h1>@Messages("change_keeper_businesskeeperdetails.title")</h1>
 
         <p>@Messages("change_keeper_businesskeeperdetails.p1")</p>

@@ -19,7 +19,8 @@
 @main(
     progress = Some(Messages("change_keeper_progress_5")),
     title = Messages("change_keeper_date_of_sale.title"),
-    currentForm = Some(data.form)
+    currentForm = Some(data.form),
+    backButton = Some(controllers.routes.DateOfSale.back())
 ) {
 
     @if(data.isSaleDateInvalid) {
@@ -32,11 +33,6 @@
         </div>
 
         <div class="second-col">
-            <a class="back" id="@BackId"
-                @if(data.isSaleDateInvalid) {tabindex="-1"}
-            href="@controllers.routes.DateOfSale.back()">
-            @Messages("change_keeper_completeAndConfirm.backbutton")
-            </a>
             <h1>@Messages("change_keeper_date_of_sale.title")</h1>
 
             @form(action = data.submitAction) {

@@ -1,6 +1,8 @@
 @(progress: Option[String] = None,
 title: String,
-currentForm: Option[Form[_]] = None, showBanner: Boolean = true)(content: Html)(implicit lang: Lang,
+currentForm: Option[Form[_]] = None,
+        showBanner: Boolean = true,
+        backButton: Option[Call] = None)(content: Html)(implicit lang: Lang,
 config: utils.helpers.Config)
 
 @import uk.gov.dvla.vehicles.presentation.common
@@ -18,6 +20,12 @@ config: utils.helpers.Config)
     <div class="section-content">
 
         @progressBar(progress)
+
+        @backButton.map { back =>
+            <a class="back" id="back" href="@back">
+            @Messages("change_keeper_businesskeeperdetails.backbutton")
+            </a>
+        }
 
         @errorsSummary(currentForm)
 

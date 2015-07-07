@@ -27,7 +27,8 @@
 @main(
     progress = Some(Messages("change_keeper_progress_3")),
     title = Messages("change_keeper_privatekeeperdetails.title"),
-    currentForm = Some(privateKeeperDetailsForm)
+    currentForm = Some(privateKeeperDetailsForm),
+    backButton = Some(controllers.routes.VehicleLookup.present())
 ){
     @form(action = PrivateKeeperDetails.submit) {
     @csrfTokenHiddenField()
@@ -45,9 +46,6 @@
         </div>
 
         <div class="second-col">
-            <a class="back" id="@BackId" href="@controllers.routes.VehicleLookup.present()">
-            @Messages("change_keeper_privatekeeperdetails.backbutton")
-            </a>
             <h1>@Messages("change_keeper_privatekeeperdetails.title")</h1>
 
             <p>@Messages("change_keeper_privatekeeperdetails.p1")</p>

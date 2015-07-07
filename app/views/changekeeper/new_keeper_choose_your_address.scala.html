@@ -23,7 +23,8 @@
   progress = Some(Messages("change_keeper_progress_4")),
   title = if(dropDownOptions.isEmpty) Messages("change_keeper_newKeeperChooseYourAddress_no_address_found_title")
           else Messages("change_keeper_newKeeperChooseYourAddress_addresses_found_title"),
-  currentForm = Some(viewModel.form)
+  currentForm = Some(viewModel.form),
+  backButton = Some(controllers.routes.NewKeeperChooseYourAddress.back())
 ) {
   <div class="two-col clearfix">
     <div class="first-col">
@@ -36,9 +37,6 @@
     </div>
 
     <div class="second-col">
-      <a class="back" id="@BackId" href="@controllers.routes.NewKeeperChooseYourAddress.back()">
-      @Messages("change_keeper_newKeeperChooseYourAddress.backbutton")
-      </a>
     <h1>@Messages("change_keeper_newKeeperChooseYourAddress_no_address_found_title")</h1>
 
     @form(action = NewKeeperChooseYourAddress.submit()) {
