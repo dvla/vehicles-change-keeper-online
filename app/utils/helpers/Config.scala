@@ -33,6 +33,7 @@ trait Config extends VehicleLookupConfig {
   def emailServiceMsRequestTimeout: Int
 
   def emailConfiguration: EmailConfiguration
+  def imagesPath: String
 
   // Survey URL
   def surveyUrl: Option[String]

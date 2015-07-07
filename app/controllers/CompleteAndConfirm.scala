@@ -426,7 +426,8 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
         implicit val emailConfiguration = config.emailConfiguration
         implicit val implicitEmailService = implicitly[EmailService](emailService)
 
-        val template = EmailMessageBuilder.buildWith(vehicleDetails, transactionId, transactionTimestamp)
+        val template = EmailMessageBuilder.buildWith(vehicleDetails, transactionId,
+          config.imagesPath, transactionTimestamp)
 
         // This sends the email.
         SEND email template withSubject s"${vehicleDetails.registrationNumber} Confirmation of new vehicle keeper" to emailAddr send trackingId
@@ -450,7 +451,8 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
         implicit val emailConfiguration = config.emailConfiguration
         implicit val implicitEmailService = implicitly[EmailService](emailService)
 
-        val template = EmailSellerMessageBuilder.buildWith(vehicleDetails, transactionId, transactionTimestamp)
+        val template = EmailSellerMessageBuilder.buildWith(vehicleDetails, transactionId,
+          config.imagesPath, transactionTimestamp)
 
         // This sends the email.
         SEND email template withSubject s"${vehicleDetails.registrationNumber} confirmation of vehicle keeper change" to emailAddr send trackingId

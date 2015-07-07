@@ -54,6 +54,8 @@ class ConfigImpl extends Config {
     getStringListProperty("email.whitelist")
   )
 
+  override val imagesPath: String = getProperty[String]("email.image.path")
+
   // Survey URL
   override val surveyUrl: Option[String] = getOptionalProperty[String]("survey.url")
 }

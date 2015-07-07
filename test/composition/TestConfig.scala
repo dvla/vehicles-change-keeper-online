@@ -48,5 +48,7 @@ class TestConfig extends Config {
     None
   )
 
+  def imagesPath: String = ""
+
   override def surveyUrl: Option[String] = Some("test/survey/url")
 }
