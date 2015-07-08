@@ -1,3 +1,18 @@
+======== 1.13 ========
+Time of release binaries creation:
+Wed Jul 8 FILL-ME-IN UTC 2015
+
+DE603   Add config option for email
+DE565   Emails are being entered with spaces
+US2982  Add trackingId for failure acceptance tests
+US3427  Remove CEG number from End Pages
+US3429  Move the Back Control
+US3430  Move Where to find this above V5C Ref No Box
+US3431  Direct to GDS Feedback Pages
+US3433  Rename the Trader Services
+US3434  Add CEG code number to Duplicate Disposal Page
+US3442  Date check wording
+
 ======== 1.12 ========
 Time of release binaries creation:
 
