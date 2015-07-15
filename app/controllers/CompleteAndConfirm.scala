@@ -262,7 +262,7 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
     val keeperAddress = newKeeperDetailsViewModel.address.address
 
     val dateOfBirth = newKeeperDetailsViewModel.dateOfBirth match {
-      case Some(date) => Some(date.toDateTimeAtStartOfDay.toString)
+      case Some(date) => Some(ISODateTimeFormat.dateTime().print(date.toDateTimeAtStartOfDay(DateTimeZone.forID("UTC"))))
       case _ => None
     }
 
