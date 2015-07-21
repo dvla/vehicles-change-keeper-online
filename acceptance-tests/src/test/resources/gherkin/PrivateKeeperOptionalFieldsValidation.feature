@@ -43,9 +43,9 @@
    Scenario: - Keeper email -  Null
      Given that the user is on the Private Keeper details page
      When the user has not entered an email address and select the submit control
-     Then the system will not display an error message "Email - Enter a valid email address up to 254 characters"
+     Then the system will not display an error message "Email - Must be a valid email address"
 
    Scenario: - Keeper email - Invalid
      Given that the user is on the Private Keeper details page
      When the user has  entered an invalid email address and select the submit control
-     Then the system will display an error for invaild email address "Enter a valid email address up to 254 characters"
+     Then the system will display an error for invaild email address "Must be a valid email address"

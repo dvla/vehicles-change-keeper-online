@@ -67,7 +67,7 @@
       Given that the user is on the Enter business keeper details page
       And   the user has entered an invalid email address
       When  the user select the submit control
-      Then  the system will display an error for invalid email address "Contact email address - Enter a valid email address up to 254 characters"
+      Then  the system will display an error for invalid email address "Contact email address - Must be a valid email address"
 
     Scenario: - invalid postcode error message
       Given that the user is on the Enter business keeper details page
