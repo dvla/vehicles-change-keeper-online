@@ -18,7 +18,7 @@ final class Error @Inject()()(implicit clientSideSessionFactory: ClientSideSessi
     Ok(views.html.changekeeper.error(exceptionDigest))
   }
 
-  def submit(exceptionDigest: String) = Action.async { implicit request =>
+  def submit(exceptionDigest: String) = Action { implicit request =>
     Logger.debug(logMessage("Error submit called - now removing full set of cookies and redirecting to Start page",
       request.cookies.trackingId()))
     CookieHelper.discardAllCookies

@@ -74,5 +74,5 @@ trait GlobalLike extends WithFilters with GlobalSettings with Composition {
   }
 
   override def onError(request: RequestHeader, ex: Throwable): Future[Result] =
-    errorStrategy(request, ex)
+    Future(errorStrategy(request, ex))
 }
