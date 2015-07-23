@@ -48,38 +48,21 @@ backButton = Some(controllers.routes.BeforeYouStart.present())
                 )
 
             </div>
-            <div class="step uppercase-input hint-margin">
-               @valtechInputText(
-                  viewModel.form(DocumentReferenceNumberId),
-//                  hintText = Some(Messages("change_keeper_vehiclelookup.refnumlabel.hint")),
-                  args = Map(
-                    '_label -> Messages("change_keeper_vehiclelookup.refnumlabel"),
-                    '_showConstraints -> false,
-                    'typeTel -> true,
-                    'maxLength -> DocumentReferenceNumber.MaxLength, // Must be set independently of the pattern as the pattern is only checked when the user submits.
-                    //'title -> Messages("error.validDocumentReferenceNumber")
-                    'title -> Messages("")
-                  ) ++ // [SKW] for accessibility Tony removed have 'title text as the screen reader reads it twice, the knock-on effect is that our custom validation messages aren't displayed so the user has no idea what is wrong.
-                  (if(config.isHtml5ValidationEnabled) Map('pattern -> DocumentReferenceNumber.Pattern) else Nil)
-               )
-                <div class="hint-image-wrap img-wrap img-wrap-desktop">
-                    <p data-tracking="v5c_image">@Messages("change_keeper_vehiclelookup.img.hint")</p>
-                    <div class="panel-indent-wrapper">
-                        <div class="panel-indent">
-                            <img src="@controllers.StaticAssets.versioned(config.assetsUrl)("images/document-reference-number.png")" alt="@Messages("change_keeper_vehiclelookup.img.alt")" />
-                        </div>
-                    </div>
-                </div>
+                @valtechInputText(
+                    viewModel.form(DocumentReferenceNumberId),
+                    args = Map(
+                        '_label -> Messages("change_keeper_vehiclelookup.refnumlabel"),
+                        'tooltipImgSrc -> controllers.StaticAssets.versioned(config.assetsUrl)("images/document-reference-number.png"),
+                        'tooltipHeading -> Messages("change_keeper_vehiclelookup.img.hint"),
+                        '_showConstraints -> false,
+                        'typeTel -> true,
+                        'maxLength -> DocumentReferenceNumber.MaxLength, // Must be set independently of the pattern as the pattern is only checked when the user submits.
+                        //'title -> Messages("error.validDocumentReferenceNumber")
+                        'title -> Messages("")
+                    ) ++ // [SKW] for accessibility Tony removed have 'title text as the screen reader reads it twice, the knock-on effect is that our custom validation messages aren't displayed so the user has no idea what is wrong.
+                    (if(config.isHtml5ValidationEnabled) Map('pattern -> DocumentReferenceNumber.Pattern) else Nil)
+                )
 
-                <div class="hint-image-wrap img-wrap img-wrap-mobile">
-                    <p>@Messages("change_keeper_vehiclelookup.img.hint")</p>
-                    <div class="panel-indent-wrapper">
-                        <div class="panel-indent">
-                            <img src="@controllers.StaticAssets.versioned(config.assetsUrl)("images/document-reference-number.png")" alt="@Messages("change_keeper_vehiclelookup.img.alt")" />
-                        </div>
-                    </div>
-                </div>
-            </div>
                 @optionalToggle(
                   viewModel.form(VehicleSellerEmailOption),
                   Messages("change_keeper_vehiclelookup.traderemailoption"),
