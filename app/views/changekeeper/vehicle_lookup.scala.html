@@ -39,7 +39,7 @@ backButton = Some(controllers.routes.BeforeYouStart.present())
                 @csrfTokenHiddenField()
 
                 @valtechInputText(viewModel.form(VehicleRegistrationNumberId),
-                hintText = Some(Messages("")),
+                hintText = Some(Messages("change_keeper_vehiclelookup.v5c")),
                 args = Map('_label -> Messages("change_keeper_vehiclelookup.vrninputlabel"),
                            'maxLength -> VehicleRegistrationNumber.MaxLength,
                            '_showConstraints -> false,
@@ -53,7 +53,7 @@ backButton = Some(controllers.routes.BeforeYouStart.present())
                     args = Map(
                         '_label -> Messages("change_keeper_vehiclelookup.refnumlabel"),
                         'tooltipImgSrc -> controllers.StaticAssets.versioned(config.assetsUrl)("images/document-reference-number.png"),
-                        'tooltipHeading -> Messages("change_keeper_vehiclelookup.img.hint"),
+                        'tooltipHeading -> Messages("change_keeper_vehiclelookup.v5c"),
                         '_showConstraints -> false,
                         'typeTel -> true,
                         'maxLength -> DocumentReferenceNumber.MaxLength, // Must be set independently of the pattern as the pattern is only checked when the user submits.

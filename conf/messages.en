@@ -146,6 +146,7 @@ change_keeper_vehiclelookup.warning.p2 = Retain or transfer personal registratio
 change_keeper_vehiclelookup.img.h2 = Help finding your V5C document reference number?
 change_keeper_vehiclelookup.img.hint = Where to find this
 change_keeper_vehiclelookup.img.alt = V5C document reference number
+change_keeper_vehiclelookup.v5c = Vehicle Registration Certificate (V5C)
 change_keeper_vehiclelookup.refnumlabel = Latest V5C document reference number
 change_keeper_vehiclelookup.refnumlabel.hint = This is an 11 digit number (see image for details)
 change_keeper_vehiclelookup.vrninputlabel = Vehicle registration number
