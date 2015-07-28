@@ -39,7 +39,7 @@ backButton = Some(controllers.routes.BeforeYouStart.present())
                 @csrfTokenHiddenField()
 
                 @valtechInputText(viewModel.form(VehicleRegistrationNumberId),
-                hintText = Some(Messages("change_keeper_vehiclelookup.v5c")),
+                hintText = Some(Messages("")),
                 args = Map('_label -> Messages("change_keeper_vehiclelookup.vrninputlabel"),
                            'maxLength -> VehicleRegistrationNumber.MaxLength,
                            '_showConstraints -> false,
