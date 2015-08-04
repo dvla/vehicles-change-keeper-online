@@ -1,3 +1,11 @@
+======== 1.15 ========
+Time of release binaries creation:
+
+US3662  SPIKE - Devise a mechanism for identifying that the DVLA have executed a transaction internally
+US3609  Log X0001 and W0075 errors  
+US3608  Add link to VVR on Suppression Marker Pages
+US3035  Deploy the image display hover over pattern in VM services
+
 ======== 1.14 ========
 Time of release binaries creation:
 Wed Jul 22 2015 11:22:05 GMT+0100 (BST)
