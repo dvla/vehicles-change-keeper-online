@@ -2,8 +2,6 @@ package controllers
 
 import javax.inject.Inject
 
-import play.api.Logger
-import uk.gov.dvla.vehicles.presentation.common.LogFormats.logMessage
 import uk.gov.dvla.vehicles.presentation.common.model.NewKeeperChooseYourAddressViewModel
 import play.api.mvc.{Request, Result}
 import uk.gov.dvla.vehicles.presentation.common
@@ -53,27 +51,27 @@ class NewKeeperChooseYourAddress @Inject()(protected override val addressLookupS
   }
 
   override protected def privateKeeperDetailsRedirect(implicit request: Request[_]) = {
-    Logger.debug(logMessage(s"Redirecting to ${routes.PrivateKeeperDetails.present()}", request.cookies.trackingId()))
+    logMessage(request.cookies.trackingId(), Debug, s"Redirecting to ${routes.PrivateKeeperDetails.present()}")
     Redirect(routes.PrivateKeeperDetails.present())
   }
 
   override protected def businessKeeperDetailsRedirect(implicit request: Request[_]) = {
-    Logger.debug(logMessage(s"Redirecting to ${routes.BusinessKeeperDetails.present()}", request.cookies.trackingId()))
+    logMessage(request.cookies.trackingId(), Debug, s"Redirecting to ${routes.BusinessKeeperDetails.present()}")
     Redirect(routes.BusinessKeeperDetails.present())
   }
   
   override protected def vehicleLookupRedirect(implicit request: Request[_]) = {
-    Logger.debug(logMessage(s"Redirecting to ${routes.VehicleLookup.present()}", request.cookies.trackingId()))
+    logMessage(request.cookies.trackingId(), Debug, s"Redirecting to ${routes.VehicleLookup.present()}")
     Redirect(routes.VehicleLookup.present())
   }
   
   override protected def completeAndConfirmRedirect(implicit request: Request[_]) = {
-    Logger.debug(logMessage(s"Redirecting to ${routes.DateOfSale.present()}", request.cookies.trackingId()))
+    logMessage(request.cookies.trackingId(), Debug, s"Redirecting to ${routes.DateOfSale.present()}")
     Redirect(routes.DateOfSale.present())
   }
   
   override protected def upnpNotFoundRedirect(implicit request: Request[_]) = {
-    Logger.debug(logMessage(s"Redirecting to ${routes.UprnNotFound.present()}", request.cookies.trackingId()))
+    logMessage(request.cookies.trackingId(), Debug, s"Redirecting to ${routes.UprnNotFound.present()}")
     Redirect(routes.UprnNotFound.present())
   }
 

@@ -1,9 +1,7 @@
 package controllers
 
 import com.google.inject.Inject
-import play.api.Logger
 import play.api.mvc.{Request, Result}
-import uk.gov.dvla.vehicles.presentation.common.LogFormats.logMessage
 import utils.helpers.Config
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.ClientSideSessionFactory
@@ -21,12 +19,12 @@ class BusinessKeeperDetails @Inject()()(implicit protected override val clientSi
     BadRequest(views.html.changekeeper.business_keeper_details(model))
 
   protected def missingVehicleDetails(implicit request: Request[_]): Result = {
-    Logger.warn(logMessage(s"Missing vehicle details, now redirecting to ${routes.VehicleLookup.present()}", request.cookies.trackingId()))
+    logMessage(request.cookies.trackingId(), Warn, s"Missing vehicle details, now redirecting to ${routes.VehicleLookup.present()}")
     Redirect(routes.VehicleLookup.present())
   }
 
   protected def success(implicit request: Request[_]): Result = {
-    Logger.debug(logMessage(s"Redirecting to ${routes.NewKeeperChooseYourAddress.present()}", request.cookies.trackingId()))
+    logMessage(request.cookies.trackingId(), Debug, s"Redirecting to ${routes.NewKeeperChooseYourAddress.present()}")
     Redirect(routes.NewKeeperChooseYourAddress.present())
   }
 }

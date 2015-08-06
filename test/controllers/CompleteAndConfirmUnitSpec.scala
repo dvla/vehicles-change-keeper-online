@@ -21,7 +21,7 @@ import play.api.test.FakeRequest
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import uk.gov.dvla.vehicles.presentation.common
-import common.clientsidesession.ClientSideSessionFactory
+import uk.gov.dvla.vehicles.presentation.common.clientsidesession.{TrackingId, ClientSideSessionFactory}
 import common.services.DateService
 import common.services.SEND.EmailConfiguration
 import common.testhelpers.CookieHelper
@@ -199,8 +199,8 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
       whenReady(result) { r =>
         r.header.headers.get(LOCATION) should equal(Some(ChangeKeeperSuccessPage.address))
         CookieHelper.verifyCookieHasBeenDiscarded(AllowGoingToCompleteAndConfirmPageCacheKey, fetchCookiesFromHeaders(r))
-        verify(acquireServiceMock, times(1)).invoke(any[AcquireRequestDto], anyString())
-        verify(emailServiceMock, times(1)).invoke(any[EmailServiceSendRequest], anyString())
+        verify(acquireServiceMock, times(1)).invoke(any[AcquireRequestDto], any[TrackingId])
+        verify(emailServiceMock, times(1)).invoke(any[EmailServiceSendRequest], any[TrackingId])
       }
     }
 
@@ -218,8 +218,8 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
       val result = completeAndConfirm.submit(request)
       whenReady(result) { r =>
         r.header.status should equal(BAD_REQUEST)
-        verify(acquireServiceMock, never()).invoke(any[AcquireRequestDto], anyString())
-        verify(emailServiceMock, never()).invoke(any[EmailServiceSendRequest], anyString())
+        verify(acquireServiceMock, never()).invoke(any[AcquireRequestDto], any[TrackingId])
+        verify(emailServiceMock, never()).invoke(any[EmailServiceSendRequest], any[TrackingId])
       }
     }
   }
@@ -262,13 +262,13 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
 
   def createControllerAndMocks: (AcquireService, EmailService, CompleteAndConfirm) = {
     val acquireServiceMock: AcquireService = mock[AcquireService]
-    when(acquireServiceMock.invoke(any[AcquireRequestDto], any[String])).
+    when(acquireServiceMock.invoke(any[AcquireRequestDto], any[TrackingId])).
       thenReturn(Future.successful {
       (OK, Some(acquireResponseSuccess))
     })
 
     val emailServiceMock: EmailService = mock[EmailService]
-    when(emailServiceMock.invoke(any[EmailServiceSendRequest](), anyString())).
+    when(emailServiceMock.invoke(any[EmailServiceSendRequest](), any[TrackingId])).
       thenReturn(Future(EmailServiceSendResponse()))
 
     val completeAndConfirm = completeAndConfirmController(acquireServiceMock, emailServiceMock)

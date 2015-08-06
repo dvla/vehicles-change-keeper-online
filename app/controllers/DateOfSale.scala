@@ -8,11 +8,11 @@ import models._
 import models.K2KCacheKeyPrefix.CookiePrefix
 import org.joda.time.{DateTime, LocalDate}
 import play.api.data.{FormError, Form}
-import play.api.Logger
 import play.api.mvc.{Action, AnyContent, Controller, Request, Result}
+import uk.gov.dvla.vehicles.presentation.common.LogFormats.DVLALogger
 import webserviceclients.emailservice.EmailService
 import uk.gov.dvla.vehicles.presentation.common
-import common.clientsidesession.ClientSideSessionFactory
+import uk.gov.dvla.vehicles.presentation.common.clientsidesession.{TrackingId, ClientSideSessionFactory}
 import common.clientsidesession.CookieImplicits.{RichCookies, RichForm, RichResult}
 import common.model.{NewKeeperDetailsViewModel, VehicleAndKeeperDetailsModel}
 import common.model.NewKeeperEnterAddressManuallyFormModel
@@ -25,7 +25,7 @@ import views.html.changekeeper.date_of_sale
 class DateOfSale @Inject()(webService: AcquireService, emailService: EmailService)
                                   (implicit clientSideSessionFactory: ClientSideSessionFactory,
                                    dateService: DateService,
-                                   config: Config) extends Controller {
+                                   config: Config) extends Controller with DVLALogger {
 
   private[controllers] val form = Form(
     DateOfSaleFormModel.Form.detailMapping
@@ -52,7 +52,7 @@ class DateOfSale @Inject()(webService: AcquireService, emailService: EmailServic
             )
           )
         }
-      result getOrElse redirectToVehicleLookup(NoCookiesFoundMessage)
+      result getOrElse redirectToVehicleLookup(NoCookiesFoundMessage, request.cookies.trackingId())
   }
 
   // The dates are valid if they are on the same date or if the disposal date/keeper change date is before the acquisition date
@@ -82,7 +82,7 @@ class DateOfSale @Inject()(webService: AcquireService, emailService: EmailServic
           )
         )
         result getOrElse {
-          Logger.warn("Could not find expected data in cache on dispose submit - now redirecting...")
+          logMessage(request.cookies.trackingId(), Warn, "Could not find expected data in cache on dispose submit - now redirecting...")
           Redirect(routes.VehicleLookup.present()).discardingCookies()
         }
       } ,
@@ -98,8 +98,8 @@ class DateOfSale @Inject()(webService: AcquireService, emailService: EmailServic
       vehicleDetails <- request.cookies.getModel[VehicleAndKeeperDetailsModel]
       sellerEmailModel <- request.cookies.getModel[SellerEmailModel]
     } yield {
-      Logger.debug(s"CompleteAndConfirm - keeperEndDate = ${vehicleDetails.keeperEndDate}")
-      Logger.debug(s"CompleteAndConfirm - keeperChangeDate = ${vehicleDetails.keeperChangeDate}")
+      logMessage(request.cookies.trackingId(), Debug, s"CompleteAndConfirm - keeperEndDate = ${vehicleDetails.keeperEndDate}")
+      logMessage(request.cookies.trackingId(), Debug, s"CompleteAndConfirm - keeperChangeDate = ${vehicleDetails.keeperChangeDate}")
       // Only do the date check if the keeper end date or the keeper change date is present. If they are both
       // present or neither are present then skip the check
 
@@ -134,13 +134,13 @@ class DateOfSale @Inject()(webService: AcquireService, emailService: EmailServic
     }
 
     result getOrElse {
-      Logger.warn("Did not find expected cookie data on complete and confirm submit - now redirecting to VehicleLookup...")
+      logMessage(request.cookies.trackingId(), Warn, "Did not find expected cookie data on complete and confirm submit - now redirecting to VehicleLookup...")
       Redirect(routes.VehicleLookup.present())
     }
   }
 
-  private def redirectToVehicleLookup(message: String) = {
-    Logger.warn(message)
+  private def redirectToVehicleLookup(message: String, trackingId: TrackingId) = {
+    logMessage(trackingId, Warn, message)
     Redirect(routes.VehicleLookup.present())
   }
 

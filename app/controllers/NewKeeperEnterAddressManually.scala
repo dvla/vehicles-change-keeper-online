@@ -2,7 +2,6 @@ package controllers
 
 import com.google.inject.Inject
 import models.K2KCacheKeyPrefix.CookiePrefix
-import play.api.Logger
 import play.api.data.Form
 import play.api.mvc.{Request, Result}
 import models.CompleteAndConfirmFormModel.AllowGoingToCompleteAndConfirmPageCacheKey
@@ -13,7 +12,6 @@ import common.controllers.NewKeeperEnterAddressManuallyBase
 import common.model.NewKeeperEnterAddressManuallyFormModel
 import common.model.NewKeeperEnterAddressManuallyViewModel
 import common.model.VehicleAndKeeperDetailsModel
-import uk.gov.dvla.vehicles.presentation.common.LogFormats.logMessage
 
 import utils.helpers.Config
 import views.html.changekeeper.new_keeper_enter_address_manually
@@ -28,7 +26,7 @@ class NewKeeperEnterAddressManually @Inject()()
     Ok(new_keeper_enter_address_manually(NewKeeperEnterAddressManuallyViewModel(form.fill(), model), postcode))
 
   protected override def missingVehicleDetails(implicit request: Request[_]): Result = {
-    Logger.debug(logMessage(s"Redirecting to ${routes.VehicleLookup.present()}", request.cookies.trackingId()))
+    logMessage(request.cookies.trackingId(), Debug, s"Redirecting to ${routes.VehicleLookup.present()}")
     Redirect(routes.VehicleLookup.present())
   }
 
@@ -39,7 +37,7 @@ class NewKeeperEnterAddressManually @Inject()()
       NewKeeperEnterAddressManuallyViewModel(formWithReplacedErrors(form), model), postcode))
 
   protected override def success(implicit request: Request[_]): Result = {
-    Logger.debug(logMessage(s"Redirecting to ${routes.DateOfSale.present()}", request.cookies.trackingId()))
+    logMessage(request.cookies.trackingId(), Debug, s"Redirecting to ${routes.DateOfSale.present()}")
     Redirect(routes.DateOfSale.present()).
       withCookie(AllowGoingToCompleteAndConfirmPageCacheKey, "true")
   }

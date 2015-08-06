@@ -11,9 +11,8 @@ import models.VehicleLookupFormModel.Form.VehicleRegistrationNumberId
 import models.VehicleLookupFormModel.Form.VehicleSoldToId
 import models.VehicleLookupViewModel
 import models.VehicleLookupFormModel.{VehicleLookupResponseCodeCacheKey, Key, JsonFormat}
-import play.api.Logger
 import play.api.data.{Form => PlayForm, FormError}
-import play.api.mvc.{Result, Request}
+import play.api.mvc.{Result, Request, Call}
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.ClientSideSessionFactory
 import common.clientsidesession.CookieImplicits.{RichForm, RichResult, RichCookies}
@@ -25,7 +24,6 @@ import common.webserviceclients.bruteforceprevention.BruteForcePreventionService
 import common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupDetailsDto
 import common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupService
 import common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupErrorMessage
-import uk.gov.dvla.vehicles.presentation.common.LogFormats._
 import utils.helpers.Config
 import views.changekeeper.VehicleLookup.VehicleSoldTo_Private
 
@@ -41,19 +39,19 @@ class VehicleLookup @Inject()(implicit bruteForceService: BruteForcePreventionSe
 
   override def vrmLocked(bruteForcePreventionModel: BruteForcePreventionModel, formModel: VehicleLookupFormModel)
                         (implicit request: Request[_]): Result = {
-    Logger.debug(logMessage(s"Redirecting to ${routes.VrmLocked.present()}", request.cookies.trackingId()))
+    logMessage(request.cookies.trackingId(), Debug, s"Redirecting to ${routes.VrmLocked.present()}")
     Redirect(routes.VrmLocked.present())
   }
 
   override def microServiceError(t: Throwable, formModel: VehicleLookupFormModel)
                                 (implicit request: Request[_]): Result = {
-    Logger.debug(logMessage(s"Redirecting to ${routes.MicroServiceError.present()}", request.cookies.trackingId()))
+    logMessage(request.cookies.trackingId(), Debug, s"Redirecting to ${routes.MicroServiceError.present()}")
     Redirect(routes.MicroServiceError.present())
   }
 
   override def vehicleLookupFailure(responseCode: VehicleAndKeeperLookupErrorMessage, formModel: VehicleLookupFormModel)
                                    (implicit request: Request[_]): Result = {
-    Logger.debug(logMessage(s"Redirecting to ${routes.VehicleLookupFailure.present()}", request.cookies.trackingId()))
+    logMessage(request.cookies.trackingId(), Debug, s"Redirecting to ${routes.VehicleLookupFailure.present()}")
     Redirect(routes.VehicleLookupFailure.present())
   }
 
@@ -68,18 +66,18 @@ class VehicleLookup @Inject()(implicit bruteForceService: BruteForcePreventionSe
     val emailCapture = SellerEmailModel(formModel.sellerEmail)
     val suppressed = model.suppressedV5Flag.getOrElse(false)
 
-    val (call, discardedCookies) =
+    val (call: Call, discardedCookies: Set[String]) =
       (formModel.vehicleSoldTo, suppressed) match {
         case (_, true) => {
-          Logger.debug(logMessage(s"Redirecting to ${routes.SuppressedV5C.present()}", request.cookies.trackingId()))
+          logMessage(request.cookies.trackingId(), Debug, s"Redirecting to ${routes.SuppressedV5C.present()}")
           (routes.SuppressedV5C.present(), BusinessKeeperDetailsCacheKeys)
         }
         case (VehicleSoldTo_Private, false) => {
-          Logger.debug(logMessage(s"Redirecting to ${routes.PrivateKeeperDetails.present()}", request.cookies.trackingId()))
+          logMessage(request.cookies.trackingId(), Debug, s"Redirecting to ${routes.PrivateKeeperDetails.present()}")
           (routes.PrivateKeeperDetails.present(), BusinessKeeperDetailsCacheKeys)
         }
         case (_, false) => {
-          Logger.debug(logMessage(s"Redirecting to ${routes.BusinessKeeperDetails.present()}", request.cookies.trackingId()))
+          logMessage(request.cookies.trackingId(), Debug, s"Redirecting to ${routes.BusinessKeeperDetails.present()}")
           (routes.BusinessKeeperDetails.present(), PrivateKeeperDetailsCacheKeys)
         }
       }
