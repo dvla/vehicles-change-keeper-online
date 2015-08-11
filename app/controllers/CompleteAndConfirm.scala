@@ -15,13 +15,15 @@ import models.VehicleLookupFormModel
 import org.joda.time.{DateTimeZone, DateTime}
 import org.joda.time.format.ISODateTimeFormat
 import play.api.data.{FormError, Form}
+import play.api.Logger
 import play.api.mvc.{Action, AnyContent, Call, Controller, Request, Result}
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import uk.gov.dvla.vehicles.presentation.common
 import uk.gov.dvla.vehicles.presentation.common.clientsidesession.{TrackingId, ClientSideSessionFactory}
 import common.clientsidesession.CookieImplicits.{RichCookies, RichForm, RichResult}
-import uk.gov.dvla.vehicles.presentation.common.LogFormats.{DVLALogger, anonymize, optionNone}
+import common.LogFormats.{anonymize, optionNone}
+import uk.gov.dvla.vehicles.presentation.common.LogFormats._
 import common.mappings.TitleType
 import common.model.{NewKeeperDetailsViewModel, VehicleAndKeeperDetailsModel}
 import common.model.NewKeeperEnterAddressManuallyFormModel
@@ -36,7 +38,7 @@ import webserviceclients.emailservice.EmailService
 class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: EmailService)
                                   (implicit clientSideSessionFactory: ClientSideSessionFactory,
                                    dateService: DateService,
-                                   config: Config) extends Controller with DVLALogger {
+                                   config: Config) extends Controller with DVLALogger  {
   private val cookiesToBeDiscardedOnRedirectAway =
     AllCacheKeys ++ Set(AllowGoingToCompleteAndConfirmPageCacheKey)
 
@@ -54,16 +56,16 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
         vehicleAndKeeperDetails <- request.cookies.getModel[VehicleAndKeeperDetailsModel]
         dateOfSaleModel <- request.cookies.getModel[DateOfSaleFormModel]
       } yield Ok(
-        complete_and_confirm(
-          CompleteAndConfirmViewModel(
-            form.fill(),
-            vehicleAndKeeperDetails,
-            newKeeperDetails,
-            dateOfSaleModel
-          ),
-          dateService
+          complete_and_confirm(
+            CompleteAndConfirmViewModel(
+              form.fill(),
+              vehicleAndKeeperDetails,
+              newKeeperDetails,
+              dateOfSaleModel
+            ),
+            dateService
+          )
         )
-      )
 
       result getOrElse
         redirectToVehicleLookup(NoCookiesFoundMessage).discardingCookie(AllowGoingToCompleteAndConfirmPageCacheKey)
@@ -80,20 +82,20 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
             vehicleDetails <- request.cookies.getModel[VehicleAndKeeperDetailsModel]
             dateOfSaleModel <- request.cookies.getModel[DateOfSaleFormModel]
           } yield {
-            BadRequest(
-              complete_and_confirm(
-                CompleteAndConfirmViewModel(formWithReplacedErrors(invalidForm),
-                  vehicleDetails,
-                  newKeeperDetails,
-                  dateOfSaleModel
-                ),
-                dateService
+              BadRequest(
+                complete_and_confirm(
+                  CompleteAndConfirmViewModel(formWithReplacedErrors(invalidForm),
+                    vehicleDetails,
+                    newKeeperDetails,
+                    dateOfSaleModel
+                  ),
+                  dateService
+                )
               )
-            )
-          }
+            }
 
           result getOrElse {
-            logMessage(request.cookies.trackingId(), Warn, s"Could not find expected data in cache on dispose submit - " +
+            logMessage(request.cookies.trackingId, Warn,s"Could not find expected data in cache on dispose submit - " +
               s"now redirecting to ${routes.VehicleLookup.present()}")
             Redirect(routes.VehicleLookup.present()).discardingCookies()
           }
@@ -117,31 +119,31 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
       sellerEmailModel <- request.cookies.getModel[SellerEmailModel]
       dateOfSaleModel <- request.cookies.getModel[DateOfSaleFormModel]
     } yield {
-        logMessage(request.cookies.trackingId(), Debug, s"CompleteAndConfirm - keeperEndDate = ${vehicleDetails.keeperEndDate}")
-        logMessage(request.cookies.trackingId(), Debug, s"CompleteAndConfirm - keeperChangeDate = ${vehicleDetails.keeperChangeDate}")
-      // Only do the date check if the keeper end date or the keeper change date is present. If they are both
-      // present or neither are present then skip the check
+        logMessage(request.cookies.trackingId(),Debug, s"CompleteAndConfirm - keeperEndDate = ${vehicleDetails.keeperEndDate}")
+        logMessage(request.cookies.trackingId(),Debug, s"CompleteAndConfirm - keeperChangeDate = ${vehicleDetails.keeperChangeDate}")
+        // Only do the date check if the keeper end date or the keeper change date is present. If they are both
+        // present or neither are present then skip the check
 
-      acquireAction(
-        validForm,
-        newKeeperDetails,
-        vehicleLookup,
-        vehicleDetails,
-        sellerEmailModel,
-        dateOfSaleModel,
-        request.cookies.trackingId
-      )
-    }
+        acquireAction(
+          validForm,
+          newKeeperDetails,
+          vehicleLookup,
+          vehicleDetails,
+          sellerEmailModel,
+          dateOfSaleModel,
+          request.cookies.trackingId
+        )
+      }
 
     result getOrElse Future.successful {
-      logMessage(request.cookies.trackingId(), Warn, s"Did not find expected cookie data on complete and confirm submit " +
+      logMessage(request.cookies.trackingId(), Warn,s"Did not find expected cookie data on complete and confirm submit " +
         s"- now redirecting to ${routes.VehicleLookup.present()}")
       Redirect(routes.VehicleLookup.present()).discardingCookie(AllowGoingToCompleteAndConfirmPageCacheKey)
     }
   }
 
   private def redirectToVehicleLookup(message: String)(implicit request: Request[_]) = {
-    logMessage(request.cookies.trackingId(), Warn, message)
+    logMessage(request.cookies.trackingId(), Warn,message)
     Redirect(routes.VehicleLookup.present())
   }
 
@@ -149,11 +151,11 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
     request.cookies.getModel[DateOfSaleFormModel].fold {
       request.cookies.getModel[NewKeeperEnterAddressManuallyFormModel] match {
         case Some(manualAddress) => {
-          logMessage(request.cookies.trackingId(), Warn, s"Redirecting to ${routes.NewKeeperEnterAddressManually.present()}")
+          logMessage(request.cookies.trackingId(),Warn, s"Redirecting to ${routes.NewKeeperEnterAddressManually.present()}")
           Redirect(routes.NewKeeperEnterAddressManually.present())
         }
         case None => {
-          logMessage(request.cookies.trackingId(), Warn, s"Redirecting to ${routes.NewKeeperChooseYourAddress.present()}")
+          logMessage(request.cookies.trackingId(),Warn,s"Redirecting to ${routes.NewKeeperChooseYourAddress.present()}")
           Redirect(routes.NewKeeperChooseYourAddress.present())
         }
       }
@@ -179,29 +181,29 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
 
     val transactionTimestamp = dateService.now.toDateTime
 
-    val disposeRequest = buildMicroServiceRequest(vehicleLookup, completeAndConfirmForm,
+    val acquireRequest = buildMicroServiceRequest(vehicleLookup, completeAndConfirmForm,
       newKeeperDetailsView, dateOfSaleFormModel, transactionTimestamp, trackingId)
 
-  logRequest(disposeRequest)
+    logRequest(acquireRequest)
 
-    webService.invoke(disposeRequest, trackingId).map {
+    webService.invoke(acquireRequest, trackingId).map {
       case (httpResponseCode, response) =>
         val result = Redirect(
-          nextPage(httpResponseCode, response)(vehicleDetails, newKeeperDetailsView, sellerEmailModel,
+          nextPage(httpResponseCode, response)(acquireRequest, vehicleDetails, newKeeperDetailsView, sellerEmailModel,
             response.map(_.transactionId).getOrElse(""), transactionTimestamp, trackingId)
         ).withCookie(CompleteAndConfirmResponseModel(response.get.transactionId, transactionTimestamp))
-         .withCookie(completeAndConfirmForm)
-
+          .withCookie(completeAndConfirmForm)
         result
     }.recover {
       case e: Throwable =>
-        logMessage(request.cookies.trackingId(), Warn, s"Acquire micro-service call failed.")
+        logMessage(request.cookies.trackingId(),Warn,s"Acquire micro-service call failed. ${e.getMessage}")
         Redirect(routes.MicroServiceError.present())
     }
   }.map(_.discardingCookie(AllowGoingToCompleteAndConfirmPageCacheKey))
 
   def nextPage(httpResponseCode: Int, response: Option[AcquireResponseDto])
-              (vehicleDetails: VehicleAndKeeperDetailsModel,
+              (acquireRequest: AcquireRequestDto,
+               vehicleDetails: VehicleAndKeeperDetailsModel,
                keeperDetails: NewKeeperDetailsViewModel,
                sellerEmailModel: SellerEmailModel,
                transactionId: String,
@@ -211,9 +213,9 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
     response.foreach(r => logResponse(r))
 
     response match {
-      case Some(r) if r.responseCode.isDefined => successReturn(vehicleDetails, keeperDetails, sellerEmailModel,
-        transactionId, transactionTimestamp, trackingId)
-      case _ => handleHttpStatusCode(httpResponseCode)(vehicleDetails, keeperDetails, sellerEmailModel,
+      case Some(r) if r.responseCode.isDefined => successReturn(r.responseCode.get, acquireRequest, vehicleDetails,
+        keeperDetails, sellerEmailModel, transactionId, transactionTimestamp, trackingId)
+      case _ => handleHttpStatusCode(httpResponseCode)(acquireRequest, vehicleDetails, keeperDetails, sellerEmailModel,
         transactionId, transactionTimestamp, trackingId)
     }
   }
@@ -274,7 +276,8 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
   }
 
   def handleHttpStatusCode(statusCode: Int)
-                          (vehicleDetails: VehicleAndKeeperDetailsModel,
+                          (acquireRequest: AcquireRequestDto,
+                           vehicleDetails: VehicleAndKeeperDetailsModel,
                            keeperDetails: NewKeeperDetailsViewModel,
                            sellerEmailModel: SellerEmailModel,
                            transactionId: String,
@@ -283,29 +286,35 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
                           (implicit request: Request[_]): Call =
     statusCode match {
       case OK =>
-        successReturn (vehicleDetails, keeperDetails, sellerEmailModel,  transactionId,
-          transactionTimestamp, trackingId)
+        successReturn(statusCode.toString, acquireRequest, vehicleDetails, keeperDetails, sellerEmailModel,
+          transactionId, transactionTimestamp, trackingId)
       case _ =>
-        logMessage(request.cookies.trackingId(), Error, s"Received http status code $statusCode from microservice call.  " +
+        logMessage(request.cookies.trackingId,Error,s"Received http status code ${statusCode} from microservice call.  " +
           s"Redirecting to ${routes.MicroServiceError.present()}")
         routes.MicroServiceError.present()
     }
 
-  private def successReturn(vehicleDetails: VehicleAndKeeperDetailsModel,
+  private def successReturn(code: String,
+                            acquireRequest: AcquireRequestDto,
+                            vehicleDetails: VehicleAndKeeperDetailsModel,
                             keeperDetails: NewKeeperDetailsViewModel,
                             sellerEmailModel: SellerEmailModel,
                             transactionId: String,
                             transactionTimestamp: DateTime,
                             trackingId: TrackingId
-                            )
+                             )
                            (implicit request: Request[_]): Call = {
+    code match {
+      case "X0001" | "W0075" => logRequestRequiringFurtherAction(code, acquireRequest)
+      case _ =>
+    }
     //send the email
     createAndSendSellerEmail(vehicleDetails, sellerEmailModel.email, transactionId,
       transactionTimestamp, trackingId)
     createAndSendEmail(vehicleDetails, keeperDetails, transactionId,
       transactionTimestamp, trackingId)
     //redirect
-    logMessage(request.cookies.trackingId(), Debug, s"Redirecting to ${routes.ChangeKeeperSuccess.present()}")
+    logMessage(request.cookies.trackingId(),Debug,s"Redirecting to ${routes.ChangeKeeperSuccess.present()}")
     routes.ChangeKeeperSuccess.present()
   }
 
@@ -339,30 +348,49 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
     VssWebEndUserDto(endUserId = config.orgBusinessUnit, orgBusUnit = config.orgBusinessUnit)
   }
 
-  private def logRequest(disposeRequest: AcquireRequestDto)(implicit request: Request[_]) = {
-    logMessage( request.cookies.trackingId(), Debug, "Change keeper micro-service request",
+  private def logRequest(acquireRequest: AcquireRequestDto)(implicit request: Request[_]) = {
+    logMessage(request.cookies.trackingId(),Debug, "Change keeper micro-service request",
       Some(Seq(
-        disposeRequest.webHeader.applicationCode,
-        disposeRequest.webHeader.originDateTime.toString(),
-        disposeRequest.webHeader.serviceTypeCode,
-        disposeRequest.webHeader.transactionId,
-        disposeRequest.dateOfTransfer,
-        disposeRequest.fleetNumber.getOrElse(optionNone),
-        disposeRequest.keeperConsent.toString,
-        disposeRequest.mileage.toString,
-        anonymize(disposeRequest.referenceNumber),
-        anonymize(disposeRequest.registrationNumber),
-        disposeRequest.requiresSorn.toString,
-        disposeRequest.transactionTimestamp
-    )) )
+        acquireRequest.webHeader.applicationCode,
+        acquireRequest.webHeader.originDateTime.toString(),
+        acquireRequest.webHeader.serviceTypeCode,
+        acquireRequest.webHeader.transactionId,
+        acquireRequest.dateOfTransfer,
+        acquireRequest.fleetNumber.getOrElse(optionNone),
+        acquireRequest.keeperConsent.toString,
+        acquireRequest.mileage.toString,
+        anonymize(acquireRequest.referenceNumber),
+        anonymize(acquireRequest.registrationNumber),
+        acquireRequest.requiresSorn.toString,
+        acquireRequest.transactionTimestamp
+      )))
   }
 
   private def logResponse(disposeResponse: AcquireResponseDto)(implicit request: Request[_]) = {
-    logMessage( request.cookies.trackingId(), Debug, "Change keeper micro-service request",
-      Some(Seq(anonymize(disposeResponse.registrationNumber),
+    logMessage(request.cookies.trackingId(),Debug,"Change keeper micro-service request",
+     Some(Seq(anonymize(disposeResponse.registrationNumber),
         disposeResponse.responseCode.getOrElse(""),
-        anonymize(disposeResponse.transactionId)) )
+        anonymize(disposeResponse.transactionId)))
     )
+  }
+
+  private def logRequestRequiringFurtherAction(responseCode: String,
+                                               acquireRequest: AcquireRequestDto)(implicit request: Request[_]) = {
+    logMessage(request.cookies.trackingId(),Error,responseCode,
+      Some(Seq(
+        acquireRequest.webHeader.applicationCode,
+        acquireRequest.webHeader.originDateTime.toString(),
+        acquireRequest.webHeader.serviceTypeCode,
+        acquireRequest.webHeader.transactionId,
+        acquireRequest.dateOfTransfer,
+        acquireRequest.fleetNumber.getOrElse(optionNone),
+        acquireRequest.keeperConsent.toString,
+        acquireRequest.mileage.toString,
+        anonymize(acquireRequest.referenceNumber),
+        anonymize(acquireRequest.registrationNumber),
+        acquireRequest.requiresSorn.toString,
+        acquireRequest.transactionTimestamp
+      )))
   }
 
   /**
@@ -392,7 +420,7 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
   private def canPerform[T](action: => T)(redirect: => T)
                            (implicit request: Request[_])= {
     request.cookies.getString(AllowGoingToCompleteAndConfirmPageCacheKey).fold {
-      logMessage(request.cookies.trackingId(), Warn, s"Could not find AllowGoingToCompleteAndConfirmPageCacheKey in the request. " +
+      logMessage(request.cookies.trackingId(),Warn,s"Could not find AllowGoingToCompleteAndConfirmPageCacheKey in the request. " +
         s"Redirect to starting page discarding cookies")
       redirect
     }(c => action)
@@ -424,7 +452,7 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
         // This sends the email.
         SEND email template withSubject s"${vehicleDetails.registrationNumber} Confirmation of new vehicle keeper" to emailAddr send trackingId
 
-      case None => logMessage(request.cookies.trackingId(), Info, s"tried to send an email with no keeper details")
+      case None => logMessage(request.cookies.trackingId(),Warn,s"tried to send an email with no keeper details")
     }
 
   def createAndSendSellerEmail(vehicleDetails: VehicleAndKeeperDetailsModel,
@@ -447,6 +475,6 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
 
         // This sends the email.
         SEND email template withSubject s"${vehicleDetails.registrationNumber} confirmation of vehicle keeper change" to emailAddr send trackingId
-      case None => logMessage(request.cookies.trackingId(), Info, s"tried to send a receipt to seller but no email was found")
+      case None => logMessage(request.cookies.trackingId(),Info,s"tried to send a receipt to seller but no email was found")
     }
 }
