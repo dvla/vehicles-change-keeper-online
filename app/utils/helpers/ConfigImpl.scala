@@ -31,8 +31,6 @@ class ConfigImpl extends Config {
   override val ordnanceSurveyUseUprn: Boolean = getProperty[Boolean]("ordnancesurvey.useUprn")
 
   // opening and closing times
-  override val opening: Int = getProperty[Int]("openingTime")
-  override val closing: Int = getProperty[Int]("closingTime")
   override val openingTimeMinOfDay: Int = getProperty[Int]("openingTimeMinOfDay")
   override val closingTimeMinOfDay: Int = getProperty[Int]("closingTimeMinOfDay")
   override val closingWarnPeriodMins: Int = getOptionalProperty[Int]("closingWarnPeriodMins").getOrElse(15)
