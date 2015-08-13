@@ -77,19 +77,9 @@ Vehicles-change-keeper-online needs certain secrets to be able to run. If you do
 3. Sandbox - Automatically run all the microservices
 Just run ```sbt sandbox``` within vehicles-change-keeper-online and it will do all the above in a fast and reliable way. 
 
-Vehicles-change-keeper-online depends on three services in order to successfully complete a transaction. These are `os-address-lookup`, `vehicle-and-keeper-lookup` and `vehicles-acquire-fulfil`
+Afterwards open your browser to:
 
-vehicle-and-keeper-lookup and vehicles-acquire-fulfil depend on legacy stub services.
-All these are located in different git repositories and need to be manually cloned built and run if the vehicles-change-keeper-online is going to run normally.
-The sandbox provides a way to run all the required microservices along with the vehicles-change-keeper-online itself with a single command.
-
-The sandbox needs:
-- git installed
-- ssh access to the git repositories granted
-- DECRYPT_PASSWORD environment variable or Java property set.
-If any of the above is missing it will print a message and exit.
-
-The sandbox is implemented as a single sbt task so you can run it like every other sbt task. Just do ```sbt sandbox```. This will download the latest versions of the services and will start them. After the sandbox is started the app is running on http://localhost:9000 and the user should be able to go all the way to selling a vehicle.
+    http://localhost:9000
 
 If here are any local changes to the vehicles-change-keeper-online code base they would be automatically picked up next time the browser is refreshed.
 
