@@ -405,53 +405,86 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
 
     val dateTime = acquireRequest.webHeader.originDateTime.toString("dd/MM/yy HH:mm")
 
-    val message1 =
+    val htmlTemplateStart = (title: String) =>
       s"""
-         |Vehicle Registration:  ${acquireRequest.registrationNumber}
-         |Transaction ID:  ${transactionId}
-         |Date/Time of Transaction: ${dateTime}
+         |<!DOCTYPE html>
+         |<head>
+         |<title>${title}</title>
+         |</head>
+         |<body>
+         |<ul style="padding: 0; list-style-type: none;">
+       """.stripMargin
+
+    val htmlTemplateEnd =
+      s"""
+         |</ul>
+         |</body>
+         |</html>
       """.stripMargin
 
-    val message2 =
+    val message1Title = s"Keeper to Keeper Failure (1 of 2) ${transactionId}"
+
+    val message1Template = (start: (String) => String, end: String, startLine: String, endLine: String) =>
+      start(message1Title) +
       s"""
-         |New Keeper Title:  ${acquireRequest.keeperDetails.keeperTitle match {
-                                  case TitleTypeDto(Some(1), None) => play.api.i18n.Messages("titlePicker.mr")
-                                  case TitleTypeDto(Some(2), None) => play.api.i18n.Messages("titlePicker.mrs")
-                                  case TitleTypeDto(Some(3), None) => play.api.i18n.Messages("titlePicker.miss")
-                                  case TitleTypeDto(Some(4), Some(s)) => s
-                                  case TitleTypeDto(None, None) => "NOT ENTERED"
-                                }
-                              }
-          |New Keeper First Name:  ${acquireRequest.keeperDetails.keeperForename.getOrElse("NOT ENTERED")}
-          |New Keeper Last/Business Name:  ${acquireRequest.keeperDetails.keeperSurname.getOrElse("NOT ENTERED")}/${acquireRequest.keeperDetails.keeperBusinessName.getOrElse("NOT ENTERED")}
-          |New Keeper Address:  ${acquireRequest.keeperDetails.keeperAddressLines.mkString("\n                     ")}
-          |                     ${acquireRequest.keeperDetails.keeperPostCode}
-          |                     ${acquireRequest.keeperDetails.keeperPostTown}
-          |New Keeper Email:  ${acquireRequest.keeperDetails.keeperEmailAddress.getOrElse("NOT ENTERED")}
-          |Date of Birth:  ${acquireRequest.keeperDetails.keeperDateOfBirth match {
+         |${startLine}Vehicle Registration:  ${acquireRequest.registrationNumber}${endLine}
+         |${startLine}Transaction ID:  ${transactionId}${endLine}
+         |${startLine}Date/Time of Transaction: ${dateTime}${endLine}
+      """.stripMargin +
+      end
+
+    val message1 = message1Template((_) => "", "", "", "")
+    val message1Html = message1Template(htmlTemplateStart, htmlTemplateEnd, "<li>", "</li>")
+
+    val message2Title = s"Keeper to Keeper Failure (2 of 2) ${transactionId}"
+
+    val message2Template = (start: (String) => String, end: String, startLine: String, endLine: String,
+                            addressSep: String, addressPad: String) =>
+      start(message2Title) +
+      s"""
+         |${startLine}New Keeper Title:  ${acquireRequest.keeperDetails.keeperTitle match {
+                                          case TitleTypeDto(Some(1), None) => play.api.i18n.Messages("titlePicker.mr")
+                                          case TitleTypeDto(Some(2), None) => play.api.i18n.Messages("titlePicker.mrs")
+                                          case TitleTypeDto(Some(3), None) => play.api.i18n.Messages("titlePicker.miss")
+                                          case TitleTypeDto(Some(4), Some(s)) => s
+                                          case TitleTypeDto(None, None) => "NOT ENTERED"
+                                        }
+                                      }${endLine}
+         |${startLine}New Keeper First Name:  ${acquireRequest.keeperDetails.keeperForename.getOrElse("NOT ENTERED")}${endLine}
+         |${startLine}New Keeper Last/Business Name:  ${acquireRequest.keeperDetails.keeperSurname.getOrElse("NOT ENTERED")}/${acquireRequest.keeperDetails.keeperBusinessName.getOrElse("NOT ENTERED")}${endLine}
+         |${startLine}New Keeper Address:  ${acquireRequest.keeperDetails.keeperAddressLines.mkString(addressSep + addressPad)}${endLine}
+         |${addressPad}${acquireRequest.keeperDetails.keeperPostCode}${endLine}
+         |${addressPad}${acquireRequest.keeperDetails.keeperPostTown}${endLine}
+         |${startLine}New Keeper Email:  ${acquireRequest.keeperDetails.keeperEmailAddress.getOrElse("NOT ENTERED")}${endLine}
+         |${startLine}Date of Birth:  ${acquireRequest.keeperDetails.keeperDateOfBirth match {
                                 case Some(s) => DateTime.parse(s).toString("dd/MM/yy")
                                 case _ => "NOT ENTERED"
                               }
-                            }
-          |Driving Licence Number:  ${acquireRequest.keeperDetails.keeperDriverNumber.getOrElse("NOT ENTERED")}
-          |Fleet Number:  ${acquireRequest.fleetNumber.getOrElse("NOT ENTERED")}
-          |Previous Keeper Email:  ${request.cookies.getModel[SellerEmailModel].get.email.getOrElse("NOT ENTERED")}
-          |Document Reference Number: ${acquireRequest.referenceNumber}
-          |Mileage: ${acquireRequest.mileage.getOrElse("NOT ENTERED")}
-          |Date of Sale:  ${DateTime.parse(acquireRequest.dateOfTransfer).toString("dd/MM/yy")}
-          |Transaction ID:  ${transactionId}
-          |Date/Time of Transaction:  ${dateTime}
-      """.stripMargin
+                            }${endLine}
+         |${startLine}Driving Licence Number:  ${acquireRequest.keeperDetails.keeperDriverNumber.getOrElse("NOT ENTERED")}${endLine}
+         |${startLine}Fleet Number:  ${acquireRequest.fleetNumber.getOrElse("NOT ENTERED")}${endLine}
+         |${startLine}Previous Keeper Email:  ${request.cookies.getModel[SellerEmailModel].get.email.getOrElse("NOT ENTERED")}${endLine}
+         |${startLine}Document Reference Number: ${acquireRequest.referenceNumber}${endLine}
+         |${startLine}Mileage: ${acquireRequest.mileage.getOrElse("NOT ENTERED")}${endLine}
+         |${startLine}Date of Sale:  ${DateTime.parse(acquireRequest.dateOfTransfer).toString("dd/MM/yy")}${endLine}
+         |${startLine}Transaction ID:  ${transactionId}${endLine}
+         |${startLine}Date/Time of Transaction:  ${dateTime}${endLine}
+      """.stripMargin +
+      end
+
+    val message2 = message2Template((_) => "", "", "", "", "\n", "                     ")
+    val message2Html = message2Template(htmlTemplateStart, htmlTemplateEnd, "<li>", "</li>",
+                                        "</li>", "<li style='padding-left: 11.2em'>")
 
     SEND
-      .email(Contents(message1, message1))
-      .withSubject(s"Keeper to Keeper Failure (1 of 2) ${transactionId}")
+      .email(Contents(message1Html, message1))
+      .withSubject(message1Title)
       .to(email)
       .send(request.cookies.trackingId)
 
     SEND
-      .email(Contents(message2, message2))
-      .withSubject(s"Keeper to Keeper Failure (2 of 2) ${transactionId}")
+      .email(Contents(message2Html, message2))
+      .withSubject(message2Title)
       .to(email)
       .send(request.cookies.trackingId)
   }
