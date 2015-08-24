@@ -16,23 +16,26 @@ import common.clientsidesession.EncryptedClientSideSessionFactory
 import common.clientsidesession.Sha1HashGenerator
 import common.filters.AccessLoggingFilter.AccessLoggerName
 import common.filters.{AccessLoggingConfig, DefaultAccessLoggingConfig}
+import common.filters.{DateTimeZoneServiceImpl, DateTimeZoneService}
 import common.services.DateService
 import common.services.DateServiceImpl
+import common.webserviceclients.acquire.{AcquireServiceImpl, AcquireService, AcquireWebServiceImpl, AcquireWebService}
 import common.webserviceclients.addresslookup.{AddressLookupService, AddressLookupWebService}
 import common.webserviceclients.addresslookup.ordnanceservey.AddressLookupServiceImpl
 import common.webserviceclients.addresslookup.ordnanceservey.WebServiceImpl
 import common.webserviceclients.bruteforceprevention.BruteForcePreventionService
 import common.webserviceclients.bruteforceprevention.BruteForcePreventionServiceImpl
 import common.webserviceclients.bruteforceprevention.BruteForcePreventionWebService
-import common.filters.{DateTimeZoneServiceImpl, DateTimeZoneService}
+import common.webserviceclients.emailservice.EmailServiceImpl
+import common.webserviceclients.emailservice.EmailService
+import common.webserviceclients.emailservice.EmailServiceWebServiceImpl
+import common.webserviceclients.emailservice.EmailServiceWebService
+import common.webserviceclients.healthstats.HealthStats
 import common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupService
 import common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupServiceImpl
 import common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupWebService
 import common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupWebServiceImpl
-import common.webserviceclients.acquire.{AcquireServiceImpl, AcquireService, AcquireWebServiceImpl, AcquireWebService}
-import uk.gov.dvla.vehicles.presentation.common.webserviceclients.healthstats.HealthStats
 import utils.helpers.{ConfigImpl, Config}
-import webserviceclients.emailservice.{EmailServiceImpl, EmailService, EmailServiceWebServiceImpl, EmailServiceWebService}
 
 /**
  * Provides real implementations of traits

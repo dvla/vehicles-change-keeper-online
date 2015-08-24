@@ -7,7 +7,7 @@ import helpers.UnitSpec
 import models.CompleteAndConfirmFormModel.AllowGoingToCompleteAndConfirmPageCacheKey
 import models.CompleteAndConfirmFormModel.Form.ConsentId
 import org.joda.time.Instant
-import org.mockito.Matchers.{any, anyString}
+import org.mockito.Matchers.any
 import org.mockito.Mockito.{never, times, verify, when}
 import pages.changekeeper.BusinessKeeperDetailsPage.{BusinessNameValid, EmailValid, FleetNumberValid}
 import pages.changekeeper.ChangeKeeperSuccessPage
@@ -16,21 +16,20 @@ import pages.changekeeper.DateOfSalePage.MileageValid
 import pages.changekeeper.DateOfSalePage.YearDateOfSaleValid
 import pages.changekeeper.PrivateKeeperDetailsPage.{FirstNameValid, LastNameValid}
 import pages.changekeeper.VehicleLookupPage
-import play.api.test.Helpers.{BAD_REQUEST, contentAsString, defaultAwaitTimeout, LOCATION, OK}
 import play.api.test.FakeRequest
+import play.api.test.Helpers.{BAD_REQUEST, contentAsString, defaultAwaitTimeout, LOCATION, OK}
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import uk.gov.dvla.vehicles.presentation.common
-import uk.gov.dvla.vehicles.presentation.common.clientsidesession.{TrackingId, ClientSideSessionFactory}
+import common.clientsidesession.{TrackingId, ClientSideSessionFactory}
 import common.services.DateService
 import common.services.SEND.EmailConfiguration
 import common.testhelpers.CookieHelper
 import common.testhelpers.CookieHelper.fetchCookiesFromHeaders
 import common.views.models.DayMonthYear
 import common.webserviceclients.acquire.{AcquireRequestDto, AcquireService}
-import common.webserviceclients.emailservice.From
+import common.webserviceclients.emailservice.{EmailService, EmailServiceSendRequest, EmailServiceSendResponse, From}
 import utils.helpers.Config
-import webserviceclients.emailservice.{EmailService, EmailServiceSendRequest, EmailServiceSendResponse}
 import webserviceclients.fakes.FakeAcquireWebServiceImpl.acquireResponseSuccess
 
 class CompleteAndConfirmUnitSpec extends UnitSpec {

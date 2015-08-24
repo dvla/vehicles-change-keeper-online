@@ -1,24 +1,26 @@
 package controllers
 
 import com.google.inject.Inject
-import models.CompleteAndConfirmFormModel._
-import models.DateOfSaleFormModel._
+import models.CompleteAndConfirmFormModel.AllowGoingToCompleteAndConfirmPageCacheKey
 import models.DateOfSaleFormModel.Form.MileageId
-import models._
+import models.DateOfSaleFormModel
+import models.DateOfSaleViewModel
 import models.K2KCacheKeyPrefix.CookiePrefix
+import models.SellerEmailModel
+import models.VehicleLookupFormModel
 import org.joda.time.{DateTime, LocalDate}
 import play.api.data.{FormError, Form}
 import play.api.mvc.{Action, AnyContent, Controller, Request, Result}
-import uk.gov.dvla.vehicles.presentation.common.LogFormats.DVLALogger
-import webserviceclients.emailservice.EmailService
 import uk.gov.dvla.vehicles.presentation.common
-import uk.gov.dvla.vehicles.presentation.common.clientsidesession.{TrackingId, ClientSideSessionFactory}
+import common.clientsidesession.{TrackingId, ClientSideSessionFactory}
 import common.clientsidesession.CookieImplicits.{RichCookies, RichForm, RichResult}
+import common.LogFormats.DVLALogger
 import common.model.{NewKeeperDetailsViewModel, VehicleAndKeeperDetailsModel}
 import common.model.NewKeeperEnterAddressManuallyFormModel
 import common.services.DateService
 import common.views.helpers.FormExtensions.formBinding
 import common.webserviceclients.acquire.AcquireService
+import common.webserviceclients.emailservice.EmailService
 import utils.helpers.Config
 import views.html.changekeeper.date_of_sale
 

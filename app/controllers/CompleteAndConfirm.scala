@@ -15,25 +15,23 @@ import models.VehicleLookupFormModel
 import org.joda.time.{DateTimeZone, DateTime}
 import org.joda.time.format.ISODateTimeFormat
 import play.api.data.{FormError, Form}
-import play.api.Logger
 import play.api.mvc.{Action, AnyContent, Call, Controller, Request, Result}
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import uk.gov.dvla.vehicles.presentation.common
-import uk.gov.dvla.vehicles.presentation.common.clientsidesession.{TrackingId, ClientSideSessionFactory}
+import common.clientsidesession.{TrackingId, ClientSideSessionFactory}
 import common.clientsidesession.CookieImplicits.{RichCookies, RichForm, RichResult}
-import common.LogFormats.{anonymize, optionNone}
-import uk.gov.dvla.vehicles.presentation.common.LogFormats._
+import common.LogFormats.{anonymize, DVLALogger, optionNone}
 import common.mappings.TitleType
 import common.model.{NewKeeperDetailsViewModel, VehicleAndKeeperDetailsModel}
 import common.model.NewKeeperEnterAddressManuallyFormModel
 import common.services.{SEND, DateService}
 import common.views.helpers.FormExtensions.formBinding
-import common.webserviceclients.common.{VssWebEndUserDto, VssWebHeaderDto}
 import common.webserviceclients.acquire.{AcquireRequestDto, AcquireResponseDto, AcquireService, KeeperDetailsDto, TitleTypeDto}
+import common.webserviceclients.common.{VssWebEndUserDto, VssWebHeaderDto}
+import common.webserviceclients.emailservice.EmailService
 import utils.helpers.Config
 import views.html.changekeeper.complete_and_confirm
-import webserviceclients.emailservice.EmailService
 
 class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: EmailService)
                                   (implicit clientSideSessionFactory: ClientSideSessionFactory,
@@ -150,14 +148,12 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
   def back = Action { implicit request =>
     request.cookies.getModel[DateOfSaleFormModel].fold {
       request.cookies.getModel[NewKeeperEnterAddressManuallyFormModel] match {
-        case Some(manualAddress) => {
+        case Some(manualAddress) =>
           logMessage(request.cookies.trackingId(),Warn, s"Redirecting to ${routes.NewKeeperEnterAddressManually.present()}")
           Redirect(routes.NewKeeperEnterAddressManually.present())
-        }
-        case None => {
+        case None =>
           logMessage(request.cookies.trackingId(),Warn,s"Redirecting to ${routes.NewKeeperChooseYourAddress.present()}")
           Redirect(routes.NewKeeperChooseYourAddress.present())
-        }
       }
     } (dateOfSale => Redirect(routes.DateOfSale.present()))
 
@@ -213,16 +209,14 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
     response.foreach(r => logResponse(r))
 
     response match {
-      case Some(r) if r.responseCode.isDefined => {
+      case Some(r) if r.responseCode.isDefined =>
         r.responseCode.get match {
-          case "X0001" | "W0075" => {
+          case "X0001" | "W0075" =>
             logRequestRequiringFurtherAction(r.responseCode.get, transactionId, acquireRequest)
             createAndSendEmailRequiringFurtherAction(transactionId, acquireRequest)
-          }
           case _ =>
         }
         successReturn(vehicleDetails, keeperDetails, sellerEmailModel, transactionId, transactionTimestamp, trackingId)
-      }
       case _ => handleHttpStatusCode(httpResponseCode)(vehicleDetails, keeperDetails, sellerEmailModel,
                                                        transactionId, transactionTimestamp, trackingId)
     }
@@ -295,7 +289,7 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
       case OK =>
         successReturn(vehicleDetails, keeperDetails, sellerEmailModel, transactionId, transactionTimestamp, trackingId)
       case _ =>
-        logMessage(request.cookies.trackingId,Error,s"Received http status code ${statusCode} from microservice call.  " +
+        logMessage(request.cookies.trackingId, Error, s"Received http status code $statusCode from microservice call. " +
           s"Redirecting to ${routes.MicroServiceError.present()}")
         routes.MicroServiceError.present()
     }
@@ -352,7 +346,7 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
     logMessage(request.cookies.trackingId(),Debug, "Change keeper micro-service request",
       Some(Seq(
         acquireRequest.webHeader.applicationCode,
-        acquireRequest.webHeader.originDateTime.toString(),
+        acquireRequest.webHeader.originDateTime.toString,
         acquireRequest.webHeader.serviceTypeCode,
         acquireRequest.webHeader.transactionId,
         acquireRequest.dateOfTransfer,
@@ -379,7 +373,7 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
     logMessage(request.cookies.trackingId(),Error,responseCode,
       Some(Seq(
         acquireRequest.webHeader.applicationCode,
-        acquireRequest.webHeader.originDateTime.toString(),
+        acquireRequest.webHeader.originDateTime.toString,
         acquireRequest.webHeader.serviceTypeCode,
         transactionId,
         acquireRequest.dateOfTransfer,
