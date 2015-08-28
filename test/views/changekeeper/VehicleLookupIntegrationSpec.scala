@@ -16,6 +16,7 @@ import common.model.BusinessKeeperDetailsFormModel.businessKeeperDetailsCacheKey
 import common.model.PrivateKeeperDetailsFormModel.privateKeeperDetailsCacheKey
 import common.testhelpers.LightFakeApplication
 import common.testhelpers.UiTag
+import common.views.widgetdriver.Wait
 
 class VehicleLookupIntegrationSpec extends UiSpec with TestHarness {
 
@@ -50,17 +51,17 @@ class VehicleLookupIntegrationSpec extends UiSpec with TestHarness {
       go to VehicleLookupPage
       page.title should equal(VehicleLookupPage.title)
 
-      new WebDriverWait(webDriver, 3).until(ExpectedConditions.visibilityOfElementLocated(
-        By.xpath("//div[@data-tooltip='tooltip_documentReferenceNumber']"))
+      Wait.until(ExpectedConditions.visibilityOfElementLocated(
+        By.xpath("//div[@data-tooltip='tooltip_documentReferenceNumber']")),
+        5
       )
     }
 
     "put the v5c image in a tooltip with Javascript enabled" taggedAs UiTag in new WebBrowserWithJs {
       go to VehicleLookupPage
       val v5c = By.xpath("//div[@data-tooltip='tooltip_documentReferenceNumber']")
-      val waiting = new WebDriverWait(webDriver, 3)
-      waiting.until(ExpectedConditions.presenceOfElementLocated(v5c))
-      waiting.until(ExpectedConditions.invisibilityOfElementLocated(v5c))
+      Wait.until(ExpectedConditions.presenceOfElementLocated(v5c), 5)
+      Wait.until(ExpectedConditions.invisibilityOfElementLocated(v5c), 5)
     }
   }
 
