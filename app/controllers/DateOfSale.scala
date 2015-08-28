@@ -2,8 +2,8 @@ package controllers
 
 import com.google.inject.Inject
 import models.CompleteAndConfirmFormModel.AllowGoingToCompleteAndConfirmPageCacheKey
-import models.DateOfSaleFormModel.Form.MileageId
 import models.DateOfSaleFormModel
+import models.DateOfSaleFormModel.Form.MileageId
 import models.DateOfSaleViewModel
 import models.K2KCacheKeyPrefix.CookiePrefix
 import models.SellerEmailModel
@@ -57,10 +57,12 @@ class DateOfSale @Inject()(webService: AcquireService, emailService: EmailServic
       result getOrElse redirectToVehicleLookup(NoCookiesFoundMessage, request.cookies.trackingId())
   }
 
-  // The dates are valid if they are on the same date or if the disposal date/keeper change date is before the acquisition date
+  // The dates are valid if they are on the same date or if the disposal date/keeper change date
+  // is before the acquisition date
   def submitWithDateCheck = submitBase(
     (keeperEndDateOrChangeDate, dateOfSale) =>
-      keeperEndDateOrChangeDate.toLocalDate.isEqual(dateOfSale) || keeperEndDateOrChangeDate.toLocalDate.isBefore(dateOfSale)
+      keeperEndDateOrChangeDate.toLocalDate.isEqual(dateOfSale) ||
+        keeperEndDateOrChangeDate.toLocalDate.isBefore(dateOfSale)
   )
 
   def submitNoDateCheck = submitBase((keeperEndDateOrChangeDate, dateOfSale) => true)
@@ -84,10 +86,13 @@ class DateOfSale @Inject()(webService: AcquireService, emailService: EmailServic
           )
         )
         result getOrElse {
-          logMessage(request.cookies.trackingId(), Warn, "Could not find expected data in cache on dispose submit - now redirecting...")
+          logMessage(request.cookies.trackingId(),
+            Warn,
+            "Could not find expected data in cache on dispose submit - now redirecting..."
+          )
           Redirect(routes.VehicleLookup.present()).discardingCookies()
         }
-      } ,
+      },
       validForm => processValidForm(validDates, validForm)
     )
   }
@@ -100,8 +105,14 @@ class DateOfSale @Inject()(webService: AcquireService, emailService: EmailServic
       vehicleDetails <- request.cookies.getModel[VehicleAndKeeperDetailsModel]
       sellerEmailModel <- request.cookies.getModel[SellerEmailModel]
     } yield {
-      logMessage(request.cookies.trackingId(), Debug, s"CompleteAndConfirm - keeperEndDate = ${vehicleDetails.keeperEndDate}")
-      logMessage(request.cookies.trackingId(), Debug, s"CompleteAndConfirm - keeperChangeDate = ${vehicleDetails.keeperChangeDate}")
+      logMessage(request.cookies.trackingId(),
+        Debug,
+        s"CompleteAndConfirm - keeperEndDate = ${vehicleDetails.keeperEndDate}"
+      )
+      logMessage(request.cookies.trackingId(),
+        Debug,
+        s"CompleteAndConfirm - keeperChangeDate = ${vehicleDetails.keeperChangeDate}"
+      )
       // Only do the date check if the keeper end date or the keeper change date is present. If they are both
       // present or neither are present then skip the check
 
@@ -121,8 +132,10 @@ class DateOfSale @Inject()(webService: AcquireService, emailService: EmailServic
               newKeeperDetails,
               isSaleDateInvalid = true, // This will tell the page to display the date warning
               isDateToCompareDisposalDate = vehicleDetails.keeperEndDate.isDefined,
-              submitAction = controllers.routes.DateOfSale.submitNoDateCheck(), // Next time the submit will not perform any date check
-              dateToCompare = Some(endDateOrChangeDate.toString("dd/MM/yyyy")) // Pass the dateOfDisposal/change date so we can tell the user in the warning
+              // Next time the submit will not perform any date check
+              submitAction = controllers.routes.DateOfSale.submitNoDateCheck(),
+              // Pass the dateOfDisposal/change date so we can tell the user in the warning
+              dateToCompare = Some(endDateOrChangeDate.toString("dd/MM/yyyy"))
             ),
             dateService)
           )
@@ -136,7 +149,11 @@ class DateOfSale @Inject()(webService: AcquireService, emailService: EmailServic
     }
 
     result getOrElse {
-      logMessage(request.cookies.trackingId(), Warn, "Did not find expected cookie data on complete and confirm submit - now redirecting to VehicleLookup...")
+      logMessage(
+        request.cookies.trackingId(),
+        Warn,
+        "Did not find expected cookie data on complete and confirm submit - now redirecting to VehicleLookup..."
+      )
       Redirect(routes.VehicleLookup.present())
     }
   }
@@ -158,6 +175,10 @@ class DateOfSale @Inject()(webService: AcquireService, emailService: EmailServic
     form.replaceError(
         MileageId,
         "error.number",
-        FormError(key = MileageId, message = "change_keeper_privatekeeperdetailscomplete.mileage.validation", args = Seq.empty)
+        FormError(
+          key = MileageId,
+          message = "change_keeper_privatekeeperdetailscomplete.mileage.validation",
+          args = Seq.empty
+        )
     ).distinctErrors
 }

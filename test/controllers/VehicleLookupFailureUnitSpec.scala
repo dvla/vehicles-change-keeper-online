@@ -2,8 +2,8 @@ package controllers
 
 import Common.PrototypeHtml
 import composition.WithApplication
-import helpers.UnitSpec
 import helpers.CookieFactoryForUnitSpecs
+import helpers.UnitSpec
 import org.mockito.Mockito.when
 import pages.changekeeper.{BeforeYouStartPage, VehicleLookupPage}
 import play.api.test.FakeRequest

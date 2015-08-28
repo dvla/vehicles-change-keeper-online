@@ -1,10 +1,12 @@
 package helpers
 
 import CookieFactoryForUnitSpecs.VehicleLookupFailureResponseCode
-
-import models.K2KCacheKeyPrefix.CookiePrefix
+import models.CompleteAndConfirmFormModel
+import models.CompleteAndConfirmResponseModel
 import models.CompleteAndConfirmResponseModel.ChangeKeeperCompletionResponseCacheKey
-import models.{DateOfSaleFormModel, CompleteAndConfirmFormModel, CompleteAndConfirmResponseModel, VehicleLookupFormModel}
+import models.DateOfSaleFormModel
+import models.K2KCacheKeyPrefix.CookiePrefix
+import models.VehicleLookupFormModel
 import models.VehicleLookupFormModel.{VehicleLookupFormModelCacheKey, VehicleLookupResponseCodeCacheKey}
 import org.joda.time.{DateTime, LocalDate}
 import org.openqa.selenium.{Cookie, WebDriver}
@@ -40,14 +42,17 @@ import common.model.PrivateKeeperDetailsFormModel.privateKeeperDetailsCacheKey
 import common.model.VehicleAndKeeperDetailsModel
 import common.model.VehicleAndKeeperDetailsModel.vehicleAndKeeperLookupDetailsCacheKey
 import views.changekeeper.VehicleLookup.VehicleSoldTo_Private
-import webserviceclients.fakes.FakeAddressLookupService.{BuildingNameOrNumberValid, Line2Valid, Line3Valid, PostTownValid}
+import webserviceclients.fakes.brute_force_protection.FakeBruteForcePreventionWebServiceImpl.MaxAttempts
+import webserviceclients.fakes.FakeAddressLookupService.BuildingNameOrNumberValid
+import webserviceclients.fakes.FakeAddressLookupService.Line2Valid
+import webserviceclients.fakes.FakeAddressLookupService.Line3Valid
+import webserviceclients.fakes.FakeAddressLookupService.PostTownValid
 import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService
 import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.RegistrationNumberValid
 import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.TransactionIdValid
 import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.TransactionTimestampValid
 import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.VehicleMakeValid
 import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.VehicleModelValid
-import webserviceclients.fakes.brute_force_protection.FakeBruteForcePreventionWebServiceImpl.MaxAttempts
 
 object CookieFactoryForUISpecs {
   private def addCookie[A](key: String, value: A)(implicit tjs: Writes[A], webDriver: WebDriver): Unit = {
@@ -201,7 +206,7 @@ object CookieFactoryForUISpecs {
       address = AddressModel(uprn = uprn, address = Seq(buildingNameOrNumber, line2, line3, postTown, postcode)),
       email = email,
       isBusinessKeeper = isBusinessKeeper,
-      displayName = if (businessName == None) firstName + " " + lastName
+      displayName = if (businessName.isEmpty) firstName + " " + lastName
       else businessName.getOrElse("")
     )
     addCookie(key, value)
@@ -213,7 +218,8 @@ object CookieFactoryForUISpecs {
   }
 
   def completeAndConfirmResponseModelModel(id: String = TransactionIdValid,
-                                           timestamp: DateTime = TransactionTimestampValid)(implicit webDriver: WebDriver) = {
+                                           timestamp: DateTime = TransactionTimestampValid)
+                                          (implicit webDriver: WebDriver) = {
     val key = ChangeKeeperCompletionResponseCacheKey
     val value = CompleteAndConfirmResponseModel(id, timestamp)
     addCookie(key, value)

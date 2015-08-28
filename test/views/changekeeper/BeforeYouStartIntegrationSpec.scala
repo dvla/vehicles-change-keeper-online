@@ -2,16 +2,17 @@ package views.changekeeper
 
 import composition.TestHarness
 import helpers.CookieFactoryForUISpecs
-import helpers.webbrowser.ProgressBar.progressStep
 import helpers.UiSpec
+import helpers.webbrowser.ProgressBar.progressStep
 import models.K2KCacheKeyPrefix.CookiePrefix
 import models.VehicleLookupFormModel.VehicleLookupFormModelCacheKey
+import pages.changekeeper.BeforeYouStartPage
 import pages.changekeeper.BeforeYouStartPage.startNow
-import pages.changekeeper.{VehicleLookupPage, BeforeYouStartPage}
+import pages.changekeeper.VehicleLookupPage
 import pages.common.Feedback.EmailFeedbackLink
 import uk.gov.dvla.vehicles.presentation.common
-import common.model.VehicleAndKeeperDetailsModel.vehicleAndKeeperLookupDetailsCacheKey
 import common.model.PrivateKeeperDetailsFormModel.privateKeeperDetailsCacheKey
+import common.model.VehicleAndKeeperDetailsModel.vehicleAndKeeperLookupDetailsCacheKey
 import common.testhelpers.UiTag
 
 class BeforeYouStartIntegrationSpec extends UiSpec with TestHarness {

@@ -1,46 +1,24 @@
 package views.changekeeper
 
-import com.google.inject.Injector
-import com.tzavellas.sse.guice.ScalaModule
-import composition.{TestHarness, GlobalLike, TestComposition}
+import composition.TestHarness
 import helpers.CookieFactoryForUISpecs
+import helpers.UiSpec
 import helpers.webbrowser.ProgressBar
+import models.{VehicleNewKeeperCompletionCacheKeys, CompleteAndConfirmFormModel}
+import CompleteAndConfirmFormModel.AllowGoingToCompleteAndConfirmPageCacheKey
+import org.openqa.selenium.{By, WebElement, WebDriver}
+import pages.changekeeper.CompleteAndConfirmPage
+import pages.changekeeper.CompleteAndConfirmPage.back
+import pages.changekeeper.DateOfSalePage
+import pages.changekeeper.VehicleLookupPage
+import pages.changekeeper.BeforeYouStartPage
+import pages.common.Feedback.EmailFeedbackLink
 import ProgressBar.progressStep
 import uk.gov.dvla.vehicles.presentation.common.testhelpers.UiTag
-import helpers.UiSpec
-import models.{VehicleNewKeeperCompletionCacheKeys, CompleteAndConfirmFormModel}
-import org.openqa.selenium.{By, WebElement, WebDriver}
-import org.scalatest.mock.MockitoSugar
-import pages.common.ErrorPanel
-import pages.changekeeper._
-import play.api.i18n.Messages
-import play.api.libs.ws.WSResponse
 import uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction
-import webserviceclients.fakes.FakeAddressLookupService.addressWithUprn
-import pages.changekeeper.CompleteAndConfirmPage.navigate
-import pages.changekeeper.CompleteAndConfirmPage.back
-import pages.changekeeper.DateOfSalePage.mileageTextBox
-import pages.changekeeper.DateOfSalePage.dayDateOfSaleTextBox
-import pages.changekeeper.DateOfSalePage.monthDateOfSaleTextBox
-import pages.changekeeper.DateOfSalePage.yearDateOfSaleTextBox
-import pages.changekeeper.CompleteAndConfirmPage.next
-import pages.changekeeper.CompleteAndConfirmPage.consent
-import pages.changekeeper.DateOfSalePage.useTodaysDate
-import webserviceclients.fakes.FakeDateServiceImpl.DateOfAcquisitionDayValid
-import webserviceclients.fakes.FakeDateServiceImpl.DateOfAcquisitionMonthValid
-import webserviceclients.fakes.FakeDateServiceImpl.DateOfAcquisitionYearValid
-import pages.common.Feedback.EmailFeedbackLink
-import uk.gov.dvla.vehicles.presentation.common.mappings.TitleType
-import CompleteAndConfirmFormModel.AllowGoingToCompleteAndConfirmPageCacheKey
-import scala.concurrent.Future
-import play.api.test.FakeApplication
-import uk.gov.dvla.vehicles.presentation.common.testhelpers.HtmlTestHelper.{htmlRegex, whitespaceRegex}
-import scala.Some
-import play.api.test.FakeApplication
-import uk.gov.dvla.vehicles.presentation.common.mappings.TitleType
 
 final class CompleteAndConfirmIntegrationSpec extends UiSpec with TestHarness {
-  final val ProgressStepNumber = 6
+  val ProgressStepNumber = 6
 
   "go to page" should {
     "display the page for a new keeper" taggedAs UiTag in new WebBrowser {
@@ -69,7 +47,7 @@ final class CompleteAndConfirmIntegrationSpec extends UiSpec with TestHarness {
       go to BeforeYouStartPage
       cacheSetup()
       go to CompleteAndConfirmPage
-      page.source should not include(progressStep(ProgressStepNumber))
+      page.source should not include progressStep(ProgressStepNumber)
     }
 
     "Redirect when no new keeper details are cached" taggedAs UiTag in new WebBrowser {
@@ -82,11 +60,13 @@ final class CompleteAndConfirmIntegrationSpec extends UiSpec with TestHarness {
       go to CompleteAndConfirmPage
       val csrf: WebElement = webDriver.findElement(By.name(CsrfPreventionAction.TokenName))
       csrf.getAttribute("type") should equal("hidden")
-      csrf.getAttribute("name") should equal(uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction.TokenName)
-      csrf.getAttribute("value").size > 0 should equal(true)
+      csrf.getAttribute("name") should
+        equal(uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction.TokenName)
+      csrf.getAttribute("value").nonEmpty should equal(true)
     }
 
-    "redirect to vehicles lookup page if there is no cookie preventGoingToCompleteAndConfirmPage set" taggedAs UiTag in new PhantomJsByDefault {
+    "redirect to vehicles lookup page " +
+      "if there is no cookie preventGoingToCompleteAndConfirmPage set" taggedAs UiTag in new PhantomJsByDefault {
       go to BeforeYouStartPage
       CookieFactoryForUISpecs
         .vehicleAndKeeperDetails()
@@ -106,7 +86,8 @@ final class CompleteAndConfirmIntegrationSpec extends UiSpec with TestHarness {
     //      page.title should equal(AcquireSuccessPage.title)
     //    }
 
-    //    "go to the AcquireFailure page when all details are entered for a new keeper" taggedAs UiTag in new MockAppWebBrowser(failingWebService) {
+    //    "go to the AcquireFailure page when all details are entered " +
+    //      "for a new keeper" taggedAs UiTag in new MockAppWebBrowser(failingWebService) {
     // ToDo uncomment test when us1684 is developed
     //      go to BeforeYouStartPage
     //      cacheSetup()
@@ -114,7 +95,8 @@ final class CompleteAndConfirmIntegrationSpec extends UiSpec with TestHarness {
     //      page.title should equal(Messages("error.title"))
     //    }
 
-    //    "go to the appropriate next page when mandatory details are entered for a new keeper" taggedAs UiTag in new WebBrowser {
+    //    "go to the appropriate next page when mandatory details are entered " +
+    //      "for a new keeper" taggedAs UiTag in new WebBrowser {
     //ToDo uncomment test when us1684 is developed
     //      go to BeforeYouStartPage
     //      cacheSetup()
@@ -132,7 +114,8 @@ final class CompleteAndConfirmIntegrationSpec extends UiSpec with TestHarness {
     //      assertCookiesDoesnExist(Set(AllowGoingToCompleteAndConfirmPageCacheKey))
     //    }
 
-    //    "clear off the preventGoingToCompleteAndConfirmPage cookie on failure" taggedAs UiTag in new MockAppWebBrowser(failingWebService) {
+    //    "clear off the preventGoingToCompleteAndConfirmPage cookie " +
+    //      "on failure" taggedAs UiTag in new MockAppWebBrowser(failingWebService) {
     //ToDo uncomment test when us1684 is developed
     //      go to BeforeYouStartPage
     //      cacheSetup()
@@ -208,7 +191,8 @@ import play.api.test.FakeApplication
 
   }
 
-//    "redirect to vehicles lookup page if there is no allowGoingToCompleteAndConfirmPageCacheKey cookie e set" taggedAs UiTag in new WebBrowser {
+//    "redirect to vehicles lookup page " +
+//      "if there is no allowGoingToCompleteAndConfirmPageCacheKey cookie e set" taggedAs UiTag in new WebBrowser {
 //ToDo uncomment test when us1684 is developed
 //      def deleteFlagCookie(implicit driver: WebDriver) =
 //        driver.manage.deleteCookieNamed(AllowGoingToCompleteAndConfirmPageCacheKey)
@@ -231,7 +215,8 @@ import play.api.test.FakeApplication
 //  }
 
   "back" should {
-    "display NewKeeperChooseYourAddress when back link is clicked for a new keeper who has selected an address" taggedAs UiTag in new WebBrowser {
+    "display NewKeeperChooseYourAddress when back link is clicked for a new keeper " +
+      "who has selected an address" taggedAs UiTag in new WebBrowser {
       go to BeforeYouStartPage
       CookieFactoryForUISpecs
         .privateKeeperDetails()
@@ -285,7 +270,8 @@ import play.api.test.FakeApplication
   private def assertCookiesDoesnExist(cookies: Set[String])(implicit driver: WebDriver) =
     for (cookie <- cookies) driver.manage().getCookieNamed(cookie) should be (null)
 
+  /*
   private def assertCookieExist(implicit driver: WebDriver) =
     driver.manage().getCookieNamed(AllowGoingToCompleteAndConfirmPageCacheKey) should not be null
-
+   */
 }

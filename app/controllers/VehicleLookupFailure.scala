@@ -16,7 +16,8 @@ final class VehicleLookupFailure @Inject()()(implicit clientSideSessionFactory: 
 
   override val vehicleLookupResponseCodeCacheKey: String = VehicleLookupResponseCodeCacheKey
 
-  override def presentResult(model: VehicleLookupFormModel, responseCode: String)(implicit request: Request[_]): Result =
+  override def presentResult(model: VehicleLookupFormModel, responseCode: String)
+                            (implicit request: Request[_]): Result =
     Ok(views.html.changekeeper.vehicle_lookup_failure(
       data = model,
       responseCodeVehicleLookupMSErrorMessage = responseCode)

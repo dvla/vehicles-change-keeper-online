@@ -4,7 +4,7 @@ import com.google.inject.Guice
 import filters.ServiceOpenFilter
 import play.filters.gzip.GzipFilter
 import uk.gov.dvla.vehicles.presentation.common
-import common.filters.{EnsureSessionCreatedFilter, AccessLoggingFilter, CsrfPreventionFilter}
+import common.filters.{AccessLoggingFilter, CsrfPreventionFilter, EnsureSessionCreatedFilter}
 import utils.helpers.ErrorStrategy
 
 trait Composition {

@@ -4,11 +4,19 @@ import cucumber.api.scala.{EN, ScalaDsl}
 import cucumber.api.java.en.{Given,Then, When}
 import helpers.RandomVrmGenerator
 import org.openqa.selenium.WebDriver
-import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.{WithClue, WebBrowserDSL, WebBrowserDriver}
 import org.scalatest.Matchers
-import pages.changekeeper._
+import pages.changekeeper.BusinessKeeperDetailsPage
+import pages.changekeeper.ChangeKeeperSuccessPage
+import pages.changekeeper.CompleteAndConfirmPage
+import pages.changekeeper.DateOfSalePage
+import pages.changekeeper.NewKeeperChooseYourAddressPage
+import pages.changekeeper.NewKeeperEnterAddressManuallyPage
+import pages.changekeeper.PrivateKeeperDetailsPage
+import pages.changekeeper.VehicleLookupPage
+import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.{WithClue, WebBrowserDSL, WebBrowserDriver}
 
-class HappyAndSadPathSteps(webBrowserDriver: WebBrowserDriver) extends ScalaDsl with EN with WebBrowserDSL with Matchers with WithClue {
+class HappyAndSadPathSteps(webBrowserDriver: WebBrowserDriver)
+  extends ScalaDsl with EN with WebBrowserDSL with Matchers with WithClue {
 
   implicit val webDriver = webBrowserDriver.asInstanceOf[WebDriver]
 
@@ -216,5 +224,4 @@ class HappyAndSadPathSteps(webBrowserDriver: WebBrowserDriver) extends ScalaDsl 
   def the_user_will_be_taken_to_Unsuccesful_postcode_private_keeper_details_page_failure_summary_page(): Unit = {
     page.source.contains("Transaction Unsuccessful")
   }
-
 }

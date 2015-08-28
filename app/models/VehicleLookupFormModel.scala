@@ -8,8 +8,8 @@ import common.clientsidesession.CacheKey
 import common.controllers.VehicleLookupFormModelBase
 import common.mappings.DocumentReferenceNumber
 import common.mappings.Email.emailConfirm
-import common.mappings.VehicleRegistrationNumber
 import common.mappings.OptionalToggle
+import common.mappings.VehicleRegistrationNumber
 
 final case class VehicleLookupFormModel(referenceNumber: String,
                                         registrationNumber: String,
@@ -28,8 +28,6 @@ object VehicleLookupFormModel {
     final val VehicleSoldToId = "vehicleSoldTo"
     final val VehicleSellerEmail = "vehicleSellerEmail"
     final val VehicleSellerEmailOption = "vehicleSellerEmailOption"
-
-
     final val Mapping = mapping(
       DocumentReferenceNumberId -> DocumentReferenceNumber.referenceNumber,
       VehicleRegistrationNumberId -> VehicleRegistrationNumber.registrationNumber,

@@ -1,8 +1,8 @@
 package gov.uk.dvla.vehicles.keeper.stepdefs
 
-import java.security.cert.X509Certificate
 import cucumber.api.java.en.{Given, Then}
 import cucumber.api.scala.{EN, ScalaDsl}
+import java.security.cert.X509Certificate
 import org.apache.http.client.methods.HttpGet
 import org.apache.http.conn.ssl.{TrustStrategy, SSLContexts}
 import org.apache.http.impl.client.HttpClientBuilder

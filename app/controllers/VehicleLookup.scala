@@ -6,13 +6,16 @@ import models.K2KCacheKeyPrefix.CookiePrefix
 import models.PrivateKeeperDetailsCacheKeys
 import models.SellerEmailModel
 import models.VehicleLookupFormModel
+import models.VehicleLookupFormModel.JsonFormat
+import models.VehicleLookupFormModel.Key
+import models.VehicleLookupFormModel.VehicleLookupResponseCodeCacheKey
 import models.VehicleLookupFormModel.Form.DocumentReferenceNumberId
 import models.VehicleLookupFormModel.Form.VehicleRegistrationNumberId
 import models.VehicleLookupFormModel.Form.VehicleSoldToId
 import models.VehicleLookupViewModel
-import models.VehicleLookupFormModel.{VehicleLookupResponseCodeCacheKey, Key, JsonFormat}
 import play.api.data.{Form => PlayForm, FormError}
-import play.api.mvc.{Result, Request, Call}
+import play.api.mvc.{Call, Request, Result}
+import scala.concurrent.Future
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.ClientSideSessionFactory
 import common.clientsidesession.CookieImplicits.{RichForm, RichResult, RichCookies}
@@ -26,8 +29,6 @@ import common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupSer
 import common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupErrorMessage
 import utils.helpers.Config
 import views.changekeeper.VehicleLookup.VehicleSoldTo_Private
-
-import scala.concurrent.Future
 
 class VehicleLookup @Inject()(implicit bruteForceService: BruteForcePreventionService,
                               vehicleLookupService: VehicleAndKeeperLookupService,
@@ -60,7 +61,8 @@ class VehicleLookup @Inject()(implicit bruteForceService: BruteForcePreventionSe
       VehicleLookupViewModel(form.fill()))
   )
 
-  override def vehicleFoundResult(vehicleAndKeeperDetailsDto: VehicleAndKeeperLookupDetailsDto, formModel: VehicleLookupFormModel)
+  override def vehicleFoundResult(vehicleAndKeeperDetailsDto: VehicleAndKeeperLookupDetailsDto,
+                                  formModel: VehicleLookupFormModel)
                                  (implicit request: Request[_]): Result = {
     val model = VehicleAndKeeperDetailsModel.from(vehicleAndKeeperDetailsDto)
     val emailCapture = SellerEmailModel(formModel.sellerEmail)
@@ -68,18 +70,17 @@ class VehicleLookup @Inject()(implicit bruteForceService: BruteForcePreventionSe
 
     val (call: Call, discardedCookies: Set[String]) =
       (formModel.vehicleSoldTo, suppressed) match {
-        case (_, true) => {
+        case (_, true) =>
           logMessage(request.cookies.trackingId(), Debug, s"Redirecting to ${routes.SuppressedV5C.present()}")
           (routes.SuppressedV5C.present(), BusinessKeeperDetailsCacheKeys)
-        }
-        case (VehicleSoldTo_Private, false) => {
+
+        case (VehicleSoldTo_Private, false) =>
           logMessage(request.cookies.trackingId(), Debug, s"Redirecting to ${routes.PrivateKeeperDetails.present()}")
           (routes.PrivateKeeperDetails.present(), BusinessKeeperDetailsCacheKeys)
-        }
-        case (_, false) => {
+
+        case (_, false) =>
           logMessage(request.cookies.trackingId(), Debug, s"Redirecting to ${routes.BusinessKeeperDetails.present()}")
           (routes.BusinessKeeperDetails.present(), PrivateKeeperDetailsCacheKeys)
-        }
       }
 
     Redirect(call).

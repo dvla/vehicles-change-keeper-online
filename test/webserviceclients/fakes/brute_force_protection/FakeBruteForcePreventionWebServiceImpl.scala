@@ -3,13 +3,13 @@ package webserviceclients.fakes.brute_force_protection
 import play.api.http.Status.{FORBIDDEN, OK}
 import play.api.libs.json.Json
 import play.api.libs.ws.WSResponse
+import scala.concurrent.Future
 import uk.gov.dvla.vehicles.presentation.common.clientsidesession.TrackingId
 import uk.gov.dvla.vehicles.presentation.common.webserviceclients.bruteforceprevention.BruteForcePreventionWebService
 import webserviceclients.fakes.FakeResponse
-import scala.concurrent.Future
 
 final class FakeBruteForcePreventionWebServiceImpl() extends BruteForcePreventionWebService {
-  import FakeBruteForcePreventionWebServiceImpl._
+  import FakeBruteForcePreventionWebServiceImpl.{VrmLocked, responseFirstAttempt}
 
   override def callBruteForce(vrm: String, trackingId: TrackingId): Future[WSResponse] = Future.successful {
     vrm match {

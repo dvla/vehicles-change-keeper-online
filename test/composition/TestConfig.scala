@@ -3,7 +3,6 @@ package composition
 import uk.gov.dvla.vehicles.presentation.common.ConfigProperties.{booleanProp, getOptionalProperty, intProp}
 import uk.gov.dvla.vehicles.presentation.common.services.SEND.EmailConfiguration
 import uk.gov.dvla.vehicles.presentation.common.webserviceclients.emailservice.From
-
 import utils.helpers.Config
 
 class TestConfig extends Config {

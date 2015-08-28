@@ -9,7 +9,8 @@ import pages.common.ErrorPanel
 import uk.gov.dvla.vehicles.presentation.common.helpers
 import helpers.webbrowser.{WithClue, WebBrowserDSL, WebBrowserDriver}
 
-class PrivateKeeperOptionalFieldsSteps(webBrowserDriver: WebBrowserDriver) extends ScalaDsl with EN with WebBrowserDSL with Matchers with WithClue {
+class PrivateKeeperOptionalFieldsSteps(webBrowserDriver: WebBrowserDriver)
+  extends ScalaDsl with EN with WebBrowserDSL with Matchers with WithClue {
 
   implicit val webDriver = webBrowserDriver.asInstanceOf[WebDriver]
 

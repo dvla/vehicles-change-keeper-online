@@ -1,10 +1,11 @@
 package utils.helpers
 
 import controllers.routes
-import play.api.mvc.Results.Redirect
-import play.api.mvc.{DiscardingCookie, RequestHeader, Result}
 import models.SeenCookieMessageCacheKey
-import scala.concurrent.Future
+import play.api.mvc.DiscardingCookie
+import play.api.mvc.RequestHeader
+import play.api.mvc.Result
+import play.api.mvc.Results.Redirect
 
 object CookieHelper {
   def discardAllCookies(implicit request: RequestHeader): Result = {

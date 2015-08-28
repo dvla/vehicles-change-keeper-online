@@ -8,7 +8,8 @@ import pages.changekeeper.{BusinessKeeperDetailsPage, NewKeeperChooseYourAddress
 import uk.gov.dvla.vehicles.presentation.common.helpers
 import helpers.webbrowser.{WithClue, WebBrowserDSL, WebBrowserDriver}
 
-class BusinessKeeperDetailsSteps(webBrowserDriver: WebBrowserDriver) extends ScalaDsl with EN with WebBrowserDSL with Matchers with WithClue {
+class BusinessKeeperDetailsSteps(webBrowserDriver: WebBrowserDriver)
+  extends ScalaDsl with EN with WebBrowserDSL with Matchers with WithClue {
 
   implicit val webDriver = webBrowserDriver.asInstanceOf[WebDriver]
 
@@ -139,7 +140,8 @@ class BusinessKeeperDetailsSteps(webBrowserDriver: WebBrowserDriver) extends Sca
   def the_user_will_be_able_to_enter_an_email_address_of_up_to_characters(charLength:Int)  {
     click on BusinessKeeperDetailsPage.emailVisible
     BusinessKeeperDetailsPage.emailField enter "jfejfhhfjlshgljhgjlhljhljhjlhljhjlhljh@fdgfdgfhgfhghgfhgfhgfhfghgfhg"
-    BusinessKeeperDetailsPage.emailConfirmField enter "jfejfhhfjlshgljhgjlhljhljhjlhljhjlhljh@fdgfdgfhgfhghgfhgfhgfhfghgfhg"
+    BusinessKeeperDetailsPage.emailConfirmField enter
+      "jfejfhhfjlshgljhgjlhljhljhjlhljhjlhljh@fdgfdgfhgfhghgfhgfhgfhfghgfhg"
   }
 
   @Given("^the user has not entered an email address$")
@@ -230,6 +232,4 @@ class BusinessKeeperDetailsSteps(webBrowserDriver: WebBrowserDriver) extends Sca
   def will_remain_in_the_same_page_instead_of_progress_to_next_page()  {
     page.title shouldEqual BusinessKeeperDetailsPage.title withClue trackingId
   }
-
 }
-

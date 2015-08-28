@@ -1,17 +1,17 @@
 package pages.changekeeper
 
-import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser._
+import org.openqa.selenium.WebDriver
 import uk.gov.dvla.vehicles.presentation.common
+import common.helpers.webbrowser.{RadioButton, WebDriverFactory, WebBrowserDSL, Page, TelField, TextField, Element}
+import common.mappings.Email.{EmailId => EmailEnterId, EmailVerifyId}
+import common.mappings.OptionalToggle.{Visible, Invisible}
 import common.model.BusinessKeeperDetailsFormModel.Form.BusinessNameId
 import common.model.BusinessKeeperDetailsFormModel.Form.EmailId
+import common.model.BusinessKeeperDetailsFormModel.Form.EmailOptionId
 import common.model.BusinessKeeperDetailsFormModel.Form.FleetNumberId
 import common.model.BusinessKeeperDetailsFormModel.Form.FleetNumberOptionId
 import common.model.BusinessKeeperDetailsFormModel.Form.PostcodeId
-import common.mappings.Email.{EmailId => EmailEnterId, EmailVerifyId}
-import uk.gov.dvla.vehicles.presentation.common.mappings.OptionalToggle._
-import uk.gov.dvla.vehicles.presentation.common.model.BusinessKeeperDetailsFormModel.Form.EmailOptionId
 import views.changekeeper.BusinessKeeperDetails.{BackId, NextId}
-import org.openqa.selenium.WebDriver
 
 object BusinessKeeperDetailsPage extends Page with WebBrowserDSL {
   final val address = buildAppUrl("business-keeper-details")

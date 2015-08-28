@@ -50,7 +50,6 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
       implicit val config: Config = mock[Config] //TestConfig
       implicit val dateService = injector.getInstance(classOf[DateService])
       when(config.isPrototypeBannerVisible).thenReturn(false)
-
       val privateKeeperDetailsPrototypeNotVisible = new PrivateKeeperDetails()
       val result = privateKeeperDetailsPrototypeNotVisible.present(request)
       contentAsString(result) should not include PrototypeHtml
@@ -197,7 +196,10 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
       val result = completeAndConfirm.submit(request)
       whenReady(result) { r =>
         r.header.headers.get(LOCATION) should equal(Some(ChangeKeeperSuccessPage.address))
-        CookieHelper.verifyCookieHasBeenDiscarded(AllowGoingToCompleteAndConfirmPageCacheKey, fetchCookiesFromHeaders(r))
+        CookieHelper.verifyCookieHasBeenDiscarded(
+          AllowGoingToCompleteAndConfirmPageCacheKey,
+          fetchCookiesFromHeaders(r)
+        )
         verify(acquireServiceMock, times(1)).invoke(any[AcquireRequestDto], any[TrackingId])
         verify(emailServiceMock, times(1)).invoke(any[EmailServiceSendRequest], any[TrackingId])
       }

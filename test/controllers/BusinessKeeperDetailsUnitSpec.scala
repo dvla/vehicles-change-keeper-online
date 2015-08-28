@@ -4,10 +4,10 @@ import Common.PrototypeHtml
 import composition.WithApplication
 import helpers.{CookieFactoryForUnitSpecs, UnitSpec}
 import uk.gov.dvla.vehicles.presentation.common
-import common.model.BusinessKeeperDetailsFormModel.Form.FleetNumberId
-import common.model.BusinessKeeperDetailsFormModel.Form.FleetNumberOptionId
 import common.model.BusinessKeeperDetailsFormModel.Form.BusinessNameId
 import common.model.BusinessKeeperDetailsFormModel.Form.EmailId
+import common.model.BusinessKeeperDetailsFormModel.Form.FleetNumberId
+import common.model.BusinessKeeperDetailsFormModel.Form.FleetNumberOptionId
 import common.model.BusinessKeeperDetailsFormModel.Form.EmailOptionId
 import common.model.BusinessKeeperDetailsFormModel.Form.PostcodeId
 import org.mockito.Mockito.when

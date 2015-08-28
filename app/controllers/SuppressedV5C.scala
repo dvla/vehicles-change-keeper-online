@@ -5,10 +5,9 @@ import models.AllCacheKeys
 import play.api.mvc.{Action, Controller}
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.ClientSideSessionFactory
-import common.clientsidesession.CookieImplicits.RichResult
-import common.model.VehicleAndKeeperDetailsModel
 import common.clientsidesession.CookieImplicits.RichCookies
-import uk.gov.dvla.vehicles.presentation.common.LogFormats.DVLALogger
+import common.clientsidesession.CookieImplicits.RichResult
+import common.LogFormats.DVLALogger
 import utils.helpers.Config
 
 class SuppressedV5C @Inject()()(implicit clientSideSessionFactory: ClientSideSessionFactory,

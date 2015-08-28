@@ -5,6 +5,7 @@ import composition.WithApplication
 import helpers.CookieFactoryForUnitSpecs
 import helpers.UnitSpec
 import org.mockito.Mockito.when
+import pages.changekeeper.NewKeeperChooseYourAddressPage
 import pages.changekeeper.PrivateKeeperDetailsPage.DayDateOfBirthValid
 import pages.changekeeper.PrivateKeeperDetailsPage.DriverNumberValid
 import pages.changekeeper.PrivateKeeperDetailsPage.EmailValid
@@ -13,15 +14,17 @@ import pages.changekeeper.PrivateKeeperDetailsPage.LastNameValid
 import pages.changekeeper.PrivateKeeperDetailsPage.MonthDateOfBirthValid
 import pages.changekeeper.PrivateKeeperDetailsPage.PostcodeValid
 import pages.changekeeper.PrivateKeeperDetailsPage.YearDateOfBirthValid
-import pages.changekeeper.{NewKeeperChooseYourAddressPage, VehicleLookupPage}
+import pages.changekeeper.VehicleLookupPage
 import play.api.i18n.Messages
-import play.api.test.Helpers.{BAD_REQUEST, contentAsString, defaultAwaitTimeout, LOCATION, OK}
 import play.api.test.FakeRequest
+import play.api.test.Helpers.{BAD_REQUEST, contentAsString, defaultAwaitTimeout, LOCATION, OK}
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.ClientSideSessionFactory
-import common.mappings.{OptionalToggle, TitleType, TitlePickerString}
 import common.mappings.Email.{EmailId => EmailEnterId, EmailVerifyId}
+import common.mappings.OptionalToggle
+import common.mappings.TitlePickerString
 import common.mappings.TitlePickerString.standardOptions
+import common.mappings.TitleType
 import common.model.PrivateKeeperDetailsFormModel.Form.DriverNumberId
 import common.model.PrivateKeeperDetailsFormModel.Form.EmailId
 import common.model.PrivateKeeperDetailsFormModel.Form.EmailOptionId
@@ -63,7 +66,7 @@ class PrivateKeeperDetailsUnitSpec extends UnitSpec {
         withCookies(CookieFactoryForUnitSpecs.privateKeeperDetailsModel())
       val result = privateKeeperDetails.present(request)
       val content = contentAsString(result)
-      content should include(Messages(standardOptions(0)))
+      content should include(Messages(standardOptions.head))
       content should include(FirstNameValid)
       content should include(LastNameValid)
       content should include(DayDateOfBirthValid)
@@ -87,7 +90,7 @@ class PrivateKeeperDetailsUnitSpec extends UnitSpec {
         withCookies(CookieFactoryForUnitSpecs.privateKeeperDetailsModel())
       val result = privateKeeperDetails.present(request)
       val content = contentAsString(result)
-      content should include(Messages(standardOptions(0)))
+      content should include(Messages(standardOptions.head))
       content should not include "selected"
     }
 
@@ -142,7 +145,8 @@ class PrivateKeeperDetailsUnitSpec extends UnitSpec {
       val request = buildCorrectlyPopulatedRequest(firstName = "")
         .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
       val result = privateKeeperDetails.submit(request)
-      val errorMessage = "First name - Must contain between 1 and 25 characters from the following A-Z, hyphen, apostrophe, full stop and space"
+      val errorMessage = "First name - Must contain between 1 and 25 characters from the following A-Z, " +
+                          "hyphen, apostrophe, full stop and space"
       val count = errorMessage.r.findAllIn(contentAsString(result)).length
       count should equal(1)
     }
@@ -151,7 +155,8 @@ class PrivateKeeperDetailsUnitSpec extends UnitSpec {
       val request = buildCorrectlyPopulatedRequest(lastName = "")
         .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
       val result = privateKeeperDetails.submit(request)
-      val errorMessage = "Last name - Must contain between 1 and 25 characters from the following A-Z, hyphen, apostrophe, full stop and space"
+      val errorMessage = "Last name - Must contain between 1 and 25 characters from the following A-Z, " +
+                          "hyphen, apostrophe, full stop and space"
       val count = errorMessage.r.findAllIn(contentAsString(result)).length
       count should equal(1)
     }

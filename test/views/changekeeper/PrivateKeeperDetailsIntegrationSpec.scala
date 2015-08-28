@@ -1,20 +1,24 @@
 package views.changekeeper
 
 import composition.TestHarness
-import helpers.webbrowser.ProgressBar.progressStep
-import helpers.UiSpec
 import helpers.CookieFactoryForUISpecs
-import uk.gov.dvla.vehicles.presentation.common.testhelpers.UiTag
+import helpers.UiSpec
+import helpers.webbrowser.ProgressBar.progressStep
 import org.openqa.selenium.{By, WebDriver, WebElement}
-import pages.changekeeper.PrivateKeeperDetailsPage.{FirstNameInvalid, LastNameInvalid, back, navigate}
-import pages.changekeeper.PrivateKeeperDetailsPage.{TitleInvalid, EmailInvalid, DriverNumberInvalid, PostcodeInvalid}
-import pages.changekeeper.{BeforeYouStartPage, PrivateKeeperDetailsPage, VehicleLookupPage}
+import pages.changekeeper.BeforeYouStartPage
+import pages.changekeeper.NewKeeperChooseYourAddressPage
+import pages.changekeeper.PrivateKeeperDetailsPage
+import pages.changekeeper.PrivateKeeperDetailsPage.{back, navigate}
+import pages.changekeeper.PrivateKeeperDetailsPage.{DriverNumberInvalid, EmailInvalid}
+import pages.changekeeper.PrivateKeeperDetailsPage.{FirstNameInvalid, LastNameInvalid}
+import pages.changekeeper.PrivateKeeperDetailsPage.{TitleInvalid,  PostcodeInvalid}
+import pages.changekeeper.VehicleLookupPage
 import pages.common.ErrorPanel
 import pages.common.Feedback.EmailFeedbackLink
 import play.api.i18n.Messages
 import uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction
 import uk.gov.dvla.vehicles.presentation.common.testhelpers.HtmlTestHelper.{htmlRegex, whitespaceRegex}
-import pages.changekeeper.NewKeeperChooseYourAddressPage
+import uk.gov.dvla.vehicles.presentation.common.testhelpers.UiTag
 
 final class PrivateKeeperDetailsIntegrationSpec extends UiSpec with TestHarness {
 
@@ -60,8 +64,9 @@ final class PrivateKeeperDetailsIntegrationSpec extends UiSpec with TestHarness 
       go to PrivateKeeperDetailsPage
       val csrf: WebElement = webDriver.findElement(By.name(CsrfPreventionAction.TokenName))
       csrf.getAttribute("type") should equal("hidden")
-      csrf.getAttribute("name") should equal(uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction.TokenName)
-      csrf.getAttribute("value").size > 0 should equal(true)
+      csrf.getAttribute("name") should
+        equal(uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction.TokenName)
+      csrf.getAttribute("value").nonEmpty should equal(true)
     }
 
     "display optional for driving licence number of new keeper input" taggedAs UiTag in new ProgressBarFalse {
@@ -109,7 +114,8 @@ final class PrivateKeeperDetailsIntegrationSpec extends UiSpec with TestHarness 
       page.title should equal("Select new keeper address")
     }
 
-    "go to the appropriate next page when mandatory private keeper details are entered" taggedAs UiTag in new WebBrowser {
+    "go to the appropriate next page " +
+      "when mandatory private keeper details are entered" taggedAs UiTag in new WebBrowser {
       go to BeforeYouStartPage
       cacheSetup()
       navigate(email = "avalid@email.address")
@@ -158,7 +164,8 @@ final class PrivateKeeperDetailsIntegrationSpec extends UiSpec with TestHarness 
       ErrorPanel.numberOfErrors should equal(1)
     }
 
-    "display one validation error message when the title and the first name are longer then 26" taggedAs UiTag in new WebBrowser {
+    "display one validation error message " +
+      "when the title and the first name are longer then 26" taggedAs UiTag in new WebBrowser {
       go to BeforeYouStartPage
       cacheSetup()
       navigate(title = "tenchartdd", firstName = "15characterssdyff")

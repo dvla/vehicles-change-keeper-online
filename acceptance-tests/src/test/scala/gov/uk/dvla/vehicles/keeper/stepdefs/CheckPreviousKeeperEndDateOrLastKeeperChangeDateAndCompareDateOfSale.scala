@@ -4,10 +4,15 @@ import cucumber.api.java.en.{Given, When, Then}
 import cucumber.api.scala.{EN, ScalaDsl}
 import org.openqa.selenium.WebDriver
 import org.scalatest.Matchers
-import pages.changekeeper._
+import pages.changekeeper.BusinessKeeperDetailsPage
+import pages.changekeeper.CompleteAndConfirmPage
+import pages.changekeeper.DateOfSalePage
+import pages.changekeeper.NewKeeperChooseYourAddressPage
+import pages.changekeeper.VehicleLookupPage
 import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.{WithClue, WebBrowserDSL, WebBrowserDriver}
 
-class CheckPreviousKeeperEndDateOrLastKeeperChangeDateAndCompareDateOfSale(webBrowserDriver: WebBrowserDriver) extends ScalaDsl with EN with WebBrowserDSL with Matchers with WithClue {
+class CheckPreviousKeeperEndDateOrLastKeeperChangeDateAndCompareDateOfSale(webBrowserDriver: WebBrowserDriver)
+  extends ScalaDsl with EN with WebBrowserDSL with Matchers with WithClue {
 
   implicit val webDriver = webBrowserDriver.asInstanceOf[WebDriver]
 
@@ -88,5 +93,4 @@ class CheckPreviousKeeperEndDateOrLastKeeperChangeDateAndCompareDateOfSale(webBr
     DateOfSalePage.yearDateOfSaleTextBox enter "2010"
     click on DateOfSalePage.next
   }
-
 }

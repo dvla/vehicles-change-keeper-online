@@ -1,13 +1,13 @@
 package views.changekeeper
 
 import composition.TestHarness
-import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.ProgressBar
 import helpers.UiSpec
 import helpers.CookieFactoryForUISpecs
 import org.openqa.selenium.WebDriver
-import pages.changekeeper.MicroServiceErrorPage.{exit, tryAgain}
+import pages.changekeeper.MicroServiceErrorPage.exit
 import pages.changekeeper.{BeforeYouStartPage, MicroServiceErrorPage}
 import pages.common.Feedback.EmailFeedbackLink
+import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.ProgressBar
 import uk.gov.dvla.vehicles.presentation.common.testhelpers.UiTag
 
 final class MicroServiceErrorIntegrationSpec extends UiSpec with TestHarness {
@@ -62,6 +62,4 @@ final class MicroServiceErrorIntegrationSpec extends UiSpec with TestHarness {
 
   private def cacheSetup()(implicit webDriver: WebDriver) =
     CookieFactoryForUISpecs.withLanguageEn() // TODO: remove this
-//      setupTradeDetails().
-//      dealerDetails()
 }

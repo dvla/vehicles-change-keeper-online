@@ -1,17 +1,16 @@
 package controllers
 
 import javax.inject.Inject
-
-import uk.gov.dvla.vehicles.presentation.common.model.NewKeeperChooseYourAddressViewModel
+import models.K2KCacheKeyPrefix.CookiePrefix
 import play.api.mvc.{Request, Result}
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.ClientSideSessionFactory
 import common.clientsidesession.CookieImplicits.RichCookies
+import common.controllers.NewKeeperChooseYourAddressBase
+import common.model.NewKeeperChooseYourAddressViewModel
 import common.webserviceclients.addresslookup.AddressLookupService
-import uk.gov.dvla.vehicles.presentation.common.controllers.NewKeeperChooseYourAddressBase
 import utils.helpers.Config
 import views.html.changekeeper.new_keeper_choose_your_address
-import models.K2KCacheKeyPrefix.CookiePrefix
 
 class NewKeeperChooseYourAddress @Inject()(protected override val addressLookupService: AddressLookupService)
                                           (implicit protected override val clientSideSessionFactory: ClientSideSessionFactory,
@@ -34,7 +33,8 @@ class NewKeeperChooseYourAddress @Inject()(protected override val addressLookupS
       addresses,
       isBusinessKeeper,
       fleetNumber
-    ))
+      )
+    )
   }
 
   override protected def presentView(model: NewKeeperChooseYourAddressViewModel,
@@ -74,5 +74,4 @@ class NewKeeperChooseYourAddress @Inject()(protected override val addressLookupS
     logMessage(request.cookies.trackingId(), Debug, s"Redirecting to ${routes.UprnNotFound.present()}")
     Redirect(routes.UprnNotFound.present())
   }
-
 }

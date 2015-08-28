@@ -1,9 +1,7 @@
 package pages
 
-import uk.gov.dvla.vehicles.presentation.common.ConfigProperties.getProperty
-
 package object changekeeper {
-  final val applicationContext = "" //getProperty[String]("application.context")
+  final val applicationContext = ""
 
   def buildAppUrl(urlPart: String) = {
     val appContextWithSlash = if (!applicationContext.endsWith("/")) s"$applicationContext/" else applicationContext

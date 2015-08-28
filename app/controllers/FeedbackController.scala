@@ -5,17 +5,18 @@ import play.api.data.{FormError, Form}
 import play.api.i18n.Messages
 import play.api.mvc.{Action, AnyContent, Call, Controller}
 import uk.gov.dvla.vehicles.presentation.common
-import common.views.helpers.FormExtensions.formBinding
-import common.clientsidesession.CookieImplicits.RichCookies
 import common.clientsidesession.ClientSideSessionFactory
+import common.clientsidesession.CookieImplicits.RichCookies
 import common.controllers.FeedbackBase
 import common.model.FeedbackForm
 import common.model.FeedbackForm.Form.{emailMapping, nameMapping, feedback}
+import common.views.helpers.FormExtensions.formBinding
 import common.webserviceclients.emailservice.EmailService
 import utils.helpers.Config
 
-class FeedbackController @Inject()(val emailService: EmailService)(implicit clientSideSessionFactory: ClientSideSessionFactory,
-                                        config: Config) extends Controller with FeedbackBase {
+class FeedbackController @Inject()(val emailService: EmailService)
+                                  (implicit clientSideSessionFactory: ClientSideSessionFactory,
+                                   config: Config) extends Controller with FeedbackBase {
 
   override val emailConfiguration = config.emailConfiguration
 
@@ -45,7 +46,7 @@ class FeedbackController @Inject()(val emailService: EmailService)(implicit clie
 
   private def formWithReplacedErrors(form: Form[FeedbackForm]) = {
     form.replaceError(
-      feedback, FormError(key = feedback,message = "error.feedback", args = Seq.empty)
+      feedback, FormError(key = feedback, message = "error.feedback", args = Seq.empty)
     ).replaceError(
         nameMapping, FormError(key = nameMapping, message = "error.feedbackName", args = Seq.empty)
       ).replaceError(

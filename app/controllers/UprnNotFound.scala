@@ -5,14 +5,14 @@ import play.api.mvc.{Action, Controller}
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.ClientSideSessionFactory
 import common.clientsidesession.CookieImplicits.RichCookies
-import uk.gov.dvla.vehicles.presentation.common.LogFormats.DVLALogger
+import common.LogFormats.DVLALogger
 import utils.helpers.Config
 
 class UprnNotFound @Inject()()(implicit clientSideSessionFactory: ClientSideSessionFactory,
                                      config: Config)  extends Controller with DVLALogger {
 
   def present = Action { implicit request =>
-    logMessage(request.cookies.trackingId(), Warn, s"Uprn not found")
+    logMessage(request.cookies.trackingId(), Warn, "Uprn not found")
     Ok(views.html.common.uprn_not_found())
   }
 }

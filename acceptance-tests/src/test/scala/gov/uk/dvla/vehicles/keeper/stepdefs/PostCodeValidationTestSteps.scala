@@ -1,14 +1,15 @@
 package gov.uk.dvla.vehicles.keeper.stepdefs
 
-import cucumber.api.scala.{EN, ScalaDsl}
 import cucumber.api.java.en.{Then, When}
+import cucumber.api.scala.{EN, ScalaDsl}
 import org.openqa.selenium.WebDriver
 import org.scalatest.Matchers
 import pages.changekeeper.{VehicleLookupPage, PrivateKeeperDetailsPage, NewKeeperChooseYourAddressPage}
 import uk.gov.dvla.vehicles.presentation.common.helpers
 import helpers.webbrowser.{WithClue, WebBrowserDSL, WebBrowserDriver}
 
-class PostCodeValidationTestSteps(webBrowserDriver: WebBrowserDriver) extends ScalaDsl with EN with WebBrowserDSL with Matchers with WithClue {
+class PostCodeValidationTestSteps(webBrowserDriver: WebBrowserDriver)
+  extends ScalaDsl with EN with WebBrowserDSL with Matchers with WithClue {
 
   implicit val webDriver = webBrowserDriver.asInstanceOf[WebDriver]
 

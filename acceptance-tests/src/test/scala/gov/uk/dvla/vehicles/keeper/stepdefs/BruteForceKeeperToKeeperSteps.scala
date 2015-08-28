@@ -8,7 +8,8 @@ import org.scalatest.Matchers
 import pages.changekeeper.{BeforeYouStartPage, VehicleLookupPage, VehicleLookupFailurePage, VrmLockedPage}
 import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.{WithClue, WebBrowserDSL, WebBrowserDriver}
 
-class BruteForceKeeperToKeeperSteps(webBrowserDriver: WebBrowserDriver) extends ScalaDsl with EN with WebBrowserDSL with Matchers with WithClue {
+class BruteForceKeeperToKeeperSteps(webBrowserDriver: WebBrowserDriver)
+  extends ScalaDsl with EN with WebBrowserDSL with Matchers with WithClue {
 
   implicit val webDriver = webBrowserDriver.asInstanceOf[WebDriver]
   private final val vrmno = RandomVrmGenerator.vrm

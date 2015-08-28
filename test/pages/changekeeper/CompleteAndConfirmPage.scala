@@ -1,7 +1,7 @@
 package pages.changekeeper
 
 import uk.gov.dvla.vehicles.presentation.common.helpers
-import helpers.webbrowser._
+import helpers.webbrowser.{Element, WebDriverFactory, WebBrowserDSL, Page, Checkbox}
 import models.CompleteAndConfirmFormModel.Form.ConsentId
 import org.openqa.selenium.WebDriver
 import views.changekeeper.CompleteAndConfirm.{BackId, SubmitId}
@@ -21,9 +21,7 @@ object CompleteAndConfirmPage extends Page with WebBrowserDSL {
 
   def navigate(consent: String = ConsentTrue)(implicit driver: WebDriver) = {
     go to CompleteAndConfirmPage
-
     click on consent
-
     click on next
   }
 }

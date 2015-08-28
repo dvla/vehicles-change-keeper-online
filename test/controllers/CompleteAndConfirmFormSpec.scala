@@ -4,8 +4,8 @@ import composition.WithApplication
 import helpers.UnitSpec
 import models.CompleteAndConfirmFormModel
 import models.CompleteAndConfirmFormModel.Form.ConsentId
-import play.api.data.Form
 import pages.changekeeper.CompleteAndConfirmPage.ConsentTrue
+import play.api.data.Form
 
 class CompleteAndConfirmFormSpec extends UnitSpec {
 

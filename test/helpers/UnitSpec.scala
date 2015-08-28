@@ -3,9 +3,10 @@ package helpers
 import composition.TestComposition
 import org.scalatest.concurrent.PatienceConfiguration.Timeout
 import org.scalatest.concurrent.ScalaFutures
+import org.scalatest.Matchers
 import org.scalatest.mock.MockitoSugar
 import org.scalatest.time.{Second, Span}
-import org.scalatest.{Matchers, WordSpec}
+import org.scalatest.WordSpec
 
 abstract class UnitSpec
   extends WordSpec

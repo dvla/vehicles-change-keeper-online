@@ -1,22 +1,26 @@
 package pages.changekeeper
 
-import models.VehicleLookupFormModel.Form._
 import org.openqa.selenium.WebDriver
 import org.scalatest.Matchers
-import pages.changekeeper.VehicleLookupPage._
 import uk.gov.dvla.vehicles.presentation.common
-import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser._
+import common.helpers.webbrowser.Element
+import common.helpers.webbrowser.WebDriverFactory
+import common.helpers.webbrowser.Page
+import common.helpers.webbrowser.WebBrowserDSL
+import common.helpers.webbrowser.RadioButton
+import common.helpers.webbrowser.TextField
+import common.helpers.webbrowser.TelField
+import common.mappings.Email.{EmailId => EmailEnterId, EmailVerifyId}
+import common.mappings.OptionalToggle.{Visible, Invisible}
 import common.mappings.TitlePickerString.OtherTitleRadioValue
 import common.model.PrivateKeeperDetailsFormModel.Form.DateOfBirthId
 import common.model.PrivateKeeperDetailsFormModel.Form.DriverNumberId
 import common.model.PrivateKeeperDetailsFormModel.Form.EmailId
+import common.model.PrivateKeeperDetailsFormModel.Form.EmailOptionId
 import common.model.PrivateKeeperDetailsFormModel.Form.FirstNameId
 import common.model.PrivateKeeperDetailsFormModel.Form.LastNameId
 import common.model.PrivateKeeperDetailsFormModel.Form.PostcodeId
 import common.model.PrivateKeeperDetailsFormModel.Form.TitleId
-import common.mappings.OptionalToggle._
-import common.mappings.Email.{EmailId => EmailEnterId, EmailVerifyId}
-import common.model.PrivateKeeperDetailsFormModel.Form.EmailOptionId
 import views.changekeeper.PrivateKeeperDetails.{BackId, SubmitId}
 
 object PrivateKeeperDetailsPage extends Page with WebBrowserDSL with Matchers {
@@ -91,7 +95,7 @@ object PrivateKeeperDetailsPage extends Page with WebBrowserDSL with Matchers {
     titleRadioButtons.find(_.underlying.getAttribute("id") endsWith titleType(title))
       .fold(throw new Exception) ( _.isSelected should equal(true))
     titleRadioButtons.filterNot(_.underlying.getAttribute("id") endsWith titleType(title))
-      .map(_.isSelected should equal(false))
+      .foreach(_.isSelected should equal(false))
   }
 
   def assertNoTitleSelected()(implicit driver: WebDriver): Unit = {

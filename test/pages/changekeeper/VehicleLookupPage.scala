@@ -1,15 +1,15 @@
 package pages.changekeeper
 
-import uk.gov.dvla.vehicles.presentation.common.helpers
-import helpers.webbrowser.{Page, WebBrowserDSL, WebDriverFactory, Element, TelField, TextField, RadioButton}
-import org.openqa.selenium.WebDriver
-import models.VehicleLookupFormModel.Form.VehicleRegistrationNumberId
 import models.VehicleLookupFormModel.Form.DocumentReferenceNumberId
-import models.VehicleLookupFormModel.Form.VehicleSoldToId
-import views.changekeeper.VehicleLookup._
-import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService._
+import models.VehicleLookupFormModel.Form.VehicleRegistrationNumberId
 import models.VehicleLookupFormModel.Form.VehicleSellerEmailOption
-import uk.gov.dvla.vehicles.presentation.common.mappings.OptionalToggle.{Visible, Invisible}
+import models.VehicleLookupFormModel.Form.VehicleSoldToId
+import org.openqa.selenium.WebDriver
+import uk.gov.dvla.vehicles.presentation.common
+import common.mappings.OptionalToggle.{Visible, Invisible}
+import common.helpers.webbrowser.{Page, WebBrowserDSL, WebDriverFactory, Element, TelField, TextField, RadioButton}
+import views.changekeeper.VehicleLookup.{VehicleSoldTo_Private, VehicleSoldTo_Business, BackId, SubmitId}
+import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.{ReferenceNumberValid, RegistrationNumberValid}
 
 object VehicleLookupPage extends Page with WebBrowserDSL {
   final val address = buildAppUrl("vehicle-lookup")

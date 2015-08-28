@@ -5,7 +5,12 @@ import cucumber.api.scala.{EN, ScalaDsl}
 import helpers.RandomVrmGenerator
 import org.openqa.selenium.WebDriver
 import org.scalatest.Matchers
-import pages.changekeeper._
+import pages.changekeeper.BusinessKeeperDetailsPage
+import pages.changekeeper.ChangeKeeperSuccessPage
+import pages.changekeeper.CompleteAndConfirmPage
+import pages.changekeeper.DateOfSalePage
+import pages.changekeeper.NewKeeperChooseYourAddressPage
+import pages.changekeeper.VehicleLookupPage
 import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.{WithClue, WebBrowserDSL, WebBrowserDriver}
 
 class BackBrowserButtonSteps(webBrowserDriver: WebBrowserDriver)
@@ -62,5 +67,4 @@ class BackBrowserButtonSteps(webBrowserDriver: WebBrowserDriver)
   def the_user_navigate_back_to_the_Vehicle_look_up_screen()  {
     page.title shouldEqual VehicleLookupPage.title withClue trackingId
   }
-
 }

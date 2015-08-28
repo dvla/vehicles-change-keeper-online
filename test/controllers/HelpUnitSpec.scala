@@ -9,8 +9,9 @@ import org.mockito.Mockito.when
 import pages.changekeeper.{VehicleLookupPage, BeforeYouStartPage}
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{contentAsString, defaultAwaitTimeout, LOCATION, OK, REFERER,  status}
-import uk.gov.dvla.vehicles.presentation.common.testhelpers.CookieHelper.{fetchCookiesFromHeaders, verifyCookieHasBeenDiscarded}
 import uk.gov.dvla.vehicles.presentation.common.clientsidesession.ClientSideSessionFactory
+import uk.gov.dvla.vehicles.presentation.common.testhelpers.CookieHelper.fetchCookiesFromHeaders
+import uk.gov.dvla.vehicles.presentation.common.testhelpers.CookieHelper.verifyCookieHasBeenDiscarded
 import utils.helpers.Config
 
 class HelpUnitSpec extends UnitSpec {

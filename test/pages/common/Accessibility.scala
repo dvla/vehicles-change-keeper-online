@@ -1,8 +1,7 @@
 package pages.common
 
-import uk.gov.dvla.vehicles.presentation.common.helpers
-import helpers.webbrowser.WebBrowserDSL
 import org.openqa.selenium.{By, WebDriver}
+import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.WebBrowserDSL
 
 object Accessibility extends WebBrowserDSL {
   def ariaRequiredPresent(controlName: String)(implicit driver: WebDriver): Boolean =

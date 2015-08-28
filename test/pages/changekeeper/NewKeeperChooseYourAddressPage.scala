@@ -1,5 +1,6 @@
 package pages.changekeeper
 
+import org.openqa.selenium.WebDriver
 import uk.gov.dvla.vehicles.presentation.common
 import common.helpers.webbrowser.{Element, Page, SingleSel, WebBrowserDSL, WebDriverFactory}
 import common.model.NewKeeperChooseYourAddressFormModel.Form.AddressSelectId
@@ -7,7 +8,6 @@ import views.changekeeper.NewKeeperChooseYourAddress
 import NewKeeperChooseYourAddress.BackId
 import NewKeeperChooseYourAddress.EnterAddressManuallyButtonId
 import NewKeeperChooseYourAddress.SelectId
-import org.openqa.selenium.WebDriver
 
 object NewKeeperChooseYourAddressPage extends Page with WebBrowserDSL {
   final val address = buildAppUrl("new-keeper-choose-your-address")
@@ -32,8 +32,6 @@ object NewKeeperChooseYourAddressPage extends Page with WebBrowserDSL {
 
   def happyPath(implicit driver: WebDriver) = {
     go to NewKeeperChooseYourAddressPage
-    // HACK for Northern Ireland
-//    chooseAddress.value = traderUprnValid.toString
     chooseAddress.value = "0"
     click on select
   }

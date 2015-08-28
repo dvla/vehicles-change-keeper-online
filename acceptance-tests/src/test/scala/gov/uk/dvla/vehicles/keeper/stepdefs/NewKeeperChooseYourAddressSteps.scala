@@ -4,10 +4,14 @@ import cucumber.api.java.en.{When, Given}
 import cucumber.api.scala.{EN, ScalaDsl}
 import org.openqa.selenium.WebDriver
 import org.scalatest.Matchers
-import pages.changekeeper.{NewKeeperChooseYourAddressPage, BusinessKeeperDetailsPage, VehicleLookupPage,NewKeeperEnterAddressManuallyPage}
+import pages.changekeeper.BusinessKeeperDetailsPage
+import pages.changekeeper.NewKeeperChooseYourAddressPage
+import pages.changekeeper.NewKeeperEnterAddressManuallyPage
+import pages.changekeeper.VehicleLookupPage
 import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.{WithClue, WebBrowserDriver, WebBrowserDSL}
 
-class NewKeeperChooseYourAddressSteps(webBrowserDriver: WebBrowserDriver) extends ScalaDsl with EN with WebBrowserDSL with Matchers with WithClue {
+class NewKeeperChooseYourAddressSteps(webBrowserDriver: WebBrowserDriver)
+  extends ScalaDsl with EN with WebBrowserDSL with Matchers with WithClue {
 
   implicit val webDriver = webBrowserDriver.asInstanceOf[WebDriver]
   private final val ValidVrn = "B1"

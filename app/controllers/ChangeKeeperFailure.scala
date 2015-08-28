@@ -1,14 +1,19 @@
 package controllers
 
 import com.google.inject.Inject
-import models._
+import models.AllCacheKeys
+import models.ChangeKeeperCompletionViewModel
+import models.CompleteAndConfirmFormModel
+import models.CompleteAndConfirmResponseModel
+import models.DateOfSaleFormModel
 import models.K2KCacheKeyPrefix.CookiePrefix
+import models.VehicleNewKeeperCompletionCacheKeys
 import play.api.mvc.{Action, Controller, Request}
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.ClientSideSessionFactory
 import common.clientsidesession.CookieImplicits.{RichCookies, RichResult}
+import common.LogFormats.DVLALogger
 import common.model.{NewKeeperDetailsViewModel, TraderDetailsModel, VehicleAndKeeperDetailsModel}
-import uk.gov.dvla.vehicles.presentation.common.LogFormats._
 import utils.helpers.Config
 
 class ChangeKeeperFailure @Inject()()(implicit clientSideSessionFactory: ClientSideSessionFactory,
@@ -30,8 +35,7 @@ class ChangeKeeperFailure @Inject()()(implicit clientSideSessionFactory: ClientS
       Ok(views.html.changekeeper.change_keeper_failure(ChangeKeeperCompletionViewModel(
         vehicleAndKeeperDetailsModel, newKeeperDetailsModel, dateOfSaleFormModel, completeAndConfirmModel, responseModel
       )))
-
-
+    
     result getOrElse
       redirectToStart(MissingCookiesAcquireFailure)
   }

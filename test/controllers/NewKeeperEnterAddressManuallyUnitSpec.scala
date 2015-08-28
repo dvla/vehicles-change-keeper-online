@@ -49,7 +49,8 @@ class NewKeeperEnterAddressManuallyUnitSpec extends UnitSpec {
       }
     }
 
-    "redirect to VehicleLookup page when present is called and both keeper types are cached in error" in new WithApplication {
+    "redirect to VehicleLookup page when present is called " +
+      "and both keeper types are cached in error" in new WithApplication {
       val request = FakeRequest().
         withCookies(CookieFactoryForUnitSpecs.privateKeeperDetailsModel()).
         withCookies(CookieFactoryForUnitSpecs.businessKeeperDetailsModel())
@@ -106,7 +107,8 @@ class NewKeeperEnterAddressManuallyUnitSpec extends UnitSpec {
         withCookies(CookieFactoryForUnitSpecs.businessKeeperDetailsModel())
       val result = newKeeperEnterAddressManually.submit(request)
       whenReady(result) { r =>
-        r.header.headers.get(LOCATION) should equal(None) //ToDo reintroduce and amend location when next page implemented
+        //ToDo reintroduce and amend location when next page implemented
+        r.header.headers.get(LOCATION) should equal(None)
       }
     }
 
@@ -121,7 +123,8 @@ class NewKeeperEnterAddressManuallyUnitSpec extends UnitSpec {
         withCookies(CookieFactoryForUnitSpecs.businessKeeperDetailsModel())
       val result = newKeeperEnterAddressManually.submit(request)
       whenReady(result) { r =>
-        r.header.headers.get(LOCATION) should equal(None) //ToDo reintroduce and amend location when next page implemented
+        //ToDo reintroduce and amend location when next page implemented
+        r.header.headers.get(LOCATION) should equal(None)
       }
     }
 

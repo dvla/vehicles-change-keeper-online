@@ -1,15 +1,16 @@
 package controllers
 
 import com.google.inject.Inject
+import models.AllCacheKeys
 import models.K2KCacheKeyPrefix.CookiePrefix
 import models.VehicleLookupFormModel.VehicleLookupFormModelCacheKey
-import models.{AllCacheKeys, VrmLockedViewModel}
+import models.VrmLockedViewModel
 import org.joda.time.DateTime
 import play.api.mvc.{Request, Result}
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.ClientSideSessionFactory
-import common.clientsidesession.CookieImplicits.RichResult
 import common.clientsidesession.CookieImplicits.RichCookies
+import common.clientsidesession.CookieImplicits.RichResult
 import common.controllers.VrmLockedBase
 import common.model.BruteForcePreventionModel
 import utils.helpers.Config

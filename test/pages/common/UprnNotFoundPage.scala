@@ -1,10 +1,9 @@
 package pages.common
 
-import uk.gov.dvla.vehicles.presentation.common.helpers
-import helpers.webbrowser.{Element, Page, WebBrowserDSL, WebDriverFactory}
 import org.openqa.selenium.WebDriver
-import views.common.UprnNotFound.{VehicleLookupId, ManualaddressbuttonId}
 import pages.changekeeper.buildAppUrl
+import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.{Element, Page, WebBrowserDSL, WebDriverFactory}
+import views.common.UprnNotFound.{VehicleLookupId, ManualaddressbuttonId}
 
 object UprnNotFoundPage extends Page with WebBrowserDSL {
   final val address = buildAppUrl("uprn-not-found")

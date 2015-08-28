@@ -1,16 +1,18 @@
 package views.changekeeper
 
 import composition.TestHarness
-import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.ProgressBar
-import helpers.UiSpec
-import uk.gov.dvla.vehicles.presentation.common.testhelpers.UiTag
-import org.openqa.selenium.WebDriver
-import pages.changekeeper.HelpPage.{back, exit}
-import pages.common.HelpPanel
-import models.HelpCacheKey
 import helpers.CookieFactoryForUISpecs
-import pages.changekeeper.{PrivateKeeperDetailsPage, HelpPage, BeforeYouStartPage}
+import helpers.UiSpec
+import org.openqa.selenium.WebDriver
+import models.HelpCacheKey
+import pages.changekeeper.BeforeYouStartPage
+import pages.changekeeper.HelpPage
+import pages.changekeeper.HelpPage.{back, exit}
+import pages.changekeeper.PrivateKeeperDetailsPage
 import pages.common.Feedback.{EmailFeedbackLink, EmailHelpLink}
+import pages.common.HelpPanel
+import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.ProgressBar
+import uk.gov.dvla.vehicles.presentation.common.testhelpers.UiTag
 
 final class HelpIntegrationSpec extends UiSpec with TestHarness {
   "go to page" ignore {

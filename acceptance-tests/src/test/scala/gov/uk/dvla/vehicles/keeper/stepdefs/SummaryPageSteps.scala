@@ -6,7 +6,8 @@ import org.scalatest.Matchers
 import pages.changekeeper.{BeforeYouStartPage, CompleteAndConfirmPage, ChangeKeeperSuccessPage}
 import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.{WithClue, WebBrowserDSL, WebBrowserDriver}
 
-class SummaryPageSteps (webBrowserDriver: WebBrowserDriver) extends ScalaDsl with EN with WebBrowserDSL with Matchers with WithClue {
+class SummaryPageSteps (webBrowserDriver: WebBrowserDriver)
+  extends ScalaDsl with EN with WebBrowserDSL with Matchers with WithClue {
 
   implicit val webDriver = webBrowserDriver.asInstanceOf[WebBrowserDriver]
   lazy val happyPath = new CompleteAndConfirmSteps(webBrowserDriver)

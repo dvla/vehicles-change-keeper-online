@@ -1,7 +1,6 @@
 package email
 
 import java.text.SimpleDateFormat
-
 import org.joda.time.DateTime
 import uk.gov.dvla.vehicles.presentation.common.model.VehicleAndKeeperDetailsModel
 
@@ -59,7 +58,7 @@ object EmailSellerMessageBuilder {
        |                    <tr>
        |                        <td style="border-collapse: collapse; padding: 20px 0;">
        |                            <a target="_blank" href="https://www.gov.uk/" style="color: #ffffff; text-decoration: none;">
-       |                                <img src="${imagesPath}/gov-uk.jpg" width="320" height="106" alt="Crown image" style="outline: none; text-decoration: none; -ms-interpolation-mode: bicubic;" />
+       |                                <img src="$imagesPath/gov-uk.jpg" width="320" height="106" alt="Crown image" style="outline: none; text-decoration: none; -ms-interpolation-mode: bicubic;" />
        |                            </a>
        |                        </td>
        |                    </tr>
@@ -105,7 +104,7 @@ object EmailSellerMessageBuilder {
        |                            Vehicles Service Manager
        |                            </p>
        |
-       |                            <img src="${imagesPath}/dvla_logo.png" width="320" alt="DVLA logo" style="outline: none; text-decoration: none; -ms-interpolation-mode: bicubic;" />
+       |                            <img src="$imagesPath/dvla_logo.png" width="320" alt="DVLA logo" style="outline: none; text-decoration: none; -ms-interpolation-mode: bicubic;" />
        |
        |                        </td>
        |                    </tr>

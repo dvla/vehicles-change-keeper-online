@@ -1,8 +1,6 @@
 package helpers
 
 import scala.collection.immutable.NumericRange.Inclusive
-import scala.collection.mutable
-import scala.collection.parallel.mutable
 import scala.util.Random
 
 object RandomVrmGenerator {
@@ -22,7 +20,6 @@ object RandomVrmGenerator {
       map(letter => alphabet(letter)).
       take(n).
       mkString
-
 
   def uniqueVrm: String = vrm match {
     case x if vrm.contains(x) => uniqueVrm

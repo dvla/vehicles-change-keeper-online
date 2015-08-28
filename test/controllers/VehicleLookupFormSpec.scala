@@ -1,8 +1,8 @@
 package controllers
 
 import composition.WithApplication
-import helpers.UnitSpec
 import helpers.InvalidVRMFormat.allInvalidVrmFormats
+import helpers.UnitSpec
 import helpers.ValidVRMFormat.allValidVrmFormats
 import models.VehicleLookupFormModel.Form.DocumentReferenceNumberId
 import models.VehicleLookupFormModel.Form.VehicleRegistrationNumberId
@@ -19,8 +19,8 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import uk.gov.dvla.vehicles.presentation.common
 import uk.gov.dvla.vehicles.presentation.common.clientsidesession.{TrackingId, ClientSideSessionFactory}
-import common.mappings.OptionalToggle
 import common.mappings.Email.{EmailId, EmailVerifyId}
+import common.mappings.OptionalToggle
 import common.services.DateServiceImpl
 import common.testhelpers.RandomVrmGenerator
 import common.webserviceclients.bruteforceprevention.BruteForcePreventionService
@@ -33,11 +33,12 @@ import common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupSer
 import common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupWebService
 import utils.helpers.Config
 import views.changekeeper.VehicleLookup.VehicleSoldTo_Private
+import webserviceclients.fakes.FakeDateServiceImpl
+import webserviceclients.fakes.FakeResponse
 import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.ConsentValid
 import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.ReferenceNumberValid
 import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.RegistrationNumberValid
 import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.vehicleDetailsResponseSuccess
-import webserviceclients.fakes.{FakeDateServiceImpl, FakeResponse}
 
 class VehicleLookupFormSpec extends UnitSpec {
 
@@ -88,12 +89,14 @@ class VehicleLookupFormSpec extends UnitSpec {
     }
 
     "reject if wrong email is present" in new WithApplication {
-      formWithValidDefaults(sellerEmail = Some("invalid email")).errors.flatMap(_.messages) should contain theSameElementsAs
+      formWithValidDefaults(sellerEmail = Some("invalid email")).errors
+        .flatMap(_.messages) should contain theSameElementsAs
         List("error.email")
     }
 
     "reject if greater than max length" in new WithApplication {
-      formWithValidDefaults(referenceNumber = "123456789101").errors.flatMap(_.messages) should contain theSameElementsAs
+      formWithValidDefaults(referenceNumber = "123456789101").errors
+        .flatMap(_.messages) should contain theSameElementsAs
         List("error.maxLength")
     }
 
@@ -108,7 +111,8 @@ class VehicleLookupFormSpec extends UnitSpec {
     }
 
     "accept if valid" in new WithApplication {
-      formWithValidDefaults(registrationNumber = RegistrationNumberValid).get.referenceNumber should equal(ReferenceNumberValid)
+      formWithValidDefaults(registrationNumber = RegistrationNumberValid).get
+        .referenceNumber should equal(ReferenceNumberValid)
     }
   }
 
@@ -163,12 +167,14 @@ class VehicleLookupFormSpec extends UnitSpec {
 
   private def vehicleLookupResponseGenerator(fullResponse:(Int, Option[VehicleAndKeeperLookupResponse])) = {
     val vehicleAndKeeperLookupWebService: VehicleAndKeeperLookupWebService = mock[VehicleAndKeeperLookupWebService]
-    when(vehicleAndKeeperLookupWebService.invoke(any[VehicleAndKeeperLookupRequest], any[TrackingId])).thenReturn(Future {
+    when(vehicleAndKeeperLookupWebService.invoke(any[VehicleAndKeeperLookupRequest], any[TrackingId]))
+      .thenReturn(Future {
       val responseAsJson : Option[JsValue] = fullResponse._2 match {
         case Some(e) => Some(Json.toJson(e))
         case _ => None
       }
-      new FakeResponse(status = fullResponse._1, fakeJson = responseAsJson)// Any call to a webservice will always return this successful response.
+      // Any call to a webservice will always return this successful response.
+      new FakeResponse(status = fullResponse._1, fakeJson = responseAsJson)
     })
     val vehicleAndKeeperLookupServiceImpl =
       new VehicleAndKeeperLookupServiceImpl(vehicleAndKeeperLookupWebService, healthStatsMock)

@@ -1,10 +1,11 @@
 package pages.changekeeper
 
-import models.DateOfSaleFormModel.Form._
+import models.DateOfSaleFormModel.Form.{DateOfSaleId, MileageId, TodaysDateId}
 import org.openqa.selenium.WebDriver
 import org.scalatest.ShouldMatchers
-import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser._
-import views.changekeeper.CompleteAndConfirm._
+import uk.gov.dvla.vehicles.presentation.common.helpers
+import helpers.webbrowser.{Element, Page, TelField, WebDriverFactory, WebBrowserDSL}
+import views.changekeeper.CompleteAndConfirm.{BackId, SubmitId}
 
 object DateOfSalePage extends Page with WebBrowserDSL with ShouldMatchers {
   final val address = buildAppUrl("date-of-sale")

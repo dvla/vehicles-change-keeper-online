@@ -8,12 +8,15 @@ import models.DateOfSaleFormModel.DateOfSaleCacheKey
 import models.DateOfSaleFormModel.Form.{DateOfSaleId, MileageId}
 import org.joda.time.{DateTime, LocalDate}
 import org.joda.time.format.DateTimeFormat
+import pages.changekeeper.CompleteAndConfirmPage
 import pages.changekeeper.DateOfSalePage.{MileageValid, DayDateOfSaleValid, MonthDateOfSaleValid, YearDateOfSaleValid}
-import pages.changekeeper.{CompleteAndConfirmPage, NewKeeperChooseYourAddressPage, NewKeeperEnterAddressManuallyPage}
+import pages.changekeeper.NewKeeperChooseYourAddressPage
+import pages.changekeeper.NewKeeperEnterAddressManuallyPage
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{BAD_REQUEST, contentAsString, defaultAwaitTimeout, LOCATION}
-import uk.gov.dvla.vehicles.presentation.common.clientsidesession.{ClearTextClientSideSessionFactory, NoCookieFlags}
+import uk.gov.dvla.vehicles.presentation.common.clientsidesession.ClearTextClientSideSessionFactory
 import uk.gov.dvla.vehicles.presentation.common.clientsidesession.CookieImplicits.RichCookies
+import uk.gov.dvla.vehicles.presentation.common.clientsidesession.NoCookieFlags
 import uk.gov.dvla.vehicles.presentation.common.mappings.Date.{DayId, MonthId, YearId}
 import uk.gov.dvla.vehicles.presentation.common.testhelpers.CookieHelper
 
@@ -44,7 +47,8 @@ class DateOfSaleUnitSpec extends UnitSpec {
       }
     }
 
-    "redirect to next page when mandatory fields are complete for new keeper and neither the date of disposal or the change date are present" in new WithApplication {
+    "redirect to next page when mandatory fields are complete for new keeper " +
+      "and neither the date of disposal or the change date are present" in new WithApplication {
       val request = buildCorrectlyPopulatedRequest()
         .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
         .withCookies(CookieFactoryForUnitSpecs.vehicleLookupFormModel())
@@ -66,7 +70,8 @@ class DateOfSaleUnitSpec extends UnitSpec {
       }
     }
 
-    "Not go to the next page when the date of acquisition is before the date of disposal and return a bad request" in new WithApplication {
+    "Not go to the next page when the date of acquisition is before the date of disposal " +
+      "and return a bad request" in new WithApplication {
       //    The date of acquisition is 19-10-2012
       val disposalDate = DateTime.parse("20-10-2012", DateTimeFormat.forPattern("dd-MM-yyyy"))
 
@@ -85,7 +90,8 @@ class DateOfSaleUnitSpec extends UnitSpec {
       }
     }
 
-    "not go to the next page when the date of acquisition is before the keeper change date and return a bad request" in new WithApplication {
+    "not go to the next page when the date of acquisition is before the keeper change date " +
+      "and return a bad request" in new WithApplication {
       //    The date of acquisition is 19-10-2012
       val changeKeeperDate = DateTime.parse("20-10-2012", DateTimeFormat.forPattern("dd-MM-yyyy"))
 
@@ -155,7 +161,8 @@ class DateOfSaleUnitSpec extends UnitSpec {
       }
     }
 
-    "call the micro service when both the date of disposal and the change date are present and redirect to the next page" in new WithApplication {
+    "call the micro service when both the date of disposal and the change date are present " +
+      "and redirect to the next page" in new WithApplication {
       //The date of acquisition is 19-10-2012
       val disposalDate = DateTime.parse("09-03-2015", DateTimeFormat.forPattern("dd-MM-yyyy"))
       val changeDate = DateTime.parse("09-03-2015", DateTimeFormat.forPattern("dd-MM-yyyy"))
@@ -163,9 +170,11 @@ class DateOfSaleUnitSpec extends UnitSpec {
       val request = buildCorrectlyPopulatedRequest()
         .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
         .withCookies(CookieFactoryForUnitSpecs.vehicleLookupFormModel())
-        .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel(keeperEndDate = Some(disposalDate), keeperChangeDate = Some(changeDate)))
+        .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel(
+          keeperEndDate = Some(disposalDate),
+          keeperChangeDate = Some(changeDate)
+        ))
         .withCookies(CookieFactoryForUnitSpecs.sellerEmailModel())
-
 
       val result = dateOfSale.submitNoDateCheck(request)
       whenReady(result) { r =>

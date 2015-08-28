@@ -5,7 +5,7 @@ import play.api.mvc.{Action, Controller}
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.ClientSideSessionFactory
 import common.clientsidesession.CookieImplicits.RichCookies
-import uk.gov.dvla.vehicles.presentation.common.LogFormats.DVLALogger
+import common.LogFormats.DVLALogger
 
 import utils.helpers.{CookieHelper, Config}
 
@@ -18,7 +18,11 @@ final class Error @Inject()()(implicit clientSideSessionFactory: ClientSideSessi
   }
 
   def submit(exceptionDigest: String) = Action { implicit request =>
-    logMessage(request.cookies.trackingId(), Error, "Submit called - now removing full set of cookies and redirecting to Start page")
+    logMessage(
+      request.cookies.trackingId(),
+      Error,
+      "Submit called - now removing full set of cookies and redirecting to Start page"
+    )
     CookieHelper.discardAllCookies
   }
 }

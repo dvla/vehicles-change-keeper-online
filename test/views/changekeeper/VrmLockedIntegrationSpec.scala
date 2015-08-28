@@ -1,12 +1,12 @@
 package views.changekeeper
 
 import composition.TestHarness
-import helpers.UiSpec
 import helpers.CookieFactoryForUISpecs
-import uk.gov.dvla.vehicles.presentation.common.testhelpers.UiTag
+import helpers.UiSpec
+import models.VehicleLookupFormModel.VehicleLookupFormModelCacheKey
 import org.openqa.selenium.WebDriver
 import pages.changekeeper.{VehicleLookupPage, BeforeYouStartPage, VrmLockedPage}
-import models.VehicleLookupFormModel.VehicleLookupFormModelCacheKey
+import uk.gov.dvla.vehicles.presentation.common.testhelpers.UiTag
 
 class VrmLockedIntegrationSpec extends UiSpec with TestHarness {
 
@@ -26,20 +26,6 @@ class VrmLockedIntegrationSpec extends UiSpec with TestHarness {
       webDriver.manage().getCookieNamed(VehicleLookupFormModelCacheKey) should equal(null)
     }
   }
-
-  // Try again button was removed due to US2199
-//  "clicking on try again button" should {
-//    "redirect to the vehicles lookup page discarding all the cookies set" taggedAs UiTag in new WebBrowser {
-//      go to BeforeYouStartPage
-//      successCookiesSetup()
-//      go to VrmLockedPage
-//      page.title should equal(VrmLockedPage.title)
-//      click on VrmLockedPage.newDisposal
-//
-//      page.title should equal(VehicleLookupPage.title)
-//      webDriver.manage().getCookieNamed(VehicleLookupFormModelCacheKey) should equal(null)
-//    }
-//  }
 
   "clicking on the exit button" should {
     "redirect to the before you start page discarding any cookies" taggedAs UiTag in new WebBrowser {

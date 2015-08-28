@@ -68,7 +68,6 @@ class DateOfSaleFormSpec extends UnitSpec {
 
     "accept if mileage is entered correctly" in new WithApplication {
       val model = formWithValidDefaults(mileage = MileageValid).get
-
       model.mileage should equal(Some(MileageValid.toInt))
     }
   }

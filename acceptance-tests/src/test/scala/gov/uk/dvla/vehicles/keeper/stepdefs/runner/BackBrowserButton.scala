@@ -13,5 +13,4 @@ import org.junit.runner.RunWith
 )
 @Ignore
 class BackBrowserButton {
-
 }

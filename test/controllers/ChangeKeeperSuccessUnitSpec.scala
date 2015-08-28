@@ -4,20 +4,20 @@ import com.tzavellas.sse.guice.ScalaModule
 import Common.PrototypeHtml
 import composition.WithApplication
 import helpers.{CookieFactoryForUnitSpecs, UnitSpec}
-import models.DateOfSaleFormModel
-import models.CompleteAndConfirmFormModel.CompleteAndConfirmCacheKey
 import models.CompleteAndConfirmResponseModel.ChangeKeeperCompletionResponseCacheKey
+import models.CompleteAndConfirmFormModel.CompleteAndConfirmCacheKey
+import models.DateOfSaleFormModel
 import models.K2KCacheKeyPrefix.CookiePrefix
 import models.VehicleLookupFormModel.VehicleLookupFormModelCacheKey
 import org.joda.time.format.DateTimeFormat
 import org.mockito.Mockito.when
 import pages.changekeeper.BeforeYouStartPage
-import pages.changekeeper.BusinessKeeperDetailsPage.FleetNumberValid
 import pages.changekeeper.BusinessKeeperDetailsPage.BusinessNameValid
+import pages.changekeeper.BusinessKeeperDetailsPage.FleetNumberValid
 import pages.changekeeper.DateOfSalePage.{DayDateOfSaleValid, MonthDateOfSaleValid, YearDateOfSaleValid}
 import pages.changekeeper.PrivateKeeperDetailsPage.{FirstNameValid, LastNameValid, EmailValid}
-import play.api.test.Helpers.{LOCATION, OK, contentAsString, defaultAwaitTimeout}
 import play.api.test.FakeRequest
+import play.api.test.Helpers.{LOCATION, OK, contentAsString, defaultAwaitTimeout}
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.ClientSideSessionFactory
 import common.model.BusinessKeeperDetailsFormModel.businessKeeperDetailsCacheKey
@@ -26,9 +26,9 @@ import common.model.PrivateKeeperDetailsFormModel.privateKeeperDetailsCacheKey
 import common.model.VehicleAndKeeperDetailsModel.vehicleAndKeeperLookupDetailsCacheKey
 import common.testhelpers.CookieHelper.{fetchCookiesFromHeaders, verifyCookieHasBeenDiscarded}
 import utils.helpers.Config
-import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.TransactionTimestampValid
-import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.TransactionIdValid
 import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.RegistrationNumberValid
+import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.TransactionIdValid
+import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.TransactionTimestampValid
 import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.{VehicleMakeValid, VehicleModelValid}
 
 class ChangeKeeperSuccessUnitSpec extends UnitSpec {
@@ -66,7 +66,8 @@ class ChangeKeeperSuccessUnitSpec extends UnitSpec {
       }
     }
 
-    "present a full page with private keeper cached details when all cookies are present for new keeper success" in new WithApplication {
+    "present a full page with private keeper cached details " +
+      "when all cookies are present for new keeper success" in new WithApplication {
       val fmt = DateTimeFormat.forPattern("dd/MM/yyyy")
 
       val request = FakeRequest().
@@ -94,7 +95,8 @@ class ChangeKeeperSuccessUnitSpec extends UnitSpec {
       content should include(TransactionIdValid)
     }
 
-    "present a full page with business keeper cached details when all cookies are present for new keeper success" in new WithApplication {
+    "present a full page with business keeper cached details " +
+      "when all cookies are present for new keeper success" in new WithApplication {
       val fmt = DateTimeFormat.forPattern("dd/MM/yyyy")
 
       val request = FakeRequest().
@@ -122,7 +124,8 @@ class ChangeKeeperSuccessUnitSpec extends UnitSpec {
       content should include(TransactionIdValid)
     }
 
-    "contain code in the page source to open the survey in a new tab when a survey url is configured" in new WithApplication {
+    "contain code in the page source to open the survey in a new tab " +
+      "when a survey url is configured" in new WithApplication {
       val request = FakeRequest().
         withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
         withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel()).
@@ -135,7 +138,8 @@ class ChangeKeeperSuccessUnitSpec extends UnitSpec {
       contentAsString(result) should include(expectedContent)
     }
 
-    "not contain code in the page source to open the survey in a new tab when a survey url is configured" in new WithApplication {
+    "not contain code in the page source to open the survey in a new tab " +
+      "when a survey url is configured" in new WithApplication {
       val request = FakeRequest().
         withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
         withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel()).

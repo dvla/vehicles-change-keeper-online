@@ -2,13 +2,14 @@ package gov.uk.dvla.vehicles.keeper.stepdefs
 
 import cucumber.api.java.en.{Then, When, Given}
 import cucumber.api.scala.{EN, ScalaDsl}
-import uk.gov.dvla.vehicles.presentation.common.helpers
-import helpers.webbrowser.{WithClue, WebBrowserDriver, WebBrowserDSL}
 import org.openqa.selenium.WebDriver
 import org.scalatest.Matchers
-import pages.changekeeper._
+import pages.changekeeper.{PrivateKeeperDetailsPage, VehicleLookupPage}
+import uk.gov.dvla.vehicles.presentation.common.helpers
+import helpers.webbrowser.{WithClue, WebBrowserDriver, WebBrowserDSL}
 
-class PrivateKeeperDetailsPageSteps(webBrowserDriver: WebBrowserDriver) extends ScalaDsl with EN with WebBrowserDSL with Matchers with WithClue {
+class PrivateKeeperDetailsPageSteps(webBrowserDriver: WebBrowserDriver)
+  extends ScalaDsl with EN with WebBrowserDSL with Matchers with WithClue {
 
   implicit val webDriver = webBrowserDriver.asInstanceOf[WebDriver]
 

@@ -1,9 +1,8 @@
 package pages.changekeeper
 
-import uk.gov.dvla.vehicles.presentation.common.helpers
-import helpers.webbrowser.{Element, Page, WebBrowserDSL, WebDriverFactory}
-import views.common.Help.{BackId, ExitId}
 import org.openqa.selenium.WebDriver
+import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.{Element, Page, WebBrowserDSL, WebDriverFactory}
+import views.common.Help.{BackId, ExitId}
 
 object HelpPage extends Page with WebBrowserDSL {
   final val address = buildAppUrl("help")

@@ -2,23 +2,23 @@ package views.changekeeper
 
 import composition.TestHarness
 import helpers.CookieFactoryForUISpecs
-import uk.gov.dvla.vehicles.presentation.common.testhelpers.UiTag
-import helpers.webbrowser.ProgressBar
 import helpers.UiSpec
+import helpers.webbrowser.ProgressBar
 import org.openqa.selenium.{By, WebElement, WebDriver}
-import pages.common.ErrorPanel
 import pages.changekeeper.BeforeYouStartPage
 import pages.changekeeper.BusinessKeeperDetailsPage
-import pages.changekeeper.PrivateKeeperDetailsPage
 import pages.changekeeper.NewKeeperChooseYourAddressPage
-import pages.changekeeper.NewKeeperEnterAddressManuallyPage
-import pages.changekeeper.VehicleLookupPage
 import pages.changekeeper.NewKeeperChooseYourAddressPage.{back, manualAddress, sadPath, happyPath}
+import pages.changekeeper.NewKeeperEnterAddressManuallyPage
+import pages.changekeeper.PrivateKeeperDetailsPage
+import pages.changekeeper.VehicleLookupPage
+import pages.common.ErrorPanel
+import pages.common.Feedback.EmailFeedbackLink
 import ProgressBar.progressStep
 import uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction
+import uk.gov.dvla.vehicles.presentation.common.testhelpers.UiTag
 import webserviceclients.fakes.FakeAddressLookupService
 import webserviceclients.fakes.FakeAddressLookupService.PostcodeValid
-import pages.common.Feedback.EmailFeedbackLink
 
 class NewKeeperChooseYourAddressIntegrationSpec extends UiSpec with TestHarness {
   final val ProgressStepNumber = 4
@@ -76,7 +76,8 @@ class NewKeeperChooseYourAddressIntegrationSpec extends UiSpec with TestHarness 
       page.title should equal(VehicleLookupPage.title)
     }
 
-    "redirect to vehicle lookup when cookies are in cache for both private and business keeper" taggedAs UiTag in new WebBrowser {
+    "redirect to vehicle lookup " +
+      "when cookies are in cache for both private and business keeper" taggedAs UiTag in new WebBrowser {
       go to BeforeYouStartPage
       cacheSetupPrivateKeeper
       cacheSetupBusinessKeeper
@@ -84,21 +85,24 @@ class NewKeeperChooseYourAddressIntegrationSpec extends UiSpec with TestHarness 
       page.title should equal(VehicleLookupPage.title)
     }
 
-    "redirect to vehicle lookup when no vehicle cookies are in cache but private keeper details exist" taggedAs UiTag in new WebBrowser {
+    "redirect to vehicle lookup " +
+      "when no vehicle cookies are in cache but private keeper details exist" taggedAs UiTag in new WebBrowser {
       go to BeforeYouStartPage
       CookieFactoryForUISpecs.privateKeeperDetails()
       go to NewKeeperChooseYourAddressPage
       page.title should equal(VehicleLookupPage.title)
     }
 
-    "redirect to vehicle lookup when no vehicle cookies are in cache but business keeper details exist" taggedAs UiTag in new WebBrowser {
+    "redirect to vehicle lookup " +
+      "when no vehicle cookies are in cache but business keeper details exist" taggedAs UiTag in new WebBrowser {
       go to BeforeYouStartPage
       CookieFactoryForUISpecs.businessKeeperDetails()
       go to NewKeeperChooseYourAddressPage
       page.title should equal(VehicleLookupPage.title)
     }
 
-    "display appropriate content when address service returns addresses for a new private keeper" taggedAs UiTag in new WebBrowser {
+    "display appropriate content " +
+      "when address service returns addresses for a new private keeper" taggedAs UiTag in new WebBrowser {
       go to BeforeYouStartPage
       cacheSetupPrivateKeeper
       go to NewKeeperChooseYourAddressPage
@@ -106,7 +110,8 @@ class NewKeeperChooseYourAddressIntegrationSpec extends UiSpec with TestHarness 
       page.source should include( """<a id="enterAddressManuallyButton" href""")
     }
 
-    "display appropriate content when address service returns addresses for a new business keeper" taggedAs UiTag in new WebBrowser {
+    "display appropriate content " +
+      "when address service returns addresses for a new business keeper" taggedAs UiTag in new WebBrowser {
       go to BeforeYouStartPage
       cacheSetupBusinessKeeper
       go to NewKeeperChooseYourAddressPage
@@ -128,12 +133,14 @@ class NewKeeperChooseYourAddressIntegrationSpec extends UiSpec with TestHarness 
       page.source.contains(FakeAddressLookupService.PostcodeValid.toUpperCase) should equal(true)
     }
 
-    "display expected addresses in dropdown when address service returns addresses for a new private keeper" taggedAs UiTag in new WebBrowser {
+    "display expected addresses in dropdown " +
+      "when address service returns addresses for a new private keeper" taggedAs UiTag in new WebBrowser {
       go to BeforeYouStartPage
       cacheSetupPrivateKeeper
       go to NewKeeperChooseYourAddressPage
 
-      NewKeeperChooseYourAddressPage.getListCount should equal(4) // The first option is the "Please select..." and the other options are the addresses.
+      // The first option is the "Please select..." and the other options are the addresses.
+      NewKeeperChooseYourAddressPage.getListCount should equal(4)
       page.source should include(
         s"presentationProperty stub, 123, property stub, street stub, town stub, area stub, $PostcodeValid"
       )
@@ -145,12 +152,14 @@ class NewKeeperChooseYourAddressIntegrationSpec extends UiSpec with TestHarness 
       )
     }
 
-    "display expected addresses in dropdown when address service returns addresses for a new business keeper" taggedAs UiTag in new WebBrowser {
+    "display expected addresses in dropdown " +
+      "when address service returns addresses for a new business keeper" taggedAs UiTag in new WebBrowser {
       go to BeforeYouStartPage
       cacheSetupBusinessKeeper
       go to NewKeeperChooseYourAddressPage
 
-      NewKeeperChooseYourAddressPage.getListCount should equal(4) // The first option is the "Please select..." and the other options are the addresses.
+      // The first option is the "Please select..." and the other options are the addresses.
+      NewKeeperChooseYourAddressPage.getListCount should equal(4)
       page.source should include(
         s"presentationProperty stub, 123, property stub, street stub, town stub, area stub, $PostcodeValid"
       )
@@ -162,7 +171,8 @@ class NewKeeperChooseYourAddressIntegrationSpec extends UiSpec with TestHarness 
       )
     }
 
-    "display appropriate content when address service returns no addresses for a new private keeper" taggedAs UiTag in new WebBrowser {
+    "display appropriate content " +
+      "when address service returns no addresses for a new private keeper" taggedAs UiTag in new WebBrowser {
       go to BeforeYouStartPage
       CookieFactoryForUISpecs.vehicleAndKeeperDetails()
       go to PrivateKeeperDetailsPage
@@ -174,7 +184,8 @@ class NewKeeperChooseYourAddressIntegrationSpec extends UiSpec with TestHarness 
       page.source should not include BusinessKeeperNameLabel
     }
 
-    "display appropriate content when address service returns no addresses for a new business keeper" taggedAs UiTag in new WebBrowser {
+    "display appropriate content " +
+      "when address service returns no addresses for a new business keeper" taggedAs UiTag in new WebBrowser {
       go to BeforeYouStartPage
       CookieFactoryForUISpecs.vehicleAndKeeperDetails()
       go to BusinessKeeperDetailsPage
@@ -209,8 +220,9 @@ class NewKeeperChooseYourAddressIntegrationSpec extends UiSpec with TestHarness 
 
       val csrf: WebElement = webDriver.findElement(By.name(CsrfPreventionAction.TokenName))
       csrf.getAttribute("type") should equal("hidden")
-      csrf.getAttribute("name") should equal(uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction.TokenName)
-      csrf.getAttribute("value").size > 0 should equal(true)
+      csrf.getAttribute("name") should
+        equal(uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction.TokenName)
+      csrf.getAttribute("value").nonEmpty should equal(true)
     }
 
     "contain the hidden csrfToken field for a new business keeper" taggedAs UiTag in new WebBrowser {
@@ -220,8 +232,9 @@ class NewKeeperChooseYourAddressIntegrationSpec extends UiSpec with TestHarness 
 
       val csrf: WebElement = webDriver.findElement(By.name(CsrfPreventionAction.TokenName))
       csrf.getAttribute("type") should equal("hidden")
-      csrf.getAttribute("name") should equal(uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction.TokenName)
-      csrf.getAttribute("value").size > 0 should equal(true)
+      csrf.getAttribute("name") should
+        equal(uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction.TokenName)
+      csrf.getAttribute("value").nonEmpty should equal(true)
     }
   }
 
@@ -258,14 +271,16 @@ class NewKeeperChooseYourAddressIntegrationSpec extends UiSpec with TestHarness 
       page.title should equal("Sale details")
     }
 
-    "display validation error messages when addressSelected is not in the list for a new private keeper" taggedAs UiTag in new WebBrowser {
+    "display validation error messages " +
+      "when addressSelected is not in the list for a new private keeper" taggedAs UiTag in new WebBrowser {
       go to BeforeYouStartPage
       cacheSetupPrivateKeeper
       sadPath
       ErrorPanel.numberOfErrors should equal(1)
     }
 
-    "display validation error messages when addressSelected is not in the list for a new business keeper" taggedAs UiTag in new WebBrowser {
+    "display validation error messages " +
+      "when addressSelected is not in the list for a new business keeper" taggedAs UiTag in new WebBrowser {
       go to BeforeYouStartPage
       cacheSetupBusinessKeeper
       sadPath

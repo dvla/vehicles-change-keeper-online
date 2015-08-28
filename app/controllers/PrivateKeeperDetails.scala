@@ -2,8 +2,8 @@ package controllers
 
 import com.google.inject.Inject
 import models.K2KCacheKeyPrefix.CookiePrefix
-import play.api.mvc.{Result, Request}
 import play.api.data.Form
+import play.api.mvc.{Result, Request}
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.ClientSideSessionFactory
 import common.clientsidesession.CookieImplicits.RichCookies
@@ -12,7 +12,8 @@ import common.model.{PrivateKeeperDetailsFormModel, VehicleAndKeeperDetailsModel
 import common.services.DateService
 import utils.helpers.Config
 
-class PrivateKeeperDetails @Inject()()(implicit protected override val clientSideSessionFactory: ClientSideSessionFactory,
+class PrivateKeeperDetails @Inject()()
+                                    (implicit protected override val clientSideSessionFactory: ClientSideSessionFactory,
                                        dateService: DateService,
                                        config: Config) extends PrivateKeeperDetailsBase {
 
@@ -25,7 +26,8 @@ class PrivateKeeperDetails @Inject()()(implicit protected override val clientSid
     Redirect(routes.VehicleLookup.present())
   }
 
-  protected override def invalidFormResult(model: VehicleAndKeeperDetailsModel, form: Form[PrivateKeeperDetailsFormModel])
+  protected override def invalidFormResult(model: VehicleAndKeeperDetailsModel,
+                                           form: Form[PrivateKeeperDetailsFormModel])
                                           (implicit request: Request[_]): Result =
     BadRequest(views.html.changekeeper.private_keeper_details(model, form))
 

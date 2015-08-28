@@ -1,19 +1,23 @@
 package webserviceclients.fakes
 
-import play.api.Logger
 import play.api.http.Status.OK
 import play.api.libs.json.Json
 import play.api.libs.ws.WSResponse
+import play.api.Logger
 import uk.gov.dvla.vehicles.presentation.common
+import common.clientsidesession.TrackingId
 import common.webserviceclients.acquire.{AcquireRequestDto, AcquireResponseDto, AcquireWebService}
-import uk.gov.dvla.vehicles.presentation.common.clientsidesession.TrackingId
 
 import scala.concurrent.Future
 
 class FakeAcquireWebServiceImpl extends AcquireWebService {
-  import webserviceclients.fakes.FakeAcquireWebServiceImpl._
+  import webserviceclients.fakes.FakeAcquireWebServiceImpl.SimulateMicroServiceUnavailable
+  import webserviceclients.fakes.FakeAcquireWebServiceImpl.SimulateSoapEndpointFailure
+  import webserviceclients.fakes.FakeAcquireWebServiceImpl.acquireResponseSoapEndpointFailure
+  import webserviceclients.fakes.FakeAcquireWebServiceImpl.acquireResponseSuccess
 
-  override def callAcquireService(request: AcquireRequestDto, trackingId: TrackingId): Future[WSResponse] = Future.successful {
+  override def callAcquireService(request: AcquireRequestDto, trackingId: TrackingId): Future[WSResponse] =
+    Future.successful {
     val acquireResponse: AcquireResponseDto = {
       request.referenceNumber match {
         case SimulateMicroServiceUnavailable => throw new RuntimeException("simulateMicroServiceUnavailable")
@@ -23,13 +27,14 @@ class FakeAcquireWebServiceImpl extends AcquireWebService {
     }
     val responseAsJson = Json.toJson(acquireResponse)
     Logger.debug(s"FakeVehicleLookupWebService callVehicleLookupService with: $responseAsJson")
-    new FakeResponse(status = OK, fakeJson = Some(responseAsJson)) // Any call to a webservice will always return this successful response.
+    // Any call to a webservice will always return this successful response.
+    new FakeResponse(status = OK, fakeJson = Some(responseAsJson))
   }
 }
 
 object FakeAcquireWebServiceImpl {
   final val TransactionIdValid = "1234"
-  private final val AuditIdValid = "7575"
+  //private final val AuditIdValid = "7575"
   private final val SimulateMicroServiceUnavailable = "8" * 11
   private final val SimulateSoapEndpointFailure = "9" * 11
   private final val RegistrationNumberValid = "AB12AWR"
@@ -44,12 +49,16 @@ object FakeAcquireWebServiceImpl {
       responseCode = None)
 
   val acquireResponseFailureWithResponseCode =
-    AcquireResponseDto(transactionId = TransactionIdValid, // We should always get back a transaction id even for failure scenarios. Only exception is if the soap endpoint is down
+    // We should always get back a transaction id even for failure scenarios.
+    // Only exception is if the soap endpoint is down
+    AcquireResponseDto(transactionId = TransactionIdValid,
       registrationNumber = "",
       responseCode = Some("ms.vehiclesService.response.unableToProcessApplication"))
 
   val acquireResponseFailureWithDuplicateDisposal =
-    AcquireResponseDto(transactionId = TransactionIdValid, // We should always get back a transaction id even for failure scenarios. Only exception is if the soap endpoint is down
+    // We should always get back a transaction id even for failure scenarios.
+    // Only exception is if the soap endpoint is down
+    AcquireResponseDto(transactionId = TransactionIdValid,
       registrationNumber = "",
       responseCode = Some("ms.vehiclesService.response.duplicateDisposalToTrade"))
 

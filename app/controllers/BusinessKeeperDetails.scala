@@ -1,17 +1,18 @@
 package controllers
 
 import com.google.inject.Inject
+import models.K2KCacheKeyPrefix.CookiePrefix
 import play.api.mvc.{Request, Result}
-import utils.helpers.Config
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.ClientSideSessionFactory
 import common.clientsidesession.CookieImplicits.RichCookies
 import common.model.BusinessKeeperDetailsViewModel
 import common.controllers.BusinessKeeperDetailsBase
-import models.K2KCacheKeyPrefix.CookiePrefix
+import utils.helpers.Config
 
 class BusinessKeeperDetails @Inject()()(implicit protected override val clientSideSessionFactory: ClientSideSessionFactory,
                                         val config: Config) extends BusinessKeeperDetailsBase {
+
   protected override def presentResult(model: BusinessKeeperDetailsViewModel)(implicit request: Request[_]): Result =
     Ok(views.html.changekeeper.business_keeper_details(model))
 
@@ -19,7 +20,10 @@ class BusinessKeeperDetails @Inject()()(implicit protected override val clientSi
     BadRequest(views.html.changekeeper.business_keeper_details(model))
 
   protected def missingVehicleDetails(implicit request: Request[_]): Result = {
-    logMessage(request.cookies.trackingId(), Warn, s"Missing vehicle details, now redirecting to ${routes.VehicleLookup.present()}")
+    logMessage(request.cookies.trackingId(),
+      Warn,
+      s"Missing vehicle details, now redirecting to ${routes.VehicleLookup.present()}"
+    )
     Redirect(routes.VehicleLookup.present())
   }
 

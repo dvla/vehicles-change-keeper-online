@@ -31,7 +31,6 @@ class BeforeYouStartUnitSpec extends UnitSpec {
       when(config.googleAnalyticsTrackingId).thenReturn(None) // Stub this config value.
       when(config.assetsUrl).thenReturn(None) // Stub this config value.
       val beforeYouStartPrototypeNotVisible = new BeforeYouStart()
-
       val result = beforeYouStartPrototypeNotVisible.present(request)
       contentAsString(result) should not include PrototypeHtml
     }
@@ -43,7 +42,6 @@ class BeforeYouStartUnitSpec extends UnitSpec {
       when(config.googleAnalyticsTrackingId).thenReturn(Some("TEST-GA-ID")) // Stub this config value.
       when(config.assetsUrl).thenReturn(Some("TEST-GA-ID")) // Stub this config value.
       val beforeYouStartPrototypeNotVisible = new BeforeYouStart()
-
       val result = beforeYouStartPrototypeNotVisible.present(request)
       contentAsString(result) should include(".google-analytics.com/ga.js")
       contentAsString(result) should include("TEST-GA-ID")
@@ -56,7 +54,6 @@ class BeforeYouStartUnitSpec extends UnitSpec {
       when(config.googleAnalyticsTrackingId).thenReturn(None) // Stub this config value.
       when(config.assetsUrl).thenReturn(None) // Stub this config value.
       val beforeYouStartPrototypeNotVisible = new BeforeYouStart()
-
       val result = beforeYouStartPrototypeNotVisible.present(request)
       contentAsString(result) should not include ".google-analytics.com/ga.js"
     }

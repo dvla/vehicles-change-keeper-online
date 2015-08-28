@@ -11,8 +11,6 @@ import controllers.Assets.Asset
 object StaticAssets {
   
   def versioned(maybeAssetsUrl: Option[String])(file: Asset): String = {
-    
     maybeAssetsUrl.map(_ + routes.Assets.versioned(file).url).getOrElse( routes.Assets.versioned(file).url)
-
   }
 }

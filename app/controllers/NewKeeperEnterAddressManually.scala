@@ -1,18 +1,17 @@
 package controllers
 
 import com.google.inject.Inject
+import models.CompleteAndConfirmFormModel.AllowGoingToCompleteAndConfirmPageCacheKey
 import models.K2KCacheKeyPrefix.CookiePrefix
 import play.api.data.Form
 import play.api.mvc.{Request, Result}
-import models.CompleteAndConfirmFormModel.AllowGoingToCompleteAndConfirmPageCacheKey
 import uk.gov.dvla.vehicles.presentation.common
-import common.clientsidesession.CookieImplicits.{RichForm, RichCookies, RichResult}
 import common.clientsidesession.ClientSideSessionFactory
+import common.clientsidesession.CookieImplicits.{RichForm, RichCookies, RichResult}
 import common.controllers.NewKeeperEnterAddressManuallyBase
 import common.model.NewKeeperEnterAddressManuallyFormModel
 import common.model.NewKeeperEnterAddressManuallyViewModel
 import common.model.VehicleAndKeeperDetailsModel
-
 import utils.helpers.Config
 import views.html.changekeeper.new_keeper_enter_address_manually
 
@@ -41,5 +40,4 @@ class NewKeeperEnterAddressManually @Inject()()
     Redirect(routes.DateOfSale.present()).
       withCookie(AllowGoingToCompleteAndConfirmPageCacheKey, "true")
   }
-
 }
