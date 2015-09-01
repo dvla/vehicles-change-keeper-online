@@ -204,7 +204,7 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
         result
     }.recover {
       case e: Throwable =>
-        logMessage(request.cookies.trackingId(),Warn,s"Acquire micro-service call failed. ${e.getMessage}")
+        logMessage(request.cookies.trackingId(), Warn, s"Acquire micro-service call failed. ${e.getMessage}")
         Redirect(routes.MicroServiceError.present())
     }
   }.map(_.discardingCookie(AllowGoingToCompleteAndConfirmPageCacheKey))
@@ -338,7 +338,7 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
       trackingId
     )
     //redirect
-    logMessage(request.cookies.trackingId(),Debug,s"Redirecting to ${routes.ChangeKeeperSuccess.present()}")
+    logMessage(request.cookies.trackingId(), Debug, s"Redirecting to ${routes.ChangeKeeperSuccess.present()}")
     routes.ChangeKeeperSuccess.present()
   }
 
@@ -395,7 +395,7 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
 
   private def logRequestRequiringFurtherAction(responseCode: String, transactionId: String,
                                                acquireRequest: AcquireRequestDto)(implicit request: Request[_]) = {
-    logMessage(request.cookies.trackingId(),Error,responseCode,
+    logMessage(request.cookies.trackingId(), Error, responseCode,
       Some(Seq(
         acquireRequest.webHeader.applicationCode,
         acquireRequest.webHeader.originDateTime.toString,
@@ -576,7 +576,7 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
         SEND email template withSubject s"${vehicleDetails.registrationNumber} Confirmation of new vehicle keeper" to
           emailAddr send trackingId
 
-      case None => logMessage(request.cookies.trackingId(), Warn, "tried to send an email with no keeper details")
+      case None => logMessage(request.cookies.trackingId(), Warn, "Tried to send an email with no keeper details")
     }
 
   def createAndSendSellerEmail(vehicleDetails: VehicleAndKeeperDetailsModel,
@@ -602,7 +602,7 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
       case None =>
         logMessage(request.cookies.trackingId(),
           Info,
-          "tried to send a receipt to seller but no email was found"
+          "Tried to send a receipt to seller but no email was found"
         )
     }
 }

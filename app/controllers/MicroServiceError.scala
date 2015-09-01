@@ -16,7 +16,7 @@ class MicroServiceError @Inject()(implicit clientSideSessionFactory: ClientSideS
   private final val DefaultRedirectUrl = BeforeYouStart.present().url
 
   def present = Action { implicit request =>
-    logMessage(request.cookies.trackingId(), Debug, s"Present serviceUnavailable page")
+    logMessage(request.cookies.trackingId(), Debug, "Present serviceUnavailable page")
     ServiceUnavailable(views.html.changekeeper.micro_service_error())
   }
 

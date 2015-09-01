@@ -24,7 +24,7 @@ class ChangeKeeperFailure @Inject()()(implicit clientSideSessionFactory: ClientS
   private final val MissingCookies = "Missing cookies in cache."
 
   def present = Action { implicit request =>
-    logMessage(request.cookies.trackingId(), Info, s"Change keeper ailure page")
+    logMessage(request.cookies.trackingId(), Info, "Change keeper ailure page")
     val result = for {
       vehicleAndKeeperDetailsModel <- request.cookies.getModel[VehicleAndKeeperDetailsModel]
       newKeeperDetailsModel <- request.cookies.getModel[NewKeeperDetailsViewModel]
