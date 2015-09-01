@@ -54,7 +54,7 @@ class DateOfSaleIntegrationSpec extends UiSpec with TestHarness {
       go to DateOfSalePage
       val csrf: WebElement = webDriver.findElement(By.name(CsrfPreventionAction.TokenName))
       csrf.getAttribute("type") should equal("hidden")
-      csrf.getAttribute("name") should equal(uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction.TokenName)
+      csrf.getAttribute("name") should equal(CsrfPreventionAction.TokenName)
       csrf.getAttribute("value").nonEmpty should equal(true)
     }
 

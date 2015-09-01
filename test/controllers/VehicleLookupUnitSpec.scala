@@ -223,7 +223,8 @@ class VehicleLookupUnitSpec extends UnitSpec {
     bruteForcePreventionService
   }
 
-  private def bruteForceServiceAndWebServiceMock(permitted: Boolean): (BruteForcePreventionService, BruteForcePreventionWebService) = {
+  private def bruteForceServiceAndWebServiceMock(permitted: Boolean):
+  (BruteForcePreventionService, BruteForcePreventionWebService) = {
     def bruteForcePreventionWebService: BruteForcePreventionWebService = {
       val status = if (permitted) play.api.http.Status.OK else play.api.http.Status.FORBIDDEN
       val bruteForcePreventionWebServiceMock = mock[BruteForcePreventionWebService]

@@ -18,7 +18,11 @@ import common.model.NewKeeperEnterAddressManuallyFormModel.Form.AddressAndPostco
 import common.testhelpers.JsonUtils.deserializeJsonToModel
 import common.testhelpers.CookieHelper.fetchCookiesFromHeaders
 import common.views.helpers.FormExtensions
-import common.views.models.AddressLinesViewModel.Form.{AddressLinesId, BuildingNameOrNumberId, Line2Id, Line3Id, PostTownId}
+import common.views.models.AddressLinesViewModel.Form.AddressLinesId
+import common.views.models.AddressLinesViewModel.Form.BuildingNameOrNumberId
+import common.views.models.AddressLinesViewModel.Form.Line2Id
+import common.views.models.AddressLinesViewModel.Form.Line3Id
+import common.views.models.AddressLinesViewModel.Form.PostTownId
 import utils.helpers.Config
 import views.changekeeper.NewKeeperEnterAddressManually.PostcodeId
 import webserviceclients.fakes.FakeAddressLookupService.BuildingNameOrNumberValid

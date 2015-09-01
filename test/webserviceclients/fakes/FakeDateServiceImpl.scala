@@ -5,7 +5,9 @@ import uk.gov.dvla.vehicles.presentation.common.services.DateService
 import uk.gov.dvla.vehicles.presentation.common.views.models.DayMonthYear
 
 final class FakeDateServiceImpl extends DateService {
-  import webserviceclients.fakes.FakeDateServiceImpl.{DateOfAcquisitionDayValid, DateOfAcquisitionMonthValid, DateOfAcquisitionYearValid}
+  import webserviceclients.fakes.FakeDateServiceImpl.DateOfAcquisitionDayValid
+  import webserviceclients.fakes.FakeDateServiceImpl.DateOfAcquisitionMonthValid
+  import webserviceclients.fakes.FakeDateServiceImpl.DateOfAcquisitionYearValid
 
   override def today = DayMonthYear(
     DateOfAcquisitionDayValid.toInt,
