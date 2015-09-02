@@ -1,3 +1,12 @@
+
+======= 1.17 ========
+TIME OF RELEASE BINARIES CREATION:
+
+
+US3731	Remove openingTime, closingTime properties from all exemplars
+US3739	Code review and clean up on vehicles-change-keeper-online e.g. logMessage, wildcard on imports, line length
+US3742	Timeout is too short for unit test VehicleLookupIntegrationSpec
+
 ======= 1.16 ========
 TIME OF RELEASE BINARIES CREATION:
 Wed Aug 19 11:34:37 UTC 2015
