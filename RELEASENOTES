@@ -1,7 +1,7 @@
 
 ======= 1.17 ========
 TIME OF RELEASE BINARIES CREATION:
-
+Wed Sep 02 15:08:10 UTC 2015
 
 US3731	Remove openingTime, closingTime properties from all exemplars
 US3739	Code review and clean up on vehicles-change-keeper-online e.g. logMessage, wildcard on imports, line length
