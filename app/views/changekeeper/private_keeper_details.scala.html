@@ -75,7 +75,10 @@
             @valtechDate(
                 privateKeeperDetailsForm(DateOfBirthId),
                 Messages("change_keeper_privatekeeper_dateofbirth"),
-                Some(Messages("change_keeper_privatekeeperdetails.dateofbirth.hint"))
+                Some(Messages("change_keeper_privatekeeperdetails.dateofbirth.hint")),
+                args = Map(
+                    'optionalFieldKey -> true
+                )
             )
 
             <div class="uppercase-input">
