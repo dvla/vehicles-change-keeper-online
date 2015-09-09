@@ -1,0 +1,10 @@
+/opt/vehicles-change-keeper-online/logs/*.log {
+        missingok
+        copytruncate
+        notifempty
+        dateext
+        daily
+        create 644 vehicles-change-keeper-online vehicles-change-keeper-online
+        compress
+        rotate 35
+}
