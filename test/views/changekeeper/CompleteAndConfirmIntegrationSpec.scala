@@ -16,47 +16,48 @@ import pages.common.Feedback.EmailFeedbackLink
 import ProgressBar.progressStep
 import uk.gov.dvla.vehicles.presentation.common.testhelpers.UiTag
 import uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction
+import org.scalatest.selenium.WebBrowser.{click, go, pageTitle, pageSource}
 
 final class CompleteAndConfirmIntegrationSpec extends UiSpec with TestHarness {
   val ProgressStepNumber = 6
 
   "go to page" should {
-    "display the page for a new keeper" taggedAs UiTag in new WebBrowser {
+    "display the page for a new keeper" taggedAs UiTag in new WebBrowserForSelenium {
       go to BeforeYouStartPage
       cacheSetup()
       go to CompleteAndConfirmPage
-      page.title should equal(CompleteAndConfirmPage.title)
+      pageTitle should equal(CompleteAndConfirmPage.title)
     }
 
-    "contain feedback email facility with appropriate subject" taggedAs UiTag in new WebBrowser {
+    "contain feedback email facility with appropriate subject" taggedAs UiTag in new WebBrowserForSelenium {
       go to BeforeYouStartPage
       cacheSetup()
       go to CompleteAndConfirmPage
 
-      page.source should include(EmailFeedbackLink)
+      pageSource should include(EmailFeedbackLink)
     }
 
     "display the progress of the page when progressBar is set to true" taggedAs UiTag in new ProgressBarTrue {
       go to BeforeYouStartPage
       cacheSetup()
       go to CompleteAndConfirmPage
-      page.source should include(progressStep(ProgressStepNumber))
+      pageSource should include(progressStep(ProgressStepNumber))
     }
 
     "not display the progress of the page when progressBar is set to false" taggedAs UiTag in new ProgressBarFalse {
       go to BeforeYouStartPage
       cacheSetup()
       go to CompleteAndConfirmPage
-      page.source should not include progressStep(ProgressStepNumber)
+      pageSource should not include progressStep(ProgressStepNumber)
     }
 
-    "Redirect when no new keeper details are cached" taggedAs UiTag in new WebBrowser {
+    "Redirect when no new keeper details are cached" taggedAs UiTag in new WebBrowserForSelenium {
       go to CompleteAndConfirmPage
-      page.title should equal(VehicleLookupPage.title)
+      pageTitle should equal(VehicleLookupPage.title)
       assertCookiesDoesnExist(Set(AllowGoingToCompleteAndConfirmPageCacheKey))
     }
 
-    "contain the hidden csrfToken field" taggedAs UiTag in new WebBrowser {
+    "contain the hidden csrfToken field" taggedAs UiTag in new WebBrowserForSelenium {
       go to CompleteAndConfirmPage
       val csrf: WebElement = webDriver.findElement(By.name(CsrfPreventionAction.TokenName))
       csrf.getAttribute("type") should equal("hidden")
@@ -72,14 +73,14 @@ final class CompleteAndConfirmIntegrationSpec extends UiSpec with TestHarness {
         .vehicleAndKeeperDetails()
         .newKeeperDetailsModel()
       go to CompleteAndConfirmPage
-      page.title should equal(VehicleLookupPage.title)
+      pageTitle should equal(VehicleLookupPage.title)
       assertCookiesDoesnExist(cookiesDeletedOnRedirect)
     }
   }
 
   "back" should {
     "display NewKeeperChooseYourAddress when back link is clicked for a new keeper " +
-      "who has selected an address" taggedAs UiTag in new WebBrowser {
+      "who has selected an address" taggedAs UiTag in new WebBrowserForSelenium {
       go to BeforeYouStartPage
       CookieFactoryForUISpecs
         .privateKeeperDetails()
@@ -90,7 +91,7 @@ final class CompleteAndConfirmIntegrationSpec extends UiSpec with TestHarness {
 
       go to CompleteAndConfirmPage
       click on back
-      page.title should equal(DateOfSalePage.title)
+      pageTitle should equal(DateOfSalePage.title)
     }
   }
 

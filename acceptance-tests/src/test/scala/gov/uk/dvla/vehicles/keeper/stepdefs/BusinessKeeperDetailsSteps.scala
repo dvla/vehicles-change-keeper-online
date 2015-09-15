@@ -6,10 +6,11 @@ import org.openqa.selenium.WebDriver
 import org.scalatest.Matchers
 import pages.changekeeper.{BusinessKeeperDetailsPage, NewKeeperChooseYourAddressPage, VehicleLookupPage}
 import uk.gov.dvla.vehicles.presentation.common.helpers
-import helpers.webbrowser.{WithClue, WebBrowserDSL, WebBrowserDriver}
+import helpers.webbrowser.{WithClue, WebBrowserDriver}
+import org.scalatest.selenium.WebBrowser.{TextField, textField, TelField, telField, RadioButton, radioButton, click, go, find, id, Element}
 
 class BusinessKeeperDetailsSteps(webBrowserDriver: WebBrowserDriver)
-  extends ScalaDsl with EN with WebBrowserDSL with Matchers with WithClue {
+  extends ScalaDsl with EN with Matchers with WithClue {
 
   implicit val webDriver = webBrowserDriver.asInstanceOf[WebDriver]
 

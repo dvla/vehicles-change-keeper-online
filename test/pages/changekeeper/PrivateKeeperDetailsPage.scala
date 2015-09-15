@@ -3,13 +3,8 @@ package pages.changekeeper
 import org.openqa.selenium.WebDriver
 import org.scalatest.Matchers
 import uk.gov.dvla.vehicles.presentation.common
-import common.helpers.webbrowser.Element
 import common.helpers.webbrowser.WebDriverFactory
 import common.helpers.webbrowser.Page
-import common.helpers.webbrowser.WebBrowserDSL
-import common.helpers.webbrowser.RadioButton
-import common.helpers.webbrowser.TextField
-import common.helpers.webbrowser.TelField
 import common.mappings.Email.{EmailId => EmailEnterId, EmailVerifyId}
 import common.mappings.OptionalToggle.{Visible, Invisible}
 import common.mappings.TitlePickerString.OtherTitleRadioValue
@@ -22,8 +17,9 @@ import common.model.PrivateKeeperDetailsFormModel.Form.LastNameId
 import common.model.PrivateKeeperDetailsFormModel.Form.PostcodeId
 import common.model.PrivateKeeperDetailsFormModel.Form.TitleId
 import views.changekeeper.PrivateKeeperDetails.{BackId, SubmitId}
+import org.scalatest.selenium.WebBrowser.{TextField, textField, TelField, telField, RadioButton, radioButton, click, go, find, id, Element, tagName}
 
-object PrivateKeeperDetailsPage extends Page with WebBrowserDSL with Matchers {
+object PrivateKeeperDetailsPage extends Page with Matchers {
   final val address = buildAppUrl("private-keeper-details")
   override def url: String = WebDriverFactory.testUrl + address.substring(1)
   final override val title: String = "Enter new keeper details"
@@ -87,7 +83,8 @@ object PrivateKeeperDetailsPage extends Page with WebBrowserDSL with Matchers {
   def selectTitle(title: String)(implicit driver: WebDriver): Unit = {
     titleRadioButtons.find(_.underlying.getAttribute("id") endsWith titleType(title)).fold {
       click on other
-      otherText enter title
+      otherText
+        .value = title
     } (click on _)
   }
 
@@ -114,16 +111,16 @@ object PrivateKeeperDetailsPage extends Page with WebBrowserDSL with Matchers {
     go to PrivateKeeperDetailsPage
 
     selectTitle(title)
-    firstNameTextBox enter firstName
-    lastNameTextBox enter lastName
-    dayDateOfBirthTextBox enter dayDateOfBirth
-    monthDateOfBirthTextBox enter monthDateOfBirth
-    yearDateOfBirthTextBox enter yearDateOfBirth
+    firstNameTextBox.value = firstName
+    lastNameTextBox.value = lastName
+    dayDateOfBirthTextBox.value = dayDateOfBirth
+    monthDateOfBirthTextBox.value = monthDateOfBirth
+    yearDateOfBirthTextBox.value = yearDateOfBirth
     click on emailVisible
-    emailTextBox enter email
-    emailConfirmTextBox enter email
-    driverNumberTextBox enter driverNumber
-    postcodeTextBox enter postcode
+    emailTextBox.value = email
+    emailConfirmTextBox.value = email
+    driverNumberTextBox.value = driverNumber
+    postcodeTextBox.value = postcode
 
     click on next
   }

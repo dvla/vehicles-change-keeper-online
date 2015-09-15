@@ -1,9 +1,9 @@
 package pages.common
 
 import org.openqa.selenium.WebDriver
-import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.{Element, WebBrowserDSL}
 import views.common.Help.HelpLinkId
+import org.scalatest.selenium.WebBrowser.{find, id, Element}
 
-object HelpPanel extends WebBrowserDSL {
+object HelpPanel {
   def help(implicit driver: WebDriver): Element = find(id(HelpLinkId)).get
 }

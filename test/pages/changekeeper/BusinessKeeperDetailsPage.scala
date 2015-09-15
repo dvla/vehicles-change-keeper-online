@@ -2,7 +2,6 @@ package pages.changekeeper
 
 import org.openqa.selenium.WebDriver
 import uk.gov.dvla.vehicles.presentation.common
-import common.helpers.webbrowser.{RadioButton, WebDriverFactory, WebBrowserDSL, Page, TelField, TextField, Element}
 import common.mappings.Email.{EmailId => EmailEnterId, EmailVerifyId}
 import common.mappings.OptionalToggle.{Visible, Invisible}
 import common.model.BusinessKeeperDetailsFormModel.Form.BusinessNameId
@@ -12,8 +11,10 @@ import common.model.BusinessKeeperDetailsFormModel.Form.FleetNumberId
 import common.model.BusinessKeeperDetailsFormModel.Form.FleetNumberOptionId
 import common.model.BusinessKeeperDetailsFormModel.Form.PostcodeId
 import views.changekeeper.BusinessKeeperDetails.{BackId, NextId}
+import common.helpers.webbrowser.{WebDriverFactory, Page}
+import org.scalatest.selenium.WebBrowser.{enter, TextField, textField, TelField, telField, RadioButton, radioButton, click, go, find, id, Element}
 
-object BusinessKeeperDetailsPage extends Page with WebBrowserDSL {
+object BusinessKeeperDetailsPage extends Page {
   final val address = buildAppUrl("business-keeper-details")
   override def url: String = WebDriverFactory.testUrl + address.substring(1)
   final override val title: String = "Enter new keeper details"
@@ -57,12 +58,12 @@ object BusinessKeeperDetailsPage extends Page with WebBrowserDSL {
     go to BusinessKeeperDetailsPage
 
     click on fleetNumberVisible
-    fleetNumberField enter fleetNumber
-    businessNameField enter businessName
+    fleetNumberField.value = fleetNumber
+    businessNameField.value = businessName
     click on emailVisible
-    emailField enter email
-    emailConfirmField enter email
-    postcodeField enter postcode
+    emailField.value = email
+    emailConfirmField.value = email
+    postcodeField.value = postcode
 
     click on next
   }

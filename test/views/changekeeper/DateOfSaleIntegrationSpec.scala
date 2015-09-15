@@ -11,46 +11,47 @@ import pages.common.ErrorPanel
 import pages.common.Feedback.EmailFeedbackLink
 import uk.gov.dvla.vehicles.presentation.common.testhelpers.UiTag
 import uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction
+import org.scalatest.selenium.WebBrowser.{click, go, pageTitle, pageSource}
 
 class DateOfSaleIntegrationSpec extends UiSpec with TestHarness {
   private final val ProgressStepNumber = 5
 
   "go to page" should {
-    "display the page for a new keeper" taggedAs UiTag in new WebBrowser {
+    "display the page for a new keeper" taggedAs UiTag in new WebBrowserForSelenium {
       go to BeforeYouStartPage
       cacheSetup()
       go to DateOfSalePage
-      page.title should equal(DateOfSalePage.title)
+      pageTitle should equal(DateOfSalePage.title)
     }
 
-    "contain feedback email facility with appropriate subject" taggedAs UiTag in new WebBrowser {
+    "contain feedback email facility with appropriate subject" taggedAs UiTag in new WebBrowserForSelenium {
       go to BeforeYouStartPage
       cacheSetup()
       go to DateOfSalePage
 
-      page.source should include(EmailFeedbackLink)
+      pageSource should include(EmailFeedbackLink)
     }
 
     "display the progress of the page when progressBar is set to true" taggedAs UiTag in new ProgressBarTrue {
       go to BeforeYouStartPage
       cacheSetup()
       go to DateOfSalePage
-      page.source should include(progressStep(ProgressStepNumber))
+      pageSource should include(progressStep(ProgressStepNumber))
     }
 
     "not display the progress of the page when progressBar is set to false" taggedAs UiTag in new ProgressBarFalse {
       go to BeforeYouStartPage
       cacheSetup()
       go to DateOfSalePage
-      page.source should not include progressStep(ProgressStepNumber)
+      pageSource should not include progressStep(ProgressStepNumber)
     }
 
-    "Redirect when no new keeper details are cached" taggedAs UiTag in new WebBrowser {
+    "Redirect when no new keeper details are cached" taggedAs UiTag in new WebBrowserForSelenium {
       go to DateOfSalePage
-      page.title should equal(VehicleLookupPage.title)
+      pageTitle should equal(VehicleLookupPage.title)
     }
 
-    "contain the hidden csrfToken field" taggedAs UiTag in new WebBrowser {
+    "contain the hidden csrfToken field" taggedAs UiTag in new WebBrowserForSelenium {
       go to DateOfSalePage
       val csrf: WebElement = webDriver.findElement(By.name(CsrfPreventionAction.TokenName))
       csrf.getAttribute("type") should equal("hidden")
@@ -63,14 +64,14 @@ class DateOfSaleIntegrationSpec extends UiSpec with TestHarness {
       cacheSetup()
       go to DateOfSalePage
 
-      page.source should include("Vehicle mileage")
+      pageSource should include("Vehicle mileage")
     }
   }
 
   "Submit button" should {
 
     "display one validation error message " +
-      "when a mileage is entered greater than max length for a new keeper" taggedAs UiTag in new WebBrowser {
+      "when a mileage is entered greater than max length for a new keeper" taggedAs UiTag in new WebBrowserForSelenium {
       go to BeforeYouStartPage
       cacheSetup()
       navigate(mileage = "1000000")
@@ -78,7 +79,7 @@ class DateOfSaleIntegrationSpec extends UiSpec with TestHarness {
     }
 
     "display one validation error message " +
-      "when a mileage is entered less than min length for a new keeper" taggedAs UiTag in new WebBrowser {
+      "when a mileage is entered less than min length for a new keeper" taggedAs UiTag in new WebBrowserForSelenium {
       go to BeforeYouStartPage
       cacheSetup()
       navigate(mileage = "-1")
@@ -86,7 +87,7 @@ class DateOfSaleIntegrationSpec extends UiSpec with TestHarness {
     }
 
     "display one validation error message " +
-      "when a mileage containing letters is entered for a new keeper" taggedAs UiTag in new WebBrowser {
+      "when a mileage containing letters is entered for a new keeper" taggedAs UiTag in new WebBrowserForSelenium {
       go to BeforeYouStartPage
       cacheSetup()
       navigate(mileage = "a")
@@ -94,7 +95,7 @@ class DateOfSaleIntegrationSpec extends UiSpec with TestHarness {
     }
 
     "display one validation error message " +
-      "when day date of sale is empty for a new keeper" taggedAs UiTag in new WebBrowser {
+      "when day date of sale is empty for a new keeper" taggedAs UiTag in new WebBrowserForSelenium {
       go to BeforeYouStartPage
       cacheSetup()
       navigate(dayDateOfSale = "")
@@ -102,7 +103,7 @@ class DateOfSaleIntegrationSpec extends UiSpec with TestHarness {
     }
 
     "display one validation error message " +
-      "when month date of sale is empty for a new keeper" taggedAs UiTag in new WebBrowser {
+      "when month date of sale is empty for a new keeper" taggedAs UiTag in new WebBrowserForSelenium {
       go to BeforeYouStartPage
       cacheSetup()
       navigate(monthDateOfSale = "")
@@ -110,7 +111,7 @@ class DateOfSaleIntegrationSpec extends UiSpec with TestHarness {
     }
 
     "display one validation error message " +
-      "when year date of sale is empty for a new keeper" taggedAs UiTag in new WebBrowser {
+      "when year date of sale is empty for a new keeper" taggedAs UiTag in new WebBrowserForSelenium {
       go to BeforeYouStartPage
       cacheSetup()
       navigate(yearDateOfSale = "")
@@ -118,7 +119,7 @@ class DateOfSaleIntegrationSpec extends UiSpec with TestHarness {
     }
 
     "display one validation error message " +
-      "when day date of sale contains letters for a new keeper" taggedAs UiTag in new WebBrowser {
+      "when day date of sale contains letters for a new keeper" taggedAs UiTag in new WebBrowserForSelenium {
       go to BeforeYouStartPage
       cacheSetup()
       navigate(dayDateOfSale = "a")
@@ -126,7 +127,7 @@ class DateOfSaleIntegrationSpec extends UiSpec with TestHarness {
     }
 
     "display one validation error message " +
-      "when month date of sale contains letters for a new keeper" taggedAs UiTag in new WebBrowser {
+      "when month date of sale contains letters for a new keeper" taggedAs UiTag in new WebBrowserForSelenium {
       go to BeforeYouStartPage
       cacheSetup()
       navigate(monthDateOfSale = "a")
@@ -134,7 +135,7 @@ class DateOfSaleIntegrationSpec extends UiSpec with TestHarness {
     }
 
     "display one validation error message " +
-      "when year date of sale contains letters for a new keeper" taggedAs UiTag in new WebBrowser {
+      "when year date of sale contains letters for a new keeper" taggedAs UiTag in new WebBrowserForSelenium {
       go to BeforeYouStartPage
       cacheSetup()
       navigate(yearDateOfSale = "a")

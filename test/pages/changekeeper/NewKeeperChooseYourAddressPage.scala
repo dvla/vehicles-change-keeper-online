@@ -2,14 +2,15 @@ package pages.changekeeper
 
 import org.openqa.selenium.WebDriver
 import uk.gov.dvla.vehicles.presentation.common
-import common.helpers.webbrowser.{Element, Page, SingleSel, WebBrowserDSL, WebDriverFactory}
+import common.helpers.webbrowser.{Page, WebDriverFactory}
 import common.model.NewKeeperChooseYourAddressFormModel.Form.AddressSelectId
 import views.changekeeper.NewKeeperChooseYourAddress
 import NewKeeperChooseYourAddress.BackId
 import NewKeeperChooseYourAddress.EnterAddressManuallyButtonId
 import NewKeeperChooseYourAddress.SelectId
+import org.scalatest.selenium.WebBrowser.{SingleSel, singleSel, tagName, click, go, find, id, Element}
 
-object NewKeeperChooseYourAddressPage extends Page with WebBrowserDSL {
+object NewKeeperChooseYourAddressPage extends Page {
   final val address = buildAppUrl("new-keeper-choose-your-address")
   override def url: String = WebDriverFactory.testUrl + address.substring(1)
   final override val title = "Select new keeper address"
@@ -26,7 +27,7 @@ object NewKeeperChooseYourAddressPage extends Page with WebBrowserDSL {
 
   def getList(implicit driver: WebDriver) = singleSel(id(AddressSelectId)).getOptions
 
-  def getListCount(implicit driver: WebDriver): Int = getList.size
+  def getListCount(implicit driver: WebDriver): Int = getList.sizeDateOfSalePage.scala
 
   def select(implicit driver: WebDriver): Element = find(id(SelectId)).get
 

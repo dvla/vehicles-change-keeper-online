@@ -13,41 +13,42 @@ import pages.common.Feedback.{EmailFeedbackLink, EmailHelpLink}
 import pages.common.HelpPanel
 import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.ProgressBar
 import uk.gov.dvla.vehicles.presentation.common.testhelpers.UiTag
+import org.scalatest.selenium.WebBrowser.{click, go, pageTitle, pageSource}
 
 final class HelpIntegrationSpec extends UiSpec with TestHarness {
   "go to page" ignore {
-    "display the page containing correct title" taggedAs UiTag in new WebBrowser {
+    "display the page containing correct title" taggedAs UiTag in new WebBrowserForSelenium {
       go to HelpPage
-      page.title should equal(HelpPage.title)
+      pageTitle should equal(HelpPage.title)
     }
 
-    "contain feedback email facility with appropriate subject" taggedAs UiTag in new WebBrowser {
+    "contain feedback email facility with appropriate subject" taggedAs UiTag in new WebBrowserForSelenium {
       go to HelpPage
-      page.source.contains(EmailFeedbackLink) should equal(true)
+      pageSource.contains(EmailFeedbackLink) should equal(true)
     }
 
-    "contain help email facility with appropriate subject" taggedAs UiTag in new WebBrowser {
+    "contain help email facility with appropriate subject" taggedAs UiTag in new WebBrowserForSelenium {
       go to HelpPage
-      page.source.contains(EmailHelpLink) should equal(true)
+      pageSource.contains(EmailHelpLink) should equal(true)
     }
 
     "not display any progress indicator when progressBar is set to true" taggedAs UiTag in new ProgressBarTrue {
       go to HelpPage
-      page.source should not contain ProgressBar.div
+      pageSource should not contain ProgressBar.div
     }
   }
 
   "back button" ignore {
-    "redirect to the users previous page" taggedAs UiTag in new WebBrowser {
+    "redirect to the users previous page" taggedAs UiTag in new WebBrowserForSelenium {
       go to BeforeYouStartPage
       cacheSetup()
       go to PrivateKeeperDetailsPage
       click on HelpPanel.help
       click on back
-      page.title should equal(PrivateKeeperDetailsPage.title)
+      pageTitle should equal(PrivateKeeperDetailsPage.title)
     }
 
-    "remove cookie" taggedAs UiTag in new WebBrowser {
+    "remove cookie" taggedAs UiTag in new WebBrowserForSelenium {
       go to BeforeYouStartPage
       click on HelpPanel.help
       click on back
@@ -56,13 +57,13 @@ final class HelpIntegrationSpec extends UiSpec with TestHarness {
   }
 
   "exit" ignore {
-    "redirect to the start page" taggedAs UiTag in new WebBrowser {
+    "redirect to the start page" taggedAs UiTag in new WebBrowserForSelenium {
       go to BeforeYouStartPage
       cacheSetup()
       go to PrivateKeeperDetailsPage
       click on HelpPanel.help
       click on exit
-      page.title should equal(BeforeYouStartPage.title)
+      pageTitle should equal(BeforeYouStartPage.title)
     }
   }
 

@@ -1,12 +1,13 @@
 package pages.changekeeper
 
 import uk.gov.dvla.vehicles.presentation.common.helpers
-import helpers.webbrowser.{Element, WebDriverFactory, WebBrowserDSL, Page, Checkbox}
 import models.CompleteAndConfirmFormModel.Form.ConsentId
 import org.openqa.selenium.WebDriver
 import views.changekeeper.CompleteAndConfirm.{BackId, SubmitId}
+import helpers.webbrowser.{WebDriverFactory, Page}
+import org.scalatest.selenium.WebBrowser.{Checkbox, checkbox, click, go, find, id, Element}
 
-object CompleteAndConfirmPage extends Page with WebBrowserDSL {
+object CompleteAndConfirmPage extends Page {
   final val address = buildAppUrl("complete-and-confirm")
   override def url: String = WebDriverFactory.testUrl + address.substring(1)
   final override val title: String = "Complete and confirm"
