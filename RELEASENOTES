@@ -1,3 +1,11 @@
+======= 1.18 ========
+TIME OF RELEASE BINARIES CREATION:
+
+US3800	Better Emphasize 'Destroy V5C' on all VM & PR Services
+US3731	Remove openingTime, closingTime properties from all exemplars
+US1777	Remove deprecated approach to marking fields as optional.
+US3789	Tidy up the upstart scripts for all microservices and apps
+US3731	Remove openingTime, closingTime properties from all exemplars
 
 ======= 1.17 ========
 TIME OF RELEASE BINARIES CREATION:
