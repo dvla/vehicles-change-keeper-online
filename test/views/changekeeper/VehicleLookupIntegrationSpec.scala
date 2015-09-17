@@ -141,11 +141,13 @@ class VehicleLookupIntegrationSpec extends UiSpec with TestHarness {
     }
   }
 
-  "back" should {
+  // This is ignored as it will call into the live gov.uk web site.
+  // This can cause problems as they blacklist IPs, which has happened with Jenkins before.
+  "back" ignore {
     "display previous page when back link is clicked" taggedAs UiTag in new WebBrowser {
       go to VehicleLookupPage
       click on VehicleLookupPage.back
-      page.title should equal(BeforeYouStartPage.title)
+      page.title should equal("Tell DVLA you've sold or bought a vehicle - GOV.UK")
     }
   }
 
