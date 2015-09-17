@@ -4,12 +4,11 @@ config: utils.helpers.Config)
 @import views.html.changekeeper.main
 
 @main(
-    title = Messages("serviceClosed.title")
+    title = Messages("closed.title")
 ) {
-    <h1>@Messages("serviceClosed.title")</h1>
-    <p>@Messages("serviceClosed.p1")</p>
-    <p>@Messages("serviceClosed.p2", opening, closing)</p>
+    <h1>@Messages("closed.title")</h1>
+    <p>@Messages("closed.p1", opening, closing)</p>
     <div class="form-steps">
-        <a id="exit-button" href="https://www.gov.uk/" class="button">@Messages("serviceClosed.exit_button")</a>
+        <a id="exit-button" href="https://www.gov.uk/" class="button">@Messages("closed.exit_button")</a>
     </div>
 }
