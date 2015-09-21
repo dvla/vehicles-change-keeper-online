@@ -3,13 +3,7 @@ package pages.changekeeper
 import org.openqa.selenium.WebDriver
 import org.scalatest.Matchers
 import uk.gov.dvla.vehicles.presentation.common
-import common.helpers.webbrowser.Element
-import common.helpers.webbrowser.WebDriverFactory
-import common.helpers.webbrowser.Page
-import common.helpers.webbrowser.WebBrowserDSL
-import common.helpers.webbrowser.RadioButton
-import common.helpers.webbrowser.TextField
-import common.helpers.webbrowser.TelField
+import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser._
 import common.mappings.Email.{EmailId => EmailEnterId, EmailVerifyId}
 import common.mappings.OptionalToggle.{Visible, Invisible}
 import common.mappings.TitlePickerString.OtherTitleRadioValue
@@ -62,9 +56,9 @@ object PrivateKeeperDetailsPage extends Page with WebBrowserDSL with Matchers {
   def emailInvisible(implicit driver: WebDriver): RadioButton =
     radioButton(id(s"${EmailOptionId}_$Invisible"))
 
-  def emailTextBox(implicit driver: WebDriver): TextField = textField(id(s"${EmailId}_$EmailEnterId"))
+  def emailTextBox(implicit driver: WebDriver): EmailField = emailField(id(s"${EmailId}_$EmailEnterId"))
 
-  def emailConfirmTextBox(implicit driver: WebDriver): TextField = textField(id(s"${EmailId}_$EmailVerifyId"))
+  def emailConfirmTextBox(implicit driver: WebDriver): EmailField = emailField(id(s"${EmailId}_$EmailVerifyId"))
 
   def driverNumberTextBox(implicit driver: WebDriver): TextField = textField(id(DriverNumberId))
 
