@@ -8,7 +8,7 @@ import org.scalatest.selenium.WebBrowser.{TextField, textField, TelField, telFie
 
 object VrmLockedPage extends Page {
   final val address = s"$applicationContext/vrm-locked"
-  override def url: String = WebDriverFactory.testUrl + address.substring(1)
+  override val url: String = WebDriverFactory.testUrl + address.substring(1)
 
   final override val title = "Registration number is locked"
 

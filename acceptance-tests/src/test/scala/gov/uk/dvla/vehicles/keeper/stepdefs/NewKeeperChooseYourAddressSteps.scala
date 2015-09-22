@@ -9,7 +9,7 @@ import pages.changekeeper.NewKeeperChooseYourAddressPage
 import pages.changekeeper.NewKeeperEnterAddressManuallyPage
 import pages.changekeeper.VehicleLookupPage
 import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.{WithClue, WebBrowserDriver}
-import org.scalatest.selenium.WebBrowser.{TextField, textField, TelField, telField, RadioButton, radioButton, click, go, find, id, Element}
+import org.scalatest.selenium.WebBrowser.{click, go, pageTitle}
 
 class NewKeeperChooseYourAddressSteps(webBrowserDriver: WebBrowserDriver)
   extends ScalaDsl with EN with Matchers with WithClue {
@@ -20,24 +20,24 @@ class NewKeeperChooseYourAddressSteps(webBrowserDriver: WebBrowserDriver)
 
   def goToNewKeeperChooseYourAddressPage() = {
     go to VehicleLookupPage
-    VehicleLookupPage.vehicleRegistrationNumber enter ValidVrn
-    VehicleLookupPage.documentReferenceNumber enter ValidDocRefNum
+    VehicleLookupPage.vehicleRegistrationNumber.value = ValidVrn
+    VehicleLookupPage.documentReferenceNumber.value = ValidDocRefNum
     click on VehicleLookupPage.emailInvisible
     click on VehicleLookupPage.vehicleSoldToBusiness
     click on VehicleLookupPage.next
-    page.title shouldEqual BusinessKeeperDetailsPage.title withClue trackingId
+    pageTitle shouldEqual BusinessKeeperDetailsPage.title withClue trackingId
     click on BusinessKeeperDetailsPage.fleetNumberInvisible
-    BusinessKeeperDetailsPage.businessNameField enter "retail"
-    BusinessKeeperDetailsPage.postcodeField enter "qq99qq"
+    BusinessKeeperDetailsPage.businessNameField.value = "retail"
+    BusinessKeeperDetailsPage.postcodeField.value = "qq99qq"
     click on BusinessKeeperDetailsPage.emailInvisible
     click on BusinessKeeperDetailsPage.next
-    page.title shouldEqual NewKeeperChooseYourAddressPage.title withClue trackingId
+    pageTitle shouldEqual NewKeeperChooseYourAddressPage.title withClue trackingId
   }
 
   def goToEnterAddressManuallyPage() = {
     goToNewKeeperChooseYourAddressPage()
     click on NewKeeperChooseYourAddressPage.manualAddress
-    page.title should equal(NewKeeperEnterAddressManuallyPage.title) withClue trackingId
+    pageTitle should equal(NewKeeperEnterAddressManuallyPage.title) withClue trackingId
   }
 
   @Given("^the user is on the NewKeeper choose your address page$")
@@ -52,7 +52,7 @@ class NewKeeperChooseYourAddressSteps(webBrowserDriver: WebBrowserDriver)
     click on NewKeeperChooseYourAddressPage.next
   }
 
-  @When("^the user navigates forwards from NewKeeper choose your address page to the enter address manually page$")
+  @When("^the user navigates forwards from NewKeeper choose your address page to the.value = address manually page$")
   def the_user_navigates_forwards_from_NewKeeper_choose_your_address_page_to_the_enter_address_manually_page() = {
     goToEnterAddressManuallyPage()
   }
@@ -64,7 +64,7 @@ class NewKeeperChooseYourAddressSteps(webBrowserDriver: WebBrowserDriver)
 
   @When("^the user has not selected an address on the Select new keeper address page and click on Next button$")
   def the_user_has_not_selected_an_address_on_the_Select_new_keeper_address_page_and_click_on_Next_button()  {
-    page.title shouldEqual NewKeeperChooseYourAddressPage.title withClue trackingId
+    pageTitle shouldEqual NewKeeperChooseYourAddressPage.title withClue trackingId
     click on NewKeeperChooseYourAddressPage.next
   }
 }

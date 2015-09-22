@@ -9,10 +9,11 @@ import NewKeeperChooseYourAddress.BackId
 import NewKeeperChooseYourAddress.EnterAddressManuallyButtonId
 import NewKeeperChooseYourAddress.SelectId
 import org.scalatest.selenium.WebBrowser.{SingleSel, singleSel, tagName, click, go, find, id, Element}
+import org.openqa.selenium.support.ui.Select
 
 object NewKeeperChooseYourAddressPage extends Page {
   final val address = buildAppUrl("new-keeper-choose-your-address")
-  override def url: String = WebDriverFactory.testUrl + address.substring(1)
+  override val url: String = WebDriverFactory.testUrl + address.substring(1)
   final override val title = "Select new keeper address"
 
   def chooseAddress(implicit driver: WebDriver): SingleSel = singleSel(id(AddressSelectId))
@@ -25,9 +26,9 @@ object NewKeeperChooseYourAddressPage extends Page {
 
   def errorTextForTitle(text:String)(implicit driver: WebDriver):Boolean= find(tagName("body")).get.text.contains(text)
 
-  def getList(implicit driver: WebDriver) = singleSel(id(AddressSelectId)).getOptions
+//  def getList(implicit driver: WebDriver) = singleSel(id(AddressSelectId)).getOptions
 
-  def getListCount(implicit driver: WebDriver): Int = getList.sizeDateOfSalePage.scala
+//  def getListCount(implicit driver: WebDriver): Int = getList.size
 
   def select(implicit driver: WebDriver): Element = find(id(SelectId)).get
 

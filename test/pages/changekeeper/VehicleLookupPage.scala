@@ -14,7 +14,7 @@ import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.{ReferenceNu
 
 object VehicleLookupPage extends Page {
   final val address = buildAppUrl("vehicle-lookup")
-  override def url: String = WebDriverFactory.testUrl + address.substring(1)
+  override val url: String = WebDriverFactory.testUrl + address.substring(1)
   final override val title: String = "Details of the vehicle being sold"
 
   def vehicleRegistrationNumber(implicit driver: WebDriver): TextField = textField(id(VehicleRegistrationNumberId))

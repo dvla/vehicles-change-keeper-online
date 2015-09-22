@@ -9,7 +9,7 @@ import org.scalatest.selenium.WebBrowser.{Checkbox, checkbox, click, go, find, i
 
 object CompleteAndConfirmPage extends Page {
   final val address = buildAppUrl("complete-and-confirm")
-  override def url: String = WebDriverFactory.testUrl + address.substring(1)
+  override val url: String = WebDriverFactory.testUrl + address.substring(1)
   final override val title: String = "Complete and confirm"
 
   final val ConsentTrue = "consent"

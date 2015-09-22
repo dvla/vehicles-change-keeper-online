@@ -21,7 +21,7 @@ import org.scalatest.selenium.WebBrowser.{TextField, textField, TelField, telFie
 
 object PrivateKeeperDetailsPage extends Page with Matchers {
   final val address = buildAppUrl("private-keeper-details")
-  override def url: String = WebDriverFactory.testUrl + address.substring(1)
+  override val url: String = WebDriverFactory.testUrl + address.substring(1)
   final override val title: String = "Enter new keeper details"
 
   final val TitleInvalid = "other"

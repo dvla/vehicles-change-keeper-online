@@ -10,7 +10,7 @@ import org.scalatest.selenium.WebBrowser.{TelField, telField, click, go, find, i
 
 object DateOfSalePage extends Page with ShouldMatchers {
   final val address = buildAppUrl("date-of-sale")
-  override def url: String = WebDriverFactory.testUrl + address.substring(1)
+  override val url: String = WebDriverFactory.testUrl + address.substring(1)
   final override val title: String = "Sale details"
 
   final val MileageValid = "1000"

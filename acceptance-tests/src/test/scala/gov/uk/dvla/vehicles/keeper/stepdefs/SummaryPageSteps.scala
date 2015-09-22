@@ -5,7 +5,7 @@ import cucumber.api.scala.{EN, ScalaDsl}
 import org.scalatest.Matchers
 import pages.changekeeper.{BeforeYouStartPage, CompleteAndConfirmPage, ChangeKeeperSuccessPage}
 import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.{WithClue, WebBrowserDriver}
-import org.scalatest.selenium.WebBrowser.{TextField, textField, TelField, telField, RadioButton, radioButton, click, go, find, id, Element}
+import org.scalatest.selenium.WebBrowser.{click, pageTitle, pageSource}
 
 class SummaryPageSteps (webBrowserDriver: WebBrowserDriver)
   extends ScalaDsl with EN with Matchers with WithClue {
@@ -18,26 +18,26 @@ class SummaryPageSteps (webBrowserDriver: WebBrowserDriver)
      happyPath.goToCompletAndConfirmPage("BF51BOV")
      click on CompleteAndConfirmPage.consent
      click on CompleteAndConfirmPage.next
-     page.title shouldEqual ChangeKeeperSuccessPage.title withClue trackingId
+     pageTitle shouldEqual ChangeKeeperSuccessPage.title withClue trackingId
   }
 
   @Given("^the user can see the Transaction Id Finish and Print button$")
   def the_user_can_see_the_Transaction_Id_Finish_and_Print_button()  {
-     page.source should include("BF51BOV-11111111111") withClue trackingId
-     page.source should include("Finish") withClue trackingId
-     page.source should include("Print") withClue trackingId
+     pageSource should include("BF51BOV-11111111111") withClue trackingId
+     pageSource should include("Finish") withClue trackingId
+     pageSource should include("Print") withClue trackingId
   }
 
   @Given("^the user can see the Thank you message and vehicle details$")
   def the_user_can_see_the_Thank_you_message_and_vehicle_details()  {
-    page.source should include("The application is being processed") withClue trackingId
-    page.source should include("Thank You") withClue trackingId
+    pageSource should include("The application is being processed") withClue trackingId
+    pageSource should include("Thank You") withClue trackingId
   }
 
   @Given("^the keeper can see the keeper details$")
   def the_keeper_can_see_the_keeper_details()  {
-    page.source should include("RETAIL") withClue trackingId
-    page.source should include("QQ9 9QQ") withClue trackingId
+    pageSource should include("RETAIL") withClue trackingId
+    pageSource should include("QQ9 9QQ") withClue trackingId
   }
 
   @When("^the user click on Finish button$")
@@ -47,6 +47,6 @@ class SummaryPageSteps (webBrowserDriver: WebBrowserDriver)
 
   @Then("^the user can navigates to BeforeStartPage$")
   def the_user_can_navigates_to_BeforeStartPage()  {
-    page.title shouldEqual BeforeYouStartPage.title withClue trackingId
+    pageTitle shouldEqual BeforeYouStartPage.title withClue trackingId
   }
 }

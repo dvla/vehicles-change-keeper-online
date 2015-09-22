@@ -7,7 +7,7 @@ import org.scalatest.selenium.WebBrowser.{TextField, textField, TelField, telFie
 
 object HelpPage extends Page {
   final val address = buildAppUrl("help")
-  override def url: String = WebDriverFactory.testUrl + address.substring(1)
+  override val url: String = WebDriverFactory.testUrl + address.substring(1)
   final override val title: String = "Help"
 
   def exit(implicit driver: WebDriver): Element = find(id(ExitId)).get

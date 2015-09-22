@@ -8,7 +8,7 @@ import pages.changekeeper.{PrivateKeeperDetailsPage, VehicleLookupPage}
 import pages.common.ErrorPanel
 import uk.gov.dvla.vehicles.presentation.common.helpers
 import helpers.webbrowser.{WithClue, WebBrowserDriver}
-import org.scalatest.selenium.WebBrowser.{TextField, textField, TelField, telField, RadioButton, radioButton, click, go, find, id, Element}
+import org.scalatest.selenium.WebBrowser.{click, go, pageTitle}
 
 class PrivateKeeperOptionalFieldsSteps(webBrowserDriver: WebBrowserDriver)
   extends ScalaDsl with EN with Matchers with WithClue {
@@ -17,20 +17,20 @@ class PrivateKeeperOptionalFieldsSteps(webBrowserDriver: WebBrowserDriver)
 
   def goToPrivateKeeperDetailsPage() {
     go to VehicleLookupPage
-    VehicleLookupPage.vehicleRegistrationNumber enter "B1"
-    VehicleLookupPage.documentReferenceNumber enter "11111111111"
+    VehicleLookupPage.vehicleRegistrationNumber.value = "B1"
+    VehicleLookupPage.documentReferenceNumber.value = "11111111111"
     click on VehicleLookupPage.emailInvisible
     click on VehicleLookupPage.vehicleSoldToPrivateIndividual
     click on VehicleLookupPage.next
-    page.title shouldEqual PrivateKeeperDetailsPage.title withClue trackingId
+    pageTitle shouldEqual PrivateKeeperDetailsPage.title withClue trackingId
   }
 
   @Given("^the user enters a validate date of birth$")
   def the_user_enters_a_validate_date_of_birth()  {
     goToPrivateKeeperDetailsPage()
-    PrivateKeeperDetailsPage.dayDateOfBirthTextBox enter "12"
-    PrivateKeeperDetailsPage.monthDateOfBirthTextBox enter "10"
-    PrivateKeeperDetailsPage.yearDateOfBirthTextBox  enter "1985"
+    PrivateKeeperDetailsPage.dayDateOfBirthTextBox.value = "12"
+    PrivateKeeperDetailsPage.monthDateOfBirthTextBox.value = "10"
+    PrivateKeeperDetailsPage.yearDateOfBirthTextBox .value = "1985"
   }
 
   @Then("^the user will not see any error message like \"(.*?)\"$")
@@ -41,9 +41,9 @@ class PrivateKeeperOptionalFieldsSteps(webBrowserDriver: WebBrowserDriver)
   @Given("^the user enters a invalid date of birth  and no other errors persists$")
   def the_user_enters_a_invalid_date_of_birth_and_no_other_errors_persists()  {
     goToPrivateKeeperDetailsPage()
-    PrivateKeeperDetailsPage.dayDateOfBirthTextBox enter "42"
-    PrivateKeeperDetailsPage.monthDateOfBirthTextBox enter "10"
-    PrivateKeeperDetailsPage.yearDateOfBirthTextBox  enter "1985"
+    PrivateKeeperDetailsPage.dayDateOfBirthTextBox.value = "42"
+    PrivateKeeperDetailsPage.monthDateOfBirthTextBox.value = "10"
+    PrivateKeeperDetailsPage.yearDateOfBirthTextBox .value = "1985"
   }
 
   @When("^the user press the submit control$")
@@ -59,17 +59,17 @@ class PrivateKeeperOptionalFieldsSteps(webBrowserDriver: WebBrowserDriver)
   @Given("^the user enters the dateOfBirth in future$")
   def the_user_enters_the_dateOfBirth_in_future() {
     goToPrivateKeeperDetailsPage()
-    PrivateKeeperDetailsPage.dayDateOfBirthTextBox enter "14"
-    PrivateKeeperDetailsPage.monthDateOfBirthTextBox enter "10"
-    PrivateKeeperDetailsPage.yearDateOfBirthTextBox  enter "2017"
+    PrivateKeeperDetailsPage.dayDateOfBirthTextBox.value = "14"
+    PrivateKeeperDetailsPage.monthDateOfBirthTextBox.value = "10"
+    PrivateKeeperDetailsPage.yearDateOfBirthTextBox .value = "2017"
   }
 
   @Given("^the Date of birth is more than oneHundredTen years in the past$")
   def the_Date_of_birth_is_more_than_oneHundredTen_years_in_the_past()  {
     goToPrivateKeeperDetailsPage()
-    PrivateKeeperDetailsPage.dayDateOfBirthTextBox enter "14"
-    PrivateKeeperDetailsPage.monthDateOfBirthTextBox enter "10"
-    PrivateKeeperDetailsPage.yearDateOfBirthTextBox  enter "1900"
+    PrivateKeeperDetailsPage.dayDateOfBirthTextBox.value = "14"
+    PrivateKeeperDetailsPage.monthDateOfBirthTextBox.value = "10"
+    PrivateKeeperDetailsPage.yearDateOfBirthTextBox .value = "1900"
   }
 
   @Then("^there will be an error message  \"(.*?)\"$")
@@ -90,7 +90,7 @@ class PrivateKeeperOptionalFieldsSteps(webBrowserDriver: WebBrowserDriver)
 
   @When("^the user enters a character into the Driver Number field$")
   def the_user_enters_a_character_into_the_Driver_Number_field() {
-    PrivateKeeperDetailsPage.driverNumberTextBox enter "morga657052Sm9jk"
+    PrivateKeeperDetailsPage.driverNumberTextBox.value = "morga657052Sm9jk"
   }
 
   @Then("^the character is capitalised$")
@@ -100,7 +100,7 @@ class PrivateKeeperOptionalFieldsSteps(webBrowserDriver: WebBrowserDriver)
 
   @When("^the user has entered a driver number into the \"(.*?)\" control$")
   def the_user_has_entered_a_driver_number_into_the_control(g:String)  {
-    PrivateKeeperDetailsPage.driverNumberTextBox enter "morga657052Sm96876"
+    PrivateKeeperDetailsPage.driverNumberTextBox.value = "morga657052Sm96876"
     click on PrivateKeeperDetailsPage.emailInvisible
     click on PrivateKeeperDetailsPage.next
   }
@@ -113,7 +113,7 @@ class PrivateKeeperOptionalFieldsSteps(webBrowserDriver: WebBrowserDriver)
   @When("^the user enters a valid email address$")
   def the_user_enters_a_valid_email_address()  {
     click on PrivateKeeperDetailsPage.emailVisible
-    PrivateKeeperDetailsPage.emailTextBox enter "a@gmail.com"
+    PrivateKeeperDetailsPage.emailTextBox.value = "a@gmail.com"
   }
 
   @Then("^the user will be able to submit the valid email address of up to \"(.*?)\" characters$")
@@ -136,8 +136,8 @@ class PrivateKeeperOptionalFieldsSteps(webBrowserDriver: WebBrowserDriver)
   @When("^the user has  entered an invalid email address and select the submit control$")
   def the_user_has_entered_an_invalid_email_address_and_select_the_submit_control()  {
     click on PrivateKeeperDetailsPage.emailVisible
-    PrivateKeeperDetailsPage.emailTextBox enter "acom"
-    PrivateKeeperDetailsPage.emailConfirmTextBox enter "acom"
+    PrivateKeeperDetailsPage.emailTextBox.value = "acom"
+    PrivateKeeperDetailsPage.emailConfirmTextBox.value = "acom"
     click on PrivateKeeperDetailsPage.next
   }
 

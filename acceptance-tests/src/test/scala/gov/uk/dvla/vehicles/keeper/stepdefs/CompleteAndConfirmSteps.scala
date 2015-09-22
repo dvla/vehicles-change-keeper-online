@@ -13,7 +13,7 @@ import pages.changekeeper.NewKeeperChooseYourAddressPage
 import pages.changekeeper.VehicleLookupPage
 import uk.gov.dvla.vehicles.presentation.common.helpers
 import helpers.webbrowser.{WithClue, WebBrowserDriver}
-import org.scalatest.selenium.WebBrowser.{TextField, textField, TelField, telField, RadioButton, radioButton, click, go, find, id, Element}
+import org.scalatest.selenium.WebBrowser.{click, go, pageTitle, pageSource}
 
 class CompleteAndConfirmSteps(webBrowserDriver: WebBrowserDriver)
   extends ScalaDsl with EN with Matchers with WithClue {
@@ -22,30 +22,30 @@ class CompleteAndConfirmSteps(webBrowserDriver: WebBrowserDriver)
 
   def goToDateOfSalePage(vrm: String = RandomVrmGenerator.uniqueVrm) {
     go to VehicleLookupPage
-    VehicleLookupPage.vehicleRegistrationNumber enter vrm
-    VehicleLookupPage.documentReferenceNumber enter "11111111111"
+    VehicleLookupPage.vehicleRegistrationNumber.value = vrm
+    VehicleLookupPage.documentReferenceNumber.value = "11111111111"
     click on VehicleLookupPage.emailInvisible
     click on VehicleLookupPage.vehicleSoldToBusiness
     click on VehicleLookupPage.next
-    page.title shouldEqual BusinessKeeperDetailsPage.title withClue trackingId
+    pageTitle shouldEqual BusinessKeeperDetailsPage.title withClue trackingId
     click on BusinessKeeperDetailsPage.fleetNumberInvisible
-    BusinessKeeperDetailsPage.businessNameField enter "retail"
-    BusinessKeeperDetailsPage.postcodeField enter "qq99qq"
+    BusinessKeeperDetailsPage.businessNameField.value = "retail"
+    BusinessKeeperDetailsPage.postcodeField.value = "qq99qq"
     click on BusinessKeeperDetailsPage.emailInvisible
     click on BusinessKeeperDetailsPage.next
     click on NewKeeperChooseYourAddressPage.select
     NewKeeperChooseYourAddressPage.chooseAddress.value="0"
     click on NewKeeperChooseYourAddressPage.next
-    page.title shouldBe DateOfSalePage.title withClue trackingId
+    pageTitle shouldBe DateOfSalePage.title withClue trackingId
   }
 
   def goToCompletAndConfirmPage(vrm: String = RandomVrmGenerator.uniqueVrm) {
     goToDateOfSalePage(vrm)
-    DateOfSalePage.dayDateOfSaleTextBox enter "12"
-    DateOfSalePage.monthDateOfSaleTextBox enter "12"
-    DateOfSalePage.yearDateOfSaleTextBox enter "2010"
+    DateOfSalePage.dayDateOfSaleTextBox.value = "12"
+    DateOfSalePage.monthDateOfSaleTextBox.value = "12"
+    DateOfSalePage.yearDateOfSaleTextBox.value = "2010"
     click on DateOfSalePage.next
-    page.title shouldBe CompleteAndConfirmPage.title withClue trackingId
+    pageTitle shouldBe CompleteAndConfirmPage.title withClue trackingId
   }
 
   @Given("^that the user is on the complete and confirm page$")
@@ -60,7 +60,7 @@ class CompleteAndConfirmSteps(webBrowserDriver: WebBrowserDriver)
 
   @Then("^the user is not progressed to the next page$")
   def the_user_is_not_progressed_to_the_next_page(): Unit = {
-    page.title shouldEqual CompleteAndConfirmPage.title withClue trackingId
+    pageTitle shouldEqual CompleteAndConfirmPage.title withClue trackingId
   }
 
   @When("^the consent field is not checked$")
@@ -75,11 +75,11 @@ class CompleteAndConfirmSteps(webBrowserDriver: WebBrowserDriver)
 
   @Then("^the user is progressed to the next stage of the service$")
   def the_user_is_progressed_to_the_next_stage_of_the_service() {
-    page.title shouldEqual ChangeKeeperSuccessPage.title withClue trackingId
+    pageTitle shouldEqual ChangeKeeperSuccessPage.title withClue trackingId
   }
   @Then("^an error message displayed \"(.*?)\"$")
   def an_error_message_displayed(err:String): Unit =  {
-    page.source.contains("Transaction Unsuccessful")
+    pageSource.contains("Transaction Unsuccessful")
   }
 
   @When("^The user clicks back on Complete and Confirm page$")

@@ -12,7 +12,7 @@ import pages.changekeeper.DateOfSalePage
 import pages.changekeeper.NewKeeperChooseYourAddressPage
 import pages.changekeeper.VehicleLookupPage
 import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.{WithClue, WebBrowserDriver}
-import org.scalatest.selenium.WebBrowser.{TextField, textField, TelField, telField, RadioButton, radioButton, click, go, find, id, Element}
+import org.scalatest.selenium.WebBrowser.{click, go, pageTitle}
 
 class BackBrowserButtonSteps(webBrowserDriver: WebBrowserDriver)
   extends ScalaDsl with EN with Matchers with WithClue {
@@ -21,37 +21,37 @@ class BackBrowserButtonSteps(webBrowserDriver: WebBrowserDriver)
 
   def goToDateOfSalePage(vrm: String = RandomVrmGenerator.uniqueVrm) {
     go to VehicleLookupPage
-    VehicleLookupPage.vehicleRegistrationNumber enter vrm
-    VehicleLookupPage.documentReferenceNumber enter "11111111111"
+    VehicleLookupPage.vehicleRegistrationNumber.value = vrm
+    VehicleLookupPage.documentReferenceNumber.value = "11111111111"
     click on VehicleLookupPage.emailInvisible
     click on VehicleLookupPage.vehicleSoldToBusiness
     click on VehicleLookupPage.next
-    page.title shouldEqual BusinessKeeperDetailsPage.title withClue trackingId
+    pageTitle shouldEqual BusinessKeeperDetailsPage.title withClue trackingId
     click on BusinessKeeperDetailsPage.fleetNumberInvisible
-    BusinessKeeperDetailsPage.businessNameField enter "retail"
-    BusinessKeeperDetailsPage.postcodeField enter "qq99qq"
+    BusinessKeeperDetailsPage.businessNameField.value = "retail"
+    BusinessKeeperDetailsPage.postcodeField.value =  "qq99qq"
     click on BusinessKeeperDetailsPage.emailInvisible
     click on BusinessKeeperDetailsPage.next
     click on NewKeeperChooseYourAddressPage.select
     NewKeeperChooseYourAddressPage.chooseAddress.value="0"
     click on NewKeeperChooseYourAddressPage.next
-    page.title shouldEqual  DateOfSalePage.title withClue trackingId
+    pageTitle shouldEqual  DateOfSalePage.title withClue trackingId
   }
 
   def goToCompletAndConfirmPage(vrm: String = RandomVrmGenerator.uniqueVrm) {
     goToDateOfSalePage(vrm)
-    DateOfSalePage.dayDateOfSaleTextBox enter "12"
-    DateOfSalePage.monthDateOfSaleTextBox enter "12"
-    DateOfSalePage.yearDateOfSaleTextBox enter "2010"
+    DateOfSalePage.dayDateOfSaleTextBox.value =  "12"
+    DateOfSalePage.monthDateOfSaleTextBox.value =  "12"
+    DateOfSalePage.yearDateOfSaleTextBox.value =  "2010"
     click on DateOfSalePage.next
-    page.title shouldEqual CompleteAndConfirmPage.title withClue trackingId
+    pageTitle shouldEqual CompleteAndConfirmPage.title withClue trackingId
   }
 
   def goToSuccessfulSummaryPage() = {
     goToCompletAndConfirmPage()
     click on CompleteAndConfirmPage.consent
     click on CompleteAndConfirmPage.next
-    page.title shouldEqual ChangeKeeperSuccessPage.title withClue trackingId
+    pageTitle shouldEqual ChangeKeeperSuccessPage.title withClue trackingId
   }
 
   @Given("^the user is on the successful summary$")
@@ -66,6 +66,6 @@ class BackBrowserButtonSteps(webBrowserDriver: WebBrowserDriver)
 
   @Then("^the user navigate back to the Vehicle look up screen$")
   def the_user_navigate_back_to_the_Vehicle_look_up_screen()  {
-    page.title shouldEqual VehicleLookupPage.title withClue trackingId
+    pageTitle shouldEqual VehicleLookupPage.title withClue trackingId
   }
 }

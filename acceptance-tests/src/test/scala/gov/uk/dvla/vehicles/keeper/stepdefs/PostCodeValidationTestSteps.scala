@@ -7,7 +7,7 @@ import org.scalatest.Matchers
 import pages.changekeeper.{VehicleLookupPage, PrivateKeeperDetailsPage, NewKeeperChooseYourAddressPage}
 import uk.gov.dvla.vehicles.presentation.common.helpers
 import helpers.webbrowser.{WithClue, WebBrowserDriver}
-import org.scalatest.selenium.WebBrowser.{TextField, textField, TelField, telField, RadioButton, radioButton, click, go, find, id, Element}
+import org.scalatest.selenium.WebBrowser.{click, pageTitle}
 
 class PostCodeValidationTestSteps(webBrowserDriver: WebBrowserDriver)
   extends ScalaDsl with EN with Matchers with WithClue {
@@ -16,7 +16,7 @@ class PostCodeValidationTestSteps(webBrowserDriver: WebBrowserDriver)
 
   @When("^the user enters an invalid postcode$")
   def the_user_enters_an_invalid_postcode()  {
-    PrivateKeeperDetailsPage.postcodeTextBox enter "rewrewrew"
+    PrivateKeeperDetailsPage.postcodeTextBox.value = "rewrewrew"
     click on PrivateKeeperDetailsPage.next
   }
 
@@ -37,16 +37,16 @@ class PostCodeValidationTestSteps(webBrowserDriver: WebBrowserDriver)
   @When("^the user enters an valid  postcode$")
   def the_user_enters_an_valid_postcode()  {
     click on PrivateKeeperDetailsPage.mr
-    PrivateKeeperDetailsPage.firstNameTextBox enter "nani"
-    PrivateKeeperDetailsPage.lastNameTextBox enter "sree"
-    PrivateKeeperDetailsPage.postcodeTextBox enter "qq99qq"
+    PrivateKeeperDetailsPage.firstNameTextBox.value = "nani"
+    PrivateKeeperDetailsPage.lastNameTextBox.value = "sree"
+    PrivateKeeperDetailsPage.postcodeTextBox.value = "qq99qq"
     click on PrivateKeeperDetailsPage.emailInvisible
     click on PrivateKeeperDetailsPage.next
   }
 
   @Then("^the user will presented with a list of addresses$")
   def the_user_will_presented_with_a_list_of_addresses()  {
-    page.title shouldEqual NewKeeperChooseYourAddressPage.title withClue trackingId
+    pageTitle shouldEqual NewKeeperChooseYourAddressPage.title withClue trackingId
   }
 
   @When("^the user selects the next button and no errors persist$")
@@ -56,7 +56,7 @@ class PostCodeValidationTestSteps(webBrowserDriver: WebBrowserDriver)
 
   @Then("^the user is taken to either postcode lookup success or postcode lookup failure screen$")
   def the_user_is_taken_to_either_postcode_lookup_success_or_postcode_lookup_failure_screen() {
-    page.title shouldEqual NewKeeperChooseYourAddressPage.title withClue trackingId
+    pageTitle shouldEqual NewKeeperChooseYourAddressPage.title withClue trackingId
   }
 
   @When("^the user selects the 'Back' button and no errors persist$")
@@ -66,6 +66,6 @@ class PostCodeValidationTestSteps(webBrowserDriver: WebBrowserDriver)
 
   @Then("^the user is taken to the previous page$")
   def the_user_is_taken_to_the_previous_page()  {
-     page.title shouldEqual VehicleLookupPage.title withClue trackingId
+     pageTitle shouldEqual VehicleLookupPage.title withClue trackingId
   }
 }

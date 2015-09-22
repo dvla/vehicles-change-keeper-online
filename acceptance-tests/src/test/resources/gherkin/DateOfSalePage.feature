@@ -5,7 +5,7 @@ Feature:complete and confirm page field validation
     Given that the user is on the date of sale page
 
   Scenario: mileage lable
-    Given   there is a  label titled "Vehicle mileage (optional)"
+    Given   there is a  label titled "Vehicle mileage"
     Then    there is a control for entry of the vehicle mileage using the format N(6)
 
   Scenario: Date of Sale - lable
