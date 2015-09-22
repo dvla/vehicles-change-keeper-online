@@ -6,6 +6,7 @@
 @import views.changekeeper.NewKeeperEnterAddressManually.{BackId, NextId}
 @import uk.gov.dvla.vehicles.presentation.common.model.NewKeeperEnterAddressManuallyFormModel.Form.AddressAndPostcodeId
 @import uk.gov.dvla.vehicles.presentation.common.views.html.widgets.addressAndPostcode
+@import uk.gov.dvla.vehicles.presentation.common.views.html.widgets.alertWarning
 @import uk.gov.dvla.vehicles.presentation.common.views.html.widgets.base.csrfTokenHiddenField
 @import views.html.helper.form
 @import views.html.common.vehicle_detail_playback
@@ -23,9 +24,9 @@
         <dl class="playback">
         @vehicle_detail_playback(viewModel.vehicleAndKeeperDetails)
         </dl>
-        <div class="alert-warning print-message">
-            <p><strong>@Messages("change_keeper_newKeeperEnterAddressManually.p4")</strong></p>
-        </div>
+        @alertWarning(List("print-message")) {
+          <p><strong>@Messages("change_keeper_newKeeperEnterAddressManually.p4")</strong></p>
+        }
     </div>
 
     <div class="second-col">

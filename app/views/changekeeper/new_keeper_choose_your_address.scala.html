@@ -11,6 +11,7 @@
 @import controllers.routes.NewKeeperChooseYourAddress
 @import uk.gov.dvla.vehicles.presentation.common
 @import common.views.helpers.BaseTemplate.fieldConstructor
+@import common.views.html.widgets.alertWarning
 @import common.views.html.widgets.base.valtechSelect
 @import common.views.html.widgets.base.csrfTokenHiddenField
 @import views.changekeeper.NewKeeperChooseYourAddress.{BackId, EnterAddressManuallyButtonId, SelectId}
@@ -31,9 +32,9 @@
       <dl class="playback">
           @vehicle_detail_playback(viewModel.vehicleDetails)
       </dl>
-      <div class="alert-warning print-message">
+      @alertWarning(List("print-message")) {
         <p><strong>@Messages("change_keeper_newKeeperChooseYourAddress.p4")</strong></p>
-      </div>
+      }
     </div>
 
     <div class="second-col">

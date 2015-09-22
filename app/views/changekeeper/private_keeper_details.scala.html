@@ -11,6 +11,7 @@
 @import views.changekeeper.PrivateKeeperDetails.{BackId, SubmitId}
 @import uk.gov.dvla.vehicles.presentation.common
 @import common.mappings.Email.EmailMaxLength
+@import common.views.html.widgets.alertWarning
 @import common.views.html.widgets.base.valtechSelect
 @import common.views.html.widgets.base.csrfTokenHiddenField
 @import common.views.html.widgets.dates.valtechDate
@@ -40,9 +41,9 @@
             <dl class="playback">
                 @vehicle_detail_playback(data)
             </dl>
-            <div class="alert-warning print-message">
-                <p><strong>@Messages("change_keeper_privatekeeperdetails.p3")</strong></p>
-            </div>
+            @alertWarning(List("print-message")) {
+              <p><strong>@Messages("change_keeper_privatekeeperdetails.p3")</strong></p>
+            }
         </div>
 
         <div class="second-col">
