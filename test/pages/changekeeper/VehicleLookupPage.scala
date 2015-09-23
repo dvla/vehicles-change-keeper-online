@@ -5,15 +5,16 @@ import models.VehicleLookupFormModel.Form.VehicleRegistrationNumberId
 import models.VehicleLookupFormModel.Form.VehicleSellerEmailOption
 import models.VehicleLookupFormModel.Form.VehicleSoldToId
 import org.openqa.selenium.WebDriver
+import org.scalatest.selenium.WebBrowser.{TextField, textField, TelField, telField, RadioButton, radioButton, click, go, find, id, Element}
 import uk.gov.dvla.vehicles.presentation.common
 import common.mappings.OptionalToggle.{Visible, Invisible}
-import common.helpers.webbrowser.{Page, WebBrowserDSL, WebDriverFactory, Element, TelField, TextField, RadioButton}
+import common.helpers.webbrowser.{Page, WebDriverFactory}
 import views.changekeeper.VehicleLookup.{VehicleSoldTo_Private, VehicleSoldTo_Business, BackId, SubmitId}
 import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.{ReferenceNumberValid, RegistrationNumberValid}
 
-object VehicleLookupPage extends Page with WebBrowserDSL {
+object VehicleLookupPage extends Page {
   final val address = buildAppUrl("vehicle-lookup")
-  override def url: String = WebDriverFactory.testUrl + address.substring(1)
+  override val url: String = WebDriverFactory.testUrl + address.substring(1)
   final override val title: String = "Details of the vehicle being sold"
 
   def vehicleRegistrationNumber(implicit driver: WebDriver): TextField = textField(id(VehicleRegistrationNumberId))
@@ -42,8 +43,8 @@ object VehicleLookupPage extends Page with WebBrowserDSL {
                (implicit driver: WebDriver) = {
     go to VehicleLookupPage
 
-    documentReferenceNumber enter referenceNumber
-    VehicleLookupPage.vehicleRegistrationNumber enter registrationNumber
+    documentReferenceNumber.value = referenceNumber
+    VehicleLookupPage.vehicleRegistrationNumber.value = registrationNumber
     click on emailInvisible
     click on VehicleLookupPage.vehicleSoldToPrivateIndividual
     if (isVehicleSoldToPrivateIndividual) click on vehicleSoldToPrivateIndividual

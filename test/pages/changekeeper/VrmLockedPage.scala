@@ -1,13 +1,14 @@
 package pages.changekeeper
 
 import org.openqa.selenium.WebDriver
-import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.{Element, Page, WebBrowserDSL, WebDriverFactory}
+import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.{Page, WebDriverFactory}
 import views.changekeeper.VrmLocked
 import VrmLocked.{ExitId, BuyAnotherVehicleId}
+import org.scalatest.selenium.WebBrowser.{TextField, textField, TelField, telField, RadioButton, radioButton, click, go, find, id, Element, tagName}
 
-object VrmLockedPage extends Page with WebBrowserDSL {
+object VrmLockedPage extends Page {
   final val address = s"$applicationContext/vrm-locked"
-  override def url: String = WebDriverFactory.testUrl + address.substring(1)
+  override val url: String = WebDriverFactory.testUrl + address.substring(1)
 
   final override val title = "Registration number is locked"
 

@@ -6,17 +6,18 @@ import org.openqa.selenium.WebDriver
 import org.scalatest.Matchers
 import pages.changekeeper.{BusinessKeeperDetailsPage, NewKeeperChooseYourAddressPage, VehicleLookupPage}
 import uk.gov.dvla.vehicles.presentation.common.helpers
-import helpers.webbrowser.{WithClue, WebBrowserDSL, WebBrowserDriver}
+import helpers.webbrowser.{WithClue, WebBrowserDriver}
+import org.scalatest.selenium.WebBrowser.{click, go, find, pageTitle, pageSource, tagName}
 
 class BusinessKeeperDetailsSteps(webBrowserDriver: WebBrowserDriver)
-  extends ScalaDsl with EN with WebBrowserDSL with Matchers with WithClue {
+  extends ScalaDsl with EN with Matchers with WithClue {
 
   implicit val webDriver = webBrowserDriver.asInstanceOf[WebDriver]
 
   def gotoBusinessKeeperDetailsPage(){
     go to VehicleLookupPage
-    VehicleLookupPage.vehicleRegistrationNumber enter "BF51BNN"
-    VehicleLookupPage.documentReferenceNumber enter "11111111111"
+    VehicleLookupPage.vehicleRegistrationNumber.value = "BF51BNN"
+    VehicleLookupPage.documentReferenceNumber.value = "11111111111"
     click on VehicleLookupPage.emailInvisible
     click on VehicleLookupPage.vehicleSoldToBusiness
     click on VehicleLookupPage.next
@@ -29,22 +30,22 @@ class BusinessKeeperDetailsSteps(webBrowserDriver: WebBrowserDriver)
 
   @When("^the user is on the new-business-keeper-details page$")
   def the_user_is_on_the_new_business_keeper_details_page() {
-    page.title shouldEqual BusinessKeeperDetailsPage.title withClue trackingId
+    pageTitle shouldEqual BusinessKeeperDetailsPage.title withClue trackingId
   }
 
   @Then("^there is a label titled \"(.*?)\"$")
   def there_is_a_label_titled(fleetNo:String ) {
-    page.text contains fleetNo
+    pageSource contains fleetNo
   }
 
   @Then("^there will be a data entry control for fleet number using the format NNNNNN or NNNNN-$")
   def there_will_be_a_data_entry_control_for_fleet_number_using_the_format_NNNNNN_or_NNNNN(): Unit = {
-    BusinessKeeperDetailsPage.fleetNumberField enter "fghfj"
+    BusinessKeeperDetailsPage.fleetNumberField.value = "fghfj"
   }
 
   @Then("^there will be help text displayed above the fleet number field \"(.*?)\"$")
   def there_will_be_help_text_displayed_above_the_fleet_number_field(helpText:String)  {
-    page.text contains helpText
+    pageSource contains helpText
   }
 
   @Given("^the fleet number is blank in business keeper details page$")
@@ -60,14 +61,14 @@ class BusinessKeeperDetailsSteps(webBrowserDriver: WebBrowserDriver)
   @Given("^the fleet number is not blank and has a valid format in business keeper deatils page$")
   def the_fleet_number_is_not_blank_and_has_a_valid_format_in_business_keeper_deatils_page()  {
     gotoBusinessKeeperDetailsPage()
-    BusinessKeeperDetailsPage.fleetNumberField enter "345654"
+    BusinessKeeperDetailsPage.fleetNumberField.value = "345654"
   }
 
   @Given("^the fleet number has an invalid format in business keeper details page$")
   def the_fleet_number_has_an_invalid_format_in_business_keeper_details_page()  {
     gotoBusinessKeeperDetailsPage()
     click on BusinessKeeperDetailsPage.fleetNumberVisible
-    BusinessKeeperDetailsPage.fleetNumberField enter "345"
+    BusinessKeeperDetailsPage.fleetNumberField.value = "345"
   }
 
   @Then("^there is a fleet number error message displayed \"(.*?)\"$")
@@ -81,14 +82,14 @@ class BusinessKeeperDetailsSteps(webBrowserDriver: WebBrowserDriver)
 
   @Then("^the user can enter a business name of up to (\\d+) characters$")
   def the_user_can_enter_a_business_name_of_up_to_characters(charLength:Int) {
-    BusinessKeeperDetailsPage.businessNameField enter "abcdefghijklmnopqrstsdgfhtajs"
+    BusinessKeeperDetailsPage.businessNameField.value = "abcdefghijklmnopqrstsdgfhtajs"
   }
 
   @Given("^the business name contains invalid characters$")
   def the_business_name_contains_invalid_characters()  {
     gotoBusinessKeeperDetailsPage()
-    BusinessKeeperDetailsPage.businessNameField enter "h"
-    BusinessKeeperDetailsPage.postcodeField enter "we32we"
+    BusinessKeeperDetailsPage.businessNameField.value = "h"
+    BusinessKeeperDetailsPage.postcodeField.value = "we32we"
   }
 
   @When("^the user has selected the submit control on the new-business-keeper-details screen$")
@@ -105,7 +106,7 @@ class BusinessKeeperDetailsSteps(webBrowserDriver: WebBrowserDriver)
   @Given("^the user has entered values into the business name$")
   def the_user_has_entered_values_into_the_business_name()  {
     gotoBusinessKeeperDetailsPage()
-    BusinessKeeperDetailsPage.businessNameField enter "dhdhh"
+    BusinessKeeperDetailsPage.businessNameField.value = "dhdhh"
   }
 
   @When("^the user select the submit control$")
@@ -139,8 +140,8 @@ class BusinessKeeperDetailsSteps(webBrowserDriver: WebBrowserDriver)
   @Then("^the user will be able to enter an email address of up to (\\d+) characters$")
   def the_user_will_be_able_to_enter_an_email_address_of_up_to_characters(charLength:Int)  {
     click on BusinessKeeperDetailsPage.emailVisible
-    BusinessKeeperDetailsPage.emailField enter "jfejfhhfjlshgljhgjlhljhljhjlhljhjlhljh@fdgfdgfhgfhghgfhgfhgfhfghgfhg"
-    BusinessKeeperDetailsPage.emailConfirmField enter
+    BusinessKeeperDetailsPage.emailField.value = "jfejfhhfjlshgljhgjlhljhljhjlhljhjlhljh@fdgfdgfhgfhghgfhgfhgfhfghgfhg"
+    BusinessKeeperDetailsPage.emailConfirmField.value =
       "jfejfhhfjlshgljhgjlhljhljhjlhljhjlhljh@fdgfdgfhgfhghgfhgfhgfhfghgfhg"
   }
 
@@ -161,20 +162,20 @@ class BusinessKeeperDetailsSteps(webBrowserDriver: WebBrowserDriver)
   @Given("^the user has entered an invalid email address$")
   def the_user_has_entered_an_invalid_email_address() {
     click on BusinessKeeperDetailsPage.emailVisible
-    BusinessKeeperDetailsPage.emailField enter "aa"
-    BusinessKeeperDetailsPage.emailConfirmField enter "aa"
+    BusinessKeeperDetailsPage.emailField.value = "aa"
+    BusinessKeeperDetailsPage.emailConfirmField.value = "aa"
   }
 
   @When("^the user tries to search on an invalid postcode$")
   def the_user_tries_to_search_on_an_invalid_postcode() {
-    BusinessKeeperDetailsPage.postcodeField enter "adsadsds"
+    BusinessKeeperDetailsPage.postcodeField.value = "adsadsds"
     click on BusinessKeeperDetailsPage.fleetNumberInvisible
     click on BusinessKeeperDetailsPage.emailInvisible
     click on BusinessKeeperDetailsPage.next
   }
   @Then("^the user does not progress to the next stage of the service$")
   def the_user_does_not_progress_to_the_next_stage_of_the_service() {
-    page.title shouldEqual BusinessKeeperDetailsPage.title withClue trackingId
+    pageTitle shouldEqual BusinessKeeperDetailsPage.title withClue trackingId
   }
 
   @When("^the user tries to search on a blank postcode$")
@@ -187,15 +188,15 @@ class BusinessKeeperDetailsSteps(webBrowserDriver: WebBrowserDriver)
   @When("^the user tries to search on a valid postcode$")
   def the_user_tries_to_search_on_a_valid_postcode() {
     click on BusinessKeeperDetailsPage.fleetNumberInvisible
-    BusinessKeeperDetailsPage.businessNameField enter "dvdvvv"
-    BusinessKeeperDetailsPage.postcodeField enter "qq99qq"
+    BusinessKeeperDetailsPage.businessNameField.value = "dvdvvv"
+    BusinessKeeperDetailsPage.postcodeField.value = "qq99qq"
     click on BusinessKeeperDetailsPage.emailInvisible
     click on BusinessKeeperDetailsPage.next
   }
 
   @Then("^the user is presented with a list of matching addresses$")
   def the_user_is_presented_with_a_list_of_matching_addresses() {
-    page.title shouldEqual NewKeeperChooseYourAddressPage.title withClue trackingId
+    pageTitle shouldEqual NewKeeperChooseYourAddressPage.title withClue trackingId
   }
 
   @Then("^an error message is displays \"(.*?)\"$")
@@ -206,30 +207,30 @@ class BusinessKeeperDetailsSteps(webBrowserDriver: WebBrowserDriver)
   @When("^the user enters special characters in businessname with valid data in rest of the fields$")
   def the_user_enters_special_characters_in_businessname_with_valid_data_in_rest_of_the_fields()  {
     click on BusinessKeeperDetailsPage.fleetNumberInvisible
-    page.title shouldEqual  BusinessKeeperDetailsPage.title withClue trackingId
-    BusinessKeeperDetailsPage.businessNameField enter "hgff(&/,)"
-    BusinessKeeperDetailsPage.postcodeField enter "qq99qq"
+    pageTitle shouldEqual  BusinessKeeperDetailsPage.title withClue trackingId
+    BusinessKeeperDetailsPage.businessNameField.value = "hgff(&/,)"
+    BusinessKeeperDetailsPage.postcodeField.value = "qq99qq"
     click on BusinessKeeperDetailsPage.emailInvisible
     click on BusinessKeeperDetailsPage.next
   }
 
   @Then("^the user will sucessfully navigate to next page$")
   def the_user_will_sucessfully_navigate_to_next_page()  {
-    page.title shouldEqual NewKeeperChooseYourAddressPage.title withClue trackingId
+    pageTitle shouldEqual NewKeeperChooseYourAddressPage.title withClue trackingId
   }
 
   @When("^the user enters special characters at the start of the business name$")
   def the_user_enters_special_charcters_at_the_start_of_the_business_name()  {
     click on BusinessKeeperDetailsPage.fleetNumberInvisible
-    page.title shouldEqual  BusinessKeeperDetailsPage.title withClue trackingId
-    BusinessKeeperDetailsPage.businessNameField enter "(&/,)GFHF"
-    BusinessKeeperDetailsPage.postcodeField enter "qq99qq"
+    pageTitle shouldEqual  BusinessKeeperDetailsPage.title withClue trackingId
+    BusinessKeeperDetailsPage.businessNameField.value = "(&/,)GFHF"
+    BusinessKeeperDetailsPage.postcodeField.value = "qq99qq"
     click on BusinessKeeperDetailsPage.emailInvisible
     click on BusinessKeeperDetailsPage.next
   }
 
   @Then("^will remain in the same page instead of progress to next page$")
   def will_remain_in_the_same_page_instead_of_progress_to_next_page()  {
-    page.title shouldEqual BusinessKeeperDetailsPage.title withClue trackingId
+    pageTitle shouldEqual BusinessKeeperDetailsPage.title withClue trackingId
   }
 }

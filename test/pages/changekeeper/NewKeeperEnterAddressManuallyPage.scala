@@ -2,7 +2,7 @@ package pages.changekeeper
 
 import org.openqa.selenium.WebDriver
 import uk.gov.dvla.vehicles.presentation.common
-import common.helpers.webbrowser.{Element, Page, TextField, WebBrowserDSL, WebDriverFactory}
+import common.helpers.webbrowser.{Page, WebDriverFactory}
 import common.views.models.AddressLinesViewModel
 import AddressLinesViewModel.Form.{AddressLinesId, BuildingNameOrNumberId, Line2Id, Line3Id, PostTownId}
 import common.model.NewKeeperEnterAddressManuallyFormModel.Form.AddressAndPostcodeId
@@ -11,8 +11,9 @@ import webserviceclients.fakes.FakeAddressLookupService.BuildingNameOrNumberVali
 import webserviceclients.fakes.FakeAddressLookupService.Line2Valid
 import webserviceclients.fakes.FakeAddressLookupService.Line3Valid
 import webserviceclients.fakes.FakeAddressLookupService.PostTownValid
+import org.scalatest.selenium.WebBrowser.{TextField, textField, TelField, telField, RadioButton, radioButton, click, go, find, id, Element, tagName}
 
-object NewKeeperEnterAddressManuallyPage extends Page with WebBrowserDSL {
+object NewKeeperEnterAddressManuallyPage extends Page {
   final val address = buildAppUrl("new-keeper-enter-address-manually")
   override val url: String = WebDriverFactory.testUrl + address.substring(1)
   final override val title: String = "Enter address"

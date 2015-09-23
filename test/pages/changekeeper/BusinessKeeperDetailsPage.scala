@@ -2,7 +2,6 @@ package pages.changekeeper
 
 import org.openqa.selenium.WebDriver
 import uk.gov.dvla.vehicles.presentation.common
-import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser._
 import common.mappings.Email.{EmailId => EmailEnterId, EmailVerifyId}
 import common.mappings.OptionalToggle.{Visible, Invisible}
 import common.model.BusinessKeeperDetailsFormModel.Form.BusinessNameId
@@ -12,10 +11,24 @@ import common.model.BusinessKeeperDetailsFormModel.Form.FleetNumberId
 import common.model.BusinessKeeperDetailsFormModel.Form.FleetNumberOptionId
 import common.model.BusinessKeeperDetailsFormModel.Form.PostcodeId
 import views.changekeeper.BusinessKeeperDetails.{BackId, NextId}
+import common.helpers.webbrowser.{WebDriverFactory, Page}
+import org.scalatest.selenium.WebBrowser.EmailField
+import org.scalatest.selenium.WebBrowser.emailField
+import org.scalatest.selenium.WebBrowser.TextField
+import org.scalatest.selenium.WebBrowser.textField
+import org.scalatest.selenium.WebBrowser.TelField
+import org.scalatest.selenium.WebBrowser.telField
+import org.scalatest.selenium.WebBrowser.RadioButton
+import org.scalatest.selenium.WebBrowser.radioButton
+import org.scalatest.selenium.WebBrowser.click
+import org.scalatest.selenium.WebBrowser.go
+import org.scalatest.selenium.WebBrowser.find
+import org.scalatest.selenium.WebBrowser.id
+import org.scalatest.selenium.WebBrowser.Element
 
-object BusinessKeeperDetailsPage extends Page with WebBrowserDSL {
+object BusinessKeeperDetailsPage extends Page {
   final val address = buildAppUrl("business-keeper-details")
-  override def url: String = WebDriverFactory.testUrl + address.substring(1)
+  override val url: String = WebDriverFactory.testUrl + address.substring(1)
   final override val title: String = "Enter new keeper details"
 
   final val FleetNumberValid = "123456"
@@ -40,9 +53,9 @@ object BusinessKeeperDetailsPage extends Page with WebBrowserDSL {
   def emailInvisible(implicit driver: WebDriver): RadioButton =
     radioButton(id(s"${EmailOptionId}_$Invisible"))
 
-  def emailField(implicit driver: WebDriver): EmailField = emailField(id(s"${EmailId}_$EmailEnterId"))
+  def emailField(implicit driver: WebDriver): EmailField = emailField(driver)
 
-  def emailConfirmField(implicit driver: WebDriver): EmailField = emailField(id(s"${EmailId}_$EmailVerifyId"))
+  def emailConfirmField(implicit driver: WebDriver): EmailField = emailField(driver)
 
   def postcodeField(implicit driver: WebDriver): TextField = textField(id(PostcodeId))
 
@@ -57,12 +70,12 @@ object BusinessKeeperDetailsPage extends Page with WebBrowserDSL {
     go to BusinessKeeperDetailsPage
 
     click on fleetNumberVisible
-    fleetNumberField enter fleetNumber
-    businessNameField enter businessName
+    fleetNumberField.value = fleetNumber
+    businessNameField.value = businessName
     click on emailVisible
-    emailField enter email
-    emailConfirmField enter email
-    postcodeField enter postcode
+    emailField.value = email
+    emailConfirmField.value = email
+    postcodeField.value = postcode
 
     click on next
   }

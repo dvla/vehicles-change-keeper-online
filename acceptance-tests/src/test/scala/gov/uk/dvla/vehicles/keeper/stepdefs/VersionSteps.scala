@@ -10,9 +10,10 @@ import org.openqa.selenium.WebDriver
 import org.scalatest.Matchers
 import scala.io.Source.fromInputStream
 import uk.gov.dvla.vehicles.presentation.common.helpers
-import helpers.webbrowser.{WebBrowserDSL, WebBrowserDriver, WebDriverFactory}
+import helpers.webbrowser.{WebBrowserDriver, WebDriverFactory}
+import org.scalatest.selenium.WebBrowser.{TextField, textField, TelField, telField, RadioButton, radioButton, click, go, find, id, Element}
 
-class VersionSteps(webBrowserDriver: WebBrowserDriver) extends ScalaDsl with EN with WebBrowserDSL with Matchers {
+class VersionSteps(webBrowserDriver: WebBrowserDriver) extends ScalaDsl with EN with Matchers {
 
   private var versionString: String = null
   implicit val webDriver = webBrowserDriver.asInstanceOf[WebDriver]

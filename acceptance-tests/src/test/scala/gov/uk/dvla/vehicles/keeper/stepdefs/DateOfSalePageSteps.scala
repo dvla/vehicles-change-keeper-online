@@ -9,30 +9,31 @@ import pages.changekeeper.CompleteAndConfirmPage
 import pages.changekeeper.DateOfSalePage
 import pages.changekeeper.NewKeeperChooseYourAddressPage
 import pages.changekeeper.VehicleLookupPage
-import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.{WithClue, WebBrowserDSL, WebBrowserDriver}
+import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.{WithClue, WebBrowserDriver}
+import org.scalatest.selenium.WebBrowser.{click, go, pageTitle, pageSource}
 
 class DateOfSalePageSteps(webBrowserDriver: WebBrowserDriver)
-  extends ScalaDsl with EN with WebBrowserDSL with Matchers with WithClue {
+  extends ScalaDsl with EN with Matchers with WithClue {
 
   implicit val webDriver = webBrowserDriver.asInstanceOf[WebDriver]
 
   def goToDateOfSalePage() {
     go to VehicleLookupPage
-    VehicleLookupPage.vehicleRegistrationNumber enter "BF51BOV"
-    VehicleLookupPage.documentReferenceNumber enter "11111111111"
+    VehicleLookupPage.vehicleRegistrationNumber.value = "BF51BOV"
+    VehicleLookupPage.documentReferenceNumber.value = "11111111111"
     click on VehicleLookupPage.emailInvisible
     click on VehicleLookupPage.vehicleSoldToBusiness
     click on VehicleLookupPage.next
-    page.title shouldEqual BusinessKeeperDetailsPage.title withClue trackingId
+    pageTitle shouldEqual BusinessKeeperDetailsPage.title withClue trackingId
     click on BusinessKeeperDetailsPage.fleetNumberInvisible
-    BusinessKeeperDetailsPage.businessNameField enter "retail"
-    BusinessKeeperDetailsPage.postcodeField enter "qq99qq"
+    BusinessKeeperDetailsPage.businessNameField.value = "retail"
+    BusinessKeeperDetailsPage.postcodeField.value = "qq99qq"
     click on BusinessKeeperDetailsPage.emailInvisible
     click on BusinessKeeperDetailsPage.next
     click on NewKeeperChooseYourAddressPage.select
     NewKeeperChooseYourAddressPage.chooseAddress.value="0"
     click on NewKeeperChooseYourAddressPage.next
-    page.title shouldBe DateOfSalePage.title withClue trackingId
+    pageTitle shouldBe DateOfSalePage.title withClue trackingId
   }
 
   @Given("^that the user is on the date of sale page$")
@@ -42,12 +43,15 @@ class DateOfSalePageSteps(webBrowserDriver: WebBrowserDriver)
 
   @Given("^there is a  label titled \"(.*?)\"$")
   def there_is_a_label_titled(lableText: String) {
-    page.text.contains(lableText) shouldBe true withClue trackingId
+
+// need to use page text rather than source
+
+    pageSource.contains(lableText) shouldBe true withClue trackingId
   }
 
   @Then("^there is a control for entry of the vehicle mileage using the format N\\((\\d+)\\)$")
   def there_is_a_control_for_entry_of_the_vehicle_mileage_using_the_format_N(onlySixDigits: Int) {
-    DateOfSalePage.mileageTextBox enter "fhgjhhhkj"
+    DateOfSalePage.mileageTextBox.value = "fhgjhhhkj"
   }
 
   @When("^there is a labelled Date of Sale and hint text$")
@@ -67,9 +71,9 @@ class DateOfSalePageSteps(webBrowserDriver: WebBrowserDriver)
     click on DateOfSalePage.dayDateOfSaleTextBox
   }
 
-  @Then("^the user can enter the (\\d+) or (\\d+) digit day of the month$")
+  @Then("^the user can.value = the (\\d+) or (\\d+) digit day of the month$")
   def the_user_can_enter_the_or_digit_day_of_the_month(digitOne:Int,digitTwo:Int): Unit = {
-    DateOfSalePage.dayDateOfSaleTextBox enter "12"
+    DateOfSalePage.dayDateOfSaleTextBox.value = "12"
   }
 
   @Then("^the field will only accept the values (\\d+)-(\\d+)$")
@@ -78,10 +82,10 @@ class DateOfSalePageSteps(webBrowserDriver: WebBrowserDriver)
 
   @When("^the user selects the data entry control labelled Month$")
   def the_user_selects_the_data_entry_control_labelled_Month() {
-    DateOfSalePage.monthDateOfSaleTextBox enter "12"
+    DateOfSalePage.monthDateOfSaleTextBox.value = "12"
   }
 
-  @Then("^the user can enter the (\\d+) or (\\d+) digit month of the year$")
+  @Then("^the user can.value = the (\\d+) or (\\d+) digit month of the year$")
   def the_user_can_enter_the_or_digit_month_of_the_year(digitOne:Int,digitTwo:Int) {
   }
 
@@ -90,16 +94,16 @@ class DateOfSalePageSteps(webBrowserDriver: WebBrowserDriver)
     click on DateOfSalePage.yearDateOfSaleTextBox
   }
 
-  @Then("^the user can enter the (\\d+) digit year$")
+  @Then("^the user can.value = the (\\d+) digit year$")
   def the_user_can_enter_the_digit_year(four: Int) {
-    DateOfSalePage.yearDateOfSaleTextBox enter "2010"
+    DateOfSalePage.yearDateOfSaleTextBox.value = "2010"
   }
 
   @When("^the Date of sale is in the future$")
   def the_Date_of_sale_is_in_the_future() {
-    DateOfSalePage.dayDateOfSaleTextBox enter "12"
-    DateOfSalePage.monthDateOfSaleTextBox enter "12"
-    DateOfSalePage.yearDateOfSaleTextBox enter "2025"
+    DateOfSalePage.dayDateOfSaleTextBox.value = "12"
+    DateOfSalePage.monthDateOfSaleTextBox.value = "12"
+    DateOfSalePage.yearDateOfSaleTextBox.value = "2025"
   }
 
   @When("^the user click on the next button$")
@@ -109,8 +113,8 @@ class DateOfSalePageSteps(webBrowserDriver: WebBrowserDriver)
 
   @When("^the Date of sale is incomplete$")
   def the_Date_of_sale_is_incomplete() {
-    DateOfSalePage.monthDateOfSaleTextBox enter "12"
-    DateOfSalePage.yearDateOfSaleTextBox enter "2025"
+    DateOfSalePage.monthDateOfSaleTextBox.value = "12"
+    DateOfSalePage.yearDateOfSaleTextBox.value = "2025"
   }
 
   @When("^the Date of sale is not a valid gregorian date$")

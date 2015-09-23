@@ -9,29 +9,30 @@ import pages.changekeeper.{BeforeYouStartPage, MicroServiceErrorPage}
 import pages.common.Feedback.EmailFeedbackLink
 import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.ProgressBar
 import uk.gov.dvla.vehicles.presentation.common.testhelpers.UiTag
+import org.scalatest.selenium.WebBrowser.{click, go, pageTitle, pageSource}
 
 final class MicroServiceErrorIntegrationSpec extends UiSpec with TestHarness {
   "go to page" should {
     // TODO: fix me
-    "display the page" taggedAs UiTag ignore new WebBrowser {
+    "display the page" taggedAs UiTag ignore new WebBrowserForSelenium {
       go to MicroServiceErrorPage
-      page.title should equal(MicroServiceErrorPage.title)
+      pageTitle should equal(MicroServiceErrorPage.title)
     }
 
-    "contain feedback email facility with appropriate subject" taggedAs UiTag ignore new WebBrowser {
+    "contain feedback email facility with appropriate subject" taggedAs UiTag ignore new WebBrowserForSelenium {
       go to MicroServiceErrorPage
-      page.source.contains(EmailFeedbackLink) should equal(true)
+      pageSource.contains(EmailFeedbackLink) should equal(true)
     }
 
     "not display any progress indicator when progressBar is set to true" taggedAs UiTag in new ProgressBarTrue {
       go to MicroServiceErrorPage
-      page.source should not contain ProgressBar.div
+      pageSource should not contain ProgressBar.div
     }
   }
 
   "tryAgain button" should {
     // TODO fix the ignored tests when the story is ready
-    "redirect to vehiclelookup" taggedAs UiTag ignore new WebBrowser {
+    "redirect to vehiclelookup" taggedAs UiTag ignore new WebBrowserForSelenium {
       /*
       go to BeforeYouStartPage
       cacheSetup()
@@ -41,7 +42,7 @@ final class MicroServiceErrorIntegrationSpec extends UiSpec with TestHarness {
       */
     }
 
-    "redirect to setuptradedetails when no details are cached" taggedAs UiTag ignore new WebBrowser {
+    "redirect to setuptradedetails when no details are cached" taggedAs UiTag ignore new WebBrowserForSelenium {
       /*
       go to MicroServiceErrorPage
       click on tryAgain
@@ -51,12 +52,12 @@ final class MicroServiceErrorIntegrationSpec extends UiSpec with TestHarness {
   }
 
   "exit button" should {
-    "redirect to beforeyoustart" taggedAs UiTag ignore new WebBrowser {
+    "redirect to beforeyoustart" taggedAs UiTag ignore new WebBrowserForSelenium {
       go to BeforeYouStartPage
       cacheSetup()
       go to MicroServiceErrorPage
       click on exit
-      page.title should equal(BeforeYouStartPage.title)
+      pageTitle should equal(BeforeYouStartPage.title)
     }
   }
 
