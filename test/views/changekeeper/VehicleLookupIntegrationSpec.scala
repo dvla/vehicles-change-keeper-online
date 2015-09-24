@@ -58,7 +58,6 @@ class VehicleLookupIntegrationSpec extends UiSpec with TestHarness {
       )
     }
 
-    // TODO : CJR : Put this back in
 //    "put the v5c image in a tooltip with Javascript enabled" taggedAs UiTag in new WebBrowserForSeleniumWithJs {
 //      go to VehicleLookupPage
 //      val v5c = By.xpath("//div[@data-tooltip='tooltip_documentReferenceNumber']")
