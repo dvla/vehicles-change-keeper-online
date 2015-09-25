@@ -78,7 +78,8 @@
                         'maxLength -> FleetNumber.MaxLength,
                         'typeFleetNumber -> true,
                         '_showConstraints -> false,
-                        'NO_OPTIONAL_LABEL -> false
+                        'NO_OPTIONAL_LABEL -> false,
+                        'validityMessage -> Messages("error.fleetNumber")
                     ) ++ (if(config.isHtml5ValidationEnabled) Map('pattern -> FleetNumber.Pattern) else Nil)
                 )
             )
@@ -92,7 +93,9 @@
                     viewModel.form(EmailId),
                     Messages("change_keeper_businesskeeperdetails.email"),
                     hintText = None,
-                    args = Map('maxLength -> EmailMaxLength)
+                    args = Map('maxLength -> EmailMaxLength,
+                               'validityMessage -> Messages("error.email")
+                          )
                 )
             )
 

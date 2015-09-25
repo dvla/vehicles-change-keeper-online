@@ -112,8 +112,8 @@
                         '_showConstraints -> false,
                         'typeTel -> true,
                         'maxLength -> Mileage.MaxLength, // Must be set independently of the pattern as the pattern is only checked when the user submits.
-                        'optionalFieldKey -> true
-                        //'title -> Messages("change_keeper_keeperdetailscomplete.mileage.validation")
+                        'optionalFieldKey -> true,
+                        'validityMessage -> Messages("change_keeper_keeperdetailscomplete.mileage.validation")
                     ) ++ (if(config.isHtml5ValidationEnabled) Map('pattern -> Mileage.Pattern) else Nil), data.isSaleDateInvalid)
                 )
 

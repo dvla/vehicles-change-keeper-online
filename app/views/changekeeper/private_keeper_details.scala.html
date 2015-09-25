@@ -101,7 +101,9 @@
                     privateKeeperDetailsForm(EmailId),
                     labelText = Messages("change_keeper_privatekeeperdetails.emaillabel"),
                     hintText = None,
-                    args = Map('maxLength -> EmailMaxLength)
+                    args = Map('maxLength -> EmailMaxLength,
+                                'validityMessage -> Messages("error.email")
+                    )
                 )
             )
 
