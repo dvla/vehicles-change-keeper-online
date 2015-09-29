@@ -27,6 +27,14 @@
         @alertWarning(List("print-message")) {
           <p><strong>@Messages("change_keeper_newKeeperEnterAddressManually.p4")</strong></p>
         }
+        @if(Messages("change_keeper_newKeeperEnterAddressManually.addresswarning")) {
+                @alertWarning() {
+                    <p>@Messages("change_keeper_newKeeperEnterAddressManually.addresswarning")
+                        <a href="http://www3.royalmail.com/find-a-postcode/nojs/enquiry" target="_blank">
+                                @Messages("change_keeper_newKeeperEnterAddressManually.addresswarninglinktext")</a>
+                    </p>
+                }
+        }
     </div>
 
     <div class="second-col">
