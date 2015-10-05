@@ -21,7 +21,7 @@ class ChangeKeeperSuccess @Inject()()(implicit clientSideSessionFactory: ClientS
                                        surveyUrl: SurveyUrl) extends Controller with DVLALogger {
 
   private final val MissingCookiesSuccess = "Missing cookies in cache. Change of keeper was successful, " +
-    "however cannot display success page. Redirecting to BeforeYouStart"
+    "however will not display success page. Redirecting to BeforeYouStart"
 
   def present = Action { implicit request =>
     val result = for {
@@ -30,7 +30,9 @@ class ChangeKeeperSuccess @Inject()()(implicit clientSideSessionFactory: ClientS
       completeAndConfirmModel <- request.cookies.getModel[CompleteAndConfirmFormModel]
       dateOfSaleFormModel <- request.cookies.getModel[DateOfSaleFormModel]
       responseModel <- request.cookies.getModel[CompleteAndConfirmResponseModel]
-    } yield
+    } yield {
+      val msg = "User transaction completed successfully - now displaying the change keeper success view"
+      logMessage(request.cookies.trackingId(), Info, msg)
       Ok(views.html.changekeeper.change_keeper_success(
         ChangeKeeperCompletionViewModel(
           vehicleAndKeeperDetailsModel,
@@ -40,7 +42,7 @@ class ChangeKeeperSuccess @Inject()()(implicit clientSideSessionFactory: ClientS
           responseModel),
         surveyUrl())
       )
-
+    }
     result getOrElse
       redirectToStart(MissingCookiesSuccess)
   }
