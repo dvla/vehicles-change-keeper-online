@@ -239,6 +239,7 @@ class Chains(data: RecordSeqFeederBuilder[String]) {
         http(chainTitle)
           .post(url)
           .headers(headers_x_www_form_urlencoded)
+          .formParam("regRight", "${consent}")
           .formParam("consent", "${consent}")
           .formParam("csrf_prevention_token", "${csrf_prevention_token}")
           .formParam("action", "")

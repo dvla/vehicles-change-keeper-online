@@ -5,7 +5,7 @@ import composition.WithApplication
 import helpers.CookieFactoryForUnitSpecs
 import helpers.UnitSpec
 import models.CompleteAndConfirmFormModel.AllowGoingToCompleteAndConfirmPageCacheKey
-import models.CompleteAndConfirmFormModel.Form.ConsentId
+import models.CompleteAndConfirmFormModel.Form.{ConsentId, RegRightId}
 import org.joda.time.Instant
 import org.mockito.Matchers.any
 import org.mockito.Mockito.{never, times, verify, when}
@@ -182,7 +182,7 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
       }
     }
 
-    "call the micro services and redirect to the next page if consent has been ticked" in new WithApplication {
+    "call the micro services and redirect to the next page if regRight and consent has been ticked" in new WithApplication {
       val request = buildCorrectlyPopulatedRequest()
         .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
         .withCookies(CookieFactoryForUnitSpecs.vehicleLookupFormModel())
@@ -277,8 +277,9 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
     (acquireServiceMock, emailServiceMock, completeAndConfirm)
   }
 
-  private def buildCorrectlyPopulatedRequest(consent: String = ConsentTrue) = {
+  private def buildCorrectlyPopulatedRequest(regRight: String = ConsentTrue, consent: String = ConsentTrue) = {
     FakeRequest().withFormUrlEncodedBody(
+      RegRightId -> regRight,
       ConsentId -> consent
     ).withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
      .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())

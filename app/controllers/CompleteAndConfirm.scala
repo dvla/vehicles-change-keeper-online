@@ -5,7 +5,7 @@ import email.{EmailMessageBuilder, EmailSellerMessageBuilder}
 import models.AllCacheKeys
 import models.CompleteAndConfirmFormModel
 import models.CompleteAndConfirmFormModel.AllowGoingToCompleteAndConfirmPageCacheKey
-import models.CompleteAndConfirmFormModel.Form.ConsentId
+import models.CompleteAndConfirmFormModel.Form.{ConsentId,RegRightId}
 import models.CompleteAndConfirmResponseModel
 import models.CompleteAndConfirmViewModel
 import models.DateOfSaleFormModel
@@ -176,7 +176,12 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
       ConsentId,
       "error.required",
       FormError(key = ConsentId, message = "change_keeper_keeperdetailscomplete.consentError", args = Seq.empty)
+    ).replaceError(
+        RegRightId,
+      "error.required",
+      FormError(key = RegRightId, message = "change_keeper_keeperdetailscomplete.loseRightsConsentError", args = Seq.empty)
     ).distinctErrors
+
 
   private def acquireAction(completeAndConfirmForm: CompleteAndConfirmFormModel,
                             newKeeperDetailsView: NewKeeperDetailsViewModel,

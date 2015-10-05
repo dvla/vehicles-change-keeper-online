@@ -60,6 +60,7 @@ class HappyAndSadPathSteps(webBrowserDriver: WebBrowserDriver)
     click on DateOfSalePage.next
     pageTitle shouldEqual CompleteAndConfirmPage.title withClue trackingId
     click on CompleteAndConfirmPage.consent
+    click on CompleteAndConfirmPage.regRight
     click on CompleteAndConfirmPage.next
   }
 
@@ -101,6 +102,7 @@ class HappyAndSadPathSteps(webBrowserDriver: WebBrowserDriver)
     click on DateOfSalePage.next
     pageTitle shouldEqual CompleteAndConfirmPage.title withClue trackingId
     click on CompleteAndConfirmPage.consent
+    click on CompleteAndConfirmPage.regRight
     click on CompleteAndConfirmPage.next
   }
 
@@ -155,6 +157,7 @@ class HappyAndSadPathSteps(webBrowserDriver: WebBrowserDriver)
     click on DateOfSalePage.next
     pageTitle shouldEqual CompleteAndConfirmPage.title withClue trackingId
     click on CompleteAndConfirmPage.consent
+    click on CompleteAndConfirmPage.regRight
     click on CompleteAndConfirmPage.next
   }
 
@@ -184,6 +187,7 @@ class HappyAndSadPathSteps(webBrowserDriver: WebBrowserDriver)
     click on DateOfSalePage.next
     pageTitle shouldEqual CompleteAndConfirmPage.title withClue trackingId
     click on CompleteAndConfirmPage.consent
+    click on CompleteAndConfirmPage.regRight
     click on CompleteAndConfirmPage.next
   }
 
@@ -218,6 +222,7 @@ class HappyAndSadPathSteps(webBrowserDriver: WebBrowserDriver)
     click on DateOfSalePage.next
     pageTitle shouldEqual CompleteAndConfirmPage.title withClue trackingId
     click on CompleteAndConfirmPage.consent
+    click on CompleteAndConfirmPage.regRight
     click on CompleteAndConfirmPage.next
   }
 

@@ -68,6 +68,11 @@ class CompleteAndConfirmSteps(webBrowserDriver: WebBrowserDriver)
     if(CompleteAndConfirmPage.consent.isSelected) click on CompleteAndConfirmPage.consent
   }
 
+  @When("^the right to registration field is checked$")
+  def the_right_to_registration_is_checked(): Unit = {
+    click on CompleteAndConfirmPage.regRight
+  }
+
   @When("^the consent field is checked$")
   def the_consent_field_is_checked() {
     click on CompleteAndConfirmPage.consent

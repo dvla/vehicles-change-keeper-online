@@ -236,9 +236,10 @@ object CookieFactoryForUISpecs {
     this
   }
 
-  def completeAndConfirmDetails(consent: String = ConsentTrue)(implicit webDriver: WebDriver) = {
+  def completeAndConfirmDetails(regRight: String = ConsentTrue, consent: String = ConsentTrue)(implicit webDriver: WebDriver) = {
     val key = CompleteAndConfirmFormModel.CompleteAndConfirmCacheKey
     val value = CompleteAndConfirmFormModel(
+      regRight,
       consent
     )
     addCookie(key, value)

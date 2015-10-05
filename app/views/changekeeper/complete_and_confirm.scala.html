@@ -13,7 +13,7 @@
 @import common.views.html.widgets.base.{valtechInputText, valtechDeclareCheck}
 @import common.views.helpers.LabelHelper.optionalFieldKey
 @import models.DateOfSaleFormModel.Form.{MileageId, DateOfSaleId, TodaysDateId}
-@import models.CompleteAndConfirmFormModel.Form.ConsentId
+@import models.CompleteAndConfirmFormModel.Form.{ConsentId, RegRightId}
 @import views.changekeeper.CompleteAndConfirm.{BackId, SubmitId, modify}
 
 @main(
@@ -97,6 +97,16 @@
 
             @form(action = controllers.routes.CompleteAndConfirm.submit()) {
                 @csrfTokenHiddenField()
+
+            @valtechDeclareCheck(
+              data.form(RegRightId),
+              None,
+              Map(
+                '_showConstraints -> false,
+                '_label -> Messages("change_keeper_keeperdetailscomplete.loseRightsConsent"),
+                'tooltipText -> "If you have a personalised or private registration number on this vehicle that you want to keep, you must transfer or retain it before notifying the sale. If you notify the sale without doing this, you will lose the rights to the registration number."
+            )
+            )
 
             @valtechDeclareCheck(
               data.form(ConsentId),
