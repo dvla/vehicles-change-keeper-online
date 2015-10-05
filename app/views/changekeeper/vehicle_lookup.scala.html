@@ -20,6 +20,7 @@ config: utils.helpers.Config)
 @import common.views.html.widgets.listRadioGroup
 @import common.views.html.widgets.optionalToggle
 @import common.mappings.Email.EmailMaxLength
+@import common.views.html.widgets.alertWarning
 
 @main(
 progress = Some(Messages("change_keeper_progress_2")),
@@ -31,6 +32,13 @@ backButton = Some(Call("GET", "https://www.gov.uk/sold-bought-vehicle/y/no/sold-
 <div class="two-col clearfix vehicle-lookup">
 
     <div class="second-col">
+        @alertWarning() {
+        <p>@Messages("change_keeper_vehiclelookup.warning")
+            <a href="https://www.gov.uk/sold-bought-vehicle/y/no/sold-your-vehicle-into-the-motor-trade" target="_blank">
+                @Messages("change_keeper_vehiclelookup.warninglinktext")</a>
+        </p>
+        }
+
         <h1>@Messages("change_keeper_vehiclelookup.title")</h1>
 
         <div class="form-steps">
@@ -98,5 +106,6 @@ backButton = Some(Call("GET", "https://www.gov.uk/sold-bought-vehicle/y/no/sold-
                 }
         </div>
     </div>
+
 </div>
 }
