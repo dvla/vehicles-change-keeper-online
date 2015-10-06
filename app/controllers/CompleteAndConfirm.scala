@@ -202,9 +202,9 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
     webService.invoke(acquireRequest, trackingId).map {
       case (httpResponseCode, response) =>
         val result = Redirect(
-          nextPage(httpResponseCode, response)(acquireRequest, vehicleDetails, newKeeperDetailsView, sellerEmailModel,
-            response.map(_.transactionId).getOrElse(""), transactionTimestamp, trackingId)
-        ).withCookie(CompleteAndConfirmResponseModel(response.get.transactionId, transactionTimestamp))
+          nextPage(httpResponseCode, response)
+            (acquireRequest, vehicleDetails, newKeeperDetailsView, sellerEmailModel, transactionTimestamp, trackingId)
+        ).withCookie(CompleteAndConfirmResponseModel(response.get.acquireResponse.transactionId, transactionTimestamp))
           .withCookie(completeAndConfirmForm)
         result
     }.recover {
@@ -219,28 +219,28 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
                vehicleDetails: VehicleAndKeeperDetailsModel,
                keeperDetails: NewKeeperDetailsViewModel,
                sellerEmailModel: SellerEmailModel,
-               transactionId: String,
                transactionTimestamp: DateTime,
                trackingId: TrackingId)
               (implicit request: Request[_]) = {
     response.foreach(r => logResponse(r))
 
-    response match {
-      case Some(r) if r.responseCode.isDefined =>
-        r.responseCode.get match {
-          case "X0001" | "W0075" =>
-            logRequestRequiringFurtherAction(r.responseCode.get, transactionId, acquireRequest)
-            createAndSendEmailRequiringFurtherAction(transactionId, acquireRequest)
-          case _ =>
+    (httpResponseCode, response) match {
+      case (OK, Some(r)) =>
+        for { ms <- r.response } yield {
+          if (ms.message == "ms.vehiclesService.response.furtherActionRequired") {
+            logRequestRequiringFurtherAction(ms.code, r.acquireResponse.transactionId, acquireRequest)
+            createAndSendEmailRequiringFurtherAction(r.acquireResponse.transactionId, acquireRequest)
+          }
         }
-        successReturn(vehicleDetails, keeperDetails, sellerEmailModel, transactionId, transactionTimestamp, trackingId)
-      case _ => handleHttpStatusCode(httpResponseCode)(vehicleDetails,
-        keeperDetails,
-        sellerEmailModel,
-        transactionId,
-        transactionTimestamp,
-        trackingId
-      )
+        successReturn(vehicleDetails, keeperDetails, sellerEmailModel,
+                      r.acquireResponse.transactionId, transactionTimestamp, trackingId)
+      case _ =>
+        logMessage(request.cookies.trackingId,
+          Error,
+          s"Received http status code $httpResponseCode from microservice call. " +
+          s"Redirecting to ${routes.MicroServiceError.present()}"
+        )
+        routes.MicroServiceError.present()
     }
   }
 
@@ -300,26 +300,6 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
       newKeeperDetailsViewModel.email,
       newKeeperDetailsViewModel.driverNumber)
   }
-
-  def handleHttpStatusCode(statusCode: Int)
-                          (vehicleDetails: VehicleAndKeeperDetailsModel,
-                           keeperDetails: NewKeeperDetailsViewModel,
-                           sellerEmailModel: SellerEmailModel,
-                           transactionId: String,
-                           transactionTimestamp: DateTime,
-                           trackingId: TrackingId)
-                          (implicit request: Request[_]): Call =
-    statusCode match {
-      case OK =>
-        successReturn(vehicleDetails, keeperDetails, sellerEmailModel, transactionId, transactionTimestamp, trackingId)
-      case _ =>
-        logMessage(request.cookies.trackingId,
-          Error,
-          s"Received http status code $statusCode from microservice call. " +
-          s"Redirecting to ${routes.MicroServiceError.present()}"
-        )
-        routes.MicroServiceError.present()
-    }
 
   private def successReturn(vehicleDetails: VehicleAndKeeperDetailsModel,
                             keeperDetails: NewKeeperDetailsViewModel,
@@ -390,11 +370,11 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
       )))
   }
 
-  private def logResponse(disposeResponse: AcquireResponseDto)(implicit request: Request[_]) = {
+  private def logResponse(response: AcquireResponseDto)(implicit request: Request[_]) = {
     logMessage(request.cookies.trackingId(), Debug, "Change keeper micro-service request",
-     Some(Seq(anonymize(disposeResponse.registrationNumber),
-        disposeResponse.responseCode.getOrElse(""),
-        anonymize(disposeResponse.transactionId)))
+     Some(Seq(anonymize(response.acquireResponse.registrationNumber),
+        s"${response.response.map(_.message)}",
+        anonymize(response.acquireResponse.transactionId)))
     )
   }
 
