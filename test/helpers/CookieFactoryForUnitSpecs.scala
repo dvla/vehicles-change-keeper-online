@@ -267,9 +267,10 @@ object CookieFactoryForUnitSpecs extends TestComposition {
       dateOfSale
     ))
 
-  def completeAndConfirmModel(consent: String = ConsentTrue): Cookie = {
+  def completeAndConfirmModel(regRight: String = ConsentTrue, consent: String = ConsentTrue): Cookie = {
     val key = CompleteAndConfirmFormModel.CompleteAndConfirmCacheKey
     val value = CompleteAndConfirmFormModel(
+      regRight,
       consent
     )
     createCookie(key, value)

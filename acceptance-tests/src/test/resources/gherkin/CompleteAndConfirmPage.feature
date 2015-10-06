@@ -13,6 +13,7 @@
 
     Scenario:complete and confirm-consent checkbox checked
       When the consent field is checked
+      When the right to registration field is checked
       And   the user click on confirm sale button
       Then the user is progressed to the next stage of the service
 

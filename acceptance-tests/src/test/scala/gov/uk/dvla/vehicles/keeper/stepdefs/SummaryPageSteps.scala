@@ -17,6 +17,7 @@ class SummaryPageSteps (webBrowserDriver: WebBrowserDriver)
   def the_user_is_on_the_successful_summary_page() {
      happyPath.goToCompletAndConfirmPage("BF51BOV")
      click on CompleteAndConfirmPage.consent
+     click on CompleteAndConfirmPage.regRight
      click on CompleteAndConfirmPage.next
      pageTitle shouldEqual ChangeKeeperSuccessPage.title withClue trackingId
   }

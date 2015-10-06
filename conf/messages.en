@@ -310,6 +310,10 @@ consent = Consent
 change_keeper_keeperdetailscomplete.consent = I have the consent of the party named to notify DVLA.
 change_keeper_keeperdetailscomplete.consentError = You must have the consent of the new keeper to notify DVLA of the purchase of this vehicle
 
+regRight = Consent
+change_keeper_keeperdetailscomplete.loseRightsConsent = I understand that I will lose the rights to this registration number when I confirm the sale
+change_keeper_keeperdetailscomplete.loseRightsConsentError = You must confirm that you understand that you will lose the rights to this vehicle registration number
+
 #page 6 - acquire success
 change_keeper_success.complete.header = Thank You
 change_keeper_success.complete.p1 = The application is being processed

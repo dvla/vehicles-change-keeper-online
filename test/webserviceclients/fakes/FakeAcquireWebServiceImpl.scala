@@ -6,7 +6,8 @@ import play.api.libs.ws.WSResponse
 import play.api.Logger
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.TrackingId
-import common.webserviceclients.acquire.{AcquireRequestDto, AcquireResponseDto, AcquireWebService}
+import common.webserviceclients.acquire.{AcquireRequestDto, AcquireResponse, AcquireResponseDto, AcquireWebService}
+import uk.gov.dvla.vehicles.presentation.common.webserviceclients.common.MicroserviceResponse
 
 import scala.concurrent.Future
 
@@ -39,48 +40,23 @@ object FakeAcquireWebServiceImpl {
   private final val SimulateSoapEndpointFailure = "9" * 11
   private final val RegistrationNumberValid = "AB12AWR"
 
-  val acquireResponseSuccess =
-    AcquireResponseDto(transactionId = TransactionIdValid,
-      registrationNumber = RegistrationNumberValid)
+  val acquireResponseSuccess = AcquireResponseDto(
+    None,
+    AcquireResponse(transactionId = TransactionIdValid, registrationNumber = RegistrationNumberValid)
+  )
 
-  val acquireResponseSoapEndpointFailure =
-    AcquireResponseDto(transactionId = "", // No transactionId because the soap endpoint is down
-      registrationNumber = "",
-      responseCode = None)
+  // We should always get back a transaction id even for failure scenarios.
+  // Only exception is if the soap endpoint is down
+  val acquireResponseGeneralError = AcquireResponseDto(
+    Some(MicroserviceResponse("", "ms.vehiclesService.error.generalError")),
+    AcquireResponse(transactionId = TransactionIdValid, registrationNumber = "")
+  )
 
-  val acquireResponseFailureWithResponseCode =
-    // We should always get back a transaction id even for failure scenarios.
-    // Only exception is if the soap endpoint is down
-    AcquireResponseDto(transactionId = TransactionIdValid,
-      registrationNumber = "",
-      responseCode = Some("ms.vehiclesService.response.unableToProcessApplication"))
-
-  val acquireResponseFailureWithDuplicateDisposal =
-    // We should always get back a transaction id even for failure scenarios.
-    // Only exception is if the soap endpoint is down
-    AcquireResponseDto(transactionId = TransactionIdValid,
-      registrationNumber = "",
-      responseCode = Some("ms.vehiclesService.response.duplicateDisposalToTrade"))
-
-  val acquireResponseSoapEndpointTimeout =
-    AcquireResponseDto(transactionId = "", // No transactionId because the soap endpoint is down
-      registrationNumber = "",
-      responseCode = None)
-
-  val acquireResponseApplicationBeingProcessed =
-    AcquireResponseDto(transactionId = TransactionIdValid,
-      registrationNumber = RegistrationNumberValid,
-      responseCode = None)
-
-  val acquireResponseUnableToProcessApplication =
-    AcquireResponseDto(transactionId = "", // No transactionId because the soap endpoint is down
-      registrationNumber = "",
-      responseCode = Some("ms.vehiclesService.response.unableToProcessApplication"))
-
-  val acquireResponseUndefinedError =
-    AcquireResponseDto(transactionId = "", // No transactionId because the soap endpoint is down
-      registrationNumber = "",
-      responseCode = Some("undefined"))
+  // No transactionId because the soap endpoint is down
+  val acquireResponseSoapEndpointFailure = AcquireResponseDto(
+    None,
+    AcquireResponse(transactionId = "", registrationNumber = "")
+  )
 
   final val ConsentValid = "true"
   final val MileageValid = "20000"
