@@ -32,13 +32,10 @@ backButton = Some(Call("GET", "https://www.gov.uk/sold-bought-vehicle/y/no/sold-
 <div class="two-col clearfix vehicle-lookup">
 
     <div class="second-col">
-        <p>
-
-        </p>
         @alertWarning() {
-            @Messages("change_keeper_vehiclelookup.warning")
-            <a href="https://www.gov.uk/sold-bought-vehicle/y/no/sold-your-vehicle-into-the-motor-trade" target="_blank">
-                @Messages("change_keeper_vehiclelookup.warninglinktext")</a>
+            <p>@Messages("change_keeper_vehiclelookup.warning")
+              &nbsp;<a href="https://www.gov.uk/sold-bought-vehicle/y/no/sold-your-vehicle-into-the-motor-trade" target="_blank">@Messages("change_keeper_vehiclelookup.warninglinktext")</a>
+            </p>
         }
 
         <h1>@Messages("change_keeper_vehiclelookup.title")</h1>
