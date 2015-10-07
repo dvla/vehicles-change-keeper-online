@@ -15,6 +15,8 @@
 .alert-warning {
   display: none;
 }
+.alert-complete .alert-warning { display: block; }
+
 
 .playback {
   dd {
