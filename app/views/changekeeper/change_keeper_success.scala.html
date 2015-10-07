@@ -42,44 +42,6 @@
             <li>@Messages("change_keeper_success.further_information.p7")</li>
             <li>@Messages("change_keeper_success.further_information.p8")</li>
         </ul>
-
-        <div class="form-steps">
-            <div class="step">
-                <button id="printDisposalSuccess"
-                        type="button"
-                        name="action"
-                        value="printDisposalSuccess"
-                        class="button js-only print-button">
-                    @Messages("change_keeper_success.buttonnavprint")
-                </button>
-            </div>
-
-            <div class="step">
-            @form(action = controllers.routes.ChangeKeeperSuccess.finish()) {
-                @csrfTokenHiddenField()
-                @surveyUrl match {
-                    case Some(url) => {
-                        <button id="@FinishId"
-                                type="submit"
-                                onclick="window.open('@url', '_blank');"
-                                name="action"
-                                class="button button-new-disposal button-secondary">
-                            @Messages("change_keeper_success.finish")
-                        </button>
-                    }
-                    case None => {
-                        <button id="@FinishId"
-                                type="submit"
-                                name="action"
-                                class="button button-new-disposal button-secondary">
-                            @Messages("change_keeper_success.finish")
-                        </button>
-                    }
-                }
-            }
-            </div>
-        </div>
-
     </div>
 
     <div class="first-col">
@@ -128,6 +90,41 @@
             </div>
         </div>
     </div>
+    <div class="form-steps">
+        <div class="step">
+            <button id="printDisposalSuccess"
+                    type="button"
+                    name="action"
+                    value="printDisposalSuccess"
+                    class="button js-only print-button">
+                @Messages("change_keeper_success.buttonnavprint")
+            </button>
+        </div>
 
+        <div class="step">
+            @form(action = controllers.routes.ChangeKeeperSuccess.finish()) {
+            @csrfTokenHiddenField()
+            @surveyUrl match {
+            case Some(url) => {
+            <button id="@FinishId"
+                    type="submit"
+                    onclick="window.open('@url', '_blank');"
+                    name="action"
+                    class="button button-new-disposal button-secondary">
+                @Messages("change_keeper_success.finish")
+            </button>
+            }
+            case None => {
+            <button id="@FinishId"
+                    type="submit"
+                    name="action"
+                    class="button button-new-disposal button-secondary">
+                @Messages("change_keeper_success.finish")
+            </button>
+            }
+            }
+            }
+        </div>
+    </div>
 </div>
 }
