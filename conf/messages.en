@@ -312,6 +312,7 @@ change_keeper_keeperdetailscomplete.consentError = You must have the consent of 
 
 regRight = Consent
 change_keeper_keeperdetailscomplete.loseRightsConsent = I understand that I will lose the rights to this registration number when I confirm the sale
+change_keeper_keeperdetailscomplete.loseRightsInformation = If you have a personalised or private registration number on this vehicle that you want to keep, you must transfer or retain it before notifying the sale. If you notify the sale without doing this, you will lose the rights to the registration number.
 change_keeper_keeperdetailscomplete.loseRightsConsentError = You must confirm that you understand that you will lose the rights to this vehicle registration number
 
 #page 6 - acquire success
