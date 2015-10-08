@@ -6,7 +6,7 @@ import org.scalatest.ShouldMatchers
 import uk.gov.dvla.vehicles.presentation.common.helpers
 import helpers.webbrowser.{Page, WebDriverFactory}
 import views.changekeeper.CompleteAndConfirm.{BackId, SubmitId}
-import org.scalatest.selenium.WebBrowser.{TelField, telField, click, go, find, id, Element}
+import org.scalatest.selenium.WebBrowser.{TelField, telField, click, go, find, id, Element, pageSource}
 
 object DateOfSalePage extends Page with ShouldMatchers {
   final val address = buildAppUrl("date-of-sale")
@@ -38,15 +38,14 @@ object DateOfSalePage extends Page with ShouldMatchers {
                yearDateOfSale: String = YearDateOfSaleValid)(implicit driver: WebDriver) = {
     go to DateOfSalePage
 
-    // TODO : CJR : Put this back in
-//    page.source should(
-//      include(BackId) and
-//      include(SubmitId) and
-//      include(MileageId) and
-//      include(s"$DateOfSaleId" + "_day") and
-//      include(s"$DateOfSaleId" + "_month") and
-//      include(s"$DateOfSaleId" + "_year")
-//    )
+    pageSource should(
+      include(BackId) and
+      include(SubmitId) and
+      include(MileageId) and
+      include(s"$DateOfSaleId" + "_day") and
+      include(s"$DateOfSaleId" + "_month") and
+      include(s"$DateOfSaleId" + "_year")
+    )
 
     mileageTextBox.value = mileage
     dayDateOfSaleTextBox.value = dayDateOfSale

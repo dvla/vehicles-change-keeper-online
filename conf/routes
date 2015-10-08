@@ -85,8 +85,6 @@ GET         /complete-and-confirm                       @controllers.CompleteAnd
 GET         /vehicle-lookup-failure                     @controllers.VehicleLookupFailure.present
 POST        /vehicle-lookup-failure                     @controllers.VehicleLookupFailure.submit
 
-GET         /uprn-not-found                             @controllers.UprnNotFound.present
-
 GET         /version                                    @controllers.Version.version
 
 GET         /cookie-policy                              @controllers.CookiePolicyController.present

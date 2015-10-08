@@ -29,8 +29,6 @@ class ConfigImpl extends Config {
   // Progress step indicator
   override val isHtml5ValidationEnabled: Boolean = getProperty[Boolean]("html5Validation.enabled")
 
-  override val ordnanceSurveyUseUprn: Boolean = getProperty[Boolean]("ordnancesurvey.useUprn")
-
   // opening and closing times
   override val openingTimeMinOfDay: Int = getProperty[Int]("openingTimeMinOfDay")
   override val closingTimeMinOfDay: Int = getProperty[Int]("closingTimeMinOfDay")
