@@ -108,7 +108,7 @@ net.virtualvoid.sbt.graph.Plugin.graphSettings
 webJarCdns := Map()
 
 // ====================== Sandbox Settings ==========================
-lazy val osAddressLookupProject = osAddressLookup("0.21-SNAPSHOT").disablePlugins(PlayScala, SbtWeb)
+lazy val osAddressLookupProject = osAddressLookup("0.22-SNAPSHOT").disablePlugins(PlayScala, SbtWeb)
 lazy val vehicleAndKeeperLookupProject = vehicleAndKeeperLookup("0.18-SNAPSHOT").disablePlugins(PlayScala, SbtWeb)
 lazy val vehiclesAcquireFulfilProject = vehiclesAcquireFulfil("0.14-SNAPSHOT").disablePlugins(PlayScala, SbtWeb)
 lazy val emailServiceProject = emailService("0.15-SNAPSHOT").disablePlugins(PlayScala, SbtWeb)
