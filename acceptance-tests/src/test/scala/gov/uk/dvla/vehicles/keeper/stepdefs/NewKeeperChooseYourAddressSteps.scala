@@ -52,7 +52,7 @@ class NewKeeperChooseYourAddressSteps(webBrowserDriver: WebBrowserDriver)
     click on NewKeeperChooseYourAddressPage.next
   }
 
-  @When("^the user navigates forwards from NewKeeper choose your address page to the.value = address manually page$")
+  @When("^the user navigates forwards from NewKeeper choose your address page to the enter address manually page$")
   def the_user_navigates_forwards_from_NewKeeper_choose_your_address_page_to_the_enter_address_manually_page() = {
     goToEnterAddressManuallyPage()
   }

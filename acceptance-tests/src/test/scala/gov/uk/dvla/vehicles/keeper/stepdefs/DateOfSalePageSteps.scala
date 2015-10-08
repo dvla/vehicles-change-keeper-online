@@ -71,7 +71,7 @@ class DateOfSalePageSteps(webBrowserDriver: WebBrowserDriver)
     click on DateOfSalePage.dayDateOfSaleTextBox
   }
 
-  @Then("^the user can.value = the (\\d+) or (\\d+) digit day of the month$")
+  @Then("^the user can enter the (\\d+) or (\\d+) digit day of the month$")
   def the_user_can_enter_the_or_digit_day_of_the_month(digitOne:Int,digitTwo:Int): Unit = {
     DateOfSalePage.dayDateOfSaleTextBox.value = "12"
   }
@@ -85,7 +85,7 @@ class DateOfSalePageSteps(webBrowserDriver: WebBrowserDriver)
     DateOfSalePage.monthDateOfSaleTextBox.value = "12"
   }
 
-  @Then("^the user can.value = the (\\d+) or (\\d+) digit month of the year$")
+  @Then("^the user can enter the (\\d+) or (\\d+) digit month of the year$")
   def the_user_can_enter_the_or_digit_month_of_the_year(digitOne:Int,digitTwo:Int) {
   }
 
@@ -94,7 +94,7 @@ class DateOfSalePageSteps(webBrowserDriver: WebBrowserDriver)
     click on DateOfSalePage.yearDateOfSaleTextBox
   }
 
-  @Then("^the user can.value = the (\\d+) digit year$")
+  @Then("^the user can enter the (\\d+) digit year$")
   def the_user_can_enter_the_digit_year(four: Int) {
     DateOfSalePage.yearDateOfSaleTextBox.value = "2010"
   }

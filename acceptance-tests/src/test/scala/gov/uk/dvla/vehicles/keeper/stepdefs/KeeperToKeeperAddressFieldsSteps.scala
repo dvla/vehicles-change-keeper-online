@@ -39,7 +39,7 @@ class KeeperToKeeperAddressFieldsSteps(webBrowserDriver: WebBrowserDriver)
     goToEnterKeeperAddressManuallyPage()
   }
 
-  @When("^the user tries to.value = the new keeper address$")
+  @When("^the user tries to enter the new keeper address$")
   def the_user_tries_to_enter_the_new_keeper_address()  {
   }
 
