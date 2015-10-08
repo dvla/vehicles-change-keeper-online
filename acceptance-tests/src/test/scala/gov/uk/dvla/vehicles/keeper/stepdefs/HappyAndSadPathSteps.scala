@@ -47,7 +47,7 @@ class HappyAndSadPathSteps(webBrowserDriver: WebBrowserDriver)
     click on PrivateKeeperDetailsPage.next
     pageTitle shouldEqual NewKeeperChooseYourAddressPage.title withClue trackingId
     click on NewKeeperChooseYourAddressPage.select
-    NewKeeperChooseYourAddressPage.chooseAddress.value = "0"
+    NewKeeperChooseYourAddressPage.chooseAddress.value = NewKeeperChooseYourAddressPage.defaultSelectedAddress
     click on NewKeeperChooseYourAddressPage.next
   }
 
@@ -89,7 +89,7 @@ class HappyAndSadPathSteps(webBrowserDriver: WebBrowserDriver)
     click on BusinessKeeperDetailsPage.next
     pageTitle shouldEqual NewKeeperChooseYourAddressPage.title withClue trackingId
     click on NewKeeperChooseYourAddressPage.select
-    NewKeeperChooseYourAddressPage.chooseAddress.value = "0"
+    NewKeeperChooseYourAddressPage.chooseAddress.value = NewKeeperChooseYourAddressPage.defaultSelectedAddress
     click on NewKeeperChooseYourAddressPage.next
   }
 

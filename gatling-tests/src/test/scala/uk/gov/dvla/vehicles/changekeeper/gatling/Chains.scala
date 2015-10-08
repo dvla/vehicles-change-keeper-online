@@ -182,7 +182,7 @@ class Chains(data: RecordSeqFeederBuilder[String]) {
         http(chainTitle)
           .post(url)
           .headers(headers_x_www_form_urlencoded)
-          .formParam("newKeeperChooseYourAddress_addressSelect", "0") // UPRN disabled for Northern Ireland
+          .formParam("newKeeperChooseYourAddress_addressSelect", "Not real street 1, Not real street2, Not real town, QQ9 9QQ")
           .formParam("csrf_prevention_token", "${csrf_prevention_token}")
           .formParam("action", "")
           // Assertions

@@ -2,7 +2,7 @@ package helpers
 
 import composition.TestComposition
 import pages.changekeeper.BusinessKeeperDetailsPage.{FleetNumberValid, BusinessNameValid}
-import pages.changekeeper.HelpPage
+import pages.changekeeper.{NewKeeperChooseYourAddressPage, HelpPage}
 import play.api.libs.json.{Json, Writes}
 import models.CompleteAndConfirmFormModel
 import models.CompleteAndConfirmResponseModel
@@ -182,7 +182,7 @@ object CookieFactoryForUnitSpecs extends TestComposition {
     createCookie(key, value)
   }
 
-  def newKeeperChooseYourAddress(uprnSelected: String = "0"): Cookie = {
+  def newKeeperChooseYourAddress(uprnSelected: String = NewKeeperChooseYourAddressPage.selectedAddress): Cookie = {
     val key = NewKeeperChooseYourAddressFormModel.newKeeperChooseYourAddressCacheKey
     val value = NewKeeperChooseYourAddressFormModel(uprnSelected = uprnSelected)
     createCookie(key, value)

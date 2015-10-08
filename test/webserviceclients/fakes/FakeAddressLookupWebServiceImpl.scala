@@ -13,15 +13,13 @@ import common.model.AddressModel
 import common.webserviceclients.addresslookup
 import addresslookup.AddressLookupWebService
 import addresslookup.gds.domain.{Address, Details, Location, Presentation}
-import addresslookup.ordnanceservey.{PostcodeToAddressResponseDto,  UprnAddressPairDto,  UprnToAddressResponseDto}
+import addresslookup.ordnanceservey.{PostcodeToAddressResponseDto,  AddressResponseDto,  UprnToAddressResponseDto}
 
 final class FakeAddressLookupWebServiceImpl(responseOfPostcodeWebService: Future[WSResponse],
                                             responseOfUprnWebService: Future[WSResponse])
                                             extends AddressLookupWebService {
   override def callPostcodeWebService(postcode: String,
-                                      trackingId: TrackingId,
-                                      showBusinessName: Option[Boolean] = None
-                                       )
+                                      trackingId: TrackingId)
                                      (implicit lang: Lang): Future[WSResponse] =
     if (postcode == NoPostcodeFound.toUpperCase) Future {
       FakeResponse(status = OK, fakeJson = None)
@@ -30,14 +28,12 @@ final class FakeAddressLookupWebServiceImpl(responseOfPostcodeWebService: Future
 
   override def callAddresses(postcode: String, trackingId: TrackingId)
                             (implicit lang: Lang): Future[WSResponse] = ???
-
-  override def callUprnWebService(uprn: String, trackingId: TrackingId)
-                                 (implicit lang: Lang): Future[WSResponse] = responseOfUprnWebService
 }
 
 object FakeAddressLookupWebServiceImpl {
   final val UprnValid = 12345L
   final val UprnValid2 = 4567L
+  final val selectedAddress = "presentationProperty stub, 123, property stub, street stub, town stub, area stub, QQ99QQ"
 
   private def addressSeq(houseName: String, houseNumber: String): Seq[String] = {
     Seq(houseName, houseNumber, "property stub", "street stub", "town stub", "area stub", PostcodeValid)
@@ -47,7 +43,7 @@ object FakeAddressLookupWebServiceImpl {
                                   houseName: String = "presentationProperty stub",
                                   houseNumber: String = "123"
                                   ) =
-    UprnAddressPairDto(uprn, address = addressSeq(houseName, houseNumber).mkString(", "))
+    AddressResponseDto(address = addressSeq(houseName, houseNumber).mkString(", "), Some(uprn), None)
 
   def postcodeToAddressResponseValid: PostcodeToAddressResponseDto = {
     val results = Seq(
@@ -77,9 +73,15 @@ object FakeAddressLookupWebServiceImpl {
 
   val uprnToAddressResponseValid = {
     val uprnAddressPair = uprnAddressPairWithDefaults()
-    UprnToAddressResponseDto(addressViewModel = Some(AddressModel(uprn = Some(uprnAddressPair.uprn.toLong),
-                             address = uprnAddressPair.address.split(", ")))
-                            )
+
+    val uprnOpt = uprnAddressPair.uprn match{
+      case Some(u) => Some(u.toLong)
+      case _ => None
+    }
+
+    UprnToAddressResponseDto(addressViewModel = Some(
+      AddressModel(uprn = uprnOpt, address = uprnAddressPair.address.split(", ")))
+    )
   }
 
   def responseValidForUprnToAddress: Future[WSResponse] = {

@@ -32,7 +32,7 @@ class CheckPreviousKeeperEndDateOrLastKeeperChangeDateAndCompareDateOfSale(webBr
     BusinessKeeperDetailsPage.postcodeField.value = "qq99qq"
     click on BusinessKeeperDetailsPage.next
     click on NewKeeperChooseYourAddressPage.select
-    NewKeeperChooseYourAddressPage.chooseAddress.value="0"
+    NewKeeperChooseYourAddressPage.chooseAddress.value=NewKeeperChooseYourAddressPage.defaultSelectedAddress
     click on NewKeeperChooseYourAddressPage.next
     pageTitle shouldBe DateOfSalePage.title withClue trackingId
   }
