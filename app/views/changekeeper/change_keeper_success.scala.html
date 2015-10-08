@@ -6,6 +6,7 @@
 @import views.html.helper.form
 @import views.changekeeper.ChangeKeeperSuccess.FinishId
 @import common.views.html.widgets.alertWarning
+@import common.views.html.widgets.alertSuccess
 @import common.views.html.widgets.base.csrfTokenHiddenField
 
 @main(
@@ -16,14 +17,12 @@
 
     <div class="second-col">
 
-        <div class="alert-complete">
-            <h1>@Messages("change_keeper_success.complete.header")</h1>
+        @alertSuccess(Some(Messages("change_keeper_success.complete.header"))){
             <p>@Messages("change_keeper_success.complete.p1")</p>
             @alertWarning() {
-              <p><strong>@Messages("change_keeper_success.complete.p2")</strong></p>
+                <p><strong>@Messages("change_keeper_success.complete.p2")</strong></p>
             }
-        </div>
-
+        }
 
         <h2>@Messages("change_keeper_success.further_information.header")</h2>
 
