@@ -20,7 +20,7 @@ class VrmLocked @Inject()()(implicit protected override val clientSideSessionFac
 
   protected override def presentResult(model: BruteForcePreventionModel)
                                       (implicit request: Request[_]): Result = {
-    logMessage(request.cookies.trackingId(), Debug, "Present VrmLocked page")
+    logMessage(request.cookies.trackingId(), Info, "Presenting VRM locked view")
     Ok(views.html.changekeeper.vrm_locked(
       VrmLockedViewModel(model.dateTimeISOChronology, DateTime.parse(model.dateTimeISOChronology).getMillis)
     ))

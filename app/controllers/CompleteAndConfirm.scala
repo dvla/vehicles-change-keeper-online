@@ -141,11 +141,9 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
       }
 
     result getOrElse Future.successful {
-      logMessage(request.cookies.trackingId(),
-        Warn,
-        s"Did not find expected cookie data on complete and confirm submit " +
+      val msg = "Did not find expected cookie data on complete and confirm submit " +
         s"- now redirecting to ${routes.VehicleLookup.present()}"
-      )
+      logMessage(request.cookies.trackingId(), Warn, msg)
       Redirect(routes.VehicleLookup.present()).discardingCookie(AllowGoingToCompleteAndConfirmPageCacheKey)
     }
   }
