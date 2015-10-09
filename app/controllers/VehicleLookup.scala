@@ -56,10 +56,10 @@ class VehicleLookup @Inject()(implicit bruteForceService: BruteForcePreventionSe
     Redirect(routes.VehicleLookupFailure.present())
   }
 
-  override def presentResult(implicit request: Request[_]) = Ok(
-    views.html.changekeeper.vehicle_lookup(
-      VehicleLookupViewModel(form.fill()))
-  )
+  override def presentResult(implicit request: Request[_]) = {
+    logMessage(request.cookies.trackingId(), Info, "Presenting vehicle lookup view")
+    Ok(views.html.changekeeper.vehicle_lookup(VehicleLookupViewModel(form.fill())))
+  }
 
   override def vehicleFoundResult(vehicleAndKeeperDetailsDto: VehicleAndKeeperLookupDetailsDto,
                                   formModel: VehicleLookupFormModel)

@@ -16,14 +16,15 @@ class MicroServiceError @Inject()(implicit clientSideSessionFactory: ClientSideS
   private final val DefaultRedirectUrl = BeforeYouStart.present().url
 
   def present = Action { implicit request =>
-    logMessage(request.cookies.trackingId(), Debug, "Present serviceUnavailable page")
-    ServiceUnavailable(views.html.changekeeper.micro_service_error())
+    val trackingId = request.cookies.trackingId()
+    logMessage(trackingId, Info, "Presenting micro service error view")
+    ServiceUnavailable(views.html.changekeeper.micro_service_error(trackingId))
   }
 
   def back = Action { implicit request =>
     val referrer: String = request.cookies.getString(MicroServiceError.MicroServiceErrorRefererCacheKey)
                                           .getOrElse(DefaultRedirectUrl)
-    logMessage(request.cookies.trackingId(), Debug, s"Microservice error page referrer $referrer")
+    logMessage(request.cookies.trackingId(), Debug, s"Micro service error page referrer $referrer")
     Redirect(referrer).discardingCookie(MicroServiceError.MicroServiceErrorRefererCacheKey)
   }
 }

@@ -18,8 +18,10 @@ class PrivateKeeperDetails @Inject()()
                                        config: Config) extends PrivateKeeperDetailsBase {
 
   protected override def presentResult(model: VehicleAndKeeperDetailsModel, form: Form[PrivateKeeperDetailsFormModel])
-                                      (implicit request: Request[_]): Result =
+                                      (implicit request: Request[_]): Result = {
+    logMessage(request.cookies.trackingId(), Info, "Presenting private keeper details view")
     Ok(views.html.changekeeper.private_keeper_details(model, form))
+  }
 
   protected override def missingVehicleDetails(implicit request: Request[_]): Result = {
     logMessage(request.cookies.trackingId(), Debug, s"Redirecting to ${routes.VehicleLookup.present()}")

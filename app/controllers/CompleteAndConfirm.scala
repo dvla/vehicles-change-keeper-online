@@ -57,18 +57,19 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
         newKeeperDetails <- request.cookies.getModel[NewKeeperDetailsViewModel]
         vehicleAndKeeperDetails <- request.cookies.getModel[VehicleAndKeeperDetailsModel]
         dateOfSaleModel <- request.cookies.getModel[DateOfSaleFormModel]
-      } yield Ok(
+      } yield {
+        logMessage(request.cookies.trackingId(), Info, "Presenting complete and confirm view")
+        Ok(
           complete_and_confirm(
             CompleteAndConfirmViewModel(
               form.fill(),
               vehicleAndKeeperDetails,
               newKeeperDetails,
               dateOfSaleModel
-            ),
-            dateService
+            ), dateService
           )
         )
-
+      }
       result getOrElse
         redirectToVehicleLookup(NoCookiesFoundMessage).discardingCookie(AllowGoingToCompleteAndConfirmPageCacheKey)
 
@@ -84,24 +85,22 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
             vehicleDetails <- request.cookies.getModel[VehicleAndKeeperDetailsModel]
             dateOfSaleModel <- request.cookies.getModel[DateOfSaleFormModel]
           } yield {
-              BadRequest(
-                complete_and_confirm(
-                  CompleteAndConfirmViewModel(formWithReplacedErrors(invalidForm),
-                    vehicleDetails,
-                    newKeeperDetails,
-                    dateOfSaleModel
-                  ),
-                  dateService
-                )
+            BadRequest(
+              complete_and_confirm(
+                CompleteAndConfirmViewModel(formWithReplacedErrors(invalidForm),
+                  vehicleDetails,
+                  newKeeperDetails,
+                  dateOfSaleModel
+                ),
+                dateService
               )
-            }
+            )
+          }
 
           result getOrElse {
-            logMessage(request.cookies.trackingId,
-              Warn,
-              s"Could not find expected data in cache on dispose submit - " +
+            val msg = "Could not find expected data in cache on dispose submit - " +
               s"now redirecting to ${routes.VehicleLookup.present()}"
-            )
+            logMessage(request.cookies.trackingId, Warn, msg)
             Redirect(routes.VehicleLookup.present()).discardingCookies()
           }
         },

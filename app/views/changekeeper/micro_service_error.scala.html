@@ -1,4 +1,4 @@
-@()(implicit lang: Lang,
+@(trackingId: uk.gov.dvla.vehicles.presentation.common.clientsidesession.TrackingId)(implicit lang: Lang,
 token: uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction.CsrfPreventionToken,
 config: utils.helpers.Config)
 
@@ -12,12 +12,13 @@ config: utils.helpers.Config)
 ){
     <h1>@Messages("micro_service_error.title")</h1>
     
-    <p>@Messages("micro_service_error.text")</p>
+    <p>@Messages("micro_service_error.text1")</p>
+    <p>@Messages("micro_service_error.text2", trackingId)</p>
 
     <div class="form-steps">
         @* Note the reverse routing syntax for the hyperlink *@
-        <a class="button" id="@TryAgainId" href="@MicroServiceError.back()"
-                >@Messages("micro_service_error.back.button")
+        <a class="button" id="@TryAgainId" href="@MicroServiceError.back()">
+            @Messages("micro_service_error.back.button")
         </a>
         <br/>
         <a class="exit" id="@ExitId" href="@BeforeYouStart.present()">

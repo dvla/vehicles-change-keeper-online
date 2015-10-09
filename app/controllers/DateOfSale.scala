@@ -41,6 +41,7 @@ class DateOfSale @Inject()(webService: AcquireService, emailService: EmailServic
         newKeeperDetails <- request.cookies.getModel[NewKeeperDetailsViewModel]
         vehicleAndKeeperDetails <- request.cookies.getModel[VehicleAndKeeperDetailsModel]
       } yield {
+          logMessage(request.cookies.trackingId(), Info, "Presenting date of sale view")
           Ok(
             date_of_sale(
               DateOfSaleViewModel(

@@ -22,7 +22,7 @@ class NewKeeperChooseYourAddress @Inject()(protected override val addressLookupS
                                   email: Option[String],
                                   addresses: Seq[(String, String)],
                                   isBusinessKeeper: Boolean,
-                                  fleetNumber: Option[String])(implicit request: Request[_]): Result = {
+                                  fleetNumber: Option[String])(implicit request: Request[_]): Result =
     BadRequest(new_keeper_choose_your_address(
       model,
       name,
@@ -33,7 +33,6 @@ class NewKeeperChooseYourAddress @Inject()(protected override val addressLookupS
       fleetNumber
       )
     )
-  }
 
   override protected def presentView(model: NewKeeperChooseYourAddressViewModel,
                             name: String,
@@ -42,7 +41,7 @@ class NewKeeperChooseYourAddress @Inject()(protected override val addressLookupS
                             addresses: Seq[(String, String)],
                             isBusinessKeeper: Boolean,
                             fleetNumber: Option[String])(implicit request: Request[_]): Result = {
-    
+    logMessage(request.cookies.trackingId(), Info, "Presenting new keeper choose your address view")
     Ok(views.html.changekeeper.new_keeper_choose_your_address(
       model, name, postcode, email, addresses, isBusinessKeeper, fleetNumber)
     )
@@ -67,5 +66,4 @@ class NewKeeperChooseYourAddress @Inject()(protected override val addressLookupS
     logMessage(request.cookies.trackingId(), Debug, s"Redirecting to ${routes.DateOfSale.present()}")
     Redirect(routes.DateOfSale.present())
   }
-  
 }

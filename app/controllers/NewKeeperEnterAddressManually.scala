@@ -21,8 +21,10 @@ class NewKeeperEnterAddressManually @Inject()()
 
   protected override def presentResult(model: VehicleAndKeeperDetailsModel, postcode: String,
                                        form: Form[NewKeeperEnterAddressManuallyFormModel])
-                                      (implicit request: Request[_]): Result =
+                                      (implicit request: Request[_]): Result = {
+    logMessage(request.cookies.trackingId(), Info, "Presenting new keeper enter address manually view")
     Ok(new_keeper_enter_address_manually(NewKeeperEnterAddressManuallyViewModel(form.fill(), model), postcode))
+  }
 
   protected override def missingVehicleDetails(implicit request: Request[_]): Result = {
     logMessage(request.cookies.trackingId(), Debug, s"Redirecting to ${routes.VehicleLookup.present()}")
