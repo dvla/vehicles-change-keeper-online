@@ -1,9 +1,25 @@
 @(model: uk.gov.dvla.vehicles.presentation.common.model.VehicleAndKeeperDetailsModel)(implicit lang: Lang)
 
-<dt><h2>@Messages("change_keeper_playback.vehicledetails")</h2></dt>
-<dt>@Messages("change_keeper_playback.vehiclereg")</dt>
-<dd>@model.registrationNumber</dd>
-<dt>@Messages("change_keeper_playback.vehiclemake")</dt>
-<dd>@model.make</dd>
-<dt>@Messages("change_keeper_playback.vehiclemodel")</dt>
-<dd>@model.model</dd>
+@import scala.collection.mutable.LinkedHashMap
+@import uk.gov.dvla.vehicles.presentation.common
+@import common.views.html.widgets.playbackList
+
+@playbackList(
+    Messages("change_keeper_playback.vehicledetails"),
+    {
+        val playbackItems: LinkedHashMap[String, String] = LinkedHashMap()
+        val flaggedRegNumberLabel: String = "REG_" + Messages("change_keeper_playback.vehiclereg")
+        playbackItems += (flaggedRegNumberLabel -> model.registrationNumber)
+
+        model.make match {
+            case Some(make) => playbackItems += (Messages("change_keeper_playback.vehiclemake") -> make)
+            case None => playbackItems
+        }
+
+        model.model match {
+            case Some(model) => playbackItems += (Messages("change_keeper_playback.vehiclemodel") -> model)
+            case None => playbackItems
+        }
+    }
+)()
+

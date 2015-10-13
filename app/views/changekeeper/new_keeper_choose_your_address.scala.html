@@ -29,9 +29,7 @@
 ) {
   <div class="two-col clearfix">
     <div class="first-col">
-      <dl class="playback">
-          @vehicle_detail_playback(viewModel.vehicleDetails)
-      </dl>
+      @vehicle_detail_playback(viewModel.vehicleDetails)
       @alertWarning(List("print-message")) {
         <p><strong>@Messages("change_keeper_newKeeperChooseYourAddress.p4")</strong></p>
       }

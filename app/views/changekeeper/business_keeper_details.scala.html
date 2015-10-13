@@ -36,11 +36,7 @@
     <div class="first-col">
 
         <h1 class="mobile-only">@Messages("change_keeper_businesskeeperdetails.title")</h1>
-
-        <dl class="playback">
-            @vehicle_detail_playback(viewModel.vehicleAndKeeperDetails)
-        </dl>
-
+        @vehicle_detail_playback(viewModel.vehicleAndKeeperDetails)
         @alertWarning(List("print-message")) {
             <p><strong>@Messages("change_keeper_businesskeeperdetails.p2")</strong></p>
         }
