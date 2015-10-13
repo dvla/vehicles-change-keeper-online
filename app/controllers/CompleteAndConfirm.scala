@@ -221,8 +221,9 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
               (implicit request: Request[_]) = {
     response.foreach(r => logResponse(r))
 
+    // NOTE: This is correct behaviour. Any response, regardless of http status, should be treated as a success.
     (httpResponseCode, response) match {
-      case (OK, Some(r)) =>
+      case (_, Some(r)) =>
         for { ms <- r.response } yield {
           if (ms.message == "ms.vehiclesService.response.furtherActionRequired") {
             logRequestRequiringFurtherAction(ms.code, r.acquireResponse.transactionId, acquireRequest)
@@ -231,7 +232,7 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
         }
         successReturn(vehicleDetails, keeperDetails, sellerEmailModel,
                       r.acquireResponse.transactionId, transactionTimestamp, trackingId)
-      case _ =>
+      case _ => // Should be Service Unavailable
         logMessage(request.cookies.trackingId,
           Error,
           s"Received http status code $httpResponseCode from microservice call. " +
