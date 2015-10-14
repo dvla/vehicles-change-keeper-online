@@ -512,7 +512,7 @@ error_suppressedV5C.button2 = Finish
 #micro-service error page
 micro_service_error.title=We are sorry
 micro_service_error.text1=The service is temporarily unavailable.
-micro_service_error.text2=If you need to contact support please quote reference {0}
+micro_service_error.text2=
 micro_service_error.back.button=Try again
 micro_service_error.exit.button=Exit
 
