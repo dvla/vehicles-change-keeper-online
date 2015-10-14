@@ -1,3 +1,19 @@
+======= 1.20 ========
+TIME OF RELEASE BINARIES CREATION:
+
+
+DE760 Missing sentence under Thank You on Summary page
+DE770 Android - Print, Notify Another Sale and Finish wording position
+US3792 Fix the error handling in some microservices (vehicles-and-keeper)
+US3810 Add 2nd Consent box for customers to to advise current keeper that VRN will be lost when they complete and confim
+US3814 Create and impliment Alert-Complete as a common widget in vehicles-presentation-common
+US3819 Create and implement playback and playback-list as common widgets in vehicles-presentation-common
+US3837 Add Warning Message to Vehicle Lookup Page Advising Customers not to use the Service if ........
+US3861 Message on Feedback Screen to Tell Customers that we wont reply to their questions
+US3866 Revisit os-address-lookup to improve the microservice return response
+US3890 Add transaction completed logging in each exemplar
+US3903 Audit the logging
+
 ======= 1.19 ========
 TIME OF RELEASE BINARIES CREATION:
 Wed Sep 30 10:15:10 UTC 2015
