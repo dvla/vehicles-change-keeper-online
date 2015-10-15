@@ -38,7 +38,7 @@
 
         <div class="first-col">
             <h1 class="mobile-only">@Messages("change_keeper_privatekeeperdetails.title")</h1>
-            @vehicle_detail_playback(data)
+            @vehicle_detail_playback(data)()
             @alertWarning(List("print-message")) {
               <p><strong>@Messages("change_keeper_privatekeeperdetails.p3")</strong></p>
             }
