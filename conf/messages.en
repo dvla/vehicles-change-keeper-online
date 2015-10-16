@@ -276,6 +276,7 @@ change_keeper_newKeeperEnterAddressManually.p4 = If the details above do not mat
 
 #page 5 - complete and confirm
 change_keeper_completeAndConfirm.title = Complete and confirm
+change_keeper_completeAndConfirm.warning = Please check that all of the information shown below is correct and use the 'back button' to amend any errors if necessary.
 change_keeper_completeandconfirm.taxOrSorn = Tax or SORN
 change_keeper_completeandconfirm.sornEntered = SORN from today
 change_keeper_completeandconfirm.sornNotEntered = This vehicle is taxed, or will be taxed
