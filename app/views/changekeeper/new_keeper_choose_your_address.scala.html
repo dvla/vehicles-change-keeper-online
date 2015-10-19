@@ -59,7 +59,7 @@
         @if(newKeeperEmail == None) {
           <dd>@Messages("change_keeper_newKeeperChooseYourAddress.emailNotEntered")</dd>
         } else {
-          <dd>@newKeeperEmail.get</dd>
+          <dd><span class="lowercase-text">@newKeeperEmail.get</span></dd>
         }
         <dt>@Messages("change_keeper_newKeeperChooseYourAddress_newKeeperpostcode_label")</dt>
         <dd>@newKeeperPostcode</dd>

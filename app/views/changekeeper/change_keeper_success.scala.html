@@ -64,16 +64,16 @@
             <div class="info-notice">
                 <dl class="playback">
                     <dt>@Messages("change_keeper_success.vehicle_details.registration_number")</dt>
-                    <dd class="uppercase-text">@viewModel.vehicleAndKeeperDetails.registrationNumber</dd>
+                    <dd>@viewModel.vehicleAndKeeperDetails.registrationNumber</dd>
                     <dt>@Messages("change_keeper_success.vehicle_details.make")</dt>
-                    <dd class="uppercase-text">@viewModel.vehicleAndKeeperDetails.make</dd>
+                    <dd>@viewModel.vehicleAndKeeperDetails.make</dd>
                     <dt>@Messages("change_keeper_success.vehicle_details.model")</dt>
-                    <dd class="uppercase-text">@viewModel.vehicleAndKeeperDetails.model</dd>
+                    <dd>@viewModel.vehicleAndKeeperDetails.model</dd>
                     <dt>@Messages("change_keeper_success.vehicle_details.mileage")</dt>
                     @if(viewModel.dateOfSaleViewModel.mileage == None) {
-                    <dd class="uppercase-text">@Messages("change_keeper_success.vehicle_details.mileage_not_entered")</dd>
+                    <dd>@Messages("change_keeper_success.vehicle_details.mileage_not_entered")</dd>
                     } else {
-                    <dd class="uppercase-text">@{java.text.NumberFormat.getIntegerInstance().format(viewModel.dateOfSaleViewModel.mileage.get)}</dd>
+                    <dd>@{java.text.NumberFormat.getIntegerInstance().format(viewModel.dateOfSaleViewModel.mileage.get)}</dd>
                     }
                 </dl>
             </div>
@@ -83,13 +83,17 @@
             <div class="info-notice">
                 <dl class="playback">
                     <dt>@Messages("change_keeper_success.vehicle_details.name")</dt>
-                    <dd class="uppercase-text">@viewModel.newKeeperDetails.displayName</dd>
+                    <dd>@viewModel.newKeeperDetails.displayName</dd>
                     <dt>@Messages("change_keeper_success.vehicle_details.address")</dt>
-                    <dd class="uppercase-text">@for(addr <- viewModel.newKeeperDetails.address.address) {@addr<br/>}</dd>
+                    <dd>@for(addr <- viewModel.newKeeperDetails.address.address) {@addr<br/>}</dd>
                     <dt>@Messages("change_keeper_success.vehicle_details.email")</dt>
-                    <dd class="uppercase-text">@viewModel.newKeeperDetails.email.getOrElse(Messages("change_keeper_email_not_entered"))</dd>
-                    <dt >@Messages("change_keeper_success.date_of_sale.label")</dt>
-                    <dd >@viewModel.dateOfSaleViewModel.dateOfSale.toString("dd/MM/yyyy")</dd>
+                    @if(viewModel.newKeeperDetails.email == None) {
+                    <dd>@Messages("change_keeper_email_not_entered")</dd>
+                    } else {
+                    <dd><span class="lowercase-text">@viewModel.newKeeperDetails.email.get</span></dd>
+                    }
+                    <dt>@Messages("change_keeper_success.date_of_sale.label")</dt>
+                    <dd>@viewModel.dateOfSaleViewModel.dateOfSale.toString("dd/MM/yyyy")</dd>
                 </dl>
             </div>
         </div>
