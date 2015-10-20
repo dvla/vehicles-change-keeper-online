@@ -7,10 +7,11 @@
 @import controllers.routes.CompleteAndConfirm
 @import uk.gov.dvla.vehicles.presentation.common
 @import common.mappings.Mileage
-@import common.views.html.widgets.dates.inputDayMonthYearTextbox
+@import common.views.html.widgets.dates.valtechDate
 @import common.views.html.widgets.base.csrfTokenHiddenField
 @import common.views.helpers.BaseTemplate.fieldConstructor
 @import common.views.html.widgets.base.{valtechInputText, valtechDeclareCheck}
+@import common.views.html.widgets.dates.valtechDate
 @import common.views.helpers.LabelHelper.optionalFieldKey
 @import models.DateOfSaleFormModel.Form.{MileageId, DateOfSaleId, TodaysDateId}
 @import views.changekeeper.CompleteAndConfirm.{BackId, SubmitId, modify}
@@ -52,16 +53,11 @@
                             </p>
                         }
                         <div id=@DateOfSaleId>
-                        @inputDayMonthYearTextbox(
-                            field = data.form(DateOfSaleId),
-                            args = Map(
-                                '_label -> Messages("change_keeper_completeAndConfirm.dateofsale.label")
-                            ),
-                            dateService = dateService,
-                            showTodaysDateButton = false,
-                            showTodaysDateButtonId = Some(TodaysDateId),
-                            hintText = Some(Messages("change_keeper_completeandconfirm.dateofsale.hint"))
-                        )
+                            @valtechDate(
+                                field = data.form(DateOfSaleId),
+                                labelText = Messages("change_keeper_completeAndConfirm.dateofsale.label"),
+                                hintText = Some(Messages("change_keeper_completeandconfirm.dateofsale.hint"))
+                            )
                         </div>
 
                         <div class="form-steps">
@@ -81,26 +77,18 @@
 
                 <div id=@DateOfSaleId class="form-steps">
                 @if(data.isSaleDateInvalid) {
-                    @inputDayMonthYearTextbox(
+                    @valtechDate(
                         field = data.form(DateOfSaleId),
+                        labelText = Messages("change_keeper_completeAndConfirm.dateofsale.label"),
+                        hintText = Some(Messages("change_keeper_completeandconfirm.dateofsale.hint")),
                         args = Map(
-                            'tabindex -> -1,
-                            '_label -> Messages("change_keeper_completeAndConfirm.dateofsale.label")
-                        ),
-                        dateService = dateService,
-                        showTodaysDateButton = false,
-                        showTodaysDateButtonId = Some(TodaysDateId),
-                        hintText = Some(Messages("change_keeper_completeandconfirm.dateofsale.hint"))
+                            'tabindex -> -1
+                        )
                     )
                 } else {
-                    @inputDayMonthYearTextbox(
+                    @valtechDate(
                         field = data.form(DateOfSaleId),
-                        args = Map(
-                            '_label -> Messages("change_keeper_completeAndConfirm.dateofsale.label")
-                        ),
-                        dateService = dateService,
-                        showTodaysDateButton = false,
-                        showTodaysDateButtonId = Some(TodaysDateId),
+                        labelText = Messages("change_keeper_completeAndConfirm.dateofsale.label"),
                         hintText = Some(Messages("change_keeper_completeandconfirm.dateofsale.hint"))
                     )
                 }
