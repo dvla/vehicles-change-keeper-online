@@ -3,7 +3,6 @@ package views.changekeeper
 import composition.TestHarness
 import helpers.CookieFactoryForUISpecs
 import helpers.UiSpec
-import models.VehicleLookupFormModel.VehicleLookupResponseCodeCacheKey
 import org.openqa.selenium.WebDriver
 import pages.changekeeper.{BeforeYouStartPage, VehicleLookupFailurePage, VehicleLookupPage}
 import pages.changekeeper.VehicleLookupFailurePage.{beforeYouStart, vehicleLookup}
@@ -47,13 +46,6 @@ final class VehicleLookupFailureIntegrationSpec extends UiSpec with TestHarness 
       CookieFactoryForUISpecs.vehicleLookupFormModel()
       go to VehicleLookupFailurePage
       pageTitle should equal(BeforeYouStartPage.title)
-    }
-
-    "remove redundant cookies when displayed" taggedAs UiTag in new PhantomJsByDefault {
-      go to BeforeYouStartPage
-      cacheSetup()
-      go to VehicleLookupFailurePage
-      webDriver.manage().getCookieNamed(VehicleLookupResponseCodeCacheKey) should equal(null)
     }
 
     "display messages that show that the number of brute force attempts does not impact which messages are displayed " +

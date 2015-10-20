@@ -1,5 +1,4 @@
-@(data: models.VehicleLookupFormModel,
-        responseCodeVehicleLookupMSErrorMessage: String)(implicit lang: Lang,
+@(data: models.VehicleLookupFormModel)(implicit lang: Lang,
         token: uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction.CsrfPreventionToken,
         config: utils.helpers.Config)
 
@@ -11,10 +10,10 @@
 ) {
 
     <h1>@Messages("change_keeper_vehiclelookupfailure.title")</h1>
-
-    <p>@Messages(s"$responseCodeVehicleLookupMSErrorMessage.p1")</p>
-    <p>@Messages(s"$responseCodeVehicleLookupMSErrorMessage.p2")</p>
-    <p>@Messages(s"$responseCodeVehicleLookupMSErrorMessage.p3")</p>
+    <p>@Messages("vehicle_and_keeper_lookup_failure.p0")</p>
+    <p>@Messages("vehicle_and_keeper_lookup_failure.p1")</p>
+    <p>@Messages("vehicle_and_keeper_lookup_failure.p2")</p>
+    <p>@Messages("vehicle_and_keeper_lookup_failure.p3")</p>
 
     <br>
 
