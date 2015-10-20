@@ -40,16 +40,6 @@ class VehicleLookupFailureUnitSpec extends UnitSpec {
       }
     }
 
-    "redirect to before you start if only vehicleLookupResponseCode is not in cache" in new WithApplication {
-      val request = FakeRequest()
-        .withCookies(CookieFactoryForUnitSpecs.bruteForcePreventionViewModel())
-        .withCookies(CookieFactoryForUnitSpecs.vehicleLookupFormModel())
-      val result = vehicleLookupFailure.present(request)
-      whenReady(result) { r =>
-        r.header.headers.get(LOCATION) should equal(Some(BeforeYouStartPage.address))
-      }
-    }
-
     "not display progress bar" in new WithApplication {
       contentAsString(present) should not include "Step "
     }
