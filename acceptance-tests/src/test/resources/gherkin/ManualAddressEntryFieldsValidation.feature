@@ -27,11 +27,6 @@
       When the user has selected the submit control
       Then there is a error message displayed "Town or city must contain between 3 and 20 characters"
 
-    Scenario: - Postcode - non editable
-      Given the user has entered a postcode on either the private or business keeper page
-      When the manual address page is invoked
-      Then the postcode field is prepopulated and is non editable
-
     Scenario:
       Given the user is on the manual address page
       When the user has selected the submit control

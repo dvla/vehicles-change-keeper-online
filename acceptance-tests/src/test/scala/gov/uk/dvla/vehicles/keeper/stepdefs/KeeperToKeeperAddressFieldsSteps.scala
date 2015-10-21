@@ -111,14 +111,6 @@ class KeeperToKeeperAddressFieldsSteps(webBrowserDriver: WebBrowserDriver)
     NewKeeperEnterAddressManuallyPage.addressPostTown.value = "df"
   }
 
-  @When("^the manual address page is invoked$")
-  def the_manual_address_page_is_invoked()  {
-  }
-
-  @Then("^the postcode field is prepopulated and is non editable$")
-  def the_postcode_field_is_prepopulated_and_is_non_editable() {
-  }
-
   @Given("^the user is on the manual address page$")
   def the_user_is_on_the_manual_address_page() {
     goToEnterKeeperAddressManuallyPage()

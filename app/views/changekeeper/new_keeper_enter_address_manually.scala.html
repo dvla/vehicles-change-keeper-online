@@ -1,5 +1,4 @@
-@(viewModel: uk.gov.dvla.vehicles.presentation.common.model.NewKeeperEnterAddressManuallyViewModel,
-  newKeeperPostcode: String)(implicit lang: Lang,
+@(viewModel: uk.gov.dvla.vehicles.presentation.common.model.NewKeeperEnterAddressManuallyViewModel)(implicit lang: Lang,
   token: uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction.CsrfPreventionToken,
   config: utils.helpers.Config)
 
@@ -43,8 +42,6 @@
 
             @addressAndPostcode(viewModel.form(AddressAndPostcodeId))
 
-            <legend>@Messages("address.postcode.label")</legend>
-            <div class="read-only-input">@newKeeperPostcode</div>
             <div class="form-steps">
                 <button id="@NextId" type="submit" name="action" class="button">
                     @Messages("change_keeper_newKeeperEnterAddressManually.submitbutton")

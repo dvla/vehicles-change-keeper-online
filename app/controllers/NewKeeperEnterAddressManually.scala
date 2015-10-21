@@ -19,11 +19,11 @@ class NewKeeperEnterAddressManually @Inject()()
                                              (implicit clientSideSessionFactory: ClientSideSessionFactory,
                                               config: Config) extends NewKeeperEnterAddressManuallyBase {
 
-  protected override def presentResult(model: VehicleAndKeeperDetailsModel, postcode: String,
+  protected override def presentResult(model: VehicleAndKeeperDetailsModel,
                                        form: Form[NewKeeperEnterAddressManuallyFormModel])
                                       (implicit request: Request[_]): Result = {
     logMessage(request.cookies.trackingId(), Info, "Presenting new keeper enter address manually view")
-    Ok(new_keeper_enter_address_manually(NewKeeperEnterAddressManuallyViewModel(form.fill(), model), postcode))
+    Ok(new_keeper_enter_address_manually(NewKeeperEnterAddressManuallyViewModel(form, model)))
   }
 
   protected override def missingVehicleDetails(implicit request: Request[_]): Result = {
@@ -31,11 +31,11 @@ class NewKeeperEnterAddressManually @Inject()()
     Redirect(routes.VehicleLookup.present())
   }
 
-  protected override def invalidFormResult(model: VehicleAndKeeperDetailsModel, postcode: String,
+  protected override def invalidFormResult(model: VehicleAndKeeperDetailsModel,
                                            form: Form[NewKeeperEnterAddressManuallyFormModel])
                                           (implicit request: Request[_]): Result =
     BadRequest(new_keeper_enter_address_manually(
-      NewKeeperEnterAddressManuallyViewModel(formWithReplacedErrors(form), model), postcode))
+      NewKeeperEnterAddressManuallyViewModel(formWithReplacedErrors(form), model)))
 
   protected override def success(implicit request: Request[_]): Result = {
     logMessage(request.cookies.trackingId(), Debug, s"Redirecting to ${routes.DateOfSale.present()}")

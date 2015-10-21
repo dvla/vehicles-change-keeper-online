@@ -3,6 +3,7 @@ package pages.changekeeper
 import org.openqa.selenium.WebDriver
 import uk.gov.dvla.vehicles.presentation.common
 import common.helpers.webbrowser.{Page, WebDriverFactory}
+import common.views.models.AddressAndPostcodeViewModel.Form.PostcodeId
 import common.views.models.AddressLinesViewModel
 import AddressLinesViewModel.Form.{AddressLinesId, BuildingNameOrNumberId, Line2Id, Line3Id, PostTownId}
 import common.model.NewKeeperEnterAddressManuallyFormModel.Form.AddressAndPostcodeId
@@ -29,6 +30,9 @@ object NewKeeperEnterAddressManuallyPage extends Page {
 
   def addressPostTown(implicit driver: WebDriver): TextField =
     textField(id(s"${AddressAndPostcodeId}_${AddressLinesId}_$PostTownId"))
+
+  def addressPostCode(implicit driver: WebDriver): TextField =
+    textField(id(s"${AddressAndPostcodeId}_$PostcodeId"))
 
   def next(implicit driver: WebDriver): Element = find(id(NextId)).get
 
