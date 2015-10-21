@@ -83,8 +83,8 @@ class CompleteAndConfirmSteps(webBrowserDriver: WebBrowserDriver)
     pageTitle shouldEqual ChangeKeeperSuccessPage.title withClue trackingId
   }
   @Then("^an error message displayed \"(.*?)\"$")
-  def an_error_message_displayed(err:String): Unit =  {
-    pageSource.contains("Transaction Unsuccessful")
+  def an_error_message_displayed(err: String): Unit =  {
+    pageSource should include(err)
   }
 
   @When("^The user clicks back on Complete and Confirm page$")

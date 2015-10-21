@@ -28,10 +28,9 @@ Feature: Minimum Happy and Sad Path Acceptance Tests for Keeper to Keeper
     Then the user will be on unsuccesful postcode Private keeper complete and confirm page and click on confirm sale button
     And  the user will be taken to Unsuccesful postcode private keeper details page succesful summary page
 
-  Scenario:Private Keeper Sad Path with unsuccessful postcode failure screen
-    When the keeper sold the vehicle to the private keeper after entering valid registration and doc ref number and click on submit button
-    When the trader entered through unsuccessful postcode lookup private keeper failure data
-    Then the user will be on unsuccesful postcode Private keeper complete and confirm page and click on confirm sale button with failure data
-    And  the user will be taken to Unsuccesful postcode private keeper details page failure summary page
-
-
+# FIXME: Should never get to the failure page?
+#  Scenario:Private Keeper Sad Path with unsuccessful postcode failure screen
+#    When the keeper sold the vehicle to the private keeper after entering valid registration and doc ref number and click on submit button
+#    And  the trader entered through unsuccessful postcode lookup private keeper failure data
+#    Then the user will be on unsuccesful postcode Private keeper complete and confirm page and click on confirm sale button with failure data
+#    And  the user will be taken to Unsuccesful postcode private keeper details page failure summary page

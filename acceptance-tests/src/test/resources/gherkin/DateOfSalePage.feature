@@ -30,7 +30,7 @@ Feature:complete and confirm page field validation
   Scenario: Date of Sale-validation feature date
     When  the Date of sale is in the future
     And   the user click on the next button
-    Then  an error message displayed "Date of sale cannot be in the future"
+    Then  an error message displayed "Date of sale - Must be a valid date DD MM YYYY and not be in the future."
 
   Scenario: Date of Sale - Incomplete
     When  the Date of sale is incomplete
