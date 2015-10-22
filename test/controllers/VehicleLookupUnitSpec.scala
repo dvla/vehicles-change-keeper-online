@@ -87,8 +87,8 @@ class VehicleLookupUnitSpec extends UnitSpec {
       "Document reference number - Document reference number must be an 11-digit number".
         r.findAllIn(contentAsString(result)).length should equal(1)
       // check the form item validation
-      "\"error\">Document reference number must be an 11-digit number".
-        r.findAllIn(contentAsString(result)).length should equal(1)
+      "\"error\">Document reference number must be an 11-digit number"
+        .r.findAllIn(contentAsString(result)).length should equal(1)
     }
 
     "replace required and min length error messages for document reference number " +
@@ -96,11 +96,11 @@ class VehicleLookupUnitSpec extends UnitSpec {
       val request = buildCorrectlyPopulatedRequest(referenceNumber = "")
       val result = vehicleLookupResponseGenerator().submit(request)
       // check the validation summary text
-      "Document reference number - Document reference number must be an 11-digit number".
-        r.findAllIn(contentAsString(result)).length should equal(1)
+      "Document reference number - Document reference number must be an 11-digit number"
+        .r.findAllIn(contentAsString(result)).length should equal(1)
       // check the form item validation
-      "\"error\">Document reference number must be an 11-digit number".
-        r.findAllIn(contentAsString(result)).length should equal(1)
+      "\"error\">Document reference number must be an 11-digit number"
+        .r.findAllIn(contentAsString(result)).length should equal(1)
     }
 
     "replace max length error message for vehicle registration number " +

@@ -35,7 +35,6 @@ class DateOfSaleUnitSpec extends UnitSpec {
       replacementMileageErrorMessage.r.findAllIn(contentAsString(result)).length should equal(2)
     }
 
-
     "return a bad request if date of sale is not entered" in new WithApplication {
       val request = buildCorrectlyPopulatedRequest(dayDateOfSale = "", monthDateOfSale = "", yearDateOfSale = "")
         .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())

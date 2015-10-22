@@ -15,6 +15,7 @@ import uk.gov.dvla.vehicles.presentation.common.testhelpers.CookieHelper.verifyC
 import utils.helpers.Config
 
 class HelpUnitSpec extends UnitSpec {
+
   "present" should {
     "display the help page" in new WithApplication {
       status(present) should equal(OK)
@@ -44,8 +45,7 @@ class HelpUnitSpec extends UnitSpec {
 
     "write help cookie" in new WithApplication {
       val origin = VehicleLookupPage.address
-      val request = FakeRequest().
-        withHeaders(REFERER -> origin)
+      val request = FakeRequest().withHeaders(REFERER -> origin)
       // Set the previous page.
       val result = help.present(request)
       whenReady(result) { r =>
@@ -67,8 +67,8 @@ class HelpUnitSpec extends UnitSpec {
     }
 
     "redirect to previous page and discard the referer cookie" in new WithApplication {
-      val request = FakeRequest().
-        withCookies(CookieFactoryForUnitSpecs.help(origin = VehicleLookupPage.address))
+      val request = FakeRequest()
+        .withCookies(CookieFactoryForUnitSpecs.help(origin = VehicleLookupPage.address))
       val result = help.back(request)
       whenReady(result) { r =>
         r.header.headers.get(LOCATION) should equal(Some(VehicleLookupPage.address))

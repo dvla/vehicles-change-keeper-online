@@ -116,8 +116,8 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
     }
 
     "play back business keeper details as expected" in new WithApplication() {
-      val request = FakeRequest().
-        withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel(
+      val request = FakeRequest()
+        .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel(
         businessName = Some(BusinessNameValid),
         fleetNumber = Some(FleetNumberValid),
         email = Some(EmailValid),

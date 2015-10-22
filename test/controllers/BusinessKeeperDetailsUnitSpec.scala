@@ -45,9 +45,9 @@ class BusinessKeeperDetailsUnitSpec extends UnitSpec {
     }
 
     "display populated fields when cookie exists" in new WithApplication {
-      val request = FakeRequest().
-        withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
-        withCookies(CookieFactoryForUnitSpecs.businessKeeperDetailsModel())
+      val request = FakeRequest()
+        .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
+        .withCookies(CookieFactoryForUnitSpecs.businessKeeperDetailsModel())
       val result = businessKeeperDetails.present(request)
       val content = contentAsString(result)
       content should include(s"""value="$FleetNumberValid"""")

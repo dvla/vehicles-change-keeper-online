@@ -11,9 +11,9 @@ class BeforeYouStart @Inject()()(implicit clientSideSessionFactory: ClientSideSe
                                        config: Config) extends Controller {
 
   def present = Action { implicit request =>
-    Ok(views.html.changekeeper.before_you_start()).
-      withNewSession.
-      discardingCookies(AllCacheKeys)
+    Ok(views.html.changekeeper.before_you_start())
+      .withNewSession
+      .discardingCookies(AllCacheKeys)
   }
 
   def submit = Action { implicit request =>

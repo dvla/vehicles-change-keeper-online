@@ -70,12 +70,12 @@ class ChangeKeeperSuccessUnitSpec extends UnitSpec {
       "when all cookies are present for new keeper success" in new WithApplication {
       val fmt = DateTimeFormat.forPattern("dd/MM/yyyy")
 
-      val request = FakeRequest().
-        withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
-        withCookies(CookieFactoryForUnitSpecs.dateOfSaleModel()).
-        withCookies(CookieFactoryForUnitSpecs.completeAndConfirmModel()).
-        withCookies(CookieFactoryForUnitSpecs.completeAndConfirmResponseModelModel()).
-        withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel(
+      val request = FakeRequest()
+        .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
+        .withCookies(CookieFactoryForUnitSpecs.dateOfSaleModel())
+        .withCookies(CookieFactoryForUnitSpecs.completeAndConfirmModel())
+        .withCookies(CookieFactoryForUnitSpecs.completeAndConfirmResponseModelModel())
+        .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel(
         firstName = Some(FirstNameValid),
         lastName = Some(LastNameValid),
         email = Some(EmailValid)
@@ -99,12 +99,12 @@ class ChangeKeeperSuccessUnitSpec extends UnitSpec {
       "when all cookies are present for new keeper success" in new WithApplication {
       val fmt = DateTimeFormat.forPattern("dd/MM/yyyy")
 
-      val request = FakeRequest().
-        withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
-        withCookies(CookieFactoryForUnitSpecs.dateOfSaleModel()).
-        withCookies(CookieFactoryForUnitSpecs.completeAndConfirmModel()).
-        withCookies(CookieFactoryForUnitSpecs.completeAndConfirmResponseModelModel()).
-        withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel(
+      val request = FakeRequest()
+        .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
+        .withCookies(CookieFactoryForUnitSpecs.dateOfSaleModel())
+        .withCookies(CookieFactoryForUnitSpecs.completeAndConfirmModel())
+        .withCookies(CookieFactoryForUnitSpecs.completeAndConfirmResponseModelModel())
+        .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel(
         businessName = Some(BusinessNameValid),
         fleetNumber = Some(FleetNumberValid),
         email = Some(EmailValid)
@@ -126,12 +126,12 @@ class ChangeKeeperSuccessUnitSpec extends UnitSpec {
 
     "contain code in the page source to open the survey in a new tab " +
       "when a survey url is configured" in new WithApplication {
-      val request = FakeRequest().
-        withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
-        withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel()).
-        withCookies(CookieFactoryForUnitSpecs.dateOfSaleModel()).
-        withCookies(CookieFactoryForUnitSpecs.completeAndConfirmModel()).
-        withCookies(CookieFactoryForUnitSpecs.completeAndConfirmResponseModelModel())
+      val request = FakeRequest()
+        .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
+        .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
+        .withCookies(CookieFactoryForUnitSpecs.dateOfSaleModel())
+        .withCookies(CookieFactoryForUnitSpecs.completeAndConfirmModel())
+        .withCookies(CookieFactoryForUnitSpecs.completeAndConfirmResponseModelModel())
 
       val result = changeKeeperSuccessWithMockConfig(mockSurveyConfig()).present(request)
       val expectedContent = s"window.open('$testUrl', '_blank')"
@@ -140,12 +140,12 @@ class ChangeKeeperSuccessUnitSpec extends UnitSpec {
 
     "not contain code in the page source to open the survey in a new tab " +
       "when a survey url is configured" in new WithApplication {
-      val request = FakeRequest().
-        withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
-        withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel()).
-        withCookies(CookieFactoryForUnitSpecs.dateOfSaleModel()).
-        withCookies(CookieFactoryForUnitSpecs.completeAndConfirmModel()).
-        withCookies(CookieFactoryForUnitSpecs.completeAndConfirmResponseModelModel())
+      val request = FakeRequest()
+        .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
+        .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
+        .withCookies(CookieFactoryForUnitSpecs.dateOfSaleModel())
+        .withCookies(CookieFactoryForUnitSpecs.completeAndConfirmModel())
+        .withCookies(CookieFactoryForUnitSpecs.completeAndConfirmResponseModelModel())
 
       val result = changeKeeperSuccessWithMockConfig(mockSurveyConfig(surveyUrl = None)).present(request)
       val expectedContent = s"window.open('$testUrl', '_blank')"
@@ -155,13 +155,13 @@ class ChangeKeeperSuccessUnitSpec extends UnitSpec {
 
   "finish" should {
     "discard the vehicle, new keeper and confirm cookies" in {
-      val request = FakeRequest().
-        withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
-        withCookies(CookieFactoryForUnitSpecs.vehicleLookupFormModel()).
-        withCookies(CookieFactoryForUnitSpecs.dateOfSaleModel()).
-        withCookies(CookieFactoryForUnitSpecs.completeAndConfirmModel()).
-        withCookies(CookieFactoryForUnitSpecs.completeAndConfirmResponseModelModel()).
-        withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
+      val request = FakeRequest()
+        .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
+        .withCookies(CookieFactoryForUnitSpecs.vehicleLookupFormModel())
+        .withCookies(CookieFactoryForUnitSpecs.dateOfSaleModel())
+        .withCookies(CookieFactoryForUnitSpecs.completeAndConfirmModel())
+        .withCookies(CookieFactoryForUnitSpecs.completeAndConfirmResponseModelModel())
+        .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
 
       val result = changeKeeperSuccess.finish(request)
       whenReady(result) { r =>
@@ -179,13 +179,13 @@ class ChangeKeeperSuccessUnitSpec extends UnitSpec {
     }
 
     "redirect to the before you start page" in {
-      val request = FakeRequest().
-        withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
-        withCookies(CookieFactoryForUnitSpecs.vehicleLookupFormModel()).
-        withCookies(CookieFactoryForUnitSpecs.dateOfSaleModel()).
-        withCookies(CookieFactoryForUnitSpecs.completeAndConfirmModel()).
-        withCookies(CookieFactoryForUnitSpecs.completeAndConfirmResponseModelModel()).
-        withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
+      val request = FakeRequest()
+        .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
+        .withCookies(CookieFactoryForUnitSpecs.vehicleLookupFormModel())
+        .withCookies(CookieFactoryForUnitSpecs.dateOfSaleModel())
+        .withCookies(CookieFactoryForUnitSpecs.completeAndConfirmModel())
+        .withCookies(CookieFactoryForUnitSpecs.completeAndConfirmResponseModelModel())
+        .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
 
       val result = changeKeeperSuccess.finish(request)
       whenReady(result) { r =>
@@ -199,12 +199,12 @@ class ChangeKeeperSuccessUnitSpec extends UnitSpec {
   }
 
   private lazy val present = {
-    val request = FakeRequest().
-      withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
-      withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel()).
-      withCookies(CookieFactoryForUnitSpecs.dateOfSaleModel()).
-      withCookies(CookieFactoryForUnitSpecs.completeAndConfirmModel()).
-      withCookies(CookieFactoryForUnitSpecs.completeAndConfirmResponseModelModel())
+    val request = FakeRequest()
+      .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
+      .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
+      .withCookies(CookieFactoryForUnitSpecs.dateOfSaleModel())
+      .withCookies(CookieFactoryForUnitSpecs.completeAndConfirmModel())
+      .withCookies(CookieFactoryForUnitSpecs.completeAndConfirmResponseModelModel())
     changeKeeperSuccess.present(request)
   }
 

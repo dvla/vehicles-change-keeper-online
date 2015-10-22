@@ -18,19 +18,19 @@ class CompleteAndConfirmFormSpec extends UnitSpec {
     }
 
     "reject if form has no fields completed" in new WithApplication {
-      formWithValidDefaults(regRight = "", consent = "").
-        errors.flatMap(_.messages) should contain theSameElementsAs
+      formWithValidDefaults(regRight = "", consent = "")
+        .errors.flatMap(_.messages) should contain theSameElementsAs
         List("error.required", "error.required")
 
     }
     "reject if right to registration is not completed" in new WithApplication {
-      formWithValidDefaults(regRight = "", consent = ConsentTrue).
-        errors.flatMap(_.messages) should contain theSameElementsAs
+      formWithValidDefaults(regRight = "", consent = ConsentTrue)
+        .errors.flatMap(_.messages) should contain theSameElementsAs
         List("error.required")
     }
     "reject if consent is not completed" in new WithApplication {
-      formWithValidDefaults(regRight = ConsentTrue, consent = "").
-        errors.flatMap(_.messages) should contain theSameElementsAs
+      formWithValidDefaults(regRight = ConsentTrue, consent = "")
+        .errors.flatMap(_.messages) should contain theSameElementsAs
         List("error.required")
     }
   }

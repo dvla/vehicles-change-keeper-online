@@ -55,9 +55,9 @@ class NewKeeperEnterAddressManuallyUnitSpec extends UnitSpec {
 
     "redirect to VehicleLookup page when present is called " +
       "and both keeper types are cached in error" in new WithApplication {
-      val request = FakeRequest().
-        withCookies(CookieFactoryForUnitSpecs.privateKeeperDetailsModel()).
-        withCookies(CookieFactoryForUnitSpecs.businessKeeperDetailsModel())
+      val request = FakeRequest()
+        .withCookies(CookieFactoryForUnitSpecs.privateKeeperDetailsModel())
+        .withCookies(CookieFactoryForUnitSpecs.businessKeeperDetailsModel())
       val result = newKeeperEnterAddressManually.present(request)
       whenReady(result) { r =>
         r.header.headers.get(LOCATION) should equal(Some(VehicleLookupPage.address))
@@ -65,10 +65,10 @@ class NewKeeperEnterAddressManuallyUnitSpec extends UnitSpec {
     }
 
     "display populated fields when cookie exists" in new WithApplication {
-      val request = FakeRequest().
-        withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
-        withCookies(CookieFactoryForUnitSpecs.privateKeeperDetailsModel()).
-        withCookies(CookieFactoryForUnitSpecs.newKeeperEnterAddressManually())
+      val request = FakeRequest()
+        .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
+        .withCookies(CookieFactoryForUnitSpecs.privateKeeperDetailsModel())
+        .withCookies(CookieFactoryForUnitSpecs.newKeeperEnterAddressManually())
       val result = newKeeperEnterAddressManually.present(request)
       val content = contentAsString(result)
       content should include(filledValue(BuildingNameOrNumberValid))
@@ -106,9 +106,9 @@ class NewKeeperEnterAddressManuallyUnitSpec extends UnitSpec {
       val request = FakeRequest().withFormUrlEncodedBody(
         s"$AddressAndPostcodeId.$AddressLinesId.$BuildingNameOrNumberId" -> BuildingNameOrNumberValid,
         s"$AddressAndPostcodeId.$AddressLinesId.$PostTownId" -> PostTownValid,
-        s"$AddressAndPostcodeId.$PostcodeId" -> PostcodeValid).
-        withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
-        withCookies(CookieFactoryForUnitSpecs.businessKeeperDetailsModel())
+        s"$AddressAndPostcodeId.$PostcodeId" -> PostcodeValid)
+        .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
+        .withCookies(CookieFactoryForUnitSpecs.businessKeeperDetailsModel())
       val result = newKeeperEnterAddressManually.submit(request)
       whenReady(result) { r =>
         //ToDo reintroduce and amend location when next page implemented
@@ -122,9 +122,9 @@ class NewKeeperEnterAddressManuallyUnitSpec extends UnitSpec {
         s"$AddressAndPostcodeId.$AddressLinesId.$Line2Id" -> Line2Valid,
         s"$AddressAndPostcodeId.$AddressLinesId.$Line3Id" -> Line3Valid,
         s"$AddressAndPostcodeId.$AddressLinesId.$PostTownId" -> PostTownValid,
-        s"$AddressAndPostcodeId.$PostcodeId" -> PostcodeValid).
-        withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
-        withCookies(CookieFactoryForUnitSpecs.businessKeeperDetailsModel())
+        s"$AddressAndPostcodeId.$PostcodeId" -> PostcodeValid)
+        .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
+        .withCookies(CookieFactoryForUnitSpecs.businessKeeperDetailsModel())
       val result = newKeeperEnterAddressManually.submit(request)
       whenReady(result) { r =>
         //ToDo reintroduce and amend location when next page implemented
@@ -133,9 +133,9 @@ class NewKeeperEnterAddressManuallyUnitSpec extends UnitSpec {
     }
 
     "return bad request when no data is entered" in new WithApplication {
-      val request = FakeRequest().
-        withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
-        withCookies(CookieFactoryForUnitSpecs.privateKeeperDetailsModel())
+      val request = FakeRequest()
+        .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
+        .withCookies(CookieFactoryForUnitSpecs.privateKeeperDetailsModel())
 
       val result = newKeeperEnterAddressManually.submit(request)
       whenReady(result) { r =>
@@ -145,9 +145,9 @@ class NewKeeperEnterAddressManuallyUnitSpec extends UnitSpec {
 
     "return bad request a valid postcode is entered without an address" in new WithApplication {
       val request = FakeRequest().withFormUrlEncodedBody(
-        s"$AddressAndPostcodeId.$PostcodeId" -> PostcodeValid).
-        withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
-        withCookies(CookieFactoryForUnitSpecs.privateKeeperDetailsModel())
+        s"$AddressAndPostcodeId.$PostcodeId" -> PostcodeValid)
+        .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
+        .withCookies(CookieFactoryForUnitSpecs.privateKeeperDetailsModel())
       val result = newKeeperEnterAddressManually.submit(request)
       whenReady(result) { r =>
         r.header.status should equal(BAD_REQUEST)
@@ -159,9 +159,9 @@ class NewKeeperEnterAddressManuallyUnitSpec extends UnitSpec {
         s"$AddressAndPostcodeId.$AddressLinesId.$BuildingNameOrNumberId" -> BuildingNameOrNumberValid,
         s"$AddressAndPostcodeId.$AddressLinesId.$Line2Id" -> Line2Valid,
         s"$AddressAndPostcodeId.$AddressLinesId.$Line3Id" -> Line3Valid,
-        s"$AddressAndPostcodeId.$AddressLinesId.$PostTownId" -> PostTownValid).
-        withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
-        withCookies(CookieFactoryForUnitSpecs.privateKeeperDetailsModel())
+        s"$AddressAndPostcodeId.$AddressLinesId.$PostTownId" -> PostTownValid)
+        .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
+        .withCookies(CookieFactoryForUnitSpecs.privateKeeperDetailsModel())
       val result = newKeeperEnterAddressManually.submit(request)
       whenReady(result) { r =>
         r.header.status should equal(BAD_REQUEST)
@@ -174,9 +174,9 @@ class NewKeeperEnterAddressManuallyUnitSpec extends UnitSpec {
         s"$AddressAndPostcodeId.$AddressLinesId.$Line2Id" -> Line2Valid,
         s"$AddressAndPostcodeId.$AddressLinesId.$Line3Id" -> Line3Valid,
         s"$AddressAndPostcodeId.$AddressLinesId.$PostTownId" -> PostTownValid,
-        s"$AddressAndPostcodeId.$PostcodeId" -> "SA1 1").
-        withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
-        withCookies(CookieFactoryForUnitSpecs.privateKeeperDetailsModel())
+        s"$AddressAndPostcodeId.$PostcodeId" -> "SA1 1")
+        .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
+        .withCookies(CookieFactoryForUnitSpecs.privateKeeperDetailsModel())
       val result = newKeeperEnterAddressManually.submit(request)
       whenReady(result) { r =>
         r.header.status should equal(BAD_REQUEST)
@@ -297,9 +297,9 @@ class NewKeeperEnterAddressManuallyUnitSpec extends UnitSpec {
       val request = FakeRequest().withFormUrlEncodedBody(
         s"$AddressAndPostcodeId.$AddressLinesId.$BuildingNameOrNumberId" -> BuildingNameOrNumberValid,
         s"$AddressAndPostcodeId.$AddressLinesId.$PostTownId" -> "",
-        s"$AddressAndPostcodeId.$PostcodeId" -> PostcodeValid).
-        withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
-        withCookies(CookieFactoryForUnitSpecs.privateKeeperDetailsModel())
+        s"$AddressAndPostcodeId.$PostcodeId" -> PostcodeValid)
+        .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
+        .withCookies(CookieFactoryForUnitSpecs.privateKeeperDetailsModel())
       val result = newKeeperEnterAddressManually.submit(request)
       val content = contentAsString(result)
       content should include("Town or city must contain between 3 and 20 characters")
@@ -340,21 +340,21 @@ class NewKeeperEnterAddressManuallyUnitSpec extends UnitSpec {
       s"$AddressAndPostcodeId.$AddressLinesId.$Line2Id" -> line2,
       s"$AddressAndPostcodeId.$AddressLinesId.$Line3Id" -> line3,
       s"$AddressAndPostcodeId.$AddressLinesId.$PostTownId" -> postTown,
-      s"$AddressAndPostcodeId.$PostcodeId" -> postCode).
-      withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
-      withCookies(CookieFactoryForUnitSpecs.privateKeeperDetailsModel())
+      s"$AddressAndPostcodeId.$PostcodeId" -> postCode)
+      .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
+      .withCookies(CookieFactoryForUnitSpecs.privateKeeperDetailsModel())
 
   private lazy val presentWithPrivateNewKeeper = {
-    val request = FakeRequest().
-      withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
-      withCookies(CookieFactoryForUnitSpecs.privateKeeperDetailsModel())
+    val request = FakeRequest()
+      .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
+      .withCookies(CookieFactoryForUnitSpecs.privateKeeperDetailsModel())
     newKeeperEnterAddressManually.present(request)
   }
 
   private lazy val presentWithBusinessNewKeeper = {
-    val request = FakeRequest().
-      withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel()).
-      withCookies(CookieFactoryForUnitSpecs.businessKeeperDetailsModel())
+    val request = FakeRequest()
+      .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
+      .withCookies(CookieFactoryForUnitSpecs.businessKeeperDetailsModel())
     newKeeperEnterAddressManually.present(request)
   }
 

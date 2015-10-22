@@ -40,8 +40,8 @@ class MicroServiceErrorUnitSpec extends UnitSpec  {
     "write micro service error referer cookie" ignore new WithApplication {
       /*
       val referer = VehicleLookupPage.address
-      val request = FakeRequest().
-        withHeaders(REFERER -> referer)
+      val request = FakeRequest()
+        .withHeaders(REFERER -> referer)
       // Set the previous page.
       val result = microServiceError.present(request)
       whenReady(result) { r =>
@@ -67,8 +67,8 @@ class MicroServiceErrorUnitSpec extends UnitSpec  {
 
     "redirect to previous page and discard the referer cookie" ignore new WithApplication {
       /*
-      val request = FakeRequest().
-        withCookies(CookieFactoryForUnitSpecs.microServiceError(VehicleLookupPage.address))
+      val request = FakeRequest()
+        .withCookies(CookieFactoryForUnitSpecs.microServiceError(VehicleLookupPage.address))
       val result = microServiceError.back(request)
       whenReady(result) { r =>
         r.header.headers.get(LOCATION) should equal(Some(VehicleLookupPage.address))
