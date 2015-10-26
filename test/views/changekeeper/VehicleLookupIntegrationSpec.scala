@@ -142,16 +142,6 @@ class VehicleLookupIntegrationSpec extends UiSpec with TestHarness {
     }
   }
 
-  // This is ignored as it will call into the live gov.uk web site.
-  // This can cause problems as they blacklist IPs, which has happened with Jenkins before.
-  "back" ignore {
-    "display previous page when back link is clicked" taggedAs UiTag in new WebBrowserForSelenium {
-      go to VehicleLookupPage
-      click on VehicleLookupPage.back
-      pageTitle should equal("Tell DVLA you've sold or bought a vehicle - GOV.UK")
-    }
-  }
-
   private val fakeAppWithHtml5ValidationDisabledConfig =
     LightFakeApplication(global, Map("html5Validation.enabled" -> false))
 }

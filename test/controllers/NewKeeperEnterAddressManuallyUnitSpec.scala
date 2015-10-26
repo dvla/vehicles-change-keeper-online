@@ -102,7 +102,7 @@ class NewKeeperEnterAddressManuallyUnitSpec extends UnitSpec {
   }
 
   "submit" should {
-    "redirect to vehicle tax or sorn after a valid submission of mandatory fields" ignore new WithApplication {
+    "redirect to vehicle tax or sorn after a valid submission of mandatory fields" in new WithApplication {
       val request = FakeRequest().withFormUrlEncodedBody(
         s"$AddressAndPostcodeId.$AddressLinesId.$BuildingNameOrNumberId" -> BuildingNameOrNumberValid,
         s"$AddressAndPostcodeId.$AddressLinesId.$PostTownId" -> PostTownValid,
@@ -111,12 +111,11 @@ class NewKeeperEnterAddressManuallyUnitSpec extends UnitSpec {
         .withCookies(CookieFactoryForUnitSpecs.businessKeeperDetailsModel())
       val result = newKeeperEnterAddressManually.submit(request)
       whenReady(result) { r =>
-        //ToDo reintroduce and amend location when next page implemented
-        r.header.headers.get(LOCATION) should equal(None)
+        r.header.headers.get(LOCATION) should equal(Some("/date-of-sale"))
       }
     }
 
-    "redirect to vehicle tax or sorn after a valid submission of all fields" ignore new WithApplication {
+    "redirect to vehicle tax or sorn after a valid submission of all fields" in new WithApplication {
       val request = FakeRequest().withFormUrlEncodedBody(
         s"$AddressAndPostcodeId.$AddressLinesId.$BuildingNameOrNumberId" -> BuildingNameOrNumberValid,
         s"$AddressAndPostcodeId.$AddressLinesId.$Line2Id" -> Line2Valid,
@@ -127,8 +126,7 @@ class NewKeeperEnterAddressManuallyUnitSpec extends UnitSpec {
         .withCookies(CookieFactoryForUnitSpecs.businessKeeperDetailsModel())
       val result = newKeeperEnterAddressManually.submit(request)
       whenReady(result) { r =>
-        //ToDo reintroduce and amend location when next page implemented
-        r.header.headers.get(LOCATION) should equal(None)
+        r.header.headers.get(LOCATION) should equal(Some("/date-of-sale"))
       }
     }
 
