@@ -58,12 +58,12 @@ class VehicleLookupIntegrationSpec extends UiSpec with TestHarness {
       )
     }
 
-//    "put the v5c image in a tooltip with Javascript enabled" taggedAs UiTag in new WebBrowserForSeleniumWithJs {
-//      go to VehicleLookupPage
-//      val v5c = By.xpath("//div[@data-tooltip='tooltip_documentReferenceNumber']")
-//      Wait.until(ExpectedConditions.presenceOfElementLocated(v5c), 5)
-//      Wait.until(ExpectedConditions.invisibilityOfElementLocated(v5c), 5)
-//    }
+    "put the v5c image in a tooltip with Javascript enabled" taggedAs UiTag in new PhantomJsByDefault {
+      go to VehicleLookupPage
+      val v5c = By.xpath("//div[@data-tooltip='tooltip_documentReferenceNumber']")
+      Wait.until(ExpectedConditions.presenceOfElementLocated(v5c), 5)
+      Wait.until(ExpectedConditions.invisibilityOfElementLocated(v5c), 5)
+    }
   }
 
   "next button" should {
