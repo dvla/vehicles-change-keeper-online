@@ -1,3 +1,15 @@
+======= 1.21 ========
+TIME OF RELEASE BINARIES CREATION:
+
+US3849 All email addresses to play back in lower case (on screen and printed summary etc)
+US3851 Move Vehicle Playback Information to Rght hand side of Confirmation Screen
+US3885 Message on Complete and Confirm Page to Check Details and use back control to amend if necessary
+US3896 Amend Vehicle Lookup Error Message to mention 'Not latest V5C'
+US3898 Change Manual Address Entry screen to allow for Postcode Amendment
+US3902 Remove inputDayMonthYearTextbox widget
+US3907 Review unit tests that are being ignored
+US3949 Correct those few occurrences that do not use the DVLA common logging code
+
 ======= 1.20 ========
 TIME OF RELEASE BINARIES CREATION:
 Wed Oct 14 13:25:03 UTC 2015
