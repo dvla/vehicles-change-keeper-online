@@ -2,6 +2,7 @@ package gov.uk.dvla.vehicles.keeper.stepdefs
 
 import cucumber.api.scala.{EN, ScalaDsl}
 import cucumber.api.java.en.{Then, When, Given}
+import org.joda.time.LocalDate
 import org.openqa.selenium.WebDriver
 import org.scalatest.Matchers
 import pages.changekeeper.BusinessKeeperDetailsPage
@@ -99,11 +100,20 @@ class DateOfSalePageSteps(webBrowserDriver: WebBrowserDriver)
     DateOfSalePage.yearDateOfSaleTextBox.value = "2010"
   }
 
+  @When("^the Date of sale is in the past$")
+  def the_Date_of_sale_is_in_the_past() {
+    val oldDate = new LocalDate().minusYears(5).minusDays(1)
+    DateOfSalePage.dayDateOfSaleTextBox.value = oldDate.getDayOfMonth.toString
+    DateOfSalePage.monthDateOfSaleTextBox.value = oldDate.getMonthOfYear.toString
+    DateOfSalePage.yearDateOfSaleTextBox.value = oldDate.getYear.toString
+  }
+
   @When("^the Date of sale is in the future$")
   def the_Date_of_sale_is_in_the_future() {
-    DateOfSalePage.dayDateOfSaleTextBox.value = "12"
-    DateOfSalePage.monthDateOfSaleTextBox.value = "12"
-    DateOfSalePage.yearDateOfSaleTextBox.value = "2025"
+    val tomorrow = new LocalDate().plusDays(1)
+    DateOfSalePage.dayDateOfSaleTextBox.value = tomorrow.getDayOfMonth.toString
+    DateOfSalePage.monthDateOfSaleTextBox.value = tomorrow.getMonthOfYear.toString
+    DateOfSalePage.yearDateOfSaleTextBox.value = tomorrow.getYear.toString
   }
 
   @When("^the user click on the next button$")

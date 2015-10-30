@@ -73,12 +73,7 @@ class DateOfSaleFormSpec extends UnitSpec {
   }
 
   "date of sale" should {
-//   "not accept a date in the future" in new WithApplication {
-//     formWithValidDefaults(yearDateOfSale = "2500").errors.flatMap(_.messages) should contain theSameElementsAs
-//       List("error.date.inTheFuture")
-//   }
-
-    "not accept an invalid day of 0" in new WithApplication {
+   "not accept an invalid day of 0" in new WithApplication {
       formWithValidDefaults(dayDateOfSale = "0").errors.flatMap(_.messages) should contain theSameElementsAs
         List("error.date.invalid")
     }
@@ -96,6 +91,26 @@ class DateOfSaleFormSpec extends UnitSpec {
     "not accept an invalid month of 13" in new WithApplication {
       formWithValidDefaults(monthDateOfSale = "13").errors.flatMap(_.messages) should contain theSameElementsAs
         List("error.date.invalid")
+    }
+
+    "not accept dates of sale that are earlier then 5 years in the past" in new WithApplication {
+      val oldDate = new LocalDate().minusYears(5).minusDays(1)
+      formWithValidDefaults(
+        yearDateOfSale = oldDate.getYear.toString,
+        monthDateOfSale = oldDate.getMonthOfYear.toString,
+        dayDateOfSale =  oldDate.getDayOfMonth.toString
+      ).errors.flatMap(_.messages) should contain theSameElementsAs
+        List(play.api.i18n.Messages("error.date.notBefore"))
+    }
+
+    "not accept a date in the future" in new WithApplication {
+     val tomorrow = new LocalDate().plusDays(1)
+     formWithValidDefaults(
+       yearDateOfSale = tomorrow.getYear.toString,
+       monthDateOfSale = tomorrow.getMonthOfYear.toString,
+       dayDateOfSale =  tomorrow.getDayOfMonth.toString
+     ).errors.flatMap(_.messages) should contain theSameElementsAs
+       List(play.api.i18n.Messages("error.date.inTheFuture"))
     }
 
     "not accept special characters in day field" in new WithApplication {
@@ -125,16 +140,6 @@ class DateOfSaleFormSpec extends UnitSpec {
 
     "not accept letters in year field" in new WithApplication {
       formWithValidDefaults(yearDateOfSale = "a").errors.flatMap(_.messages) should contain theSameElementsAs
-        List("error.date.invalid")
-    }
-
-    "not accept dates of sale that are earlier then 5 years in the past" in new WithApplication {
-      val oldDate = new LocalDate().minusYears(5).minusDays(1)
-      formWithValidDefaults(
-        yearDateOfSale = oldDate.yearOfCentury().toString,
-        monthDateOfSale = oldDate.monthOfYear().toString,
-        dayDateOfSale =  oldDate.dayOfMonth().toString
-      ).errors.flatMap(_.messages) should contain theSameElementsAs
         List("error.date.invalid")
     }
 
