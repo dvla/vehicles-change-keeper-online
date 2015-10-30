@@ -16,7 +16,6 @@
     title = "Summary"
 ){
 <div class="two-col clearfix acquire-success">
-
     <div class="second-col">
 
         @alertSuccess(Some(Messages("change_keeper_success.complete.header"))){
@@ -27,7 +26,6 @@
         }
 
         <h2>@Messages("change_keeper_success.further_information.header")</h2>
-
         <ul>
             <li>@Messages("change_keeper_success.further_information.p1")</li>
             <li>@Messages("change_keeper_success.further_information.p2")</li>
@@ -37,7 +35,6 @@
         </ul>
 
         <h2>@Messages("change_keeper_success.further_information.header.2")</h2>
-
         <ul>
             <li>@Messages("change_keeper_success.further_information.p6")</li>
             <li>@Messages("change_keeper_success.further_information.p7")</li>
@@ -50,52 +47,73 @@
             Messages("change_keeper_success.transaction_details.header"),
             {
                 val playbackItems: LinkedHashMap[String, String] = LinkedHashMap();
-                playbackItems += (Messages("change_keeper_success.transaction_details.transaction_id") -> viewModel.completeAndConfirmResponseModel.transactionId)
-                playbackItems += (Messages("change_keeper_success.transaction_details.transaction_date") -> viewModel.completeAndConfirmResponseModel.transactionTimestamp.toString("dd/MM/yyyy"))
+                playbackItems += (
+                    Messages("change_keeper_success.transaction_details.transaction_id") ->
+                    viewModel.completeAndConfirmResponseModel.transactionId
+                )
+                playbackItems += (
+                    Messages("change_keeper_success.transaction_details.transaction_date") ->
+                    viewModel.completeAndConfirmResponseModel.transactionTimestamp.toString("dd/MM/yyyy")
+                )
             },
             List("transaction-details")
         )()
 
-        <div class="related vehicle-sold-by desktop-only">
-        </div>
+        @playbackList(
+            Messages("change_keeper_success.vehicle_details.p1"),
+            {
+                val playbackItems: LinkedHashMap[String, String] = LinkedHashMap()
+                val flaggedRegNumberLabel: String = "REG_" + Messages("change_keeper_success.vehicle_details.registration_number")
+                playbackItems += (flaggedRegNumberLabel -> viewModel.vehicleAndKeeperDetails.registrationNumber)
+
+                viewModel.vehicleAndKeeperDetails.make match {
+                    case Some(make) => playbackItems += (Messages("change_keeper_success.vehicle_details.make") -> make)
+                    case None => playbackItems
+                }
+
+                viewModel.vehicleAndKeeperDetails.model match {
+                    case Some(model) => playbackItems += (Messages("change_keeper_success.vehicle_details.model") -> model)
+                    case None => playbackItems
+                }
+
+                playbackItems += (
+                    Messages("change_keeper_success.vehicle_details.mileage") ->
+                    (viewModel.dateOfSaleViewModel.mileage match {
+                        case Some(mileage) => java.text.NumberFormat.getIntegerInstance().format(viewModel.dateOfSaleViewModel.mileage.get)
+                        case None => Messages("change_keeper_success.vehicle_details.mileage_not_entered")
+                    })
+                )
+            },
+            List("related")
+        )()
+
         <div class="change-keeper-summary-playback">
-            <h2>@Messages("change_keeper_success.vehicle_details.p1")</h2>
-
-            <div class="info-notice">
-                <dl class="playback">
-                    <dt>@Messages("change_keeper_success.vehicle_details.registration_number")</dt>
-                    <dd>@viewModel.vehicleAndKeeperDetails.registrationNumber</dd>
-                    <dt>@Messages("change_keeper_success.vehicle_details.make")</dt>
-                    <dd>@viewModel.vehicleAndKeeperDetails.make</dd>
-                    <dt>@Messages("change_keeper_success.vehicle_details.model")</dt>
-                    <dd>@viewModel.vehicleAndKeeperDetails.model</dd>
-                    <dt>@Messages("change_keeper_success.vehicle_details.mileage")</dt>
-                    @if(viewModel.dateOfSaleViewModel.mileage == None) {
-                    <dd>@Messages("change_keeper_success.vehicle_details.mileage_not_entered")</dd>
-                    } else {
-                    <dd>@{java.text.NumberFormat.getIntegerInstance().format(viewModel.dateOfSaleViewModel.mileage.get)}</dd>
-                    }
-                </dl>
-            </div>
-
-            <h2>@Messages("change_keeper_success.new_keeper_details.p1")</h2>
-
-            <div class="info-notice">
-                <dl class="playback">
-                    <dt>@Messages("change_keeper_success.vehicle_details.name")</dt>
-                    <dd>@viewModel.newKeeperDetails.displayName</dd>
-                    <dt>@Messages("change_keeper_success.vehicle_details.address")</dt>
-                    <dd>@for(addr <- viewModel.newKeeperDetails.address.address) {@addr<br/>}</dd>
-                    <dt>@Messages("change_keeper_success.vehicle_details.email")</dt>
-                    @if(viewModel.newKeeperDetails.email == None) {
-                    <dd>@Messages("change_keeper_email_not_entered")</dd>
-                    } else {
-                    <dd><span class="lowercase-text">@viewModel.newKeeperDetails.email.get</span></dd>
-                    }
-                    <dt>@Messages("change_keeper_success.date_of_sale.label")</dt>
-                    <dd>@viewModel.dateOfSaleViewModel.dateOfSale.toString("dd/MM/yyyy")</dd>
-                </dl>
-            </div>
+            @playbackList(
+                Messages("change_keeper_success.new_keeper_details.p1"),
+                {
+                    val playbackItems: LinkedHashMap[String, String] = LinkedHashMap()
+                    playbackItems += (
+                        Messages("change_keeper_success.vehicle_details.name") ->
+                        viewModel.newKeeperDetails.displayName
+                    )
+                    playbackItems += (
+                        Messages("change_keeper_success.vehicle_details.address") ->
+                        viewModel.newKeeperDetails.address.address.mkString("<br/>")
+                    )
+                    playbackItems += (
+                        Messages("change_keeper_success.vehicle_details.email") ->
+                        (viewModel.newKeeperDetails.email match {
+                            case Some(email) => "<span class=\"lowercase-text\">" + email + "</span>"
+                            case None => Messages("change_keeper_email_not_entered")
+                        })
+                    )
+                    playbackItems += (
+                        Messages("change_keeper_success.date_of_sale.label") ->
+                        viewModel.dateOfSaleViewModel.dateOfSale.toString("dd/MM/yyyy")
+                    )
+                },
+                List("bg-plain")
+            )()
         </div>
     </div>
     <div class="form-steps">
