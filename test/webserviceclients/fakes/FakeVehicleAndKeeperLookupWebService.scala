@@ -51,7 +51,6 @@ object FakeVehicleAndKeeperLookupWebService {
   final val TransactionTimestampValid = new DateTime()
   final val UnhandledException = "unhandled_exception"
 
-  // TODO : Use proper values here
   private def vehicleDetails(disposeFlag: Boolean = true) =
     VehicleAndKeeperLookupDetailsDto(
       registrationNumber = RegistrationNumberValid,
