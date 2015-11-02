@@ -97,8 +97,8 @@ class DateOfSaleFormSpec extends UnitSpec {
       val oldDate = new LocalDate().minusYears(5).minusDays(1)
       formWithValidDefaults(
         yearDateOfSale = oldDate.getYear.toString,
-        monthDateOfSale = oldDate.getMonthOfYear.toString,
-        dayDateOfSale =  oldDate.getDayOfMonth.toString
+        monthDateOfSale = oldDate.toString("MM"),
+        dayDateOfSale =  oldDate.toString("dd")
       ).errors.flatMap(_.messages) should contain theSameElementsAs
         List(play.api.i18n.Messages("error.date.notBefore"))
     }
@@ -107,8 +107,8 @@ class DateOfSaleFormSpec extends UnitSpec {
      val tomorrow = new LocalDate().plusDays(1)
      formWithValidDefaults(
        yearDateOfSale = tomorrow.getYear.toString,
-       monthDateOfSale = tomorrow.getMonthOfYear.toString,
-       dayDateOfSale =  tomorrow.getDayOfMonth.toString
+       monthDateOfSale = tomorrow.toString("MM"),
+       dayDateOfSale =  tomorrow.toString("dd")
      ).errors.flatMap(_.messages) should contain theSameElementsAs
        List(play.api.i18n.Messages("error.date.inTheFuture"))
     }

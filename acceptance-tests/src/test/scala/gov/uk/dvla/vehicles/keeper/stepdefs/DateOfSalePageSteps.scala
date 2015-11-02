@@ -103,16 +103,16 @@ class DateOfSalePageSteps(webBrowserDriver: WebBrowserDriver)
   @When("^the Date of sale is in the past$")
   def the_Date_of_sale_is_in_the_past() {
     val oldDate = new LocalDate().minusYears(5).minusDays(1)
-    DateOfSalePage.dayDateOfSaleTextBox.value = oldDate.getDayOfMonth.toString
-    DateOfSalePage.monthDateOfSaleTextBox.value = oldDate.getMonthOfYear.toString
+    DateOfSalePage.dayDateOfSaleTextBox.value = oldDate.toString("dd")
+    DateOfSalePage.monthDateOfSaleTextBox.value = oldDate.toString("MM")
     DateOfSalePage.yearDateOfSaleTextBox.value = oldDate.getYear.toString
   }
 
   @When("^the Date of sale is in the future$")
   def the_Date_of_sale_is_in_the_future() {
     val tomorrow = new LocalDate().plusDays(1)
-    DateOfSalePage.dayDateOfSaleTextBox.value = tomorrow.getDayOfMonth.toString
-    DateOfSalePage.monthDateOfSaleTextBox.value = tomorrow.getMonthOfYear.toString
+    DateOfSalePage.dayDateOfSaleTextBox.value = tomorrow.toString("dd")
+    DateOfSalePage.monthDateOfSaleTextBox.value = tomorrow.toString("MM")
     DateOfSalePage.yearDateOfSaleTextBox.value = tomorrow.getYear.toString
   }
 
