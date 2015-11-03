@@ -75,7 +75,8 @@
       } else {
         @valtechSelect(viewModel.form(AddressSelectId),
           options = dropDownOptions.toSeq,
-          args = Map('_label -> Messages("change_keeper_newKeeperChooseYourAddress_addressSelect_label"))
+          args = Map('_label -> Messages("change_keeper_newKeeperChooseYourAddress_addressSelect_label"),
+                      'autoFocus -> true)
         )
       }
 

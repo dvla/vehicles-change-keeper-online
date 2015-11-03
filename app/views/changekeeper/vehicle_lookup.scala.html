@@ -50,7 +50,8 @@ backButton = Some(Call("GET", "https://www.gov.uk/sold-bought-vehicle/y/no/sold-
                 args = Map('_label -> Messages("change_keeper_vehiclelookup.vrninputlabel"),
                            'maxLength -> VehicleRegistrationNumber.MaxLength,
                            '_showConstraints -> false,
-                            'alphaNumericOnly -> true
+                            'alphaNumericOnly -> true,
+                            'autoFocus -> true
                     )
                 )
 
