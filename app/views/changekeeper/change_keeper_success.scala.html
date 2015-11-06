@@ -10,6 +10,7 @@
 @import common.views.html.widgets.alertSuccess
 @import common.views.html.widgets.base.csrfTokenHiddenField
 @import common.views.html.widgets.playbackList
+@import common.views.html.widgets.vehicleDetailPlayback
 
 @main(
     progress = Some(Messages("change_keeper_progress_6")),
@@ -59,24 +60,11 @@
             List("transaction-details")
         )()
 
-        @playbackList(
-            Messages("change_keeper_success.vehicle_details.p1"),
+        @vehicleDetailPlayback(
+            viewModel.vehicleAndKeeperDetails,
             {
-                val playbackItems: LinkedHashMap[String, String] = LinkedHashMap()
-                val flaggedRegNumberLabel: String = "REG_" + Messages("change_keeper_success.vehicle_details.registration_number")
-                playbackItems += (flaggedRegNumberLabel -> viewModel.vehicleAndKeeperDetails.registrationNumber)
-
-                viewModel.vehicleAndKeeperDetails.make match {
-                    case Some(make) => playbackItems += (Messages("change_keeper_success.vehicle_details.make") -> make)
-                    case None => playbackItems
-                }
-
-                viewModel.vehicleAndKeeperDetails.model match {
-                    case Some(model) => playbackItems += (Messages("change_keeper_success.vehicle_details.model") -> model)
-                    case None => playbackItems
-                }
-
-                playbackItems += (
+                val additionalPlaybackItems: LinkedHashMap[String, String] = LinkedHashMap()
+                additionalPlaybackItems += (
                     Messages("change_keeper_success.vehicle_details.mileage") ->
                     (viewModel.dateOfSaleViewModel.mileage match {
                         case Some(mileage) => java.text.NumberFormat.getIntegerInstance().format(viewModel.dateOfSaleViewModel.mileage.get)

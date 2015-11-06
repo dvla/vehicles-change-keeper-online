@@ -19,11 +19,11 @@
 @import common.views.html.widgets.base.valtechInputText
 @import common.views.html.widgets.email
 @import common.views.html.widgets.titlePicker
+@import common.views.html.widgets.vehicleDetailPlayback
 @import common.mappings.Postcode
 @import common.views.html.widgets.optionalToggle
 @import common.model.PrivateKeeperDetailsFormModel.Form.{TitleId, DateOfBirthId, EmailId, EmailOptionId, FirstNameId, FirstNameAndTitleMaxLength, PostcodeId}
 @import common.model.PrivateKeeperDetailsFormModel.Form.{LastNameId, LastNameMaxLength, DriverNumberId, DriverNumberMaxLength}
-@import views.html.common.vehicle_detail_playback
 
 @main(
     progress = Some(Messages("change_keeper_progress_3")),
@@ -38,7 +38,7 @@
 
         <div class="first-col">
             <h1 class="mobile-only">@Messages("change_keeper_privatekeeperdetails.title")</h1>
-            @vehicle_detail_playback(data)()
+            @vehicleDetailPlayback(data)()
             @alertWarning(List("print-message")) {
               <p><strong>@Messages("change_keeper_privatekeeperdetails.p3")</strong></p>
             }

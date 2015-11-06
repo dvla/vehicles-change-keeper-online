@@ -17,13 +17,13 @@
 @import common.model.BusinessKeeperDetailsFormModel.Form.EmailOptionId
 @import common.views.constraints.FleetNumber
 @import common.views.html.widgets.base.csrfTokenHiddenField
-@import common.views.helpers.BaseTemplate.fieldConstructor
 @import common.views.html.widgets.alertWarning
-@import common.views.html.widgets.base.valtechInputText
 @import common.views.html.widgets.email
 @import common.views.html.widgets.optionalToggle
+@import common.views.html.widgets.vehicleDetailPlayback
+@import common.views.helpers.BaseTemplate.fieldConstructor
+@import common.views.html.widgets.base.valtechInputText
 @import views.html.helper.form
-@import views.html.common.vehicle_detail_playback
 
 @main(
   progress = Some(Messages("change_keeper_progress_3")),
@@ -32,22 +32,17 @@
   backButton = Some(controllers.routes.VehicleLookup.present())
 ) {
 <div class="two-col clearfix">
-
     <div class="first-col">
-
         <h1 class="mobile-only">@Messages("change_keeper_businesskeeperdetails.title")</h1>
-        @vehicle_detail_playback(viewModel.vehicleAndKeeperDetails)()
+        @vehicleDetailPlayback(viewModel.vehicleAndKeeperDetails)()
         @alertWarning(List("print-message")) {
             <p><strong>@Messages("change_keeper_businesskeeperdetails.p2")</strong></p>
         }
-
     </div>
 
     <div class="second-col">
         <h1>@Messages("change_keeper_businesskeeperdetails.title")</h1>
-
         <p>@Messages("change_keeper_businesskeeperdetails.p1")</p>
-
         <div class="form-steps">
             @form(action = controllers.routes.BusinessKeeperDetails.submit()) {
             @csrfTokenHiddenField()

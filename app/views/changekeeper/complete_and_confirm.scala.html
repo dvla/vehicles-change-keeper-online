@@ -3,18 +3,19 @@
   token: uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction.CsrfPreventionToken,
   config: utils.helpers.Config)
 
-@import views.html.helper.form
 @import controllers.routes.CompleteAndConfirm
+@import scala.collection.mutable.LinkedHashMap
 @import uk.gov.dvla.vehicles.presentation.common
 @import common.mappings.Mileage
-@import common.views.html.widgets.base.csrfTokenHiddenField
 @import common.views.helpers.BaseTemplate.fieldConstructor
-@import common.views.html.widgets.base.{valtechInputText, valtechDeclareCheck}
 @import common.views.helpers.LabelHelper.optionalFieldKey
+@import common.views.html.widgets.base.csrfTokenHiddenField
+@import common.views.html.widgets.base.{valtechInputText, valtechDeclareCheck}
+@import common.views.html.widgets.vehicleDetailPlayback
 @import models.DateOfSaleFormModel.Form.{MileageId, DateOfSaleId, TodaysDateId}
 @import models.CompleteAndConfirmFormModel.Form.{ConsentId, RegRightId}
 @import views.changekeeper.CompleteAndConfirm.{BackId, SubmitId, modify}
-@import views.html.common.vehicle_detail_playback
+@import views.html.helper.form
 
 @main(
     progress = Some(Messages("change_keeper_progress_6")),
@@ -29,18 +30,19 @@
         <p>@Messages("change_keeper_completeAndConfirm.warning")</p>
 
         <div class="first-col">
-            @vehicle_detail_playback(data.vehicleAndKeeperDetails) {
-            <p>
-                @Messages("change_keeper_completeAndConfirm.mileage.label")<br/>
-                <strong>
-                    @if(data.dateOfSaleModel.mileage.isDefined) {
-                    @data.dateOfSaleModel.mileage.get.toString
-                    } else {
-                    @Messages("change_keeper_completeandconfirm.emailNotEntered")
-                    }
-                </strong>
-            </p>
-            }
+            @vehicleDetailPlayback(
+                data.vehicleAndKeeperDetails,
+                {
+                    val additionalPlaybackItems: LinkedHashMap[String, String] = LinkedHashMap()
+                    additionalPlaybackItems += (
+                        Messages("change_keeper_completeAndConfirm.mileage.label") ->
+                        (data.dateOfSaleModel.mileage match {
+                            case Some(mileage) => data.dateOfSaleModel.mileage.get.toString
+                            case None => Messages("change_keeper_completeandconfirm.emailNotEntered")
+                        })
+                    )
+                }
+            )()
         </div>
 
         <div class="second-col">
