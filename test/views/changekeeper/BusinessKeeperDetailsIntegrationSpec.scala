@@ -16,7 +16,7 @@ import ProgressBar.progressStep
 import uk.gov.dvla.vehicles.presentation.common.testhelpers.UiTag
 import uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction
 import uk.gov.dvla.vehicles.presentation.common.testhelpers.HtmlTestHelper.{htmlRegex, whitespaceRegex}
-import org.scalatest.selenium.WebBrowser.{click, go, pageTitle, pageSource}
+import org.scalatest.selenium.WebBrowser.{click, currentUrl, go, pageTitle, pageSource}
 
 class BusinessKeeperDetailsIntegrationSpec extends UiSpec with TestHarness {
 
@@ -112,8 +112,19 @@ class BusinessKeeperDetailsIntegrationSpec extends UiSpec with TestHarness {
       go to BusinessKeeperDetailsPage
       click on back
       pageTitle should equal(VehicleLookupPage.title)
+      currentUrl should equal(VehicleLookupPage.url)
     }
-  }
+
+   "display previous page when back button is clicked with ceg identifier" taggedAs UiTag in new WebBrowserForSelenium {
+      go to BeforeYouStartPage
+      CookieFactoryForUISpecs.vehicleAndKeeperDetails().withIdentifier("ceg")
+
+      go to BusinessKeeperDetailsPage
+      click on back
+      pageTitle should equal(VehicleLookupPage.title)
+      currentUrl should equal(VehicleLookupPage.cegUrl)
+    }
+ }
 
   private def cacheSetup()(implicit webDriver: WebDriver) =
     CookieFactoryForUISpecs.vehicleAndKeeperDetails()

@@ -2,6 +2,7 @@ package controllers
 
 import composition.{TestConfig, WithApplication}
 import helpers.{UnitSpec, CookieFactoryForUnitSpecs}
+import models.IdentifierCacheKey
 import models.VehicleLookupFormModel.Form.DocumentReferenceNumberId
 import models.VehicleLookupFormModel.Form.VehicleRegistrationNumberId
 import models.VehicleLookupFormModel.Form.VehicleSellerEmailOption
@@ -24,6 +25,7 @@ import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.{TrackingId, ClientSideSessionFactory}
 import common.mappings.{DocumentReferenceNumber, OptionalToggle}
 import common.services.DateServiceImpl
+import common.testhelpers.CookieHelper.fetchCookiesFromHeaders
 import common.webserviceclients.bruteforceprevention.BruteForcePreventionService
 import common.webserviceclients.bruteforceprevention.BruteForcePreventionServiceImpl
 import common.webserviceclients.bruteforceprevention.BruteForcePreventionWebService
@@ -58,6 +60,21 @@ class VehicleLookupUnitSpec extends UnitSpec {
   "present" should {
     "display the page" in new WithApplication {
       present.futureValue.header.status should equal(play.api.http.Status.OK)
+    }
+
+    "not contain an identifier cookie if default route" in new WithApplication {
+      whenReady(present) { r =>
+        val cookies = fetchCookiesFromHeaders(r)
+        cookies.find(_.name == IdentifierCacheKey) should equal(None)
+      }
+    }
+
+    "contain an identifier cookie of type ceg if ceg route" in new WithApplication {
+      val result = vehicleLookupResponseGenerator().ceg(FakeRequest())
+      whenReady(result) { r =>
+        val cookies = fetchCookiesFromHeaders(r)
+        cookies.find(_.name == IdentifierCacheKey).get.value should equal(vehicleLookupResponseGenerator().identifier)
+      }
     }
 
     "display populated fields when cookie exists" in new WithApplication {

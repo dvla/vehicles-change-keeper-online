@@ -76,6 +76,11 @@ object CookieFactoryForUISpecs {
     this
   }
 
+  def withIdentifier(id: String)(implicit webDriver: WebDriver) = {
+    webDriver.manage().addCookie(new Cookie(models.IdentifierCacheKey, id))
+    this
+  }
+
   def vehicleAndKeeperDetails(registrationNumber: String = RegistrationNumberValid,
                               vehicleMake: Option[String] = Some(VehicleMakeValid),
                               vehicleModel: Option[String] = Some(VehicleModelValid),

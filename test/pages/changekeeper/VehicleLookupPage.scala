@@ -13,8 +13,12 @@ import views.changekeeper.VehicleLookup.{VehicleSoldTo_Private, VehicleSoldTo_Bu
 import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.{ReferenceNumberValid, RegistrationNumberValid}
 
 object VehicleLookupPage extends Page {
-  final val address = buildAppUrl("vehicle-lookup")
+  private final val route = "vehicle-lookup"
+  final val address = buildAppUrl(route)
+
   override val url: String = WebDriverFactory.testUrl + address.substring(1)
+  val cegUrl: String = WebDriverFactory.testUrl + buildAppUrl(s"${route}/ceg").substring(1)
+
   final override val title: String = "Details of the vehicle being sold"
 
   def vehicleRegistrationNumber(implicit driver: WebDriver): TextField = textField(id(VehicleRegistrationNumberId))

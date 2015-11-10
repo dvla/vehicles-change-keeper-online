@@ -7,6 +7,7 @@ import helpers.{CookieFactoryForUnitSpecs, UnitSpec}
 import models.CompleteAndConfirmResponseModel.ChangeKeeperCompletionResponseCacheKey
 import models.CompleteAndConfirmFormModel.CompleteAndConfirmCacheKey
 import models.DateOfSaleFormModel
+import models.IdentifierCacheKey
 import models.K2KCacheKeyPrefix.CookiePrefix
 import models.VehicleLookupFormModel.VehicleLookupFormModelCacheKey
 import org.joda.time.format.DateTimeFormat
@@ -70,16 +71,13 @@ class ChangeKeeperSuccessUnitSpec extends UnitSpec {
       "when all cookies are present for new keeper success" in new WithApplication {
       val fmt = DateTimeFormat.forPattern("dd/MM/yyyy")
 
-      val request = FakeRequest()
-        .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
-        .withCookies(CookieFactoryForUnitSpecs.dateOfSaleModel())
-        .withCookies(CookieFactoryForUnitSpecs.completeAndConfirmModel())
-        .withCookies(CookieFactoryForUnitSpecs.completeAndConfirmResponseModelModel())
-        .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel(
-        firstName = Some(FirstNameValid),
-        lastName = Some(LastNameValid),
-        email = Some(EmailValid)
-      ))
+      val request = fakeRequest.withCookies(
+        CookieFactoryForUnitSpecs.newKeeperDetailsModel(
+          firstName = Some(FirstNameValid),
+          lastName = Some(LastNameValid),
+          email = Some(EmailValid)
+        )
+      )
 
       val content = contentAsString(changeKeeperSuccess.present(request))
       content should include(RegistrationNumberValid)
@@ -99,16 +97,13 @@ class ChangeKeeperSuccessUnitSpec extends UnitSpec {
       "when all cookies are present for new keeper success" in new WithApplication {
       val fmt = DateTimeFormat.forPattern("dd/MM/yyyy")
 
-      val request = FakeRequest()
-        .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
-        .withCookies(CookieFactoryForUnitSpecs.dateOfSaleModel())
-        .withCookies(CookieFactoryForUnitSpecs.completeAndConfirmModel())
-        .withCookies(CookieFactoryForUnitSpecs.completeAndConfirmResponseModelModel())
-        .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel(
-        businessName = Some(BusinessNameValid),
-        fleetNumber = Some(FleetNumberValid),
-        email = Some(EmailValid)
-      ))
+      val request = fakeRequest.withCookies(
+        CookieFactoryForUnitSpecs.newKeeperDetailsModel(
+          businessName = Some(BusinessNameValid),
+          fleetNumber = Some(FleetNumberValid),
+          email = Some(EmailValid)
+        )
+      )
 
       val content = contentAsString(changeKeeperSuccess.present(request))
       content should include(RegistrationNumberValid)
@@ -126,12 +121,7 @@ class ChangeKeeperSuccessUnitSpec extends UnitSpec {
 
     "contain code in the page source to open the survey in a new tab " +
       "when a survey url is configured" in new WithApplication {
-      val request = FakeRequest()
-        .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
-        .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
-        .withCookies(CookieFactoryForUnitSpecs.dateOfSaleModel())
-        .withCookies(CookieFactoryForUnitSpecs.completeAndConfirmModel())
-        .withCookies(CookieFactoryForUnitSpecs.completeAndConfirmResponseModelModel())
+      val request = fakeRequest.withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
 
       val result = changeKeeperSuccessWithMockConfig(mockSurveyConfig()).present(request)
       val expectedContent = s"window.open('$testUrl', '_blank')"
@@ -140,12 +130,7 @@ class ChangeKeeperSuccessUnitSpec extends UnitSpec {
 
     "not contain code in the page source to open the survey in a new tab " +
       "when a survey url is configured" in new WithApplication {
-      val request = FakeRequest()
-        .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
-        .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
-        .withCookies(CookieFactoryForUnitSpecs.dateOfSaleModel())
-        .withCookies(CookieFactoryForUnitSpecs.completeAndConfirmModel())
-        .withCookies(CookieFactoryForUnitSpecs.completeAndConfirmResponseModelModel())
+      val request = fakeRequest.withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
 
       val result = changeKeeperSuccessWithMockConfig(mockSurveyConfig(surveyUrl = None)).present(request)
       val expectedContent = s"window.open('$testUrl', '_blank')"
@@ -155,36 +140,35 @@ class ChangeKeeperSuccessUnitSpec extends UnitSpec {
 
   "finish" should {
     "discard the vehicle, new keeper and confirm cookies" in {
-      val request = FakeRequest()
-        .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
+      val request = fakeRequest
         .withCookies(CookieFactoryForUnitSpecs.vehicleLookupFormModel())
-        .withCookies(CookieFactoryForUnitSpecs.dateOfSaleModel())
-        .withCookies(CookieFactoryForUnitSpecs.completeAndConfirmModel())
-        .withCookies(CookieFactoryForUnitSpecs.completeAndConfirmResponseModelModel())
+        .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
+
+      val result = changeKeeperSuccess.finish(request)
+      whenReady(result) { r =>
+        verifyDiscardedCookies(fetchCookiesFromHeaders(r))
+      }
+    }
+
+    "discard the vehicle, new keeper and confirm cookies with ceg identifier" in {
+      val identifier = "ceg"
+
+      val request = fakeRequest
+        .withCookies(CookieFactoryForUnitSpecs.withIdentifier(identifier))
+        .withCookies(CookieFactoryForUnitSpecs.vehicleLookupFormModel())
         .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
 
       val result = changeKeeperSuccess.finish(request)
       whenReady(result) { r =>
         val cookies = fetchCookiesFromHeaders(r)
-
-        verifyCookieHasBeenDiscarded(vehicleAndKeeperLookupDetailsCacheKey, cookies)
-        verifyCookieHasBeenDiscarded(VehicleLookupFormModelCacheKey, cookies)
-        verifyCookieHasBeenDiscarded(newKeeperDetailsCacheKey, cookies)
-        verifyCookieHasBeenDiscarded(privateKeeperDetailsCacheKey, cookies)
-        verifyCookieHasBeenDiscarded(businessKeeperDetailsCacheKey, cookies)
-        verifyCookieHasBeenDiscarded(DateOfSaleFormModel.DateOfSaleCacheKey, cookies)
-        verifyCookieHasBeenDiscarded(CompleteAndConfirmCacheKey, cookies)
-        verifyCookieHasBeenDiscarded(ChangeKeeperCompletionResponseCacheKey, cookies)
+        verifyDiscardedCookies(cookies)
+        verifyCookieHasBeenDiscarded(IdentifierCacheKey, cookies)
       }
     }
 
     "redirect to the before you start page" in {
-      val request = FakeRequest()
-        .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
+      val request = fakeRequest
         .withCookies(CookieFactoryForUnitSpecs.vehicleLookupFormModel())
-        .withCookies(CookieFactoryForUnitSpecs.dateOfSaleModel())
-        .withCookies(CookieFactoryForUnitSpecs.completeAndConfirmModel())
-        .withCookies(CookieFactoryForUnitSpecs.completeAndConfirmResponseModelModel())
         .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
 
       val result = changeKeeperSuccess.finish(request)
@@ -198,13 +182,27 @@ class ChangeKeeperSuccessUnitSpec extends UnitSpec {
     injector.getInstance(classOf[ChangeKeeperSuccess])
   }
 
-  private lazy val present = {
-    val request = FakeRequest()
+  private lazy val fakeRequest =
+    FakeRequest()
       .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
-      .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
       .withCookies(CookieFactoryForUnitSpecs.dateOfSaleModel())
       .withCookies(CookieFactoryForUnitSpecs.completeAndConfirmModel())
       .withCookies(CookieFactoryForUnitSpecs.completeAndConfirmResponseModelModel())
+
+  private def verifyDiscardedCookies(cookies: Seq[play.api.mvc.Cookie]) = {
+    verifyCookieHasBeenDiscarded(vehicleAndKeeperLookupDetailsCacheKey, cookies)
+    verifyCookieHasBeenDiscarded(VehicleLookupFormModelCacheKey, cookies)
+    verifyCookieHasBeenDiscarded(newKeeperDetailsCacheKey, cookies)
+    verifyCookieHasBeenDiscarded(privateKeeperDetailsCacheKey, cookies)
+    verifyCookieHasBeenDiscarded(businessKeeperDetailsCacheKey, cookies)
+    verifyCookieHasBeenDiscarded(DateOfSaleFormModel.DateOfSaleCacheKey, cookies)
+    verifyCookieHasBeenDiscarded(CompleteAndConfirmCacheKey, cookies)
+    verifyCookieHasBeenDiscarded(ChangeKeeperCompletionResponseCacheKey, cookies)
+  }
+
+  private lazy val present = {
+    val request = fakeRequest
+      .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
     changeKeeperSuccess.present(request)
   }
 

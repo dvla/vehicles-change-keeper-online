@@ -19,6 +19,7 @@ GET         /before-you-start                           @controllers.BeforeYouSt
 POST        /before-you-start                           @controllers.BeforeYouStart.submit
 
 #page 2 - Vehicle Lookup
+GET         /vehicle-lookup/ceg                         @controllers.VehicleLookup.ceg
 GET         /vehicle-lookup                             @controllers.VehicleLookup.present
 POST        /vehicle-lookup                             @controllers.VehicleLookup.submit
 

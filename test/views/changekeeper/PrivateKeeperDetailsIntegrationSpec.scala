@@ -19,7 +19,7 @@ import play.api.i18n.Messages
 import uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction
 import uk.gov.dvla.vehicles.presentation.common.testhelpers.HtmlTestHelper.{htmlRegex, whitespaceRegex}
 import uk.gov.dvla.vehicles.presentation.common.testhelpers.UiTag
-import org.scalatest.selenium.WebBrowser.{click, go, pageTitle, pageSource}
+import org.scalatest.selenium.WebBrowser.{click, currentUrl, go, pageTitle, pageSource}
 
 final class PrivateKeeperDetailsIntegrationSpec extends UiSpec with TestHarness {
 
@@ -183,14 +183,26 @@ final class PrivateKeeperDetailsIntegrationSpec extends UiSpec with TestHarness 
   }
 
   "back" should {
-    "display previous page when back link is clicked with " taggedAs UiTag in new WebBrowserForSelenium {
+    "display previous page when back link is clicked" taggedAs UiTag in new WebBrowserForSelenium {
       go to BeforeYouStartPage
       cacheSetup()
 
       go to PrivateKeeperDetailsPage
       click on back
       pageTitle should equal(VehicleLookupPage.title)
+      currentUrl should equal(VehicleLookupPage.url)
     }
+
+    "display previous page when back link is clicked with ceg identifier" taggedAs UiTag in new WebBrowserForSelenium {
+      go to BeforeYouStartPage
+      cacheSetup().withIdentifier("ceg")
+
+      go to PrivateKeeperDetailsPage
+      click on back
+      pageTitle should equal(VehicleLookupPage.title)
+      currentUrl should equal(VehicleLookupPage.cegUrl)
+    }
+
   }
 
   private def cacheSetup()(implicit webDriver: WebDriver) = CookieFactoryForUISpecs.vehicleAndKeeperDetails()

@@ -81,6 +81,10 @@ object CookieFactoryForUnitSpecs extends TestComposition {
     session.newCookie(cookieName, value)
   }
 
+  def withIdentifier(id: String) = {
+    createCookie(models.IdentifierCacheKey, id)
+  }
+
   def seenCookieMessage(): Cookie = {
     val key = SeenCookieMessageCacheKey
     val value = SeenCookieTrue

@@ -2,6 +2,7 @@ package controllers
 
 import com.google.inject.Inject
 import models.BusinessKeeperDetailsCacheKeys
+import models.IdentifierCacheKey
 import models.K2KCacheKeyPrefix.CookiePrefix
 import models.PrivateKeeperDetailsCacheKeys
 import models.SellerEmailModel
@@ -35,6 +36,7 @@ class VehicleLookup @Inject()(implicit bruteForceService: BruteForcePreventionSe
                               dateService: DateService,
                               clientSideSessionFactory: ClientSideSessionFactory,
                               config: Config) extends VehicleLookupBase[VehicleLookupFormModel] {
+
   override val form = PlayForm(VehicleLookupFormModel.Form.Mapping)
   override val responseCodeCacheKey: String = VehicleLookupResponseCodeCacheKey
 
@@ -57,8 +59,13 @@ class VehicleLookup @Inject()(implicit bruteForceService: BruteForcePreventionSe
   }
 
   override def presentResult(implicit request: Request[_]) = {
-    logMessage(request.cookies.trackingId(), Info, "Presenting vehicle lookup view")
-    Ok(views.html.changekeeper.vehicle_lookup(VehicleLookupViewModel(form.fill())))
+    request.cookies.getString(IdentifierCacheKey) match {
+      case Some(c) =>
+        Redirect(routes.VehicleLookup.ceg)
+      case None =>
+        logMessage(request.cookies.trackingId(), Info, "Presenting vehicle lookup view")
+        Ok(views.html.changekeeper.vehicle_lookup(VehicleLookupViewModel(form.fill())))
+    }
   }
 
   override def vehicleFoundResult(vehicleAndKeeperDetailsDto: VehicleAndKeeperLookupDetailsDto,
@@ -107,5 +114,12 @@ class VehicleLookup @Inject()(implicit bruteForceService: BruteForcePreventionSe
         VehicleSoldToId,
         FormError(key = VehicleSoldToId, message = "error.validBougtByType", args = Seq.empty)
       ).distinctErrors
+  }
+
+  val identifier = "ceg"
+  def ceg = play.api.mvc.Action { implicit request =>
+    logMessage(request.cookies.trackingId(), Info, s"Presenting vehicle lookup view for identifier ${identifier}")
+    Ok(views.html.changekeeper.vehicle_lookup(VehicleLookupViewModel(form.fill())))
+      .withCookie(IdentifierCacheKey, identifier)
   }
 }
