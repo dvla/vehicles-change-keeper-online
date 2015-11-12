@@ -1,3 +1,15 @@
+======= 1.22 ========
+TIME OF RELEASE BINARIES CREATION:
+
+DE807   Vehicle look up failure page
+DE814   1st line of address validation
+US3908  Amend 'Date of Sale' entry fields to only accept dates no more than 5 years in the past
+US3912  Amend Summary Screen on all Exemplars to Display VRN in 'Number Plate Styling' and Vehicle Details in Blue Box
+US3939  Cursor needs to Alight in First Mandatory Field in Readiness For Input
+US3941  Capture CEG Identifier to Distinguish Assisted Digital Transactions from Others
+US3955  Amend implementation of feedback link and remove its associated javascript
+US3975  Create and implement Vehicle Detail Playback as common widget in vehicles-presentation-common
+
 ======= 1.21 ========
 TIME OF RELEASE BINARIES CREATION:
 Wed Oct 28 11:07:20 UTC 2015
