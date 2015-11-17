@@ -116,7 +116,7 @@ class VehicleLookup @Inject()(implicit bruteForceService: BruteForcePreventionSe
       ).distinctErrors
   }
 
-  val identifier = "ceg"
+  val identifier = "CEG"
   def ceg = play.api.mvc.Action { implicit request =>
     logMessage(request.cookies.trackingId(), Info, s"Presenting vehicle lookup view for identifier ${identifier}")
     Ok(views.html.changekeeper.vehicle_lookup(VehicleLookupViewModel(form.fill())))

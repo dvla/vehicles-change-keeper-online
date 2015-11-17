@@ -151,7 +151,7 @@ class ChangeKeeperSuccessUnitSpec extends UnitSpec {
     }
 
     "discard the vehicle, new keeper and confirm cookies with ceg identifier" in {
-      val identifier = "ceg"
+      val identifier = "CEG"
 
       val request = fakeRequest
         .withCookies(CookieFactoryForUnitSpecs.withIdentifier(identifier))

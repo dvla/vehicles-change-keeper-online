@@ -195,7 +195,7 @@ final class PrivateKeeperDetailsIntegrationSpec extends UiSpec with TestHarness 
 
     "display previous page when back link is clicked with ceg identifier" taggedAs UiTag in new WebBrowserForSelenium {
       go to BeforeYouStartPage
-      cacheSetup().withIdentifier("ceg")
+      cacheSetup().withIdentifier("CEG")
 
       go to PrivateKeeperDetailsPage
       click on back

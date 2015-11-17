@@ -117,7 +117,7 @@ class BusinessKeeperDetailsIntegrationSpec extends UiSpec with TestHarness {
 
    "display previous page when back button is clicked with ceg identifier" taggedAs UiTag in new WebBrowserForSelenium {
       go to BeforeYouStartPage
-      CookieFactoryForUISpecs.vehicleAndKeeperDetails().withIdentifier("ceg")
+      CookieFactoryForUISpecs.vehicleAndKeeperDetails().withIdentifier("CEG")
 
       go to BusinessKeeperDetailsPage
       click on back
