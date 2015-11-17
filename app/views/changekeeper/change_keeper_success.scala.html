@@ -4,13 +4,14 @@
 
 @import scala.collection.mutable.LinkedHashMap
 @import uk.gov.dvla.vehicles.presentation.common
-@import views.html.helper.form
-@import views.changekeeper.ChangeKeeperSuccess.FinishId
 @import common.views.html.widgets.alertWarning
 @import common.views.html.widgets.alertSuccess
 @import common.views.html.widgets.base.csrfTokenHiddenField
+@import common.views.html.widgets.formSteps
 @import common.views.html.widgets.playbackList
 @import common.views.html.widgets.vehicleDetailPlayback
+@import views.html.helper.form
+@import views.changekeeper.ChangeKeeperSuccess.FinishId
 
 @main(
     progress = Some(Messages("change_keeper_progress_6")),
@@ -104,41 +105,13 @@
             )()
         </div>
     </div>
-    <div class="form-steps">
-        <div class="step">
-            <button id="printDisposalSuccess"
-                    type="button"
-                    name="action"
-                    value="printDisposalSuccess"
-                    class="button js-only print-button">
-                @Messages("change_keeper_success.buttonnavprint")
-            </button>
-        </div>
 
-        <div class="step">
-            @form(action = controllers.routes.ChangeKeeperSuccess.finish()) {
-            @csrfTokenHiddenField()
-            @surveyUrl match {
-            case Some(url) => {
-            <button id="@FinishId"
-                    type="submit"
-                    onclick="window.open('@url', '_blank');"
-                    name="action"
-                    class="button button-new-disposal button-secondary">
-                @Messages("change_keeper_success.finish")
-            </button>
-            }
-            case None => {
-            <button id="@FinishId"
-                    type="submit"
-                    name="action"
-                    class="button button-new-disposal button-secondary">
-                @Messages("change_keeper_success.finish")
-            </button>
-            }
-            }
-            }
-        </div>
-    </div>
+    @formSteps(
+        controllers.routes.ChangeKeeperSuccess.finish(),
+        FinishId,
+        surveyUrl,
+        cssClasses = Nil,
+        Map.empty
+    )
 </div>
 }
