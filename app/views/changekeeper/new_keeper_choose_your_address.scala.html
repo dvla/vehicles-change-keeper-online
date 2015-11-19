@@ -19,6 +19,8 @@
 @import views.html.changekeeper.main
 @import views.html.helper.form
 @import uk.gov.dvla.vehicles.presentation.common.model.NewKeeperChooseYourAddressFormModel.Form.AddressSelectId
+@import scala.collection.mutable.LinkedHashMap
+@import common.views.html.widgets.playbackList
 
 @main(
   progress = Some(Messages("change_keeper_progress_4")),
@@ -40,30 +42,27 @@
 
     @form(action = NewKeeperChooseYourAddress.submit()) {
       @csrfTokenHiddenField()
-      <dl class="playback">
-        @if(isBusinessKeeper) {
-          <dt>@Messages("change_keeper_newKeeperChooseYourAddress_newBusinessFleetNumber_label")</dt>
-          @if(businessFleetNumber == None) {
-            <dd>@Messages("change_keeper_newKeeperChooseYourAddress.fleetNumberNotEntered")</dd>
-          } else {
-            <dd>@businessFleetNumber.get</dd>
+
+      @playbackList(
+        null,
+        {
+          val playbackItems: LinkedHashMap[String, String] = LinkedHashMap()
+          if(isBusinessKeeper) {
+            playbackItems += Messages("change_keeper_newKeeperChooseYourAddress_newBusinessFleetNumber_label") -> (if(businessFleetNumber == None)
+                Messages("change_keeper_newKeeperChooseYourAddress.fleetNumberNotEntered")
+              else businessFleetNumber.get)
           }
+          playbackItems += (if(isBusinessKeeper) Messages("change_keeper_newKeeperChooseYourAddress_newBusinessKeeperName_label")
+            else Messages("change_keeper_newKeeperChooseYourAddress_newPrivateKeeperName_label")) ->
+            Messages("change_keeper_newKeeperChooseYourAddress_newKeeperName", newKeeperName)
+
+          playbackItems += Messages("change_keeper_newKeeperChooseYourAddress_newKeeperEmail_label") -> (if(newKeeperEmail == None)
+              Messages("change_keeper_newKeeperChooseYourAddress.emailNotEntered")
+            else ("<span class=\"lowercase-text\">" + newKeeperEmail.get + "</span>") )
+
+          playbackItems += Messages("change_keeper_newKeeperChooseYourAddress_newKeeperpostcode_label") -> newKeeperPostcode
         }
-        @if(isBusinessKeeper) {
-            <dt>@Messages("change_keeper_newKeeperChooseYourAddress_newBusinessKeeperName_label")</dt>
-        } else {
-            <dt>@Messages("change_keeper_newKeeperChooseYourAddress_newPrivateKeeperName_label")</dt>
-        }
-        <dd>@Messages("change_keeper_newKeeperChooseYourAddress_newKeeperName", newKeeperName)</dd>
-        <dt>@Messages("change_keeper_newKeeperChooseYourAddress_newKeeperEmail_label")</dt>
-        @if(newKeeperEmail == None) {
-          <dd>@Messages("change_keeper_newKeeperChooseYourAddress.emailNotEntered")</dd>
-        } else {
-          <dd><span class="lowercase-text">@newKeeperEmail.get</span></dd>
-        }
-        <dt>@Messages("change_keeper_newKeeperChooseYourAddress_newKeeperpostcode_label")</dt>
-        <dd>@newKeeperPostcode</dd>
-      </dl>
+      )()
 
       <br/>
 

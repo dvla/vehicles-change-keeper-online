@@ -16,6 +16,8 @@
 @import models.CompleteAndConfirmFormModel.Form.{ConsentId, RegRightId}
 @import views.changekeeper.CompleteAndConfirm.{BackId, SubmitId, modify}
 @import views.html.helper.form
+@import common.views.html.widgets.playbackList
+
 
 @main(
     progress = Some(Messages("change_keeper_progress_6")),
@@ -47,37 +49,29 @@
 
         <div class="second-col">
             <div>
-                <h2>@Messages("change_keeper_completeandconfirm.newkeeperDetails")</h2>
-                <p>
-                    @Messages("change_keeper_completeandconfirm.displayName")<br/>
-                    <strong>@data.keeperDetails.displayName</strong><br/>
-                </p>
-                <p>
-                    @Messages("change_keeper_completeandconfirm.address")<br/>
-                    @for(addr <- data.keeperDetails.address.address) {<strong>@addr</strong><br/>}
-                </p>
-                <p>
-                    @Messages("change_keeper_completeandconfirm.email")<br/>
-                    @if(data.keeperDetails.email == None) {
-                    <strong>@Messages("change_keeper_completeandconfirm.emailNotEntered")</strong><br/>
-                    } else {
-                    <strong><span class="lowercase-text">@data.keeperDetails.email.get</span></strong><br/>
+
+                @playbackList(
+                    Messages("change_keeper_completeandconfirm.newkeeperDetails"),
+                    {
+                        val playbackItems: LinkedHashMap[String, String] = LinkedHashMap()
+                        playbackItems += Messages("change_keeper_completeandconfirm.displayName") -> data.keeperDetails.displayName
+                        playbackItems += Messages("change_keeper_completeandconfirm.address") -> data.keeperDetails.address.address.mkString("<br/>")
+                        playbackItems += Messages("change_keeper_completeandconfirm.email") -> {
+                            if(data.keeperDetails.email == None) Messages("change_keeper_completeandconfirm.emailNotEntered")
+                            else ("<span class=\"lowercase-text\">" + data.keeperDetails.email.get + "</span>")
+                            }
+                        if(data.keeperDetails.isBusinessKeeper) {
+                            playbackItems += Messages("change_keeper_completeandconfirm.fleetNumber") -> {
+                                if(data.keeperDetails.fleetNumber == None) Messages("change_keeper_completeandconfirm.fleetNumberNotEntered")
+                                else data.keeperDetails.fleetNumber.get
+                                }
+                        }
+
+                        playbackItems += Messages("change_keeper_completeAndConfirm.date_of_sale") ->
+                            data.dateOfSaleModel.dateOfSale.toString("dd/MM/yyyy")
                     }
-                </p>
-                <p>
-                    @if(data.keeperDetails.isBusinessKeeper) {
-                    @Messages("change_keeper_completeandconfirm.fleetNumber")<br/>
-                    @if(data.keeperDetails.fleetNumber == None) {
-                    <strong>@Messages("change_keeper_completeandconfirm.fleetNumberNotEntered")</strong>
-                    } else {
-                    <strong>@data.keeperDetails.fleetNumber.get</strong>
-                    }
-                    }
-                </p>
-                <p>
-                    @Messages("change_keeper_completeAndConfirm.date_of_sale")<br/>
-                    <strong>@data.dateOfSaleModel.dateOfSale.toString("dd/MM/yyyy")</strong>
-                </p>
+                )()
+
             </div>
         </div>
 
