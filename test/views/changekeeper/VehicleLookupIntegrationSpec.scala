@@ -7,6 +7,9 @@ import helpers.webbrowser.ProgressBar.progressStep
 import models.K2KCacheKeyPrefix.CookiePrefix
 import org.openqa.selenium.{By, WebElement}
 import org.openqa.selenium.support.ui.{ExpectedConditions}
+import org.scalatest.concurrent.Eventually
+import org.scalatest.concurrent.IntegrationPatience
+import org.scalatest.selenium.WebBrowser.{go, pageTitle, pageSource, click}
 import pages.common.ErrorPanel
 import pages.changekeeper.{VehicleLookupPage}
 import pages.changekeeper.VehicleLookupPage.happyPath
@@ -17,9 +20,8 @@ import common.model.PrivateKeeperDetailsFormModel.privateKeeperDetailsCacheKey
 import common.testhelpers.LightFakeApplication
 import common.testhelpers.UiTag
 import common.views.widgetdriver.Wait
-import org.scalatest.selenium.WebBrowser.{go, pageTitle, pageSource, click}
 
-class VehicleLookupIntegrationSpec extends UiSpec with TestHarness {
+class VehicleLookupIntegrationSpec extends UiSpec with TestHarness with Eventually with IntegrationPatience {
 
   final val ProgressStepNumber = 2
 
@@ -82,8 +84,10 @@ class VehicleLookupIntegrationSpec extends UiSpec with TestHarness {
     "clear businessKeeperDetails when private keeper data is entered" taggedAs UiTag in new PhantomJsByDefault {
       go to VehicleLookupPage
       CookieFactoryForUISpecs.businessKeeperDetails()
-      happyPath()
-      webDriver.manage().getCookieNamed(businessKeeperDetailsCacheKey) should equal(null)
+      eventually {
+        happyPath()
+        webDriver.manage().getCookieNamed(businessKeeperDetailsCacheKey) should equal(null)
+      }
     }
 
     "clear privateKeeperDetails when business keeper data is entered" taggedAs UiTag in new PhantomJsByDefault {

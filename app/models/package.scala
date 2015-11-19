@@ -14,7 +14,6 @@ import common.model.VehicleAndKeeperDetailsModel.vehicleAndKeeperLookupDetailsCa
 
 package object models {
   final val HelpCacheKey = s"${CookiePrefix}help"
-  final val SeenCookieMessageCacheKey = "seen_cookie_message" // Same value across all exemplars
   final val IdentifierCacheKey = s"${CookiePrefix}identifier"
 
   final val ChangeKeeperCacheKeys = Set(

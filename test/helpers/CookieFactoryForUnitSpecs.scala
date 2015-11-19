@@ -10,7 +10,6 @@ import models.CompleteAndConfirmResponseModel.ChangeKeeperCompletionResponseCach
 import models.DateOfSaleFormModel
 import models.HelpCacheKey
 import models.K2KCacheKeyPrefix.CookiePrefix
-import models.SeenCookieMessageCacheKey
 import models.SellerEmailModel
 import models.SellerEmailModel.SellerEmailModelCacheKey
 import models.VehicleLookupFormModel
@@ -44,6 +43,7 @@ import common.model.NewKeeperEnterAddressManuallyFormModel
 import common.model.NewKeeperEnterAddressManuallyFormModel.newKeeperEnterAddressManuallyCacheKey
 import common.model.PrivateKeeperDetailsFormModel
 import common.model.PrivateKeeperDetailsFormModel.privateKeeperDetailsCacheKey
+import common.model.SeenCookieMessageCacheKey
 import common.model.VehicleAndKeeperDetailsModel
 import common.model.VehicleAndKeeperDetailsModel.vehicleAndKeeperLookupDetailsCacheKey
 import common.views.models.{AddressLinesViewModel, AddressAndPostcodeViewModel}
