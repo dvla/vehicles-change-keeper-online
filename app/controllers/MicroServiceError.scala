@@ -14,11 +14,13 @@ class MicroServiceError @Inject()(implicit clientSideSessionFactory: ClientSideS
                                   config: Config) extends Controller with DVLALogger {
 
   private final val DefaultRedirectUrl = BeforeYouStart.present().url
+  protected val tryAgainTarget = controllers.routes.MicroServiceError.back()
+  protected val exitTarget = controllers.routes.BeforeYouStart.present()
 
   def present = Action { implicit request =>
     val trackingId = request.cookies.trackingId()
     logMessage(trackingId, Info, "Presenting micro service error view")
-    ServiceUnavailable(views.html.changekeeper.micro_service_error(trackingId))
+    ServiceUnavailable(views.html.changekeeper.micro_service_error(tryAgainTarget, exitTarget, trackingId))
   }
 
   def back = Action { implicit request =>

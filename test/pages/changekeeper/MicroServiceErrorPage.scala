@@ -2,7 +2,7 @@ package pages.changekeeper
 
 import org.openqa.selenium.WebDriver
 import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.{Page, WebDriverFactory}
-import views.changekeeper.MicroServiceError.{ExitId, TryAgainId}
+import uk.gov.dvla.vehicles.presentation.common.views.widgets.MicroServiceError.{ExitId, TryAgainId}
 import org.scalatest.selenium.WebBrowser.{find, id, Element}
 
 object MicroServiceErrorPage extends Page {
