@@ -1,6 +1,6 @@
 ======= 1.23 ========
 TIME OF RELEASE BINARIES CREATION:
-
+Wed Nov 25 14:10:51 UTC 2015
 
 US3942 	Record CEG Identifier to Distinguish Assisted Digital Transactions from Others
 US3959 	Ensure all widgets in vehicles-presentation-common that use javascript have the javascript behaviour under unit testing
