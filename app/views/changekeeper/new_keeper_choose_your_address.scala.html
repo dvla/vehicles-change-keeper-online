@@ -56,10 +56,10 @@
             else Messages("change_keeper_newKeeperChooseYourAddress_newPrivateKeeperName_label")) ->
             Messages("change_keeper_newKeeperChooseYourAddress_newKeeperName", newKeeperName)
 
-          playbackItems += Messages("change_keeper_newKeeperChooseYourAddress_newKeeperEmail_label") -> (if(newKeeperEmail == None)
-              Messages("change_keeper_newKeeperChooseYourAddress.emailNotEntered")
-            else ("<span class=\"lowercase-text\">" + newKeeperEmail.get + "</span>") )
-
+          newKeeperEmail match {
+            case Some(newKeeperEmail) => playbackItems += ("EMAIL_" + Messages("change_keeper_newKeeperChooseYourAddress_newKeeperEmail_label") -> newKeeperEmail)
+            case None => playbackItems += (Messages("change_keeper_newKeeperChooseYourAddress_newKeeperEmail_label") ->
+              Messages("change_keeper_newKeeperChooseYourAddress.emailNotEntered") )}
           playbackItems += Messages("change_keeper_newKeeperChooseYourAddress_newKeeperpostcode_label") -> newKeeperPostcode
         }
       )()

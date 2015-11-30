@@ -89,13 +89,9 @@
                         Messages("change_keeper_success.vehicle_details.address") ->
                         viewModel.newKeeperDetails.address.address.mkString("<br/>")
                     )
-                    playbackItems += (
-                        Messages("change_keeper_success.vehicle_details.email") ->
-                        (viewModel.newKeeperDetails.email match {
-                            case Some(email) => "<span class=\"lowercase-text\">" + email + "</span>"
-                            case None => Messages("change_keeper_email_not_entered")
-                        })
-                    )
+                    viewModel.newKeeperDetails.email match {
+                        case Some(email) => playbackItems += ("EMAIL_" + Messages("change_keeper_success.vehicle_details.email") -> email)
+                        case None => playbackItems += (Messages("change_keeper_success.vehicle_details.email") -> Messages("change_keeper_email_not_entered") )}
                     playbackItems += (
                         Messages("change_keeper_success.date_of_sale.label") ->
                         viewModel.dateOfSaleViewModel.dateOfSale.toString("dd/MM/yyyy")
