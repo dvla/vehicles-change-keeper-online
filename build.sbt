@@ -65,8 +65,8 @@ libraryDependencies ++= Seq(
   "org.apache.commons" % "commons-io" % "1.3.2",
   "org.apache.commons" % "commons-email" % "1.2",
   "org.webjars" % "requirejs" % "2.1.14-1",
-  "junit" % "junit" % "4.11",
-  "junit" % "junit-dep" % "4.11"
+  "junit" % "junit" % "4.11" % "test",
+  "junit" % "junit-dep" % "4.11" % "test"
 )
 
 pipelineStages := Seq(rjs, digest, gzip)
