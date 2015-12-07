@@ -65,7 +65,12 @@ libraryDependencies ++= Seq(
   "org.apache.commons" % "commons-email" % "1.2",
   "org.webjars" % "requirejs" % "2.1.14-1",
   "junit" % "junit" % "4.11" % "test",
-  "junit" % "junit-dep" % "4.11" % "test"
+  "junit" % "junit-dep" % "4.11" % "test",
+  "net.sourceforge.htmlunit" % "htmlunit" % "2.13" exclude("commons-collections", "commons-collections"),
+  // Note that commons-collections transitive dependency of htmlunit has been excluded above.
+  // We need to use version 3.2.2 of commons-collections to avoid the following in 3.2.1:
+  // https://commons.apache.org/proper/commons-collections/security-reports.html#Apache_Commons_Collections_Security_Vulnerabilities
+  "commons-collections" % "commons-collections" % "3.2.2" withSources() withJavadoc()
 )
 
 pipelineStages := Seq(rjs, digest, gzip)
