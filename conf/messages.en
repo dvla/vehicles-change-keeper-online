@@ -49,6 +49,7 @@ widget.optional = (optional)
 error.restricted.validNumberOnly = This field only accepts numbers
 error.restricted.validVrnOnly = Vehicle registration number must be valid format
 error.restricted.validPostcode = Must be between five and eight characters and in a valid format, e.g. AB1 2BA or AB12BA
+
 error.validTitle = Must be a valid title
 error.title=An unrecoverable error has occurred
 error.button=Start again
@@ -67,8 +68,6 @@ error.dateOfBirth.inTheFuture = Must be a valid date DD MM YYYY and not be in th
 error.dateOfBirth.invalid = Must be a valid date DD MM YYYY and not be in the future.
 error.dateOfBirth.110yearsInThePast = Date of birth cannot be more than 110 years in the past
 error.fleetNumber = The fleet number can only be a 6 digit number, please try again.
-error.address.characterInvalid = The first character of the address must be alphanumeric. Other characters must be valid (a-z, A-Z, 0-9, &, -,(), /, ‘ and , or .)
-error.postTown.characterInvalid = Town or city contains invalid characters
 error.validBougtByType = Select whether the vehicle is being sold to a private individual or business
 error.validDriverNumber = The Driver Number that you have entered does not appear to be in an acceptable format. Please amend your entry or delete and re-submit.
 error.fleetNumber = The fleet number can only be a 6 digit number, please try again.
@@ -402,10 +401,14 @@ addressAndPostcode = Building name or number
 addressAndPostcode.addressLines = Address
 addressAndPostcode.postcode = Postcode
 addressAndPostcode.addressLines.buildingNameOrNumber = Building name or number
+
+# common to both addressPicker widget and addressAndPostcode widget
 error.address.buildingNameOrNumber.invalid = Building/number and street must contain between 4 and 30 characters
+error.address.characterInvalid = The first character of the address must be alphanumeric. Other characters must be valid (a-z, A-Z, 0-9, &, -,(), /, ‘ and , or .)
+#error.address.maxLengthOfLinesConcatenated = Address can have no more than 120 characters
 error.address.postTown = Town or city must contain between 3 and 20 characters
-error.address.postcode.invalid = Must be between five and eight characters and in a valid format, eg. AB1 2Ba or AB12BA
-error.address.maxLengthOfLinesConcatenated = Address can have no more than 120 characters
+error.address.postTown.characterInvalid = Town or city contains invalid characters
+error.address.threeAlphas = Must have at least 3 alpha characters
 
 #keeper still on record (no previous disposal has been done to the vehicle so the keeper is still on record)
 acquire_keeperstillonrecord.title = A keeper is on the record
