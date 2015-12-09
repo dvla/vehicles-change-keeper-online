@@ -48,8 +48,8 @@ lazy val gatlingTestsProject = Project("gatling-tests", file("gatling-tests"))
 
 libraryDependencies ++= Seq(
   filters,
-  "dvla" %% "vehicles-presentation-common" % "2.38-SNAPSHOT" withSources() withJavadoc() exclude("junit", "junit-dep"),
-  "dvla" %% "vehicles-presentation-common" % "2.38-SNAPSHOT" % "test" classifier "tests" withSources() withJavadoc() exclude("junit", "junit-dep"),
+  "dvla" %% "vehicles-presentation-common" % "2.39-SNAPSHOT" withSources() withJavadoc() exclude("junit", "junit-dep"),
+  "dvla" %% "vehicles-presentation-common" % "2.39-SNAPSHOT" % "test" classifier "tests" withSources() withJavadoc() exclude("junit", "junit-dep"),
   "com.google.guava" % "guava" % "15.0" withSources() withJavadoc(), // See: http://stackoverflow.com/questions/16614794/illegalstateexception-impossible-to-get-artifacts-when-data-has-not-been-loaded
   "org.seleniumhq.selenium" % "selenium-java" % "2.43.0" % "test",
   "com.github.detro" % "phantomjsdriver" % "1.2.0" % "test" withSources() withJavadoc(),
@@ -65,7 +65,12 @@ libraryDependencies ++= Seq(
   "org.apache.commons" % "commons-email" % "1.2",
   "org.webjars" % "requirejs" % "2.1.14-1",
   "junit" % "junit" % "4.11" % "test",
-  "junit" % "junit-dep" % "4.11" % "test"
+  "junit" % "junit-dep" % "4.11" % "test",
+  "net.sourceforge.htmlunit" % "htmlunit" % "2.13" exclude("commons-collections", "commons-collections"),
+  // Note that commons-collections transitive dependency of htmlunit has been excluded above.
+  // We need to use version 3.2.2 of commons-collections to avoid the following in 3.2.1:
+  // https://commons.apache.org/proper/commons-collections/security-reports.html#Apache_Commons_Collections_Security_Vulnerabilities
+  "commons-collections" % "commons-collections" % "3.2.2" withSources() withJavadoc()
 )
 
 pipelineStages := Seq(rjs, digest, gzip)
@@ -107,7 +112,7 @@ net.virtualvoid.sbt.graph.Plugin.graphSettings
 webJarCdns := Map()
 
 // ====================== Sandbox Settings ==========================
-lazy val osAddressLookupProject = osAddressLookup("0.25-SNAPSHOT").disablePlugins(PlayScala, SbtWeb)
+lazy val osAddressLookupProject = osAddressLookup("0.26-SNAPSHOT").disablePlugins(PlayScala, SbtWeb)
 lazy val vehicleAndKeeperLookupProject = vehicleAndKeeperLookup("0.20-SNAPSHOT").disablePlugins(PlayScala, SbtWeb)
 lazy val vehiclesAcquireFulfilProject = vehiclesAcquireFulfil("0.16-SNAPSHOT").disablePlugins(PlayScala, SbtWeb)
 lazy val emailServiceProject = emailService("0.17-SNAPSHOT").disablePlugins(PlayScala, SbtWeb)

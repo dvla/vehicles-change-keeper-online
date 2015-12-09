@@ -49,6 +49,7 @@ widget.optional = (optional)
 error.restricted.validNumberOnly = This field only accepts numbers
 error.restricted.validVrnOnly = Vehicle registration number must be valid format
 error.restricted.validPostcode = Must be between five and eight characters and in a valid format, e.g. AB1 2BA or AB12BA
+
 error.validTitle = Must be a valid title
 error.title=An unrecoverable error has occurred
 error.button=Start again
@@ -67,8 +68,6 @@ error.dateOfBirth.inTheFuture = Must be a valid date DD MM YYYY and not be in th
 error.dateOfBirth.invalid = Must be a valid date DD MM YYYY and not be in the future.
 error.dateOfBirth.110yearsInThePast = Date of birth cannot be more than 110 years in the past
 error.fleetNumber = The fleet number can only be a 6 digit number, please try again.
-error.address.characterInvalid = The first character of the address must be alphanumeric. Other characters must be valid (a-z, A-Z, 0-9, &, -,(), /, ‘ and , or .)
-error.postTown.characterInvalid = Town or city contains invalid characters
 error.validBougtByType = Select whether the vehicle is being sold to a private individual or business
 error.validDriverNumber = The Driver Number that you have entered does not appear to be in an acceptable format. Please amend your entry or delete and re-submit.
 error.fleetNumber = The fleet number can only be a 6 digit number, please try again.
@@ -351,15 +350,15 @@ change_keeper_success.new_keeper_details.p1 = New keeper details
 change_keeper_success.further_information.header = What happens next for you?
 change_keeper_success.further_information.header.2 = What happens next for the new keeper?
 
-change_keeper_success.further_information.p1 = We will send you (the previous keeper) a disposal acknowledgement letter.
-change_keeper_success.further_information.p2 = We will automatically issue a refund for any full remaining months of vehicle tax and cancel any direct debit (DD).
-change_keeper_success.further_information.p3 = Both the disposal acknowledgement letter and refund will be sent to the address on the V5C.
-change_keeper_success.further_information.p4 = If you do not receive either within 4-6 weeks, please contact DVLA Customer Enquiries as you could still be liable for the vehicle.
+change_keeper_success.further_information.p1 = we will send you (the previous keeper) a disposal acknowledgement letter.
+change_keeper_success.further_information.p2 = we will automatically issue a refund for any full remaining months of vehicle tax and cancel any direct debit (DD).
+change_keeper_success.further_information.p3 = both the disposal acknowledgement letter and refund will be sent to the address on the V5C.
+change_keeper_success.further_information.p4 = if you do not receive either within 4-6 weeks, please contact DVLA Customer Enquiries as you could still be liable for the vehicle.
 
-change_keeper_success.further_information.p5 = You may want to take a print of this summary for your records.
-change_keeper_success.further_information.p6 = Since 1st October 2014 vehicle tax can no longer be transferred as part of the sale, so the new keeper must tax the vehicle if they want to use it on the road.
-change_keeper_success.further_information.p7 = Within 5 working days we will send a new vehicle registration certificate (V5C) to the new keeper.
-change_keeper_success.further_information.p8 = If they do not receive a new V5C in 2 weeks they must contact DVLA Customer Enquiries.
+change_keeper_success.further_information.p5 = you may want to take a print of this summary for your records.
+change_keeper_success.further_information.p6 = since 1st October 2014 vehicle tax can no longer be transferred as part of the sale, so the new keeper must tax the vehicle if they want to use it on the road.
+change_keeper_success.further_information.p7 = within 5 working days we will send a new vehicle registration certificate (V5C) to the new keeper.
+change_keeper_success.further_information.p8 = if they do not receive a new V5C in 2 weeks they must contact DVLA Customer Enquiries.
 change_keeper_success.buttonnavprint = Print
 change_keeper_success.finish = Finish
 
@@ -402,10 +401,14 @@ addressAndPostcode = Building name or number
 addressAndPostcode.addressLines = Address
 addressAndPostcode.postcode = Postcode
 addressAndPostcode.addressLines.buildingNameOrNumber = Building name or number
+
+# common to both addressPicker widget and addressAndPostcode widget
 error.address.buildingNameOrNumber.invalid = Building/number and street must contain between 4 and 30 characters
+error.address.characterInvalid = The first character of the address must be alphanumeric. Other characters must be valid (a-z, A-Z, 0-9, &, -,(), /, ‘ and , or .)
+#error.address.maxLengthOfLinesConcatenated = Address can have no more than 120 characters
 error.address.postTown = Town or city must contain between 3 and 20 characters
-error.address.postcode.invalid = Must be between five and eight characters and in a valid format, eg. AB1 2Ba or AB12BA
-error.address.maxLengthOfLinesConcatenated = Address can have no more than 120 characters
+error.address.postTown.characterInvalid = Town or city contains invalid characters
+error.address.threeAlphas = Must have at least 3 alpha characters
 
 #keeper still on record (no previous disposal has been done to the vehicle so the keeper is still on record)
 acquire_keeperstillonrecord.title = A keeper is on the record
