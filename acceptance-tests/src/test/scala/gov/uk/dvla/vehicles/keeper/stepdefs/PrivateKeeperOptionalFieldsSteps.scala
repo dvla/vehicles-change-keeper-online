@@ -1,5 +1,7 @@
 package gov.uk.dvla.vehicles.keeper.stepdefs
 
+import java.util.Calendar
+
 import cucumber.api.scala.{EN, ScalaDsl}
 import cucumber.api.java.en.{Then, When, Given}
 import org.openqa.selenium.WebDriver
@@ -15,6 +17,11 @@ class PrivateKeeperOptionalFieldsSteps(webBrowserDriver: WebBrowserDriver)
 
   implicit val webDriver = webBrowserDriver.asInstanceOf[WebDriver]
 
+  val dob = Calendar.getInstance()
+  val age = 20
+  val invalidAge = 111
+  dob.set(12, 10, Calendar.getInstance().get(Calendar.YEAR) - age)
+
   def goToPrivateKeeperDetailsPage() {
     go to VehicleLookupPage
     VehicleLookupPage.vehicleRegistrationNumber.value = "B1"
@@ -28,9 +35,9 @@ class PrivateKeeperOptionalFieldsSteps(webBrowserDriver: WebBrowserDriver)
   @Given("^the user enters a validate date of birth$")
   def the_user_enters_a_validate_date_of_birth()  {
     goToPrivateKeeperDetailsPage()
-    PrivateKeeperDetailsPage.dayDateOfBirthTextBox.value = "12"
-    PrivateKeeperDetailsPage.monthDateOfBirthTextBox.value = "10"
-    PrivateKeeperDetailsPage.yearDateOfBirthTextBox .value = "1985"
+    PrivateKeeperDetailsPage.dayDateOfBirthTextBox.value = dob.get(Calendar.DATE).toString
+    PrivateKeeperDetailsPage.monthDateOfBirthTextBox.value = dob.get(Calendar.MONTH).toString
+    PrivateKeeperDetailsPage.yearDateOfBirthTextBox .value = dob.get(Calendar.YEAR).toString
   }
 
   @Then("^the user will not see any error message like \"(.*?)\"$")
@@ -42,8 +49,8 @@ class PrivateKeeperOptionalFieldsSteps(webBrowserDriver: WebBrowserDriver)
   def the_user_enters_a_invalid_date_of_birth_and_no_other_errors_persists()  {
     goToPrivateKeeperDetailsPage()
     PrivateKeeperDetailsPage.dayDateOfBirthTextBox.value = "42"
-    PrivateKeeperDetailsPage.monthDateOfBirthTextBox.value = "10"
-    PrivateKeeperDetailsPage.yearDateOfBirthTextBox .value = "1985"
+    PrivateKeeperDetailsPage.monthDateOfBirthTextBox.value = dob.get(Calendar.MONTH).toString
+    PrivateKeeperDetailsPage.yearDateOfBirthTextBox .value = dob.get(Calendar.YEAR).toString
   }
 
   @When("^the user press the submit control$")
@@ -59,17 +66,9 @@ class PrivateKeeperOptionalFieldsSteps(webBrowserDriver: WebBrowserDriver)
   @Given("^the user enters the dateOfBirth in future$")
   def the_user_enters_the_dateOfBirth_in_future() {
     goToPrivateKeeperDetailsPage()
-    PrivateKeeperDetailsPage.dayDateOfBirthTextBox.value = "14"
-    PrivateKeeperDetailsPage.monthDateOfBirthTextBox.value = "10"
-    PrivateKeeperDetailsPage.yearDateOfBirthTextBox .value = "2017"
-  }
-
-  @Given("^the Date of birth is more than oneHundredTen years in the past$")
-  def the_Date_of_birth_is_more_than_oneHundredTen_years_in_the_past()  {
-    goToPrivateKeeperDetailsPage()
-    PrivateKeeperDetailsPage.dayDateOfBirthTextBox.value = "14"
-    PrivateKeeperDetailsPage.monthDateOfBirthTextBox.value = "10"
-    PrivateKeeperDetailsPage.yearDateOfBirthTextBox .value = "1900"
+    PrivateKeeperDetailsPage.dayDateOfBirthTextBox.value = Calendar.getInstance().get(Calendar.DATE).toString
+    PrivateKeeperDetailsPage.monthDateOfBirthTextBox.value = Calendar.getInstance().get(Calendar.MONTH).toString
+    PrivateKeeperDetailsPage.yearDateOfBirthTextBox .value = (Calendar.getInstance().get(Calendar.YEAR) + 1).toString
   }
 
   @Then("^there will be an error message  \"(.*?)\"$")
@@ -77,6 +76,13 @@ class PrivateKeeperOptionalFieldsSteps(webBrowserDriver: WebBrowserDriver)
     PrivateKeeperDetailsPage.errorTextForTitle(dobFutureError) shouldBe true withClue trackingId
   }
 
+  @Given("^the Date of birth is more than oneHundredTen years in the past$")
+  def the_Date_of_birth_is_more_than_oneHundredTen_years_in_the_past()  {
+    goToPrivateKeeperDetailsPage()
+    PrivateKeeperDetailsPage.dayDateOfBirthTextBox.value = Calendar.getInstance().get(Calendar.DATE).toString
+    PrivateKeeperDetailsPage.monthDateOfBirthTextBox.value = Calendar.getInstance().get(Calendar.MONTH).toString
+    PrivateKeeperDetailsPage.yearDateOfBirthTextBox .value = (Calendar.getInstance().get(Calendar.YEAR) - invalidAge).toString
+  }
 
   @Then("^there will be an errored message  \"(.*?)\"$")
   def there_will_be_an_errored_message(dobPastError:String)  {

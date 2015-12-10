@@ -1,5 +1,7 @@
 package gov.uk.dvla.vehicles.keeper.stepdefs
 
+import java.util.Calendar
+
 import cucumber.api.java.en.{Given, When, Then}
 import cucumber.api.scala.{EN, ScalaDsl}
 import org.openqa.selenium.WebDriver
@@ -16,6 +18,9 @@ class CheckPreviousKeeperEndDateOrLastKeeperChangeDateAndCompareDateOfSale(webBr
   extends ScalaDsl with EN with Matchers with WithClue {
 
   implicit val webDriver = webBrowserDriver.asInstanceOf[WebDriver]
+
+  val dos = Calendar.getInstance()
+  dos.add(Calendar.YEAR, -1)
 
   def goToDateOfSalePage(registrationNumber:String) = {
     go to VehicleLookupPage
@@ -44,17 +49,17 @@ class CheckPreviousKeeperEndDateOrLastKeeperChangeDateAndCompareDateOfSale(webBr
 
   @When("^the user enters a date of sale before the previous keeper end date and click on submit button$")
   def the_user_enters_a_date_of_sale_before_the_previous_keeper_end_date_and_click_on_submit_button()  {
-    DateOfSalePage.dayDateOfSaleTextBox.value = "12"
-    DateOfSalePage.monthDateOfSaleTextBox.value = "12"
-    DateOfSalePage.yearDateOfSaleTextBox.value = "2010"
+    DateOfSalePage.dayDateOfSaleTextBox.value = dos.get(Calendar.DATE).toString
+    DateOfSalePage.monthDateOfSaleTextBox.value = dos.get(Calendar.MONTH).toString
+    DateOfSalePage.yearDateOfSaleTextBox.value = dos.get(Calendar.YEAR).toString
     click on DateOfSalePage.next
   }
 
   @When("^the user enters a date of sale before the last keeper change date and click on submit button$")
   def the_user_enters_a_date_of_sale_before_the_last_keeper_change_date_and_click_on_submit_button() {
-    DateOfSalePage.dayDateOfSaleTextBox.value = "12"
-    DateOfSalePage.monthDateOfSaleTextBox.value = "12"
-    DateOfSalePage.yearDateOfSaleTextBox.value = "2010"
+    DateOfSalePage.dayDateOfSaleTextBox.value = dos.get(Calendar.DATE).toString
+    DateOfSalePage.monthDateOfSaleTextBox.value = dos.get(Calendar.MONTH).toString
+    DateOfSalePage.yearDateOfSaleTextBox.value = dos.get(Calendar.YEAR).toString
     click on DateOfSalePage.next
   }
 
@@ -79,19 +84,19 @@ class CheckPreviousKeeperEndDateOrLastKeeperChangeDateAndCompareDateOfSale(webBr
     pageSource should not include "<div class=\"popup-modal\">" withClue trackingId
   }
 
-  @When("^no date is returned by the back end system and  user enters a date of sale$")
+  @When("^no date is returned by the back end system and user enters a date of sale$")
   def no_date_is_returned_by_the_back_end_system_and_user_enters_a_date_of_sale(): Unit =  {
-    DateOfSalePage.dayDateOfSaleTextBox.value = "12"
-    DateOfSalePage.monthDateOfSaleTextBox.value = "12"
-    DateOfSalePage.yearDateOfSaleTextBox.value = "2010"
+    DateOfSalePage.dayDateOfSaleTextBox.value = dos.get(Calendar.DATE).toString
+    DateOfSalePage.monthDateOfSaleTextBox.value = dos.get(Calendar.MONTH).toString
+    DateOfSalePage.yearDateOfSaleTextBox.value = dos.get(Calendar.YEAR).toString
     click on DateOfSalePage.next
   }
 
   @When("^keeper end date and change date has been returned by the back end system$")
   def keeper_end_date_and_change_date_has_been_returned_by_the_back_end_system()  {
-    DateOfSalePage.dayDateOfSaleTextBox.value = "12"
-    DateOfSalePage.monthDateOfSaleTextBox.value = "12"
-    DateOfSalePage.yearDateOfSaleTextBox.value = "2010"
+    DateOfSalePage.dayDateOfSaleTextBox.value = dos.get(Calendar.DATE).toString
+    DateOfSalePage.monthDateOfSaleTextBox.value = dos.get(Calendar.MONTH).toString
+    DateOfSalePage.yearDateOfSaleTextBox.value = dos.get(Calendar.YEAR).toString
     click on DateOfSalePage.next
   }
 }

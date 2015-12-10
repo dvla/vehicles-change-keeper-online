@@ -1,5 +1,7 @@
 package gov.uk.dvla.vehicles.keeper.stepdefs
 
+import java.util.Calendar
+
 import cucumber.api.scala.{EN, ScalaDsl}
 import cucumber.api.java.en.{Given,Then, When}
 import helpers.RandomVrmGenerator
@@ -20,6 +22,9 @@ class HappyAndSadPathSteps(webBrowserDriver: WebBrowserDriver)
   extends ScalaDsl with EN with Matchers with WithClue {
 
   implicit val webDriver = webBrowserDriver.asInstanceOf[WebDriver]
+
+  val dos = Calendar.getInstance()
+  dos.add(Calendar.YEAR, -1)
 
   @Given("^the user is on the vehicle look up page$")
   def the_user_is_on_the_vehicle_look_up_page() {
@@ -54,9 +59,9 @@ class HappyAndSadPathSteps(webBrowserDriver: WebBrowserDriver)
   @Then("^the user will be on complete and confirm page and click on confirm sale button$")
   def the_user_will_be_on_complete_and_confirm_page_and_click_on_confirm_sale_button() {
     pageTitle shouldEqual DateOfSalePage.title withClue trackingId
-    DateOfSalePage.dayDateOfSaleTextBox.value = "11"
-    DateOfSalePage.monthDateOfSaleTextBox.value = "11"
-    DateOfSalePage.yearDateOfSaleTextBox.value = "2011"
+    DateOfSalePage.dayDateOfSaleTextBox.value = dos.get(Calendar.DATE).toString
+    DateOfSalePage.monthDateOfSaleTextBox.value = dos.get(Calendar.MONTH).toString
+    DateOfSalePage.yearDateOfSaleTextBox.value = dos.get(Calendar.YEAR).toString
     click on DateOfSalePage.next
     pageTitle shouldEqual CompleteAndConfirmPage.title withClue trackingId
     click on CompleteAndConfirmPage.consent
@@ -96,9 +101,9 @@ class HappyAndSadPathSteps(webBrowserDriver: WebBrowserDriver)
   @Then("^the user will be on Business keeper complete and confirm page and click on confirm sale button$")
   def the_user_will_be_on_Business_keeper_complete_and_confirm_page_and_click_on_confirm_sale_button() {
     pageTitle shouldEqual DateOfSalePage.title withClue trackingId
-    DateOfSalePage.dayDateOfSaleTextBox.value = "11"
-    DateOfSalePage.monthDateOfSaleTextBox.value = "11"
-    DateOfSalePage.yearDateOfSaleTextBox.value = "2011"
+    DateOfSalePage.dayDateOfSaleTextBox.value = dos.get(Calendar.DATE).toString
+    DateOfSalePage.monthDateOfSaleTextBox.value = dos.get(Calendar.MONTH).toString
+    DateOfSalePage.yearDateOfSaleTextBox.value = dos.get(Calendar.YEAR).toString
     click on DateOfSalePage.next
     pageTitle shouldEqual CompleteAndConfirmPage.title withClue trackingId
     click on CompleteAndConfirmPage.consent
@@ -151,9 +156,9 @@ class HappyAndSadPathSteps(webBrowserDriver: WebBrowserDriver)
   @Then("^the user will be on unsuccesful postcode Business keeper complete and confirm page and click on confirm sale button$")
   def the_user_will_be_on_unsuccesful_postcode_Business_keeper_complete_and_confirm_page_and_click_on_confirm_sale_button() {
     pageTitle shouldEqual DateOfSalePage.title withClue trackingId
-    DateOfSalePage.dayDateOfSaleTextBox.value = "11"
-    DateOfSalePage.monthDateOfSaleTextBox.value = "11"
-    DateOfSalePage.yearDateOfSaleTextBox.value = "2011"
+    DateOfSalePage.dayDateOfSaleTextBox.value = dos.get(Calendar.DATE).toString
+    DateOfSalePage.monthDateOfSaleTextBox.value = dos.get(Calendar.MONTH).toString
+    DateOfSalePage.yearDateOfSaleTextBox.value = dos.get(Calendar.YEAR).toString
     click on DateOfSalePage.next
     pageTitle shouldEqual CompleteAndConfirmPage.title withClue trackingId
     click on CompleteAndConfirmPage.consent
@@ -181,9 +186,9 @@ class HappyAndSadPathSteps(webBrowserDriver: WebBrowserDriver)
   @Then("^the user will be on unsuccesful postcode Private keeper complete and confirm page and click on confirm sale button$")
   def the_user_will_be_on_unsuccesful_postcode_Private_keeper_complete_and_confirm_page_and_click_on_confirm_sale_button()  {
     pageTitle shouldEqual DateOfSalePage.title withClue trackingId
-    DateOfSalePage.dayDateOfSaleTextBox.value = "11"
-    DateOfSalePage.monthDateOfSaleTextBox.value = "11"
-    DateOfSalePage.yearDateOfSaleTextBox.value = "2011"
+    DateOfSalePage.dayDateOfSaleTextBox.value = dos.get(Calendar.DATE).toString
+    DateOfSalePage.monthDateOfSaleTextBox.value = dos.get(Calendar.MONTH).toString
+    DateOfSalePage.yearDateOfSaleTextBox.value = dos.get(Calendar.YEAR).toString
     click on DateOfSalePage.next
     pageTitle shouldEqual CompleteAndConfirmPage.title withClue trackingId
     click on CompleteAndConfirmPage.consent
@@ -216,9 +221,9 @@ class HappyAndSadPathSteps(webBrowserDriver: WebBrowserDriver)
   @Then("^the user will be on unsuccesful postcode Private keeper complete and confirm page and click on confirm sale button with failure data$")
   def the_user_will_be_on_unsuccesful_postcode_Private_keeper_complete_and_confirm_page_and_click_on_confirm_sale_button_with_failure_data()  {
     pageTitle shouldEqual DateOfSalePage.title withClue trackingId
-    DateOfSalePage.dayDateOfSaleTextBox.value = "11"
-    DateOfSalePage.monthDateOfSaleTextBox.value = "11"
-    DateOfSalePage.yearDateOfSaleTextBox.value = "2011"
+    DateOfSalePage.dayDateOfSaleTextBox.value = dos.get(Calendar.DATE).toString
+    DateOfSalePage.monthDateOfSaleTextBox.value = dos.get(Calendar.MONTH).toString
+    DateOfSalePage.yearDateOfSaleTextBox.value = dos.get(Calendar.YEAR).toString
     click on DateOfSalePage.next
     pageTitle shouldEqual CompleteAndConfirmPage.title withClue trackingId
     click on CompleteAndConfirmPage.consent
