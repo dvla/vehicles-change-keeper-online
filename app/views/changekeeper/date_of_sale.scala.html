@@ -100,7 +100,9 @@
                         'typeTel -> true,
                         'maxLength -> Mileage.MaxLength, // Must be set independently of the pattern as the pattern is only checked when the user submits.
                         'optionalFieldKey -> true,
-                        'validityMessage -> Messages("change_keeper_keeperdetailscomplete.mileage.validation")
+                        'validityMessage -> Messages("change_keeper_keeperdetailscomplete.mileage.validation"),
+                        'class -> "ga-track-optional-text",
+                        Symbol("data-ga-action") -> "mileage"
                     ) ++ (if(config.isHtml5ValidationEnabled) Map('pattern -> Mileage.Pattern) else Nil), data.isSaleDateInvalid)
                 )
 
