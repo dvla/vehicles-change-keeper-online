@@ -41,9 +41,15 @@ class CompleteAndConfirmSteps(webBrowserDriver: WebBrowserDriver)
 
   def goToCompletAndConfirmPage(vrm: String = RandomVrmGenerator.uniqueVrm) {
     goToDateOfSalePage(vrm)
-    DateOfSalePage.dayDateOfSaleTextBox.value = "12"
-    DateOfSalePage.monthDateOfSaleTextBox.value = "12"
-    DateOfSalePage.yearDateOfSaleTextBox.value = "2010"
+
+    import java.util.Calendar
+
+    val c = Calendar.getInstance
+    c.add(Calendar.MONTH, -1)
+
+    DateOfSalePage.dayDateOfSaleTextBox.value = f"${c.get(Calendar.DATE)}%02d"
+    DateOfSalePage.monthDateOfSaleTextBox.value = f"${c.get(Calendar.MONTH)}%02d"
+    DateOfSalePage.yearDateOfSaleTextBox.value = c.get(Calendar.YEAR).toString
     click on DateOfSalePage.next
     pageTitle shouldBe CompleteAndConfirmPage.title withClue trackingId
   }

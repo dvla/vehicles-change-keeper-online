@@ -46,7 +46,7 @@ class CheckPreviousKeeperEndDateOrLastKeeperChangeDateAndCompareDateOfSale(webBr
   def the_user_enters_a_date_of_sale_before_the_previous_keeper_end_date_and_click_on_submit_button()  {
     DateOfSalePage.dayDateOfSaleTextBox.value = "12"
     DateOfSalePage.monthDateOfSaleTextBox.value = "12"
-    DateOfSalePage.yearDateOfSaleTextBox.value = "2010"
+    DateOfSalePage.yearDateOfSaleTextBox.value = getPreviousYear
     click on DateOfSalePage.next
   }
 
@@ -54,7 +54,7 @@ class CheckPreviousKeeperEndDateOrLastKeeperChangeDateAndCompareDateOfSale(webBr
   def the_user_enters_a_date_of_sale_before_the_last_keeper_change_date_and_click_on_submit_button() {
     DateOfSalePage.dayDateOfSaleTextBox.value = "12"
     DateOfSalePage.monthDateOfSaleTextBox.value = "12"
-    DateOfSalePage.yearDateOfSaleTextBox.value = "2010"
+    DateOfSalePage.yearDateOfSaleTextBox.value = getPreviousYear
     click on DateOfSalePage.next
   }
 
@@ -83,7 +83,7 @@ class CheckPreviousKeeperEndDateOrLastKeeperChangeDateAndCompareDateOfSale(webBr
   def no_date_is_returned_by_the_back_end_system_and_user_enters_a_date_of_sale(): Unit =  {
     DateOfSalePage.dayDateOfSaleTextBox.value = "12"
     DateOfSalePage.monthDateOfSaleTextBox.value = "12"
-    DateOfSalePage.yearDateOfSaleTextBox.value = "2010"
+    DateOfSalePage.yearDateOfSaleTextBox.value = getPreviousYear
     click on DateOfSalePage.next
   }
 
@@ -91,7 +91,11 @@ class CheckPreviousKeeperEndDateOrLastKeeperChangeDateAndCompareDateOfSale(webBr
   def keeper_end_date_and_change_date_has_been_returned_by_the_back_end_system()  {
     DateOfSalePage.dayDateOfSaleTextBox.value = "12"
     DateOfSalePage.monthDateOfSaleTextBox.value = "12"
-    DateOfSalePage.yearDateOfSaleTextBox.value = "2010"
+    DateOfSalePage.yearDateOfSaleTextBox.value = getPreviousYear
     click on DateOfSalePage.next
+  }
+
+  private def getPreviousYear = {
+    (java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)-1).toString
   }
 }
