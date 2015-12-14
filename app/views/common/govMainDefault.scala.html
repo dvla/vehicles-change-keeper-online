@@ -126,10 +126,6 @@
         <script type="text/javascript" src="@controllers.StaticAssets.versioned(config.assetsUrl)("lib/jquery/jquery.min.js")"></script>
         <script type="text/javascript" src="@controllers.StaticAssets.versioned(config.assetsUrl)("lib/vehicles-presentation-common/javascripts/common.js")"></script>
         <script type="text/javascript">
-            // Run the common code that is not common to all but this one needs
-            hideEmailOnOther('#privatekeeper_title_titleOption_4', '.form-item #privatekeeper_title_titleText');
-        </script>
-        <script type="text/javascript">
             if (typeof $ !== "function" || $('html').hasClass('js-ready') === false) {
                 // Either Jquery or common are not available so revert to the no-js view
                 document.body.className = document.body.className.replace('js-enabled','js-disabled');
