@@ -39,7 +39,7 @@
                     additionalPlaybackItems += (
                         Messages("change_keeper_completeAndConfirm.mileage.label") ->
                         (data.dateOfSaleModel.mileage match {
-                            case Some(mileage) => data.dateOfSaleModel.mileage.get.toString
+                            case Some(mileage) => mileage.toString
                             case None => Messages("change_keeper_completeandconfirm.emailNotEntered")
                         })
                     )
@@ -49,24 +49,25 @@
 
         <div class="second-col">
             <div>
-
                 @playbackList(
                     Messages("change_keeper_completeandconfirm.newkeeperDetails"),
                     {
                         val playbackItems: LinkedHashMap[String, String] = LinkedHashMap()
                         playbackItems += Messages("change_keeper_completeandconfirm.displayName") -> data.keeperDetails.displayName
                         playbackItems += Messages("change_keeper_completeandconfirm.address") -> data.keeperDetails.address.address.mkString("<br/>")
-                        playbackItems += Messages("change_keeper_completeandconfirm.email") -> {
-                            if(data.keeperDetails.email == None) Messages("change_keeper_completeandconfirm.emailNotEntered")
-                            else ("<span class=\"lowercase-text\">" + data.keeperDetails.email.get + "</span>")
-                            }
+                        data.keeperDetails.email match {
+                            case Some(email) => playbackItems += ("EMAIL_" + Messages("change_keeper_completeandconfirm.email") -> email)
+                            case None => playbackItems += (Messages("change_keeper_completeandconfirm.email") ->
+                                Messages("change_keeper_completeandconfirm.emailNotEntered"))
+                        }
                         if(data.keeperDetails.isBusinessKeeper) {
                             playbackItems += Messages("change_keeper_completeandconfirm.fleetNumber") -> {
-                                if(data.keeperDetails.fleetNumber == None) Messages("change_keeper_completeandconfirm.fleetNumberNotEntered")
-                                else data.keeperDetails.fleetNumber.get
-                                }
+                                (data.keeperDetails.fleetNumber match {
+                                    case Some(fleetNumber) => fleetNumber
+                                    case None => Messages("change_keeper_completeandconfirm.fleetNumberNotEntered")
+                                })
+                            }
                         }
-
                         playbackItems += Messages("change_keeper_completeAndConfirm.date_of_sale") ->
                             data.dateOfSaleModel.dateOfSale.toString("dd/MM/yyyy")
                     }
