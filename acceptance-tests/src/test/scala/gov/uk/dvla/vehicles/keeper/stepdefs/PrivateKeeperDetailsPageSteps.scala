@@ -7,6 +7,7 @@ import org.scalatest.Matchers
 import pages.changekeeper.{PrivateKeeperDetailsPage, VehicleLookupPage}
 import uk.gov.dvla.vehicles.presentation.common.helpers
 import helpers.webbrowser.{WithClue, WebBrowserDriver}
+import uk.gov.dvla.vehicles.presentation.common.testhelpers.RandomVrmGenerator
 import org.scalatest.selenium.WebBrowser.{click, go, pageTitle, pageSource}
 
 class PrivateKeeperDetailsPageSteps(webBrowserDriver: WebBrowserDriver)
@@ -17,7 +18,7 @@ class PrivateKeeperDetailsPageSteps(webBrowserDriver: WebBrowserDriver)
   private final val Postcode = "qq99qq"
   private final val FirstName = "joe"
   private final val LastName = "bloggs"
-  private final val ValidVrn = "BF51BMU"
+  private final val ValidVrn = RandomVrmGenerator.uniqueVrm
   private final val ValidDocRefNum = "1" * 11
 
   def goToPrivateKeeperDetailsPage() = {
