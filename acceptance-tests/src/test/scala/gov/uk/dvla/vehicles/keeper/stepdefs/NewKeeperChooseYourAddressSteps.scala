@@ -9,13 +9,14 @@ import pages.changekeeper.NewKeeperChooseYourAddressPage
 import pages.changekeeper.NewKeeperEnterAddressManuallyPage
 import pages.changekeeper.VehicleLookupPage
 import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.{WithClue, WebBrowserDriver}
+import uk.gov.dvla.vehicles.presentation.common.testhelpers.RandomVrmGenerator
 import org.scalatest.selenium.WebBrowser.{click, go, pageTitle}
 
 class NewKeeperChooseYourAddressSteps(webBrowserDriver: WebBrowserDriver)
   extends ScalaDsl with EN with Matchers with WithClue {
 
   implicit val webDriver = webBrowserDriver.asInstanceOf[WebDriver]
-  private final val ValidVrn = "B1"
+  private final val ValidVrn = RandomVrmGenerator.uniqueVrm
   private final val ValidDocRefNum = "1" * 11
 
   def goToNewKeeperChooseYourAddressPage() = {
