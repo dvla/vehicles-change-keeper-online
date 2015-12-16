@@ -25,7 +25,7 @@ global-please-wait-close = Close this message
 footer.builtbyintro = Built by
 footer.builtby = Driver & Vehicle Licensing Agency
 footer.text1 = All content is available under the
-footer.link = Open Government Licence v2.0
+footer.link = open government licence v2.0
 footer.text2 = , except where otherwise stated
 
 #prototype
@@ -69,9 +69,9 @@ error.dateOfBirth.invalid = Must be a valid date DD MM YYYY and not be in the fu
 error.dateOfBirth.110yearsInThePast = Date of birth cannot be more than 110 years in the past
 error.fleetNumber = The fleet number can only be a 6 digit number, please try again.
 error.validBougtByType = Select whether the vehicle is being sold to a private individual or business
-error.validDriverNumber = The Driver Number that you have entered does not appear to be in an acceptable format. Please amend your entry or delete and re-submit.
+error.validDriverNumber = The driver number that you have entered does not appear to be in an acceptable format. Please amend your entry or delete and re-submit.
 error.fleetNumber = The fleet number can only be a 6 digit number, please try again.
-error.titlePlusFirstName.tooLong = The combined length of your Title e.g. Mr/Mrs/Miss/Other and First name(s) cannot exceed 26 characters. Please amend your entry and re-submit.
+error.titlePlusFirstName.tooLong = The combined length of your title e.g. Mr/Mrs/Miss/Other and first name(s) cannot exceed 26 characters. Please amend your entry and re-submit.
 error.validDocumentReferenceNumber = Document reference number must be an 11-digit number
 error.validSellerEmail = Must be a valid email address
 error.threeAlphas = Must have at least 3 alpha characters
@@ -146,7 +146,7 @@ change_keeper_vehiclelookup.warning.p2 = Retain or transfer personal registratio
 change_keeper_vehiclelookup.img.h2 = Help finding your V5C document reference number?
 change_keeper_vehiclelookup.img.hint = Where to find this
 change_keeper_vehiclelookup.img.alt = V5C document reference number
-change_keeper_vehiclelookup.v5c = Vehicle Registration Certificate (V5C)
+change_keeper_vehiclelookup.v5c = Vehicle registration certificate (V5C)
 change_keeper_vehiclelookup.refnumlabel = Latest V5C document reference number
 change_keeper_vehiclelookup.refnumlabel.hint = This is an 11 digit number (see image for details)
 change_keeper_vehiclelookup.vrninputlabel = Vehicle registration number
@@ -174,7 +174,7 @@ documentReferenceNumber = Document reference number
 vehicleSellerEmail = Seller email
 vehicleSellerEmailOption = Email confirmation
 change_keeper_vehiclelookup.selleremail = Seller''s email address
-change_keeper_vehiclelookup.warning=Do not use this service if you have sold your vehicle to a motor trader or Garage. If you have sold your vehicle to a motor trader or garage then please select this link.
+change_keeper_vehiclelookup.warning=Do not use this service if you have sold your vehicle to a motor trader or garage. If you have sold your vehicle to a motor trader or garage then please select this link.
 change_keeper_vehiclelookup.warninglinktext=Sold your vehicle into the motor trade
 
 #page 3 - private keeper details
@@ -276,7 +276,7 @@ change_keeper_newKeeperEnterAddressManually.p4 = If the details above do not mat
 
 #page 5 - complete and confirm
 change_keeper_completeAndConfirm.title = Complete and confirm
-change_keeper_completeAndConfirm.warning = Please check that all of the information shown below is correct and use the 'back button' to amend any errors if necessary.
+change_keeper_completeAndConfirm.warning = Please check that all of the information shown below is correct and use the 'Back button' to amend any errors if necessary.
 change_keeper_completeandconfirm.taxOrSorn = Tax or SORN
 change_keeper_completeandconfirm.sornEntered = SORN from today
 change_keeper_completeandconfirm.sornNotEntered = This vehicle is taxed, or will be taxed
@@ -317,7 +317,7 @@ change_keeper_keeperdetailscomplete.loseRightsInformation = If you have a person
 change_keeper_keeperdetailscomplete.loseRightsConsentError = You must confirm that you understand that you will lose the rights to this vehicle registration number
 
 #page 6 - acquire success
-change_keeper_success.complete.header = Thank You
+change_keeper_success.complete.header = Thank you
 change_keeper_success.complete.p1 = The application is being processed
 change_keeper_success.complete.p2 = Give the V5C/2 (green slip) to the new keeper and destroy the rest of the V5C.
 change_keeper_success.transaction_details.header = Transaction details
@@ -466,10 +466,10 @@ acquire_vehicleTaxOrSorn.vehicleDetails = Vehicle details
 acquire_vehicleTaxOrSorn.vehicleReg = Registration
 acquire_vehicleTaxOrSorn.vehicleMake = Make
 acquire_vehicleTaxOrSorn.vehicleModel = Model
-acquire_vehicleTaxOrSorn.p1 = A vehicle needs to be either taxed or you need to make a Statutory Off Road Notification (SORN) when a vehicle is purchased.
+acquire_vehicleTaxOrSorn.p1 = A vehicle needs to be either taxed or you need to make a statutory off road notification (SORN) when a vehicle is purchased.
 acquire_vehicleTaxOrSorn.link = Tax the vehicle now
 acquire_vehicleTaxOrSorn.p2 = Or
-acquire_vehicleTaxOrSorn.sornVehicleText = Do you want to make a Statutory Off Road Notification (SORN) now as part of this service?
+acquire_vehicleTaxOrSorn.sornVehicleText = Do you want to make a statutory off road notification (SORN) now as part of this service?
 acquire_vehicleTaxOrSorn.sornVehicle = Yes, SORN vehicle now
 acquire_vehicleTaxOrSorn.submitbutton = Next
 acquire_vehicleTaxOrSorn.backbutton = Back
@@ -478,7 +478,7 @@ acquire_success.vehicle_details.p1 = Details of the vehicle being purchased
 acquire_success.new_keeper_details.p1 = Details of the new keeper DVLA has put on record for this vehicle
 acquire_success.further_information.header = What happens next?
 acquire_success.further_information.p1 = Within 4 weeks a new vehicle registration certificate (V5C) will be sent to the new keeper.
-acquire_success.further_information.p2 = If they do not receive a new V5C in 4 weeks they must contact DVLA Customer Enquiries on 0300 790 6802
+acquire_success.further_information.p2 = If they do not receive a new V5C in 4 weeks they must contact DVLA customer enquiries on 0300 790 6802
 acquire_success.further_information.alert = Please print this page and pass it to the customer along with the V5C/2 slip from the vehicle registration certificate (V5C)
 acquire_success.buttonnavprint = Print
 acquire_success.buyAnother = Buy another vehicle
@@ -504,7 +504,7 @@ error.date.notOne = Year cannot be 0000
 error_suppressedV5C.title = Vehicle is part of a suppressed fleet
 error_suppressedV5C.text1 = DVLA cannot record the sale of this vehicle as it is part of a suppressed fleet.
 error_suppressedV5C.text2 = Before a sale of this vehicle can be updated, you will need to request a vehicle registration certificate (V5C) from the DVLA. This can be done using the
-error_suppressedV5C.text3 = View Vehicle Record service.
+error_suppressedV5C.text3 = view vehicle record service.
 error_suppressedV5C.link = https://www.gov.uk/dvla-fleet-vehicle-info
 error_suppressedV5C.button1 = Buy another vehicle
 error_suppressedV5C.button2 = Finish
@@ -545,13 +545,13 @@ error.title.tooLong = Other title field can only contain characters from the fol
 error.title.illegalCharacters = Other title field can only contain characters from the following A-Z, hyphen, apostrophe, full stop and space.
 
 # micro-service response codes
-ms.vehiclesService.response.unableToProcessApplication-title = Transaction Unsuccessful
+ms.vehiclesService.response.unableToProcessApplication-title = Transaction unsuccessful
 ms.vehiclesService.response.unableToProcessApplication = We are unable to process the transaction at this time. Please send the completed V5C to
 ms.vehiclesService.response.unableToProcessApplication-address = DVLA, Swansea, SA99 1BA
 
 # help
 help.title = Help
-help.p1 = This service is in Private Beta phase
+help.p1 = This service is in private beta phase
 help.p2.1 = If you require any help using it then please contact Julie Riseley on 01792 788410 or
 help.p2.2 = send an email
 help.email = mailto:julie.riseley@dvla.gsi.gov.uk?Subject=Private%20sale%20of%20a%20vehicle%20help
@@ -559,12 +559,12 @@ help.exit_button = Exit
 help.back_button = Back
 
 # closed
-closed.title = Service Unavailable
+closed.title = Service unavailable
 closed.p1 = This service is only available Monday to Saturday {0} to {1}.
 closed.exit_button = Exit
 
 # feedback
-common_feedback.title = Give Feedback
+common_feedback.title = Give feedback
 common_feedback.warning = This page is for feedback only and we are unable to offer a personal reply to your email
 common_feedback.message = Please don''t include any personal or financial information.
 common_feedback.label = What went wrong, if anything? What went well? How could we improve this service?
@@ -572,7 +572,7 @@ common_feedback.charactersRemaining = characters remaining
 common_feedback.placeholder = (Limit is 1200 characters)
 common_feedback.submit_button = Submit feedback
 common_feedback.thankyou = Thank you for your feedback
-common_feedback.subject = Private sale of a vehicle - Feedback
+common_feedback.subject = Private sale of a vehicle - feedback
 common_feedback.name = Name
 common_feedback.email = Email
 common_feedback.feedbackTitle = Please leave your name and email address in case we need to contact you

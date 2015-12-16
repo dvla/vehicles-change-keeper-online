@@ -35,7 +35,7 @@ class SummaryPageSteps (webBrowserDriver: WebBrowserDriver)
   @Given("^the user can see the Thank you message and vehicle details$")
   def the_user_can_see_the_Thank_you_message_and_vehicle_details()  {
     pageSource should include("The application is being processed") withClue trackingId
-    pageSource should include("Thank You") withClue trackingId
+    pageSource should include("Thank you") withClue trackingId
   }
 
   @Given("^the keeper can see the keeper details$")
