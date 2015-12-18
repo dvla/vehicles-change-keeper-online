@@ -1,19 +1,19 @@
 package gov.uk.dvla.vehicles.keeper.stepdefs
 
-import _root_.helpers.RandomVrmGenerator
 import cucumber.api.java.en.{Then, When, Given}
 import cucumber.api.scala.{EN, ScalaDsl}
 import org.openqa.selenium.WebDriver
 import org.scalatest.Matchers
+import org.scalatest.selenium.WebBrowser.{click, go, pageTitle}
 import pages.changekeeper.{BeforeYouStartPage, VehicleLookupPage, VehicleLookupFailurePage, VrmLockedPage}
 import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.{WithClue, WebBrowserDriver}
-import org.scalatest.selenium.WebBrowser.{click, go, pageTitle}
+import uk.gov.dvla.vehicles.presentation.common.testhelpers.RandomVrmGenerator
 
 class BruteForceKeeperToKeeperSteps(webBrowserDriver: WebBrowserDriver)
   extends ScalaDsl with EN with Matchers with WithClue {
 
   implicit val webDriver = webBrowserDriver.asInstanceOf[WebDriver]
-  private final val vrmno = RandomVrmGenerator.vrm
+  private final val vrmNo = RandomVrmGenerator.vrm
   private final val docRef = RandomVrmGenerator.docRef
 
   def bruteForceUnsuccessfulPage() {
@@ -26,7 +26,7 @@ class BruteForceKeeperToKeeperSteps(webBrowserDriver: WebBrowserDriver)
   }
 
   def bruteForceLockedPage() {
-    VehicleLookupPage.vehicleRegistrationNumber.value = vrmno
+    VehicleLookupPage.vehicleRegistrationNumber.value = vrmNo
     VehicleLookupPage.documentReferenceNumber.value = docRef
     click on VehicleLookupPage.emailInvisible
     click on VehicleLookupPage.vehicleSoldToPrivateIndividual

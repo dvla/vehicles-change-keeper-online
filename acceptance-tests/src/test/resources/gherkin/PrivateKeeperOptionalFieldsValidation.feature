@@ -33,7 +33,7 @@
    Scenario: - Driver number - format error
      Given that the user is on the Private Keeper details page
      When the user has entered a driver number into the "Driver number" control
-     Then there will be an error message displayed as "Driver number - The Driver Number that you have entered does not appear to be in an acceptable format. Please amend your entry or delete and re-submit"
+     Then there will be an error message displayed as "Driver number - The driver number that you have entered does not appear to be in an acceptable format. Please amend your entry or delete and re-submit"
 
    Scenario: - Keeper email - Valid
      Given that the user is on the Private Keeper details page

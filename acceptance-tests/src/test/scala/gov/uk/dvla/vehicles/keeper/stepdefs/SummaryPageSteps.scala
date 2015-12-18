@@ -5,6 +5,7 @@ import cucumber.api.scala.{EN, ScalaDsl}
 import org.scalatest.Matchers
 import pages.changekeeper.{BeforeYouStartPage, CompleteAndConfirmPage, ChangeKeeperSuccessPage}
 import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.{WithClue, WebBrowserDriver}
+import uk.gov.dvla.vehicles.presentation.common.testhelpers.RandomVrmGenerator
 import org.scalatest.selenium.WebBrowser.{click, pageTitle, pageSource}
 
 class SummaryPageSteps (webBrowserDriver: WebBrowserDriver)
@@ -13,9 +14,11 @@ class SummaryPageSteps (webBrowserDriver: WebBrowserDriver)
   implicit val webDriver = webBrowserDriver.asInstanceOf[WebBrowserDriver]
   lazy val happyPath = new CompleteAndConfirmSteps(webBrowserDriver)
 
+  private val vrm = RandomVrmGenerator.uniqueVrm
+
   @Given("^the user is on the successful summary page$")
   def the_user_is_on_the_successful_summary_page() {
-     happyPath.goToCompletAndConfirmPage("BF51BOV")
+     happyPath.goToCompletAndConfirmPage(vrm)
      click on CompleteAndConfirmPage.consent
      click on CompleteAndConfirmPage.regRight
      click on CompleteAndConfirmPage.next
@@ -24,7 +27,7 @@ class SummaryPageSteps (webBrowserDriver: WebBrowserDriver)
 
   @Given("^the user can see the Transaction Id Finish and Print button$")
   def the_user_can_see_the_Transaction_Id_Finish_and_Print_button()  {
-     pageSource should include("BF51BOV-11111111111") withClue trackingId
+     pageSource should include(s"${vrm}-11111111111") withClue trackingId
      pageSource should include("Finish") withClue trackingId
      pageSource should include("Print") withClue trackingId
   }
@@ -32,7 +35,7 @@ class SummaryPageSteps (webBrowserDriver: WebBrowserDriver)
   @Given("^the user can see the Thank you message and vehicle details$")
   def the_user_can_see_the_Thank_you_message_and_vehicle_details()  {
     pageSource should include("The application is being processed") withClue trackingId
-    pageSource should include("Thank You") withClue trackingId
+    pageSource should include("Thank you") withClue trackingId
   }
 
   @Given("^the keeper can see the keeper details$")

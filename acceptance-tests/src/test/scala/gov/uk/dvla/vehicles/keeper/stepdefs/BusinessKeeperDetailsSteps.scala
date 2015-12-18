@@ -7,6 +7,7 @@ import org.scalatest.Matchers
 import pages.changekeeper.{BusinessKeeperDetailsPage, NewKeeperChooseYourAddressPage, VehicleLookupPage}
 import uk.gov.dvla.vehicles.presentation.common.helpers
 import helpers.webbrowser.{WithClue, WebBrowserDriver}
+import uk.gov.dvla.vehicles.presentation.common.testhelpers.RandomVrmGenerator
 import org.scalatest.selenium.WebBrowser.{click, go, find, pageTitle, pageSource, tagName}
 
 class BusinessKeeperDetailsSteps(webBrowserDriver: WebBrowserDriver)
@@ -16,7 +17,7 @@ class BusinessKeeperDetailsSteps(webBrowserDriver: WebBrowserDriver)
 
   def gotoBusinessKeeperDetailsPage(){
     go to VehicleLookupPage
-    VehicleLookupPage.vehicleRegistrationNumber.value = "BF51BNN"
+    VehicleLookupPage.vehicleRegistrationNumber.value = RandomVrmGenerator.uniqueVrm
     VehicleLookupPage.documentReferenceNumber.value = "11111111111"
     click on VehicleLookupPage.emailInvisible
     click on VehicleLookupPage.vehicleSoldToBusiness
