@@ -11,6 +11,7 @@ import common.model.NewKeeperChooseYourAddressViewModel
 import common.webserviceclients.addresslookup.AddressLookupService
 import utils.helpers.Config
 import views.html.changekeeper.new_keeper_choose_your_address
+import common.views.constraints.Postcode.formatPostcode
 
 class NewKeeperChooseYourAddress @Inject()(protected override val addressLookupService: AddressLookupService)
                                           (implicit protected override val clientSideSessionFactory: ClientSideSessionFactory,
@@ -43,7 +44,7 @@ class NewKeeperChooseYourAddress @Inject()(protected override val addressLookupS
                             fleetNumber: Option[String])(implicit request: Request[_]): Result = {
     logMessage(request.cookies.trackingId(), Info, "Presenting new keeper choose your address view")
     Ok(views.html.changekeeper.new_keeper_choose_your_address(
-      model, name, postcode, email, addresses, isBusinessKeeper, fleetNumber)
+      model, name, formatPostcode(postcode), email, addresses, isBusinessKeeper, fleetNumber)
     )
   }
 
