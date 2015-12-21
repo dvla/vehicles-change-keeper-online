@@ -17,7 +17,7 @@ Feature:
 
   Scenario: Date of sale - without keeper end date and change date returned by the back end system
     Given The user goes to the Date of sale page entering registration number: AA11AAJ
-    When no date is returned by the back end system and  user enters a date of sale
+    When no date is returned by the back end system and user enters a date of sale
     Then the user will not see a warning message
     And the user will be taken to the "Date of sale" page
 

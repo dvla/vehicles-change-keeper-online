@@ -1,5 +1,7 @@
 package gov.uk.dvla.vehicles.keeper.stepdefs
 
+import java.util.Calendar
+
 import cucumber.api.java.en.{Then, When, Given}
 import cucumber.api.scala.{EN, ScalaDsl}
 import org.openqa.selenium.WebDriver
@@ -18,6 +20,9 @@ class BackBrowserButtonSteps(webBrowserDriver: WebBrowserDriver)
   extends ScalaDsl with EN with Matchers with WithClue {
 
   implicit val webDriver = webBrowserDriver.asInstanceOf[WebDriver]
+
+  val dos = Calendar.getInstance()
+  dos.add(Calendar.YEAR, -1)
 
   def goToDateOfSalePage(vrm: String = RandomVrmGenerator.uniqueVrm) {
     go to VehicleLookupPage
@@ -42,7 +47,7 @@ class BackBrowserButtonSteps(webBrowserDriver: WebBrowserDriver)
     goToDateOfSalePage(vrm)
     DateOfSalePage.dayDateOfSaleTextBox.value =  "12"
     DateOfSalePage.monthDateOfSaleTextBox.value =  "12"
-    DateOfSalePage.yearDateOfSaleTextBox.value =  "2010"
+    DateOfSalePage.yearDateOfSaleTextBox.value =  getPreviousYear
     click on DateOfSalePage.next
     pageTitle shouldEqual CompleteAndConfirmPage.title withClue trackingId
   }
@@ -68,4 +73,9 @@ class BackBrowserButtonSteps(webBrowserDriver: WebBrowserDriver)
   def the_user_navigate_back_to_the_Vehicle_look_up_screen()  {
     pageTitle shouldEqual VehicleLookupPage.title withClue trackingId
   }
+
+  private def getPreviousYear = {
+    (java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)-1).toString
+  }
+
 }
