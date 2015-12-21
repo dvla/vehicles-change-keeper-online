@@ -1,5 +1,6 @@
 package pages.changekeeper
 
+import org.joda.time.DateTime
 import org.openqa.selenium.WebDriver
 import org.scalatest.Matchers
 import uk.gov.dvla.vehicles.presentation.common
@@ -37,6 +38,8 @@ object PrivateKeeperDetailsPage extends Page with Matchers {
   override val url: String = WebDriverFactory.testUrl + address.substring(1)
   final override val title: String = "Enter new keeper details"
 
+  final val VALID_AGE:Integer = 30
+
   final val TitleInvalid = "other"
   final val FirstNameValid = "fn"
   final val FirstNameInvalid = ""
@@ -50,7 +53,7 @@ object PrivateKeeperDetailsPage extends Page with Matchers {
   final val DriverNumberInvalid = "A"
   final val DayDateOfBirthValid = "24"
   final val MonthDateOfBirthValid = "12"
-  final val YearDateOfBirthValid = "1920"
+  final val YearDateOfBirthValid = (DateTime.now.getYear - VALID_AGE).toString
   final val PostcodeValid = "QQ99QQ"
   final val NoPostcodeFound = "XX99XX"
   final val PostcodeInvalid = "XX99X"

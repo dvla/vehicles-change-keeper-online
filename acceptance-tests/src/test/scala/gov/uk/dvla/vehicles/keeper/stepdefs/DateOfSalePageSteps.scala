@@ -98,7 +98,7 @@ class DateOfSalePageSteps(webBrowserDriver: WebBrowserDriver)
 
   @Then("^the user can enter the (\\d+) digit year$")
   def the_user_can_enter_the_digit_year(four: Int) {
-    DateOfSalePage.yearDateOfSaleTextBox.value = "2010"
+    DateOfSalePage.yearDateOfSaleTextBox.value = org.joda.time.LocalDate.now.minusYears(2).getYear.toString
   }
 
   @When("^the Date of sale is in the past$")

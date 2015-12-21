@@ -16,7 +16,7 @@ object DateOfSalePage extends Page with ShouldMatchers {
   final val MileageValid = "1000"
   final val DayDateOfSaleValid = "19"
   final val MonthDateOfSaleValid = "10"
-  final val YearDateOfSaleValid = "2012"
+  final val YearDateOfSaleValid = org.joda.time.LocalDate.now.minusYears(2).getYear.toString
 
   def back(implicit driver: WebDriver): Element = find(id(BackId)).get
 

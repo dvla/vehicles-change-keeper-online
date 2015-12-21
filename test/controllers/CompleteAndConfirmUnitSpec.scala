@@ -234,7 +234,7 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
 
   private def dateServiceStubbed(day: Int = 1,
                                  month: Int = 1,
-                                 year: Int = 2014) = {
+                                 year: Int = org.joda.time.LocalDate.now.minusYears(1).getYear) = {
     val dateService = mock[DateService]
     when(dateService.today).thenReturn(new DayMonthYear(day = day,
       month = month,

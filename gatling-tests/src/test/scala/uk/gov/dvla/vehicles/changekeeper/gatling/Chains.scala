@@ -4,7 +4,7 @@ import io.gatling.core.Predef._
 import io.gatling.core.feeder.RecordSeqFeederBuilder
 import io.gatling.http.Predef._
 import Headers.{headers_accept_html, headers_accept_png, headers_x_www_form_urlencoded}
-
+import java.util.Calendar
 class Chains(data: RecordSeqFeederBuilder[String]) {
 
   private final val BeforeYouStartPageTitle = "Private sale of a vehicle"
@@ -19,6 +19,8 @@ class Chains(data: RecordSeqFeederBuilder[String]) {
   private final val BuyersDetailsPlaybackHeading = s"New keeper details"
   private final val SummaryPageTitle = "Summary"
   private final val TransactionDetailsPlaybackHeading = "Transaction details"
+
+  private final val year = (Calendar.getInstance().get(Calendar.YEAR)-1).toString
 
   def verifyAssetsAreAccessible =
     exec(http("screen.min.css")
@@ -212,7 +214,7 @@ class Chains(data: RecordSeqFeederBuilder[String]) {
           .formParam("mileage", "${mileage}")
           .formParam("dateofsale.day", "${dateDay}")
           .formParam("dateofsale.month", "${dateMonth}")
-          .formParam("dateofsale.year", "${dateYear}")
+          .formParam("dateofsale.year", year)
           .formParam("csrf_prevention_token", "${csrf_prevention_token}")
           .formParam("action", "")
           // Assertions
@@ -234,6 +236,7 @@ class Chains(data: RecordSeqFeederBuilder[String]) {
   def completeAndConfirmSubmit = {
     val url = "/complete-and-confirm"
     val chainTitle = s"POST $url"
+    val expectedTransactionDate = "${dateDay}/${dateMonth}/" + year
     exitBlockOnFail(
       exec(
         http(chainTitle)
@@ -248,7 +251,7 @@ class Chains(data: RecordSeqFeederBuilder[String]) {
           .check(regex(SummaryPageTitle).exists)
           .check(regex(TransactionDetailsPlaybackHeading).exists)
           .check(regex("${expected_transactionId}").exists)
-          .check(regex("${expected_transactionDate}").exists)
+          .check(regex(expectedTransactionDate).exists)
           .notSilent
       )
     )

@@ -8,7 +8,7 @@
      Then the user will not see any error message like "Please enter a valid date in the format DD MM YYYY "
 
    Scenario: - Date of birth - Invalid or incomplete
-     Given the user enters a invalid date of birth  and no other errors persists
+     Given the user enters a invalid date of birth and no other errors persists
      When the user clicks on the private keeper no email radio button
      When the user press the submit control
      Then there will be an error message displayed "Must be a valid date DD MM YYYY and not be in the future."
@@ -47,5 +47,5 @@
 
    Scenario: - Keeper email - Invalid
      Given that the user is on the Private Keeper details page
-     When the user has  entered an invalid email address and select the submit control
+     When the user has entered an invalid email address and select the submit control
      Then the system will display an error for invaild email address "Must be a valid email address"

@@ -36,9 +36,7 @@ class PrivateKeeperOptionalFieldsSteps(webBrowserDriver: WebBrowserDriver)
   @Given("^the user enters a validate date of birth$")
   def the_user_enters_a_validate_date_of_birth()  {
     goToPrivateKeeperDetailsPage()
-    PrivateKeeperDetailsPage.dayDateOfBirthTextBox.value = dob.get(Calendar.DATE).toString
-    PrivateKeeperDetailsPage.monthDateOfBirthTextBox.value = dob.get(Calendar.MONTH).toString
-    PrivateKeeperDetailsPage.yearDateOfBirthTextBox .value = dob.get(Calendar.YEAR).toString
+    enterDobDate()
   }
 
   @Then("^the user will not see any error message like \"(.*?)\"$")
@@ -46,12 +44,11 @@ class PrivateKeeperOptionalFieldsSteps(webBrowserDriver: WebBrowserDriver)
     PrivateKeeperDetailsPage.errorTextForTitle(noErrMsg) shouldBe false withClue trackingId
   }
 
-  @Given("^the user enters a invalid date of birth  and no other errors persists$")
+  @Given("^the user enters a invalid date of birth and no other errors persists$")
   def the_user_enters_a_invalid_date_of_birth_and_no_other_errors_persists()  {
     goToPrivateKeeperDetailsPage()
+    enterDobDate()
     PrivateKeeperDetailsPage.dayDateOfBirthTextBox.value = "42"
-    PrivateKeeperDetailsPage.monthDateOfBirthTextBox.value = dob.get(Calendar.MONTH).toString
-    PrivateKeeperDetailsPage.yearDateOfBirthTextBox .value = dob.get(Calendar.YEAR).toString
   }
 
   @When("^the user press the submit control$")
@@ -67,8 +64,7 @@ class PrivateKeeperOptionalFieldsSteps(webBrowserDriver: WebBrowserDriver)
   @Given("^the user enters the dateOfBirth in future$")
   def the_user_enters_the_dateOfBirth_in_future() {
     goToPrivateKeeperDetailsPage()
-    PrivateKeeperDetailsPage.dayDateOfBirthTextBox.value = Calendar.getInstance().get(Calendar.DATE).toString
-    PrivateKeeperDetailsPage.monthDateOfBirthTextBox.value = Calendar.getInstance().get(Calendar.MONTH).toString
+    enterDobDate()
     PrivateKeeperDetailsPage.yearDateOfBirthTextBox .value = (Calendar.getInstance().get(Calendar.YEAR) + 1).toString
   }
 
@@ -80,8 +76,7 @@ class PrivateKeeperOptionalFieldsSteps(webBrowserDriver: WebBrowserDriver)
   @Given("^the Date of birth is more than oneHundredTen years in the past$")
   def the_Date_of_birth_is_more_than_oneHundredTen_years_in_the_past()  {
     goToPrivateKeeperDetailsPage()
-    PrivateKeeperDetailsPage.dayDateOfBirthTextBox.value = Calendar.getInstance().get(Calendar.DATE).toString
-    PrivateKeeperDetailsPage.monthDateOfBirthTextBox.value = Calendar.getInstance().get(Calendar.MONTH).toString
+    enterDobDate()
     PrivateKeeperDetailsPage.yearDateOfBirthTextBox .value = (Calendar.getInstance().get(Calendar.YEAR) - invalidAge).toString
   }
 
@@ -140,7 +135,7 @@ class PrivateKeeperOptionalFieldsSteps(webBrowserDriver: WebBrowserDriver)
     PrivateKeeperDetailsPage.errorTextForTitle(noErrorMsg) shouldBe false withClue trackingId
   }
 
-  @When("^the user has  entered an invalid email address and select the submit control$")
+  @When("^the user has entered an invalid email address and select the submit control$")
   def the_user_has_entered_an_invalid_email_address_and_select_the_submit_control()  {
     click on PrivateKeeperDetailsPage.emailVisible
     PrivateKeeperDetailsPage.emailTextBox.value = "acom"
@@ -152,4 +147,11 @@ class PrivateKeeperOptionalFieldsSteps(webBrowserDriver: WebBrowserDriver)
   def the_system_will_display_an_error_for_invaild_email_address(errMsg: String)  {
     ErrorPanel.text should include(errMsg) withClue trackingId
   }
+
+  private def enterDobDate() {
+    PrivateKeeperDetailsPage.dayDateOfBirthTextBox.value = f"${dob.get(Calendar.DATE)}%02d"  //must be dd format
+    PrivateKeeperDetailsPage.monthDateOfBirthTextBox.value = f"${(dob.get(Calendar.MONTH) + 1)}%02d" //must be mm format
+    PrivateKeeperDetailsPage.yearDateOfBirthTextBox.value = dob.get(Calendar.YEAR).toString
+  }
+
 }

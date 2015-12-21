@@ -21,9 +21,6 @@ class BackBrowserButtonSteps(webBrowserDriver: WebBrowserDriver)
 
   implicit val webDriver = webBrowserDriver.asInstanceOf[WebDriver]
 
-  val dos = Calendar.getInstance()
-  dos.add(Calendar.YEAR, -1)
-
   def goToDateOfSalePage(vrm: String = RandomVrmGenerator.uniqueVrm) {
     go to VehicleLookupPage
     VehicleLookupPage.vehicleRegistrationNumber.value = vrm

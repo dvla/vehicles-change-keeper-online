@@ -48,7 +48,7 @@ class CompleteAndConfirmSteps(webBrowserDriver: WebBrowserDriver)
     c.add(Calendar.MONTH, -1)
 
     DateOfSalePage.dayDateOfSaleTextBox.value = f"${c.get(Calendar.DATE)}%02d"
-    DateOfSalePage.monthDateOfSaleTextBox.value = f"${c.get(Calendar.MONTH)}%02d"
+    DateOfSalePage.monthDateOfSaleTextBox.value = f"${c.get(Calendar.MONTH)+1}%02d"
     DateOfSalePage.yearDateOfSaleTextBox.value = c.get(Calendar.YEAR).toString
     click on DateOfSalePage.next
     pageTitle shouldBe CompleteAndConfirmPage.title withClue trackingId

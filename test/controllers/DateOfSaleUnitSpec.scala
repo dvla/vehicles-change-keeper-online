@@ -23,6 +23,8 @@ import uk.gov.dvla.vehicles.presentation.common.testhelpers.CookieHelper
 class DateOfSaleUnitSpec extends UnitSpec {
   implicit private final val sessionFactory = new ClearTextClientSideSessionFactory()(new NoCookieFlags)
 
+  private val saleYear = org.joda.time.LocalDate.now.minusYears(2).getYear.toString
+
   "submit" should {
     "replace numeric mileage error message for with standard error message" in new WithApplication {
       val request = buildCorrectlyPopulatedRequest(mileage = "$$")
@@ -71,8 +73,8 @@ class DateOfSaleUnitSpec extends UnitSpec {
 
     "Not go to the next page when the date of acquisition is before the date of disposal " +
       "and return a bad request" in new WithApplication {
-      //    The date of acquisition is 19-10-2012
-      val disposalDate = DateTime.parse("20-10-2012", DateTimeFormat.forPattern("dd-MM-yyyy"))
+      // The date of acquisition is 19-10-${saleYear}
+      val disposalDate = DateTime.parse(s"20-10-${saleYear}", DateTimeFormat.forPattern("dd-MM-yyyy"))
 
       val request = buildCorrectlyPopulatedRequest()
         .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
@@ -91,8 +93,8 @@ class DateOfSaleUnitSpec extends UnitSpec {
 
     "not go to the next page when the date of acquisition is before the keeper change date " +
       "and return a bad request" in new WithApplication {
-      //    The date of acquisition is 19-10-2012
-      val changeKeeperDate = DateTime.parse("20-10-2012", DateTimeFormat.forPattern("dd-MM-yyyy"))
+      //    The date of acquisition is 19-10-${saleYear}
+      val changeKeeperDate = DateTime.parse(s"20-10-${saleYear}", DateTimeFormat.forPattern("dd-MM-yyyy"))
 
       val request = buildCorrectlyPopulatedRequest()
         .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
@@ -110,8 +112,8 @@ class DateOfSaleUnitSpec extends UnitSpec {
     }
 
     "Go to the next page when the date of acquisition is the same as the date of disposal" in new WithApplication {
-      //    The date of acquisition is 19-10-2012
-      val disposalDate = DateTime.parse("19-10-2012", DateTimeFormat.forPattern("dd-MM-yyyy"))
+      //    The date of acquisition is 19-10-${saleYear}
+      val disposalDate = DateTime.parse(s"19-10-${saleYear}", DateTimeFormat.forPattern("dd-MM-yyyy"))
 
       val request = buildCorrectlyPopulatedRequest()
         .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
@@ -135,8 +137,8 @@ class DateOfSaleUnitSpec extends UnitSpec {
     }
 
     "Go to the next page when the date of acquisition is the same as the keeper change date" in new WithApplication {
-      //    The date of acquisition is 19-10-2012
-      val changeDate = DateTime.parse("19-10-2012", DateTimeFormat.forPattern("dd-MM-yyyy"))
+      //    The date of acquisition is 19-10-${saleYear}
+      val changeDate = DateTime.parse(s"19-10-${saleYear}", DateTimeFormat.forPattern("dd-MM-yyyy"))
 
       val request = buildCorrectlyPopulatedRequest()
         .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
@@ -162,9 +164,9 @@ class DateOfSaleUnitSpec extends UnitSpec {
 
     "call the micro service when both the date of disposal and the change date are present " +
       "and redirect to the next page" in new WithApplication {
-      //The date of acquisition is 19-10-2012
-      val disposalDate = DateTime.parse("09-03-2015", DateTimeFormat.forPattern("dd-MM-yyyy"))
-      val changeDate = DateTime.parse("09-03-2015", DateTimeFormat.forPattern("dd-MM-yyyy"))
+      val year = org.joda.time.LocalDate.now.minusYears(1).getYear.toString
+      val disposalDate = DateTime.parse(s"09-03-${year}", DateTimeFormat.forPattern("dd-MM-yyyy"))
+      val changeDate = DateTime.parse(s"09-03-${year}", DateTimeFormat.forPattern("dd-MM-yyyy"))
 
       val request = buildCorrectlyPopulatedRequest()
         .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
