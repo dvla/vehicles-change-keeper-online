@@ -10,6 +10,7 @@ import pages.changekeeper.NewKeeperEnterAddressManuallyPage
 import pages.changekeeper.PrivateKeeperDetailsPage
 import pages.changekeeper.VehicleLookupPage
 import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.{WithClue, WebBrowserDriver}
+import uk.gov.dvla.vehicles.presentation.common.testhelpers.RandomVrmGenerator
 import org.scalatest.selenium.WebBrowser.{click, go, pageTitle, pageSource}
 
 class KeeperToKeeperAddressFieldsSteps(webBrowserDriver: WebBrowserDriver)
@@ -19,7 +20,7 @@ class KeeperToKeeperAddressFieldsSteps(webBrowserDriver: WebBrowserDriver)
 
   def goToEnterKeeperAddressManuallyPage() {
     go to VehicleLookupPage
-    VehicleLookupPage.vehicleRegistrationNumber.value = "BF51BNL"
+    VehicleLookupPage.vehicleRegistrationNumber.value = RandomVrmGenerator.uniqueVrm
     VehicleLookupPage.documentReferenceNumber.value = "11111111111"
     click on VehicleLookupPage.emailInvisible
     click on VehicleLookupPage.vehicleSoldToPrivateIndividual

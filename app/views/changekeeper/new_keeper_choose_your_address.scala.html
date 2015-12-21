@@ -48,9 +48,12 @@
         {
           val playbackItems: LinkedHashMap[String, String] = LinkedHashMap()
           if(isBusinessKeeper) {
-            playbackItems += Messages("change_keeper_newKeeperChooseYourAddress_newBusinessFleetNumber_label") -> (if(businessFleetNumber == None)
-                Messages("change_keeper_newKeeperChooseYourAddress.fleetNumberNotEntered")
-              else businessFleetNumber.get)
+            playbackItems += Messages("change_keeper_newKeeperChooseYourAddress_newBusinessFleetNumber_label") -> {
+              (businessFleetNumber match {
+                case Some(businessFleetNumber) => businessFleetNumber
+                case None => Messages("change_keeper_newKeeperChooseYourAddress.fleetNumberNotEntered")
+              })
+            }
           }
           playbackItems += (if(isBusinessKeeper) Messages("change_keeper_newKeeperChooseYourAddress_newBusinessKeeperName_label")
             else Messages("change_keeper_newKeeperChooseYourAddress_newPrivateKeeperName_label")) ->

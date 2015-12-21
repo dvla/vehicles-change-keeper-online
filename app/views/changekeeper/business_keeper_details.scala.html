@@ -73,7 +73,8 @@
                         'NO_OPTIONAL_LABEL -> false,
                         'validityMessage -> Messages("error.fleetNumber")
                     ) ++ (if(config.isHtml5ValidationEnabled) Map('pattern -> FleetNumber.Pattern) else Nil)
-                )
+                ),
+                gaTrackValue = true
             )
 
             @optionalToggle(
@@ -88,7 +89,8 @@
                     args = Map('maxLength -> EmailMaxLength,
                                'validityMessage -> Messages("error.email")
                           )
-                )
+                ),
+                gaTrackValue = true
             )
 
             <div class="uppercase-input">

@@ -11,6 +11,7 @@ import pages.changekeeper.DateOfSalePage
 import pages.changekeeper.NewKeeperChooseYourAddressPage
 import pages.changekeeper.VehicleLookupPage
 import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.{WithClue, WebBrowserDriver}
+import uk.gov.dvla.vehicles.presentation.common.testhelpers.RandomVrmGenerator
 import org.scalatest.selenium.WebBrowser.{click, go, pageTitle, pageSource}
 
 class DateOfSalePageSteps(webBrowserDriver: WebBrowserDriver)
@@ -20,7 +21,7 @@ class DateOfSalePageSteps(webBrowserDriver: WebBrowserDriver)
 
   def goToDateOfSalePage() {
     go to VehicleLookupPage
-    VehicleLookupPage.vehicleRegistrationNumber.value = "BF51BOV"
+    VehicleLookupPage.vehicleRegistrationNumber.value = RandomVrmGenerator.uniqueVrm
     VehicleLookupPage.documentReferenceNumber.value = "11111111111"
     click on VehicleLookupPage.emailInvisible
     click on VehicleLookupPage.vehicleSoldToBusiness

@@ -76,7 +76,9 @@
                 Messages("change_keeper_privatekeeper_dateofbirth"),
                 Some(Messages("change_keeper_privatekeeperdetails.dateofbirth.hint")),
                 args = Map(
-                    'optionalFieldKey -> true
+                    'optionalFieldKey -> true,
+                    'class -> "ga-track-optional-text",
+                    Symbol("data-ga-action") -> "date_of_birth"
                 )
             )
 
@@ -86,7 +88,9 @@
                     args = Map('_label -> Messages("change_keeper_privatekeeperdetails.drivernumberlabel"),
                         '_showConstraints -> false,
                         'maxLength -> DriverNumberMaxLength,
-                        'optionalFieldKey -> true
+                        'optionalFieldKey -> true,
+                        'class -> "ga-track-optional-text",
+                        Symbol("data-ga-action") -> "driving_licence"
                     )
                 )
             </div>
@@ -102,7 +106,8 @@
                     args = Map('maxLength -> EmailMaxLength,
                                 'validityMessage -> Messages("error.email")
                     )
-                )
+                ),
+                gaTrackValue = true
             )
 
             <div class="uppercase-input">

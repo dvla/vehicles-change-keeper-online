@@ -1,10 +1,10 @@
 package gov.uk.dvla.vehicles.keeper.stepdefs
 
-import _root_.helpers.RandomVrmGenerator
 import cucumber.api.scala.{EN, ScalaDsl}
 import cucumber.api.java.en.{Then, When, Given}
 import org.openqa.selenium.WebDriver
 import org.scalatest.Matchers
+import org.scalatest.selenium.WebBrowser.{click, go, pageTitle, pageSource}
 import pages.changekeeper.BusinessKeeperDetailsPage
 import pages.changekeeper.ChangeKeeperSuccessPage
 import pages.changekeeper.CompleteAndConfirmPage
@@ -13,7 +13,7 @@ import pages.changekeeper.NewKeeperChooseYourAddressPage
 import pages.changekeeper.VehicleLookupPage
 import uk.gov.dvla.vehicles.presentation.common.helpers
 import helpers.webbrowser.{WithClue, WebBrowserDriver}
-import org.scalatest.selenium.WebBrowser.{click, go, pageTitle, pageSource}
+import uk.gov.dvla.vehicles.presentation.common.testhelpers.RandomVrmGenerator
 
 class CompleteAndConfirmSteps(webBrowserDriver: WebBrowserDriver)
   extends ScalaDsl with EN with Matchers with WithClue {
@@ -41,9 +41,15 @@ class CompleteAndConfirmSteps(webBrowserDriver: WebBrowserDriver)
 
   def goToCompletAndConfirmPage(vrm: String = RandomVrmGenerator.uniqueVrm) {
     goToDateOfSalePage(vrm)
-    DateOfSalePage.dayDateOfSaleTextBox.value = "12"
-    DateOfSalePage.monthDateOfSaleTextBox.value = "12"
-    DateOfSalePage.yearDateOfSaleTextBox.value = "2010"
+
+    import java.util.Calendar
+
+    val c = Calendar.getInstance
+    c.add(Calendar.MONTH, -1)
+
+    DateOfSalePage.dayDateOfSaleTextBox.value = f"${c.get(Calendar.DATE)}%02d"
+    DateOfSalePage.monthDateOfSaleTextBox.value = f"${c.get(Calendar.MONTH)}%02d"
+    DateOfSalePage.yearDateOfSaleTextBox.value = c.get(Calendar.YEAR).toString
     click on DateOfSalePage.next
     pageTitle shouldBe CompleteAndConfirmPage.title withClue trackingId
   }

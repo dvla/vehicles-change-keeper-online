@@ -4,9 +4,9 @@ import java.util.Calendar
 
 import cucumber.api.scala.{EN, ScalaDsl}
 import cucumber.api.java.en.{Given,Then, When}
-import helpers.RandomVrmGenerator
 import org.openqa.selenium.WebDriver
 import org.scalatest.Matchers
+import org.scalatest.selenium.WebBrowser.{click, go, pageTitle, pageSource}
 import pages.changekeeper.BusinessKeeperDetailsPage
 import pages.changekeeper.ChangeKeeperSuccessPage
 import pages.changekeeper.CompleteAndConfirmPage
@@ -16,7 +16,7 @@ import pages.changekeeper.NewKeeperEnterAddressManuallyPage
 import pages.changekeeper.PrivateKeeperDetailsPage
 import pages.changekeeper.VehicleLookupPage
 import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.{WithClue, WebBrowserDriver}
-import org.scalatest.selenium.WebBrowser.{click, go, pageTitle, pageSource}
+import uk.gov.dvla.vehicles.presentation.common.testhelpers.RandomVrmGenerator
 
 class HappyAndSadPathSteps(webBrowserDriver: WebBrowserDriver)
   extends ScalaDsl with EN with Matchers with WithClue {

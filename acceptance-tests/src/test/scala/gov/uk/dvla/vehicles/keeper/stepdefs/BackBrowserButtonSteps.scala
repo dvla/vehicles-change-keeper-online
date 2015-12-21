@@ -2,7 +2,6 @@ package gov.uk.dvla.vehicles.keeper.stepdefs
 
 import cucumber.api.java.en.{Then, When, Given}
 import cucumber.api.scala.{EN, ScalaDsl}
-import helpers.RandomVrmGenerator
 import org.openqa.selenium.WebDriver
 import org.scalatest.Matchers
 import pages.changekeeper.BusinessKeeperDetailsPage
@@ -11,8 +10,9 @@ import pages.changekeeper.CompleteAndConfirmPage
 import pages.changekeeper.DateOfSalePage
 import pages.changekeeper.NewKeeperChooseYourAddressPage
 import pages.changekeeper.VehicleLookupPage
-import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.{WithClue, WebBrowserDriver}
 import org.scalatest.selenium.WebBrowser.{click, go, pageTitle}
+import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.{WithClue, WebBrowserDriver}
+import uk.gov.dvla.vehicles.presentation.common.testhelpers.RandomVrmGenerator
 
 class BackBrowserButtonSteps(webBrowserDriver: WebBrowserDriver)
   extends ScalaDsl with EN with Matchers with WithClue {

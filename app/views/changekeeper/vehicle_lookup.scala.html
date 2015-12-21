@@ -83,17 +83,20 @@ backButton = Some(Call("GET", "https://www.gov.uk/sold-bought-vehicle/y/no/sold-
                     args = Map('maxLength -> EmailMaxLength,
                                'validityMessage -> Messages("error.email")
                     )
-                  )
+                  ),
+                  gaTrackValue = true
                 )
 
                 <h3>@Messages("change_keeper_vehiclelookup.vehiclesoldto.label")</h3>
 
                 @listRadioGroup(field = viewModel.form(VehicleSoldToId),
                     args = Map('items -> Seq(
-                        VehicleSoldTo_Private -> Messages("change_keeper_vehiclelookup.vehiclesoldto.private"),
-                        VehicleSoldTo_Business -> Messages("change_keeper_vehiclelookup.vehiclesoldto.business")
-                    ),
-                    '_label -> Messages("change_keeper_vehiclelookup.vehiclesoldto.hint")
+                            VehicleSoldTo_Private -> Messages("change_keeper_vehiclelookup.vehiclesoldto.private"),
+                            VehicleSoldTo_Business -> Messages("change_keeper_vehiclelookup.vehiclesoldto.business")
+                        ),
+                        '_label -> Messages("change_keeper_vehiclelookup.vehiclesoldto.hint"),
+                        'class -> "ga-track-value",
+                        Symbol("data-ga-action") -> "track_path"
                     )
                 )
 

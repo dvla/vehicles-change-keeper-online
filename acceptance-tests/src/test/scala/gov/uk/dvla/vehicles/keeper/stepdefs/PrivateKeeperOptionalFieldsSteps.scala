@@ -10,6 +10,7 @@ import pages.changekeeper.{PrivateKeeperDetailsPage, VehicleLookupPage}
 import pages.common.ErrorPanel
 import uk.gov.dvla.vehicles.presentation.common.helpers
 import helpers.webbrowser.{WithClue, WebBrowserDriver}
+import uk.gov.dvla.vehicles.presentation.common.testhelpers.RandomVrmGenerator
 import org.scalatest.selenium.WebBrowser.{click, go, pageTitle}
 
 class PrivateKeeperOptionalFieldsSteps(webBrowserDriver: WebBrowserDriver)
@@ -24,7 +25,7 @@ class PrivateKeeperOptionalFieldsSteps(webBrowserDriver: WebBrowserDriver)
 
   def goToPrivateKeeperDetailsPage() {
     go to VehicleLookupPage
-    VehicleLookupPage.vehicleRegistrationNumber.value = "B1"
+    VehicleLookupPage.vehicleRegistrationNumber.value = RandomVrmGenerator.uniqueVrm
     VehicleLookupPage.documentReferenceNumber.value = "11111111111"
     click on VehicleLookupPage.emailInvisible
     click on VehicleLookupPage.vehicleSoldToPrivateIndividual
