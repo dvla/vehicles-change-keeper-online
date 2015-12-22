@@ -32,7 +32,6 @@ class DateOfSalePageSteps(webBrowserDriver: WebBrowserDriver)
     BusinessKeeperDetailsPage.postcodeField.value = "qq99qq"
     click on BusinessKeeperDetailsPage.emailInvisible
     click on BusinessKeeperDetailsPage.next
-    click on NewKeeperChooseYourAddressPage.select
     NewKeeperChooseYourAddressPage.chooseAddress.value = NewKeeperChooseYourAddressPage.defaultSelectedAddress
     click on NewKeeperChooseYourAddressPage.next
     pageTitle shouldBe DateOfSalePage.title withClue trackingId

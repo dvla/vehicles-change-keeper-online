@@ -27,16 +27,14 @@ object NewKeeperChooseYourAddressPage extends Page {
 
   def errorTextForTitle(text:String)(implicit driver: WebDriver):Boolean= find(tagName("body")).get.text.contains(text)
 
-  def select(implicit driver: WebDriver): Element = find(id(SelectId)).get
-
   def happyPath(implicit driver: WebDriver) = {
     go to NewKeeperChooseYourAddressPage
     chooseAddress.value = selectedAddress
-    click on select
+    click on next
   }
 
   def sadPath(implicit driver: WebDriver) = {
     go to NewKeeperChooseYourAddressPage
-    click on select
+    click on next
   }
 }

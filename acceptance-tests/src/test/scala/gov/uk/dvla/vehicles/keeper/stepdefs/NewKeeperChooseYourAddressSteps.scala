@@ -48,7 +48,6 @@ class NewKeeperChooseYourAddressSteps(webBrowserDriver: WebBrowserDriver)
 
   @When("^the user navigates forwards from NewKeeper choose your address page and there are no validation errors$")
   def the_user_navigates_forwards_from_NewKeeper_choose_your_address_page_and_there_are_no_validation_errors()  {
-    click on NewKeeperChooseYourAddressPage.select
     NewKeeperChooseYourAddressPage.chooseAddress.value = NewKeeperChooseYourAddressPage.defaultSelectedAddress
     click on NewKeeperChooseYourAddressPage.next
   }
