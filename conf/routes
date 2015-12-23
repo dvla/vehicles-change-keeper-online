@@ -86,6 +86,9 @@ GET         /complete-and-confirm                       @controllers.CompleteAnd
 GET         /vehicle-lookup-failure                     @controllers.VehicleLookupFailure.present
 POST        /vehicle-lookup-failure                     @controllers.VehicleLookupFailure.submit
 
+GET         /healthcheck                                @uk.gov.dvla.vehicles.presentation.common.controllers.HealthCheck.respond
+GET         /healthcheck/debug                          @uk.gov.dvla.vehicles.presentation.common.controllers.HealthCheck.debug
+
 GET         /version                                    @controllers.Version.version
 
 GET         /cookie-policy                              @controllers.CookiePolicy.present
