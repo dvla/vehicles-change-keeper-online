@@ -1,16 +1,14 @@
 package gov.uk.dvla.vehicles.keeper.stepdefs
 
 import cucumber.api.java.en.{Then, When, Given}
-import cucumber.api.scala.{EN, ScalaDsl}
 import org.openqa.selenium.WebDriver
-import org.scalatest.Matchers
 import org.scalatest.selenium.WebBrowser.{click, go, pageTitle}
 import pages.changekeeper.{BeforeYouStartPage, VehicleLookupPage, VehicleLookupFailurePage, VrmLockedPage}
-import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.{WithClue, WebBrowserDriver}
+import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.WebBrowserDriver
 import uk.gov.dvla.vehicles.presentation.common.testhelpers.RandomVrmGenerator
 
 class BruteForceKeeperToKeeperSteps(webBrowserDriver: WebBrowserDriver)
-  extends ScalaDsl with EN with Matchers with WithClue {
+  extends gov.uk.dvla.vehicles.keeper.helpers.AcceptanceTestHelper {
 
   implicit val webDriver = webBrowserDriver.asInstanceOf[WebDriver]
   private final val vrmNo = RandomVrmGenerator.vrm

@@ -1,58 +1,38 @@
 package gov.uk.dvla.vehicles.keeper.stepdefs
 
-import cucumber.api.scala.{EN, ScalaDsl}
 import cucumber.api.java.en.{Then, When, Given}
 import org.joda.time.LocalDate
 import org.openqa.selenium.WebDriver
-import org.scalatest.Matchers
 import pages.changekeeper.BusinessKeeperDetailsPage
 import pages.changekeeper.CompleteAndConfirmPage
 import pages.changekeeper.DateOfSalePage
 import pages.changekeeper.NewKeeperChooseYourAddressPage
 import pages.changekeeper.VehicleLookupPage
-import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.{WithClue, WebBrowserDriver}
+import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.WebBrowserDriver
 import uk.gov.dvla.vehicles.presentation.common.testhelpers.RandomVrmGenerator
 import org.scalatest.selenium.WebBrowser.{click, go, pageTitle, pageSource}
 
 class DateOfSalePageSteps(webBrowserDriver: WebBrowserDriver)
-  extends ScalaDsl with EN with Matchers with WithClue {
+  extends gov.uk.dvla.vehicles.keeper.helpers.AcceptanceTestHelper {
 
   implicit val webDriver = webBrowserDriver.asInstanceOf[WebDriver]
 
-  def goToDateOfSalePage() {
-    go to VehicleLookupPage
-    VehicleLookupPage.vehicleRegistrationNumber.value = RandomVrmGenerator.uniqueVrm
-    VehicleLookupPage.documentReferenceNumber.value = "11111111111"
-    click on VehicleLookupPage.emailInvisible
-    click on VehicleLookupPage.vehicleSoldToBusiness
-    click on VehicleLookupPage.next
-    pageTitle shouldEqual BusinessKeeperDetailsPage.title withClue trackingId
-    click on BusinessKeeperDetailsPage.fleetNumberInvisible
-    BusinessKeeperDetailsPage.businessNameField.value = "retail"
-    BusinessKeeperDetailsPage.postcodeField.value = "qq99qq"
-    click on BusinessKeeperDetailsPage.emailInvisible
-    click on BusinessKeeperDetailsPage.next
-    NewKeeperChooseYourAddressPage.chooseAddress.value = NewKeeperChooseYourAddressPage.defaultSelectedAddress
-    click on NewKeeperChooseYourAddressPage.next
-    pageTitle shouldBe DateOfSalePage.title withClue trackingId
-  }
+  private val commonSteps = new CommonSteps(webBrowserDriver)
 
   @Given("^that the user is on the date of sale page$")
   def that_the_user_is_on_the_date_of_sale_page() {
-    goToDateOfSalePage()
+    commonSteps.goToDateOfSalePage()
   }
 
   @Given("^there is a  label titled \"(.*?)\"$")
   def there_is_a_label_titled(lableText: String) {
-
-// need to use page text rather than source
-
+    // need to use page text rather than source
     pageSource.contains(lableText) shouldBe true withClue trackingId
   }
 
   @Then("^there is a control for entry of the vehicle mileage using the format N\\((\\d+)\\)$")
-  def there_is_a_control_for_entry_of_the_vehicle_mileage_using_the_format_N(onlySixDigits: Int) {
-    DateOfSalePage.mileageTextBox.value = "fhgjhhhkj"
+  def there_is_a_control_for_entry_of_the_vehicle_mileage_using_the_format_N(maxDigits: Int) {
+    DateOfSalePage.mileageTextBox.attribute("maxlength") shouldBe Some(maxDigits.toString)
   }
 
   @When("^there is a labelled Date of Sale and hint text$")
@@ -62,9 +42,10 @@ class DateOfSalePageSteps(webBrowserDriver: WebBrowserDriver)
 
   @When("^the Date of sale section will contain the Month label Month entry control Year label Year entry control$")
   def the_Date_of_sale_section_will_contain_the_Month_label_Month_entry_control_Year_label_Year_entry_control(): Unit = {
-    webDriver.getPageSource.contains("Day") shouldBe true withClue trackingId
-    webDriver.getPageSource.contains("Month") shouldBe true withClue trackingId
-    webDriver.getPageSource.contains("Year") shouldBe true withClue trackingId
+    val source = pageSource
+    source.contains("Day") shouldBe true withClue trackingId
+    source.contains("Month") shouldBe true withClue trackingId
+    source.contains("Year") shouldBe true withClue trackingId
   }
 
   @When("^the user selects the data entry control labelled Day$")

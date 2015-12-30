@@ -1,15 +1,13 @@
 package gov.uk.dvla.vehicles.keeper.stepdefs
 
 import cucumber.api.java.en.{Then, When, Given}
-import cucumber.api.scala.{EN, ScalaDsl}
-import org.scalatest.Matchers
 import pages.changekeeper.{BeforeYouStartPage, CompleteAndConfirmPage, ChangeKeeperSuccessPage}
-import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.{WithClue, WebBrowserDriver}
+import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.WebBrowserDriver
 import uk.gov.dvla.vehicles.presentation.common.testhelpers.RandomVrmGenerator
 import org.scalatest.selenium.WebBrowser.{click, pageTitle, pageSource}
 
 class SummaryPageSteps (webBrowserDriver: WebBrowserDriver)
-  extends ScalaDsl with EN with Matchers with WithClue {
+  extends gov.uk.dvla.vehicles.keeper.helpers.AcceptanceTestHelper {
 
   implicit val webDriver = webBrowserDriver.asInstanceOf[WebBrowserDriver]
   lazy val happyPath = new CompleteAndConfirmSteps(webBrowserDriver)

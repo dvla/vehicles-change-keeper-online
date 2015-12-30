@@ -1,11 +1,8 @@
 package gov.uk.dvla.vehicles.keeper.stepdefs
 
-import java.util.Calendar
-
-import cucumber.api.scala.{EN, ScalaDsl}
 import cucumber.api.java.en.{Given,Then, When}
+import java.util.Calendar
 import org.openqa.selenium.WebDriver
-import org.scalatest.Matchers
 import org.scalatest.selenium.WebBrowser.{click, go, pageTitle, pageSource}
 import pages.changekeeper.BusinessKeeperDetailsPage
 import pages.changekeeper.ChangeKeeperSuccessPage
@@ -15,11 +12,11 @@ import pages.changekeeper.NewKeeperChooseYourAddressPage
 import pages.changekeeper.NewKeeperEnterAddressManuallyPage
 import pages.changekeeper.PrivateKeeperDetailsPage
 import pages.changekeeper.VehicleLookupPage
-import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.{WithClue, WebBrowserDriver}
+import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.WebBrowserDriver
 import uk.gov.dvla.vehicles.presentation.common.testhelpers.RandomVrmGenerator
 
 class HappyAndSadPathSteps(webBrowserDriver: WebBrowserDriver)
-  extends ScalaDsl with EN with Matchers with WithClue {
+  extends gov.uk.dvla.vehicles.keeper.helpers.AcceptanceTestHelper {
 
   implicit val webDriver = webBrowserDriver.asInstanceOf[WebDriver]
 

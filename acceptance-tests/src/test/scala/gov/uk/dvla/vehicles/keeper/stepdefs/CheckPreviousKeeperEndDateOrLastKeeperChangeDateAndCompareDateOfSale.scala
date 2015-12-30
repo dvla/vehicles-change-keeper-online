@@ -3,47 +3,25 @@ package gov.uk.dvla.vehicles.keeper.stepdefs
 import java.util.Calendar
 
 import cucumber.api.java.en.{Given, When, Then}
-import cucumber.api.scala.{EN, ScalaDsl}
 import org.openqa.selenium.WebDriver
-import org.scalatest.Matchers
 import pages.changekeeper.BusinessKeeperDetailsPage
 import pages.changekeeper.CompleteAndConfirmPage
 import pages.changekeeper.DateOfSalePage
 import pages.changekeeper.NewKeeperChooseYourAddressPage
 import pages.changekeeper.VehicleLookupPage
-import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.{WithClue, WebBrowserDriver}
+import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.WebBrowserDriver
 import org.scalatest.selenium.WebBrowser.{click, go, pageTitle, pageSource}
 
 class CheckPreviousKeeperEndDateOrLastKeeperChangeDateAndCompareDateOfSale(webBrowserDriver: WebBrowserDriver)
-  extends ScalaDsl with EN with Matchers with WithClue {
+  extends gov.uk.dvla.vehicles.keeper.helpers.AcceptanceTestHelper {
 
   implicit val webDriver = webBrowserDriver.asInstanceOf[WebDriver]
 
-  val dos = Calendar.getInstance()
-  dos.add(Calendar.YEAR, -1)
-
-  def goToDateOfSalePage(registrationNumber:String) = {
-    go to VehicleLookupPage
-    pageTitle shouldEqual VehicleLookupPage.title withClue trackingId
-    VehicleLookupPage.vehicleRegistrationNumber.value = registrationNumber
-    VehicleLookupPage.documentReferenceNumber.value = "88888888881"
-    click on VehicleLookupPage.emailInvisible
-    click on VehicleLookupPage.vehicleSoldToBusiness
-    click on VehicleLookupPage.next
-    pageTitle shouldEqual BusinessKeeperDetailsPage.title withClue trackingId
-    click on BusinessKeeperDetailsPage.fleetNumberInvisible
-    BusinessKeeperDetailsPage.businessNameField.value = "retail"
-    click on BusinessKeeperDetailsPage.emailInvisible
-    BusinessKeeperDetailsPage.postcodeField.value = "qq99qq"
-    click on BusinessKeeperDetailsPage.next
-    NewKeeperChooseYourAddressPage.chooseAddress.value=NewKeeperChooseYourAddressPage.defaultSelectedAddress
-    click on NewKeeperChooseYourAddressPage.next
-    pageTitle shouldBe DateOfSalePage.title withClue trackingId
-  }
+  private val commonSteps = new CommonSteps(webBrowserDriver)
 
   @Given("^The user goes to the Date of sale page entering registration number: (.*?)$")
   def the_user_is_on_the_Date_of_Sale_page_with_Vehicle_Registration_number_as(registrationNumber:String)  {
-    goToDateOfSalePage(registrationNumber)
+    commonSteps.goToDateOfSalePage(registrationNumber, "88888888881")
   }
 
   @When("^the user enters a date of sale before the previous keeper end date and click on submit button$")
