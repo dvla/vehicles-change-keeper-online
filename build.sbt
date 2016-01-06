@@ -48,8 +48,8 @@ lazy val gatlingTestsProject = Project("gatling-tests", file("gatling-tests"))
 
 libraryDependencies ++= Seq(
   filters,
-  "dvla" %% "vehicles-presentation-common" % "2.39" withSources() withJavadoc() exclude("junit", "junit-dep"),
-  "dvla" %% "vehicles-presentation-common" % "2.39" % "test" classifier "tests" withSources() withJavadoc() exclude("junit", "junit-dep"),
+  "dvla" %% "vehicles-presentation-common" % "2.40-SNAPSHOT" withSources() withJavadoc() exclude("junit", "junit-dep"),
+  "dvla" %% "vehicles-presentation-common" % "2.40-SNAPSHOT" % "test" classifier "tests" withSources() withJavadoc() exclude("junit", "junit-dep"),
   "com.google.guava" % "guava" % "15.0" withSources() withJavadoc(), // See: http://stackoverflow.com/questions/16614794/illegalstateexception-impossible-to-get-artifacts-when-data-has-not-been-loaded
   "org.seleniumhq.selenium" % "selenium-java" % "2.43.0" % "test",
   "com.github.detro" % "phantomjsdriver" % "1.2.0" % "test" withSources() withJavadoc(),
@@ -112,10 +112,10 @@ net.virtualvoid.sbt.graph.Plugin.graphSettings
 webJarCdns := Map()
 
 // ====================== Sandbox Settings ==========================
-lazy val osAddressLookupProject = osAddressLookup("0.26").disablePlugins(PlayScala, SbtWeb)
-lazy val vehicleAndKeeperLookupProject = vehicleAndKeeperLookup("0.20").disablePlugins(PlayScala, SbtWeb)
-lazy val vehiclesAcquireFulfilProject = vehiclesAcquireFulfil("0.16").disablePlugins(PlayScala, SbtWeb)
-lazy val emailServiceProject = emailService("0.17").disablePlugins(PlayScala, SbtWeb)
+lazy val osAddressLookupProject = osAddressLookup("0.27-SNAPSHOT").disablePlugins(PlayScala, SbtWeb)
+lazy val vehicleAndKeeperLookupProject = vehicleAndKeeperLookup("0.21-SNAPSHOT").disablePlugins(PlayScala, SbtWeb)
+lazy val vehiclesAcquireFulfilProject = vehiclesAcquireFulfil("0.17-SNAPSHOT").disablePlugins(PlayScala, SbtWeb)
+lazy val emailServiceProject = emailService("0.18-SNAPSHOT").disablePlugins(PlayScala, SbtWeb)
 lazy val legacyStubsProject = legacyStubs("1.0-SNAPSHOT").disablePlugins(PlayScala, SbtWeb)
 
 SandboxSettings.portOffset := 20000
