@@ -10,11 +10,15 @@ import common.clientsidesession.CookieImplicits.RichCookies
 import common.controllers.FeedbackBase
 import common.model.FeedbackForm
 import common.model.FeedbackForm.Form.{emailMapping, nameMapping, feedback}
+import common.services.DateService
 import common.views.helpers.FormExtensions.formBinding
 import common.webserviceclients.emailservice.EmailService
+import common.webserviceclients.healthstats.HealthStats
 import utils.helpers.Config
 
-class FeedbackController @Inject()(val emailService: EmailService)
+class FeedbackController @Inject()(val emailService: EmailService,
+                                   val dateService: DateService,
+                                   val healthStats: HealthStats)
                                   (implicit clientSideSessionFactory: ClientSideSessionFactory,
                                    config: Config) extends Controller with FeedbackBase {
 

@@ -34,10 +34,11 @@ import common.webserviceclients.acquire.KeeperDetailsDto
 import common.webserviceclients.acquire.TitleTypeDto
 import common.webserviceclients.common.{VssWebEndUserDto, VssWebHeaderDto}
 import common.webserviceclients.emailservice.EmailService
+import common.webserviceclients.healthstats.HealthStats
 import utils.helpers.Config
 import views.html.changekeeper.complete_and_confirm
 
-class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: EmailService)
+class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: EmailService, healthStats: HealthStats)
                                   (implicit clientSideSessionFactory: ClientSideSessionFactory,
                                    dateService: DateService,
                                    config: Config) extends Controller with DVLALogger  {
@@ -402,15 +403,6 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
   private def createAndSendEmailRequiringFurtherAction(transactionId: String, acquireRequest: AcquireRequestDto)
                                                       (implicit request: Request[_]) = {
 
-    import SEND._ // Keep this local so that we don't pollute rest of the class with unnecessary imports.
-
-    implicit val emailConfiguration = config.emailConfiguration
-    implicit val implicitEmailService = implicitly[EmailService](emailService)
-
-    val email = config.emailConfiguration.feedbackEmail.email
-
-    val dateTime = acquireRequest.webHeader.originDateTime.toString("dd/MM/yy HH:mm")
-
     val htmlTemplateStart = (title: String) =>
       s"""
          |<!DOCTYPE html>
@@ -429,6 +421,8 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
       """.stripMargin
 
     val message1Title = s"Keeper to Keeper Failure (1 of 2) $transactionId"
+
+    val dateTime = acquireRequest.webHeader.originDateTime.toString("dd/MM/yy HH:mm")
 
     val message1Template = (start: (String) => String, end: String, startLine: String, endLine: String) =>
       start(message1Title) +
@@ -486,6 +480,14 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
     val message2 = message2Template((_) => "", "", "", "", "\n", "                     ")
     val message2Html = message2Template(htmlTemplateStart, htmlTemplateEnd, "<li>", "</li>",
                                         "</li>", "<li style='padding-left: 11.2em'>")
+
+    import SEND.Contents // Keep this local so that we don't pollute rest of the class with unnecessary imports.
+
+    implicit val emailConfiguration = config.emailConfiguration
+    implicit val implicitEmailService = implicitly[EmailService](emailService)
+    implicit val implicitHealthStats = implicitly[HealthStats](healthStats)
+
+    val email = config.emailConfiguration.feedbackEmail.email
 
     SEND
       .email(Contents(message1Html, message1))
@@ -551,17 +553,17 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
     keeperDetails.email match {
       case Some(emailAddr) =>
         import scala.language.postfixOps
-        import SEND._ // Keep this local so that we don't pollute rest of the class with unnecessary imports.
 
         implicit val emailConfiguration = config.emailConfiguration
         implicit val implicitEmailService = implicitly[EmailService](emailService)
+        implicit val implicitHealthStats = implicitly[HealthStats](healthStats)
 
         val template = EmailMessageBuilder.buildWith(vehicleDetails, transactionId,
           config.imagesPath, transactionTimestamp)
 
         // This sends the email.
-        SEND email template withSubject s"${vehicleDetails.registrationNumber} Confirmation of new vehicle keeper" to
-          emailAddr send trackingId
+        val subject = s"${vehicleDetails.registrationNumber} Confirmation of new vehicle keeper"
+        SEND email template withSubject subject to emailAddr send trackingId
 
       case None => logMessage(request.cookies.trackingId(), Warn, "Tried to send an email with no keeper details")
     }
@@ -575,21 +577,18 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
     sellerEmail match {
       case Some(emailAddr) =>
         import scala.language.postfixOps
-        import SEND._ // Keep this local so that we don't pollute rest of the class with unnecessary imports.
 
         implicit val emailConfiguration = config.emailConfiguration
         implicit val implicitEmailService = implicitly[EmailService](emailService)
+        implicit val implicitHealthStats = implicitly[HealthStats](healthStats)
 
         val template = EmailSellerMessageBuilder.buildWith(vehicleDetails, transactionId,
           config.imagesPath, transactionTimestamp)
 
         // This sends the email.
-        SEND email template withSubject s"${vehicleDetails.registrationNumber} confirmation of vehicle keeper change" to
-          emailAddr send trackingId
+        val subject = s"${vehicleDetails.registrationNumber} confirmation of vehicle keeper change"
+        SEND email template withSubject subject to emailAddr send trackingId
       case None =>
-        logMessage(request.cookies.trackingId(),
-          Info,
-          "Tried to send a receipt to seller but no email was found"
-        )
+        logMessage(request.cookies.trackingId(), Info, "Tried to send a receipt to seller but no email was found")
     }
 }

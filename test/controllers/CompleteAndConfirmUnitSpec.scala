@@ -29,6 +29,7 @@ import common.testhelpers.CookieHelper.fetchCookiesFromHeaders
 import common.views.models.DayMonthYear
 import common.webserviceclients.acquire.{AcquireRequestDto, AcquireService}
 import common.webserviceclients.emailservice.{EmailService, EmailServiceSendRequest, EmailServiceSendResponse, From}
+import common.webserviceclients.healthstats.HealthStats
 import utils.helpers.Config
 import webserviceclients.fakes.FakeAcquireWebServiceImpl.acquireResponseSuccess
 
@@ -229,7 +230,8 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
                                (implicit config: Config = mockConfig,
                                 dateService: DateService = dateServiceStubbed()): CompleteAndConfirm = {
     implicit val clientSideSessionFactory = injector.getInstance(classOf[ClientSideSessionFactory])
-    new CompleteAndConfirm(acquireService, emailService)
+    val healthStatsMock = mock[HealthStats]
+    new CompleteAndConfirm(acquireService, emailService, healthStatsMock)
   }
 
   private def dateServiceStubbed(day: Int = 1,
