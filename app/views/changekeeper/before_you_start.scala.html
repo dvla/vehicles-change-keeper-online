@@ -6,28 +6,27 @@
 @import views.changekeeper.BeforeYouStart.NextId
 
 @main(
-    progress = Some(Messages("change_keeper_progress_1")),
     title = Messages("change_keeper_beforeyoustart.title")
 ) {
 
-    <h1>@Messages("change_keeper_beforeyoustart.title")</h1>
+<h1>@Messages("change_keeper_beforeyoustart.title")</h1>
 
-    <h2>@Messages("change_keeper_beforeyoustart.p1")</h2>
+<h2>@Messages("change_keeper_beforeyoustart.p1")</h2>
 
-    <ol>
-        <li>@Messages("change_keeper_beforeyoustart.listitem1") </li>
-        <li>@Messages("change_keeper_beforeyoustart.listitem2") </li>
-        <li>@Messages("change_keeper_beforeyoustart.listitem3.1")
-            <a href="https://www.gov.uk/government/publications/application-to-transfer-or-retain-a-vehicle-registration-number"
-               target="_blank">
-                @Messages("change_keeper_beforeyoustart.listitem3.link")
-            </a>
-            @Messages("change_keeper_beforeyoustart.listitem3.2")
-        </li>
-        <li>@Messages("change_keeper_beforeyoustart.listitem4")</li>
-    </ol>
+<ol>
+    <li>@Messages("change_keeper_beforeyoustart.listitem1") </li>
+    <li>@Messages("change_keeper_beforeyoustart.listitem2") </li>
+    <li>@Messages("change_keeper_beforeyoustart.listitem3.1")
+        <a href="https://www.gov.uk/government/publications/application-to-transfer-or-retain-a-vehicle-registration-number"
+           target="_blank">
+            @Messages("change_keeper_beforeyoustart.listitem3.link")
+        </a>
+        @Messages("change_keeper_beforeyoustart.listitem3.2")
+    </li>
+    <li>@Messages("change_keeper_beforeyoustart.listitem4")</li>
+</ol>
 
-    <a class="button" role="button" id="@NextId" href="@VehicleLookup.present()" autofocus="true">
-        @Messages("change_keeper_beforeyoustart.button")
-    </a>
+<a class="button" role="button" id="@NextId" href="@VehicleLookup.present()" autofocus="true">
+    @Messages("change_keeper_beforeyoustart.button")
+</a>
 }

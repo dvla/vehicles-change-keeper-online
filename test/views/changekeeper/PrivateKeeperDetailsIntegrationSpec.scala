@@ -3,7 +3,6 @@ package views.changekeeper
 import composition.TestHarness
 import helpers.CookieFactoryForUISpecs
 import helpers.UiSpec
-import helpers.webbrowser.ProgressBar.progressStep
 import org.openqa.selenium.{By, WebDriver, WebElement}
 import pages.changekeeper.BeforeYouStartPage
 import pages.changekeeper.NewKeeperChooseYourAddressPage
@@ -42,19 +41,6 @@ final class PrivateKeeperDetailsIntegrationSpec extends UiSpec with TestHarness 
       pageSource.contains(EmailFeedbackLink) should equal(true)
     }
 
-    "display the progress of the page when progressBar is set to true" taggedAs UiTag in new ProgressBarTrue {
-      go to BeforeYouStartPage
-      cacheSetup()
-      go to PrivateKeeperDetailsPage
-      pageSource.contains(progressStep(3)) should equal(true)
-    }
-
-    "not display the progress of the page when progressBar is set to false" taggedAs UiTag in new ProgressBarFalse {
-      go to BeforeYouStartPage
-      cacheSetup()
-      go to PrivateKeeperDetailsPage
-      pageSource.contains(progressStep(3)) should equal(false)
-    }
 
     "Redirect when no vehicle details are cached" taggedAs UiTag in new WebBrowserForSelenium {
       go to PrivateKeeperDetailsPage
@@ -70,7 +56,7 @@ final class PrivateKeeperDetailsIntegrationSpec extends UiSpec with TestHarness 
       csrf.getAttribute("value").nonEmpty should equal(true)
     }
 
-    "display optional for driving licence number of new keeper input" taggedAs UiTag in new ProgressBarFalse {
+    "display optional for driving licence number of new keeper input" taggedAs UiTag in new WebBrowserForSelenium {
       go to BeforeYouStartPage
       cacheSetup()
       go to PrivateKeeperDetailsPage
@@ -82,7 +68,7 @@ final class PrivateKeeperDetailsIntegrationSpec extends UiSpec with TestHarness 
       pageCharsNoWhitespace.contains(optionalLabelValue) should equal(true)
     }
 
-    "display optional for date of birth input" taggedAs UiTag in new ProgressBarFalse {
+    "display optional for date of birth input" taggedAs UiTag in new WebBrowserForSelenium {
       go to BeforeYouStartPage
       cacheSetup()
       go to PrivateKeeperDetailsPage
@@ -94,7 +80,7 @@ final class PrivateKeeperDetailsIntegrationSpec extends UiSpec with TestHarness 
       pageCharsNoWhitespace.contains(optionalLabelValue) should equal(true)
     }
 
-    "display optional for email address input" taggedAs UiTag in new ProgressBarFalse {
+    "display optional for email address input" taggedAs UiTag in new WebBrowserForSelenium {
       go to BeforeYouStartPage
       cacheSetup()
       go to PrivateKeeperDetailsPage

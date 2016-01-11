@@ -3,7 +3,6 @@ package views.changekeeper
 import composition.TestHarness
 import helpers.CookieFactoryForUISpecs
 import helpers.UiSpec
-import helpers.webbrowser.ProgressBar
 import models.{VehicleNewKeeperCompletionCacheKeys, CompleteAndConfirmFormModel}
 import CompleteAndConfirmFormModel.AllowGoingToCompleteAndConfirmPageCacheKey
 import org.openqa.selenium.{By, WebElement, WebDriver}
@@ -13,13 +12,12 @@ import pages.changekeeper.DateOfSalePage
 import pages.changekeeper.VehicleLookupPage
 import pages.changekeeper.BeforeYouStartPage
 import pages.common.Feedback.EmailFeedbackLink
-import ProgressBar.progressStep
 import uk.gov.dvla.vehicles.presentation.common.testhelpers.UiTag
 import uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction
 import org.scalatest.selenium.WebBrowser.{click, go, pageTitle, pageSource}
 
 final class CompleteAndConfirmIntegrationSpec extends UiSpec with TestHarness {
-  val ProgressStepNumber = 6
+
 
   "go to page" should {
     "display the page for a new keeper" taggedAs UiTag in new WebBrowserForSelenium {
@@ -35,20 +33,6 @@ final class CompleteAndConfirmIntegrationSpec extends UiSpec with TestHarness {
       go to CompleteAndConfirmPage
 
       pageSource should include(EmailFeedbackLink)
-    }
-
-    "display the progress of the page when progressBar is set to true" taggedAs UiTag in new ProgressBarTrue {
-      go to BeforeYouStartPage
-      cacheSetup()
-      go to CompleteAndConfirmPage
-      pageSource should include(progressStep(ProgressStepNumber))
-    }
-
-    "not display the progress of the page when progressBar is set to false" taggedAs UiTag in new ProgressBarFalse {
-      go to BeforeYouStartPage
-      cacheSetup()
-      go to CompleteAndConfirmPage
-      pageSource should not include progressStep(ProgressStepNumber)
     }
 
     "Redirect when no new keeper details are cached" taggedAs UiTag in new WebBrowserForSelenium {

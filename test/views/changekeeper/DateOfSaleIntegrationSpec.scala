@@ -2,7 +2,6 @@ package views.changekeeper
 
 import composition.TestHarness
 import helpers.CookieFactoryForUISpecs
-import helpers.webbrowser.ProgressBar.progressStep
 import helpers.UiSpec
 import org.openqa.selenium.{By, WebElement, WebDriver}
 import pages.changekeeper.DateOfSalePage.navigate
@@ -14,7 +13,7 @@ import uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction
 import org.scalatest.selenium.WebBrowser.{click, go, pageTitle, pageSource}
 
 class DateOfSaleIntegrationSpec extends UiSpec with TestHarness {
-  private final val ProgressStepNumber = 5
+
 
   "go to page" should {
     "display the page for a new keeper" taggedAs UiTag in new WebBrowserForSelenium {
@@ -32,20 +31,6 @@ class DateOfSaleIntegrationSpec extends UiSpec with TestHarness {
       pageSource should include(EmailFeedbackLink)
     }
 
-    "display the progress of the page when progressBar is set to true" taggedAs UiTag in new ProgressBarTrue {
-      go to BeforeYouStartPage
-      cacheSetup()
-      go to DateOfSalePage
-      pageSource should include(progressStep(ProgressStepNumber))
-    }
-
-    "not display the progress of the page when progressBar is set to false" taggedAs UiTag in new ProgressBarFalse {
-      go to BeforeYouStartPage
-      cacheSetup()
-      go to DateOfSalePage
-      pageSource should not include progressStep(ProgressStepNumber)
-    }
-
     "Redirect when no new keeper details are cached" taggedAs UiTag in new WebBrowserForSelenium {
       go to DateOfSalePage
       pageTitle should equal(VehicleLookupPage.title)
@@ -59,7 +44,7 @@ class DateOfSaleIntegrationSpec extends UiSpec with TestHarness {
       csrf.getAttribute("value").nonEmpty should equal(true)
     }
 
-    "display optional for vehicle mileage input" taggedAs UiTag in new ProgressBarFalse {
+    "display optional for vehicle mileage input" taggedAs UiTag in new WebBrowserForSelenium {
       go to BeforeYouStartPage
       cacheSetup()
       go to DateOfSalePage

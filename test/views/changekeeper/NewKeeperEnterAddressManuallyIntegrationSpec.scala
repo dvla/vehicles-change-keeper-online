@@ -2,7 +2,6 @@ package views.changekeeper
 
 import composition.TestHarness
 import helpers.UiSpec
-import helpers.webbrowser.ProgressBar.progressStep
 import org.openqa.selenium.{By, WebDriver, WebElement}
 import pages.changekeeper.{BeforeYouStartPage, NewKeeperEnterAddressManuallyPage}
 import pages.changekeeper.NewKeeperEnterAddressManuallyPage.{sadPath, happyPath, happyPathMandatoryFieldsOnly}
@@ -15,7 +14,7 @@ import org.scalatest.selenium.WebBrowser.{click, go, pageTitle, pageSource}
 
 class NewKeeperEnterAddressManuallyIntegrationSpec extends UiSpec with TestHarness {
 
-  final val ProgressStepNumber = 4
+
 
   "go to page" should {
     "display the page" taggedAs UiTag in new WebBrowserForSelenium {
@@ -32,21 +31,7 @@ class NewKeeperEnterAddressManuallyIntegrationSpec extends UiSpec with TestHarne
       pageSource.contains(EmailFeedbackLink) should equal(true)
     }
 
-    "display the progress of the page when progressBar is set to true" taggedAs UiTag in new ProgressBarTrue {
-      go to BeforeYouStartPage
-      cacheSetup()
-      go to NewKeeperEnterAddressManuallyPage
-      pageSource.contains(progressStep(ProgressStepNumber)) should equal(true)
-    }
-
-    "not display the progress of the page when progressBar is set to false" taggedAs UiTag in new ProgressBarFalse {
-      go to BeforeYouStartPage
-      cacheSetup()
-      go to NewKeeperEnterAddressManuallyPage
-      pageSource.contains(progressStep(ProgressStepNumber)) should equal(false)
-    }
-
-    "contain the hidden csrfToken field" taggedAs UiTag in new WebBrowserForSelenium {
+     "contain the hidden csrfToken field" taggedAs UiTag in new WebBrowserForSelenium {
       go to BeforeYouStartPage
       cacheSetup()
       go to NewKeeperEnterAddressManuallyPage

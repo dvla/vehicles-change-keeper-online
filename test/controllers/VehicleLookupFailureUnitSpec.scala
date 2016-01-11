@@ -40,9 +40,6 @@ class VehicleLookupFailureUnitSpec extends UnitSpec {
       }
     }
 
-    "not display progress bar" in new WithApplication {
-      contentAsString(present) should not include "Step "
-    }
 
     "display prototype message when config set to true" in new WithApplication {
       contentAsString(present) should include(PrototypeHtml)

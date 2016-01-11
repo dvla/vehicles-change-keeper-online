@@ -3,7 +3,6 @@ package views.changekeeper
 import composition.TestHarness
 import helpers.CookieFactoryForUISpecs
 import helpers.UiSpec
-import helpers.webbrowser.ProgressBar
 import org.openqa.selenium.{By, WebElement, WebDriver}
 import pages.changekeeper.BeforeYouStartPage
 import pages.changekeeper.BusinessKeeperDetailsPage
@@ -12,7 +11,6 @@ import pages.changekeeper.NewKeeperChooseYourAddressPage
 import pages.changekeeper.VehicleLookupPage
 import pages.common.ErrorPanel
 import pages.common.Feedback.EmailFeedbackLink
-import ProgressBar.progressStep
 import uk.gov.dvla.vehicles.presentation.common.testhelpers.UiTag
 import uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction
 import uk.gov.dvla.vehicles.presentation.common.testhelpers.HtmlTestHelper.{htmlRegex, whitespaceRegex}
@@ -20,7 +18,6 @@ import org.scalatest.selenium.WebBrowser.{click, currentUrl, go, pageTitle, page
 
 class BusinessKeeperDetailsIntegrationSpec extends UiSpec with TestHarness {
 
-  final val ProgressStepNumber = 3
 
   "go to page" should {
     "display the page" taggedAs UiTag in new WebBrowserForSelenium {
@@ -38,21 +35,7 @@ class BusinessKeeperDetailsIntegrationSpec extends UiSpec with TestHarness {
       pageSource.contains(EmailFeedbackLink) should equal(true)
     }
 
-    "display the progress of the page when progressBar is set to true" taggedAs UiTag in new ProgressBarTrue {
-      go to BeforeYouStartPage
-      cacheSetup()
-      go to BusinessKeeperDetailsPage
-      pageSource.contains(progressStep(ProgressStepNumber)) should equal(true)
-    }
-
-    "not display the progress of the page when progressBar is set to false" taggedAs UiTag in new ProgressBarFalse {
-      go to BeforeYouStartPage
-      cacheSetup()
-      go to BusinessKeeperDetailsPage
-      pageSource.contains(progressStep(ProgressStepNumber)) should equal(false)
-    }
-
-    "contain the hidden csrfToken field" taggedAs UiTag in new WebBrowserForSelenium {
+   "contain the hidden csrfToken field" taggedAs UiTag in new WebBrowserForSelenium {
       go to BusinessKeeperDetailsPage
       val csrf: WebElement = webDriver.findElement(By.name(CsrfPreventionAction.TokenName))
       csrf.getAttribute("type") should equal("hidden")
@@ -61,7 +44,7 @@ class BusinessKeeperDetailsIntegrationSpec extends UiSpec with TestHarness {
       csrf.getAttribute("value").nonEmpty should equal(true)
     }
 
-    "display optional for business email input" taggedAs UiTag in new ProgressBarFalse {
+    "display optional for business email input" taggedAs UiTag in new WebBrowserForSelenium {
       go to BeforeYouStartPage
       cacheSetup()
       go to BusinessKeeperDetailsPage

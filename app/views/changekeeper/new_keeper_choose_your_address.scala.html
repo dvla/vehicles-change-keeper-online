@@ -23,7 +23,6 @@
 @import common.views.html.widgets.playbackList
 
 @main(
-  progress = Some(Messages("change_keeper_progress_4")),
   title = if(dropDownOptions.isEmpty) Messages("change_keeper_newKeeperChooseYourAddress_no_address_found_title")
           else Messages("change_keeper_newKeeperChooseYourAddress_addresses_found_title"),
   currentForm = Some(viewModel.form),

@@ -3,7 +3,6 @@ package views.changekeeper
 import composition.TestHarness
 import helpers.CookieFactoryForUISpecs
 import helpers.UiSpec
-import helpers.webbrowser.ProgressBar.progressStep
 import models.K2KCacheKeyPrefix.CookiePrefix
 import org.openqa.selenium.{By, WebElement}
 import org.openqa.selenium.support.ui.{ExpectedConditions}
@@ -23,7 +22,7 @@ import common.views.widgetdriver.Wait
 
 class VehicleLookupIntegrationSpec extends UiSpec with TestHarness with Eventually with IntegrationPatience {
 
-  final val ProgressStepNumber = 2
+
 
   "go to page" should {
     "display the page" taggedAs UiTag in new WebBrowserForSelenium {
@@ -31,17 +30,7 @@ class VehicleLookupIntegrationSpec extends UiSpec with TestHarness with Eventual
       pageTitle should equal(VehicleLookupPage.title)
     }
 
-    "display the progress of the page when progressBar is set to true" taggedAs UiTag in new ProgressBarTrue {
-      go to VehicleLookupPage
-      pageSource.contains(progressStep(ProgressStepNumber)) should equal(true)
-    }
-
-    "not display the progress of the page when progressBar is set to false" taggedAs UiTag in new ProgressBarFalse {
-      go to VehicleLookupPage
-      pageSource.contains(progressStep(ProgressStepNumber)) should equal(false)
-    }
-
-    "contain the hidden csrfToken field" taggedAs UiTag in new WebBrowserForSelenium {
+      "contain the hidden csrfToken field" taggedAs UiTag in new WebBrowserForSelenium {
       go to VehicleLookupPage
       val csrf: WebElement = webDriver.findElement(By.name(CsrfPreventionAction.TokenName))
       csrf.getAttribute("type") should equal("hidden")

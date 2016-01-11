@@ -7,7 +7,6 @@ import org.openqa.selenium.WebDriver
 import pages.changekeeper.{BeforeYouStartPage, VehicleLookupFailurePage, VehicleLookupPage}
 import pages.changekeeper.VehicleLookupFailurePage.{beforeYouStart, vehicleLookup}
 import pages.common.Feedback.EmailFeedbackLink
-import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.ProgressBar
 import uk.gov.dvla.vehicles.presentation.common.testhelpers.UiTag
 import webserviceclients.fakes.brute_force_protection.FakeBruteForcePreventionWebServiceImpl.MaxAttempts
 import org.scalatest.selenium.WebBrowser.{click, go, pageTitle, pageSource}
@@ -26,13 +25,6 @@ final class VehicleLookupFailureIntegrationSpec extends UiSpec with TestHarness 
       cacheSetup()
       go to VehicleLookupFailurePage
       pageSource.contains(EmailFeedbackLink) should equal(true)
-    }
-
-    "not display any progress indicator when progressBar is set to true" taggedAs UiTag in new ProgressBarTrue {
-      go to BeforeYouStartPage
-      cacheSetup()
-      go to VehicleLookupFailurePage
-      pageSource should not contain ProgressBar.div
     }
 
     "redirect to before you start details if cache is empty on page load" taggedAs UiTag in new WebBrowserForSelenium {

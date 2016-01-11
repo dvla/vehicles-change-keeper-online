@@ -12,10 +12,7 @@ trait Config extends VehicleLookupConfig {
   // Prototype message in html
   def isPrototypeBannerVisible: Boolean
 
-  // Progress step indicator
-  def isProgressBarEnabled: Boolean
-
-  def startUrl: String
+   def startUrl: String
 
   // Google analytics
   def googleAnalyticsTrackingId: Option[String]

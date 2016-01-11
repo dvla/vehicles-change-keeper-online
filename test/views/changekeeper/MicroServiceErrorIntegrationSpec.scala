@@ -8,7 +8,6 @@ import pages.changekeeper.MicroServiceErrorPage.exit
 import pages.changekeeper.MicroServiceErrorPage.tryAgain
 import pages.changekeeper.{BeforeYouStartPage, MicroServiceErrorPage}
 import pages.common.Feedback.EmailFeedbackLink
-import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.ProgressBar
 import uk.gov.dvla.vehicles.presentation.common.testhelpers.UiTag
 import org.scalatest.selenium.WebBrowser.{click, go, pageTitle, pageSource}
 
@@ -24,10 +23,7 @@ final class MicroServiceErrorIntegrationSpec extends UiSpec with TestHarness {
       pageSource.contains(EmailFeedbackLink) should equal(true)
     }
 
-    "not display any progress indicator when progressBar is set to true" taggedAs UiTag in new ProgressBarTrue {
-      go to MicroServiceErrorPage
-      pageSource should not contain ProgressBar.div
-    }
+
   }
 
   "tryAgain button" should {

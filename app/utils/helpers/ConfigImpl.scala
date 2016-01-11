@@ -18,8 +18,6 @@ class ConfigImpl extends Config {
   // Prototype message in html
   override val isPrototypeBannerVisible: Boolean = getProperty[Boolean]("prototype.disclaimer")
 
-  override val isProgressBarEnabled: Boolean = getProperty[Boolean]("progressBar.enabled")
-
   override val startUrl: String = getProperty[String]("start.page")
 
   // Google analytics

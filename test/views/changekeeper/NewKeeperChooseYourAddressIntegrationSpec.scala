@@ -3,7 +3,6 @@ package views.changekeeper
 import composition.TestHarness
 import helpers.CookieFactoryForUISpecs
 import helpers.UiSpec
-import helpers.webbrowser.ProgressBar
 import org.openqa.selenium.{By, WebElement, WebDriver}
 import pages.changekeeper.BeforeYouStartPage
 import pages.changekeeper.BusinessKeeperDetailsPage
@@ -14,7 +13,6 @@ import pages.changekeeper.PrivateKeeperDetailsPage
 import pages.changekeeper.VehicleLookupPage
 import pages.common.ErrorPanel
 import pages.common.Feedback.EmailFeedbackLink
-import ProgressBar.progressStep
 import uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction
 import uk.gov.dvla.vehicles.presentation.common.testhelpers.UiTag
 import webserviceclients.fakes.FakeAddressLookupService
@@ -22,7 +20,7 @@ import webserviceclients.fakes.FakeAddressLookupService.PostcodeValid
 import org.scalatest.selenium.WebBrowser.{click, go, pageTitle, pageSource}
 
 class NewKeeperChooseYourAddressIntegrationSpec extends UiSpec with TestHarness {
-  final val ProgressStepNumber = 4
+
   final val PrivateKeeperNameLabel = " Name"
   final val BusinessKeeperNameLabel = "Business name"
   final val BusinessFleetNumberLabel = "Business fleet number"
@@ -55,21 +53,7 @@ class NewKeeperChooseYourAddressIntegrationSpec extends UiSpec with TestHarness 
       pageSource.contains(BusinessFleetNumberLabel) should equal(true)
     }
 
-    "display the progress of the page when progressBar is set to true" taggedAs UiTag in new ProgressBarTrue {
-      go to BeforeYouStartPage
-      cacheSetupPrivateKeeper
-      go to NewKeeperChooseYourAddressPage
-      pageSource.contains(progressStep(ProgressStepNumber)) should equal(true)
-    }
-
-    "not display the progress of the page when progressBar is set to false" taggedAs UiTag in new ProgressBarFalse {
-      go to BeforeYouStartPage
-      cacheSetupPrivateKeeper
-      go to NewKeeperChooseYourAddressPage
-      pageSource.contains(progressStep(ProgressStepNumber)) should equal(false)
-    }
-
-    "redirect to vehicle lookup when no keeper cookies are in cache" taggedAs UiTag in new WebBrowserForSelenium {
+     "redirect to vehicle lookup when no keeper cookies are in cache" taggedAs UiTag in new WebBrowserForSelenium {
       go to BeforeYouStartPage
       CookieFactoryForUISpecs
         .vehicleAndKeeperDetails()
