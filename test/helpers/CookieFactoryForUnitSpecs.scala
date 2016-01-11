@@ -2,7 +2,7 @@ package helpers
 
 import composition.TestComposition
 import pages.changekeeper.BusinessKeeperDetailsPage.{FleetNumberValid, BusinessNameValid}
-import pages.changekeeper.{NewKeeperChooseYourAddressPage, HelpPage}
+import pages.changekeeper.NewKeeperChooseYourAddressPage
 import play.api.libs.json.{Json, Writes}
 import models.CompleteAndConfirmFormModel
 import models.CompleteAndConfirmResponseModel
@@ -93,12 +93,6 @@ object CookieFactoryForUnitSpecs extends TestComposition {
 
   def trackingIdModel(value: String = TrackingIdValue): Cookie = {
     createCookie(ClientSideSessionFactory.TrackingIdCookieName, value)
-  }
-
-  def help(origin: String = HelpPage.address): Cookie = {
-    val key = HelpCacheKey
-    val value = origin
-    createCookie(key, value)
   }
 
   def vehicleLookupFormModel(referenceNumber: String = ReferenceNumberValid,
