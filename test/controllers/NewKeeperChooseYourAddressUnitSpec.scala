@@ -43,13 +43,13 @@ class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
 
   "present" should {
     "display the page if private new keeper details cached" in new WithApplication {
-      whenReady(presentWithPrivateNewKeeper, timeout) { r =>
+      whenReady(presentWithPrivateNewKeeper) { r =>
         r.header.status should equal(OK)
       }
     }
 
     "display the page if business new keeper details cached" in new WithApplication {
-      whenReady(presentWithBusinessNewKeeper, timeout) { r =>
+      whenReady(presentWithBusinessNewKeeper) { r =>
         r.header.status should equal(OK)
       }
     }
@@ -285,7 +285,7 @@ class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
       )
 
       val result = controller.submit(request)
-      whenReady(result, timeout) { r =>
+      whenReady(result) { r =>
         r.header.status should equal(BAD_REQUEST)
         verify(addressServiceMock, times(1)).callPostcodeWebService(anyString(),any[TrackingId])(any[Lang])
       }
