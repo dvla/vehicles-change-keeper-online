@@ -1,20 +1,9 @@
-import de.johoop.jacoco4sbt.JacocoPlugin._
-import io.gatling.sbt.GatlingPlugin
-import org.scalastyle.sbt.ScalastylePlugin
-import uk.gov.dvla.vehicles.sandbox.ProjectDefinitions.gatlingTests
-import uk.gov.dvla.vehicles.sandbox.ProjectDefinitions.legacyStubs
-import uk.gov.dvla.vehicles.sandbox.ProjectDefinitions.osAddressLookup
-import uk.gov.dvla.vehicles.sandbox.ProjectDefinitions.vehiclesAcquireFulfil
-import uk.gov.dvla.vehicles.sandbox.ProjectDefinitions.vehicleAndKeeperLookup
-import uk.gov.dvla.vehicles.sandbox.ProjectDefinitions.emailService
-import uk.gov.dvla.vehicles.sandbox.Runner._
-import uk.gov.dvla.vehicles.sandbox.Sandbox
-import uk.gov.dvla.vehicles.sandbox.SandboxSettings
-import uk.gov.dvla.vehicles.sandbox.Tasks
-import io.gatling.sbt.GatlingPlugin
-import GatlingPlugin.Gatling
 import com.typesafe.sbt.rjs.Import.RjsKeys.webJarCdns
-//import Sandbox.accept
+import io.gatling.sbt.GatlingPlugin
+import io.gatling.sbt.GatlingPlugin.Gatling
+import org.scalastyle.sbt.ScalastylePlugin
+import uk.gov.dvla.vehicles.sandbox.ProjectDefinitions.{emailService, legacyStubs, osAddressLookup, vehicleAndKeeperLookup, vehiclesAcquireFulfil}
+import uk.gov.dvla.vehicles.sandbox.{Sandbox, SandboxSettings, Tasks}
 import Common._
 
 name := "vehicles-change-keeper-online"
@@ -93,10 +82,6 @@ concurrentRestrictions in Global := Seq(Tags.limit(Tags.CPU, 100), Tags.limit(Ta
 
 sbt.Keys.fork in Test := false
 
-jacoco.settings
-
-parallelExecution in jacoco.Config := false
-
 parallelExecution in Test in acceptanceTestsProject := true
 
 // Using node to do the javascript optimisation cuts the time down dramatically
@@ -108,6 +93,12 @@ sources in doc in Compile := List()
 ScalastylePlugin.Settings
 
 net.virtualvoid.sbt.graph.Plugin.graphSettings
+
+coverageExcludedPackages := "<empty>;Reverse.*"
+
+coverageMinimum := 70
+
+coverageFailOnMinimum := false
 
 webJarCdns := Map()
 
