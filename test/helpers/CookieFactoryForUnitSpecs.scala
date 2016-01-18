@@ -8,7 +8,6 @@ import models.CompleteAndConfirmFormModel
 import models.CompleteAndConfirmResponseModel
 import models.CompleteAndConfirmResponseModel.ChangeKeeperCompletionResponseCacheKey
 import models.DateOfSaleFormModel
-import models.HelpCacheKey
 import models.K2KCacheKeyPrefix.CookiePrefix
 import models.SellerEmailModel
 import models.SellerEmailModel.SellerEmailModelCacheKey

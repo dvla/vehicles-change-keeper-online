@@ -13,7 +13,7 @@ import common.model.PrivateKeeperDetailsFormModel.privateKeeperDetailsCacheKey
 import common.model.VehicleAndKeeperDetailsModel.vehicleAndKeeperLookupDetailsCacheKey
 
 package object models {
-  final val HelpCacheKey = s"${CookiePrefix}help"
+
   final val IdentifierCacheKey = s"${CookiePrefix}identifier"
 
   final val ChangeKeeperCacheKeys = Set(
@@ -45,7 +45,6 @@ package object models {
       .++(VehicleDetailsCacheKeys)
       .++(PrivateKeeperDetailsCacheKeys)
       .++(BusinessKeeperDetailsCacheKeys)
-      .+(HelpCacheKey)
 
   final val CompletionCacheKeys = Set(
     newKeeperDetailsCacheKey,
