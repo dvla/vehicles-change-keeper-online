@@ -24,7 +24,6 @@ class ConfigImpl extends Config {
   override val googleAnalyticsTrackingId: Option[String] =
     getOptionalProperty[String]("googleAnalytics.id.changeKeeper")
 
-  // Progress step indicator
   override val isHtml5ValidationEnabled: Boolean = getProperty[Boolean]("html5Validation.enabled")
 
   // opening and closing times
