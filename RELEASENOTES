@@ -1,3 +1,14 @@
+======= 1.26 ========
+TIME OF RELEASE BINARIES CREATION:
+
+US2404  Mixin trait eventually with testComposition and IntegrationPatience on any file that contains selenium code
+US3790  Code coverage for all the code
+US4012  Remove redundant views/common object progressBar
+US4013  Remove redundant views/common object help
+US4014  Remove redundant views/common object feedback
+US4144  Remove tests concerning date widget from exemplars
+US4161  When the SEND email service gets an error when trying to call the email web service it must inform the HealthStats service
+
 ======= 1.25 ========
 TIME OF RELEASE BINARIES CREATION:
 Wed Jan 06 16:53:22 UTC 2016
