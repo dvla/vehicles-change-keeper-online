@@ -39,7 +39,7 @@
             <h1 class="mobile-only">@Messages("change_keeper_privatekeeperdetails.title")</h1>
             @vehicleDetailPlayback(data)()
             @alertWarning(List("print-message")) {
-              <p><strong>@Messages("change_keeper_privatekeeperdetails.p3")</strong></p>
+              <p><strong>@Messages("change_keeper_vehicledetails.warning")</strong></p>
             }
         </div>
 
@@ -111,8 +111,8 @@
 
             <div class="uppercase-input">
                 @valtechInputText(privateKeeperDetailsForm(PostcodeId),
-                    hintText = Some(Messages("acquire_privatekeeperdetails.postcode.hint")),
-                    args = Map('_label -> Messages("acquire_privatekeeperdetails.postcodelabel"),
+                    hintText = Some(Messages("change_keeper_privatekeeperdetails.postcode.hint")),
+                    args = Map('_label -> Messages("change_keeper_privatekeeperdetails.postcodelabel"),
                         '_showConstraints -> false,
                         'maxLength -> Postcode.MaxLength
                     )
