@@ -95,7 +95,7 @@ error.invalid = Invalid value
 # PRIVATE SALE OF VEHICLE
 ##
 
-change_keeper_vehicledetails.warning = If the vehicle details shown are incorrect please abandon this transaction and send the V5C with a covering letter to DVLA, Swansea, SA99 1DZ.
+change_keeper_vehicledetails.warning = If the vehicle details shown are incorrect please abandon this transaction and send the V5C with a covering letter to DVLA, Swansea, SA99 1BA.
 
 # 404 onHandlerNotFound
 onHandlerNotFound.title=This page cannot be found
