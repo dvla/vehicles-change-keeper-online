@@ -32,7 +32,7 @@
     <div class="first-col">
       @vehicleDetailPlayback(viewModel.vehicleDetails)()
       @alertWarning(List("print-message")) {
-        <p><strong>@Messages("change_keeper_newKeeperChooseYourAddress.p4")</strong></p>
+        <p><strong>@Messages("change_keeper_vehicledetails.warning")</strong></p>
       }
     </div>
 
@@ -77,7 +77,11 @@
         @valtechSelect(viewModel.form(AddressSelectId),
           options = dropDownOptions.toSeq,
           args = Map('_label -> Messages("change_keeper_newKeeperChooseYourAddress_addressSelect_label"),
-                      'autoFocus -> true)
+                      'autoFocus -> true,
+                      'class -> "ga-track-value ga-track-region",
+                      Symbol("data-ga-category") -> "field_value",
+                      Symbol("data-ga-action") -> "address_region"
+                )
         )
       }
 
