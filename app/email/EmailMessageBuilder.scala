@@ -78,7 +78,7 @@ object EmailMessageBuilder {
        |
        |                            <p><strong style="text-decoration: underline">This is an automated email - Please do not reply as emails received at this address cannot be responded to.</strong></p>
        |
-       |                            <p>DVLA have been notified electronically that you are now the new keeper of Vehicle Registration Number: <strong>${vehicleDetails.registrationNumber}</strong></p>
+       |                            <p>DVLA have been notified electronically that you are now the new keeper of vehicle registration number: <strong>${vehicleDetails.registrationNumber}</strong></p>
        |
        |                            <p>The online Transaction ID is <strong>$transactionId</strong></p>
        |
@@ -120,7 +120,7 @@ object EmailMessageBuilder {
     s"""
        |THIS IS AN AUTOMATED EMAIL - Please do not reply as emails received at this address cannot be responded to.
        |
-       |DVLA have been notified electronically that you are now the new keeper of Vehicle Registration Number: ${vehicleDetails.registrationNumber}
+       |DVLA have been notified electronically that you are now the new keeper of vehicle registration number: ${vehicleDetails.registrationNumber}
        |
        |The online Transaction ID is $transactionId
        |
