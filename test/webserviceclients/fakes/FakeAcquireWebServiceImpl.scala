@@ -48,8 +48,8 @@ object FakeAcquireWebServiceImpl {
   // We should always get back a transaction id even for failure scenarios.
   // Only exception is if the soap endpoint is down
   val acquireResponseGeneralError = AcquireResponseDto(
-    Some(MicroserviceResponse("", "ms.vehiclesService.error.generalError")),
-    AcquireResponse(transactionId = TransactionIdValid, registrationNumber = "")
+    Some(MicroserviceResponse("U0020", "ms.vehiclesService.error.generalError")),
+    AcquireResponse(transactionId = TransactionIdValid, registrationNumber = "AA11AAC")
   )
 
   // No transactionId because the soap endpoint is down

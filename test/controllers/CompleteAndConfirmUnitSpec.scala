@@ -17,7 +17,7 @@ import pages.changekeeper.DateOfSalePage.YearDateOfSaleValid
 import pages.changekeeper.PrivateKeeperDetailsPage.{FirstNameValid, LastNameValid}
 import pages.changekeeper.VehicleLookupPage
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{BAD_REQUEST, contentAsString, defaultAwaitTimeout, LOCATION, OK}
+import play.api.test.Helpers.{BAD_REQUEST, contentAsString, defaultAwaitTimeout, FORBIDDEN, LOCATION, OK}
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import uk.gov.dvla.vehicles.presentation.common
@@ -27,10 +27,11 @@ import common.services.SEND.EmailConfiguration
 import common.testhelpers.CookieHelper
 import common.testhelpers.CookieHelper.fetchCookiesFromHeaders
 import common.views.models.DayMonthYear
-import common.webserviceclients.acquire.{AcquireRequestDto, AcquireService}
+import common.webserviceclients.acquire.{AcquireRequestDto, AcquireResponseDto, AcquireService}
 import common.webserviceclients.emailservice.{EmailService, EmailServiceSendRequest, EmailServiceSendResponse, From}
 import common.webserviceclients.healthstats.HealthStats
 import utils.helpers.Config
+import webserviceclients.fakes.FakeAcquireWebServiceImpl.acquireResponseGeneralError
 import webserviceclients.fakes.FakeAcquireWebServiceImpl.acquireResponseSuccess
 
 class CompleteAndConfirmUnitSpec extends UnitSpec {
@@ -192,7 +193,7 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
         .withCookies(CookieFactoryForUnitSpecs.dateOfSaleModel())
         .withCookies(CookieFactoryForUnitSpecs.allowGoingToCompleteAndConfirm())
 
-      val (acquireServiceMock, emailServiceMock, completeAndConfirm) = createControllerAndMocks
+      val (acquireServiceMock, emailServiceMock, completeAndConfirm) = createControllerAndMocks()
 
       val result = completeAndConfirm.submit(request)
       whenReady(result) { r =>
@@ -206,6 +207,25 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
       }
     }
 
+    "redirect to next page when acquire web service returns forbidden" in new WithApplication {
+      val request = buildCorrectlyPopulatedRequest()
+        .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
+        .withCookies(CookieFactoryForUnitSpecs.vehicleLookupFormModel())
+        .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
+        .withCookies(CookieFactoryForUnitSpecs.sellerEmailModel())
+        .withCookies(CookieFactoryForUnitSpecs.dateOfSaleModel())
+        .withCookies(CookieFactoryForUnitSpecs.allowGoingToCompleteAndConfirm())
+
+      val acquireServiceMock = acquireServiceStubbed(FORBIDDEN, Some(acquireResponseGeneralError))
+      val (_, emailServiceMock, completeAndConfirm) = createControllerAndMocks(acquireServiceMock = acquireServiceMock)
+
+      val result = completeAndConfirm.submit(request)
+      whenReady(result) { r =>
+        r.header.headers.get(LOCATION) should equal(Some(ChangeKeeperSuccessPage.address))
+        verify(acquireServiceMock, times(1)).invoke(any[AcquireRequestDto], any[TrackingId])
+      }
+    }
+
     "return a bad request and not call the micro services if consent is not ticked" in new WithApplication {
       val request = buildCorrectlyPopulatedRequest(consent = "")
         .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
@@ -215,7 +235,7 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
         .withCookies(CookieFactoryForUnitSpecs.dateOfSaleModel())
         .withCookies(CookieFactoryForUnitSpecs.allowGoingToCompleteAndConfirm())
 
-      val (acquireServiceMock, emailServiceMock, completeAndConfirm) = createControllerAndMocks
+      val (acquireServiceMock, emailServiceMock, completeAndConfirm) = createControllerAndMocks()
 
       val result = completeAndConfirm.submit(request)
       whenReady(result) { r =>
@@ -224,6 +244,8 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
         verify(emailServiceMock, never()).invoke(any[EmailServiceSendRequest], any[TrackingId])
       }
     }
+
+
   }
 
   private def completeAndConfirmController(acquireService: AcquireService, emailService: EmailService)
@@ -263,13 +285,17 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
     config
   }
 
-  def createControllerAndMocks: (AcquireService, EmailService, CompleteAndConfirm) = {
+  def acquireServiceStubbed(status: Int = OK, response: Some[AcquireResponseDto] = Some(acquireResponseSuccess)) = {
     val acquireServiceMock: AcquireService = mock[AcquireService]
     when(acquireServiceMock.invoke(any[AcquireRequestDto], any[TrackingId])).
       thenReturn(Future.successful {
-      (OK, Some(acquireResponseSuccess))
+      (status, response)
     })
+    acquireServiceMock
+  }
 
+  def createControllerAndMocks(acquireServiceMock: AcquireService = acquireServiceStubbed())
+                                                                : (AcquireService, EmailService, CompleteAndConfirm) = {
     val emailServiceMock: EmailService = mock[EmailService]
     when(emailServiceMock.invoke(any[EmailServiceSendRequest](), any[TrackingId])).
       thenReturn(Future(EmailServiceSendResponse()))
