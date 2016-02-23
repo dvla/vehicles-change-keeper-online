@@ -28,11 +28,11 @@ import common.testhelpers.CookieHelper
 import common.testhelpers.CookieHelper.fetchCookiesFromHeaders
 import common.views.models.DayMonthYear
 import common.webserviceclients.acquire.{AcquireRequestDto, AcquireResponseDto, AcquireService}
+import common.webserviceclients.fakes.FakeAcquireWebServiceImpl.acquireResponseGeneralError
+import common.webserviceclients.fakes.FakeAcquireWebServiceImpl.acquireResponseSuccess
 import common.webserviceclients.emailservice.{EmailService, EmailServiceSendRequest, EmailServiceSendResponse, From}
 import common.webserviceclients.healthstats.HealthStats
 import utils.helpers.Config
-import webserviceclients.fakes.FakeAcquireWebServiceImpl.acquireResponseGeneralError
-import webserviceclients.fakes.FakeAcquireWebServiceImpl.acquireResponseSuccess
 
 class CompleteAndConfirmUnitSpec extends UnitSpec {
   "present" should {

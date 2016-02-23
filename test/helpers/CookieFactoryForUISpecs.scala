@@ -6,6 +6,7 @@ import models.CompleteAndConfirmResponseModel
 import models.CompleteAndConfirmResponseModel.ChangeKeeperCompletionResponseCacheKey
 import models.DateOfSaleFormModel
 import models.K2KCacheKeyPrefix.CookiePrefix
+import models.SellerEmailModel
 import models.VehicleLookupFormModel
 import models.VehicleLookupFormModel.{VehicleLookupFormModelCacheKey, VehicleLookupResponseCodeCacheKey}
 import org.joda.time.{DateTime, LocalDate}
@@ -218,8 +219,13 @@ object CookieFactoryForUISpecs {
     this
   }
 
+  def sellerEmailModel(email: Option[String] = None)(implicit webDriver: WebDriver) = {
+    addCookie(SellerEmailModel.SellerEmailModelCacheKey, email)
+    this
+  }
+
   def allowGoingToCompleteAndConfirmPageCookie()(implicit webDriver: WebDriver) = {
-    addCookie(CompleteAndConfirmFormModel.AllowGoingToCompleteAndConfirmPageCacheKey, "")
+    addCookie(CompleteAndConfirmFormModel.AllowGoingToCompleteAndConfirmPageCacheKey, "true")
   }
 
   def completeAndConfirmResponseModelModel(id: String = TransactionIdValid,

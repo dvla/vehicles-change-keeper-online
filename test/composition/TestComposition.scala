@@ -10,11 +10,13 @@ import common.clientsidesession.CookieFlags
 import common.clientsidesession.NoCookieFlags
 import common.clientsidesession.ClientSideSessionFactory
 import common.clientsidesession.ClearTextClientSideSessionFactory
-import common.filters.{DateTimeZoneServiceImpl, DateTimeZoneService}
+import common.filters.{DateTimeZoneService, DateTimeZoneServiceImpl}
 import common.services.DateService
+import common.webserviceclients.acquire.AcquireWebService
 import common.webserviceclients.addresslookup.{AddressLookupWebService, AddressLookupService}
 import common.webserviceclients.addresslookup.ordnanceservey.AddressLookupServiceImpl
 import common.webserviceclients.bruteforceprevention.BruteForcePreventionWebService
+import common.webserviceclients.fakes.FakeAcquireWebServiceImpl
 import common.webserviceclients.vehicleandkeeperlookup.VehicleAndKeeperLookupWebService
 import utils.helpers.Config
 import webserviceclients.fakes.brute_force_protection.FakeBruteForcePreventionWebServiceImpl
@@ -44,6 +46,8 @@ private class TestModule() extends ScalaModule with MockitoSugar {
 
     ordnanceSurveyAddressLookup()
     bind[VehicleAndKeeperLookupWebService].to[FakeVehicleAndKeeperLookupWebService].asEagerSingleton()
+
+    bind[AcquireWebService].to[FakeAcquireWebServiceImpl].asEagerSingleton()
 
     bind[DateService].to[FakeDateServiceImpl].asEagerSingleton()
     bind[DateTimeZoneService].toInstance(new DateTimeZoneServiceImpl)

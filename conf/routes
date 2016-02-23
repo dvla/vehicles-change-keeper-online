@@ -55,11 +55,6 @@ POST        /complete-and-confirm                       @controllers.CompleteAnd
 GET         /change-keeper-success                      @controllers.ChangeKeeperSuccess.present
 POST        /change-keeper-finish                       @controllers.ChangeKeeperSuccess.finish
 
-# Failure
-GET         /change-keeper-failure                      @controllers.ChangeKeeperFailure.present
-POST        /failure-change-keeper-another              @controllers.ChangeKeeperFailure.buyAnother
-POST        /failure-change-keeper-finish               @controllers.ChangeKeeperFailure.finish
-
 # feedback
 GET         /feedback                                   @controllers.FeedbackController.present
 POST        /feedback                                   @controllers.FeedbackController.submit
