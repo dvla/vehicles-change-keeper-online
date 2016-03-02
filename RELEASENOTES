@@ -1,3 +1,9 @@
+======= 1.29 ========
+TIME OF RELEASE BINARIES CREATION:
+DE845 	Feedback - error message wording
+US4175 	Remove failure pages/controllers etc from Acquire and K2K
+US4206 	Change gatling tests to only log failures
+
 ======= 1.28 ========
 TIME OF RELEASE BINARIES CREATION:
 Wed Feb 17 13:16:16 UTC 2016
