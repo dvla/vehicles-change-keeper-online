@@ -1,7 +1,6 @@
 package gov.uk.dvla.vehicles.keeper.stepdefs
 
 import cucumber.api.java.en.{Given, When, Then}
-import org.scalatest.concurrent.Eventually.eventually
 import org.scalatest.selenium.WebBrowser.pageTitle
 import org.scalatest.selenium.WebBrowser.pageSource
 import org.scalatest.selenium.WebBrowser.click
