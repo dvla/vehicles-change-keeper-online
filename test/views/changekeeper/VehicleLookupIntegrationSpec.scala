@@ -22,8 +22,6 @@ import common.views.widgetdriver.Wait
 
 class VehicleLookupIntegrationSpec extends UiSpec with TestHarness with Eventually with IntegrationPatience {
 
-
-
   "go to page" should {
     "display the page" taggedAs UiTag in new WebBrowserForSelenium {
       go to VehicleLookupPage
@@ -54,6 +52,15 @@ class VehicleLookupIntegrationSpec extends UiSpec with TestHarness with Eventual
       val v5c = By.xpath("//div[@data-tooltip='tooltip_documentReferenceNumber']")
       Wait.until(ExpectedConditions.presenceOfElementLocated(v5c), 5)
       Wait.until(ExpectedConditions.invisibilityOfElementLocated(v5c), 5)
+    }
+
+    "have a v5c document reference number input field of type tel" taggedAs UiTag in new WebBrowserForSelenium {
+      go to VehicleLookupPage
+
+      val docRef: WebElement = webDriver.findElement(
+        By.name(models.VehicleLookupFormModel.Form.DocumentReferenceNumberId)
+      )
+      docRef.getAttribute("type") should equal("tel")
     }
   }
 
