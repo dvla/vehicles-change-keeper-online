@@ -9,7 +9,6 @@ import models.SellerEmailModel
 import models.VehicleLookupFormModel
 import models.VehicleLookupFormModel.JsonFormat
 import models.VehicleLookupFormModel.Key
-import models.VehicleLookupFormModel.VehicleLookupResponseCodeCacheKey
 import models.VehicleLookupFormModel.Form.DocumentReferenceNumberId
 import models.VehicleLookupFormModel.Form.VehicleRegistrationNumberId
 import models.VehicleLookupFormModel.Form.VehicleSoldToId
@@ -21,7 +20,9 @@ import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.ClientSideSessionFactory
 import common.clientsidesession.CookieImplicits.{RichForm, RichResult, RichCookies}
 import common.controllers.VehicleLookupBase
-import common.model.{BruteForcePreventionModel, VehicleAndKeeperDetailsModel}
+import common.model.BruteForcePreventionModel
+import common.model.MicroserviceResponseModel.MsResponseCacheKey
+import common.model.VehicleAndKeeperDetailsModel
 import common.services.DateService
 import common.views.helpers.FormExtensions.formBinding
 import common.webserviceclients.bruteforceprevention.BruteForcePreventionService
@@ -38,7 +39,7 @@ class VehicleLookup @Inject()(implicit bruteForceService: BruteForcePreventionSe
                               config: Config) extends VehicleLookupBase[VehicleLookupFormModel] {
 
   override val form = PlayForm(VehicleLookupFormModel.Form.Mapping)
-  override val responseCodeCacheKey: String = VehicleLookupResponseCodeCacheKey
+  override val responseCodeCacheKey: String = MsResponseCacheKey
 
   override def vrmLocked(bruteForcePreventionModel: BruteForcePreventionModel, formModel: VehicleLookupFormModel)
                         (implicit request: Request[_]): Result = {

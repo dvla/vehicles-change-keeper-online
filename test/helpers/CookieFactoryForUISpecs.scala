@@ -1,6 +1,6 @@
 package helpers
 
-import CookieFactoryForUnitSpecs.VehicleLookupFailureResponseCode
+import CookieFactoryForUnitSpecs.VehicleLookupFailureResponseMessage
 import models.CompleteAndConfirmFormModel
 import models.CompleteAndConfirmResponseModel
 import models.CompleteAndConfirmResponseModel.ChangeKeeperCompletionResponseCacheKey
@@ -8,7 +8,7 @@ import models.DateOfSaleFormModel
 import models.K2KCacheKeyPrefix.CookiePrefix
 import models.SellerEmailModel
 import models.VehicleLookupFormModel
-import models.VehicleLookupFormModel.{VehicleLookupFormModelCacheKey, VehicleLookupResponseCodeCacheKey}
+import models.VehicleLookupFormModel.VehicleLookupFormModelCacheKey
 import org.joda.time.{DateTime, LocalDate}
 import org.openqa.selenium.{Cookie, WebDriver}
 import pages.changekeeper.BusinessKeeperDetailsPage.{BusinessNameValid, FleetNumberValid}
@@ -36,12 +36,15 @@ import common.model.BruteForcePreventionModel
 import common.model.BruteForcePreventionModel.bruteForcePreventionViewModelCacheKey
 import common.model.BusinessKeeperDetailsFormModel
 import common.model.BusinessKeeperDetailsFormModel.businessKeeperDetailsCacheKey
+import common.model.MicroserviceResponseModel
+import common.model.MicroserviceResponseModel.MsResponseCacheKey
 import common.model.NewKeeperDetailsViewModel
 import common.model.NewKeeperDetailsViewModel.newKeeperDetailsCacheKey
 import common.model.PrivateKeeperDetailsFormModel
 import common.model.PrivateKeeperDetailsFormModel.privateKeeperDetailsCacheKey
 import common.model.VehicleAndKeeperDetailsModel
 import common.model.VehicleAndKeeperDetailsModel.vehicleAndKeeperLookupDetailsCacheKey
+import common.webserviceclients.common.MicroserviceResponse
 import views.changekeeper.VehicleLookup.VehicleSoldTo_Private
 import webserviceclients.fakes.brute_force_protection.FakeBruteForcePreventionWebServiceImpl.MaxAttempts
 import webserviceclients.fakes.FakeAddressLookupService.BuildingNameOrNumberValid
@@ -134,10 +137,10 @@ object CookieFactoryForUISpecs {
     this
   }
 
-  def vehicleLookupResponseCode(responseCode: String = VehicleLookupFailureResponseCode)
-                               (implicit webDriver: WebDriver) = {
-    val key = VehicleLookupResponseCodeCacheKey
-    val value = responseCode
+  def vehicleLookupResponse(responseMessage: String = VehicleLookupFailureResponseMessage)
+                           (implicit webDriver: WebDriver) = {
+    val key = MsResponseCacheKey
+    val value = MicroserviceResponseModel(MicroserviceResponse("", responseMessage))
     addCookie(key, value)
     this
   }

@@ -2,10 +2,11 @@ import models.CompleteAndConfirmFormModel.CompleteAndConfirmCacheKey
 import models.CompleteAndConfirmResponseModel.ChangeKeeperCompletionResponseCacheKey
 import models.DateOfSaleFormModel.DateOfSaleCacheKey
 import models.K2KCacheKeyPrefix.CookiePrefix
-import models.VehicleLookupFormModel.{VehicleLookupFormModelCacheKey, VehicleLookupResponseCodeCacheKey}
+import models.VehicleLookupFormModel.VehicleLookupFormModelCacheKey
 import uk.gov.dvla.vehicles.presentation.common
 import common.model.BruteForcePreventionModel.bruteForcePreventionViewModelCacheKey
 import common.model.BusinessKeeperDetailsFormModel.businessKeeperDetailsCacheKey
+import common.model.MicroserviceResponseModel.MsResponseCacheKey
 import common.model.NewKeeperChooseYourAddressFormModel.newKeeperChooseYourAddressCacheKey
 import common.model.NewKeeperDetailsViewModel.newKeeperDetailsCacheKey
 import common.model.NewKeeperEnterAddressManuallyFormModel.newKeeperEnterAddressManuallyCacheKey
@@ -50,7 +51,7 @@ package object models {
     newKeeperDetailsCacheKey,
     DateOfSaleCacheKey,
     CompleteAndConfirmCacheKey,
-    VehicleLookupResponseCodeCacheKey,
+    MsResponseCacheKey,
     ChangeKeeperCompletionResponseCacheKey
   )
 

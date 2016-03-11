@@ -12,7 +12,7 @@ import models.K2KCacheKeyPrefix.CookiePrefix
 import models.SellerEmailModel
 import models.SellerEmailModel.SellerEmailModelCacheKey
 import models.VehicleLookupFormModel
-import models.VehicleLookupFormModel.{VehicleLookupResponseCodeCacheKey, VehicleLookupFormModelCacheKey}
+import models.VehicleLookupFormModel.VehicleLookupFormModelCacheKey
 import org.joda.time.{DateTime, LocalDate}
 import pages.changekeeper.DateOfSalePage.DayDateOfSaleValid
 import pages.changekeeper.DateOfSalePage.MileageValid
@@ -35,6 +35,8 @@ import common.model.BruteForcePreventionModel
 import common.model.BruteForcePreventionModel.bruteForcePreventionViewModelCacheKey
 import common.model.BusinessKeeperDetailsFormModel
 import common.model.BusinessKeeperDetailsFormModel.businessKeeperDetailsCacheKey
+import common.model.MicroserviceResponseModel
+import common.model.MicroserviceResponseModel.MsResponseCacheKey
 import common.model.NewKeeperChooseYourAddressFormModel
 import common.model.NewKeeperDetailsViewModel
 import common.model.NewKeeperDetailsViewModel.newKeeperDetailsCacheKey
@@ -46,6 +48,7 @@ import common.model.SeenCookieMessageCacheKey
 import common.model.VehicleAndKeeperDetailsModel
 import common.model.VehicleAndKeeperDetailsModel.vehicleAndKeeperLookupDetailsCacheKey
 import common.views.models.{AddressLinesViewModel, AddressAndPostcodeViewModel}
+import common.webserviceclients.common.MicroserviceResponse
 import views.changekeeper.VehicleLookup.VehicleSoldTo_Private
 import webserviceclients.fakes.brute_force_protection.FakeBruteForcePreventionWebServiceImpl.MaxAttempts
 import webserviceclients.fakes.FakeAddressLookupService.BuildingNameOrNumberValid
@@ -66,7 +69,7 @@ object CookieFactoryForUnitSpecs extends TestComposition {
   final val KeeperEmail = "abc@def.com"
   final val SeenCookieTrue = "yes"
   final val ConsentTrue = "true"
-  final val VehicleLookupFailureResponseCode = "400 - vehiclelookupfailure"
+  final val VehicleLookupFailureResponseMessage = "vehiclelookupfailure"
   private val session = new ClearTextClientSideSession(TrackingId(TrackingIdValue))
 
   private def createCookie[A](key: String, value: A)(implicit tjs: Writes[A]): Cookie = {
@@ -248,8 +251,8 @@ object CookieFactoryForUnitSpecs extends TestComposition {
     createCookie(key, value)
   }
 
-  def vehicleLookupResponseCode(responseCode: String = VehicleLookupFailureResponseCode): Cookie =
-    createCookie(VehicleLookupResponseCodeCacheKey, responseCode)
+  def vehicleLookupResponse(responseMessage: String = VehicleLookupFailureResponseMessage): Cookie =
+    createCookie(MsResponseCacheKey, MicroserviceResponseModel(MicroserviceResponse("", responseMessage)))
 
   def allowGoingToCompleteAndConfirm(): Cookie =
     createCookie(CompleteAndConfirmFormModel.AllowGoingToCompleteAndConfirmPageCacheKey, "")

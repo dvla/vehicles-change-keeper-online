@@ -23,7 +23,7 @@ class VehicleLookupFailureUnitSpec extends UnitSpec {
     "redirect to before you start if bruteForcePreventionViewModel is not in cache" in new WithApplication {
       val request = FakeRequest()
         .withCookies(CookieFactoryForUnitSpecs.vehicleLookupFormModel())
-        .withCookies(CookieFactoryForUnitSpecs.vehicleLookupResponseCode())
+        .withCookies(CookieFactoryForUnitSpecs.vehicleLookupResponse())
       val result = vehicleLookupFailure.present(request)
       whenReady(result) { r =>
         r.header.headers.get(LOCATION) should equal(Some(BeforeYouStartPage.address))
@@ -33,7 +33,7 @@ class VehicleLookupFailureUnitSpec extends UnitSpec {
     "redirect to before you start if VehicleLookupFormModelCache is not in cache" in new WithApplication {
       val request = FakeRequest()
         .withCookies(CookieFactoryForUnitSpecs.bruteForcePreventionViewModel())
-        .withCookies(CookieFactoryForUnitSpecs.vehicleLookupResponseCode())
+        .withCookies(CookieFactoryForUnitSpecs.vehicleLookupResponse())
       val result = vehicleLookupFailure.present(request)
       whenReady(result) { r =>
         r.header.headers.get(LOCATION) should equal(Some(BeforeYouStartPage.address))
@@ -84,7 +84,7 @@ class VehicleLookupFailureUnitSpec extends UnitSpec {
     val request = FakeRequest()
       .withCookies(CookieFactoryForUnitSpecs.bruteForcePreventionViewModel())
       .withCookies(CookieFactoryForUnitSpecs.vehicleLookupFormModel())
-      .withCookies(CookieFactoryForUnitSpecs.vehicleLookupResponseCode())
+      .withCookies(CookieFactoryForUnitSpecs.vehicleLookupResponse())
     vehicleLookupFailure.present(request)
   }
 }

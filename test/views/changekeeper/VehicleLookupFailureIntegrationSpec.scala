@@ -47,7 +47,7 @@ final class VehicleLookupFailureIntegrationSpec extends UiSpec with TestHarness 
       CookieFactoryForUISpecs.
         bruteForcePreventionViewModel(attempts = 1, maxAttempts = MaxAttempts).
         vehicleLookupFormModel().
-        vehicleLookupResponseCode(responseCode = "300L - vehicle_and_keeper_lookup_vrm_not_found")
+        vehicleLookupResponse(responseMessage = "vehicle_and_keeper_lookup_vrm_not_found")
 
       go to VehicleLookupFailurePage
       pageSource should include("Only a limited number of attempts can be made to retrieve vehicle details " +
@@ -61,7 +61,7 @@ final class VehicleLookupFailureIntegrationSpec extends UiSpec with TestHarness 
       CookieFactoryForUISpecs.
         bruteForcePreventionViewModel(attempts = 2, maxAttempts = MaxAttempts).
         vehicleLookupFormModel().
-        vehicleLookupResponseCode(responseCode = "400P - vehicle_and_keeper_lookup_vrm_not_found")
+        vehicleLookupResponse(responseMessage = "vehicle_and_keeper_lookup_vrm_not_found")
 
       go to VehicleLookupFailurePage
       pageSource should include("Only a limited number of attempts can be made to retrieve vehicle details " +
@@ -74,7 +74,7 @@ final class VehicleLookupFailureIntegrationSpec extends UiSpec with TestHarness 
       CookieFactoryForUISpecs.
         bruteForcePreventionViewModel().
         vehicleLookupFormModel().
-        vehicleLookupResponseCode(responseCode = "600K - vehicle_and_keeper_lookup_document_reference_mismatch")
+        vehicleLookupResponse(responseMessage = "vehicle_and_keeper_lookup_document_reference_mismatch")
 
       go to VehicleLookupFailurePage
       pageSource should include("Only a limited number of attempts can be made to retrieve vehicle details " +
@@ -106,5 +106,5 @@ final class VehicleLookupFailureIntegrationSpec extends UiSpec with TestHarness 
     CookieFactoryForUISpecs.
       bruteForcePreventionViewModel().
       vehicleLookupFormModel().
-      vehicleLookupResponseCode()
+      vehicleLookupResponse()
 }
