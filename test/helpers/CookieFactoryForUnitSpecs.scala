@@ -1,8 +1,9 @@
 package helpers
 
 import composition.TestComposition
+import controllers.MicroServiceError._
 import pages.changekeeper.BusinessKeeperDetailsPage.{FleetNumberValid, BusinessNameValid}
-import pages.changekeeper.NewKeeperChooseYourAddressPage
+import pages.changekeeper.{VehicleLookupPage, NewKeeperChooseYourAddressPage}
 import play.api.libs.json.{Json, Writes}
 import models.CompleteAndConfirmFormModel
 import models.CompleteAndConfirmResponseModel
@@ -289,4 +290,12 @@ object CookieFactoryForUnitSpecs extends TestComposition {
     val value = SellerEmailModel(email)
     createCookie(key, value)
   }
+
+  def microServiceError(origin: String = VehicleLookupPage.address): Cookie = {
+    val key = MicroServiceErrorRefererCacheKey
+    val value = origin
+    createCookie(key, value)
+  }
+
+
 }

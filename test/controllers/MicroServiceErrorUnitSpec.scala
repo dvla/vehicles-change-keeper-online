@@ -1,18 +1,18 @@
 package controllers
 
-import Common.PrototypeHtml
 import composition.WithApplication
-import helpers.{UnitSpec}
+import controllers.Common.PrototypeHtml
+import controllers.MicroServiceError.MicroServiceErrorRefererCacheKey
+import helpers.{CookieFactoryForUnitSpecs, UnitSpec}
 import org.mockito.Mockito.when
 import pages.changekeeper.{BeforeYouStartPage, VehicleLookupPage}
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{contentAsString, defaultAwaitTimeout, SERVICE_UNAVAILABLE, status, LOCATION, REFERER}
-import uk.gov.dvla.vehicles.presentation.common
+import play.api.test.Helpers.{LOCATION, REFERER, SERVICE_UNAVAILABLE, contentAsString, defaultAwaitTimeout, status}
 import uk.gov.dvla.vehicles.presentation.common.clientsidesession.ClientSideSessionFactory
-import uk.gov.dvla.vehicles.presentation.common.testhelpers.CookieFactoryForUnitSpecs
+//import uk.gov.dvla.vehicles.presentation.common.testhelpers.CookieFactoryForUnitSpecs
+import uk.gov.dvla.vehicles.presentation.common.testhelpers.CookieHelper.{fetchCookiesFromHeaders, verifyCookieHasBeenDiscarded}
 import utils.helpers.Config
-import MicroServiceError.MicroServiceErrorRefererCacheKey
-import common.testhelpers.CookieHelper.fetchCookiesFromHeaders
+
 
 class MicroServiceErrorUnitSpec extends UnitSpec  {
   "present" should {
@@ -37,7 +37,7 @@ class MicroServiceErrorUnitSpec extends UnitSpec  {
       contentAsString(result) should not include PrototypeHtml
     }
 
-    "write micro service error referer cookie" ignore new WithApplication {
+    "write micro service error referer cookie" in new WithApplication {
       val referer = VehicleLookupPage.address
       val request = FakeRequest()
         .withHeaders(REFERER -> referer)
@@ -61,15 +61,15 @@ class MicroServiceErrorUnitSpec extends UnitSpec  {
       }
     }
 
-    "redirect to previous page and discard the referer cookie" ignore new WithApplication {
-//      val request = FakeRequest()
-//        .withCookies(CookieFactoryForUnitSpecs.microServiceError(VehicleLookupPage.address))
-//      val result = microServiceError.back(request)
-//      whenReady(result) { r =>
-//        r.header.headers.get(LOCATION) should equal(Some(VehicleLookupPage.address))
-//        val cookies = fetchCookiesFromHeaders(r)
-//        verifyCookieHasBeenDiscarded(MicroServiceErrorRefererCacheKey, cookies)
-//      }
+    "redirect to previous page and discard the referer cookie" in new WithApplication {
+      val request = FakeRequest()
+        .withCookies(CookieFactoryForUnitSpecs.microServiceError(VehicleLookupPage.address))
+      val result = microServiceError.back(request)
+      whenReady(result) { r =>
+        r.header.headers.get(LOCATION) should equal(Some(VehicleLookupPage.address))
+        val cookies = fetchCookiesFromHeaders(r)
+        verifyCookieHasBeenDiscarded(MicroServiceErrorRefererCacheKey, cookies)
+      }
     }
   }
 
