@@ -1,6 +1,6 @@
 package controllers
 
-import composition.WithApplication
+import helpers.WithApplication
 import helpers.UnitSpec
 import org.mockito.Mockito.when
 import play.api.test.FakeRequest

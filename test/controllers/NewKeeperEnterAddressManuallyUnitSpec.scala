@@ -1,7 +1,7 @@
 package controllers
 
 import Common.PrototypeHtml
-import composition.WithApplication
+import helpers.WithApplication
 import helpers.{CookieFactoryForUnitSpecs, UnitSpec}
 import models.K2KCacheKeyPrefix.CookiePrefix
 import org.mockito.Mockito.when

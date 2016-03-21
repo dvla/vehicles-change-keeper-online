@@ -1,7 +1,7 @@
 package controllers
 
 import composition.{TestConfig, WithApplication}
-import helpers.{UnitSpec, CookieFactoryForUnitSpecs}
+import helpers.{CookieFactoryForUnitSpecs, UnitSpec}
 import models.IdentifierCacheKey
 import models.VehicleLookupFormModel.Form.DocumentReferenceNumberId
 import models.VehicleLookupFormModel.Form.VehicleRegistrationNumberId

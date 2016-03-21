@@ -1,7 +1,7 @@
 package controllers
 
 import Common.PrototypeHtml
-import composition.WithApplication
+import helpers.WithApplication
 import helpers.UnitSpec
 import org.mockito.Mockito.when
 import pages.changekeeper.VehicleLookupPage
