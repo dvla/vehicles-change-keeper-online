@@ -190,15 +190,6 @@ class Chains(data: RecordSeqFeederBuilder[String]) {
           // Assertions
           .check(regex( """<input type="hidden" name="csrf_prevention_token" value="(.*)"/>""").saveAs("csrf_prevention_token"))
           .check(regex(DateOfSalePageTitle).exists)
-          .check(regex(BuyersDetailsPlaybackHeading).exists)
-          .check(regex("${expected_buyerName}").exists)
-          .check(regex("${expected_buyerAddressLine1}").exists)
-          .check(regex("${expected_buyerAddressLine2}").exists)
-          .check(regex("${expected_buyerAddressPostcode}").exists)
-          .check(regex(VehicleDetailsPlaybackHeading).exists)
-          .check(regex("${expected_registrationNumberFormatted}").exists)
-          .check(regex("${expected_make}").exists)
-          .check(regex("${expected_model}").exists)
       )
     )
   }
