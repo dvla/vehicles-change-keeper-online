@@ -24,10 +24,6 @@ class FeedbackController @Inject()(val emailService: EmailService,
 
   override val emailConfiguration = config.emailConfiguration
 
-  private[controllers] val form = Form(
-    FeedbackForm.Form.Mapping
-  )
-
   implicit val controls: Map[String, Call] = Map(
     "submit" -> controllers.routes.FeedbackController.submit()
   )
@@ -46,15 +42,5 @@ class FeedbackController @Inject()(val emailService: EmailService,
           Ok(views.html.changekeeper.feedbackSuccess())
         }
     )
-  }
-
-  private def formWithReplacedErrors(form: Form[FeedbackForm]) = {
-    form.replaceError(
-      feedback, FormError(key = feedback, message = "error.feedback", args = Seq.empty)
-    ).replaceError(
-        nameMapping, FormError(key = nameMapping, message = "error.feedbackName", args = Seq.empty)
-      ).replaceError(
-        emailMapping, FormError(key = emailMapping, message = "error.email", args = Seq.empty)
-      ).distinctErrors
   }
 }
