@@ -12,6 +12,8 @@ import webserviceclients.fakes.brute_force_protection.FakeBruteForcePreventionWe
 import org.scalatest.selenium.WebBrowser.{click, go, pageTitle, pageSource}
 
 final class VehicleLookupFailureIntegrationSpec extends UiSpec with TestHarness {
+  val expectedString = "You will only have a limited number of attempts to enter the vehicle details for this vehicle."
+
   "go to page" should {
     "display the page" taggedAs UiTag in new WebBrowserForSelenium {
       go to BeforeYouStartPage
@@ -50,8 +52,7 @@ final class VehicleLookupFailureIntegrationSpec extends UiSpec with TestHarness 
         vehicleLookupResponse(responseMessage = "vehicle_and_keeper_lookup_vrm_not_found")
 
       go to VehicleLookupFailurePage
-      pageSource should include("Only a limited number of attempts can be made to retrieve vehicle details " +
-        "for each vehicle registration number entered.")
+      pageSource should include(expectedString)
     }
 
     "display messages that show that the number of brute force attempts does not impact which messages are displayed " +
@@ -64,8 +65,7 @@ final class VehicleLookupFailureIntegrationSpec extends UiSpec with TestHarness 
         vehicleLookupResponse(responseMessage = "vehicle_and_keeper_lookup_vrm_not_found")
 
       go to VehicleLookupFailurePage
-      pageSource should include("Only a limited number of attempts can be made to retrieve vehicle details " +
-        "for each vehicle registration number entered.")
+      pageSource should include(expectedString)
     }
 
     "display appropriate messages for document reference mismatch" taggedAs UiTag in new WebBrowserForSelenium {
@@ -77,8 +77,7 @@ final class VehicleLookupFailureIntegrationSpec extends UiSpec with TestHarness 
         vehicleLookupResponse(responseMessage = "vehicle_and_keeper_lookup_document_reference_mismatch")
 
       go to VehicleLookupFailurePage
-      pageSource should include("Only a limited number of attempts can be made to retrieve vehicle details " +
-        "for each vehicle registration number entered.")
+      pageSource should include(expectedString)
     }
   }
 
