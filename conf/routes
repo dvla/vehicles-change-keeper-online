@@ -85,6 +85,7 @@ GET         /version                                    @controllers.Version.ver
 
 GET         /cookie-policy                              @controllers.CookiePolicy.present
 GET         /tandc                                      @controllers.TermsAndConditions.present
+GET         /privacy-policy                             @controllers.PrivacyPolicy.present
 
 #error page when the user looks up a vehicle and it has a suppressed V5C
 GET         /suppressed-v5c                             @controllers.SuppressedV5C.present
