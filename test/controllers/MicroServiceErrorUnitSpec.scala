@@ -1,6 +1,6 @@
 package controllers
 
-import helpers.WithApplication
+import composition.WithApplication
 import controllers.Common.PrototypeHtml
 import controllers.MicroServiceError.MicroServiceErrorRefererCacheKey
 import helpers.{CookieFactoryForUnitSpecs, UnitSpec}

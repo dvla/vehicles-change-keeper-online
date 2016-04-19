@@ -2,8 +2,8 @@ package controllers
 
 import com.tzavellas.sse.guice.ScalaModule
 import Common.PrototypeHtml
-import helpers.WithApplication
 import helpers.{CookieFactoryForUnitSpecs, UnitSpec}
+import composition.WithApplication
 import models.CompleteAndConfirmResponseModel.ChangeKeeperCompletionResponseCacheKey
 import models.CompleteAndConfirmFormModel.CompleteAndConfirmCacheKey
 import models.DateOfSaleFormModel

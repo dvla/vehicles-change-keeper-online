@@ -73,6 +73,9 @@ val myTestOptions =
 
 myTestOptions
 
+// use this to get a full stack trace when test failures occur
+//testOptions in Test += Tests.Argument("-oUDF")
+
 // If tests are annotated with @LiveTest then they are excluded when running sbt test
 testOptions in Test += Tests.Argument(TestFrameworks.ScalaTest, "-l", "helpers.tags.LiveTest")
 

@@ -1,7 +1,7 @@
 package controllers
 
 import Common.PrototypeHtml
-import helpers.WithApplication
+import composition.WithApplication
 import helpers.CookieFactoryForUnitSpecs
 import helpers.UnitSpec
 import org.mockito.Mockito.when

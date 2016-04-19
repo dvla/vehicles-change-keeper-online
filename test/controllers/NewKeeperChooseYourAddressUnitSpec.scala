@@ -1,7 +1,7 @@
 package controllers
 
 import Common.PrototypeHtml
-import helpers.WithApplication
+import composition.WithApplication
 import helpers.CookieFactoryForUnitSpecs
 import helpers.UnitSpec
 import models.K2KCacheKeyPrefix.CookiePrefix
@@ -9,6 +9,8 @@ import org.mockito.invocation.InvocationOnMock
 import org.mockito.Matchers.{any, anyString}
 import org.mockito.Mockito.{times, verify, when}
 import org.mockito.stubbing.Answer
+import org.scalatest.concurrent.PatienceConfiguration.Timeout
+import org.scalatest.time.{Second, Span}
 import pages.changekeeper.BusinessKeeperDetailsPage.BusinessNameValid
 import pages.changekeeper.DateOfSalePage
 import pages.changekeeper.PrivateKeeperDetailsPage.{FirstNameValid, LastNameValid}
@@ -42,8 +44,9 @@ import webserviceclients.fakes.FakeAddressLookupWebServiceImpl.responseValidForU
 class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
 
   "present" should {
+    // NOTE: without the 1 second timeout here a org.specs2.execute.ErrorException is thrown and for subsequent test
     "display the page if private new keeper details cached" in new WithApplication {
-      whenReady(presentWithPrivateNewKeeper) { r =>
+      whenReady(presentWithPrivateNewKeeper, Timeout(Span(1, Second))) { r =>
         r.header.status should equal(OK)
       }
     }
