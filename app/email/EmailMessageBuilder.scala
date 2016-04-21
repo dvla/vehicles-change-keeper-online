@@ -82,7 +82,7 @@ object EmailMessageBuilder {
        |
        |                            <p>The online Transaction ID is <strong>$transactionId</strong></p>
        |
-       |                            <p>You should receive your new V5C (log book) within 2 weeks.</p>
+       |                            <p>You should receive your new V5C registration certificate (logbook) within 2 weeks.</p>
        |
        |                            <p>Since 1st October 2014, vehicle tax can no longer be transferred as part of the sale. This is because the seller will automatically receive a refund of any remaining tax.</p>
        |
@@ -124,7 +124,7 @@ object EmailMessageBuilder {
        |
        |The online Transaction ID is $transactionId
        |
-       |You should receive your new V5C (log book) within 2 weeks.
+       |You should receive your new V5C registration certificate (logbook) within 2 weeks.
        |
        |Since 1st October 2014, vehicle tax can no longer be transferred as part of the sale. This is because the seller will automatically receive a refund of any remaining tax.
        |

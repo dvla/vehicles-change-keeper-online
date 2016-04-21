@@ -76,7 +76,7 @@ object EmailSellerMessageBuilder {
        |
        |                            <p><strong style="text-decoration: underline">This is an automated email - Please do not reply as emails received at this address cannot be responded to.</strong></p>
        |
-       |                            <p>Thank you for using DVLA’s online service to confirm you are no longer the registered keeper of this vehicle. Please destroy the original V5C registration certificate. This must <strong>not</strong> be sent to DVLA.</p>
+       |                            <p>Thank you for using DVLA’s online service to confirm you are no longer the registered keeper of this vehicle. Please destroy the original V5C registration certificate (logbook). This must <strong>not</strong> be sent to DVLA.</p>
        |
        |                            <p>Your application details are:</p>
        |
@@ -89,7 +89,7 @@ object EmailSellerMessageBuilder {
        |
        |                            <p>You should receive a postal acknowledgement letter within 4 weeks.</p>
        |
-       |                            <p>DVLA will automatically issue a refund for any full remaining months for vehicle tax and cancel any direct debits. The refund will be sent to the address on the V5C log book, which was used.</p>
+       |                            <p>DVLA will automatically issue a refund for any full remaining months for vehicle tax and cancel any direct debits. The refund will be sent to the address on the V5C registration certificate (logbook), which was used.</p>
        |
        |                            <p>You may still receive a V11 tax reminder as these are pre-printed up to 6 weeks in advance. If you do receive a V11 for this vehicle after notifying the sale, please ignore it.</p>
        |
@@ -128,7 +128,7 @@ object EmailSellerMessageBuilder {
         |
         |
         |Thank you for using DVLA’s online service to confirm you are no longer the registered keeper of this vehicle.
-        |Please destroy the original V5C registration certificate. This must not be sent to DVLA.
+        |Please destroy the original V5C registration certificate (logbook). This must not be sent to DVLA.
         |
         |Your application details are:
         |Vehicle Registration Number: ${vehicleDetails.registrationNumber}
@@ -137,7 +137,7 @@ object EmailSellerMessageBuilder {
         |
         |You should receive a postal acknowledgement letter within 4 weeks.
         |
-        |DVLA will automatically issue a refund for any full remaining months for vehicle tax and cancel any direct debits. The refund will be sent to the address on the V5C log book, which was used.
+        |DVLA will automatically issue a refund for any full remaining months for vehicle tax and cancel any direct debits. The refund will be sent to the address on the V5C registration certificate (logbook), which was used.
         |
         |You may still receive a V11 tax reminder as these are pre-printed up to 6 weeks in advance. If you do receive a V11 for this vehicle after notifying the sale, please ignore it.
         |

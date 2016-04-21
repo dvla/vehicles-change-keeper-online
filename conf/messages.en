@@ -88,7 +88,7 @@ error.invalid = Invalid value
 # PRIVATE SALE OF VEHICLE
 ##
 
-change_keeper_vehicledetails.warning = If the vehicle details shown are incorrect please abandon this transaction and send the V5C with a covering letter to DVLA, Swansea, SA99 1BA.
+change_keeper_vehicledetails.warning = If the vehicle details shown are incorrect please abandon this transaction and send the V5C registration certificate (logbook) with a covering letter to DVLA, Swansea, SA99 1BA.
 
 # 404 onHandlerNotFound
 onHandlerNotFound.title=This page cannot be found
@@ -105,8 +105,8 @@ mandatory = Fields not labelled (optional) are mandatory
 #page 1 - Before You Start
 change_keeper_beforeyoustart.title = Private sale of a vehicle
 change_keeper_beforeyoustart.p1 = Before you start:
-change_keeper_beforeyoustart.listitem1 = You will need the document reference number from the latest vehicle registration certificate (V5C).
-change_keeper_beforeyoustart.listitem2 = If you need to change any vehicle details on the V5C e.g. tax class, you should not use this service. You will need to complete the V5C and tax the vehicle at the Post Office.
+change_keeper_beforeyoustart.listitem1 = You will need the document reference number from the latest V5C registration certificate (logbook).
+change_keeper_beforeyoustart.listitem2 = If you need to change any vehicle details on the V5C registration certificate (logbook) e.g. tax class, you should not use this service. You will need to complete the V5C and tax the vehicle at the Post Office.
 change_keeper_beforeyoustart.listitem3.1 = You will not be able to use this online service to assign or transfer a vehicle registration number.
 change_keeper_beforeyoustart.listitem3.link = Apply to retain a vehicle registration number (V317)
 change_keeper_beforeyoustart.listitem3.2 =, you will need to send the completed application to the DVLA, Swansea, SA99 1DS.
@@ -116,18 +116,18 @@ change_keeper_beforeyoustart.button = Start now
 #page 2 - vehicle Lookup
 change_keeper_vehiclelookup.title = Details of the vehicle being sold
 change_keeper_vehiclelookup.name = Sell a vehicle into the motor trade
-change_keeper_vehiclelookup.p1 = Please provide the following details from the latest vehicle registration certificate (V5C)
+change_keeper_vehiclelookup.p1 = Please provide the following details from the latest V5C registration certificate (logbook)
 change_keeper_vehiclelookup.p2 = Vehicle being sold from
 change_keeper_vehiclelookup.warning.p1 = Do not dispose of a vehicle with a personal registration unless the current keeper understands that the registration will be disposed of along with the vehicle.
 change_keeper_vehiclelookup.warning.p2 = Retain or transfer personal registrations before disposing to the trade.
-change_keeper_vehiclelookup.img.h2 = Help finding your V5C document reference number?
+change_keeper_vehiclelookup.img.h2 = Help finding your V5C registration certificate (logbook) document reference number?
 change_keeper_vehiclelookup.img.hint = Where to find this
-change_keeper_vehiclelookup.img.alt = V5C document reference number
-change_keeper_vehiclelookup.v5c = Vehicle registration certificate (V5C)
-change_keeper_vehiclelookup.refnumlabel = Latest V5C document reference number
+change_keeper_vehiclelookup.img.alt = V5C registration certificate (logbook) document reference number
+change_keeper_vehiclelookup.v5c = V5C registration certificate (logbook)
+change_keeper_vehiclelookup.refnumlabel = Latest V5C registration certificate (logbook) document reference number
 change_keeper_vehiclelookup.refnumlabel.hint = This is an 11 digit number (see image for details)
 change_keeper_vehiclelookup.vrninputlabel = Vehicle registration number
-change_keeper_vehiclelookup.vrninputlabel.hint = You can find this at the top of the front page of the V5C
+change_keeper_vehiclelookup.vrninputlabel.hint = You can find this at the top of the front page of the V5C registration certificate (logbook)
 change_keeper_vehiclelookup.backbutton = Back
 change_keeper_vehiclelookup.button = Next
 change_keeper_vehiclelookup.button2 = Edit
@@ -143,8 +143,8 @@ change_keeper_vehiclelookup.vehiclesoldto.hint = Do not use this service if you 
 change_keeper_vehiclelookup.vehiclesoldto.label = Is the vehicle being sold to a private individual or a business?
 change_keeper_vehiclelookup.vehiclesoldto.private = Private individual
 change_keeper_vehiclelookup.vehiclesoldto.business = Business
-change_keeper_vehiclelookup.img.h2 = Help finding your V5C document reference number?
-change_keeper_vehiclelookup.img.alt = V5C document reference number/
+change_keeper_vehiclelookup.img.h2 = Help finding your V5C registration certificate (logbook) document reference number?
+change_keeper_vehiclelookup.img.alt = V5C registration certificate (logbook) document reference number/
 vehicleSoldTo = Vehicle sold to
 vehicleRegistrationNumber = Vehicle registration number
 documentReferenceNumber = Document reference number
@@ -156,7 +156,7 @@ change_keeper_vehiclelookup.warninglinktext=Sold your vehicle into the motor tra
 
 #page 3 - private keeper details
 change_keeper_privatekeeperdetails.title = Enter new keeper details
-change_keeper_privatekeeperdetails.p1 = We will use these details to create a new vehicle registration certificate (V5C).
+change_keeper_privatekeeperdetails.p1 = We will use these details to create a new V5C registration certificate (logbook).
 change_keeper_privatekeeperdetails.firstnamelabel = First name(s)
 change_keeper_privatekeeperdetails.lastnamelabel = Last name
 change_keeper_privatekeeperdetails.dateofbirth.hint = For example, 01 03 1976
@@ -181,7 +181,7 @@ privatekeeper_dateofbirth = Date of Birth
 
 #page 3 - business keeper details
 change_keeper_businesskeeperdetails.title = Enter new keeper details
-change_keeper_businesskeeperdetails.p1 = We will use these details to create a new vehicle registration certificate (V5C).
+change_keeper_businesskeeperdetails.p1 = We will use these details to create a new V5C registration certificate (logbook).
 change_keeper_businesskeeperdetails.fleetnumber = Fleet number
 change_keeper_businesskeeperdetails.businessname = Business name
 change_keeper_businesskeeperdetails.businessname.hint = If the business buying this vehicle has a DVLA fleet number, please provide it
@@ -260,8 +260,8 @@ change_keeper_completeAndConfirm.date_of_sale = Date of sale
 change_keeper_privatekeeperdetailscomplete.mileage.validation  = You must enter a valid mileage between 0 and 999999
 change_keeper_completeAndConfirm.dateofsale.label = Date of sale
 change_keeper_completeandconfirm.dateofsale.hint = For example, 02 01 2015
-change_keeper_completeandconfirm.dateofsale.disposalDate.warning = Our records show you became the keeper of this vehicle on {0} which is shown on your V5C. As the date of sale you’ve entered is before this, please enter a correct date and select ‘Next’ to continue.
-change_keeper_completeandconfirm.dateofsale.keeperChangeDate.warning = Our records show you became the keeper of this vehicle on {0} which is shown on your V5C. As the date of sale you’ve entered is before this, please enter a correct date and select ‘Next’ to continue.
+change_keeper_completeandconfirm.dateofsale.disposalDate.warning = Our records show you became the keeper of this vehicle on {0} which is shown on your V5C registration certificate (logbook). As the date of sale you’ve entered is before this, please enter a correct date and select ‘Next’ to continue.
+change_keeper_completeandconfirm.dateofsale.keeperChangeDate.warning = Our records show you became the keeper of this vehicle on {0} which is shown on your V5C registration certificate (logbook). As the date of sale you’ve entered is before this, please enter a correct date and select ‘Next’ to continue.
 change_keeper_privatekeeperdetails.traderemailoption = Does the new keeper want an email confirmation of the sale?
 change_keeper_privatekeeperdetails.traderemailoption.yes = Yes
 change_keeper_privatekeeperdetails.traderemailoption.no = No
@@ -279,7 +279,7 @@ change_keeper_keeperdetailscomplete.loseRightsConsentError = You must confirm th
 #page 6 - acquire success
 change_keeper_success.complete.header = Thank you
 change_keeper_success.complete.p1 = The application is being processed
-change_keeper_success.complete.p2 = Give the V5C/2 (green slip) to the new keeper and destroy the rest of the V5C.
+change_keeper_success.complete.p2 = Give the V5C/2 (green slip) to the new keeper and destroy the rest of the V5C registration certificate (logbook).
 change_keeper_success.transaction_details.header = Transaction details
 change_keeper_success.transaction_details.transaction_id = Transaction ID
 change_keeper_success.transaction_details.transaction_date = Transaction date
@@ -304,7 +304,7 @@ change_keeper_success.vehicle_details.name = Name
 change_keeper_success.vehicle_details.address = Address
 change_keeper_success.vehicle_details.postcode = Postcode
 change_keeper_success.vehicle_details.email = Contact email address
-change_keeper_success.further_information.alert = Please destroy V5C. You may wish to take a print of this summary page for your records
+change_keeper_success.further_information.alert = Please destroy V5C registration certificate (logbook). You may wish to take a print of this summary page for your records
 change_keeper_success.vehicle_details.p1 = Vehicle details
 change_keeper_success.new_keeper_details.p1 = New keeper details
 change_keeper_success.further_information.header = What happens next for you?
@@ -312,13 +312,13 @@ change_keeper_success.further_information.header.2 = What happens next for the n
 
 change_keeper_success.further_information.p1 = we will send you (the previous keeper) a disposal acknowledgement letter.
 change_keeper_success.further_information.p2 = we will automatically issue a refund for any full remaining months of vehicle tax and cancel any direct debit (DD).
-change_keeper_success.further_information.p3 = both the disposal acknowledgement letter and refund will be sent to the address on the V5C.
+change_keeper_success.further_information.p3 = both the disposal acknowledgement letter and refund will be sent to the address on the V5C registration certificate (logbook).
 change_keeper_success.further_information.p4 = if you do not receive either within 4-6 weeks, please contact DVLA customer enquiries as you could still be liable for the vehicle.
 
 change_keeper_success.further_information.p5 = you may want to take a print of this summary for your records.
 change_keeper_success.further_information.p6 = since 1st October 2014 vehicle tax can no longer be transferred as part of the sale, so the new keeper must tax the vehicle if they want to use it on the road.
-change_keeper_success.further_information.p7 = within 5 working days we will send a new vehicle registration certificate (V5C) to the new keeper.
-change_keeper_success.further_information.p8 = if they do not receive a new V5C in 2 weeks they must contact DVLA customer enquiries.
+change_keeper_success.further_information.p7 = within 5 working days we will send a new V5C registration certificate (logbook) to the new keeper.
+change_keeper_success.further_information.p8 = if they do not receive a new V5C registration certificate (logbook) in 2 weeks they must contact DVLA customer enquiries.
 change_keeper_success.buttonnavprint = Print
 change_keeper_success.finish = Finish
 
@@ -333,10 +333,10 @@ change_keeper_vehiclelookupfailure.title = Unable to find a vehicle record
 change_keeper_vehiclelookupfailure.p1 = The service is temporarily unavailable. Please try again later or send a completed V5C/3 to DVLA, Swansea, SA99 1BD
 change_keeper_vehiclelookupfailure.button = Try again
 change_keeper_vehiclelookupfailure.button2 = Exit
-vehicle_and_keeper_lookup_failure.p0 = The vehicle registration number and/or the V5C document reference number entered is either incorrect or does not come from the latest V5C issued for this vehicle.
-vehicle_and_keeper_lookup_failure.p1 = Please check that the vehicle registration number and V5C document reference number are correct and select the ‘Try again’ button below.
-vehicle_and_keeper_lookup_failure.p2 = If you are sure that the details have been entered correctly then you may be using an old V5C and it’s likely that we have issued you with a new one since.
-vehicle_and_keeper_lookup_failure.p3 = If you do not have the latest issued V5C, you will need to send your completed V5C to DVLA, Swansea, SA99 1BD.
+vehicle_and_keeper_lookup_failure.p0 = The vehicle registration number and/or the V5C registration certificate (logbook) document reference number entered is either incorrect or does not come from the latest V5C issued for this vehicle.
+vehicle_and_keeper_lookup_failure.p1 = Please check that the vehicle registration number and V5C registration certificate (logbook) document reference number are correct and select the ‘Try again’ button below.
+vehicle_and_keeper_lookup_failure.p2 = If you are sure that the details have been entered correctly then you may be using an old V5C registration certificate (logbook) and it’s likely that we have issued you with a new one since.
+vehicle_and_keeper_lookup_failure.p3 = If you do not have the latest issued V5C registration certificate (logbook), you will need to send your completed V5C registration certificate (logbook) to DVLA, Swansea, SA99 1BD.
 vehicle_and_keeper_lookup_failure.p4 = You will only have a limited number of attempts to enter the vehicle details for this vehicle.
 
 #page 3 [optional] - manual address entry
@@ -376,7 +376,7 @@ error.date.notOne = Year cannot be 0000
 #keeper still on record (no previous disposal has been done to the vehicle so the keeper is still on record)
 error_suppressedV5C.title = Vehicle is part of a suppressed fleet
 error_suppressedV5C.text1 = DVLA cannot record the sale of this vehicle as it is part of a suppressed fleet.
-error_suppressedV5C.text2 = Before a sale of this vehicle can be updated, you will need to request a vehicle registration certificate (V5C) from the DVLA. This can be done using the
+error_suppressedV5C.text2 = Before a sale of this vehicle can be updated, you will need to request a V5C registration certificate (logbook) from the DVLA. This can be done using the
 error_suppressedV5C.text3 = view vehicle record service.
 error_suppressedV5C.link = https://www.gov.uk/dvla-fleet-vehicle-info
 error_suppressedV5C.button1 = Buy another vehicle
@@ -393,7 +393,7 @@ micro_service_error.exit.button=Exit
 vrm_locked.title=Registration number is locked
 vrm_locked.text1= There have been repeated unsuccessful attempts to access the vehicle details. The system has now locked this vehicle registration number for 10 minutes.
 vrm_locked.text2=Locked at
-vrm_locked.text3.1= If you are sure that the details entered are correct then please send your completed V5C to
+vrm_locked.text3.1= If you are sure that the details entered are correct then please send your completed V5C registration certificate (logbook) to
 vrm_locked.text3.2=DVLA, Swansea SA99 1BA
 vrm_locked.buyanother.button=Buy another vehicle
 vrm_locked.exit.button=Exit
@@ -419,7 +419,7 @@ error.title.illegalCharacters = Other title field can only contain characters fr
 
 # micro-service response codes
 ms.vehiclesService.response.unableToProcessApplication-title = Transaction unsuccessful
-ms.vehiclesService.response.unableToProcessApplication = We are unable to process the transaction at this time. Please send the completed V5C to
+ms.vehiclesService.response.unableToProcessApplication = We are unable to process the transaction at this time. Please send the completed V5C registration certificate (logbook) to
 ms.vehiclesService.response.unableToProcessApplication-address = DVLA, Swansea, SA99 1BA
 
 # closed
