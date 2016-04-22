@@ -1,4 +1,4 @@
-@(title: String)(content: Html)(implicit lang: Lang,
+@(title: String, showLanguageSwitch: Boolean)(content: Html)(implicit lang: Lang,
         config: utils.helpers.Config)
 
 @import views.html.common.alternateLanguages
@@ -34,27 +34,33 @@
         <link rel="apple-touch-icon-precomposed" href="@controllers.StaticAssets.versioned(config.assetsUrl)("lib/vehicles-presentation-common/images/apple-touch-icon-144x144.png")" sizes="144x144">
         <link rel="apple-touch-icon-precomposed" href="@controllers.StaticAssets.versioned(config.assetsUrl)("lib/vehicles-presentation-common/images/apple-touch-icon-152x152.png")" sizes="152X152">
 
+        <!-- Google Analytics -->
         <script>
-            var _gaq = _gaq || [];
-            @if(config.googleAnalyticsTrackingId.isDefined) {
-                <!-- Google Analytics -->
-                _gaq.push(['_setAccount', '@{config.googleAnalyticsTrackingId}']);
-                _gaq.push(['_trackPageview']);
+        var _gaq = _gaq || [];
+        @if(config.googleAnalyticsTrackingId.isDefined) {
+            @*
+            https://support.google.com/analytics/answer/1008080?hl=en&utm_id=ad
+            Paste it immediately before the closing </head> tag.
+            *@
+            <!-- Google Analytics -->
+            _gaq.push(['_setAccount', '@{config.googleAnalyticsTrackingId}']);
+            _gaq.push(['_trackPageview']);
 
-                (function() {
-                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-                })();
+            (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
 
-                <!-- End Google Analytics -->
-            }
+            <!-- End Google Analytics -->
+        }
         </script>
+        <!-- End Google Analytics -->
     </head>
 
     <body data-closing-time="@config.closingTimeMinOfDay" class="js-disabled">
-    <script type="text/javascript">document.body.className = document.body.className.replace('js-disabled','js-enabled');</script>
-    @serviceClosingWarning(config.openingTimeMinOfDay, config.closingTimeMinOfDay, config.closingWarnPeriodMins)
+		<script type="text/javascript">document.body.className = document.body.className.replace('js-disabled','js-enabled');</script>
+		@serviceClosingWarning(config.openingTimeMinOfDay, config.closingTimeMinOfDay, config.closingWarnPeriodMins)
         <a href="#main" class="visuallyhidden">Skip to main content</a>
 
         <div id="global-cookie-message">
@@ -93,6 +99,9 @@
                     <div class="footer-meta-inner">
                         <ul>
                             <li><a href="@routes.CookiePolicy.present()" target="_blank">@Messages("footer.cookies")</a></li>
+                            @if(showLanguageSwitch) {
+                                <li>@alternateLanguages(showLanguageSwitch)</li>
+                            }
                             <li><a href="@routes.TermsAndConditions.present()" target="_blank">@Messages("footer.tandc")</a></li>
                             <li><a href="@routes.PrivacyPolicy.present()" target="_blank">@Messages("footer.privacy")</a></li>
                             <li>@{Messages("footer.builtbyintro")}&nbsp;<a href="https://www.gov.uk/government/organisations/driver-and-vehicle-licensing-agency" target="_blank">@{Messages("footer.builtby")}</a></li>
@@ -129,10 +138,10 @@
         <script type="text/javascript">
             window.onload = function() {
                 if (typeof $ !== "function" || $('html').hasClass('js-ready') === false) {
-                    // Either Jquery or common have not loaded so revert to the no-js view
+                    // Either Jquery or common are not available so revert to the no-js view
                    document.body.className = document.body.className.replace('js-enabled','js-disabled');
                 }
-             }
+            }
         </script>
-   </body>
+    </body>
 </html>

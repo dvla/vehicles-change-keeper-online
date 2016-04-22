@@ -1,16 +1,17 @@
-@(
-title: String,
-currentForm: Option[Form[_]] = None,
-        showBanner: Boolean = true,
-        backButton: Option[Call] = None)(content: Html)(implicit lang: Lang,
-config: utils.helpers.Config)
+@(title: String,
+    currentForm: Option[Form[_]] = None,
+    showBanner: Boolean = true,
+    backButton: Option[Call] = None,
+    showLanguageSwitch: Boolean = false
+    )(content: Html)(implicit lang: Lang,
+    config: utils.helpers.Config)
 
 @import uk.gov.dvla.vehicles.presentation.common
 @import common.views.html.widgets.errorsSummary
 @import views.html.common.{protoType}
 @import views.html.common.govMainDefault
 
-@govMainDefault(title) {
+@govMainDefault(title, showLanguageSwitch) {
 <div class="app vehicles-change-keeper-online">
 
     @if(showBanner) {

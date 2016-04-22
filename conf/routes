@@ -78,6 +78,8 @@ GET         /complete-and-confirm                       @controllers.CompleteAnd
 GET         /vehicle-lookup-failure                     @controllers.VehicleLookupFailure.present
 POST        /vehicle-lookup-failure                     @controllers.VehicleLookupFailure.submit
 
+GET         /with-language/:chosenLanguage              @uk.gov.dvla.vehicles.presentation.common.controllers.AlternateLanguages.withLanguage(chosenLanguage: String)
+
 GET         /healthcheck                                @uk.gov.dvla.vehicles.presentation.common.controllers.HealthCheck.respond
 GET         /healthcheck/debug                          @uk.gov.dvla.vehicles.presentation.common.controllers.HealthCheck.debug
 
