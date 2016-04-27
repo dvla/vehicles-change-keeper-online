@@ -1,10 +1,14 @@
+import Common._
 import com.typesafe.sbt.rjs.Import.RjsKeys.webJarCdns
 import io.gatling.sbt.GatlingPlugin
 import io.gatling.sbt.GatlingPlugin.Gatling
 import org.scalastyle.sbt.ScalastylePlugin
-import uk.gov.dvla.vehicles.sandbox.ProjectDefinitions.{emailService, legacyStubs, osAddressLookup, vehicleAndKeeperLookup, vehiclesAcquireFulfil}
+import uk.gov.dvla.vehicles.sandbox.ProjectDefinitions.emailService
+import uk.gov.dvla.vehicles.sandbox.ProjectDefinitions.legacyStubs
+import uk.gov.dvla.vehicles.sandbox.ProjectDefinitions.osAddressLookup
+import uk.gov.dvla.vehicles.sandbox.ProjectDefinitions.vehicleAndKeeperLookup
+import uk.gov.dvla.vehicles.sandbox.ProjectDefinitions.vehiclesAcquireFulfil
 import uk.gov.dvla.vehicles.sandbox.{Sandbox, SandboxSettings, Tasks}
-import Common._
 
 name := "vehicles-change-keeper-online"
 

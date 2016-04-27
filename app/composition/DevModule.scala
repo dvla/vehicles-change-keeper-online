@@ -75,7 +75,7 @@ class DevModule extends ScalaModule {
       .asEagerSingleton()
     bind[BruteForcePreventionService].to[BruteForcePreventionServiceImpl].asEagerSingleton()
 
-    bind[LoggerLike].annotatedWith(Names.named(AccessLoggerName)).toInstance(Logger("dvla.pages.common.AccessLogger"))
+    bind[LoggerLike].annotatedWith(Names.named(AccessLoggerName)).toInstance(Logger("dvla.common.AccessLogger"))
     bind[AccessLoggingConfig].toInstance(new DefaultAccessLoggingConfig())
     bind[DateTimeZoneService].toInstance(new DateTimeZoneServiceImpl)
     bind[HealthStats].asEagerSingleton()
