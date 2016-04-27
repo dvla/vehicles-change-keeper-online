@@ -1,3 +1,11 @@
+======= 1.33 ========
+TIME OF RELEASE BINARIES CREATION:
+Wed Apr 27 09:33:53 UTC 2016
+
+VMPRCI-4317 	Ensure V5C reference universal throughout all VM & PR services
+VMPRCI-4329 	Welsh Translation Cookie shared across services
+VMPRCI-4330 	Some unit tests failing locally when executed individually
+
 ======= 1.32 ========
 TIME OF RELEASE BINARIES CREATION:
 Thu Apr 14 08:30:38 UTC 2016
