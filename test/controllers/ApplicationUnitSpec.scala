@@ -1,6 +1,6 @@
 package controllers
 
-import helpers.WithApplication
+import helpers.TestWithApplication
 import helpers.UnitSpec
 import org.mockito.Mockito.when
 import play.api.test.FakeRequest
@@ -13,21 +13,21 @@ class ApplicationUnitSpec extends UnitSpec {
   lazy val applicationContext = getProperty[String]("application.context")
 
   "index" should {
-    "redirect the user to the start url" in new WithApplication {
+    "redirect the user to the start url" in new TestWithApplication {
       implicit val config = configWithStartUrl("/testStart")
       implicit val clientSideSessionFactory = injector.getInstance(classOf[ClientSideSessionFactory])
       val result = new Application().index(FakeRequest())
       redirectLocation(result) should equal(Some("/testStart"))
     }
 
-    "redirect the user to the start url when the start url does not have a starting slash" in new WithApplication {
+    "redirect the user to the start url when the start url does not have a starting slash" in new TestWithApplication {
       implicit val config = configWithStartUrl("testStart")
       implicit val clientSideSessionFactory = injector.getInstance(classOf[ClientSideSessionFactory])
       val result = new Application().index(FakeRequest())
       redirectLocation(result) should equal(Some("testStart"))
     }
 
-    "redirect the user to the start url when the start url has application context" in new WithApplication {
+    "redirect the user to the start url when the start url has application context" in new TestWithApplication {
       implicit val config = configWithStartUrl("/testContext/testStart")
       implicit val clientSideSessionFactory = injector.getInstance(classOf[ClientSideSessionFactory])
       val result = new Application().index(FakeRequest())

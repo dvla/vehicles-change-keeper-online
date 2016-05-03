@@ -9,7 +9,7 @@ import pages.common.ErrorPanel
 import pages.common.Feedback.EmailFeedbackLink
 import uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction
 import uk.gov.dvla.vehicles.presentation.common.testhelpers.UiTag
-import helpers.CookieFactoryForUISpecs
+import helpers.changekeeper.CookieFactoryForUISpecs
 import org.scalatest.selenium.WebBrowser.{click, go, pageTitle, pageSource}
 
 class NewKeeperEnterAddressManuallyIntegrationSpec extends UiSpec with TestHarness {

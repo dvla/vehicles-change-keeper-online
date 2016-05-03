@@ -28,7 +28,7 @@ import org.scalatest.selenium.WebBrowser.Element
 
 object BusinessKeeperDetailsPage extends Page {
   final val address = buildAppUrl("business-keeper-details")
-  override val url: String = WebDriverFactory.testUrl + address.substring(1)
+  override lazy val url: String = WebDriverFactory.testUrl + address.substring(1)
   final override val title: String = "Enter new keeper details"
 
   final val FleetNumberValid = "123456"

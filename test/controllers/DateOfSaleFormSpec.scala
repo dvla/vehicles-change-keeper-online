@@ -1,6 +1,6 @@
 package controllers
 
-import composition.WithApplication
+import helpers.TestWithApplication
 import helpers.UnitSpec
 import models.DateOfSaleFormModel
 import models.DateOfSaleFormModel.Form.{DateOfSaleId, MileageId}
@@ -12,7 +12,7 @@ import uk.gov.dvla.vehicles.presentation.common.mappings.DayMonthYear.{DayId, Mo
 class DateOfSaleFormSpec extends UnitSpec {
 
   "form" should {
-    "accept if form is completed with all fields entered correctly" in new WithApplication {
+    "accept if form is completed with all fields entered correctly" in new TestWithApplication {
       val model = formWithValidDefaults().get
       model.mileage should equal(Some("1000".toInt))
       model.dateOfSale should equal(new LocalDate(
@@ -22,7 +22,7 @@ class DateOfSaleFormSpec extends UnitSpec {
       ))
     }
 
-    "accept if form is completed with mandatory fields only" in new WithApplication {
+    "accept if form is completed with mandatory fields only" in new TestWithApplication {
       val model = formWithValidDefaults(
         mileage = "").get
       model.mileage should equal(None)
@@ -33,7 +33,7 @@ class DateOfSaleFormSpec extends UnitSpec {
       ))
     }
 
-    "reject if form has no fields completed" in new WithApplication {
+    "reject if form has no fields completed" in new TestWithApplication {
       formWithValidDefaults(dayDateOfSale = "", monthDateOfSale = "", yearDateOfSale = "").
         errors.flatMap(_.messages) should contain theSameElementsAs
         List("error.date.invalid")
@@ -41,32 +41,32 @@ class DateOfSaleFormSpec extends UnitSpec {
   }
 
   "mileage" should {
-    "not accept less than 0" in new WithApplication {
+    "not accept less than 0" in new TestWithApplication {
       formWithValidDefaults(mileage = "-1").errors.flatMap(_.messages) should contain theSameElementsAs
         List("error.min")
     }
 
-    "not accept less than 999999" in new WithApplication {
+    "not accept less than 999999" in new TestWithApplication {
       formWithValidDefaults(mileage = "1000000").errors.flatMap(_.messages) should contain theSameElementsAs
         List("error.max")
     }
 
-    "not accept letters" in new WithApplication {
+    "not accept letters" in new TestWithApplication {
       formWithValidDefaults(mileage = "abc").errors.flatMap(_.messages) should contain theSameElementsAs
         List("error.number")
     }
 
-    "not accept special characters %%" in new WithApplication {
+    "not accept special characters %%" in new TestWithApplication {
       formWithValidDefaults(mileage = "%%").errors.flatMap(_.messages) should contain theSameElementsAs
         List("error.number")
     }
 
-    "not accept special characters (" in new WithApplication {
+    "not accept special characters (" in new TestWithApplication {
       formWithValidDefaults(mileage = "(").errors.flatMap(_.messages) should contain theSameElementsAs
         List("error.number")
     }
 
-    "accept if mileage is entered correctly" in new WithApplication {
+    "accept if mileage is entered correctly" in new TestWithApplication {
       val model = formWithValidDefaults(mileage = MileageValid).get
       model.mileage should equal(Some(MileageValid.toInt))
     }

@@ -1,8 +1,8 @@
 package controllers
 
 import Common.PrototypeHtml
-import composition.WithApplication
-import helpers.CookieFactoryForUnitSpecs
+import helpers.TestWithApplication
+import helpers.changekeeper.CookieFactoryForUnitSpecs
 import helpers.UnitSpec
 import org.mockito.Mockito.when
 import pages.changekeeper.NewKeeperChooseYourAddressPage
@@ -38,17 +38,17 @@ import utils.helpers.Config
 class PrivateKeeperDetailsUnitSpec extends UnitSpec {
 
   "present" should {
-    "display the page" in new WithApplication {
+    "display the page" in new TestWithApplication {
       whenReady(present) { r =>
         r.header.status should equal(OK)
       }
     }
 
-    "display prototype message when config set to true" in new WithApplication {
+    "display prototype message when config set to true" in new TestWithApplication {
       contentAsString(present) should include(PrototypeHtml)
     }
 
-    "not display prototype message when config set to false" in new WithApplication {
+    "not display prototype message when config set to false" in new TestWithApplication {
       val request = FakeRequest()
       implicit val clientSideSessionFactory = injector.getInstance(classOf[ClientSideSessionFactory])
       implicit val config = mock[Config]
@@ -60,7 +60,7 @@ class PrivateKeeperDetailsUnitSpec extends UnitSpec {
       contentAsString(result) should not include PrototypeHtml
     }
 
-    "display populated fields when cookie exists" in new WithApplication {
+    "display populated fields when cookie exists" in new TestWithApplication {
       val request = FakeRequest()
         .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
         .withCookies(CookieFactoryForUnitSpecs.privateKeeperDetailsModel())
@@ -75,7 +75,7 @@ class PrivateKeeperDetailsUnitSpec extends UnitSpec {
       content should include(EmailValid)
     }
 
-    "display populated other title when cookie exists" in new WithApplication {
+    "display populated other title when cookie exists" in new TestWithApplication {
       val request = FakeRequest()
         .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
         .withCookies(CookieFactoryForUnitSpecs.privateKeeperDetailsModel(title = TitleType(4, "otherTitle")))
@@ -84,7 +84,7 @@ class PrivateKeeperDetailsUnitSpec extends UnitSpec {
       content should include("otherTitle")
     }
 
-    "display empty fields when cookie does not exist" in new WithApplication {
+    "display empty fields when cookie does not exist" in new TestWithApplication {
       val request = FakeRequest()
         .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
         .withCookies(CookieFactoryForUnitSpecs.privateKeeperDetailsModel())
@@ -94,7 +94,7 @@ class PrivateKeeperDetailsUnitSpec extends UnitSpec {
       content should not include "selected"
     }
 
-    "redirect to vehicle lookup page when no cookie is present" in new WithApplication {
+    "redirect to vehicle lookup page when no cookie is present" in new TestWithApplication {
       val request = FakeRequest()
       val result = privateKeeperDetails.present(request)
       whenReady(result) { r =>
@@ -104,7 +104,7 @@ class PrivateKeeperDetailsUnitSpec extends UnitSpec {
   }
 
   "submit" should {
-    "redirect to next page when mandatory fields are complete" in new WithApplication {
+    "redirect to next page when mandatory fields are complete" in new TestWithApplication {
       val request = buildCorrectlyPopulatedRequest(email = "avalid@email.address")
         .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
       val result = privateKeeperDetails.submit(request)
@@ -113,7 +113,7 @@ class PrivateKeeperDetailsUnitSpec extends UnitSpec {
       }
     }
 
-    "redirect to next page when all fields are complete" in new WithApplication {
+    "redirect to next page when all fields are complete" in new TestWithApplication {
       val request = buildCorrectlyPopulatedRequest()
         .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
       val result = privateKeeperDetails.submit(request)
@@ -122,7 +122,7 @@ class PrivateKeeperDetailsUnitSpec extends UnitSpec {
       }
     }
 
-    "redirect to vehicle lookup page when no cookie is present" in new WithApplication {
+    "redirect to vehicle lookup page when no cookie is present" in new TestWithApplication {
       val request = buildCorrectlyPopulatedRequest(title = "2")
       val result = privateKeeperDetails.submit(request)
       whenReady(result) { r =>
@@ -130,7 +130,7 @@ class PrivateKeeperDetailsUnitSpec extends UnitSpec {
       }
     }
 
-    "return a bad request if no details are entered" in new WithApplication {
+    "return a bad request if no details are entered" in new TestWithApplication {
       val request = buildCorrectlyPopulatedRequest(title = "",
                                                    firstName = "",
                                                    lastName = "")
@@ -141,7 +141,7 @@ class PrivateKeeperDetailsUnitSpec extends UnitSpec {
       }
     }
 
-    "replace required error message for first name with standard error message" in new WithApplication {
+    "replace required error message for first name with standard error message" in new TestWithApplication {
       val request = buildCorrectlyPopulatedRequest(firstName = "")
         .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
       val result = privateKeeperDetails.submit(request)
@@ -151,7 +151,7 @@ class PrivateKeeperDetailsUnitSpec extends UnitSpec {
       count should equal(1)
     }
 
-    "replace required error message for last name with standard error message" in new WithApplication {
+    "replace required error message for last name with standard error message" in new TestWithApplication {
       val request = buildCorrectlyPopulatedRequest(lastName = "")
         .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
       val result = privateKeeperDetails.submit(request)
@@ -161,7 +161,7 @@ class PrivateKeeperDetailsUnitSpec extends UnitSpec {
       count should equal(1)
     }
 
-    "replace required error message for postcode with standard error message" in new WithApplication {
+    "replace required error message for postcode with standard error message" in new TestWithApplication {
       val request = buildCorrectlyPopulatedRequest(postcode = "")
         .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
       val result = privateKeeperDetails.submit(request)

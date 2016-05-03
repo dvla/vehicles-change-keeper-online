@@ -1,7 +1,7 @@
 package views.changekeeper
 
 import composition.TestHarness
-import helpers.CookieFactoryForUISpecs
+import helpers.changekeeper.CookieFactoryForUISpecs
 import helpers.UiSpec
 import models.VehicleLookupFormModel.VehicleLookupFormModelCacheKey
 import org.openqa.selenium.WebDriver

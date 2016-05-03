@@ -9,7 +9,7 @@ object MicroServiceErrorPage extends Page {
   final val address = buildAppUrl("service-error")
   final override val title = "We are sorry"
 
-  override val url: String = WebDriverFactory.testUrl + address.substring(1)
+  override lazy val url: String = WebDriverFactory.testUrl + address.substring(1)
 
   def tryAgain(implicit driver: WebDriver): Element = find(id(TryAgainId)).get
 

@@ -1,4 +1,4 @@
-package controllers
+package pages
 
 object ApplicationContext {
   val applicationContext = "/"

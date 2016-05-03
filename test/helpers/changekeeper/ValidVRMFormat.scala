@@ -1,4 +1,4 @@
-package helpers
+package helpers.changekeeper
 
 object ValidVRMFormat {
   val allValidVrmFormats = Seq(

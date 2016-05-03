@@ -3,39 +3,20 @@ package pages.changekeeper
 import org.joda.time.DateTime
 import org.openqa.selenium.WebDriver
 import org.scalatest.Matchers
+import org.scalatest.selenium.WebBrowser.{Element, EmailField, RadioButton, TelField, TextField, click, emailField}
+import org.scalatest.selenium.WebBrowser.{find, go, id, radioButton, tagName, telField, textField}
 import uk.gov.dvla.vehicles.presentation.common
-import common.helpers.webbrowser.WebDriverFactory
-import common.helpers.webbrowser.Page
-import common.mappings.Email.{EmailId => EmailEnterId, EmailVerifyId}
-import common.mappings.OptionalToggle.{Visible, Invisible}
-import common.mappings.TitlePickerString.OtherTitleRadioValue
-import common.model.PrivateKeeperDetailsFormModel.Form.DateOfBirthId
-import common.model.PrivateKeeperDetailsFormModel.Form.DriverNumberId
-import common.model.PrivateKeeperDetailsFormModel.Form.EmailId
-import common.model.PrivateKeeperDetailsFormModel.Form.EmailOptionId
-import common.model.PrivateKeeperDetailsFormModel.Form.FirstNameId
-import common.model.PrivateKeeperDetailsFormModel.Form.LastNameId
-import common.model.PrivateKeeperDetailsFormModel.Form.PostcodeId
-import common.model.PrivateKeeperDetailsFormModel.Form.TitleId
+import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.{Page, WebDriverFactory}
+import uk.gov.dvla.vehicles.presentation.common.mappings.Email.{EmailId => EmailEnterId, EmailVerifyId}
+import uk.gov.dvla.vehicles.presentation.common.mappings.OptionalToggle.{Invisible, Visible}
+import uk.gov.dvla.vehicles.presentation.common.mappings.TitlePickerString.OtherTitleRadioValue
+import uk.gov.dvla.vehicles.presentation.common.model.PrivateKeeperDetailsFormModel.Form.{DateOfBirthId, DriverNumberId}
+import uk.gov.dvla.vehicles.presentation.common.model.PrivateKeeperDetailsFormModel.Form.{EmailId, EmailOptionId, FirstNameId, LastNameId, PostcodeId, TitleId}
 import views.changekeeper.PrivateKeeperDetails.{BackId, SubmitId}
-import org.scalatest.selenium.WebBrowser.EmailField
-import org.scalatest.selenium.WebBrowser.emailField
-import org.scalatest.selenium.WebBrowser.TextField
-import org.scalatest.selenium.WebBrowser.textField
-import org.scalatest.selenium.WebBrowser.TelField
-import org.scalatest.selenium.WebBrowser.telField
-import org.scalatest.selenium.WebBrowser.RadioButton
-import org.scalatest.selenium.WebBrowser.radioButton
-import org.scalatest.selenium.WebBrowser.click
-import org.scalatest.selenium.WebBrowser.go
-import org.scalatest.selenium.WebBrowser.find
-import org.scalatest.selenium.WebBrowser.id
-import org.scalatest.selenium.WebBrowser.Element
-import org.scalatest.selenium.WebBrowser.tagName
 
 object PrivateKeeperDetailsPage extends Page with Matchers {
   final val address = buildAppUrl("private-keeper-details")
-  override val url: String = WebDriverFactory.testUrl + address.substring(1)
+  override lazy val url: String = WebDriverFactory.testUrl + address.substring(1)
   final override val title: String = "Enter new keeper details"
 
   final val VALID_AGE:Integer = 30

@@ -2,7 +2,7 @@ package views.changekeeper
 
 import composition.TestHarness
 import helpers.UiSpec
-import helpers.CookieFactoryForUISpecs
+import helpers.changekeeper.CookieFactoryForUISpecs
 import org.openqa.selenium.WebDriver
 import pages.changekeeper.MicroServiceErrorPage.exit
 import pages.changekeeper.MicroServiceErrorPage.tryAgain

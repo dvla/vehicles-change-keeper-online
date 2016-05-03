@@ -1,8 +1,8 @@
 package controllers
 
 import Common.PrototypeHtml
-import composition.WithApplication
-import helpers.CookieFactoryForUnitSpecs
+import helpers.TestWithApplication
+import helpers.changekeeper.CookieFactoryForUnitSpecs
 import helpers.UnitSpec
 import models.CompleteAndConfirmFormModel.AllowGoingToCompleteAndConfirmPageCacheKey
 import models.CompleteAndConfirmFormModel.Form.{ConsentId, RegRightId}
@@ -36,17 +36,17 @@ import utils.helpers.Config
 
 class CompleteAndConfirmUnitSpec extends UnitSpec {
   "present" should {
-    "display the page with new keeper cached" in new WithApplication {
+    "display the page with new keeper cached" in new TestWithApplication {
       whenReady(present) { r =>
         r.header.status should equal(OK)
       }
     }
 
-    "display prototype message when config set to true" in new WithApplication {
+    "display prototype message when config set to true" in new TestWithApplication {
       contentAsString(present) should include(PrototypeHtml)
     }
 
-    "not display prototype message when config set to false" in new WithApplication {
+    "not display prototype message when config set to false" in new TestWithApplication {
       val request = FakeRequest()
       implicit val clientSideSessionFactory = injector.getInstance(classOf[ClientSideSessionFactory])
       implicit val config: Config = mock[Config] //TestConfig
@@ -57,7 +57,7 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
       contentAsString(result) should not include PrototypeHtml
     }
 
-    "present a full form when cookie data is present for new keeper" in new WithApplication {
+    "present a full form when cookie data is present for new keeper" in new TestWithApplication {
       val request = FakeRequest()
         .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
         .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
@@ -70,14 +70,14 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
       content should include( YearDateOfSaleValid)
     }
 
-    "display empty fields when new keeper complete cookie does not exist" in new WithApplication {
+    "display empty fields when new keeper complete cookie does not exist" in new TestWithApplication {
       val request = FakeRequest()
       val result = completeAndConfirm.present(request)
       val content = contentAsString(result)
       content should not include MileageValid
     }
 
-    "redirect to vehicle lookup when no new keeper details cookie is present" in new WithApplication {
+    "redirect to vehicle lookup when no new keeper details cookie is present" in new TestWithApplication {
       val request = FakeRequest()
       val result = completeAndConfirm.present(request)
       whenReady(result) { r =>
@@ -85,7 +85,7 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
       }
     }
 
-    "redirect to vehicle lookup when allowGoingToCompleteAndConfirmPage cookie is not set" in new WithApplication {
+    "redirect to vehicle lookup when allowGoingToCompleteAndConfirmPage cookie is not set" in new TestWithApplication {
       val request = FakeRequest()
         .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
       val result = completeAndConfirm.present(request)
@@ -94,7 +94,7 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
       }
     }
 
-    "redirect to date of sale page when no dateOfSale cookies is present" in new WithApplication {
+    "redirect to date of sale page when no dateOfSale cookies is present" in new TestWithApplication {
       val request = FakeRequest()
         .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
         .withCookies(CookieFactoryForUnitSpecs.allowGoingToCompleteAndConfirm())
@@ -104,7 +104,7 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
       }
     }
 
-    "present the form when new keeper details cookie is present" in new WithApplication {
+    "present the form when new keeper details cookie is present" in new TestWithApplication {
       val request = FakeRequest()
         .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
         .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
@@ -117,7 +117,7 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
       }
     }
 
-    "play back business keeper details as expected" in new WithApplication() {
+    "play back business keeper details as expected" in new TestWithApplication() {
       val request = FakeRequest()
         .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel(
         businessName = Some(BusinessNameValid),
@@ -134,7 +134,7 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
       content should include(s"$EmailValid")
     }
 
-    "play back private keeper details as expected" in new WithApplication() {
+    "play back private keeper details as expected" in new TestWithApplication() {
       val request = FakeRequest().
         withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel(
         firstName = Some(FirstNameValid),
@@ -151,7 +151,7 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
       content should include(s"$EmailValid")
     }
 
-    "play back date of sale as expected" in new WithApplication() {
+    "play back date of sale as expected" in new TestWithApplication() {
       val request = FakeRequest().
         withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel(
         firstName = Some(FirstNameValid),
@@ -170,7 +170,7 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
   }
 
   "submit" should {
-    "return a bad request if consent is not ticked" in new WithApplication {
+    "return a bad request if consent is not ticked" in new TestWithApplication {
       val request = buildCorrectlyPopulatedRequest(consent = "")
         .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
         .withCookies(CookieFactoryForUnitSpecs.vehicleAndKeeperDetailsModel())
@@ -184,7 +184,7 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
       }
     }
 
-    "call the micro services and redirect to the next page if regRight and consent has been ticked" in new WithApplication {
+    "call the micro services and redirect to the next page if regRight and consent has been ticked" in new TestWithApplication {
       val request = buildCorrectlyPopulatedRequest()
         .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
         .withCookies(CookieFactoryForUnitSpecs.vehicleLookupFormModel())
@@ -207,7 +207,7 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
       }
     }
 
-    "redirect to next page when acquire web service returns forbidden" in new WithApplication {
+    "redirect to next page when acquire web service returns forbidden" in new TestWithApplication {
       val request = buildCorrectlyPopulatedRequest()
         .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
         .withCookies(CookieFactoryForUnitSpecs.vehicleLookupFormModel())
@@ -226,7 +226,7 @@ class CompleteAndConfirmUnitSpec extends UnitSpec {
       }
     }
 
-    "return a bad request and not call the micro services if consent is not ticked" in new WithApplication {
+    "return a bad request and not call the micro services if consent is not ticked" in new TestWithApplication {
       val request = buildCorrectlyPopulatedRequest(consent = "")
         .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
         .withCookies(CookieFactoryForUnitSpecs.vehicleLookupFormModel())

@@ -1,30 +1,29 @@
 package controllers
 
-import composition.WithApplication
 import controllers.Common.PrototypeHtml
 import controllers.MicroServiceError.MicroServiceErrorRefererCacheKey
-import helpers.{CookieFactoryForUnitSpecs, UnitSpec}
+import helpers.{TestWithApplication, UnitSpec}
+import helpers.changekeeper.CookieFactoryForUnitSpecs
 import org.mockito.Mockito.when
 import pages.changekeeper.{BeforeYouStartPage, VehicleLookupPage}
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{LOCATION, REFERER, SERVICE_UNAVAILABLE, contentAsString, defaultAwaitTimeout, status}
 import uk.gov.dvla.vehicles.presentation.common.clientsidesession.ClientSideSessionFactory
-//import uk.gov.dvla.vehicles.presentation.common.testhelpers.CookieFactoryForUnitSpecs
 import uk.gov.dvla.vehicles.presentation.common.testhelpers.CookieHelper.{fetchCookiesFromHeaders, verifyCookieHasBeenDiscarded}
 import utils.helpers.Config
 
 
 class MicroServiceErrorUnitSpec extends UnitSpec  {
   "present" should {
-    "display the page" in new WithApplication {
+    "display the page" in new TestWithApplication {
       status(present) should equal(SERVICE_UNAVAILABLE)
     }
 
-    "display prototype message when config set to true" in new WithApplication {
+    "display prototype message when config set to true" in new TestWithApplication {
       contentAsString(present) should include(PrototypeHtml)
     }
 
-    "not display prototype message when config set to false" in new WithApplication {
+    "not display prototype message when config set to false" in new TestWithApplication {
       val request = FakeRequest()
       implicit val clientSideSessionFactory = injector.getInstance(classOf[ClientSideSessionFactory])
       implicit val config: Config = mock[Config]
@@ -37,7 +36,7 @@ class MicroServiceErrorUnitSpec extends UnitSpec  {
       contentAsString(result) should not include PrototypeHtml
     }
 
-    "write micro service error referer cookie" in new WithApplication {
+    "write micro service error referer cookie" in new TestWithApplication {
       val referer = VehicleLookupPage.address
       val request = FakeRequest()
         .withHeaders(REFERER -> referer)
@@ -51,7 +50,7 @@ class MicroServiceErrorUnitSpec extends UnitSpec  {
   }
 
   "try again" should {
-    "redirect to vehicle lookup page when there is no referer" in new WithApplication {
+    "redirect to vehicle lookup page when there is no referer" in new TestWithApplication {
       val request = FakeRequest()
       // No previous page cookie, which can only happen if they wiped their cookies after
       // page presented or they are calling the route directly.
@@ -61,7 +60,7 @@ class MicroServiceErrorUnitSpec extends UnitSpec  {
       }
     }
 
-    "redirect to previous page and discard the referer cookie" in new WithApplication {
+    "redirect to previous page and discard the referer cookie" in new TestWithApplication {
       val request = FakeRequest()
         .withCookies(CookieFactoryForUnitSpecs.microServiceError(VehicleLookupPage.address))
       val result = microServiceError.back(request)

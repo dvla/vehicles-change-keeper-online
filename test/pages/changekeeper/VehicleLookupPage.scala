@@ -13,11 +13,11 @@ import views.changekeeper.VehicleLookup.{VehicleSoldTo_Private, VehicleSoldTo_Bu
 import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.{ReferenceNumberValid, RegistrationNumberValid}
 
 object VehicleLookupPage extends Page {
-  private final val route = "vehicle-lookup"
+  final val route = "vehicle-lookup"
   final val address = buildAppUrl(route)
 
-  override val url: String = WebDriverFactory.testUrl + address.substring(1)
-  val cegUrl: String = WebDriverFactory.testUrl + buildAppUrl(s"${route}/ceg").substring(1)
+  override lazy val url: String = WebDriverFactory.testUrl + address.substring(1)
+  lazy val cegUrl: String = WebDriverFactory.testUrl + buildAppUrl(s"${route}/ceg").substring(1)
 
   final override val title: String = "Details of the vehicle being sold"
 
@@ -53,6 +53,7 @@ object VehicleLookupPage extends Page {
     click on VehicleLookupPage.vehicleSoldToPrivateIndividual
     if (isVehicleSoldToPrivateIndividual) click on vehicleSoldToPrivateIndividual
     else click on vehicleSoldToBusiness
+
     click on next
   }
 }

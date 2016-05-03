@@ -1,53 +1,48 @@
 package controllers
 
 import com.tzavellas.sse.guice.ScalaModule
-import Common.PrototypeHtml
-import helpers.{CookieFactoryForUnitSpecs, UnitSpec}
-import composition.WithApplication
-import models.CompleteAndConfirmResponseModel.ChangeKeeperCompletionResponseCacheKey
+import controllers.Common.PrototypeHtml
+import helpers.{TestWithApplication, UnitSpec}
+import helpers.changekeeper.CookieFactoryForUnitSpecs
 import models.CompleteAndConfirmFormModel.CompleteAndConfirmCacheKey
-import models.DateOfSaleFormModel
-import models.IdentifierCacheKey
+import models.CompleteAndConfirmResponseModel.ChangeKeeperCompletionResponseCacheKey
+import models.{DateOfSaleFormModel, IdentifierCacheKey}
 import models.K2KCacheKeyPrefix.CookiePrefix
 import models.VehicleLookupFormModel.VehicleLookupFormModelCacheKey
 import org.joda.time.format.DateTimeFormat
 import org.mockito.Mockito.when
 import pages.changekeeper.BeforeYouStartPage
-import pages.changekeeper.BusinessKeeperDetailsPage.BusinessNameValid
-import pages.changekeeper.BusinessKeeperDetailsPage.FleetNumberValid
+import pages.changekeeper.BusinessKeeperDetailsPage.{BusinessNameValid, FleetNumberValid}
 import pages.changekeeper.DateOfSalePage.{DayDateOfSaleValid, MonthDateOfSaleValid, YearDateOfSaleValid}
-import pages.changekeeper.PrivateKeeperDetailsPage.{FirstNameValid, LastNameValid, EmailValid}
+import pages.changekeeper.PrivateKeeperDetailsPage.{EmailValid, FirstNameValid, LastNameValid}
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{LOCATION, OK, contentAsString, defaultAwaitTimeout}
 import uk.gov.dvla.vehicles.presentation.common
-import common.clientsidesession.ClientSideSessionFactory
-import common.model.BusinessKeeperDetailsFormModel.businessKeeperDetailsCacheKey
-import common.model.NewKeeperDetailsViewModel.newKeeperDetailsCacheKey
-import common.model.PrivateKeeperDetailsFormModel.privateKeeperDetailsCacheKey
-import common.model.VehicleAndKeeperDetailsModel.vehicleAndKeeperLookupDetailsCacheKey
-import common.testhelpers.CookieHelper.{fetchCookiesFromHeaders, verifyCookieHasBeenDiscarded}
+import uk.gov.dvla.vehicles.presentation.common.clientsidesession.ClientSideSessionFactory
+import uk.gov.dvla.vehicles.presentation.common.model.BusinessKeeperDetailsFormModel.businessKeeperDetailsCacheKey
+import uk.gov.dvla.vehicles.presentation.common.model.NewKeeperDetailsViewModel.newKeeperDetailsCacheKey
+import uk.gov.dvla.vehicles.presentation.common.model.PrivateKeeperDetailsFormModel.privateKeeperDetailsCacheKey
+import uk.gov.dvla.vehicles.presentation.common.model.VehicleAndKeeperDetailsModel.vehicleAndKeeperLookupDetailsCacheKey
+import uk.gov.dvla.vehicles.presentation.common.testhelpers.CookieHelper.{fetchCookiesFromHeaders, verifyCookieHasBeenDiscarded}
 import utils.helpers.Config
-import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.RegistrationNumberValid
-import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.TransactionIdValid
-import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.TransactionTimestampValid
-import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.{VehicleMakeValid, VehicleModelValid}
+import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.{RegistrationNumberValid, TransactionIdValid, TransactionTimestampValid, VehicleMakeValid, VehicleModelValid}
 
 class ChangeKeeperSuccessUnitSpec extends UnitSpec {
 
   val testUrl = "http://test/survery/url"
 
   "present" should {
-    "display the page with new keeper cached" in new WithApplication {
+    "display the page with new keeper cached" in new TestWithApplication {
       whenReady(present) { r =>
         r.header.status should equal(OK)
       }
     }
 
-    "display prototype message when config set to true" in new WithApplication {
+    "display prototype message when config set to true" in new TestWithApplication {
       contentAsString(present) should include(PrototypeHtml)
     }
 
-    "not display prototype message when config set to false" in new WithApplication {
+    "not display prototype message when config set to false" in new TestWithApplication {
       val request = FakeRequest()
       implicit val clientSideSessionFactory = injector.getInstance(classOf[ClientSideSessionFactory])
       implicit val config: Config = mock[Config]
@@ -59,7 +54,7 @@ class ChangeKeeperSuccessUnitSpec extends UnitSpec {
       contentAsString(result) should not include PrototypeHtml
     }
 
-    "redirect to before you start when no completion cookie is present" in new WithApplication {
+    "redirect to before you start when no completion cookie is present" in new TestWithApplication {
       val request = FakeRequest()
       val result = changeKeeperSuccess.present(request)
       whenReady(result) { r =>
@@ -68,7 +63,7 @@ class ChangeKeeperSuccessUnitSpec extends UnitSpec {
     }
 
     "present a full page with private keeper cached details " +
-      "when all cookies are present for new keeper success" in new WithApplication {
+      "when all cookies are present for new keeper success" in new TestWithApplication {
       val fmt = DateTimeFormat.forPattern("dd/MM/yyyy")
 
       val request = fakeRequest.withCookies(
@@ -94,7 +89,7 @@ class ChangeKeeperSuccessUnitSpec extends UnitSpec {
     }
 
     "present a full page with business keeper cached details " +
-      "when all cookies are present for new keeper success" in new WithApplication {
+      "when all cookies are present for new keeper success" in new TestWithApplication {
       val fmt = DateTimeFormat.forPattern("dd/MM/yyyy")
 
       val request = fakeRequest.withCookies(
@@ -120,7 +115,7 @@ class ChangeKeeperSuccessUnitSpec extends UnitSpec {
     }
 
     "contain code in the page source to open the survey in a new tab " +
-      "when a survey url is configured" in new WithApplication {
+      "when a survey url is configured" in new TestWithApplication {
       val request = fakeRequest.withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
 
       val result = changeKeeperSuccessWithMockConfig(mockSurveyConfig()).present(request)
@@ -129,7 +124,7 @@ class ChangeKeeperSuccessUnitSpec extends UnitSpec {
     }
 
     "not contain code in the page source to open the survey in a new tab " +
-      "when a survey url is configured" in new WithApplication {
+      "when a survey url is configured" in new TestWithApplication {
       val request = fakeRequest.withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
 
       val result = changeKeeperSuccessWithMockConfig(mockSurveyConfig(surveyUrl = None)).present(request)

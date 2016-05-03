@@ -1,6 +1,6 @@
 package controllers
 
-import composition.WithApplication
+import helpers.TestWithApplication
 import helpers.UnitSpec
 import models.CompleteAndConfirmFormModel
 import models.CompleteAndConfirmFormModel.Form.ConsentId
@@ -11,24 +11,24 @@ import play.api.data.Form
 class CompleteAndConfirmFormSpec extends UnitSpec {
 
   "form" should {
-    "accept if form is completed with all fields entered correctly" in new WithApplication {
+    "accept if form is completed with all fields entered correctly" in new TestWithApplication {
       val model = formWithValidDefaults().get
       model.consent should equal ("consent")
       model.regRight should equal ("consent")
     }
 
-    "reject if form has no fields completed" in new WithApplication {
+    "reject if form has no fields completed" in new TestWithApplication {
       formWithValidDefaults(regRight = "", consent = "")
         .errors.flatMap(_.messages) should contain theSameElementsAs
         List("error.required", "error.required")
 
     }
-    "reject if right to registration is not completed" in new WithApplication {
+    "reject if right to registration is not completed" in new TestWithApplication {
       formWithValidDefaults(regRight = "", consent = ConsentTrue)
         .errors.flatMap(_.messages) should contain theSameElementsAs
         List("error.required")
     }
-    "reject if consent is not completed" in new WithApplication {
+    "reject if consent is not completed" in new TestWithApplication {
       formWithValidDefaults(regRight = ConsentTrue, consent = "")
         .errors.flatMap(_.messages) should contain theSameElementsAs
         List("error.required")

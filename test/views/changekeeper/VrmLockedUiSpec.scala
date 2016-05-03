@@ -1,7 +1,8 @@
 package views.changekeeper
 
 import composition.TestHarness
-import helpers.{CookieFactoryForUISpecs, UiSpec}
+import helpers.UiSpec
+import helpers.changekeeper.CookieFactoryForUISpecs
 import org.openqa.selenium.{By, WebElement, WebDriver}
 import org.scalatest.selenium.WebBrowser.{click, currentUrl, go}
 import pages.changekeeper.{BeforeYouStartPage, VrmLockedPage}
