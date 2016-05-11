@@ -1,5 +1,6 @@
 ======= 1.34 ========
 TIME OF RELEASE BINARIES CREATION:
+Wed May 11 14:17:49 UTC 2016
 
 VMPRCI-4351 	Add messages file test to identify missing values
 VMPRCI-4348 	Review VM/PR components that are logging to syslog
