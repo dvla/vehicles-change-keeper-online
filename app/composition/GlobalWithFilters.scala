@@ -1,17 +1,19 @@
 package composition
 
-import com.typesafe.config.ConfigFactory
 import java.io.File
 import java.util.{TimeZone, UUID}
+
+import com.typesafe.config.ConfigFactory
 import org.joda.time.DateTimeZone
-import play.api.{Application, Configuration, GlobalSettings, Logger, Mode, Play}
+import play.api.Play.current
 import play.api.i18n.Lang
 import play.api.mvc.Results.NotFound
 import play.api.mvc.{RequestHeader, Result}
-import play.api.Play.current
+import play.api.{Application, Configuration, Logger, Mode, Play}
+import utils.helpers.Config
+
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
-import utils.helpers.Config
 
 /**
  * Application configuration is in a hierarchy of files:
