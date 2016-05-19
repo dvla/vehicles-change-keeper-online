@@ -21,12 +21,6 @@ global-please-wait-p1 = We are currently receiving a large volume of application
 global-please-wait-p2 = This page will update automatically, please do not close your browser.
 global-please-wait-close = Close this message
 
-#prototype
-prototype.banner = This is a new service -
-prototype.link =  your feedback
-prototype.link.source = mailto:vm.feedback@digital.dvla.gov.uk?Subject=Private%20sale%20of%20a%20vehicle%20feedback
-prototype.bannerPart2 = will help us to improve it
-
 #widget messages
 errorsummary.title = Please correct the details below
 errorsummary.p1 = Please fix the following:
@@ -426,9 +420,6 @@ ms.vehiclesService.response.unableToProcessApplication-address = DVLA, Swansea, 
 closed.title = Service unavailable
 closed.p1 = This service is only available Monday to Saturday {0} to {1}.
 closed.exit_button = Exit
-
-# feedback
-common_feedback.subject = Private sale of a vehicle - feedback
 
 #The option toggle
 mandatory-alternative.not-selected = This field is mandatory. Please select one of the options.
