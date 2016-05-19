@@ -10,9 +10,6 @@ trait Config extends VehicleLookupConfig with CommonConfig {
 
   def assetsUrl: Option[String]
 
-  // Prototype message in html
-  def isPrototypeBannerVisible: Boolean
-
    def startUrl: String
 
   // Google analytics
