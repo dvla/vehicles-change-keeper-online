@@ -161,14 +161,14 @@ class ChangeKeeperSuccessUnitSpec extends UnitSpec {
       }
     }
 
-    "redirect to the before you start page" in {
+    "redirect to gov.uk" in {
       val request = fakeRequest
         .withCookies(CookieFactoryForUnitSpecs.vehicleLookupFormModel())
         .withCookies(CookieFactoryForUnitSpecs.newKeeperDetailsModel())
 
       val result = changeKeeperSuccess.finish(request)
       whenReady(result) { r =>
-        r.header.headers.get(LOCATION) should equal(Some(BeforeYouStartPage.address))
+        r.header.headers.get(LOCATION) should equal(Some("https://www.gov.uk"))
       }
     }
   }

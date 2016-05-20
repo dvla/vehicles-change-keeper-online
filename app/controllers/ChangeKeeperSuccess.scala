@@ -48,8 +48,7 @@ class ChangeKeeperSuccess @Inject()()(implicit clientSideSessionFactory: ClientS
   }
 
   def finish = Action { implicit request =>
-    logMessage(request.cookies.trackingId(), Debug, s"Redirecting to ${routes.BeforeYouStart.present()}")
-    Redirect(routes.BeforeYouStart.present())
+    Redirect("https://www.gov.uk")
       .discardingCookies(AllCacheKeys)
   }
 

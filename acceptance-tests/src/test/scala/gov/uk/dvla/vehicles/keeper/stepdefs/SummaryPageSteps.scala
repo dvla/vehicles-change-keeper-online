@@ -41,14 +41,4 @@ class SummaryPageSteps (webBrowserDriver: WebBrowserDriver)
     pageSource should include("RETAIL") withClue trackingId
     pageSource should include("QQ9 9QQ") withClue trackingId
   }
-
-  @When("^the user click on Finish button$")
-  def the_user_click_on_Finish_button()  {
-    click on ChangeKeeperSuccessPage.finish
-  }
-
-  @Then("^the user can navigates to BeforeStartPage$")
-  def the_user_can_navigates_to_BeforeStartPage()  {
-    pageTitle shouldEqual BeforeYouStartPage.title withClue trackingId
-  }
 }
