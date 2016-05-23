@@ -376,13 +376,6 @@ error_suppressedV5C.link = https://www.gov.uk/dvla-fleet-vehicle-info
 error_suppressedV5C.button1 = Buy another vehicle
 error_suppressedV5C.button2 = Finish
 
-#micro-service error page
-micro_service_error.title=We are sorry
-micro_service_error.text1=The service is temporarily unavailable.
-micro_service_error.text2=
-micro_service_error.back.button=Try again
-micro_service_error.exit.button=Exit
-
 #vrm locked
 vrm_locked.title=Registration number is locked
 vrm_locked.text1= There have been repeated unsuccessful attempts to access the vehicle details. The system has now locked this vehicle registration number for 10 minutes.
