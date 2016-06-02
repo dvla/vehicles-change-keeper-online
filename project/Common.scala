@@ -1,12 +1,9 @@
-import java.io.File
-import java.util.Date
-
 import sbt.Keys._
 import sbt._
 
 object Common {
   val versionString = "1.36-SNAPSHOT"
-  val scalaVersionString = "2.10.5"
+  val scalaVersionString = "2.10.6"
   val organisationString = "dvla"
   val organisationNameString = "Driver & Vehicle Licensing Agency"
   val nexus = "http://rep002-01.skyscape.preview-dvla.co.uk:8081/nexus/content/repositories"
