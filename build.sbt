@@ -28,7 +28,6 @@ lazy val root = (project in file("."))
 lazy val acceptanceTestsProject = Project("acceptance-tests", file("acceptance-tests"))
   .dependsOn(root % "test->test")
   .disablePlugins(PlayScala, SbtWeb)
-  .settings(net.virtualvoid.sbt.graph.Plugin.graphSettings:_*)
 
 lazy val gatlingTestsProject = Project("gatling-tests", file("gatling-tests"))
   .disablePlugins(PlayScala, SbtWeb)
@@ -41,13 +40,14 @@ libraryDependencies ++= Seq(
   // https://commons.apache.org/proper/commons-collections/security-reports.html#Apache_Commons_Collections_Security_Vulnerabilities
   "commons-collections" % "commons-collections" % "3.2.2" withSources() withJavadoc(),
   "commons-codec" % "commons-codec" % "1.10" withSources() withJavadoc(),
+  "commons-io" % "commons-io" % "2.4",
   "com.google.inject" % "guice" % "4.0" withSources() withJavadoc(),
   "com.google.guava" % "guava" % "19.0" withSources() withJavadoc(), // See: http://stackoverflow.com/questions/16614794/illegalstateexception-impossible-to-get-artifacts-when-data-has-not-been-loaded
   "com.tzavellas" % "sse-guice" % "0.7.1" withSources() withJavadoc(), // Scala DSL for Guice
-  "commons-io" % "commons-io" % "2.4",
   "org.apache.commons" % "commons-email" % "1.2",
-  "org.webjars" % "requirejs" % "2.1.14-1",
+  "org.webjars" % "requirejs" % "2.1.22",
   // test
+  // The combination of selenium 2.43.0 and phantomjsdriver 1.2.0 works in the Travis build when open sourcing
   "com.github.detro" % "phantomjsdriver" % "1.2.0" % "test" withSources() withJavadoc(),
   "com.github.tomakehurst" % "wiremock" % "1.58" % "test" withSources() withJavadoc() exclude("log4j", "log4j"),
   "junit" % "junit" % "4.11" % "test",
@@ -80,12 +80,15 @@ testOptions in Test += Tests.Argument(TestFrameworks.ScalaTest, "-l", "helpers.t
 
 javaOptions in Test += System.getProperty("waitSeconds")
 
-concurrentRestrictions in Global := Seq(Tags.limit(Tags.CPU, 100), Tags.limit(Tags.Network, 10), Tags.limit(Tags.Test, 100))
+// use this to get a full stack trace when test failures occur
+//testOptions in Test := Seq(Tests.Filter(s => (s.endsWith("IntegrationSpec") || s.endsWith("UiSpec"))))
 
-sbt.Keys.fork in Test := false
+concurrentRestrictions in Global := Seq(Tags.limit(Tags.CPU, 4), Tags.limit(Tags.Network, 10), Tags.limit(Tags.Test, 4))
 
 //parallelExecution in Test := true
-parallelExecution in Test in acceptanceTestsProject := true
+//parallelExecution in Test in acceptanceTestsProject := true
+
+sbt.Keys.fork in Test := false
 
 // Using node to do the javascript optimisation cuts the time down dramatically
 JsEngineKeys.engineType := JsEngineKeys.EngineType.Node
@@ -95,7 +98,7 @@ sources in doc in Compile := List()
 
 ScalastylePlugin.Settings
 
-net.virtualvoid.sbt.graph.Plugin.graphSettings
+credentials += Credentials(Path.userHome / ".sbt/.credentials")
 
 // Scoverage - avoid play! framework generated classes
 coverageExcludedPackages := "<empty>;Reverse.*"
@@ -111,7 +114,7 @@ resolvers ++= projectResolvers
 
 webJarCdns := Map()
 
-// Uncomment before releasing to bithub in order to make Travis work
+// Uncomment before releasing to github in order to make Travis work
 //resolvers ++= "Dvla Bintray Public" at "http://dl.bintray.com/dvla/maven/"
 
 // ====================== Sandbox Settings ==========================
