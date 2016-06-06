@@ -49,12 +49,8 @@ class Chains(data: RecordSeqFeederBuilder[String]) {
           .get(s"/assets/lib/vehicles-presentation-common/images/open-government-licence_2x.png")
           .headers(headers_accept_png)
       )
-      .exec(http("require.js")
-        .get(s"/assets/javascripts/require.js")
-        .headers(Map("""Accept""" -> """*/*"""))
-      )
       .exec(http("custom.js")
-        .get(s"/assets/javascripts/main.js")
+        .get(s"/assets/javascripts/custom.js")
         .headers(Map("""Accept""" -> """*/*"""))
       )
 
