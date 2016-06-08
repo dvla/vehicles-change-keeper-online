@@ -414,6 +414,9 @@ closed.title = Service unavailable
 closed.p1 = This service is only available Monday to Saturday {0} to {1}.
 closed.exit_button = Exit
 
+# feedback
+common_feedback.subject = Private sale of a vehicle - feedback
+
 #The option toggle
 mandatory-alternative.not-selected = This field is mandatory. Please select one of the options.
 option-toggle.visible = Yes
