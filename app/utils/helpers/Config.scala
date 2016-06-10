@@ -6,11 +6,9 @@ import uk.gov.dvla.vehicles.presentation.common.utils.helpers.CommonConfig
 
 trait Config extends VehicleLookupConfig with CommonConfig {
 
-  final val NotFound = "NOT FOUND"
-
   def assetsUrl: Option[String]
 
-   def startUrl: String
+  def startUrl: String
 
   // Google analytics
   def googleAnalyticsTrackingId: Option[String]

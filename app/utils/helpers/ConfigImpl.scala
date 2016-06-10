@@ -29,7 +29,7 @@ class ConfigImpl extends Config {
   // opening and closing times
   override val openingTimeMinOfDay: Int = getProperty[Int]("openingTimeMinOfDay")
   override val closingTimeMinOfDay: Int = getProperty[Int]("closingTimeMinOfDay")
-  override val closingWarnPeriodMins: Int = getOptionalProperty[Int]("closingWarnPeriodMins").getOrElse(15)
+  override val closingWarnPeriodMins: Int = getOptionalProperty[Int]("closingWarnPeriodMins").getOrElse(ConfigImpl.DEFAULT_CLOSING_WARN_PERIOD)
 
   // Web headers
   override val applicationCode: String = getProperty[String]("webHeader.applicationCode")
@@ -40,9 +40,9 @@ class ConfigImpl extends Config {
   override val contactId: Long = getProperty[Long]("webHeader.contactId")
 
   override val emailServiceMicroServiceUrlBase: String =
-    getOptionalProperty[String]("emailServiceMicroServiceUrlBase").getOrElse(NotFound)
+    getOptionalProperty[String]("emailServiceMicroServiceUrlBase").getOrElse(ConfigImpl.DEFAULT_BASE_URL)
   override val emailServiceMsRequestTimeout: Int =
-    getOptionalProperty[Int]("emailService.ms.requesttimeout").getOrElse(10000)
+    getOptionalProperty[Int]("emailService.ms.requesttimeout").getOrElse(ConfigImpl.DEFAULT_MS_REQ_TIMEOUT)
 
   override val emailConfiguration: EmailConfiguration = EmailConfiguration(
     From(getProperty[String]("email.senderAddress"), "DO-NOT-REPLY"),
@@ -54,4 +54,12 @@ class ConfigImpl extends Config {
 
   // Survey URL
   override val surveyUrl: Option[String] = getOptionalProperty[String]("survey.url")
+}
+
+object ConfigImpl {
+
+  final val DEFAULT_BASE_URL = "NOT FOUND"
+  final val DEFAULT_MS_REQ_TIMEOUT = 10000 // in millis
+  final val DEFAULT_CLOSING_WARN_PERIOD = 15 // in minutes
+
 }
