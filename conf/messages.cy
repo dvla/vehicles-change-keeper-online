@@ -32,8 +32,8 @@ error.restricted.validVrnOnly = Vehicle registration number must be valid format
 error.restricted.validPostcode = Must be between five and eight characters and in a valid format, e.g. AB1 2BA or AB12BA
 
 error.validTitle = Must be a valid title
-error.title=An unrecoverable error has occurred
-error.button=Start again
+error.title = An unrecoverable error has occurred
+error.button = Start again
 error.validBusinessName = Must be between 2 and 58 characters and only contain valid characters (a-z, A-Z, 0-9, &, -,(), /, ‘ and , or .). The following characters cannot be used at the start of trader name name  (&,-,(), /, ‘ and , or .)
 error.validBusinessKeeperName = Must be between 2 and 30 characters, contain at least one alpha character and only contain valid characters (a-z, A-Z, 0-9, &, -,(), /, ‘ and , or .). The following characters cannot be used at the start of business name (&,-,(), /, ‘ and , or .)
 error.invalidBracesOrQuotes = Brackets and quotes must be used as a pair e.g. (...) or "..."
@@ -51,29 +51,12 @@ error.dateOfBirth.110yearsInThePast = Date of birth cannot be more than 110 year
 error.fleetNumber = The fleet number can only be a 6 digit number, please try again.
 error.validBougtByType = Select whether the vehicle is being sold to a private individual or business
 error.validDriverNumber = The driver number that you have entered does not appear to be in an acceptable format. Please amend your entry or delete and re-submit.
-error.fleetNumber = The fleet number can only be a 6 digit number, please try again.
 error.titlePlusFirstName.tooLong = The combined length of your title e.g. Mr/Mrs/Miss/Other and first name(s) cannot exceed 26 characters. Please amend your entry and re-submit.
 error.validDocumentReferenceNumber = Document reference number must be an 11-digit number
 error.validSellerEmail = Must be a valid email address
 error.threeAlphas = Must have at least 3 alpha characters
 error.email.confirm.required = Please confirm the email address
 error.email.not.match = The email addresses did not match
-
-datePlaceholder.day=Day
-datePlaceholder.month=Month
-datePlaceholder.year=Year
-datePlaceholder.January=January
-datePlaceholder.February=February
-datePlaceholder.March=March
-datePlaceholder.April=April
-datePlaceholder.May=May
-datePlaceholder.June=June
-datePlaceholder.July=July
-datePlaceholder.August=August
-datePlaceholder.September=September
-datePlaceholder.October=October
-datePlaceholder.November=November
-datePlaceholder.December=December
 
 select_default = Please select
 error.invalid = Invalid value
@@ -85,11 +68,11 @@ error.invalid = Invalid value
 change_keeper_vehicledetails.warning = If the vehicle details shown are incorrect please abandon this transaction and send the V5C registration certificate (logbook) with a covering letter to DVLA, Swansea, SA99 1BA.
 
 # 404 onHandlerNotFound
-onHandlerNotFound.title=This page cannot be found
-onHandlerNotFound.header=This page cannot be found
-onHandlerNotFound.body=We are unable to find the page you have requested, this event has been logged for investigation.
-onHandlerNotFound.noJavascript=If you wish to try again select the back button on your browser, if not select "Exit" to leave the service.
-onHandlerNotFound.start.button=Start
+onHandlerNotFound.title = This page cannot be found
+onHandlerNotFound.header = This page cannot be found
+onHandlerNotFound.body = We are unable to find the page you have requested, this event has been logged for investigation.
+onHandlerNotFound.noJavascript = If you wish to try again select the back button on your browser, if not select "Exit" to leave the service.
+onHandlerNotFound.start.button = Start
 
 language.cy.button = Cymraeg
 language.en.button = YAGNI
@@ -137,16 +120,14 @@ change_keeper_vehiclelookup.vehiclesoldto.hint = Do not use this service if you 
 change_keeper_vehiclelookup.vehiclesoldto.label = Is the vehicle being sold to a private individual or a business?
 change_keeper_vehiclelookup.vehiclesoldto.private = Private individual
 change_keeper_vehiclelookup.vehiclesoldto.business = Business
-change_keeper_vehiclelookup.img.h2 = Help finding your V5C registration certificate (logbook) document reference number?
-change_keeper_vehiclelookup.img.alt = V5C registration certificate (logbook) document reference number/
 vehicleSoldTo = Vehicle sold to
 vehicleRegistrationNumber = Vehicle registration number
 documentReferenceNumber = Document reference number
 vehicleSellerEmail = Seller email
 vehicleSellerEmailOption = Email confirmation
 change_keeper_vehiclelookup.selleremail = Seller''s email address
-change_keeper_vehiclelookup.warning=Do not use this service if you have sold your vehicle to a motor trader or garage. If you have sold your vehicle to a motor trader or garage then please select this link.
-change_keeper_vehiclelookup.warninglinktext=Sold your vehicle into the motor trade
+change_keeper_vehiclelookup.warning = Do not use this service if you have sold your vehicle to a motor trader or garage. If you have sold your vehicle to a motor trader or garage then please select this link.
+change_keeper_vehiclelookup.warninglinktext = Sold your vehicle into the motor trade
 
 #page 3 - private keeper details
 change_keeper_privatekeeperdetails.title = Enter new keeper details
@@ -316,12 +297,6 @@ change_keeper_success.further_information.p8 = if they do not receive a new V5C 
 change_keeper_success.buttonnavprint = Print
 change_keeper_success.finish = Finish
 
-#uprn not found
-change_keeper_uprnnotfound.title = Error confirming post code
-change_keeper_uprnnotfound.p1 = An error has occurred validating your postcode. Please re-enter or enter your details manually
-change_keeper_uprnnotfound.manualaddressbutton = Set-up trade details
-change_keeper_uprnnotfound.setuptradedetailsbutton = Manually enter address
-
 #vehicle lookup failure
 change_keeper_vehiclelookupfailure.title = Unable to find a vehicle record
 change_keeper_vehiclelookupfailure.p1 = The service is temporarily unavailable. Please try again later or send a completed V5C/3 to DVLA, Swansea, SA99 1BD
@@ -336,10 +311,7 @@ vehicle_and_keeper_lookup_failure.p4 = You will only have a limited number of at
 #page 3 [optional] - manual address entry
 addressAndPostcode_addressLines = Address
 address.lines.label = Building/number and street
-address.buildingNameOrNumber.label =
 address.buildingNameOrNumber.hint = e.g. 1 HIGH STREET
-address.line2.label=
-address.line3.label=
 address.postTown.label= Town or city
 address.postcode.label = Postcode
 address.postcode.label.prompt = e.g. SA99 1BD
@@ -377,13 +349,13 @@ error_suppressedV5C.button1 = Buy another vehicle
 error_suppressedV5C.button2 = Finish
 
 #vrm locked
-vrm_locked.title=Registration number is locked
-vrm_locked.text1= There have been repeated unsuccessful attempts to access the vehicle details. The system has now locked this vehicle registration number for 10 minutes.
-vrm_locked.text2=Locked at
-vrm_locked.text3.1= If you are sure that the details entered are correct then please send your completed V5C registration certificate (logbook) to
-vrm_locked.text3.2=DVLA, Swansea SA99 1BA
-vrm_locked.buyanother.button=Buy another vehicle
-vrm_locked.exit.button=Exit
+vrm_locked.title = Registration number is locked
+vrm_locked.text1 = There have been repeated unsuccessful attempts to access the vehicle details. The system has now locked this vehicle registration number for 10 minutes.
+vrm_locked.text2 = Locked at
+vrm_locked.text3.1 = If you are sure that the details entered are correct then please send your completed V5C registration certificate (logbook) to
+vrm_locked.text3.2 = DVLA, Swansea SA99 1BA
+vrm_locked.buyanother.button = Buy another vehicle
+vrm_locked.exit.button = Exit
 
 # Date labels
 dateOfBirth.day = Day
