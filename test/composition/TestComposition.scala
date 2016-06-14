@@ -61,8 +61,7 @@ private class TestModule() extends ScalaModule with MockitoSugar {
     bind[AddressLookupService].to[AddressLookupServiceImpl]
 
     val fakeWebServiceImpl = new FakeAddressLookupWebServiceImpl(
-      responseOfPostcodeWebService = FakeAddressLookupWebServiceImpl.responseValidForPostcodeToAddress,
-      responseOfUprnWebService = FakeAddressLookupWebServiceImpl.responseValidForUprnToAddress
+      responseOfPostcodeWebService = FakeAddressLookupWebServiceImpl.responseValidForPostcodeToAddress
     )
     bind[AddressLookupWebService].toInstance(fakeWebServiceImpl)
   }

@@ -5,7 +5,9 @@ import helpers.changekeeper.CookieFactoryForUISpecs
 import helpers.UiSpec
 import org.openqa.selenium.{By, WebElement, WebDriver}
 import pages.changekeeper.BeforeYouStartPage
+import pages.changekeeper.BusinessKeeperDetailsPage.PostcodeValid
 import pages.changekeeper.BusinessKeeperDetailsPage
+import pages.changekeeper.BusinessKeeperDetailsPage.PostcodeValid
 import pages.changekeeper.NewKeeperChooseYourAddressPage
 import pages.changekeeper.NewKeeperChooseYourAddressPage.{back, manualAddress, sadPath, happyPath}
 import pages.changekeeper.NewKeeperEnterAddressManuallyPage
@@ -16,7 +18,6 @@ import pages.common.Feedback.EmailFeedbackLink
 import uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction
 import uk.gov.dvla.vehicles.presentation.common.testhelpers.UiTag
 import webserviceclients.fakes.FakeAddressLookupService
-import webserviceclients.fakes.FakeAddressLookupService.PostcodeValid
 import org.scalatest.selenium.WebBrowser.{click, go, pageTitle, pageSource}
 
 class NewKeeperChooseYourAddressIntegrationSpec extends UiSpec with TestHarness {
@@ -108,14 +109,14 @@ class NewKeeperChooseYourAddressIntegrationSpec extends UiSpec with TestHarness 
       go to BeforeYouStartPage
       cacheSetupPrivateKeeper
       go to NewKeeperChooseYourAddressPage
-      pageSource.contains(FakeAddressLookupService.PostcodeValid.toUpperCase) should equal(true)
+      pageSource.contains(PostcodeValid.toUpperCase) should equal(true)
     }
 
     "display the postcode entered in the previous page for a new business keeper" taggedAs UiTag in new WebBrowserForSelenium {
       go to BeforeYouStartPage
       cacheSetupBusinessKeeper
       go to NewKeeperChooseYourAddressPage
-      pageSource.contains(FakeAddressLookupService.PostcodeValid.toUpperCase) should equal(true)
+      pageSource.contains(PostcodeValid.toUpperCase) should equal(true)
     }
 
     "display expected addresses in dropdown " +

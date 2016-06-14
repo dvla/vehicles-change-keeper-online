@@ -36,20 +36,15 @@ final class FakeVehicleAndKeeperLookupWebService extends VehicleAndKeeperLookupW
 }
 
 object FakeVehicleAndKeeperLookupWebService {
-  final val SoldToIndividual = ""
   final val RegistrationNumberValid = "AB12AWR"
-  final val RegistrationNumberWithSpaceValid = "AB12 AWR"
   final val ReferenceNumberValid = "12345678910"
   final val VehicleMakeValid = "Alfa Romeo"
   final val VehicleModelValid = "Alfasud ti"
-  final val KeeperNameValid = "Keeper Name"
-  final val KeeperUprnValid = 10123456789L
   final val ConsentValid = "true"
   final val TransactionIdValid = "A1-100"
   final val VrmNotFound = MicroserviceResponse(code = "", message = "vehicle_lookup_vrm_not_found")
   final val DocumentRecordMismatch = MicroserviceResponse(code = "", message = "vehicle_lookup_document_record_mismatch")
   final val TransactionTimestampValid = new DateTime()
-  final val UnhandledException = "unhandled_exception"
 
   private def vehicleDetails(disposeFlag: Boolean = true) =
     VehicleAndKeeperLookupDetailsDto(

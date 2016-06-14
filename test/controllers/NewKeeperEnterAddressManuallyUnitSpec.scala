@@ -5,6 +5,7 @@ import helpers.{TestWithApplication, UnitSpec}
 import helpers.changekeeper.CookieFactoryForUnitSpecs
 import models.K2KCacheKeyPrefix.CookiePrefix
 import org.mockito.Mockito.when
+import pages.changekeeper.BusinessKeeperDetailsPage.PostcodeValid
 import pages.changekeeper.VehicleLookupPage
 import play.api.mvc.Result
 import play.api.test.FakeRequest
@@ -20,7 +21,7 @@ import uk.gov.dvla.vehicles.presentation.common.views.helpers.FormExtensions
 import uk.gov.dvla.vehicles.presentation.common.views.models.AddressLinesViewModel.Form.{AddressLinesId, BuildingNameOrNumberId, Line2Id, Line3Id, PostTownId}
 import utils.helpers.Config
 import views.changekeeper.NewKeeperEnterAddressManually.PostcodeId
-import webserviceclients.fakes.FakeAddressLookupService.{BuildingNameOrNumberValid, Line2Valid, Line3Valid, PostTownValid, PostcodeValid}
+import webserviceclients.fakes.FakeAddressLookupService.{BuildingNameOrNumberValid, Line2Valid, Line3Valid, PostTownValid}
 
 import scala.concurrent.Future
 

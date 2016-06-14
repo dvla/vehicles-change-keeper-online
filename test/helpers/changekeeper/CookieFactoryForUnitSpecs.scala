@@ -38,7 +38,6 @@ import uk.gov.dvla.vehicles.presentation.common.views.models.{AddressAndPostcode
 import uk.gov.dvla.vehicles.presentation.common.webserviceclients.common.MicroserviceResponse
 import views.changekeeper.VehicleLookup.VehicleSoldTo_Private
 import webserviceclients.fakes.FakeAddressLookupService.{BuildingNameOrNumberValid, Line2Valid, Line3Valid, PostTownValid}
-import webserviceclients.fakes.FakeAddressLookupWebServiceImpl.UprnValid
 import webserviceclients.fakes.FakeVehicleAndKeeperLookupWebService.{ReferenceNumberValid, RegistrationNumberValid, TransactionIdValid, TransactionTimestampValid, VehicleMakeValid, VehicleModelValid}
 import webserviceclients.fakes.brute_force_protection.FakeBruteForcePreventionWebServiceImpl.MaxAttempts
 
@@ -156,15 +155,9 @@ object CookieFactoryForUnitSpecs extends TestComposition {
     createCookie(key, value)
   }
 
-  def newKeeperChooseYourAddressUseUprn(uprnSelected: String = UprnValid.toString): Cookie = {
+  def newKeeperChooseYourAddress(addressSelected: String = NewKeeperChooseYourAddressPage.selectedAddress): Cookie = {
     val key = NewKeeperChooseYourAddressFormModel.newKeeperChooseYourAddressCacheKey
-    val value = NewKeeperChooseYourAddressFormModel(uprnSelected = uprnSelected)
-    createCookie(key, value)
-  }
-
-  def newKeeperChooseYourAddress(uprnSelected: String = NewKeeperChooseYourAddressPage.selectedAddress): Cookie = {
-    val key = NewKeeperChooseYourAddressFormModel.newKeeperChooseYourAddressCacheKey
-    val value = NewKeeperChooseYourAddressFormModel(uprnSelected = uprnSelected)
+    val value = NewKeeperChooseYourAddressFormModel(addressSelected)
     createCookie(key, value)
   }
 
@@ -192,7 +185,7 @@ object CookieFactoryForUnitSpecs extends TestComposition {
       driverNumber = driverNumber,
       businessName = businessName,
       fleetNumber = fleetNumber,
-      address = AddressModel(uprn = uprn, address = Seq(buildingNameOrNumber, line2, line3, postTown, postcode)),
+      address = AddressModel(address = Seq(buildingNameOrNumber, line2, line3, postTown, postcode)),
       email = email,
       isBusinessKeeper = isBusinessKeeper,
       displayName = if (businessName.isEmpty) firstName + " " + lastName

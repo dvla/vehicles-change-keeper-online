@@ -170,7 +170,6 @@ object CookieFactoryForUISpecs {
                             fleetNumber: Option[String] = None,
                             email: Option[String] = None,
                             isBusinessKeeper: Boolean = false,
-                            uprn: Option[Long] = None,
                             buildingNameOrNumber: String = BuildingNameOrNumberValid,
                             line2: String = Line2Valid,
                             line3: String = Line3Valid,
@@ -185,7 +184,7 @@ object CookieFactoryForUISpecs {
       driverNumber = driverNumber,
       businessName = businessName,
       fleetNumber = fleetNumber,
-      address = AddressModel(uprn = uprn, address = Seq(buildingNameOrNumber, line2, line3, postTown, postcode)),
+      address = AddressModel(address = Seq(buildingNameOrNumber, line2, line3, postTown, postcode)),
       email = email,
       isBusinessKeeper = isBusinessKeeper,
       displayName = if (businessName.isEmpty) firstName + " " + lastName
