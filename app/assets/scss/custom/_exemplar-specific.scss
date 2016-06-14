@@ -13,35 +13,19 @@
         }
     }
 
-    .change-keeper-summary-playback {
-      padding: 1em;
-      .info-notice {
-        border: none;
-        padding: 0;
-      }
-    }
-
     .acquire-complete-confirm {
-      div {
-         margin-bottom: 20px;
-      }
-      p {
-        margin-bottom: 5px;
-      }
-      strong {
-        text-transform: uppercase;
-      }
+        div {
+            margin-bottom: 20px;
+        }
+        p {
+            margin-bottom: 5px;
+        }
+        strong {
+            text-transform: uppercase;
+        }
     }
 
-      .vehicle-lookup .alert-warning {
-          margin-top: 1.2em;
-      }
-  .hint-margin {
-    .form-item {
-      margin-bottom: 10px;
+    .vehicle-lookup .alert-warning {
+        margin-top: 1.2em;
     }
-    .panel-indent {
-      margin-top: 0;
-    }
-  }
 } // end $htmlNamespace

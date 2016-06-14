@@ -2,30 +2,8 @@
 
 @import "../../target/web/web-modules/main/webjars/lib/vehicles-presentation-common/scss/_print.scss";
 
-.vehicles-change-keeper-online {
-    padding: 20px;
-    margin-bottom: 0;
-}
-
-.vehicle-details-header {
-  page-break-before: always;
-  padding-top: 20px;
-}
-
 .alert-warning {
   display: none;
 }
+
 .alert-complete .alert-warning { display: block; }
-
-
-.playback {
-  dd {
-    text-transform: uppercase;
-  }
-}
-
-.please-wait-overlay,
-.please-wait-overlay h2,
-.serviceClosingWarning{
-  display: none !important;
-}
