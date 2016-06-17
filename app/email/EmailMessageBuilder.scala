@@ -2,6 +2,7 @@ package email
 
 import java.text.SimpleDateFormat
 import org.joda.time.DateTime
+import play.api.i18n.Messages
 import uk.gov.dvla.vehicles.presentation.common.model.VehicleAndKeeperDetailsModel
 import uk.gov.dvla.vehicles.presentation.common.services.SEND
 
@@ -18,12 +19,12 @@ object EmailMessageBuilder {
      val transactionTimestampStr = new SimpleDateFormat("dd/MM/yyyy HH:mm").format(transactionTimestamp.toDate)
 
      Contents(
-        buildHtml(vehicleDetails, transactionId, imagesPath, transactionTimestampStr),
-        buildText(vehicleDetails, transactionId, transactionTimestampStr)
+        buildHtml(vehicleDetails.registrationNumber, transactionId, imagesPath, transactionTimestampStr),
+        buildText(vehicleDetails.registrationNumber, transactionId, transactionTimestampStr)
      )
   }
 
-  private def buildHtml(vehicleDetails: VehicleAndKeeperDetailsModel,transactionId: String, imagesPath: String,
+  private def buildHtml(regNumber: String, transactionId: String, imagesPath: String,
                         transactionTimestamp: String): String =
     s"""
        |
@@ -32,7 +33,7 @@ object EmailMessageBuilder {
        |<head>
        |    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
        |    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-       |    <title>${vehicleDetails.registrationNumber} Confirmation of new vehicle keeper</title>
+       |    <title>${regNumber} ${Messages("email.title")}</title>
        |</head>
        |
        |<body style="width: 100% !important; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; margin: 0; padding: 0;">
@@ -76,27 +77,27 @@ object EmailMessageBuilder {
        |                    <tr>
        |                        <td style="border-collapse: collapse;">
        |
-       |                            <p><strong style="text-decoration: underline">This is an automated email - Please do not reply as emails received at this address cannot be responded to.</strong></p>
+       |                            <p><strong style="text-decoration: underline">${Messages("email.template.line1")}</strong></p>
        |
-       |                            <p>DVLA have been notified electronically that you are now the new keeper of vehicle registration number: <strong>${vehicleDetails.registrationNumber}</strong></p>
+       |                            <p>${Messages("email.newKeeper.p1")} <strong>${regNumber}</strong></p>
        |
-       |                            <p>The online Transaction ID is <strong>$transactionId</strong></p>
+       |                            <p>${Messages("email.newKeeper.p2")} <strong>$transactionId</strong></p>
        |
-       |                            <p>You should receive your new V5C registration certificate (logbook) within 2 weeks.</p>
+       |                            <p>${Messages("email.newKeeper.p3")}</p>
        |
-       |                            <p>Since 1st October 2014, vehicle tax can no longer be transferred as part of the sale. This is because the seller will automatically receive a refund of any remaining tax.</p>
+       |                            <p>${Messages("email.newKeeper.p4")}</p>
        |
-       |                            <p>You must tax this vehicle before it is driven on the road, tax now at <a href="http://www.gov.uk/vehicletax" target="_blank">www.gov.uk/vehicletax</a>.</p>
+       |                            <p>${Messages("email.newKeeper.p5Html")}</p>
        |
-       |                            <p>If you do not want to tax you can make a SORN declaration now at <a href="http://www.gov.uk/sorn" target="_blank">www.gov.uk/sorn</a>.</p>
+       |                            <p>${Messages("email.newKeeper.p6Html")}</p>
        |
-       |                            <p>For more information on driving and transport go to <a href="http://www.gov.uk/browse/driving" target="_blank">www.gov.uk/browse/driving</a>.</p>
+       |                            <p>${Messages("email.template.line2Html")}</p>
        |
-       |                            <p>You may wish to save or print this email confirmation for your records.</p>
+       |                            <p>${Messages("email.template.line3")}</p>
        |
-       |                            <p>Yours sincerely <br />
-       |                            Rohan Gye<br />
-       |                            Vehicles Service Manager
+       |                            <p>${Messages("email.signature.p1")}<br>
+       |                            ${Messages("email.signature.p2")}<br>
+       |                            ${Messages("email.signature.p3")}
        |                            </p>
        |
        |                            <img src="$imagesPath/dvla_logo.png" width="320" alt="DVLA logo" style="outline: none; text-decoration: none; -ms-interpolation-mode: bicubic;" />
@@ -115,29 +116,29 @@ object EmailMessageBuilder {
        |
     """.stripMargin
 
-  private def buildText(vehicleDetails: VehicleAndKeeperDetailsModel, transactionId: String,
+  private def buildText(regNumber: String, transactionId: String,
                         transactionTimestamp: String): String =
     s"""
-       |THIS IS AN AUTOMATED EMAIL - Please do not reply as emails received at this address cannot be responded to.
+       |${Messages("email.template.line1")}
        |
-       |DVLA have been notified electronically that you are now the new keeper of vehicle registration number: ${vehicleDetails.registrationNumber}
+       |${Messages("email.newKeeper.p1")} ${regNumber}
        |
-       |The online Transaction ID is $transactionId
+       |${Messages("email.newKeeper.p2")} $transactionId
        |
-       |You should receive your new V5C registration certificate (logbook) within 2 weeks.
+       |${Messages("email.newKeeper.p3")}
        |
-       |Since 1st October 2014, vehicle tax can no longer be transferred as part of the sale. This is because the seller will automatically receive a refund of any remaining tax.
+       |${Messages("email.newKeeper.p4")}
        |
-       |You must tax this vehicle before it is driven on the road, tax now at http://www.gov.uk/vehicletax
+       |${Messages("email.newKeeper.p5")}
        |
-       |If you do not want to tax you can make a SORN declaration now at http://www.gov.uk/sorn
+       |${Messages("email.newKeeper.p6")}
        |
-       |For more information on driving and transport go to http://www.gov.uk/browse/driving
+       |${Messages("email.template.line2")}
        |
-       |You may wish to save or print this email confirmation for your records.
+       |${Messages("email.template.line3")}
        |
-       | Yours sincerely
-       | Rohan Gye
-       | Vehicles Service Manager
+       | ${Messages("email.signature.p1")}
+       | ${Messages("email.signature.p2")}
+       | ${Messages("email.signature.p3")}
       """.stripMargin
 }

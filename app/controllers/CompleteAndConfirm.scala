@@ -35,6 +35,7 @@ import common.webserviceclients.acquire.TitleTypeDto
 import common.webserviceclients.common.{VssWebEndUserDto, VssWebHeaderDto}
 import common.webserviceclients.emailservice.EmailService
 import common.webserviceclients.healthstats.HealthStats
+import play.api.i18n.Messages
 import utils.helpers.Config
 import views.html.changekeeper.complete_and_confirm
 
@@ -562,7 +563,7 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
           config.imagesPath, transactionTimestamp)
 
         // This sends the email.
-        val subject = s"${vehicleDetails.registrationNumber} Confirmation of new vehicle keeper"
+        val subject = s"${vehicleDetails.registrationNumber} ${Messages("email.title")}"
         SEND email template withSubject subject to emailAddr send trackingId
 
       case None => logMessage(request.cookies.trackingId(), Warn, "Tried to send an email with no keeper details")

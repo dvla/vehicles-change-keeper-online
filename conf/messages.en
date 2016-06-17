@@ -51,7 +51,6 @@ error.dateOfBirth.110yearsInThePast = Date of birth cannot be more than 110 year
 error.fleetNumber = The fleet number can only be a 6 digit number, please try again.
 error.validBougtByType = Select whether the vehicle is being sold to a private individual or business
 error.validDriverNumber = The driver number that you have entered does not appear to be in an acceptable format. Please amend your entry or delete and re-submit.
-error.fleetNumber = The fleet number can only be a 6 digit number, please try again.
 error.titlePlusFirstName.tooLong = The combined length of your title e.g. Mr/Mrs/Miss/Other and first name(s) cannot exceed 26 characters. Please amend your entry and re-submit.
 error.validDocumentReferenceNumber = Document reference number must be an 11-digit number
 error.validSellerEmail = Must be a valid email address
@@ -121,8 +120,6 @@ change_keeper_vehiclelookup.vehiclesoldto.hint = Do not use this service if you 
 change_keeper_vehiclelookup.vehiclesoldto.label = Is the vehicle being sold to a private individual or a business?
 change_keeper_vehiclelookup.vehiclesoldto.private = Private individual
 change_keeper_vehiclelookup.vehiclesoldto.business = Business
-change_keeper_vehiclelookup.img.h2 = Help finding your V5C registration certificate (logbook) document reference number?
-change_keeper_vehiclelookup.img.alt = V5C registration certificate (logbook) document reference number/
 vehicleSoldTo = Vehicle sold to
 vehicleRegistrationNumber = Vehicle registration number
 documentReferenceNumber = Document reference number
@@ -352,13 +349,13 @@ error_suppressedV5C.button1 = Buy another vehicle
 error_suppressedV5C.button2 = Finish
 
 #vrm locked
-vrm_locked.title =Registration number is locked
+vrm_locked.title = Registration number is locked
 vrm_locked.text1 = There have been repeated unsuccessful attempts to access the vehicle details. The system has now locked this vehicle registration number for 10 minutes.
-vrm_locked.text2 =Locked at
+vrm_locked.text2 = Locked at
 vrm_locked.text3.1 = If you are sure that the details entered are correct then please send your completed V5C registration certificate (logbook) to
 vrm_locked.text3.2 = DVLA, Swansea SA99 1BA
 vrm_locked.buyanother.button = Buy another vehicle
-vrm_locked.exit.button=Exit
+vrm_locked.exit.button = Exit
 
 # Date labels
 dateOfBirth.day = Day
@@ -400,4 +397,26 @@ option-toggle.invisible = No
 change_keeper_date_of_sale.title = Sale details
 change_keeper_date_of_sale.next = Next
 
+# VPC widget - email
 email.verify.label = Confirm email address
+
+# email
+email.template.line1 = THIS IS AN AUTOMATED EMAIL - Please do not reply as emails received at this address cannot be responded to.
+email.template.line2 = For more information on driving and transport go to www.gov.uk/browse/driving
+email.template.line2Html = For more information on driving and transport go to <a href="http://www.gov.uk/browse/driving" target="_blank">www.gov.uk/browse/driving</a>.
+email.template.line3 = You may wish to save or print this email confirmation for your records.
+
+email.newKeeper.p1 = DVLA have been notified electronically that you are now the new keeper of vehicle registration number:
+email.newKeeper.p2 = The online Transaction ID is $transactionId
+email.newKeeper.p3 = You should receive your new V5C registration certificate (logbook) within 2 weeks.
+email.newKeeper.p4 = Since 1st October 2014, vehicle tax can no longer be transferred as part of the sale. This is because the seller will automatically receive a refund of any remaining tax.
+email.newKeeper.p5 = You must tax this vehicle before it is driven on the road, tax now at http://www.gov.uk/vehicletax
+email.newKeeper.p6 = If you do not want to tax you can make a SORN declaration now at http://www.gov.uk/sorn
+email.newKeeper.p5Html = You must tax this vehicle before it is driven on the road, tax now at <a href="http://www.gov.uk/vehicletax" target="_blank">www.gov.uk/vehicletax</a>.
+email.newKeeper.p6Html = If you do not want to tax you can make a SORN declaration now at <a href="http://www.gov.uk/sorn" target="_blank">www.gov.uk/sorn</a>.
+
+email.signature.p1 = Yours sincerely
+email.signature.p2 = Rohan Gye
+email.signature.p3 = Vehicles Service Manager
+
+email.title = Confirmation of new vehicle keeper

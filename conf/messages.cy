@@ -397,4 +397,26 @@ option-toggle.invisible = No
 change_keeper_date_of_sale.title = Sale details
 change_keeper_date_of_sale.next = Next
 
+# VPC widget - email
 email.verify.label = Confirm email address
+
+# email
+email.template.line1 = THIS IS AN AUTOMATED EMAIL - Please do not reply as emails received at this address cannot be responded to.
+email.template.line2 = For more information on driving and transport go to www.gov.uk/browse/driving
+email.template.line2Html = For more information on driving and transport go to <a href="http://www.gov.uk/browse/driving" target="_blank">www.gov.uk/browse/driving</a>.
+email.template.line3 = You may wish to save or print this email confirmation for your records.
+
+email.newKeeper.p1 = DVLA have been notified electronically that you are now the new keeper of vehicle registration number:
+email.newKeeper.p2 = The online Transaction ID is $transactionId
+email.newKeeper.p3 = You should receive your new V5C registration certificate (logbook) within 2 weeks.
+email.newKeeper.p4 = Since 1st October 2014, vehicle tax can no longer be transferred as part of the sale. This is because the seller will automatically receive a refund of any remaining tax.
+email.newKeeper.p5 = You must tax this vehicle before it is driven on the road, tax now at http://www.gov.uk/vehicletax
+email.newKeeper.p6 = If you do not want to tax you can make a SORN declaration now at http://www.gov.uk/sorn
+email.newKeeper.p5Html = You must tax this vehicle before it is driven on the road, tax now at <a href="http://www.gov.uk/vehicletax" target="_blank">www.gov.uk/vehicletax</a>.
+email.newKeeper.p6Html = If you do not want to tax you can make a SORN declaration now at <a href="http://www.gov.uk/sorn" target="_blank">www.gov.uk/sorn</a>.
+
+email.signature.p1 = Yours sincerely
+email.signature.p2 = Rohan Gye
+email.signature.p3 = Vehicles Service Manager
+
+email.title = Confirmation of new vehicle keeper
