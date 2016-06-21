@@ -421,7 +421,7 @@ email.signature.p3 = Vehicles Service Manager
 
 email.title = Confirmation of new vehicle keeper
 
-email.seller.p1 = Thank you for using DVLA’s online service to confirm you are no longer the registered keeper of this vehicle. Please destroy the original V5C registration certificate (logbook). \
+email.seller.p1 = Thank you for using DVLA’s online service to confirm you are no longer the registered keeper of this vehicle. Please destroy the original V5C registration certificate (logbook).
 email.seller.p2 = This must not be sent to DVLA.
 email.seller.p2Html = This must <strong>not</strong> be sent to DVLA.
 
