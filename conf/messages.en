@@ -407,7 +407,7 @@ email.template.line2Html = For more information on driving and transport go to <
 email.template.line3 = You may wish to save or print this email confirmation for your records.
 
 email.newKeeper.p1 = DVLA have been notified electronically that you are now the new keeper of vehicle registration number:
-email.newKeeper.p2 = The online Transaction ID is $transactionId
+email.newKeeper.p2 = The online Transaction ID is
 email.newKeeper.p3 = You should receive your new V5C registration certificate (logbook) within 2 weeks.
 email.newKeeper.p4 = Since 1st October 2014, vehicle tax can no longer be transferred as part of the sale. This is because the seller will automatically receive a refund of any remaining tax.
 email.newKeeper.p5 = You must tax this vehicle before it is driven on the road, tax now at http://www.gov.uk/vehicletax
@@ -420,3 +420,17 @@ email.signature.p2 = Rohan Gye
 email.signature.p3 = Vehicles Service Manager
 
 email.title = Confirmation of new vehicle keeper
+
+email.seller.p1 = Thank you for using DVLA’s online service to confirm you are no longer the registered keeper of this vehicle. Please destroy the original V5C registration certificate (logbook). \
+email.seller.p2 = This must not be sent to DVLA.
+email.seller.p2Html = This must <strong>not</strong> be sent to DVLA.
+
+email.txndetails.p1 = Your application details are:
+email.txndetails.p2 = Vehicle registration number:
+email.txndetails.p3 = Transaction ID:
+email.txndetails.p4 = Application made on:
+
+email.seller.p3 = You should receive a postal acknowledgement letter within 4 weeks.
+email.seller.p4 = DVLA will automatically issue a refund for any full remaining months for vehicle tax and cancel any direct debits. The refund will be sent to the address on the V5C registration certificate (logbook), which was used.
+email.seller.p5 = You may still receive a V11 tax reminder as these are pre-printed up to 6 weeks in advance. If you do receive a V11 for this vehicle after notifying the sale, please ignore it.
+email.seller.p6 = If another payment is taken before your Direct Debit is cancelled, you’ll be automatically refunded within 10 days.

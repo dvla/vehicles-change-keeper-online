@@ -2,6 +2,7 @@ package email
 
 import java.text.SimpleDateFormat
 import org.joda.time.DateTime
+import play.api.i18n.Messages
 import uk.gov.dvla.vehicles.presentation.common.model.VehicleAndKeeperDetailsModel
 
 /**
@@ -74,34 +75,34 @@ object EmailSellerMessageBuilder {
        |                    <tr>
        |                        <td style="border-collapse: collapse;">
        |
-       |                            <p><strong style="text-decoration: underline">This is an automated email - Please do not reply as emails received at this address cannot be responded to.</strong></p>
+       |                            <p><strong style="text-decoration: underline">${Messages("email.template.line1")}</strong></p>
        |
-       |                            <p>Thank you for using DVLA’s online service to confirm you are no longer the registered keeper of this vehicle. Please destroy the original V5C registration certificate (logbook). This must <strong>not</strong> be sent to DVLA.</p>
+       |                            <p>${Messages("email.seller.p1")} ${Messages("email.seller.p2Html")}</p>
        |
-       |                            <p>Your application details are:</p>
+       |                            <p>${Messages("email.txndetails.p1")}</p>
        |
        |                            <p>
-       |                                Vehicle Registration Number: <strong>${vehicleDetails.registrationNumber}</strong> <br />
-       |                                Transaction ID: <strong>$transactionId</strong> <br />
-       |                                Application Made On: <strong>$transactionTimestamp</strong>
+       |                                ${Messages("email.txndetails.p2")} <strong>${vehicleDetails.registrationNumber}</strong> <br />
+       |                                ${Messages("email.txndetails.p3")} <strong>$transactionId</strong> <br />
+       |                                ${Messages("email.txndetails.p4")} <strong>$transactionTimestamp</strong>
        |
        |                            </p>
        |
-       |                            <p>You should receive a postal acknowledgement letter within 4 weeks.</p>
+       |                            <p>${Messages("email.seller.p3")}</p>
        |
-       |                            <p>DVLA will automatically issue a refund for any full remaining months for vehicle tax and cancel any direct debits. The refund will be sent to the address on the V5C registration certificate (logbook), which was used.</p>
+       |                            <p>${Messages("email.seller.p4")}</p>
        |
-       |                            <p>You may still receive a V11 tax reminder as these are pre-printed up to 6 weeks in advance. If you do receive a V11 for this vehicle after notifying the sale, please ignore it.</p>
+       |                            <p>${Messages("email.seller.p5")}</p>
        |
-       |                            <p>If another payment is taken before your Direct Debit is cancelled, you’ll be automatically refunded within 10 days.</p>
+       |                            <p>${Messages("email.seller.p6")}</p>
        |
-       |                            <p>For more information on driving and transport go to <a href="http://www.gov.uk/browse/driving" target="_blank">www.gov.uk/browse/driving</a>.</p>
+       |                            <p>${Messages("email.template.line2Html")}</p>
        |
-       |                            <p>You may wish to save or print this email confirmation for your records.</p>
+       |                            <p>${Messages("email.template.line3")}</p>
        |
-       |                            <p>Yours sincerely <br />
-       |                            Rohan Gye<br />
-       |                            Vehicles Service Manager
+       |                            <p>${Messages("email.signature.p1")}<br>
+       |                            ${Messages("email.signature.p2")}<br>
+       |                            ${Messages("email.signature.p3")}
        |                            </p>
        |
        |                            <img src="$imagesPath/dvla_logo.png" width="320" alt="DVLA logo" style="outline: none; text-decoration: none; -ms-interpolation-mode: bicubic;" />
@@ -124,34 +125,32 @@ object EmailSellerMessageBuilder {
                         transactionTimestamp: String): String =
 
     s"""
-        |THIS IS AN AUTOMATED EMAIL - Please do not reply as emails received at this address cannot be responded to.
+        |${Messages("email.template.line1")}
         |
         |
-        |Thank you for using DVLA’s online service to confirm you are no longer the registered keeper of this vehicle.
-        |Please destroy the original V5C registration certificate (logbook). This must not be sent to DVLA.
+        |${Messages("email.seller.p1")} ${Messages("email.seller.p2")}
         |
-        |Your application details are:
-        |Vehicle Registration Number: ${vehicleDetails.registrationNumber}
-        |Transaction ID: $transactionId
-        |Application Made On: $transactionTimestamp
+        |${Messages("email.txndetails.p1")}
+        |${Messages("email.txndetails.p2")} ${vehicleDetails.registrationNumber}
+        |${Messages("email.txndetails.p3")} $transactionId
+        |${Messages("email.txndetails.p4")} $transactionTimestamp
         |
-        |You should receive a postal acknowledgement letter within 4 weeks.
+        |${Messages("email.template.line2")}
         |
-        |DVLA will automatically issue a refund for any full remaining months for vehicle tax and cancel any direct debits. The refund will be sent to the address on the V5C registration certificate (logbook), which was used.
+        |${Messages("email.seller.p3")}
         |
-        |You may still receive a V11 tax reminder as these are pre-printed up to 6 weeks in advance. If you do receive a V11 for this vehicle after notifying the sale, please ignore it.
+        |${Messages("email.seller.p4")}
         |
-        |If another payment is taken before your Direct Debit is cancelled, you’ll be automatically refunded within 10 days.
+        |${Messages("email.seller.p5")}
         |
-        |For more information on driving and transport go to http://www.gov.uk/browse/driving
+        |${Messages("email.seller.p6")}
         |
-        |You may wish to save or print this email confirmation for your records.
+        |${Messages("email.template.line2")}
         |
-        | Yours sincerely
-        | Rohan Gye
-        | Vehicles Service Manager
-                                                                                                                                                                                                     |       |                            </p>
+        |${Messages("email.template.line3")}
         |
-        |Thank You
+        | ${Messages("email.signature.p1")}
+        | ${Messages("email.signature.p2")}
+        | ${Messages("email.signature.p3")}
       """.stripMargin
 }

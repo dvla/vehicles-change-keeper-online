@@ -79,7 +79,7 @@ object EmailMessageBuilder {
        |
        |                            <p><strong style="text-decoration: underline">${Messages("email.template.line1")}</strong></p>
        |
-       |                            <p>${Messages("email.newKeeper.p1")} <strong>${regNumber}</strong></p>
+       |                            <p>${Messages("email.newKeeper.p1")} <strong>$regNumber</strong></p>
        |
        |                            <p>${Messages("email.newKeeper.p2")} <strong>$transactionId</strong></p>
        |
@@ -121,7 +121,7 @@ object EmailMessageBuilder {
     s"""
        |${Messages("email.template.line1")}
        |
-       |${Messages("email.newKeeper.p1")} ${regNumber}
+       |${Messages("email.newKeeper.p1")} $regNumber
        |
        |${Messages("email.newKeeper.p2")} $transactionId
        |
