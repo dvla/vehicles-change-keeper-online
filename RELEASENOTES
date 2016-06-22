@@ -1,5 +1,6 @@
 ======= 1.36 ========
 TIME OF RELEASE BINARIES CREATION:
+Wed Jun 22 13:13:48 UTC 2016
 
 VMPRCI-4015 	Remove redundant views/common object uprn_not_found, and other references to uprn
 VMPRCI-4190 	Remove unused javascript files
