@@ -1,6 +1,6 @@
 ======= 1.37 ========
 TIME OF RELEASE BINARIES CREATION:
-
+Fri Jul 01 08:59:25 UTC 2016
 
 VMPRCI-4427 	bump gatling-sbt plugin version
 VMPRCI-4424 	Refactor exemplar ErrorStrategy into VPC
