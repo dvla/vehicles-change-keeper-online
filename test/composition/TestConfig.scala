@@ -1,6 +1,6 @@
 package composition
 
-import uk.gov.dvla.vehicles.presentation.common.ConfigProperties.{booleanProp, getOptionalProperty, intProp}
+import uk.gov.dvla.vehicles.presentation.common.ConfigProperties.{booleanProp, getIntListProperty, getOptionalProperty, intProp}
 import uk.gov.dvla.vehicles.presentation.common.services.SEND.EmailConfiguration
 import uk.gov.dvla.vehicles.presentation.common.webserviceclients.emailservice.From
 import utils.helpers.Config
@@ -24,6 +24,7 @@ class TestConfig extends Config {
   def openingTimeMinOfDay: Int = getOptionalProperty[Int]("openingTimeMinOfDay").getOrElse(TestConfig.DEFAULT_OPENING_TIME)
   def closingTimeMinOfDay: Int = getOptionalProperty[Int]("closingTimeMinOfDay").getOrElse(TestConfig.DEFAULT_CLOSING_TIME)
   override val closingWarnPeriodMins: Int = getOptionalProperty[Int]("closingWarnPeriodMins").getOrElse(TestConfig.DEFAULT_CLOSING_WARN_PERIOD)
+  override val closedDays: List[Int] = getIntListProperty("closedDays").getOrElse(List())
 
   // Web headers
   override val applicationCode = TestConfig.WEB_APPLICATION_CODE
@@ -78,5 +79,4 @@ object TestConfig {
   final val DEFAULT_OPENING_TIME = 0
   final val DEFAULT_CLOSING_TIME = 1440
   final val DEFAULT_CLOSING_WARN_PERIOD = 0
-
 }

@@ -2,6 +2,7 @@ package utils.helpers
 
 import uk.gov.dvla.vehicles.presentation.common
 import common.ConfigProperties.booleanProp
+import common.ConfigProperties.getIntListProperty
 import common.ConfigProperties.getOptionalProperty
 import common.ConfigProperties.getProperty
 import common.ConfigProperties.getStringListProperty
@@ -54,6 +55,8 @@ class ConfigImpl extends Config {
 
   // Survey URL
   override val surveyUrl: Option[String] = getOptionalProperty[String]("survey.url")
+
+  override val closedDays: List[Int] = getIntListProperty("closedDays").getOrElse(List())
 }
 
 object ConfigImpl {

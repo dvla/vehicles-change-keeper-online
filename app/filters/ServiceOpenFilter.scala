@@ -10,6 +10,7 @@ class ServiceOpenFilter @Inject()(implicit config: Config,
   protected lazy val closing = config.closingTimeMinOfDay
   protected lazy val dateTimeZone = timeZone
   protected lazy val html = views.html.changekeeper.closed("", "")
+  override protected val closedDays = config.closedDays
 
   override def html(opening: String, closing: String) =
     views.html.changekeeper.closed(opening, closing)
