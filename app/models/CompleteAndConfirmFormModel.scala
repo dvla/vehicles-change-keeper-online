@@ -1,10 +1,11 @@
 package models
 
-import mappings.Consent.{consent, regRight}
+import mappings.Consent.regRight
 import models.K2KCacheKeyPrefix.CookiePrefix
 import play.api.data.Forms.mapping
 import play.api.libs.json.Json
 import uk.gov.dvla.vehicles.presentation.common.clientsidesession.CacheKey
+import uk.gov.dvla.vehicles.presentation.common.mappings.Consent.consent
 import uk.gov.dvla.vehicles.presentation.common.services.DateService
 
 case class CompleteAndConfirmFormModel(regRight: String, consent: String)
