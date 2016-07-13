@@ -25,7 +25,7 @@
     Scenario: - Address entry - Town or city - null or less than three characters
       Given the town or city is null OR the town or city has less than 3 characters
       When the user has selected the submit control
-      Then there is a error message displayed "Town or city must contain between 3 and 20 characters"
+      Then there is a error message displayed "Post town requires a minimum length of three characters"
 
     Scenario:
       Given the user is on the manual address page

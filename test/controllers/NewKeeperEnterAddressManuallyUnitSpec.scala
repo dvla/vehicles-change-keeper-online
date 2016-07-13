@@ -294,7 +294,7 @@ class NewKeeperEnterAddressManuallyUnitSpec extends UnitSpec {
         .withCookies(CookieFactoryForUnitSpecs.privateKeeperDetailsModel())
       val result = newKeeperEnterAddressManually.submit(request)
       val content = contentAsString(result)
-      content should include("Town or city must contain between 3 and 20 characters")
+      content should include("Post town requires a minimum length of three characters")
     }
   }
   private lazy val newKeeperEnterAddressManually = {
