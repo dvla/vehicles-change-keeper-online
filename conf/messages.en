@@ -1,7 +1,4 @@
-# dispose_failure
-global.buttonnavprint = Print
-
-#error.validTitle = Must be a valid title
+# error view
 error.title = An unrecoverable error has occurred
 error.button = Start again
 
@@ -17,7 +14,6 @@ error.validDocumentReferenceNumber = Document reference number must be an 11-dig
 
 # BusinessKeeperDetails.feature
 error.validSellerEmail = Email address is required
-#error.threeAlphas = Must have at least 3 alpha characters
 
 # VPC - BusinessKeeperDetailsFormModel
 businessName = Business name
