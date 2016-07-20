@@ -20,7 +20,15 @@ class Chains(data: RecordSeqFeederBuilder[String]) {
   private final val SummaryPageTitle = "Summary"
   private final val TransactionDetailsPlaybackHeading = "Transaction details"
 
-  private final val year = (Calendar.getInstance().get(Calendar.YEAR)-1).toString
+  private final val ValidDateOfSale = {
+    val calendar = Calendar.getInstance()
+    calendar.add(Calendar.MONTH, -9)
+    calendar
+  }
+
+  private final val day = f"${ValidDateOfSale.get(Calendar.DATE)}%02d"
+  private final val month = f"${ValidDateOfSale.get(Calendar.MONTH)+1}%02d"
+  private final val year = ValidDateOfSale.get(Calendar.YEAR).toString
 
   def verifyAssetsAreAccessible =
     exec(http("screen.min.css")
@@ -199,8 +207,8 @@ class Chains(data: RecordSeqFeederBuilder[String]) {
           .post(url)
           .headers(headers_x_www_form_urlencoded)
           .formParam("mileage", "${mileage}")
-          .formParam("dateofsale.day", "${dateDay}")
-          .formParam("dateofsale.month", "${dateMonth}")
+          .formParam("dateofsale.day", day)
+          .formParam("dateofsale.month", month)
           .formParam("dateofsale.year", year)
           .formParam("csrf_prevention_token", "${csrf_prevention_token}")
           .formParam("action", "")
@@ -223,7 +231,7 @@ class Chains(data: RecordSeqFeederBuilder[String]) {
   def completeAndConfirmSubmit = {
     val url = "/complete-and-confirm"
     val chainTitle = s"POST $url"
-    val expectedTransactionDate = "${dateDay}/${dateMonth}/" + year
+    val expectedTransactionDate = s"$day/$month/$year"
     exitBlockOnFail(
       exec(
         http(chainTitle)

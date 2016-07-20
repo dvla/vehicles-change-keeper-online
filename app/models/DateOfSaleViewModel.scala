@@ -9,7 +9,6 @@ import uk.gov.dvla.vehicles.presentation.common.model.{NewKeeperDetailsViewModel
 case class DateOfSaleViewModel(form: Form[DateOfSaleFormModel],
                                vehicleAndKeeperDetails: VehicleAndKeeperDetailsModel,
                                keeperDetails: NewKeeperDetailsViewModel,
-                               isSaleDateInvalid: Boolean,
-                               isDateToCompareDisposalDate: Boolean,
+                               showDateOfSaleWarning: Boolean = false,
                                submitAction: Call = DateOfSale.submitWithDateCheck(),
-                               dateToCompare: Option[String] = None)
+                               disposalDate: Option[String] = None)

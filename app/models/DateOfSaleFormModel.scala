@@ -36,7 +36,7 @@ object DateOfSaleFormModel {
     final def detailMapping(implicit dateService: DateService) = mapping(
       MileageId -> mileage,
       DateOfSaleId -> dateMapping
-        .verifying(notBefore(new LocalDate().minusYears(validYearsInThePast)))
+        .verifying(notBefore(dateService.now.toDateTime.toLocalDate.minusYears(validYearsInThePast)))
         .verifying(notInTheFuture())
         .verifying(notOne())
     )(DateOfSaleFormModel.apply)(DateOfSaleFormModel.unapply)

@@ -22,7 +22,7 @@
     backButton = Some(controllers.routes.DateOfSale.back())
 ) {
 
-    @if(data.isSaleDateInvalid) {
+    @if(data.showDateOfSaleWarning) {
     <div class="site-overlay"></div>
     }
 
@@ -37,19 +37,13 @@
             @form(action = data.submitAction) {
                 @csrfTokenHiddenField()
 
-                @if(data.isSaleDateInvalid) {
+                @if(data.showDateOfSaleWarning) {
                     <div class="popup-modal">
-                        @if(data.isDateToCompareDisposalDate) {
-                            <p>
-                                @Messages("change_keeper_completeandconfirm.dateofsale.disposalDate.warning",
-                                data.dateToCompare.getOrElse("NOT FOUND"))
-                            </p>
-                        } else {
-                            <p>
-                                @Messages("change_keeper_completeandconfirm.dateofsale.keeperChangeDate.warning",
-                                data.dateToCompare.getOrElse("NOT FOUND"))
-                            </p>
-                        }
+                      @if(data.disposalDate.isDefined) {
+                          <p>@Messages("change_keeper_completeandconfirm.dateofsale.warning", data.disposalDate.get)</p>
+                      } else {
+                          <p>@Messages("change_keeper_completeandconfirm.dateofsale.warning.over12Months")</p>
+                      }
                         <div id=@DateOfSaleId>
                             @valtechDate(
                                 field = data.form(DateOfSaleId),
@@ -74,22 +68,12 @@
                 }
 
                 <div id=@DateOfSaleId class="form-steps">
-                @if(data.isSaleDateInvalid) {
                     @valtechDate(
                         field = data.form(DateOfSaleId),
                         labelText = Messages("change_keeper_completeAndConfirm.dateofsale.label"),
                         hintText = Some(Messages("change_keeper_completeandconfirm.dateofsale.hint")),
-                        args = Map(
-                            'tabindex -> -1
-                        )
+                        args = modify(Map.empty, data.showDateOfSaleWarning)
                     )
-                } else {
-                    @valtechDate(
-                        field = data.form(DateOfSaleId),
-                        labelText = Messages("change_keeper_completeAndConfirm.dateofsale.label"),
-                        hintText = Some(Messages("change_keeper_completeandconfirm.dateofsale.hint"))
-                    )
-                }
                 </div>
 
                 @valtechInputText(
@@ -102,14 +86,14 @@
                         'validityMessage -> Messages("change_keeper_keeperdetailscomplete.mileage.validation"),
                         'class -> "ga-track-optional-text",
                         Symbol("data-ga-action") -> "mileage"
-                    ) ++ (if(config.isHtml5ValidationEnabled) Map('pattern -> Mileage.Pattern) else Nil), data.isSaleDateInvalid)
+                    ) ++ (if(config.isHtml5ValidationEnabled) Map('pattern -> Mileage.Pattern) else Nil), data.showDateOfSaleWarning)
                 )
 
                 <div class="form-steps">
                     <button id="@SubmitId"
                         type="submit"
                         name="action"
-                        @if(data.isSaleDateInvalid) {tabindex="-1"}
+                        @if(data.showDateOfSaleWarning) {tabindex="-1"}
                         class="button">
                         @Messages("change_keeper_date_of_sale.next")
                     </button>

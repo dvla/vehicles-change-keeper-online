@@ -40,10 +40,20 @@ class CheckPreviousKeeperEndDateOrLastKeeperChangeDateAndCompareDateOfSale(webBr
     click on DateOfSalePage.next
   }
 
-  @Then("^the user will remain on the Date of Sale page and a warning will be displayed$")
-  def the_user_will_remain_on_the_date_of_sale_page_and_a_warning_will_be_displayed()  {
+  @When("^the user enters a date of sale that is over 12 months in the past and click on submit button$")
+  def the_user_enters_a_date_of_sale_that_is_over_twelve_months_in_the_past_and_click_on_submit_button() {
+    val invalidDateOfSale = org.joda.time.DateTime.now.minusMonths(13)
+    DateOfSalePage.dayDateOfSaleTextBox.value = invalidDateOfSale.toString("dd")
+    DateOfSalePage.monthDateOfSaleTextBox.value = invalidDateOfSale.toString("MM")
+    DateOfSalePage.yearDateOfSaleTextBox.value = invalidDateOfSale.getYear.toString
+    click on DateOfSalePage.next
+  }
+
+  @Then("^the user will remain on the Date of Sale page and a warning will be displayed \"(.*?)\"$")
+  def the_user_will_remain_on_the_date_of_sale_page_and_a_warning_will_be_displayed(warning: String)  {
     pageTitle should equal(DateOfSalePage.title) withClue trackingId
     pageSource should include("<div class=\"popup-modal\">") withClue trackingId
+    pageSource should include(warning) withClue trackingId
   }
 
   @Then("^the user confirms the date$")

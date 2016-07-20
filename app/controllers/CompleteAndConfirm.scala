@@ -347,7 +347,7 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
   private def buildWebHeader(trackingId: TrackingId,
                              identifier: Option[String]): VssWebHeaderDto = {
     VssWebHeaderDto(transactionId = trackingId.value,
-      originDateTime = new DateTime,
+      originDateTime = dateService.now.toDateTime,
       applicationCode = config.applicationCode,
       serviceTypeCode = config.vssServiceTypeCode,
       buildEndUser(identifier))

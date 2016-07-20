@@ -24,6 +24,10 @@ import common.webserviceclients.emailservice.EmailService
 import utils.helpers.Config
 import views.html.changekeeper.date_of_sale
 
+object DateOfSaleCheck extends Enumeration {
+  val DateOfDisposalAfterDateOfSale, DateOfSaleOver12Months, Ok = Value
+}
+
 class DateOfSale @Inject()(webService: AcquireService, emailService: EmailService)
                                   (implicit clientSideSessionFactory: ClientSideSessionFactory,
                                    dateService: DateService,
@@ -48,8 +52,7 @@ class DateOfSale @Inject()(webService: AcquireService, emailService: EmailServic
                 form.fill(),
                 vehicleAndKeeperDetails,
                 newKeeperDetails,
-                isSaleDateInvalid = false,
-                isDateToCompareDisposalDate = false
+                showDateOfSaleWarning= false
               ),
               dateService
             )
@@ -59,16 +62,19 @@ class DateOfSale @Inject()(webService: AcquireService, emailService: EmailServic
   }
 
   // The dates are valid if they are on the same date or if the disposal date/keeper change date
-  // is before the acquisition date
-  def submitWithDateCheck = submitBase(
-    (keeperEndDateOrChangeDate, dateOfSale) =>
-      keeperEndDateOrChangeDate.toLocalDate.isEqual(dateOfSale) ||
-        keeperEndDateOrChangeDate.toLocalDate.isBefore(dateOfSale)
-  )
+  // is before the date of sale
+  def submitWithDateCheck = submitBase({
+    case (Some(keeperEndOrChangeDate), dateOfSale) if (keeperEndOrChangeDate.toLocalDate.isAfter(dateOfSale)) =>
+      DateOfSaleCheck.DateOfDisposalAfterDateOfSale
+    case (_, dateOfSale) if (dateOfSale.isBefore(dateService.now.toDateTime.toLocalDate.minusMonths(12))) =>
+      DateOfSaleCheck.DateOfSaleOver12Months
+    case _ =>
+      DateOfSaleCheck.Ok
+  })
 
-  def submitNoDateCheck = submitBase((keeperEndDateOrChangeDate, dateOfSale) => true)
+  def submitNoDateCheck = submitBase((_, _) => DateOfSaleCheck.Ok)
 
-  private def submitBase(validDates: (DateTime, LocalDate) => Boolean) = Action { implicit request =>
+  private def submitBase(validDates: (Option[DateTime], LocalDate) => DateOfSaleCheck.Value) = Action { implicit request =>
     form.bindFromRequest.fold(
       invalidForm => {
         val result = for {
@@ -80,8 +86,7 @@ class DateOfSale @Inject()(webService: AcquireService, emailService: EmailServic
                 formWithReplacedErrors(invalidForm),
                 vehicleDetails,
                 newKeeperDetails,
-                isSaleDateInvalid = false,
-                isDateToCompareDisposalDate = false
+                showDateOfSaleWarning = false
               ),
             dateService
           )
@@ -98,7 +103,7 @@ class DateOfSale @Inject()(webService: AcquireService, emailService: EmailServic
     )
   }
 
-  private def processValidForm(validDates: (DateTime, LocalDate) => Boolean, validModel: DateOfSaleFormModel)
+  private def processValidForm(validDates: (Option[DateTime], LocalDate) => DateOfSaleCheck.Value, validModel: DateOfSaleFormModel)
                               (implicit request: Request[AnyContent]): Result = {
     val result = for {
       newKeeperDetails <- request.cookies.getModel[NewKeeperDetailsViewModel]
@@ -117,35 +122,44 @@ class DateOfSale @Inject()(webService: AcquireService, emailService: EmailServic
       // Only do the date check if the keeper end date or the keeper change date is present. If they are both
       // present or neither are present then skip the check
 
-      Seq(vehicleDetails.keeperChangeDate, vehicleDetails.keeperEndDate).flatten match {
-        case Seq(endDateOrChangeDate) if validDates(endDateOrChangeDate, validModel.dateOfSale) =>
-          // Either the keeper end date or the keeper change date is populated so do the date check
-          // The dateOfSale is valid
-          Redirect(routes.CompleteAndConfirm.present())
-            .withCookie(validModel)
-            .withCookie(AllowGoingToCompleteAndConfirmPageCacheKey, "true")
-        case Seq(endDateOrChangeDate) =>
-          // The dateOfSale is invalid
-          BadRequest(date_of_sale(
-            DateOfSaleViewModel(
-              form.fill(validModel),
-              vehicleDetails,
-              newKeeperDetails,
-              isSaleDateInvalid = true, // This will tell the page to display the date warning
-              isDateToCompareDisposalDate = vehicleDetails.keeperEndDate.isDefined,
-              // Next time the submit will not perform any date check
-              submitAction = controllers.routes.DateOfSale.submitNoDateCheck(),
-              // Pass the dateOfDisposal/change date so we can tell the user in the warning
-              dateToCompare = Some(endDateOrChangeDate.toString("dd/MM/yyyy"))
-            ),
-            dateService)
-          )
-        case _ =>
-          // Either both dates are missing or they are both populated so just call the acquire service
-          // and move to the next page
-          Redirect(routes.CompleteAndConfirm.present())
-            .withCookie(validModel)
-            .withCookie(AllowGoingToCompleteAndConfirmPageCacheKey, "true")
+      def dateInvalidCall(disposalDate: Option[DateTime]) = {
+        BadRequest(date_of_sale(
+          DateOfSaleViewModel(
+            form.fill(validModel),
+            vehicleDetails,
+            newKeeperDetails,
+            showDateOfSaleWarning = true,
+            // Next time the submit will not perform any date check
+            submitAction = controllers.routes.DateOfSale.submitNoDateCheck(),
+            // Pass the dateOfDisposal/change date so we can tell the user in the warning
+            disposalDate = disposalDate.map(_.toString("dd/MM/yyyy"))
+          ),
+          dateService))
+      }
+
+      def dateCheck(keeperChangeOrEndDate: Option[DateTime]) = {
+        validDates(keeperChangeOrEndDate, validModel.dateOfSale) match {
+          case DateOfSaleCheck.Ok =>
+            Redirect(routes.CompleteAndConfirm.present())
+              .withCookie(validModel)
+              .withCookie(AllowGoingToCompleteAndConfirmPageCacheKey, "true")
+          case DateOfSaleCheck.DateOfDisposalAfterDateOfSale =>
+            logMessage(request.cookies.trackingId(), Debug, "Date of sale date validation failed: disposalDate " +
+              s"($keeperChangeOrEndDate) after dateOfSale (${validModel.dateOfSale})")
+            dateInvalidCall(keeperChangeOrEndDate)
+          case DateOfSaleCheck.DateOfSaleOver12Months =>
+            logMessage(request.cookies.trackingId(), Debug, "Date of sale date validation failed: dateOfSale " +
+              s"(${validModel.dateOfSale}) over 12 months")
+            dateInvalidCall(None)
+        }
+      }
+
+      (vehicleDetails.keeperChangeDate, vehicleDetails.keeperEndDate) match {
+        case (Some(keeperChangeDate), None) => dateCheck(vehicleDetails.keeperChangeDate)
+        case (None, Some(keeperEndDate)) => dateCheck(vehicleDetails.keeperEndDate)
+        // Either both dates are missing or they are both populated so just call the acquire service
+        // and move to the next page
+        case _ => dateCheck(None)
       }
     }
 
