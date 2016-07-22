@@ -24,6 +24,7 @@ fleetNumber = Fleet number
 fleetNumberOption = Fleet number
 
 # VPC - NewKeeperEnterAddressManuallyBase
+addressAndPostcode.addressLines = Address
 addressAndPostcode.addressLines.buildingNameOrNumber = Building name or number
 
 # gatling
