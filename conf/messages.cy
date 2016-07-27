@@ -241,7 +241,7 @@ vrm_locked.text3.2 = DVLA, Swansea SA99 1BA
 vrm_locked.exit.button = Exit
 
 # exemplar closed, micro_service_error, terms_and_conditions widgets
-closed.lastDayOpen = Sunday
+closed.lastDayOpen = Saturday
 
 # FeedbackController
 common_feedback.subject = Private sale of a vehicle - feedback
