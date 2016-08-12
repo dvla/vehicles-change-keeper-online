@@ -30,11 +30,6 @@ addressAndPostcode.addressLines.buildingNameOrNumber = Building name or number
 # gatling
 error.title.missing = Other - This is a required field
 
-# VPC - closed widget
-closed.title = Service unavailable
-closed.p1 = This service is only available Monday to {2} {0} to {1}.
-closed.exit_button = Exit
-
 # VPC - OptionalToggle widget
 mandatory-alternative.not-selected = This field is mandatory. Please select one of the options.
 
