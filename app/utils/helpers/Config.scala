@@ -19,6 +19,7 @@ trait Config extends VehicleLookupConfig with CommonConfig {
   def openingTimeMinOfDay: Int
   def closingTimeMinOfDay: Int
   def closingWarnPeriodMins: Int
+  def closedDays: List[Int]
 
   def emailServiceMicroServiceUrlBase: String
   def emailServiceMsRequestTimeout: Int
@@ -28,6 +29,4 @@ trait Config extends VehicleLookupConfig with CommonConfig {
 
   // Survey URL
   def surveyUrl: Option[String]
-
-  val closedDays: List[Int]
 }
