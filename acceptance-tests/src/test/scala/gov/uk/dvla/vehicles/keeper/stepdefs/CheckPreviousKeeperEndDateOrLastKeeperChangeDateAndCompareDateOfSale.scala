@@ -56,6 +56,14 @@ class CheckPreviousKeeperEndDateOrLastKeeperChangeDateAndCompareDateOfSale(webBr
     pageSource should include(warning) withClue trackingId
   }
 
+  @Then("^the user enters a valid date and confirms$")
+  def the_user_enters_a_valid_date_and_confirms()  {
+    DateOfSalePage.dayDateOfSaleTextBox.value = "12"
+    DateOfSalePage.monthDateOfSaleTextBox.value = "12"
+    DateOfSalePage.yearDateOfSaleTextBox.value = getPreviousYear
+    click on DateOfSalePage.next
+  }
+
   @Then("^the user confirms the date$")
   def the_user_confirms_the_date()  {
     click on DateOfSalePage.next
