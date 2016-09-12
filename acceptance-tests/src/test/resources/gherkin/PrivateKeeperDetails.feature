@@ -11,7 +11,7 @@
   Scenario: Private Keeper Other Title text box value as null
     When the user selects Other title radio button and then click on Submit button
     But  not entered any text in Other title text box
-    Then the user will remain on the same page with an error message "Other - This is a required field"
+    Then the user will remain on the same page with an error message "Title - Please enter the title of the new keeper"
 
   Scenario: Private Keeper First name - null entry
     When the user click on Submit button by not entering any text on FirstName textBox

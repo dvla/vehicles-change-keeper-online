@@ -5,10 +5,6 @@ error.button = Start again
 # VehicleLookup
 error.validBougtByType = Select whether the vehicle is being sold to a private individual or business
 
-# VPC - PrivateKeeperDetailsBase
-error.validDriverNumber = The driver number that you have entered does not appear to be in an acceptable format. Please amend your entry or delete and re-submit.
-error.titlePlusFirstName.tooLong = The combined length of your title e.g. Mr/Mrs/Miss/Other and first name(s) cannot exceed 26 characters. Please amend your entry and re-submit.
-
 # vehicle_lookup widget
 error.validDocumentReferenceNumber = Document reference number must be an 11-digit number
 
@@ -26,15 +22,6 @@ fleetNumberOption = Fleet number
 # VPC - NewKeeperEnterAddressManuallyBase
 addressAndPostcode.addressLines = Address
 addressAndPostcode.addressLines.buildingNameOrNumber = Building name or number
-
-# gatling
-error.title.missing = Other - This is a required field
-
-# VPC - OptionalToggle widget
-mandatory-alternative.not-selected = This field is mandatory. Please select one of the options.
-
-# VPC - email widget
-email.verify.label = Confirm email address
 
 ##
 # PRIVATE SALE OF VEHICLE
@@ -215,9 +202,6 @@ vehicle_and_keeper_lookup_failure.p4 = You will only have a limited number of at
 
 #page 7 - change keeper failure
 error.date.notOne = Year cannot be 0000
-
-# gatling
-error.title.unknownOption = Please enter the title of the new keeper
 
 #keeper still on record (no previous disposal has been done to the vehicle so the keeper is still on record)
 error_suppressedV5C.title = Vehicle is part of a suppressed fleet
