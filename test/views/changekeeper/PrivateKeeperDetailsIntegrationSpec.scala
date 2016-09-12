@@ -130,14 +130,28 @@ final class PrivateKeeperDetailsIntegrationSpec extends UiSpec with TestHarness 
       ErrorPanel.numberOfErrors should equal(1)
     }
 
-    "display one validation error message when no firstname is entered" taggedAs UiTag in new WebBrowserForSelenium {
+    "display one validation error message when no first name is entered" taggedAs UiTag in new WebBrowserForSelenium {
       go to BeforeYouStartPage
       cacheSetup()
-      navigate(firstName = FirstNameInvalid)
+      navigate(firstName = "")
       ErrorPanel.numberOfErrors should equal(1)
     }
 
-    "display one validation error message when no lastName is entered" taggedAs UiTag in new WebBrowserForSelenium {
+    "display one validation error message when first name is invalid" taggedAs UiTag in new WebBrowserForSelenium {
+       go to BeforeYouStartPage
+       cacheSetup()
+       navigate(firstName = FirstNameInvalid)
+       ErrorPanel.numberOfErrors should equal(1)
+     }
+
+    "display one validation error message when no last name is entered" taggedAs UiTag in new WebBrowserForSelenium {
+      go to BeforeYouStartPage
+      cacheSetup()
+      navigate(lastName = "")
+      ErrorPanel.numberOfErrors should equal(1)
+    }
+
+    "display one validation error message when last name is invalid" taggedAs UiTag in new WebBrowserForSelenium {
       go to BeforeYouStartPage
       cacheSetup()
       navigate(lastName = LastNameInvalid)
