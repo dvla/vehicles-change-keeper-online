@@ -70,7 +70,7 @@ change_keeper_vehiclelookup.warninglinktext = Sold your vehicle into the motor t
 
 #page 3 - private keeper details
 change_keeper_privatekeeperdetails.title = Enter new keeper details
-change_keeper_privatekeeperdetails.p1 = We will use these details to create a new V5C registration certificate (logbook).
+change_keeper_privatekeeperdetails.p1 = Dylai rhain fod yn manylion y person yr ydych wedi gwerthu’r cerbyd iddynt. Byddwn yn defnyddio’r manylion hyn i ddiweddaru ein cofnodion a chyhoeddi tystysgrif cofrestru V5CW newydd (llyfr log).
 change_keeper_privatekeeperdetails.firstnamelabel = First name(s)
 change_keeper_privatekeeperdetails.lastnamelabel = Last name
 change_keeper_privatekeeperdetails.dateofbirth.hint = For example, 01 03 1976
@@ -84,7 +84,7 @@ change_keeper_privatekeeperdetails.postcode.hint = e.g. AB1 2BA or AB12BA
 
 #page 3 - business keeper details
 change_keeper_businesskeeperdetails.title = Enter new keeper details
-change_keeper_businesskeeperdetails.p1 = We will use these details to create a new V5C registration certificate (logbook).
+change_keeper_businesskeeperdetails.p1 = Dylai rhain fod yn manylion y busnes yr ydych wedi gwerthu’r cerbyd iddynt. Byddwn yn defnyddio’r manylion hyn i ddiweddaru ein cofnodion a chyhoeddi tystysgrif cofrestru V5CW newydd (llyfr log).
 change_keeper_businesskeeperdetails.fleetnumber = Fleet number
 change_keeper_businesskeeperdetails.businessname = Business name
 change_keeper_businesskeeperdetails.businessname.hint = If the business buying this vehicle has a DVLA fleet number, please provide it
