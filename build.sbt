@@ -124,7 +124,7 @@ SandboxSettings.portOffset := 20000
 
 SandboxSettings.applicationContext := ""
 
-SandboxSettings.webAppSecrets := "ui/dev/vehicles-change-keeper-online.conf.enc"
+SandboxSettings.webAppSecrets := "vehicles-change-keeper-online/conf/vehicles-change-keeper-online.conf"
 
 SandboxSettings.osAddressLookupProject := osAddressLookupProject
 
