@@ -121,6 +121,7 @@ class HappyAndSadPathSteps(webBrowserDriver: WebBrowserDriver)
     pageTitle shouldEqual NewKeeperEnterAddressManuallyPage.title withClue trackingId
     NewKeeperEnterAddressManuallyPage.addressBuildingNameOrNumber.value = "2 high street"
     NewKeeperEnterAddressManuallyPage.addressPostTown.value = "swansea"
+    NewKeeperEnterAddressManuallyPage.addressPostcode.value = "sa11aa"
     click on NewKeeperEnterAddressManuallyPage.next
   }
 
@@ -141,6 +142,7 @@ class HappyAndSadPathSteps(webBrowserDriver: WebBrowserDriver)
     pageTitle shouldEqual NewKeeperEnterAddressManuallyPage.title withClue trackingId
     NewKeeperEnterAddressManuallyPage.addressBuildingNameOrNumber.value = "2 high street"
     NewKeeperEnterAddressManuallyPage.addressPostTown.value = "swansea"
+    NewKeeperEnterAddressManuallyPage.addressPostcode.value = "sa11aa"
     click on NewKeeperEnterAddressManuallyPage.next
   }
 
@@ -169,6 +171,7 @@ class HappyAndSadPathSteps(webBrowserDriver: WebBrowserDriver)
     pageTitle shouldEqual NewKeeperEnterAddressManuallyPage.title withClue trackingId
     NewKeeperEnterAddressManuallyPage.addressBuildingNameOrNumber.value = "2 high street"
     NewKeeperEnterAddressManuallyPage.addressPostTown.value = "swansea"
+    NewKeeperEnterAddressManuallyPage.addressPostcode.value = "sa11aa"
     click on NewKeeperEnterAddressManuallyPage.next
   }
 
@@ -202,6 +205,7 @@ class HappyAndSadPathSteps(webBrowserDriver: WebBrowserDriver)
     pageTitle shouldEqual NewKeeperEnterAddressManuallyPage.title withClue trackingId
     NewKeeperEnterAddressManuallyPage.addressBuildingNameOrNumber.value = "2 high street"
     NewKeeperEnterAddressManuallyPage.addressPostTown.value = "swansea"
+    NewKeeperEnterAddressManuallyPage.addressPostcode.value = "sa11aa"
     click on NewKeeperEnterAddressManuallyPage.next
   }
 

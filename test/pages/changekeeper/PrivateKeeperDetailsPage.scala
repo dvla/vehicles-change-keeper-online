@@ -23,9 +23,9 @@ object PrivateKeeperDetailsPage extends Page with Matchers {
 
   final val TitleInvalid = "other"
   final val FirstNameValid = "fn"
-  final val FirstNameInvalid = ""
+  final val FirstNameInvalid = "-fn"
   final val LastNameValid = "TestLastName"
-  final val LastNameInvalid = ""
+  final val LastNameInvalid = "+TestLastName"
   final val EmailValid = "my@email.com"
   final val EmailInvalid = "no_at_symbol.com"
   final val VehicleMakeValid = "Audi"

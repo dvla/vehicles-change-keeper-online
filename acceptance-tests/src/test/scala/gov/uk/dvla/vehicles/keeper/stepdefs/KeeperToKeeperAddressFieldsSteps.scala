@@ -67,6 +67,7 @@ class KeeperToKeeperAddressFieldsSteps(webBrowserDriver: WebBrowserDriver)
     click on NewKeeperChooseYourAddressPage.manualAddress
     NewKeeperEnterAddressManuallyPage.addressBuildingNameOrNumber.value = "1 first lane"
     NewKeeperEnterAddressManuallyPage.addressPostTown.value = "hghjg"
+    NewKeeperEnterAddressManuallyPage.addressPostcode.value = "sa11aa"
   }
 
   @Then("^there is no address error message is displayed \"(.*?)\"$")
@@ -116,6 +117,7 @@ class KeeperToKeeperAddressFieldsSteps(webBrowserDriver: WebBrowserDriver)
     click on NewKeeperChooseYourAddressPage.manualAddress
     NewKeeperEnterAddressManuallyPage.addressBuildingNameOrNumber.value = "1Gffhf"
     NewKeeperEnterAddressManuallyPage.addressPostTown.value = "hghjg"
+    NewKeeperEnterAddressManuallyPage.addressPostcode.value = "sa11aa"
   }
 
   @Then("^the user is taken to the Date of Sale page$")

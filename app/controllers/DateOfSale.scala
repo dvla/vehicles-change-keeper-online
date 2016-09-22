@@ -64,9 +64,9 @@ class DateOfSale @Inject()(webService: AcquireService, emailService: EmailServic
   // The dates are valid if they are on the same date or if the disposal date/keeper change date
   // is before the date of sale
   def submitWithDateCheck = submitBase({
-    case (Some(keeperEndOrChangeDate), dateOfSale) if (keeperEndOrChangeDate.toLocalDate.isAfter(dateOfSale)) =>
+    case (Some(keeperEndOrChangeDate), dateOfSale) if keeperEndOrChangeDate.toLocalDate.isAfter(dateOfSale) =>
       DateOfSaleCheck.DateOfDisposalAfterDateOfSale
-    case (_, dateOfSale) if (dateOfSale.isBefore(dateService.now.toDateTime.toLocalDate.minusMonths(12))) =>
+    case (_, dateOfSale) if dateOfSale.isBefore(dateService.now.toDateTime.toLocalDate.minusMonths(12)) =>
       DateOfSaleCheck.DateOfSaleOver12Months
     case _ =>
       DateOfSaleCheck.Ok
@@ -122,10 +122,10 @@ class DateOfSale @Inject()(webService: AcquireService, emailService: EmailServic
       // Only do the date check if the keeper end date or the keeper change date is present. If they are both
       // present or neither are present then skip the check
 
-      def dateInvalidCall(disposalDate: Option[DateTime]) = {
+      def dateInvalidCall(warningModel: Form[DateOfSaleFormModel], disposalDate: Option[DateTime]) = {
         BadRequest(date_of_sale(
           DateOfSaleViewModel(
-            form.fill(validModel),
+            warningModel,
             vehicleDetails,
             newKeeperDetails,
             showDateOfSaleWarning = true,
@@ -146,11 +146,16 @@ class DateOfSale @Inject()(webService: AcquireService, emailService: EmailServic
           case DateOfSaleCheck.DateOfDisposalAfterDateOfSale =>
             logMessage(request.cookies.trackingId(), Debug, "Date of sale date validation failed: disposalDate " +
               s"($keeperChangeOrEndDate) after dateOfSale (${validModel.dateOfSale})")
-            dateInvalidCall(keeperChangeOrEndDate)
+            // VMPRCI-4450: Don't pass through the entered date of sale and ignore the resulting error
+            val model = form.bind(Map(
+              models.DateOfSaleFormModel.Form.MileageId -> validModel.mileage.fold("")(_.toString)
+            )).discardingErrors
+
+            dateInvalidCall(model, keeperChangeOrEndDate)
           case DateOfSaleCheck.DateOfSaleOver12Months =>
             logMessage(request.cookies.trackingId(), Debug, "Date of sale date validation failed: dateOfSale " +
               s"(${validModel.dateOfSale}) over 12 months")
-            dateInvalidCall(None)
+            dateInvalidCall(form.fill(validModel), None)
         }
       }
 

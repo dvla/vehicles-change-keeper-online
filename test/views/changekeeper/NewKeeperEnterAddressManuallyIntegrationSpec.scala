@@ -14,8 +14,6 @@ import org.scalatest.selenium.WebBrowser.{click, go, pageTitle, pageSource}
 
 class NewKeeperEnterAddressManuallyIntegrationSpec extends UiSpec with TestHarness {
 
-
-
   "go to page" should {
     "display the page" taggedAs UiTag in new WebBrowserForSelenium {
       go to BeforeYouStartPage
@@ -62,7 +60,7 @@ class NewKeeperEnterAddressManuallyIntegrationSpec extends UiSpec with TestHarne
       go to BeforeYouStartPage
       cacheSetup()
       sadPath
-      ErrorPanel.numberOfErrors should equal(2)
+      ErrorPanel.numberOfErrors should equal(3)
     }
   }
 

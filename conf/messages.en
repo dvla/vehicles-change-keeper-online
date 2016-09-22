@@ -5,10 +5,6 @@ error.button = Start again
 # VehicleLookup
 error.validBougtByType = Select whether the vehicle is being sold to a private individual or business
 
-# VPC - PrivateKeeperDetailsBase
-error.validDriverNumber = The driver number that you have entered does not appear to be in an acceptable format. Please amend your entry or delete and re-submit.
-error.titlePlusFirstName.tooLong = The combined length of your title e.g. Mr/Mrs/Miss/Other and first name(s) cannot exceed 26 characters. Please amend your entry and re-submit.
-
 # vehicle_lookup widget
 error.validDocumentReferenceNumber = Document reference number must be an 11-digit number
 
@@ -26,15 +22,6 @@ fleetNumberOption = Fleet number
 # VPC - NewKeeperEnterAddressManuallyBase
 addressAndPostcode.addressLines = Address
 addressAndPostcode.addressLines.buildingNameOrNumber = Building name or number
-
-# gatling
-error.title.missing = Other - This is a required field
-
-# VPC - OptionalToggle widget
-mandatory-alternative.not-selected = This field is mandatory. Please select one of the options.
-
-# VPC - email widget
-email.verify.label = Confirm email address
 
 ##
 # PRIVATE SALE OF VEHICLE
@@ -83,7 +70,7 @@ change_keeper_vehiclelookup.warninglinktext = Sold your vehicle into the motor t
 
 #page 3 - private keeper details
 change_keeper_privatekeeperdetails.title = Enter new keeper details
-change_keeper_privatekeeperdetails.p1 = We will use these details to create a new V5C registration certificate (logbook).
+change_keeper_privatekeeperdetails.p1 = These should be the details of the person you sold the vehicle to. We will use these details to update our records and issue a new V5C registration certificate (logbook).
 change_keeper_privatekeeperdetails.firstnamelabel = First name(s)
 change_keeper_privatekeeperdetails.lastnamelabel = Last name
 change_keeper_privatekeeperdetails.dateofbirth.hint = For example, 01 03 1976
@@ -97,7 +84,7 @@ change_keeper_privatekeeperdetails.postcode.hint = e.g. AB1 2BA or AB12BA
 
 #page 3 - business keeper details
 change_keeper_businesskeeperdetails.title = Enter new keeper details
-change_keeper_businesskeeperdetails.p1 = We will use these details to create a new V5C registration certificate (logbook).
+change_keeper_businesskeeperdetails.p1 = These should be the details of the business you sold the vehicle to. We will use these details to update our records and issue a new V5C registration certificate (logbook).
 change_keeper_businesskeeperdetails.fleetnumber = Fleet number
 change_keeper_businesskeeperdetails.businessname = Business name
 change_keeper_businesskeeperdetails.businessname.hint = If the business buying this vehicle has a DVLA fleet number, please provide it
@@ -160,7 +147,7 @@ change_keeper_completeAndConfirm.date_of_sale = Date of sale
 change_keeper_privatekeeperdetailscomplete.mileage.validation  = You must enter a valid mileage between 0 and 999999
 change_keeper_completeAndConfirm.dateofsale.label = Date of sale
 change_keeper_completeandconfirm.dateofsale.hint = For example, 02 01 2015
-change_keeper_completeandconfirm.dateofsale.warning = Our records show you became the keeper of this vehicle on {0} which is shown on your V5C registration certificate (logbook). As the date of sale you’ve entered is before this, please enter a correct date and select ‘Next’ to continue.
+change_keeper_completeandconfirm.dateofsale.warning = The date you’ve entered is before the current keeper acquired the vehicle, which is shown on the V5C registration certificate (logbook). Please enter a correct date that’s later than the one shown on the logbook and select ‘Next’.
 change_keeper_completeandconfirm.dateofsale.warning.over12Months = The date you have entered is over 12 months ago, please check the date to make sure it is correct.
 change_keeper_privatekeeperdetails.traderemailoption = Does the new keeper want an email confirmation of the sale?
 change_keeper_privatekeeperdetails.traderemailoption.yes = Yes
@@ -215,9 +202,6 @@ vehicle_and_keeper_lookup_failure.p4 = You will only have a limited number of at
 
 #page 7 - change keeper failure
 error.date.notOne = Year cannot be 0000
-
-# gatling
-error.title.unknownOption = Please enter the title of the new keeper
 
 #keeper still on record (no previous disposal has been done to the vehicle so the keeper is still on record)
 error_suppressedV5C.title = Vehicle is part of a suppressed fleet
