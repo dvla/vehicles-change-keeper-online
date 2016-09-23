@@ -8,21 +8,6 @@ error.validBougtByType = Select whether the vehicle is being sold to a private i
 # vehicle_lookup widget
 error.validDocumentReferenceNumber = Document reference number must be an 11-digit number
 
-# BusinessKeeperDetails.feature
-error.validSellerEmail = Email address is required
-
-# VPC - BusinessKeeperDetailsFormModel
-businessName = Business name
-businesskeeper_email = Contact email address
-businesskeeper_option_email = Email confirmation
-businesskeeper_postcode = Postcode
-fleetNumber = Fleet number
-fleetNumberOption = Fleet number
-
-# VPC - NewKeeperEnterAddressManuallyBase
-addressAndPostcode.addressLines = Address
-addressAndPostcode.addressLines.buildingNameOrNumber = Building name or number
-
 ##
 # PRIVATE SALE OF VEHICLE
 ##
@@ -70,7 +55,7 @@ change_keeper_vehiclelookup.warninglinktext = Sold your vehicle into the motor t
 
 #page 3 - private keeper details
 change_keeper_privatekeeperdetails.title = Enter new keeper details
-change_keeper_privatekeeperdetails.p1 = Dylai rhain fod yn manylion y person yr ydych wedi gwerthu’r cerbyd iddynt. Byddwn yn defnyddio’r manylion hyn i ddiweddaru ein cofnodion a chyhoeddi tystysgrif cofrestru V5CW newydd (llyfr log).
+change_keeper_privatekeeperdetails.p1 = These should be the details of the person you sold the vehicle to. We will use these details to update our records and issue a new V5C registration certificate (logbook).
 change_keeper_privatekeeperdetails.firstnamelabel = First name(s)
 change_keeper_privatekeeperdetails.lastnamelabel = Last name
 change_keeper_privatekeeperdetails.dateofbirth.hint = For example, 01 03 1976
@@ -84,7 +69,7 @@ change_keeper_privatekeeperdetails.postcode.hint = e.g. AB1 2BA or AB12BA
 
 #page 3 - business keeper details
 change_keeper_businesskeeperdetails.title = Enter new keeper details
-change_keeper_businesskeeperdetails.p1 = Dylai rhain fod yn manylion y busnes yr ydych wedi gwerthu’r cerbyd iddynt. Byddwn yn defnyddio’r manylion hyn i ddiweddaru ein cofnodion a chyhoeddi tystysgrif cofrestru V5CW newydd (llyfr log).
+change_keeper_businesskeeperdetails.p1 = These should be the details of the business you sold the vehicle to. We will use these details to update our records and issue a new V5C registration certificate (logbook).
 change_keeper_businesskeeperdetails.fleetnumber = Fleet number
 change_keeper_businesskeeperdetails.businessname = Business name
 change_keeper_businesskeeperdetails.businessname.hint = If the business buying this vehicle has a DVLA fleet number, please provide it
@@ -104,25 +89,24 @@ change_keeper_businesskeeperdetails.fleetnumberoption.no = No
 change_keeper_email_not_entered = Not entered
 
 #page 4 - new keeper choose your address
+change_keeper_newKeeperChooseYourAddress.emailNotEntered = Not entered
+change_keeper_newKeeperChooseYourAddress.fleetNumberNotEntered = Not entered
+change_keeper_newKeeperChooseYourAddress.manualAddressEntry = Address is not in the list
+change_keeper_newKeeperChooseYourAddress.manualAddressEntry.enterManuallyButton = Enter address
+change_keeper_newKeeperChooseYourAddress.submitbutton = Next
+change_keeper_newKeeperEnterAddressManually.addresswarninglinktext = inform the Royal Mail.
 change_keeper_newKeeperChooseYourAddress_addresses_found_title = Select new keeper address
 change_keeper_newKeeperChooseYourAddress_no_address_found_title = Select new keeper address
 change_keeper_newKeeperChooseYourAddress_newBusinessFleetNumber_label = Business fleet number
-change_keeper_newKeeperChooseYourAddress.fleetNumberNotEntered = Not entered
 change_keeper_newKeeperChooseYourAddress_newPrivateKeeperName_label = Name
 change_keeper_newKeeperChooseYourAddress_newBusinessKeeperName_label = Business name
 change_keeper_newKeeperChooseYourAddress_newKeeperName = {0}
 change_keeper_newKeeperChooseYourAddress_newKeeperEmail_label = Email address
-change_keeper_newKeeperChooseYourAddress.emailNotEntered = Not entered
 change_keeper_newKeeperChooseYourAddress_newKeeperpostcode_label = Postcode
 change_keeper_newKeeperChooseYourAddress_addressSelect_label = Choose the new keeper's address
-change_keeper_newKeeperChooseYourAddress.submitbutton = Next
-change_keeper_newKeeperEnterAddressManually.addresswarninglinktext = inform the Royal Mail.
-change_keeper_newKeeperChooseYourAddress.manualAddressEntry = Address is not in the list
-change_keeper_newKeeperChooseYourAddress.manualAddressEntry.enterManuallyButton = Enter address
 change_keeper_newKeeperChooseYourAddress_noaddressesfound.h2.1 = No address found for that postcode.
 change_keeper_newKeeperChooseYourAddress_noaddressesfound.h2.2 = Please either ''Enter address'' or click ''Back'' to try again.
 # gatling
-change_keeper_newKeeperChooseYourAddress.address.required = Please select a valid address
 newKeeperChooseYourAddress_addressSelect = Choose the new keepers address
 
 #page 4 [optional] - new keeper manual address entry
@@ -218,9 +202,6 @@ vrm_locked.text2 = Locked at
 vrm_locked.text3.1 = If you are sure that the details entered are correct then please send your completed V5C registration certificate (logbook) to
 vrm_locked.text3.2 = DVLA, Swansea SA99 1BA
 vrm_locked.exit.button = Exit
-
-# exemplar closed, micro_service_error, terms_and_conditions widgets
-closed.lastDayOpen = Saturday
 
 # FeedbackController
 common_feedback.subject = Private sale of a vehicle - feedback
