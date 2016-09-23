@@ -38,7 +38,11 @@ class FeedbackController @Inject()(val emailService: EmailService,
         BadRequest(views.html.changekeeper.feedback(formWithReplacedErrors(invalidForm))),
         validForm => {
           val trackingId = request.cookies.trackingId
-          sendFeedback(validForm, Messages("common_feedback.subject"), trackingId)
+          sendFeedback(
+            validForm,
+            s"${Messages("change_keeper_beforeyoustart.title")} - ${Messages("common_feedback.subject.suffix")}",
+            trackingId
+          )
           Ok(views.html.changekeeper.feedbackSuccess())
         }
     )

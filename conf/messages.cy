@@ -203,9 +203,6 @@ vrm_locked.text3.1 = If you are sure that the details entered are correct then p
 vrm_locked.text3.2 = DVLA, Swansea SA99 1BA
 vrm_locked.exit.button = Exit
 
-# FeedbackController
-common_feedback.subject = Private sale of a vehicle - feedback
-
 change_keeper_date_of_sale.title = Sale details
 change_keeper_date_of_sale.next = Next
 
