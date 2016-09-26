@@ -102,7 +102,7 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
           result getOrElse {
             val msg = "Could not find expected data in cache on dispose submit - " +
               s"now redirecting to ${routes.VehicleLookup.present()}"
-            logMessage(request.cookies.trackingId, Warn, msg)
+            logMessage(request.cookies.trackingId(), Warn, msg)
             Redirect(routes.VehicleLookup.present()).discardingCookies()
           }
         },
@@ -138,7 +138,7 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
           vehicleDetails,
           sellerEmailModel,
           dateOfSaleModel,
-          request.cookies.trackingId
+          request.cookies.trackingId()
         )
       }
 
@@ -237,7 +237,7 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
         successReturn(vehicleDetails, keeperDetails, sellerEmailModel,
                       r.acquireResponse.transactionId, transactionTimestamp, trackingId)
       case _ => // Should be Service Unavailable
-        logMessage(request.cookies.trackingId,
+        logMessage(request.cookies.trackingId(),
           Error,
           s"Received http status code $httpResponseCode from microservice call. " +
           s"Redirecting to ${routes.MicroServiceError.present()}"
@@ -494,13 +494,13 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
       .email(Contents(message1Html, message1))
       .withSubject(message1Title)
       .to(email)
-      .send(request.cookies.trackingId)
+      .send(request.cookies.trackingId())
 
     SEND
       .email(Contents(message2Html, message2))
       .withSubject(message2Title)
       .to(email)
-      .send(request.cookies.trackingId)
+      .send(request.cookies.trackingId())
   }
 
   /**
