@@ -1,17 +1,16 @@
 package gov.uk.dvla.vehicles.keeper.stepdefs
 
 import cucumber.api.java.en.{Then, When, Given}
+import gov.uk.dvla.vehicles.keeper.helpers.AcceptanceTestHelper
 import java.util.Calendar
 import org.openqa.selenium.WebDriver
 import pages.changekeeper.{PrivateKeeperDetailsPage, VehicleLookupPage}
 import pages.common.ErrorPanel
-import uk.gov.dvla.vehicles.presentation.common.helpers
-import helpers.webbrowser.WebBrowserDriver
+import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.WebBrowserDriver
 import uk.gov.dvla.vehicles.presentation.common.testhelpers.RandomVrmGenerator
 import org.scalatest.selenium.WebBrowser.{click, go, pageTitle}
 
-class PrivateKeeperOptionalFieldsSteps(webBrowserDriver: WebBrowserDriver)
-  extends gov.uk.dvla.vehicles.keeper.helpers.AcceptanceTestHelper {
+class PrivateKeeperOptionalFieldsSteps(webBrowserDriver: WebBrowserDriver) extends AcceptanceTestHelper {
 
   implicit val webDriver = webBrowserDriver.asInstanceOf[WebDriver]
 
@@ -147,7 +146,7 @@ class PrivateKeeperOptionalFieldsSteps(webBrowserDriver: WebBrowserDriver)
 
   private def enterDobDate() {
     PrivateKeeperDetailsPage.dayDateOfBirthTextBox.value = f"${dob.get(Calendar.DATE)}%02d"  //must be dd format
-    PrivateKeeperDetailsPage.monthDateOfBirthTextBox.value = f"${(dob.get(Calendar.MONTH) + 1)}%02d" //must be mm format
+    PrivateKeeperDetailsPage.monthDateOfBirthTextBox.value = f"${dob.get(Calendar.MONTH) + 1}%02d" //must be mm format
     PrivateKeeperDetailsPage.yearDateOfBirthTextBox.value = dob.get(Calendar.YEAR).toString
   }
 

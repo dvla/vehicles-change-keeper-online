@@ -1,6 +1,7 @@
 package gov.uk.dvla.vehicles.keeper.stepdefs
 
 import cucumber.api.java.en.{Then, When, Given}
+import gov.uk.dvla.vehicles.keeper.helpers.AcceptanceTestHelper
 import org.openqa.selenium.WebDriver
 import org.scalatest.selenium.WebBrowser.{click, go, pageTitle, pageSource}
 import pages.changekeeper.BusinessKeeperDetailsPage
@@ -9,12 +10,10 @@ import pages.changekeeper.CompleteAndConfirmPage
 import pages.changekeeper.DateOfSalePage
 import pages.changekeeper.NewKeeperChooseYourAddressPage
 import pages.changekeeper.VehicleLookupPage
-import uk.gov.dvla.vehicles.presentation.common.helpers
-import helpers.webbrowser.WebBrowserDriver
+import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.WebBrowserDriver
 import uk.gov.dvla.vehicles.presentation.common.testhelpers.RandomVrmGenerator
 
-class CompleteAndConfirmSteps(webBrowserDriver: WebBrowserDriver)
-  extends gov.uk.dvla.vehicles.keeper.helpers.AcceptanceTestHelper {
+class CompleteAndConfirmSteps(webBrowserDriver: WebBrowserDriver) extends AcceptanceTestHelper {
 
   implicit val webDriver = webBrowserDriver.asInstanceOf[WebDriver]
 

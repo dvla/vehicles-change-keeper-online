@@ -1,6 +1,7 @@
 package gov.uk.dvla.vehicles.keeper.stepdefs
 
 import cucumber.api.java.en.{Given,Then, When}
+import gov.uk.dvla.vehicles.keeper.helpers.AcceptanceTestHelper
 import java.util.Calendar
 import org.openqa.selenium.WebDriver
 import org.scalatest.selenium.WebBrowser.{click, go, pageTitle, pageSource}
@@ -15,8 +16,7 @@ import pages.changekeeper.VehicleLookupPage
 import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.WebBrowserDriver
 import uk.gov.dvla.vehicles.presentation.common.testhelpers.RandomVrmGenerator
 
-class HappyAndSadPathSteps(webBrowserDriver: WebBrowserDriver)
-  extends gov.uk.dvla.vehicles.keeper.helpers.AcceptanceTestHelper {
+class HappyAndSadPathSteps(webBrowserDriver: WebBrowserDriver) extends AcceptanceTestHelper {
 
   implicit val webDriver = webBrowserDriver.asInstanceOf[WebDriver]
 
@@ -227,7 +227,7 @@ class HappyAndSadPathSteps(webBrowserDriver: WebBrowserDriver)
 
   private def enterDosDate() {
     DateOfSalePage.dayDateOfSaleTextBox.value = f"${dos.get(Calendar.DATE)}%02d"  //must be dd format
-    DateOfSalePage.monthDateOfSaleTextBox.value = f"${(dos.get(Calendar.MONTH) + 1)}%02d" //must be mm format
+    DateOfSalePage.monthDateOfSaleTextBox.value = f"${dos.get(Calendar.MONTH) + 1}%02d" //must be mm format
     DateOfSalePage.yearDateOfSaleTextBox.value = dos.get(Calendar.YEAR).toString
   }
 }

@@ -1,13 +1,13 @@
 package gov.uk.dvla.vehicles.keeper.stepdefs
 
-import cucumber.api.java.en.{Then, When, Given}
-import pages.changekeeper.{BeforeYouStartPage, CompleteAndConfirmPage, ChangeKeeperSuccessPage}
+import cucumber.api.java.en.Given
+import gov.uk.dvla.vehicles.keeper.helpers.AcceptanceTestHelper
+import org.scalatest.selenium.WebBrowser.{click, pageTitle, pageSource}
+import pages.changekeeper.{CompleteAndConfirmPage, ChangeKeeperSuccessPage}
 import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.WebBrowserDriver
 import uk.gov.dvla.vehicles.presentation.common.testhelpers.RandomVrmGenerator
-import org.scalatest.selenium.WebBrowser.{click, pageTitle, pageSource}
 
-class SummaryPageSteps (webBrowserDriver: WebBrowserDriver)
-  extends gov.uk.dvla.vehicles.keeper.helpers.AcceptanceTestHelper {
+class SummaryPageSteps(webBrowserDriver: WebBrowserDriver) extends AcceptanceTestHelper {
 
   implicit val webDriver = webBrowserDriver.asInstanceOf[WebBrowserDriver]
   lazy val happyPath = new CompleteAndConfirmSteps(webBrowserDriver)
@@ -25,7 +25,7 @@ class SummaryPageSteps (webBrowserDriver: WebBrowserDriver)
 
   @Given("^the user can see the Transaction Id Finish and Print button$")
   def the_user_can_see_the_Transaction_Id_Finish_and_Print_button()  {
-     pageSource should include(s"${vrm}-11111111111") withClue trackingId
+     pageSource should include(s"$vrm-11111111111") withClue trackingId
      pageSource should include("Finish") withClue trackingId
      pageSource should include("Print") withClue trackingId
   }

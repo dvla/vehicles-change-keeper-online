@@ -1,8 +1,7 @@
 package gov.uk.dvla.vehicles.keeper.stepdefs
 
-import cucumber.api.java.en.{Given, When, Then}
+import gov.uk.dvla.vehicles.keeper.helpers.AcceptanceTestHelper
 import org.scalatest.selenium.WebBrowser.pageTitle
-import org.scalatest.selenium.WebBrowser.pageSource
 import org.scalatest.selenium.WebBrowser.click
 import org.scalatest.selenium.WebBrowser.go
 import org.openqa.selenium.WebDriver
@@ -14,7 +13,7 @@ import uk.gov.dvla.vehicles.presentation.common
 import common.helpers.webbrowser.WebBrowserDriver
 import common.testhelpers.RandomVrmGenerator
 
-class CommonSteps(webBrowserDriver: WebBrowserDriver) extends gov.uk.dvla.vehicles.keeper.helpers.AcceptanceTestHelper {
+class CommonSteps(webBrowserDriver: WebBrowserDriver) extends AcceptanceTestHelper {
 
   implicit lazy val webDriver = webBrowserDriver.asInstanceOf[WebDriver]
 

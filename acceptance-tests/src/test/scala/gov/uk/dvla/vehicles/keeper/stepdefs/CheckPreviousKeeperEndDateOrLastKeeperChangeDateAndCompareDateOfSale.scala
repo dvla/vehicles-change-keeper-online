@@ -1,19 +1,15 @@
 package gov.uk.dvla.vehicles.keeper.stepdefs
 
-import java.util.Calendar
-
 import cucumber.api.java.en.{Given, When, Then}
+import gov.uk.dvla.vehicles.keeper.helpers.AcceptanceTestHelper
 import org.openqa.selenium.WebDriver
-import pages.changekeeper.BusinessKeeperDetailsPage
+import org.scalatest.selenium.WebBrowser.{click, pageTitle, pageSource}
 import pages.changekeeper.CompleteAndConfirmPage
 import pages.changekeeper.DateOfSalePage
-import pages.changekeeper.NewKeeperChooseYourAddressPage
-import pages.changekeeper.VehicleLookupPage
 import uk.gov.dvla.vehicles.presentation.common.helpers.webbrowser.WebBrowserDriver
-import org.scalatest.selenium.WebBrowser.{click, go, pageTitle, pageSource}
 
 class CheckPreviousKeeperEndDateOrLastKeeperChangeDateAndCompareDateOfSale(webBrowserDriver: WebBrowserDriver)
-  extends gov.uk.dvla.vehicles.keeper.helpers.AcceptanceTestHelper {
+  extends AcceptanceTestHelper {
 
   implicit val webDriver = webBrowserDriver.asInstanceOf[WebDriver]
 
