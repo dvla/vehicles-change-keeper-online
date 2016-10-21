@@ -40,7 +40,8 @@ backButton = Some(Call("GET", "https://www.gov.uk/sold-bought-vehicle/y/no/sold-
         <h1>@Messages("change_keeper_vehiclelookup.title")</h1>
 
         <div class="form-steps">
-            @form(action = controllers.routes.VehicleLookup.submit()) {
+            @form(action = controllers.routes.VehicleLookup.submit(),
+                  (if(!config.isHtml5ValidationEnabled) Seq('novalidate -> "novalidate") else Nil): _*) {
             <div class="step uppercase-input">
                 @csrfTokenHiddenField()
 
@@ -64,10 +65,11 @@ backButton = Some(Call("GET", "https://www.gov.uk/sold-bought-vehicle/y/no/sold-
                         '_showConstraints -> false,
                         'typeTel -> true,
                         'maxLength -> DocumentReferenceNumber.MaxLength, // Must be set independently of the pattern as the pattern is only checked when the user submits.
-                        'validityMessage -> Messages("error.validDocumentReferenceNumber"),
                         'title -> Messages("")
-                    ) ++ // [SKW] for accessibility Tony removed have 'title text as the screen reader reads it twice, the knock-on effect is that our custom validation messages aren't displayed so the user has no idea what is wrong.
-                    (if(config.isHtml5ValidationEnabled) Map('pattern -> DocumentReferenceNumber.Pattern) else Nil)
+                    ) ++ (if(config.isHtml5ValidationEnabled)
+                            Map('pattern -> DocumentReferenceNumber.Pattern,
+                                'validityMessage -> Messages("error.validDocumentReferenceNumber"))
+                          else Nil)
                 )
 
                 @optionalToggle(
@@ -79,9 +81,10 @@ backButton = Some(Call("GET", "https://www.gov.uk/sold-bought-vehicle/y/no/sold-
                     viewModel.form(VehicleSellerEmail),
                     Messages("change_keeper_vehiclelookup.selleremail"),
                     hintText = None,
-                    args = Map('maxLength -> EmailMaxLength,
-                               'validityMessage -> Messages("error.email")
-                    )
+                    args = Map('maxLength -> EmailMaxLength) ++
+                               (if(config.isHtml5ValidationEnabled)
+                                   Map('validityMessage -> Messages("error.email"))
+                                else Nil)
                   ),
                   gaTrackValue = true
                 )

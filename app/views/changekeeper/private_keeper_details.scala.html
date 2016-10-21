@@ -30,7 +30,8 @@
     currentForm = Some(privateKeeperDetailsForm),
     backButton = Some(controllers.routes.VehicleLookup.present())
 ){
-    @form(action = PrivateKeeperDetails.submit) {
+    @form(action = PrivateKeeperDetails.submit,
+          (if(!config.isHtml5ValidationEnabled) Seq('novalidate -> "novalidate") else Nil): _*) {
     @csrfTokenHiddenField()
 
     <div class="two-col clearfix">
@@ -102,9 +103,10 @@
                     privateKeeperDetailsForm(EmailId),
                     labelText = Messages("change_keeper_privatekeeperdetails.emaillabel"),
                     hintText = None,
-                    args = Map('maxLength -> EmailMaxLength,
-                                'validityMessage -> Messages("error.email")
-                    )
+                    args = Map('maxLength -> EmailMaxLength) ++
+                           (if(config.isHtml5ValidationEnabled)
+                               Map('validityMessage -> Messages("error.email"))
+                            else Nil)
                 ),
                 gaTrackValue = true
             )

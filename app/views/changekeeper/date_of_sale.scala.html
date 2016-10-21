@@ -34,7 +34,8 @@
         <div class="second-col">
             <h1>@Messages("change_keeper_date_of_sale.title")</h1>
 
-            @form(action = data.submitAction) {
+            @form(action = data.submitAction,
+                  (if(!config.isHtml5ValidationEnabled) Seq('novalidate -> "novalidate") else Nil): _*) {
                 @csrfTokenHiddenField()
 
                 @if(data.showDateOfSaleWarning) {
@@ -83,10 +84,12 @@
                         'typeTel -> true,
                         'maxLength -> Mileage.MaxLength, // Must be set independently of the pattern as the pattern is only checked when the user submits.
                         'optionalFieldKey -> true,
-                        'validityMessage -> Messages("change_keeper_keeperdetailscomplete.mileage.validation"),
                         'class -> "ga-track-optional-text",
                         Symbol("data-ga-action") -> "mileage"
-                    ) ++ (if(config.isHtml5ValidationEnabled) Map('pattern -> Mileage.Pattern) else Nil), data.showDateOfSaleWarning)
+                    ) ++ (if(config.isHtml5ValidationEnabled)
+                            Map('pattern -> Mileage.Pattern,
+                                'validityMessage -> Messages("change_keeper_keeperdetailscomplete.mileage.validation"))
+                          else Nil), data.showDateOfSaleWarning)
                 )
 
                 <div class="form-steps">

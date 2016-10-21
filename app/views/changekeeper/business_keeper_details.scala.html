@@ -43,7 +43,8 @@
         <h1>@Messages("change_keeper_businesskeeperdetails.title")</h1>
         <p>@Messages("change_keeper_businesskeeperdetails.p1")</p>
         <div class="form-steps">
-            @form(action = controllers.routes.BusinessKeeperDetails.submit()) {
+            @form(action = controllers.routes.BusinessKeeperDetails.submit(),
+                  (if(!config.isHtml5ValidationEnabled) Seq('novalidate -> "novalidate") else Nil): _*) {
             @csrfTokenHiddenField()
 
             <div class="uppercase-input">
@@ -69,9 +70,11 @@
                         'maxLength -> FleetNumber.MaxLength,
                         'typeFleetNumber -> true,
                         '_showConstraints -> false,
-                        'NO_OPTIONAL_LABEL -> false,
-                        'validityMessage -> Messages("error.fleetNumber")
-                    ) ++ (if(config.isHtml5ValidationEnabled) Map('pattern -> FleetNumber.Pattern) else Nil)
+                        'NO_OPTIONAL_LABEL -> false
+                    ) ++ (if(config.isHtml5ValidationEnabled)
+                            Map('pattern -> FleetNumber.Pattern,
+                                'validityMessage -> Messages("error.fleetNumber"))
+                          else Nil)
                 ),
                 gaTrackValue = true
             )
@@ -85,9 +88,10 @@
                     viewModel.form(EmailId),
                     Messages("change_keeper_businesskeeperdetails.email"),
                     hintText = None,
-                    args = Map('maxLength -> EmailMaxLength,
-                               'validityMessage -> Messages("error.email")
-                          )
+                    args = Map('maxLength -> EmailMaxLength) ++
+                           (if(config.isHtml5ValidationEnabled)
+                               Map('validityMessage -> Messages("error.email"))
+                            else Nil)
                 ),
                 gaTrackValue = true
             )
