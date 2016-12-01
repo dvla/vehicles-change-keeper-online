@@ -2,7 +2,7 @@ package email
 
 import java.text.SimpleDateFormat
 import org.joda.time.DateTime
-import play.api.i18n.Messages
+import play.api.i18n.{Lang, Messages}
 import uk.gov.dvla.vehicles.presentation.common.model.VehicleAndKeeperDetailsModel
 import uk.gov.dvla.vehicles.presentation.common.services.SEND
 
@@ -15,7 +15,7 @@ object EmailMessageBuilder {
   import SEND.Contents
 
   def buildWith(vehicleDetails: VehicleAndKeeperDetailsModel, transactionId: String, imagesPath: String,
-                transactionTimestamp: DateTime): Contents = {
+                transactionTimestamp: DateTime)(implicit lang: Lang): Contents = {
      val transactionTimestampStr = new SimpleDateFormat("dd/MM/yyyy HH:mm").format(transactionTimestamp.toDate)
 
      Contents(
@@ -25,7 +25,7 @@ object EmailMessageBuilder {
   }
 
   private def buildHtml(regNumber: String, transactionId: String, imagesPath: String,
-                        transactionTimestamp: String): String =
+                        transactionTimestamp: String)(implicit lang: Lang): String =
     s"""
        |
        |<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -117,7 +117,7 @@ object EmailMessageBuilder {
     """.stripMargin
 
   private def buildText(regNumber: String, transactionId: String,
-                        transactionTimestamp: String): String =
+                        transactionTimestamp: String)(implicit lang: Lang): String =
     s"""
        |${Messages("email.template.line1")}
        |

@@ -587,7 +587,7 @@ class CompleteAndConfirm @Inject()(webService: AcquireService, emailService: Ema
           config.imagesPath, transactionTimestamp)
 
         // This sends the email.
-        val subject = s"${vehicleDetails.registrationNumber} confirmation of vehicle keeper change"
+        val subject = s"${vehicleDetails.registrationNumber} ${Messages("email.seller.title")}"
         SEND email template withSubject subject to emailAddr send trackingId
       case None =>
         logMessage(request.cookies.trackingId(), Info, "Tried to send a receipt to seller but no email was found")

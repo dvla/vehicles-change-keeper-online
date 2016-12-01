@@ -24,8 +24,8 @@ config: utils.helpers.Config)
 
 @main(
 title = Messages("change_keeper_vehiclelookup.title"),
-currentForm = Some(viewModel.form),
-backButton = Some(Call("GET", "https://www.gov.uk/sold-bought-vehicle/y/no/sold-your-vehicle-privately"))
+    currentForm = Some(viewModel.form),
+    backButton = Some(Call("GET", "https://www.gov.uk/sold-bought-vehicle/y/no/sold-your-vehicle-privately"))
 ) {
 
 <div class="two-col clearfix vehicle-lookup">

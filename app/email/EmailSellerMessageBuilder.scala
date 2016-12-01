@@ -2,7 +2,7 @@ package email
 
 import java.text.SimpleDateFormat
 import org.joda.time.DateTime
-import play.api.i18n.Messages
+import play.api.i18n.{Lang, Messages}
 import uk.gov.dvla.vehicles.presentation.common.model.VehicleAndKeeperDetailsModel
 
 /**
@@ -14,7 +14,7 @@ object EmailSellerMessageBuilder {
   import uk.gov.dvla.vehicles.presentation.common.services.SEND.Contents
 
   def buildWith(vehicleDetails: VehicleAndKeeperDetailsModel,  transactionId: String, imagesPath: String,
-                transactionTimestamp: DateTime): Contents = {
+                transactionTimestamp: DateTime)(implicit lang: Lang): Contents = {
 
     val transactionTimestampStr = new SimpleDateFormat("dd/MM/yyyy HH:mm").format(transactionTimestamp.toDate)
 
@@ -25,7 +25,7 @@ object EmailSellerMessageBuilder {
   }
 
   private def buildHtml(vehicleDetails: VehicleAndKeeperDetailsModel,  transactionId: String, imagesPath: String,
-                        transactionTimestamp: String): String =
+                        transactionTimestamp: String)(implicit lang: Lang): String =
     s"""<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
        |<html xmlns="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/xhtml">
        |<head>
@@ -122,7 +122,7 @@ object EmailSellerMessageBuilder {
       """.stripMargin
 
   private def buildText(vehicleDetails: VehicleAndKeeperDetailsModel,transactionId: String,
-                        transactionTimestamp: String): String =
+                        transactionTimestamp: String)(implicit lang: Lang): String =
 
     s"""
         |${Messages("email.template.line1")}
