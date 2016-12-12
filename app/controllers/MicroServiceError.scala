@@ -2,16 +2,14 @@ package controllers
 
 import com.google.inject.Inject
 import controllers.routes.BeforeYouStart
-import java.util.Locale
 import models.K2KCacheKeyPrefix.CookiePrefix
-import org.joda.time.{DateTime, DateTimeZone}
-import org.joda.time.format.DateTimeFormat
 import play.api.mvc.{Action, Controller}
 import uk.gov.dvla.vehicles.presentation.common
 import common.clientsidesession.ClientSideSessionFactory
 import common.clientsidesession.CookieImplicits.{RichCookies, RichResult}
 import common.LogFormats.DVLALogger
 import utils.helpers.Config
+import uk.gov.dvla.vehicles.presentation.common.mappings.Time.fromMinutes
 
 class MicroServiceError @Inject()(implicit clientSideSessionFactory: ClientSideSessionFactory,
                                   config: Config) extends Controller with DVLALogger {
@@ -29,8 +27,8 @@ class MicroServiceError @Inject()(implicit clientSideSessionFactory: ClientSideS
 
     ServiceUnavailable(
       views.html.changekeeper.micro_service_error(
-        h(config.openingTimeMinOfDay * MillisInMinute),
-        h(config.closingTimeMinOfDay * MillisInMinute),
+        fromMinutes(config.openingTimeMinOfDay),
+        fromMinutes(config.closingTimeMinOfDay),
         tryAgainTarget,
         exitTarget
       )
@@ -45,12 +43,6 @@ class MicroServiceError @Inject()(implicit clientSideSessionFactory: ClientSideS
     logMessage(request.cookies.trackingId(), Debug, s"Micro service error page referrer $referrer")
     Redirect(referrer).discardingCookie(MicroServiceError.MicroServiceErrorRefererCacheKey)
   }
-
-  private final val MillisInMinute = 60 * 1000L
-
-  private def h(hourMillis: Long) =
-    DateTimeFormat.forPattern("HH:mm").withLocale(Locale.UK)
-      .print(new DateTime(hourMillis, DateTimeZone.forID("UTC"))).toLowerCase // Must use UTC as we only want to format the hour
 }
 
 object MicroServiceError {
