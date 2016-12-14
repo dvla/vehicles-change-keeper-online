@@ -36,7 +36,7 @@ object PrivateKeeperDetailsPage extends Page with Matchers {
   final val MonthDateOfBirthValid = "12"
   final val YearDateOfBirthValid = (DateTime.now.getYear - VALID_AGE).toString
   final val PostcodeValid = "QQ99QQ"
-  final val NoPostcodeFound = "XX99XX"
+  final val PostcodeWithoutAddresses = "XX99XX"
   final val PostcodeInvalid = "XX99X"
 
   def back(implicit driver: WebDriver): Element = find(id(BackId)).get
@@ -123,7 +123,7 @@ object PrivateKeeperDetailsPage extends Page with Matchers {
   }
 
   def submitPostcodeWithoutAddresses(implicit driver: WebDriver) = {
-    navigate(postcode = NoPostcodeFound)
+    navigate(postcode = PostcodeWithoutAddresses)
   }
 
   private def titleType(title: String): String = title match {

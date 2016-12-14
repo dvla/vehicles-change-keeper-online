@@ -18,33 +18,26 @@ class NewKeeperChooseYourAddress @Inject()(protected override val addressLookupS
                                            config: Config) extends NewKeeperChooseYourAddressBase(addressLookupService) {
 
   override protected def invalidFormResult(model: NewKeeperChooseYourAddressViewModel,
-                                  name: String,
-                                  postcode: String,
-                                  email: Option[String],
-                                  addresses: Seq[(String, String)],
-                                  isBusinessKeeper: Boolean,
-                                  fleetNumber: Option[String])(implicit request: Request[_]): Result =
+                                           name: String,
+                                           postcode: String,
+                                           email: Option[String],
+                                           dropDownOptions: Seq[(String, String)],
+                                           isBusinessKeeper: Boolean,
+                                           fleetNumber: Option[String])(implicit request: Request[_]): Result =
     BadRequest(new_keeper_choose_your_address(
-      model,
-      name,
-      postcode,
-      email,
-      addresses,
-      isBusinessKeeper,
-      fleetNumber
-      )
+      model, name, postcode, email, dropDownOptions, isBusinessKeeper, fleetNumber)
     )
 
   override protected def presentView(model: NewKeeperChooseYourAddressViewModel,
-                            name: String,
-                            postcode: String,
-                            email: Option[String],
-                            addresses: Seq[(String, String)],
-                            isBusinessKeeper: Boolean,
-                            fleetNumber: Option[String])(implicit request: Request[_]): Result = {
+                                     name: String,
+                                     postcode: String,
+                                     email: Option[String],
+                                     dropDownOptions: Seq[(String, String)],
+                                     isBusinessKeeper: Boolean,
+                                     fleetNumber: Option[String])(implicit request: Request[_]): Result = {
     logMessage(request.cookies.trackingId(), Info, "Presenting new keeper choose your address view")
     Ok(views.html.changekeeper.new_keeper_choose_your_address(
-      model, name, formatPostcode(postcode), email, addresses, isBusinessKeeper, fleetNumber)
+      model, name, formatPostcode(postcode), email, dropDownOptions, isBusinessKeeper, fleetNumber)
     )
   }
 
