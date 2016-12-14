@@ -140,7 +140,7 @@ class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
       val (controller, addressServiceMock) = newKeeperChooseYourAddressControllerAndMocks()
       val result = controller.present(request)
       whenReady(result) { r =>
-        verify(addressServiceMock, times(1)).callPostcodeWebService(
+        verify(addressServiceMock, times(1)).callAddresses(
           anyString(),
           any[TrackingId]
         )(any[Lang])
@@ -286,7 +286,7 @@ class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
       val result = controller.submit(request)
       whenReady(result) { r =>
         r.header.status should equal(BAD_REQUEST)
-        verify(addressServiceMock, times(1)).callPostcodeWebService(anyString(),any[TrackingId])(any[Lang])
+        verify(addressServiceMock, times(1)).callAddresses(anyString(),any[TrackingId])(any[Lang])
       }
     }
 
@@ -299,7 +299,7 @@ class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
       )
       val result = controller.submit(request)
       whenReady(result) { r =>
-        verify(addressServiceMock, times(1)).callPostcodeWebService(anyString(), any[TrackingId])(any[Lang])
+        verify(addressServiceMock, times(1)).callAddresses(anyString(), any[TrackingId])(any[Lang])
       }
     }
   }
@@ -332,7 +332,7 @@ class NewKeeperChooseYourAddressUnitSpec extends UnitSpec {
                            else responseValidForPostcodeToAddressNotFound
 
     val addressLookupWebServiceMock = mock[AddressLookupWebService]
-    when(addressLookupWebServiceMock.callPostcodeWebService(
+    when(addressLookupWebServiceMock.callAddresses(
       anyString(),
       any[TrackingId]
     )(any[Lang]))
