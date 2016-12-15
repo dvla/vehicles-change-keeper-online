@@ -77,21 +77,22 @@ class CheckPreviousKeeperEndDateOrLastKeeperChangeDateAndCompareDateOfSale(webBr
 
   @When("^no date is returned by the back end system and user enters a date of sale$")
   def no_date_is_returned_by_the_back_end_system_and_user_enters_a_date_of_sale(): Unit =  {
-    DateOfSalePage.dayDateOfSaleTextBox.value = "12"
-    DateOfSalePage.monthDateOfSaleTextBox.value = "12"
-    DateOfSalePage.yearDateOfSaleTextBox.value = getPreviousYear
+    val validDateOfSale = org.joda.time.DateTime.now.minusDays(7)
+    DateOfSalePage.dayDateOfSaleTextBox.value = validDateOfSale.toString("dd")
+    DateOfSalePage.monthDateOfSaleTextBox.value = validDateOfSale.toString("MM")
+    DateOfSalePage.yearDateOfSaleTextBox.value = validDateOfSale.getYear.toString
     click on DateOfSalePage.next
   }
 
   @When("^keeper end date and change date has been returned by the back end system$")
   def keeper_end_date_and_change_date_has_been_returned_by_the_back_end_system()  {
-    DateOfSalePage.dayDateOfSaleTextBox.value = "12"
-    DateOfSalePage.monthDateOfSaleTextBox.value = "12"
-    DateOfSalePage.yearDateOfSaleTextBox.value = getPreviousYear
+    val validDateOfSale = org.joda.time.DateTime.now.minusMonths(2)
+    DateOfSalePage.dayDateOfSaleTextBox.value = validDateOfSale.toString("dd")
+    DateOfSalePage.monthDateOfSaleTextBox.value = validDateOfSale.toString("MM")
+    DateOfSalePage.yearDateOfSaleTextBox.value = validDateOfSale.getYear.toString
     click on DateOfSalePage.next
   }
 
-  private def getPreviousYear = {
+  private def getPreviousYear =
     (java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)-1).toString
-  }
 }
