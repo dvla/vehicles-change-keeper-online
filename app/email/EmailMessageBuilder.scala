@@ -137,8 +137,7 @@ object EmailMessageBuilder {
        |
        |${Messages("email.template.line3")}
        |
-       | ${Messages("email.signature.p1")}
-       | ${Messages("email.signature.p2")}
-       | ${Messages("email.signature.p3")}
-      """.stripMargin
+       |${Messages("email.signature.p1")}
+       |${Messages("email.signature.p2")}
+       |${Messages("email.signature.p3")}""".stripMargin
 }
