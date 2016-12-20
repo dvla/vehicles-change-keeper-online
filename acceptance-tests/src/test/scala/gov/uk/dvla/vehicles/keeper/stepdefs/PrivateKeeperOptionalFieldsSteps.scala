@@ -111,7 +111,7 @@ class PrivateKeeperOptionalFieldsSteps(webBrowserDriver: WebBrowserDriver) exten
   @When("^the user enters a valid email address$")
   def the_user_enters_a_valid_email_address()  {
     click on PrivateKeeperDetailsPage.emailVisible
-    PrivateKeeperDetailsPage.emailTextBox.value = "a@gmail.com"
+    PrivateKeeperDetailsPage.emailTextBox.value = "a@email.com"
   }
 
   @Then("^the user will be able to submit the valid email address of up to \"(.*?)\" characters$")
