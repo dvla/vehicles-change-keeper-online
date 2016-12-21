@@ -5,7 +5,7 @@ import controllers.MicroServiceError.MicroServiceErrorRefererCacheKey
 import helpers.{TestWithApplication, UnitSpec}
 import helpers.changekeeper.CookieFactoryForUnitSpecs
 import org.mockito.Mockito.when
-import pages.changekeeper.{BeforeYouStartPage, VehicleLookupPage}
+import pages.changekeeper.VehicleLookupPage
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{LOCATION, REFERER, SERVICE_UNAVAILABLE, contentAsString, defaultAwaitTimeout, status}
 import uk.gov.dvla.vehicles.presentation.common.clientsidesession.ClientSideSessionFactory
@@ -56,7 +56,7 @@ class MicroServiceErrorUnitSpec extends UnitSpec  {
       // page presented or they are calling the route directly.
       val result = microServiceError.back(request)
       whenReady(result) { r =>
-        r.header.headers.get(LOCATION) should equal(Some(BeforeYouStartPage.address))
+        r.header.headers.get(LOCATION) should equal(Some(VehicleLookupPage.address))
       }
     }
 
