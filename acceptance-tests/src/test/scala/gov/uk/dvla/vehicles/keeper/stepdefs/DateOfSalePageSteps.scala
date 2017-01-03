@@ -106,8 +106,8 @@ class DateOfSalePageSteps(webBrowserDriver: WebBrowserDriver) extends Acceptance
 
   @When("^the Date of sale is not a valid gregorian date$")
   def the_Date_of_sale_is_not_a_valid_gregorian_date() {
-    DateOfSalePage.dayDateOfSaleTextBox.value = "29"
-    DateOfSalePage.monthDateOfSaleTextBox.value = "02"
+    DateOfSalePage.dayDateOfSaleTextBox.value = "31"
+    DateOfSalePage.monthDateOfSaleTextBox.value = "04"
     DateOfSalePage.yearDateOfSaleTextBox.value = LocalDate.now.minusYears(1).getYear.toString
   }
 }
