@@ -6,7 +6,8 @@ import helpers.changekeeper.CookieFactoryForUISpecs
 import org.openqa.selenium.WebDriver
 import pages.changekeeper.MicroServiceErrorPage.exit
 import pages.changekeeper.MicroServiceErrorPage.tryAgain
-import pages.changekeeper.{BeforeYouStartPage, MicroServiceErrorPage}
+import pages.changekeeper.{BeforeYouStartPage, MicroServiceErrorPage, VehicleLookupPage}
+import pages.common.AlternateLanguages.{cymraeg, english}
 import pages.common.Feedback.EmailFeedbackLink
 import uk.gov.dvla.vehicles.presentation.common.testhelpers.UiTag
 import org.scalatest.selenium.WebBrowser.{click, go, pageTitle, pageSource}
@@ -32,7 +33,17 @@ final class MicroServiceErrorIntegrationSpec extends UiSpec with TestHarness {
       cacheSetup()
       go to MicroServiceErrorPage
       click on tryAgain
-      pageTitle should equal(BeforeYouStartPage.title)
+      pageTitle should equal(VehicleLookupPage.title)
+    }
+
+    "not be its own referer" taggedAs UiTag in new WebBrowserForSelenium {
+      go to BeforeYouStartPage
+      cacheSetup()
+      go to MicroServiceErrorPage
+      click on cymraeg
+      click on english
+      click on tryAgain
+      pageTitle should equal(VehicleLookupPage.title)
     }
   }
 
