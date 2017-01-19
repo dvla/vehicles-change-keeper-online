@@ -14,12 +14,10 @@ error.validDocumentReferenceNumber = Mae’n rhaid i rif cyfeirnod y ddogfen fod
 
 change_keeper_vehicledetails.warning = Os yw’r manylion cerbyd a ddangosir yn anghywir, a wnewch chi adael y trafodyn hwn ac anfon y dystysgrif gofrestru V5CW (llyfr log) gyda llythyr eglurhaol at y DVLA, Abertawe, SA99 1BA.
 
-
 # 404 onHandlerNotFound
 onHandlerNotFound.title = Ni lwyddwyd i ddod o hyd i’r dudalen hon
 onHandlerNotFound.header = Ni lwyddwyd i ddod o hyd i’r dudalen hon
 onHandlerNotFound.body = Ni lwyddwyd i ddod o hyd i’r dudalen rydych wedi gwneud cais amdani, mae’r digwyddiad hwn wedi cael ei gofnodi i’w gael ei ymchwilio.
-
 onHandlerNotFound.start.button = Dechrau
 
 #page 1 - Before You Start
@@ -169,7 +167,6 @@ change_keeper_success.further_information.p1 = byddwn yn anfon llythyr cydnabydd
 change_keeper_success.further_information.p2 = byddwn yn anfon ad-daliad awtomatig ar gyfer unrhyw fisoedd llawn sy’n weddill o dreth cerbyd a chanslo’r debyd uniongyrchol (DD).
 change_keeper_success.further_information.p3 = bydd y llythyr cydnabyddiaeth gwaredu ynghyd â’r ad-daliad yn cael eu hanfon i’r cyfeiriad ar y dystysgrif gofrestru V5CW (llyfr log).
 change_keeper_success.further_information.p4 = os nad ydych yn derbyn naill ai’r llythyr cydnabyddiaeth gwaredu na’r ad-daliad o fewn 4-6 wythnos, cysylltwch gydag ymholiadau cwsmeriaid DVLA oherwydd mae’n bosib eich bod yn parhau’n atebol am y cerbyd
-
 change_keeper_success.further_information.p5 = Mae’n bosib y byddwch am argraffu’r crynodeb hwn ar gyfer eich cofnodion.
 change_keeper_success.further_information.p6 = Ers 1 Hydref 2014, ni all treth cerbyd gael ei drosglwyddo fel rhan o’r gwerthiant, felly mae’n rhaid i’r ceidwad newydd drethu’r cerbyd os ydynt am ei ddefnyddio ar y ffordd.
 change_keeper_success.further_information.p7 = o fewn 5 niwrnod gwaith byddwn yn anfon tystysgrif gofrestru cerbyd V5CW (llyfr log) newydd i’r ceidwad newydd.
@@ -201,7 +198,6 @@ vrm_locked.title = Mae’r rhif cofrestru wedi’i gloi
 vrm_locked.text1 = Mae nifer o geisiadau aflwyddiannus wedi bod i gael mynediad i’r manylion cerbyd. Mae’r system nawr wedi cloi’r rhif cofrestru cerbyd hwn am 10 munud.
 vrm_locked.text2 = Wedi’i gloi am
 vrm_locked.text3.1 = Os ydych yn si’r bod y manylion yn gywir yna anfonwch eich tystysgrif gofrestru V5CW (llyfr log) wedi’i gwblhau i
-
 vrm_locked.text3.2 = DVLA, Abertawe,  SA99 1BA
 vrm_locked.exit.button = Gadael
 
@@ -218,7 +214,6 @@ email.newKeeper.p1 = Mae DVLA wedi cael ei hysbysu’n electronig eich bod nawr 
 email.newKeeper.p2 = Y dynodiad trafodyn arlein yw
 email.newKeeper.p3 = Dylech dderbyn eich tystysgrif gofrestru V5CW (llyfr log) newydd o fewn 2 wythnos.
 email.newKeeper.p4 = Ers 1 Hydref 2014, ni all treth cerbyd gael ei drosglwyddo fel rhan o’r gwerthiant. Y rheswm am hwn yw bod  gwerthwr yn derbyn ad-daliad yn awtomatig ar gyfer unrhyw dreth sy’n weddill.
-
 email.newKeeper.p5 = Mae’n rhaid i chi drethu’r cerbyd cyn ei yrru ar y ffordd, gallwch ei drethu nawr yn https://www.gov.uk/treth-car
 email.newKeeper.p6 = Os nad ydych am drethu’ch cerbyd gallwch wneud datganiad HOS nawr yn https://www.gov.uk/gwneud-hos
 email.newKeeper.p5Html = Mae’n rhaid i chi drethu’r cerbyd cyn ei yrru ar y ffordd, gallwch ei drethu nawr yn <a href="http://www.gov.uk/treth-car" target="_blank">www.gov.uk/treth-car</a>.
