@@ -1,12 +1,9 @@
 package pages
 
+import uk.gov.dvla.vehicles.presentation.common.testhelpers.ApplicationContext
+import ApplicationContext.ApplicationRoot
+
 package object changekeeper {
-  final val applicationContext = ""
-
-  def buildAppUrl(urlPart: String) = {
-    val appContextWithSlash = if (!applicationContext.endsWith("/")) s"$applicationContext/" else applicationContext
-    val urlPartWithoutSlash = urlPart.dropWhile(_ == '/')
-
-    appContextWithSlash + urlPartWithoutSlash
-  }
+  final implicit val applicationContext: ApplicationRoot = "/"
+  def buildAppUrl(urlPart: String) = ApplicationContext.buildAppUrl(urlPart)
 }

@@ -7,7 +7,7 @@ import VehicleLookupFailure.{BeforeYouStartId, VehicleLookupId}
 import org.scalatest.selenium.WebBrowser.{TextField, textField, TelField, telField, RadioButton, radioButton, click, go, find, id, Element, tagName}
 
 object VehicleLookupFailurePage extends Page {
-  final val address = s"$applicationContext/vehicle-lookup-failure"
+  final val address = buildAppUrl("vehicle-lookup-failure")
   final override val title: String = "Unable to find a vehicle record"
 
   override lazy val url: String = WebDriverFactory.testUrl + address.substring(1)
