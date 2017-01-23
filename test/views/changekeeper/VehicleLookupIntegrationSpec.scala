@@ -2,7 +2,6 @@ package views.changekeeper
 
 import composition.TestHarness
 import helpers.changekeeper.CookieFactoryForUISpecs
-import helpers.UiSpec
 import models.K2KCacheKeyPrefix.CookiePrefix
 import org.openqa.selenium.{By, WebElement}
 import org.openqa.selenium.support.ui.{ExpectedConditions}
@@ -17,7 +16,7 @@ import common.filters.CsrfPreventionAction
 import common.model.BusinessKeeperDetailsFormModel.businessKeeperDetailsCacheKey
 import common.model.PrivateKeeperDetailsFormModel.privateKeeperDetailsCacheKey
 import common.testhelpers.LightFakeApplication
-import common.testhelpers.UiTag
+import common.testhelpers.{UiSpec, UiTag}
 import common.views.widgetdriver.Wait
 
 class VehicleLookupIntegrationSpec extends UiSpec with TestHarness with Eventually with IntegrationPatience {

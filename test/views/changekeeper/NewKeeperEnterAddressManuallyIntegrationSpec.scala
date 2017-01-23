@@ -1,14 +1,13 @@
 package views.changekeeper
 
 import composition.TestHarness
-import helpers.UiSpec
 import org.openqa.selenium.{By, WebDriver, WebElement}
 import pages.changekeeper.{BeforeYouStartPage, NewKeeperEnterAddressManuallyPage}
 import pages.changekeeper.NewKeeperEnterAddressManuallyPage.{sadPath, happyPath, happyPathMandatoryFieldsOnly}
 import pages.common.ErrorPanel
 import pages.common.Feedback.EmailFeedbackLink
 import uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction
-import uk.gov.dvla.vehicles.presentation.common.testhelpers.UiTag
+import uk.gov.dvla.vehicles.presentation.common.testhelpers.{UiSpec, UiTag}
 import helpers.changekeeper.CookieFactoryForUISpecs
 import org.scalatest.selenium.WebBrowser.{click, go, pageTitle, pageSource}
 

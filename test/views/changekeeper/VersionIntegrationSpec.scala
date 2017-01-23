@@ -1,10 +1,10 @@
 package views.changekeeper
 
 import composition.TestHarness
-import helpers.UiSpec
 import pages.changekeeper.VersionPage
 import scala.io.Source.fromInputStream
 import org.scalatest.selenium.WebBrowser.{go, pageSource}
+import uk.gov.dvla.vehicles.presentation.common.testhelpers.UiSpec
 
 class VersionIntegrationSpec extends UiSpec with TestHarness {
   "Version endpoint" should {

@@ -2,7 +2,6 @@ package views.changekeeper
 
 import composition.TestHarness
 import helpers.changekeeper.CookieFactoryForUISpecs
-import helpers.UiSpec
 import models.{CompleteAndConfirmFormModel, VehicleNewKeeperCompletionCacheKeys}
 import CompleteAndConfirmFormModel.AllowGoingToCompleteAndConfirmPageCacheKey
 import org.openqa.selenium.{By, WebDriver, WebElement}
@@ -21,7 +20,7 @@ import common.webserviceclients.fakes.FakeAcquireWebServiceImpl.SimulateForbidde
 import common.webserviceclients.fakes.FakeAcquireWebServiceImpl.SimulateMicroServiceUnavailable
 import common.webserviceclients.fakes.FakeAcquireWebServiceImpl.SimulateSoapEndpointFailure
 import common.filters.CsrfPreventionAction
-import common.testhelpers.UiTag
+import common.testhelpers.{UiSpec, UiTag}
 
 final class CompleteAndConfirmIntegrationSpec extends UiSpec with TestHarness {
 

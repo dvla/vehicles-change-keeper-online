@@ -2,13 +2,12 @@ package views.changekeeper
 
 import composition.TestHarness
 import helpers.changekeeper.CookieFactoryForUISpecs
-import helpers.UiSpec
 import org.openqa.selenium.{By, WebElement, WebDriver}
 import pages.changekeeper.DateOfSalePage.navigate
 import pages.changekeeper.{DateOfSalePage, BeforeYouStartPage, VehicleLookupPage}
 import pages.common.ErrorPanel
 import pages.common.Feedback.EmailFeedbackLink
-import uk.gov.dvla.vehicles.presentation.common.testhelpers.UiTag
+import uk.gov.dvla.vehicles.presentation.common.testhelpers.{UiSpec, UiTag}
 import uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction
 import org.scalatest.selenium.WebBrowser.{click, go, pageTitle, pageSource}
 

@@ -1,7 +1,6 @@
 package views.changekeeper
 
 import composition.TestHarness
-import helpers.UiSpec
 import helpers.changekeeper.CookieFactoryForUISpecs
 import org.openqa.selenium.WebDriver
 import pages.changekeeper.MicroServiceErrorPage.exit
@@ -9,7 +8,7 @@ import pages.changekeeper.MicroServiceErrorPage.tryAgain
 import pages.changekeeper.{BeforeYouStartPage, MicroServiceErrorPage, VehicleLookupPage}
 import pages.common.AlternateLanguages.{cymraeg, english}
 import pages.common.Feedback.EmailFeedbackLink
-import uk.gov.dvla.vehicles.presentation.common.testhelpers.UiTag
+import uk.gov.dvla.vehicles.presentation.common.testhelpers.{UiSpec, UiTag}
 import org.scalatest.selenium.WebBrowser.{click, go, pageTitle, pageSource}
 
 final class MicroServiceErrorIntegrationSpec extends UiSpec with TestHarness {

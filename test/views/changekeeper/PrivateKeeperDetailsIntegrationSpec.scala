@@ -2,7 +2,6 @@ package views.changekeeper
 
 import composition.TestHarness
 import helpers.changekeeper.CookieFactoryForUISpecs
-import helpers.UiSpec
 import org.openqa.selenium.{By, WebDriver, WebElement}
 import pages.changekeeper.BeforeYouStartPage
 import pages.changekeeper.NewKeeperChooseYourAddressPage
@@ -17,7 +16,7 @@ import pages.common.Feedback.EmailFeedbackLink
 import play.api.i18n.Messages
 import uk.gov.dvla.vehicles.presentation.common.filters.CsrfPreventionAction
 import uk.gov.dvla.vehicles.presentation.common.testhelpers.HtmlTestHelper.{htmlRegex, whitespaceRegex}
-import uk.gov.dvla.vehicles.presentation.common.testhelpers.UiTag
+import uk.gov.dvla.vehicles.presentation.common.testhelpers.{UiSpec, UiTag}
 import org.scalatest.selenium.WebBrowser.{click, currentUrl, go, pageTitle, pageSource}
 
 final class PrivateKeeperDetailsIntegrationSpec extends UiSpec with TestHarness {

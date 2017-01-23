@@ -2,7 +2,6 @@ package views.changekeeper
 
 import composition.TestHarness
 import helpers.changekeeper.CookieFactoryForUISpecs
-import helpers.UiSpec
 import models.K2KCacheKeyPrefix.CookiePrefix
 import models.VehicleLookupFormModel.VehicleLookupFormModelCacheKey
 import pages.changekeeper.BeforeYouStartPage
@@ -13,7 +12,7 @@ import pages.common.Feedback.EmailFeedbackLink
 import uk.gov.dvla.vehicles.presentation.common
 import common.model.PrivateKeeperDetailsFormModel.privateKeeperDetailsCacheKey
 import common.model.VehicleAndKeeperDetailsModel.vehicleAndKeeperLookupDetailsCacheKey
-import common.testhelpers.UiTag
+import common.testhelpers.{UiSpec, UiTag}
 import org.scalatest.selenium.WebBrowser.{click, go, pageTitle, pageSource}
 
 class BeforeYouStartIntegrationSpec extends UiSpec with TestHarness {
