@@ -1,5 +1,6 @@
 ======= 1.46 ========
 TIME OF RELEASE BINARIES CREATION:
+Wed Jan 25 11:16:39 UTC 2017
 
 VMPRCI-4487 	Updated and centralised time formatting code to 12 hour clock
 VMPRCI-4543 	Test helpers clean up
