@@ -1,3 +1,15 @@
+======= 1.46 ========
+TIME OF RELEASE BINARIES CREATION:
+
+VMPRCI-4487 	Updated and centralised time formatting code to 12 hour clock
+VMPRCI-4543 	Test helpers clean up
+VMPRCI-4545 	Plain text emails
+VMPRCI-4562 	Consolidate VM and PR web app postcode address lookup calls
+VMPRCI-4572 	Reintroduce email.whitelist property for non preprod and live environments
+VMPRCI-4580 	Re-review dates used in acceptance tests
+VMPRCI-4588 	Further revisions to welsh translation
+VMPRCI-4589 	Language Link / Try Again (microservice) error
+
 ======= 1.45 ========
 TIME OF RELEASE BINARIES CREATION:
 Wed Dec 07 11:33:52 UTC 2016
